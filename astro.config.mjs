@@ -5,7 +5,7 @@ import starlightLinksValidator from 'starlight-links-validator';
 import tailwindcss from '@tailwindcss/vite';
 
 // Secret path for password-protected staging
-const SECRET_PATH = '/50344740e79c4934ebc490ee8ab5dc08';
+const SECRET_PATH = '/50344740e79c4934ebc490ee8ab5dc08/';
 
 // https://astro.build/config
 export default defineConfig({
