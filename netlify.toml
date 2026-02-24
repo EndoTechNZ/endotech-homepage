@@ -4,3 +4,10 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Redirect root to password page (already handled by index.html)
+# All other non-existent paths go to password page
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404

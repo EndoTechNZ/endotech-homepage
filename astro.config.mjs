@@ -1,13 +1,27 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightLinksValidator from 'starlight-links-validator';
 import tailwindcss from '@tailwindcss/vite';
+
+// Secret path for password-protected staging
+const SECRET_PATH = '/50344740e79c4934ebc490ee8ab5dc08';
 
 // https://astro.build/config
 export default defineConfig({
+  base: SECRET_PATH,
   integrations: [
     starlight({
       title: 'EndoTech Docs',
+      plugins: [
+        starlightLinksValidator({
+          errorOnRelativeLinks: false,
+        }),
+      ],
+      head: [
+        // Prevent indexing on staging
+        { tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' } },
+      ],
       logo: {
         light: './src/assets/logo-wordmark.png',
         dark: './src/assets/logo-wordmark-dark.png',
