@@ -9,8 +9,8 @@ export default defineConfig({
     starlight({
       title: 'EndoTech Docs',
       logo: {
-        light: './src/assets/logo.png',
-        dark: './src/assets/logo-dark.png',
+        light: './src/assets/logo-wordmark.png',
+        dark: './src/assets/logo-wordmark-dark.png',
         replacesTitle: true,
       },
       social: [
@@ -27,11 +27,26 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Technology',
+          items: [
+            { label: 'Transform Technology', slug: 'technology/transform-technology' },
+            { label: 'Avatar Tip', slug: 'technology/avatar-tip' },
+          ],
+        },
+        {
           label: 'Technique',
           items: [
             { label: 'Workflow Overview', slug: 'technique/workflow' },
             { label: 'ET Technique', slug: 'technique/et-technique' },
             { label: 'PT Technique', slug: 'technique/pt-technique' },
+            { label: 'Motor Settings', slug: 'technique/motor-settings' },
+          ],
+        },
+        {
+          label: 'Research',
+          items: [
+            { label: 'Clinical Evidence', slug: 'research/evidence' },
+            { label: 'Apical Control', slug: 'research/apical-control' },
           ],
         },
         {
