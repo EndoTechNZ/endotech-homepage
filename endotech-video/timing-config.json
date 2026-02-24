@@ -1,0 +1,85 @@
+{
+  "fps": 30,
+  "totalFrames": 1157,
+  "totalSeconds": 38.56666666666667,
+  "scenes": [
+    {
+      "id": "intro",
+      "name": "IntroScene",
+      "audioDuration": 5.572792,
+      "audioFrames": 168,
+      "sceneFrames": 198,
+      "startFrame": 0,
+      "narrationStart": 20
+    },
+    {
+      "id": "problem",
+      "name": "ProblemScene",
+      "audioDuration": 2.182688,
+      "audioFrames": 66,
+      "sceneFrames": 96,
+      "startFrame": 198,
+      "narrationStart": 218
+    },
+    {
+      "id": "technology",
+      "name": "TechnologyScene",
+      "audioDuration": 7.105313,
+      "audioFrames": 214,
+      "sceneFrames": 244,
+      "startFrame": 294,
+      "narrationStart": 314
+    },
+    {
+      "id": "products",
+      "name": "ProductsScene",
+      "audioDuration": 8.4985,
+      "audioFrames": 255,
+      "sceneFrames": 285,
+      "startFrame": 538,
+      "narrationStart": 558
+    },
+    {
+      "id": "benefits",
+      "name": "BenefitsScene",
+      "subNarrations": [
+        "benefits-1",
+        "benefits-2",
+        "benefits-3"
+      ],
+      "audioDuration": 4.969083,
+      "audioFrames": 150,
+      "sceneFrames": 200,
+      "startFrame": 823,
+      "subTimings": [
+        {
+          "id": "benefits-1",
+          "audioDuration": 1.578958,
+          "audioFrames": 48,
+          "narrationStart": 843
+        },
+        {
+          "id": "benefits-2",
+          "audioDuration": 1.904042,
+          "audioFrames": 58,
+          "narrationStart": 901
+        },
+        {
+          "id": "benefits-3",
+          "audioDuration": 1.486083,
+          "audioFrames": 45,
+          "narrationStart": 969
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "name": "CTAScene",
+      "audioDuration": 3.436563,
+      "audioFrames": 104,
+      "sceneFrames": 134,
+      "startFrame": 1023,
+      "narrationStart": 1043
+    }
+  ]
+}

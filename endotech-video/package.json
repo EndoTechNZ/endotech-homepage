@@ -1,0 +1,27 @@
+{
+  "name": "endotech-video",
+  "version": "1.0.0",
+  "description": "EndoTech product demo video",
+  "scripts": {
+    "start": "remotion studio",
+    "narration": "node scripts/generate-narration.js",
+    "audio:process": "node scripts/process-audio.js",
+    "timing": "node scripts/generate-timing.js",
+    "audio:all": "npm run narration && npm run audio:process && npm run timing",
+    "render": "remotion render EndoTechDemo ../public/videos/explainer.mp4",
+    "build": "npm run audio:all && npm run render",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.428",
+    "@remotion/player": "^4.0.428",
+    "dotenv": "^17.3.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "remotion": "^4.0.428"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "typescript": "^5.0.0"
+  }
+}

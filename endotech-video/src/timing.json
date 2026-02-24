@@ -1,0 +1,100 @@
+{
+  "fps": 30,
+  "scenes": [
+    {
+      "id": "intro",
+      "name": "IntroScene",
+      "startFrame": 0,
+      "durationFrames": 196
+    },
+    {
+      "id": "problem",
+      "name": "ProblemScene",
+      "startFrame": 196,
+      "durationFrames": 97
+    },
+    {
+      "id": "technology",
+      "name": "TechnologyScene",
+      "startFrame": 293,
+      "durationFrames": 230
+    },
+    {
+      "id": "products",
+      "name": "ProductsScene",
+      "startFrame": 523,
+      "durationFrames": 291
+    },
+    {
+      "id": "benefits",
+      "name": "BenefitsScene",
+      "startFrame": 814,
+      "durationFrames": 200
+    },
+    {
+      "id": "cta",
+      "name": "CTAScene",
+      "startFrame": 1014,
+      "durationFrames": 222
+    }
+  ],
+  "narrations": [
+    {
+      "id": "intro",
+      "file": "narration-intro.mp3",
+      "startFrame": 20,
+      "durationFrames": 166
+    },
+    {
+      "id": "problem",
+      "file": "narration-problem.mp3",
+      "startFrame": 216,
+      "durationFrames": 67
+    },
+    {
+      "id": "technology",
+      "file": "narration-technology.mp3",
+      "startFrame": 313,
+      "durationFrames": 200
+    },
+    {
+      "id": "products",
+      "file": "narration-products.mp3",
+      "startFrame": 543,
+      "durationFrames": 261
+    },
+    {
+      "id": "benefits-1",
+      "file": "narration-benefits-1.mp3",
+      "startFrame": 834,
+      "durationFrames": 48
+    },
+    {
+      "id": "benefits-2",
+      "file": "narration-benefits-2.mp3",
+      "startFrame": 892,
+      "durationFrames": 58
+    },
+    {
+      "id": "benefits-3",
+      "file": "narration-benefits-3.mp3",
+      "startFrame": 960,
+      "durationFrames": 45
+    },
+    {
+      "id": "cta-ready",
+      "file": "narration-cta-ready.mp3",
+      "startFrame": 1014,
+      "durationFrames": 48
+    },
+    {
+      "id": "cta-contact",
+      "file": "narration-cta-contact.mp3",
+      "startFrame": 1072,
+      "durationFrames": 45
+    }
+  ],
+  "totalFrames": 1236,
+  "totalSeconds": 41.2,
+  "musicStartFrom": 4209
+}
