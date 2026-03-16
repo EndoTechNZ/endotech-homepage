@@ -12,18 +12,18 @@ const base = import.meta.env.BASE_URL;
 
 <Layout title="EndoTech Singapore | TransformX™ Rotary Endodontic Files">
   <!-- Navigation -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+  <nav id="site-nav" class="fixed top-0 left-0 right-0 z-50 border-b border-slate-100/80 bg-white/78 backdrop-blur-md transition-all duration-300 dark:border-slate-800/80 dark:bg-slate-900/78">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between transition-all duration-300">
       <a href={base} class="flex items-center gap-3">
         <img src={logo.src} alt="EndoTech Singapore" class="h-10 w-auto dark:hidden" />
         <img src={logoDark.src} alt="EndoTech Singapore" class="h-10 w-auto hidden dark:block" />
       </a>
       <div class="hidden md:flex items-center gap-8">
-        <a href="#products" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Products</a>
-        <a href="#workflow" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Workflow</a>
+        <a href="#products" data-section-link="products" class="nav-link text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Products</a>
+        <a href="#workflow" data-section-link="workflow" class="nav-link text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Workflow</a>
         <a href={`${base}products/overview/`} class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Clinical Docs</a>
-        <a href="#contact" class="inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all hover:shadow-lg hover:shadow-slate-900/20">
-          Make an Appointment
+        <a href="#contact" data-section-link="contact" class="inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all hover:shadow-lg hover:shadow-slate-900/20">
+          Request Information
         </a>
       </div>
       <button class="md:hidden p-2" aria-label="Menu">
@@ -35,7 +35,7 @@ const base = import.meta.env.BASE_URL;
   </nav>
 
   <!-- Hero Section -->
-  <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+  <section class="relative min-h-screen flex items-center pt-8 md:pt-12 overflow-hidden">
     <!-- Background -->
     <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-cyan-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-cyan-950/30"></div>
     <div class="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23fff&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
@@ -48,8 +48,8 @@ const base = import.meta.env.BASE_URL;
     <div class="absolute top-32 left-20 w-px h-32 bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent hidden lg:block"></div>
     <div class="absolute top-48 left-32 w-16 h-px bg-gradient-to-r from-cyan-500/20 to-transparent hidden lg:block"></div>
 
-    <div class="relative max-w-7xl mx-auto px-6 py-20 lg:py-32">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
+    <div class="relative max-w-7xl mx-auto px-6 py-14 lg:py-20">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div class="space-y-8">
           <div class="inline-flex items-center gap-2 px-4 py-2 bg-cyan-50 dark:bg-cyan-950/50 border border-cyan-100 dark:border-cyan-800 rounded-full">
             <span class="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></span>
@@ -62,11 +62,11 @@ const base = import.meta.env.BASE_URL;
             <span class="block text-slate-600 dark:text-slate-400 font-medium text-3xl lg:text-4xl xl:text-5xl mt-3">in Endodontics</span>
           </h1>
 
-          <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
-            Get to length <span class="text-slate-900 dark:text-white font-semibold">predictably</span> and <span class="text-slate-900 dark:text-white font-semibold">safely</span>. TransformX™ with Avatar™ Tip — engineered for clinicians who demand precision.
+          <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
+            Improve <span class="text-slate-900 dark:text-white font-semibold">working-length control</span>, maintain <span class="text-slate-900 dark:text-white font-semibold">canal centring</span>, and reduce the risk of <span class="text-slate-900 dark:text-white font-semibold">ledging, transportation, and separation</span> with TransformX™ and Avatar™ Tip.
           </p>
 
-          <div class="flex flex-wrap gap-4 pt-4">
+          <div class="flex flex-wrap gap-4 pt-2">
             <a href="#products" class="group inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all hover:shadow-xl hover:shadow-slate-900/20 hover:-translate-y-0.5">
               View Products
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,11 +74,23 @@ const base = import.meta.env.BASE_URL;
               </svg>
             </a>
             <a href="#contact" class="inline-flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-8 py-4 rounded-full font-semibold border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
-              Make an Appointment
+              Request Information
             </a>
           </div>
 
-          <div class="flex items-center gap-8 pt-8 border-t border-slate-100 dark:border-slate-800">
+          <div class="inline-flex flex-wrap items-center gap-3 rounded-2xl border border-cyan-100 bg-white/90 px-4 py-3 shadow-sm shadow-cyan-100/40 backdrop-blur dark:border-cyan-900/60 dark:bg-slate-900/80 dark:shadow-black/20">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-cyan-500/10 text-cyan-600 dark:bg-cyan-400/10 dark:text-cyan-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </span>
+            <div>
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">Fits familiar PT and ET-style workflows</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">No new shaping philosophy or motor-learning curve required.</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-8 pt-6 border-t border-slate-100 dark:border-slate-800">
             <div>
               <div class="text-2xl font-bold text-slate-900 dark:text-white">500+</div>
               <div class="text-sm text-slate-500 dark:text-slate-400">Dentists Trust Us</div>
@@ -97,9 +109,12 @@ const base = import.meta.env.BASE_URL;
         </div>
 
         <div class="relative hidden lg:block">
+          <div class="absolute inset-x-16 top-12 h-56 rounded-full bg-gradient-to-r from-cyan-300/25 via-blue-300/10 to-slate-200/10 blur-3xl dark:from-cyan-400/20 dark:via-blue-500/20 dark:to-slate-700/10"></div>
+          <div class="absolute left-10 right-10 bottom-10 h-16 rounded-full bg-slate-900/10 blur-2xl dark:bg-black/30"></div>
           <div class="aspect-square relative">
             <!-- Product image -->
-            <div class="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl border border-slate-200/50 dark:border-slate-700/50 shadow-2xl shadow-slate-200/50 dark:shadow-black/30 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-white via-slate-50 to-cyan-50/60 dark:from-slate-800 dark:via-slate-900 dark:to-cyan-950/20 rounded-3xl border border-slate-200/70 dark:border-slate-700/50 shadow-[0_30px_90px_-30px_rgba(15,23,42,0.28)] dark:shadow-[0_40px_100px_-35px_rgba(0,0,0,0.55)] overflow-hidden">
+              <div class="absolute inset-0 opacity-40" style="background-image: radial-gradient(circle at top left, rgba(6,182,212,0.10), transparent 35%), linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px); background-size: auto, 32px 32px, 32px 32px;"></div>
               <img src={heroProduct.src} alt="TransformX Rotary Files" class="w-full h-full object-contain p-8" />
               <!-- Corner accent -->
               <div class="absolute top-6 right-6 flex items-center gap-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur px-3 py-1.5 rounded-full border border-slate-200/50 dark:border-slate-700/50">
@@ -563,7 +578,7 @@ const base = import.meta.env.BASE_URL;
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
           </svg>
-          Make an Appointment
+          Request Information
         </a>
         <a href={`${base}resources/downloads/`} class="inline-flex items-center justify-center gap-3 bg-cyan-500/30 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:bg-cyan-500/40 hover:border-white/30 transition-all">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -648,6 +663,21 @@ const base = import.meta.env.BASE_URL;
     background-color: rgb(51 65 85); /* slate-700 */
     color: white;
   }
+
+  #site-nav.scrolled {
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 18px 45px -28px rgba(15, 23, 42, 0.35);
+    backdrop-filter: blur(18px);
+  }
+
+  .dark #site-nav.scrolled {
+    background: rgba(15, 23, 42, 0.92);
+    box-shadow: 0 18px 45px -28px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-link.active {
+    color: rgb(8 145 178);
+  }
 </style>
 
 <script>
@@ -689,13 +719,44 @@ const base = import.meta.env.BASE_URL;
 
   // Initialize on load
   document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.getElementById('site-nav');
+    const navLinks = document.querySelectorAll('[data-section-link]');
+    const observedSections = ['products', 'workflow', 'contact']
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    function updateNavState() {
+      if (!nav) return;
+      nav.classList.toggle('scrolled', window.scrollY > 24);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const targetId = entry.target.getAttribute('id');
+        const link = document.querySelector(`[data-section-link="${targetId}"]`);
+        if (!link) return;
+
+        if (entry.isIntersecting) {
+          navLinks.forEach((item) => item.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    }, {
+      rootMargin: '-35% 0px -45% 0px',
+      threshold: 0.1,
+    });
+
+    observedSections.forEach((section) => observer.observe(section));
+
     const storedTheme = getStoredTheme();
     updateButtonStates(storedTheme);
+    updateNavState();
 
     // Set up button click handlers
     document.getElementById('theme-light')?.addEventListener('click', () => updateTheme('light'));
     document.getElementById('theme-system')?.addEventListener('click', () => updateTheme('system'));
     document.getElementById('theme-dark')?.addEventListener('click', () => updateTheme('dark'));
+    window.addEventListener('scroll', updateNavState, { passive: true });
 
     // Listen for system preference changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
