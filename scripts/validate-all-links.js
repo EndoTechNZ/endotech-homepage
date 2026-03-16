@@ -12,9 +12,9 @@ import { JSDOM } from 'jsdom';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, '..', 'dist');
-
-// Get base path from astro config
-const SECRET_PATH = '/50344740e79c4934ebc490ee8ab5dc08';
+const basePath = process.env.DEPLOY_TARGET === 'github-pages'
+  ? '/endotech-homepage/'
+  : '/';
 
 function getAllHtmlFiles(dir, files = []) {
   const items = fs.readdirSync(dir);
@@ -54,6 +54,14 @@ function resolveLink(link, basePath) {
 function linkExistsInDist(link) {
   // Remove trailing slash and anchor
   let cleanLink = link.split('#')[0];
+  const normalizedBase = basePath === '/' ? '' : basePath.replace(/\/$/, '');
+
+  if (normalizedBase && cleanLink === normalizedBase) {
+    cleanLink = '/';
+  } else if (normalizedBase && cleanLink.startsWith(normalizedBase + '/')) {
+    cleanLink = cleanLink.slice(normalizedBase.length);
+  }
+
   if (cleanLink.endsWith('/')) {
     cleanLink = cleanLink.slice(0, -1);
   }

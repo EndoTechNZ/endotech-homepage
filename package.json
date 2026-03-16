@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && node scripts/setup-password-protection.js && node scripts/validate-all-links.js",
+    "build": "astro build && node scripts/validate-all-links.js",
+    "build:staging": "astro build && node scripts/setup-password-protection.js && node scripts/validate-all-links.js",
+    "build:github": "astro build && node scripts/validate-all-links.js",
     "preview": "astro preview",
     "astro": "astro"
   },

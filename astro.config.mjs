@@ -4,12 +4,14 @@ import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
 import tailwindcss from '@tailwindcss/vite';
 
-// Secret path for password-protected staging
-const SECRET_PATH = '/50344740e79c4934ebc490ee8ab5dc08/';
+const isGitHubPages = process.env.DEPLOY_TARGET === 'github-pages';
+const site = isGitHubPages ? 'https://endotechnz.github.io' : undefined;
+const base = isGitHubPages ? '/endotech-homepage/' : '/';
 
 // https://astro.build/config
 export default defineConfig({
-  base: SECRET_PATH,
+  site,
+  base,
   integrations: [
     starlight({
       title: 'EndoTech Docs',
@@ -19,8 +21,9 @@ export default defineConfig({
         }),
       ],
       head: [
-        // Prevent indexing on staging
-        { tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' } },
+        ...(isGitHubPages ? [] : [
+          { tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' } },
+        ]),
       ],
       logo: {
         light: './src/assets/logo-wordmark.png',
@@ -74,7 +77,7 @@ export default defineConfig({
           label: 'About',
           items: [
             { label: 'About EndoTech', slug: 'about/company' },
-            { label: 'Contact & Pricing', slug: 'about/contact' },
+            { label: 'Contact & Orders', slug: 'about/contact' },
           ],
         },
       ],
