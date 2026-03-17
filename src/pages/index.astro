@@ -20,17 +20,34 @@ const base = import.meta.env.BASE_URL;
       </a>
       <div class="hidden md:flex items-center gap-8">
         <a href="#products" data-section-link="products" class="nav-link text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Products</a>
+        <a href="#compare" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Compare</a>
         <a href="#workflow" data-section-link="workflow" class="nav-link text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Workflow</a>
         <a href={`${base}products/overview/`} class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Clinical Docs</a>
         <a href="#contact" data-section-link="contact" class="inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all hover:shadow-lg hover:shadow-slate-900/20">
           Request Information
         </a>
       </div>
-      <button class="md:hidden p-2" aria-label="Menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button
+        id="mobile-menu-button"
+        class="md:hidden inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-200"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        Menu
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
+    </div>
+    <div id="mobile-menu" class="hidden border-t border-slate-200/80 bg-white/95 px-6 pb-6 pt-4 shadow-2xl shadow-slate-900/5 dark:border-slate-800/80 dark:bg-slate-900/95 md:hidden">
+      <div class="grid gap-3">
+        <a href="#products" class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Browse product systems</a>
+        <a href="#compare" class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Compare ET, PT, and sealer</a>
+        <a href="#workflow" class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Review the workflow</a>
+        <a href={`${base}resources/downloads/`} class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Download the clinical pack</a>
+        <a href="mailto:info@endotechsg.com" class="mobile-nav-link inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white dark:bg-white dark:text-slate-900">Contact EndoTech</a>
+      </div>
     </div>
   </nav>
 
@@ -63,47 +80,47 @@ const base = import.meta.env.BASE_URL;
           </h1>
 
           <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-            Improve <span class="text-slate-900 dark:text-white font-semibold">working-length control</span>, maintain <span class="text-slate-900 dark:text-white font-semibold">canal centring</span>, and reduce the risk of <span class="text-slate-900 dark:text-white font-semibold">ledging, transportation, and separation</span> with TransformX™ and Avatar™ Tip.
+            Evaluate a rotary file system built to improve <span class="text-slate-900 dark:text-white font-semibold">working-length control</span>, maintain <span class="text-slate-900 dark:text-white font-semibold">canal centring</span>, and reduce the likelihood of <span class="text-slate-900 dark:text-white font-semibold">ledging, transportation, and file separation</span> in curved anatomy.
           </p>
 
           <div class="flex flex-wrap gap-4 pt-2">
             <a href="#products" class="group inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all hover:shadow-xl hover:shadow-slate-900/20 hover:-translate-y-0.5">
-              View Products
+              View Product Systems
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
             </a>
-            <a href="#contact" class="inline-flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-8 py-4 rounded-full font-semibold border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
-              Request Information
+            <a href={`${base}resources/downloads/`} class="inline-flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-8 py-4 rounded-full font-semibold border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+              Download Clinical Pack
+            </a>
+            <a href="mailto:info@endotechsg.com" class="inline-flex items-center gap-2 px-2 py-4 font-semibold text-slate-900 transition-colors hover:text-cyan-600 dark:text-white dark:hover:text-cyan-400">
+              Talk to EndoTech
             </a>
           </div>
 
-          <div class="inline-flex flex-wrap items-center gap-3 rounded-2xl border border-cyan-100 bg-white/90 px-4 py-3 shadow-sm shadow-cyan-100/40 backdrop-blur dark:border-cyan-900/60 dark:bg-slate-900/80 dark:shadow-black/20">
-            <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-cyan-500/10 text-cyan-600 dark:bg-cyan-400/10 dark:text-cyan-400">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </span>
-            <div>
-              <p class="text-sm font-semibold text-slate-900 dark:text-white">Fits familiar PT and ET-style workflows</p>
-              <p class="text-sm text-slate-500 dark:text-slate-400">No new shaping philosophy or motor-learning curve required.</p>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div class="rounded-2xl border border-cyan-100 bg-white/90 px-4 py-4 shadow-sm shadow-cyan-100/40 backdrop-blur dark:border-cyan-900/60 dark:bg-slate-900/80 dark:shadow-black/20">
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">Built around familiar PT and ET-style workflows</p>
+              <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Designed to slot into existing sequence logic and established motor settings.</p>
+            </div>
+            <div class="rounded-2xl border border-cyan-100 bg-white/90 px-4 py-4 shadow-sm shadow-cyan-100/40 backdrop-blur dark:border-cyan-900/60 dark:bg-slate-900/80 dark:shadow-black/20">
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">Clinical evaluation comes first</p>
+              <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Open workflow sheets, part numbers, and system comparisons before contacting sales.</p>
             </div>
           </div>
 
-          <div class="flex items-center gap-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+          <div class="grid gap-4 pt-6 border-t border-slate-100 dark:border-slate-800 sm:grid-cols-3">
             <div>
-              <div class="text-2xl font-bold text-slate-900 dark:text-white">500+</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">Dentists Trust Us</div>
+              <div class="text-2xl font-bold text-slate-900 dark:text-white">PT + ET</div>
+              <div class="text-sm text-slate-500 dark:text-slate-400">Workflow-matched shaping families</div>
             </div>
-            <div class="w-px h-10 bg-slate-200 dark:bg-slate-700"></div>
             <div>
-              <div class="text-2xl font-bold text-slate-900 dark:text-white">10k+</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">Cases Completed</div>
+              <div class="text-2xl font-bold text-slate-900 dark:text-white">PDF pack</div>
+              <div class="text-sm text-slate-500 dark:text-slate-400">Technique sheets, part numbers, and handouts</div>
             </div>
-            <div class="w-px h-10 bg-slate-200 dark:bg-slate-700"></div>
             <div>
               <div class="text-2xl font-bold text-slate-900 dark:text-white">APAC</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">Distribution</div>
+              <div class="text-sm text-slate-500 dark:text-slate-400">Regional supply and ordering support</div>
             </div>
           </div>
         </div>
@@ -131,6 +148,46 @@ const base = import.meta.env.BASE_URL;
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400">
       <span class="text-xs font-medium tracking-wider uppercase">Scroll Down For More</span>
       <div class="w-px h-8 bg-gradient-to-b from-slate-300 dark:from-slate-600 to-transparent animate-bounce"></div>
+    </div>
+  </section>
+
+  <!-- Clinical Proof Strip -->
+  <section class="relative border-y border-slate-200/70 bg-white py-14 dark:border-slate-800 dark:bg-slate-950">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-2xl">
+          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-400">Clinical Proof</p>
+          <h2 class="mt-3 text-3xl font-bold text-slate-900 dark:text-white">Make evaluation easy before asking for the order</h2>
+          <p class="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">Clinicians usually want sequence sheets, ordering references, and technical rationale before they want a sales conversation. This section surfaces those materials immediately.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href={`${base}resources/downloads/`} class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-cyan-400 hover:text-cyan-700 dark:border-slate-700 dark:text-slate-100 dark:hover:border-cyan-600 dark:hover:text-cyan-300">Open downloads</a>
+          <a href={`${base}technique/workflow/`} class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-cyan-400 hover:text-cyan-700 dark:border-slate-700 dark:text-slate-100 dark:hover:border-cyan-600 dark:hover:text-cyan-300">Review workflow docs</a>
+        </div>
+      </div>
+
+      <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <a href={`${base}downloads/ET-Technique-Work-Flow.pdf`} class="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Technique</p>
+          <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">ET Workflow PDF</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Open the ET sequence clinicians can review chairside or share with the team.</p>
+        </a>
+        <a href={`${base}downloads/PT-Technique-Work-Flow.pdf`} class="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Technique</p>
+          <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">PT Workflow PDF</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Stay inside a familiar PT-style sequence while checking order and shaping intent.</p>
+        </a>
+        <a href={`${base}downloads/ET-Part-Numbers.pdf`} class="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Ordering</p>
+          <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">Part-Number Sheets</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Give distributors and clinic buyers the practical ordering detail they expect.</p>
+        </a>
+        <a href={`${base}research/evidence/`} class="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Rationale</p>
+          <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">Clinical Evidence</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Connect performance claims to the research and apical-control pages instead of leaving them generic.</p>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -244,7 +301,7 @@ const base = import.meta.env.BASE_URL;
         </video>
       </div>
 
-      <p class="text-center text-slate-500 dark:text-slate-400 text-sm mt-6">37 seconds • Learn about TransformX technology and products</p>
+      <p class="text-center text-slate-500 dark:text-slate-400 text-sm mt-6">37 seconds • Short overview of file design, workflow fit, and product family</p>
     </div>
   </section>
 
@@ -265,7 +322,7 @@ const base = import.meta.env.BASE_URL;
             </svg>
           </div>
           <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Transform Technology</h3>
-          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">Variable-phase design adapts as it advances—controlled coronal shaping where stability matters, increased flexibility at the apex where risk is highest.</p>
+          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">Variable-phase geometry shifts the file's behavior through the canal: more coronal stability during early shaping, more apical flexibility where transportation risk increases.</p>
         </div>
 
         <!-- Card 2 -->
@@ -276,7 +333,7 @@ const base = import.meta.env.BASE_URL;
             </svg>
           </div>
           <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Avatar™ Tip</h3>
-          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">Precision-engineered apical geometry for control in the most critical millimeters. Minimises ledging, transportation, and perforation risk.</p>
+          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">Refined apical geometry is intended to improve guidance in the final millimeters and lower the chance of apical zipping, ledging, and transportation.</p>
         </div>
 
         <!-- Card 3 -->
@@ -287,7 +344,7 @@ const base = import.meta.env.BASE_URL;
             </svg>
           </div>
           <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Work Smarter, Not Different</h3>
-          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">TransformX doesn't ask you to work differently—it helps the file work smarter. Same technique, same motor settings, better outcomes.</p>
+          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">The system is positioned for clinicians who want performance gains without relearning their full shaping protocol or changing routine motor settings.</p>
         </div>
 
         <!-- Card 4 -->
@@ -298,7 +355,7 @@ const base = import.meta.env.BASE_URL;
             </svg>
           </div>
           <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Shape Defines Seal</h3>
-          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">Controlled taper development and predictable canal centring create reproducible conditions for optimal obturation.</p>
+          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">More controlled taper development and better canal centring help create a preparation shape that supports more consistent irrigation and obturation.</p>
         </div>
       </div>
     </div>
@@ -325,7 +382,7 @@ const base = import.meta.env.BASE_URL;
               <h3 class="text-xl font-bold text-slate-900 dark:text-white">ET TransformX Files</h3>
               <span class="text-sm font-semibold text-cyan-600 dark:text-cyan-400">Contact for details</span>
             </div>
-            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">For clinicians familiar with EdgeTaper, EdgeX7, Race Evo, and other .04/.06 taper systems.</p>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Recommended for clinicians already shaping with ET, EdgeX7, Race Evo, or other .04/.06-style sequences who want similar sequence logic with greater apical control.</p>
             <div class="flex flex-wrap gap-2 pt-2">
               <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-full">EdgeTaper</span>
               <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-full">EdgeX7</span>
@@ -350,7 +407,7 @@ const base = import.meta.env.BASE_URL;
               <h3 class="text-xl font-bold text-slate-900 dark:text-white">PT TransformX Files</h3>
               <span class="text-sm font-semibold text-cyan-600 dark:text-cyan-400">Contact for details</span>
             </div>
-            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">For clinicians experienced with ProTaper Gold or ProTaper Next systems.</p>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Recommended for clinicians using ProTaper-style systems who want a familiar progression while evaluating different file behavior and fatigue characteristics.</p>
             <div class="flex flex-wrap gap-2 pt-2">
               <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-full">ProTaper Gold</span>
               <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-full">ProTaper Next</span>
@@ -374,7 +431,7 @@ const base = import.meta.env.BASE_URL;
               <h3 class="text-xl font-bold text-slate-900 dark:text-white">iRoot Sealer</h3>
               <span class="text-sm font-semibold text-cyan-600 dark:text-cyan-400">Contact for details</span>
             </div>
-            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Premixed, injectable bioceramic root canal sealer — the gold standard for obturation.</p>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Premixed injectable bioceramic sealer for clinicians building a matched shaping-to-obturation workflow around a modern bioceramic protocol.</p>
             <div class="flex flex-wrap gap-2 pt-2">
               <span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-medium rounded-full">Gold Standard</span>
               <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-full">Bioceramic</span>
@@ -389,7 +446,111 @@ const base = import.meta.env.BASE_URL;
         </a>
       </div>
 
-      <p class="text-center text-slate-500 dark:text-slate-400 text-sm mt-8">All prices in SGD. Volume discounts available.</p>
+      <p class="text-center text-slate-500 dark:text-slate-400 text-sm mt-8">Request pricing, pack configuration, and regional availability directly from EndoTech.</p>
+    </div>
+  </section>
+
+  <!-- Comparison Section -->
+  <section id="compare" class="py-24 lg:py-32 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-3xl">
+          <h2 class="text-sm font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider mb-4">Compare Systems</h2>
+          <p class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white">Answer the questions major brands answer on page one</p>
+          <p class="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">This table is meant to answer the first clinical-screening questions quickly: what sequence style it matches, what problem it is trying to solve, and which technical document to open next.</p>
+        </div>
+        <a href={`${base}products/overview/`} class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100">
+          Open the full product overview
+        </a>
+      </div>
+
+      <div class="mt-12 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-left">
+            <thead class="bg-slate-50 dark:bg-slate-900/80">
+              <tr class="text-sm text-slate-500 dark:text-slate-400">
+                <th class="px-6 py-4 font-semibold">Question</th>
+                <th class="px-6 py-4 font-semibold text-slate-900 dark:text-white">ET TransformX</th>
+                <th class="px-6 py-4 font-semibold text-slate-900 dark:text-white">PT TransformX</th>
+                <th class="px-6 py-4 font-semibold text-slate-900 dark:text-white">iRoot Sealer</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-sm dark:divide-slate-800">
+              <tr>
+                <td class="px-6 py-5 font-semibold text-slate-900 dark:text-white">Best fit</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300">Clinicians already working in ET, EdgeX7, or .04/.06 style sequences.</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300">Clinicians used to ProTaper-style shaping and wanting minimal workflow disruption.</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300">Practices that want to standardize around the gold standard for obturation today: a bioceramic sealer workflow.</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-5 font-semibold text-slate-900 dark:text-white">What feels familiar</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300">ET-style sequence logic, familiar motor habits, .04/.06 thinking.</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300">PT-style sequence logic with a lower learning curve for switching.</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300">Fits directly into the obturation phase after shaping and gives clinicians a modern gold-standard endpoint without changing their instrumentation system.</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-5 font-semibold text-slate-900 dark:text-white">Primary promise</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300">Maintain centring while advancing efficiently toward working length.</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300">Preserve a PT-style treatment rhythm while improving control and fatigue behavior.</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300">Deliver the predictable bioceramic obturation that defines the gold standard endpoint in endodontics today.</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-5 font-semibold text-slate-900 dark:text-white">What to open next</td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300"><a href={`${base}downloads/ET-Technique-Work-Flow.pdf`} class="font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">ET workflow PDF</a></td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300"><a href={`${base}downloads/PT-Technique-Work-Flow.pdf`} class="font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">PT workflow PDF</a></td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300"><a href={`${base}products/iroot-sealer/`} class="font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">Sealer details</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-4 md:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-950">
+          <p class="text-sm font-semibold text-slate-900 dark:text-white">For the specialist</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Jump straight to workflow and apical-control rationale.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-950">
+          <p class="text-sm font-semibold text-slate-900 dark:text-white">For the GP</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Use the comparison table to match the system to what you already run.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-950">
+          <p class="text-sm font-semibold text-slate-900 dark:text-white">For the buyer or distributor</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Open the part-number PDFs first, then use the contact route for pricing and availability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Switching Section -->
+  <section class="py-24 lg:py-32 bg-slate-50 dark:bg-slate-800/60">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto">
+        <h2 class="text-sm font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider mb-4">Switching Logic</h2>
+        <p class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white">Why a clinician would switch from a bigger-name system</p>
+          <p class="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">A credible landing page should explain the switching logic directly: current system, expected benefit, and the document to review before trialing the product.</p>
+      </div>
+
+      <div class="mt-12 grid gap-6 lg:grid-cols-3">
+        <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-400">From ProTaper-style systems</p>
+          <h3 class="mt-4 text-2xl font-bold text-slate-900 dark:text-white">Keep the rhythm, improve the control</h3>
+          <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">The PT story is framed as a practical transition for clinicians who want to preserve familiar sequence behavior while evaluating different file metallurgy and apical control.</p>
+          <a href={`${base}products/pt-transformx/`} class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">Review PT TransformX</a>
+        </div>
+        <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-400">From ET and .04/.06 systems</p>
+          <h3 class="mt-4 text-2xl font-bold text-slate-900 dark:text-white">Stay in a familiar sequence architecture</h3>
+          <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">The ET story now makes the compatibility case explicitly, so clinicians can see where it fits without translating the product name into sequence behavior themselves.</p>
+          <a href={`${base}products/et-transformx/`} class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">Review ET TransformX</a>
+        </div>
+        <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-400">For the full system story</p>
+          <h3 class="mt-4 text-2xl font-bold text-slate-900 dark:text-white">Shape, then seal with confidence</h3>
+          <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">The sealer is positioned as part of the full treatment workflow, linking shaping outcomes to the final obturation step instead of presenting a separate SKU in isolation.</p>
+          <a href={`${base}products/iroot-sealer/`} class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">Review iRoot Sealer</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -410,7 +571,7 @@ const base = import.meta.env.BASE_URL;
             1
           </div>
           <h3 class="text-2xl font-bold mb-3">Glide Path</h3>
-          <p class="text-slate-400 leading-relaxed">Establish a reproducible glide path to working length before rotary instrumentation.</p>
+          <p class="text-slate-400 leading-relaxed">Confirm patency and establish a reproducible glide path to working length before introducing the rotary sequence.</p>
 
           <!-- Connector -->
           <div class="hidden md:block absolute top-10 left-[calc(50%+4rem)] w-[calc(100%-5rem)] h-0.5 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
@@ -422,7 +583,7 @@ const base = import.meta.env.BASE_URL;
             2
           </div>
           <h3 class="text-2xl font-bold mb-3">Shape</h3>
-          <p class="text-slate-400 leading-relaxed">Use the TransformX sequence. Irrigate, recapitulate, and re-irrigate between files.</p>
+          <p class="text-slate-400 leading-relaxed">Run the recommended TransformX shaping sequence with irrigation, recapitulation, and length control checks between files.</p>
 
           <!-- Connector -->
           <div class="hidden md:block absolute top-10 left-[calc(50%+4rem)] w-[calc(100%-5rem)] h-0.5 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
@@ -434,7 +595,7 @@ const base = import.meta.env.BASE_URL;
             3
           </div>
           <h3 class="text-2xl font-bold mb-3">Finish</h3>
-          <p class="text-slate-400 leading-relaxed">Complete apical sizing and proceed to obturation with confidence.</p>
+          <p class="text-slate-400 leading-relaxed">Confirm apical finish size, complete final irrigation, and move into obturation with the intended canal form established.</p>
         </div>
       </div>
 
@@ -449,69 +610,50 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <!-- Testimonials Section -->
+  <!-- Clinical Evaluation Section -->
   <section class="py-24 lg:py-32 bg-white dark:bg-slate-900">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-sm font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider mb-4">Testimonials</h2>
-        <p class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white">What Clinicians Are Saying</p>
+      <div class="text-center mb-16 max-w-3xl mx-auto">
+        <h2 class="text-sm font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider mb-4">Clinical Evaluation</h2>
+        <p class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white">What to evaluate in your first cases</p>
+        <p class="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">Instead of relying on testimonials alone, this section makes the page more useful to clinicians by highlighting the technical outcomes worth checking when trialing a new shaping system.</p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Testimonial 1 -->
-        <div class="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl">
-          <div class="flex gap-1 mb-4">
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-          </div>
-          <p class="text-slate-600 dark:text-slate-300 mb-6">"The Avatar tip really does make a difference. I'm getting to working length faster with less resistance. My patients are happier and so am I."</p>
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-cyan-100 dark:bg-cyan-900 rounded-full flex items-center justify-center text-cyan-600 dark:text-cyan-400 font-bold">DR</div>
-            <div>
-              <div class="font-semibold text-slate-900 dark:text-white">Dr. Rachel Tan</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">Endodontist, Singapore</div>
+      <div class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-8 dark:border-slate-800 dark:bg-slate-950">
+          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-400">First-Case Checklist</p>
+          <div class="mt-6 grid gap-5 md:grid-cols-2">
+            <div class="rounded-2xl bg-white p-5 shadow-sm dark:bg-slate-900">
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">Working-length control</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Check how consistently the file progresses to length without excessive apical force or repeated renegotiation.</p>
+            </div>
+            <div class="rounded-2xl bg-white p-5 shadow-sm dark:bg-slate-900">
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">Canal centring</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Evaluate whether the preparation remains centered through curvature rather than straightening the canal path.</p>
+            </div>
+            <div class="rounded-2xl bg-white p-5 shadow-sm dark:bg-slate-900">
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">Apical termination</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Look at how predictably you can prepare and finish short of the foramen in the biologically preferred zone.</p>
+            </div>
+            <div class="rounded-2xl bg-white p-5 shadow-sm dark:bg-slate-900">
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">Procedure feel</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Compare tactile feedback, debris control, and resistance in curved anatomy against the system you already use.</p>
             </div>
           </div>
         </div>
 
-        <!-- Testimonial 2 -->
-        <div class="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl">
-          <div class="flex gap-1 mb-4">
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+        <div class="rounded-3xl border border-slate-200 bg-slate-900 p-8 text-white dark:border-slate-700">
+          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">Evidence Summary</p>
+          <h3 class="mt-4 text-2xl font-bold">Why these points matter</h3>
+          <div class="mt-6 space-y-5 text-sm leading-relaxed text-slate-300">
+            <p>Endodontic outcome literature consistently emphasizes apical control, obturation quality, and procedural precision as the technical variables most clinicians can influence.</p>
+            <p>That is why this page keeps directing visitors back to the workflow sheets, apical-control rationale, and evidence pages rather than asking them to trust broad brand claims.</p>
+            <p class="text-white font-semibold">Best next reads:</p>
           </div>
-          <p class="text-slate-600 dark:text-slate-300 mb-6">"Switched from ProTaper to PT TransformX six months ago. Same workflow, better results. The fatigue resistance is noticeably improved."</p>
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-cyan-100 dark:bg-cyan-900 rounded-full flex items-center justify-center text-cyan-600 dark:text-cyan-400 font-bold">JL</div>
-            <div>
-              <div class="font-semibold text-slate-900 dark:text-white">Dr. James Lee</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">General Dentist, Malaysia</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Testimonial 3 -->
-        <div class="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl">
-          <div class="flex gap-1 mb-4">
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-          </div>
-          <p class="text-slate-600 dark:text-slate-300 mb-6">"iRoot Sealer combined with TransformX files gives me the most predictable obturation I've ever achieved. The bioceramic bond is exceptional."</p>
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-cyan-100 dark:bg-cyan-900 rounded-full flex items-center justify-center text-cyan-600 dark:text-cyan-400 font-bold">SW</div>
-            <div>
-              <div class="font-semibold text-slate-900 dark:text-white">Dr. Sarah Wong</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">Endodontist, Hong Kong</div>
-            </div>
+          <div class="mt-4 grid gap-3">
+            <a href={`${base}research/apical-control/`} class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Read apical control rationale</a>
+            <a href={`${base}research/evidence/`} class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Read clinical evidence summary</a>
+            <a href={`${base}technique/workflow/`} class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Open the workflow overview</a>
           </div>
         </div>
       </div>
@@ -569,23 +711,37 @@ const base = import.meta.env.BASE_URL;
       <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-cyan-400 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="relative max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-4xl lg:text-5xl font-bold mb-6">Ready to elevate your endo?</h2>
-      <p class="text-xl text-cyan-100 mb-10 max-w-2xl mx-auto">Get in touch for product information, availability, or to place an order. We serve dental professionals across Singapore and the Asia-Pacific region.</p>
+    <div class="relative max-w-6xl mx-auto px-6">
+      <div class="text-center">
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6">Choose the next step that matches your intent</h2>
+        <p class="text-xl text-cyan-100 mb-10 max-w-3xl mx-auto">Choose whether you need technical documents, product-fit guidance, or a commercial response. The path should match the stage of your evaluation.</p>
+      </div>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="mailto:info@endotechsg.com" class="inline-flex items-center justify-center gap-3 bg-white text-cyan-700 px-8 py-4 rounded-full font-bold hover:bg-cyan-50 transition-all hover:shadow-xl hover:shadow-black/10 hover:-translate-y-0.5">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-          </svg>
-          Request Information
-        </a>
-        <a href={`${base}resources/downloads/`} class="inline-flex items-center justify-center gap-3 bg-cyan-500/30 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:bg-cyan-500/40 hover:border-white/30 transition-all">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-          </svg>
-          Download Resources
-        </a>
+      <div class="grid gap-5 lg:grid-cols-3">
+        <div class="rounded-3xl border border-white/15 bg-white/10 p-8 backdrop-blur">
+          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-100">Learn</p>
+          <h3 class="mt-4 text-2xl font-bold">Review the clinical pack</h3>
+          <p class="mt-3 text-sm leading-relaxed text-cyan-50/90">Best for clinicians who want to review workflow sheets, part numbers, and support material before trial or purchase.</p>
+          <a href={`${base}resources/downloads/`} class="mt-6 inline-flex items-center justify-center gap-3 rounded-full bg-white px-6 py-3 text-sm font-bold text-cyan-700 hover:bg-cyan-50">
+            Download resources
+          </a>
+        </div>
+        <div class="rounded-3xl border border-white/15 bg-white/10 p-8 backdrop-blur">
+          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-100">Compare</p>
+          <h3 class="mt-4 text-2xl font-bold">Talk through product fit</h3>
+          <p class="mt-3 text-sm leading-relaxed text-cyan-50/90">Use this route if you need help matching ET, PT, or obturation products to your current instrumentation habits.</p>
+          <a href="mailto:info@endotechsg.com?subject=EndoTech%20product%20fit" class="mt-6 inline-flex items-center justify-center gap-3 rounded-full bg-cyan-500/30 px-6 py-3 text-sm font-bold text-white border border-white/20 hover:bg-cyan-500/40 hover:border-white/30">
+            Ask about system fit
+          </a>
+        </div>
+        <div class="rounded-3xl border border-white/15 bg-white/10 p-8 backdrop-blur">
+          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-100">Order</p>
+          <h3 class="mt-4 text-2xl font-bold">Request pricing or availability</h3>
+          <p class="mt-3 text-sm leading-relaxed text-cyan-50/90">Use this route for pricing, stocking discussions, group orders, or APAC distribution and availability enquiries.</p>
+          <a href="mailto:info@endotechsg.com?subject=EndoTech%20pricing%20and%20availability" class="mt-6 inline-flex items-center justify-center gap-3 rounded-full bg-slate-900 px-6 py-3 text-sm font-bold text-white hover:bg-slate-950">
+            Request information
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -721,9 +877,18 @@ const base = import.meta.env.BASE_URL;
   document.addEventListener('DOMContentLoaded', () => {
     const nav = document.getElementById('site-nav');
     const navLinks = document.querySelectorAll('[data-section-link]');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-nav-link');
     const observedSections = ['products', 'workflow', 'contact']
       .map((id) => document.getElementById(id))
       .filter(Boolean);
+
+    function setMobileMenu(open: boolean) {
+      if (!mobileMenu || !mobileMenuButton) return;
+      mobileMenu.classList.toggle('hidden', !open);
+      mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
 
     function updateNavState() {
       if (!nav) return;
@@ -757,6 +922,23 @@ const base = import.meta.env.BASE_URL;
     document.getElementById('theme-system')?.addEventListener('click', () => updateTheme('system'));
     document.getElementById('theme-dark')?.addEventListener('click', () => updateTheme('dark'));
     window.addEventListener('scroll', updateNavState, { passive: true });
+    mobileMenuButton?.addEventListener('click', () => {
+      const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+      setMobileMenu(!isOpen);
+    });
+    mobileMenuLinks.forEach((link) => {
+      link.addEventListener('click', () => setMobileMenu(false));
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        setMobileMenu(false);
+      }
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setMobileMenu(false);
+      }
+    });
 
     // Listen for system preference changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
