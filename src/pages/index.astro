@@ -158,7 +158,7 @@ const base = import.meta.env.BASE_URL;
         <div class="max-w-2xl">
           <p class="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-400">Clinical Proof</p>
           <h2 class="mt-3 text-3xl font-bold text-slate-900 dark:text-white">Make evaluation easy before asking for the order</h2>
-          <p class="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">Clinicians usually want sequence sheets, ordering references, and technical rationale before they want a sales conversation. This section surfaces those materials immediately.</p>
+          <p class="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">Clinicians usually want sequence sheets, clinical and technical rationale first.</p>
         </div>
         <div class="flex flex-wrap gap-3">
           <a href={`${base}resources/downloads/`} class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-cyan-400 hover:text-cyan-700 dark:border-slate-700 dark:text-slate-100 dark:hover:border-cyan-600 dark:hover:text-cyan-300">Open downloads</a>
@@ -167,25 +167,33 @@ const base = import.meta.env.BASE_URL;
       </div>
 
       <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <a href={`${base}downloads/ET-Technique-Work-Flow.pdf`} class="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Technique</p>
-          <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">ET Workflow PDF</h3>
-          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Open the ET sequence clinicians can review chairside or share with the team.</p>
+        <a href={`${base}downloads/ET-Technique-Work-Flow.pdf`} class="proof-card rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+          <div class="relative z-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Technique</p>
+            <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">ET Workflow PDF</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Open the ET sequence clinicians can review chairside or share with the team.</p>
+          </div>
         </a>
-        <a href={`${base}downloads/PT-Technique-Work-Flow.pdf`} class="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Technique</p>
-          <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">PT Workflow PDF</h3>
-          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Stay inside a familiar PT-style sequence while checking order and shaping intent.</p>
+        <a href={`${base}downloads/PT-Technique-Work-Flow.pdf`} class="proof-card rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+          <div class="relative z-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Technique</p>
+            <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">PT Workflow PDF</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Stay inside a familiar PT-style sequence while checking order and shaping intent.</p>
+          </div>
         </a>
-        <a href={`${base}downloads/ET-Part-Numbers.pdf`} class="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Ordering</p>
-          <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">Part-Number Sheets</h3>
-          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Give distributors and clinic buyers the practical ordering detail they expect.</p>
+        <a href={`${base}downloads/ET-Part-Numbers.pdf`} class="proof-card rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+          <div class="relative z-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Ordering</p>
+            <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">Part-Number Sheets</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Give distributors and clinic buyers the practical ordering detail they expect.</p>
+          </div>
         </a>
-        <a href={`${base}research/evidence/`} class="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Rationale</p>
-          <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">Clinical Evidence</h3>
-          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Connect performance claims to the research and apical-control pages instead of leaving them generic.</p>
+        <a href={`${base}research/evidence/`} class="proof-card rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+          <div class="relative z-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Rationale</p>
+            <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">Clinical Evidence</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Connect performance claims to the research and apical-control pages instead of leaving them generic.</p>
+          </div>
         </a>
       </div>
     </div>
@@ -197,85 +205,93 @@ const base = import.meta.env.BASE_URL;
       <div class="text-center mb-10">
         <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400 mb-3">Explore</p>
         <p class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Jump straight to the part that helps you most</p>
-        <p class="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-3">Built for clinicians comparing systems, reviewing technique, and preparing to order.</p>
+        <p class="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-3">Built for clinicians evaluating systems, advancing technique, and accessing evidence, protocols, and downloads.</p>
       </div>
 
       <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <a href={`${base}products/overview/`} class="group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-300">
-          <div class="flex items-center justify-between mb-5">
-            <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 dark:bg-cyan-950/60 dark:text-cyan-400">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16M4 18h10"></path>
+        <a href={`${base}products/overview/`} class="action-card group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-300">
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-5">
+              <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 dark:bg-cyan-950/60 dark:text-cyan-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16M4 18h10"></path>
+                </svg>
+              </span>
+              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Overview</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Compare Systems</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">See the ET, PT, and sealer lineup in one place before diving into details.</p>
+            <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 dark:text-cyan-400 group-hover:gap-3 transition-all">
+              View products
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
             </span>
-            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Overview</span>
           </div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Compare Systems</h3>
-          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">See the ET, PT, and sealer lineup in one place before diving into details.</p>
-          <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 dark:text-cyan-400 group-hover:gap-3 transition-all">
-            View products
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
-          </span>
         </a>
 
-        <a href="#workflow" class="group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-300">
-          <div class="flex items-center justify-between mb-5">
-            <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 dark:bg-cyan-950/60 dark:text-cyan-400">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 5l7 7-7 7"></path>
+        <a href="#workflow" class="action-card group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-300">
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-5">
+              <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 dark:bg-cyan-950/60 dark:text-cyan-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </span>
+              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Technique</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Review the Workflow</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Move from interest to clinical confidence with the recommended shaping sequence.</p>
+            <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 dark:text-cyan-400 group-hover:gap-3 transition-all">
+              Go to workflow
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
             </span>
-            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Technique</span>
           </div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Review the Workflow</h3>
-          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Move from interest to clinical confidence with the recommended shaping sequence.</p>
-          <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 dark:text-cyan-400 group-hover:gap-3 transition-all">
-            Go to workflow
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
-          </span>
         </a>
 
-        <a href={`${base}resources/downloads/`} class="group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-300">
-          <div class="flex items-center justify-between mb-5">
-            <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 dark:bg-cyan-950/60 dark:text-cyan-400">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 5v10m0 0l-4-4m4 4l4-4M5 19h14"></path>
+        <a href={`${base}resources/downloads/`} class="action-card group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-300">
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-5">
+              <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 dark:bg-cyan-950/60 dark:text-cyan-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 5v10m0 0l-4-4m4 4l4-4M5 19h14"></path>
+                </svg>
+              </span>
+              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Resources</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Download PDFs</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Grab part numbers, technique sheets, and handouts you can use in practice.</p>
+            <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 dark:text-cyan-400 group-hover:gap-3 transition-all">
+              Open downloads
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
             </span>
-            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Resources</span>
           </div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Download PDFs</h3>
-          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Grab part numbers, technique sheets, and handouts you can use in practice.</p>
-          <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 dark:text-cyan-400 group-hover:gap-3 transition-all">
-            Open downloads
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
-          </span>
         </a>
 
-        <a href="#contact" class="group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-300">
-          <div class="flex items-center justify-between mb-5">
-            <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 dark:bg-cyan-950/60 dark:text-cyan-400">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+        <a href="#contact" class="action-card group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-300">
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-5">
+              <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 dark:bg-cyan-950/60 dark:text-cyan-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              </span>
+              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Contact</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Talk to EndoTech</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Ask about availability, product fit, or ordering for your clinic or region.</p>
+            <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 dark:text-cyan-400 group-hover:gap-3 transition-all">
+              Get in touch
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
             </span>
-            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Contact</span>
           </div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Talk to EndoTech</h3>
-          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Ask about availability, product fit, or ordering for your clinic or region.</p>
-          <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 dark:text-cyan-400 group-hover:gap-3 transition-all">
-            Get in touch
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
-          </span>
         </a>
       </div>
     </div>
@@ -834,6 +850,39 @@ const base = import.meta.env.BASE_URL;
   .nav-link.active {
     color: rgb(8 145 178);
   }
+
+  .proof-card,
+  .action-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    --dot-x: 50%;
+    --dot-y: 50%;
+  }
+
+  .proof-card::after,
+  .action-card::after {
+    content: '';
+    position: absolute;
+    left: var(--dot-x);
+    top: var(--dot-y);
+    width: 14px;
+    height: 14px;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.9) 0%, rgba(14, 165, 233, 0.35) 45%, rgba(14, 165, 233, 0) 75%);
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+    filter: blur(0.4px);
+    transition: opacity 160ms ease, transform 180ms ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .proof-card.is-hovering::after,
+  .action-card.is-hovering::after {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 </style>
 
 <script>
@@ -880,6 +929,8 @@ const base = import.meta.env.BASE_URL;
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileMenuLinks = document.querySelectorAll('.mobile-nav-link');
+    const proofCards = document.querySelectorAll<HTMLElement>('.proof-card');
+    const actionCards = document.querySelectorAll<HTMLElement>('.action-card');
     const observedSections = ['products', 'workflow', 'contact']
       .map((id) => document.getElementById(id))
       .filter(Boolean);
@@ -928,6 +979,42 @@ const base = import.meta.env.BASE_URL;
     });
     mobileMenuLinks.forEach((link) => {
       link.addEventListener('click', () => setMobileMenu(false));
+    });
+    proofCards.forEach((card) => {
+      const updateDotPosition = (event: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        card.style.setProperty('--dot-x', `${x}px`);
+        card.style.setProperty('--dot-y', `${y}px`);
+      };
+
+      card.addEventListener('mouseenter', (event) => {
+        card.classList.add('is-hovering');
+        updateDotPosition(event);
+      });
+      card.addEventListener('mousemove', updateDotPosition);
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('is-hovering');
+      });
+    });
+    actionCards.forEach((card) => {
+      const updateDotPosition = (event: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        card.style.setProperty('--dot-x', `${x}px`);
+        card.style.setProperty('--dot-y', `${y}px`);
+      };
+
+      card.addEventListener('mouseenter', (event) => {
+        card.classList.add('is-hovering');
+        updateDotPosition(event);
+      });
+      card.addEventListener('mousemove', updateDotPosition);
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('is-hovering');
+      });
     });
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 768) {
