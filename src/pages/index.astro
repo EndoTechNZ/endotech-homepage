@@ -110,17 +110,35 @@ const base = import.meta.env.BASE_URL;
           </div>
 
           <div class="grid gap-4 pt-6 border-t border-slate-100 dark:border-slate-800 sm:grid-cols-3">
-            <div>
-              <div class="text-2xl font-bold text-slate-900 dark:text-white">PT + ET</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">Workflow-matched shaping families</div>
+            <div class="rounded-3xl border border-slate-200/80 bg-white/92 p-5 shadow-lg shadow-slate-200/45 backdrop-blur dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-black/20">
+              <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 shadow-sm shadow-cyan-100 dark:bg-cyan-950/60 dark:text-cyan-400 dark:shadow-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 6h12M6 12h12M6 18h7"></path>
+                </svg>
+              </div>
+              <div class="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-cyan-600/80 dark:text-cyan-400/80">Workflow Options</div>
+              <div class="mt-3 text-2xl font-bold leading-tight text-slate-900 dark:text-white">Three File Systems + One Glidepath</div>
+              <div class="mt-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Choose the shaping workflow that matches how you already work, with glidepath support coming too.</div>
             </div>
-            <div>
-              <div class="text-2xl font-bold text-slate-900 dark:text-white">PDF pack</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">Technique sheets, part numbers, and handouts</div>
+            <div class="rounded-3xl border border-slate-200/80 bg-white/92 p-5 shadow-lg shadow-slate-200/45 backdrop-blur dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-black/20">
+              <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 shadow-sm shadow-cyan-100 dark:bg-cyan-950/60 dark:text-cyan-400 dark:shadow-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 5v14M5 12h14"></path>
+                </svg>
+              </div>
+              <div class="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-cyan-600/80 dark:text-cyan-400/80">Clinical Access</div>
+              <div class="mt-3 text-2xl font-bold leading-tight text-slate-900 dark:text-white">Clinical Downloads</div>
+              <div class="mt-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Open technique sheets, part numbers, and chairside handouts.</div>
             </div>
-            <div>
-              <div class="text-2xl font-bold text-slate-900 dark:text-white">APAC</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">Regional supply and ordering support</div>
+            <div class="rounded-3xl border border-slate-200/80 bg-white/92 p-5 shadow-lg shadow-slate-200/45 backdrop-blur dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-black/20">
+              <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 shadow-sm shadow-cyan-100 dark:bg-cyan-950/60 dark:text-cyan-400 dark:shadow-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12h18M12 3v18"></path>
+                </svg>
+              </div>
+              <div class="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-cyan-600/80 dark:text-cyan-400/80">Regional Help</div>
+              <div class="mt-3 text-2xl font-bold leading-tight text-slate-900 dark:text-white">APAC Support</div>
+              <div class="mt-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Regional supply, product-fit help, and ordering support.</div>
             </div>
           </div>
         </div>
@@ -145,7 +163,7 @@ const base = import.meta.env.BASE_URL;
     </div>
 
     <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400">
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 md:bottom-8 md:left-[58%] md:translate-x-0 flex flex-col items-center gap-2 text-slate-400">
       <span class="text-xs font-medium tracking-wider uppercase">Scroll Down For More</span>
       <div class="w-px h-8 bg-gradient-to-b from-slate-300 dark:from-slate-600 to-transparent animate-bounce"></div>
     </div>
@@ -332,8 +350,8 @@ const base = import.meta.env.BASE_URL;
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Card 1 -->
         <div class="group relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-cyan-200 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 transition-all duration-300">
-          <div class="w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
-            <svg class="w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="insight-icon w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
+            <svg class="insight-icon-glyph w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
             </svg>
           </div>
@@ -343,8 +361,8 @@ const base = import.meta.env.BASE_URL;
 
         <!-- Card 2 -->
         <div class="group relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-cyan-200 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 transition-all duration-300">
-          <div class="w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
-            <svg class="w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="insight-icon w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
+            <svg class="insight-icon-glyph w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
@@ -354,8 +372,8 @@ const base = import.meta.env.BASE_URL;
 
         <!-- Card 3 -->
         <div class="group relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-cyan-200 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 transition-all duration-300">
-          <div class="w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
-            <svg class="w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="insight-icon w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
+            <svg class="insight-icon-glyph w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
             </svg>
           </div>
@@ -365,8 +383,8 @@ const base = import.meta.env.BASE_URL;
 
         <!-- Card 4 -->
         <div class="group relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-cyan-200 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 transition-all duration-300">
-          <div class="w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
-            <svg class="w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="insight-icon w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
+            <svg class="insight-icon-glyph w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
             </svg>
           </div>
@@ -882,6 +900,25 @@ const base = import.meta.env.BASE_URL;
   .action-card.is-hovering::after {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+  }
+
+  .insight-icon {
+    transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+    transform-origin: center;
+  }
+
+  .insight-icon-glyph {
+    transition: transform 240ms ease;
+    transform-origin: center;
+  }
+
+  .group:hover .insight-icon {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 14px 30px -18px rgba(14, 165, 233, 0.55);
+  }
+
+  .group:hover .insight-icon-glyph {
+    transform: scale(1.06);
   }
 </style>
 
