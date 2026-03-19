@@ -56,6 +56,7 @@
 	border-bottom: 1px solid var(--sl-color-gray-5);
 	padding-left: 0.75rem;
 	padding-bottom: 1rem;
+	transition: border-left-color 160ms ease, border-left-width 160ms ease;
 }
 
 .sl-markdown .avatar-toggle__summary {
@@ -113,6 +114,12 @@
 .sl-markdown .avatar-toggle__summary:focus-visible::before {
 	opacity: 1;
 	transform: translateY(-50%) scale(1);
+}
+
+.sl-markdown .avatar-toggle:hover,
+.sl-markdown .avatar-toggle:focus-within {
+	border-left-color: #000000;
+	border-left-width: 5px;
 }
 
 .sl-markdown .avatar-toggle > :not(summary) {
