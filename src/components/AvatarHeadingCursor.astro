@@ -9,6 +9,7 @@
     if (!dot) return;
 
     let active = false;
+    let currentTarget = null;
 
     const showDot = () => {
       active = true;
@@ -26,19 +27,31 @@
       dot.style.top = `${event.clientY}px`;
     };
 
-    const bindTargets = () => {
-      const targets = document.querySelectorAll('.avatar-toggle__summary');
-      targets.forEach((target) => {
-        target.addEventListener('pointerenter', showDot);
-        target.addEventListener('pointerleave', hideDot);
-        target.addEventListener('pointermove', moveDot);
-      });
+    const handlePointerEnter = (event) => {
+      const summary = event.target.closest('.avatar-toggle__summary');
+      if (!summary) return;
+      currentTarget = summary;
+      showDot();
+      moveDot(event);
     };
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', bindTargets, { once: true });
-    } else {
-      bindTargets();
-    }
+    const handlePointerMove = (event) => {
+      if (!currentTarget) return;
+      if (!event.target.closest('.avatar-toggle__summary')) return;
+      moveDot(event);
+    };
+
+    const handlePointerLeave = (event) => {
+      if (!currentTarget) return;
+      const related = event.relatedTarget;
+      if (related instanceof Element && currentTarget.contains(related)) return;
+      currentTarget = null;
+      hideDot();
+    };
+
+    document.addEventListener('pointerover', handlePointerEnter);
+    document.addEventListener('pointermove', handlePointerMove);
+    document.addEventListener('pointerout', handlePointerLeave);
+    document.addEventListener('astro:after-swap', hideDot);
   })();
 </script>
