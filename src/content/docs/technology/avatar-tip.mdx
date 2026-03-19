@@ -47,16 +47,16 @@ That difference matters mechanically:
 
 ### Video Comparison
 
-<div style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', margin: '1.5rem 0' }}>
-  <figure>
-    <video controls muted playsinline preload="metadata" style={{ width: '100%', borderRadius: '1rem', background: '#0f172a' }}>
+<div style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', alignItems: 'start', margin: '1.5rem 0' }}>
+  <figure style={{ margin: 0 }}>
+    <video controls muted playsinline preload="metadata" style={{ display: 'block', width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', borderRadius: '1rem', background: '#0f172a' }}>
       <source src="../../videos/avatar-tip/avatar-tip-rounded.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
     <figcaption>Avatar Tip: rounded leading geometry designed for smoother guidance.</figcaption>
   </figure>
-  <figure>
-    <video controls muted playsinline preload="metadata" style={{ width: '100%', borderRadius: '1rem', background: '#0f172a' }}>
+  <figure style={{ margin: 0 }}>
+    <video controls muted playsinline preload="metadata" style={{ display: 'block', width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', borderRadius: '1rem', background: '#0f172a' }}>
       <source src="../../videos/avatar-tip/competitor-tip-pointed.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
