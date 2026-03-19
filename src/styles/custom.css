@@ -16,3 +16,36 @@
 .site-title img {
 	max-height: 2.5rem;
 }
+
+/* Reference links: show a blue dot cue on hover without affecting nav/buttons */
+.sl-markdown ol li a {
+	position: relative;
+	text-decoration: none;
+	transition: color 160ms ease, padding-left 160ms ease;
+}
+
+.sl-markdown ol li a::before {
+	content: "";
+	position: absolute;
+	left: -0.75rem;
+	top: 50%;
+	width: 0.38rem;
+	height: 0.38rem;
+	border-radius: 9999px;
+	background: var(--sl-color-accent);
+	opacity: 0;
+	transform: translateY(-50%) scale(0.7);
+	transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.sl-markdown ol li a:hover,
+.sl-markdown ol li a:focus-visible {
+	color: var(--sl-color-accent);
+	padding-left: 0.25rem;
+}
+
+.sl-markdown ol li a:hover::before,
+.sl-markdown ol li a:focus-visible::before {
+	opacity: 1;
+	transform: translateY(-50%) scale(1);
+}
