@@ -49,3 +49,69 @@
 	opacity: 1;
 	transform: translateY(-50%) scale(1);
 }
+
+.sl-markdown .avatar-toggle {
+	margin: 1.5rem 0 2rem;
+	border-bottom: 1px solid var(--sl-color-gray-5);
+	padding-bottom: 1rem;
+}
+
+.sl-markdown .avatar-toggle__summary {
+	position: relative;
+	list-style: none;
+	cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Ccircle cx='9' cy='9' r='4' fill='%232b6cb0'/%3E%3C/svg%3E") 9 9, pointer;
+	padding: 0 0 0.25rem 0;
+	font-size: clamp(2rem, 1.8rem + 1vw, 3rem);
+	font-weight: 700;
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+	color: var(--sl-color-text);
+	transition: color 160ms ease, padding-left 160ms ease;
+}
+
+.sl-markdown .avatar-toggle__summary::-webkit-details-marker {
+	display: none;
+}
+
+.sl-markdown .avatar-toggle__summary::before {
+	content: "";
+	position: absolute;
+	left: -1rem;
+	top: 50%;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 9999px;
+	background: var(--sl-color-accent);
+	opacity: 0;
+	transform: translateY(-50%) scale(0.7);
+	transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.sl-markdown .avatar-toggle__summary::after {
+	content: "+";
+	margin-left: 0.75rem;
+	font-size: 0.85em;
+	font-weight: 500;
+	color: var(--sl-color-accent);
+}
+
+.sl-markdown .avatar-toggle[open] .avatar-toggle__summary::after {
+	content: "-";
+}
+
+.sl-markdown .avatar-toggle__summary:hover,
+.sl-markdown .avatar-toggle__summary:focus-visible {
+	color: var(--sl-color-accent);
+	padding-left: 0.25rem;
+	outline: none;
+}
+
+.sl-markdown .avatar-toggle__summary:hover::before,
+.sl-markdown .avatar-toggle__summary:focus-visible::before {
+	opacity: 1;
+	transform: translateY(-50%) scale(1);
+}
+
+.sl-markdown .avatar-toggle > :not(summary) {
+	margin-top: 1.25rem;
+}
