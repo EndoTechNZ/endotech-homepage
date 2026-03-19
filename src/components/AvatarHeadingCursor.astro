@@ -1,0 +1,44 @@
+<div class="avatar-cursor-dot" aria-hidden="true"></div>
+
+<script is:inline>
+  (() => {
+    if (typeof window === 'undefined') return;
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    const dot = document.querySelector('.avatar-cursor-dot');
+    if (!dot) return;
+
+    let active = false;
+
+    const showDot = () => {
+      active = true;
+      dot.classList.add('is-visible');
+    };
+
+    const hideDot = () => {
+      active = false;
+      dot.classList.remove('is-visible');
+    };
+
+    const moveDot = (event) => {
+      if (!active) return;
+      dot.style.left = `${event.clientX}px`;
+      dot.style.top = `${event.clientY}px`;
+    };
+
+    const bindTargets = () => {
+      const targets = document.querySelectorAll('.avatar-toggle__summary');
+      targets.forEach((target) => {
+        target.addEventListener('pointerenter', showDot);
+        target.addEventListener('pointerleave', hideDot);
+        target.addEventListener('pointermove', moveDot);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindTargets, { once: true });
+    } else {
+      bindTargets();
+    }
+  })();
+</script>
