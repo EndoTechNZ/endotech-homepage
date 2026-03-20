@@ -81,14 +81,14 @@
 	position: absolute;
 	left: -1.4rem;
 	top: 50%;
-	width: 0.7rem;
-	height: 0.7rem;
+	width: 0.24rem;
+	height: 0.24rem;
 	border-radius: 9999px;
 	background: #2563eb;
 	opacity: 0;
 	transform: translateY(-50%) scale(0.7);
 	transition: opacity 160ms ease, transform 160ms ease;
-	box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+	box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
 }
 
 .sl-markdown .avatar-toggle__summary::after {
@@ -138,11 +138,11 @@
 	left: 0;
 	top: 0;
 	z-index: 9999;
-	width: 0.34rem;
-	height: 0.34rem;
+	width: 0.18rem;
+	height: 0.18rem;
 	border-radius: 9999px;
 	background: #2563eb;
-	box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+	box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.1);
 	opacity: 0;
 	pointer-events: none;
 	transform: translate(-50%, -50%) scale(0.75);
