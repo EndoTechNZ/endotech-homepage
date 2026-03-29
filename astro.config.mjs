@@ -18,6 +18,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
+          exclude: ['/products/iroot/**'],
         }),
       ],
       head: [

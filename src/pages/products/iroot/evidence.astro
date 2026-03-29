@@ -1,0 +1,73 @@
+---
+import ProductLayout from '../../../layouts/ProductLayout.astro';
+import ProductHero from '../../../components/product/ProductHero.astro';
+import FeatureGrid from '../../../components/product/FeatureGrid.astro';
+import EvidenceCards from '../../../components/product/EvidenceCards.astro';
+import DownloadsList from '../../../components/product/DownloadsList.astro';
+import DistributorCTA from '../../../components/product/DistributorCTA.astro';
+import { evidenceCards, evidenceThemes, getProductDownloads, literatureReferences } from '../../../data/iroot';
+import { getIrootDownloads } from '../../../utils/downloads';
+
+const downloads = getProductDownloads(getIrootDownloads());
+---
+
+<ProductLayout
+  title="iRoot Evidence & Downloads | EndoTech Singapore"
+  description="Evidence themes, literature directions, and downloadable materials for the iRoot bioceramic family."
+  accent="slate"
+>
+  <ProductHero
+    eyebrow="Evidence & Downloads"
+    title="Clinical references and technical files for the iRoot family"
+    subtitle="Separate promotional copy from evidence-heavy claims and keep technical documents easy to access."
+    description="This page is designed to hold brochure PDFs, IFUs, SDS files, and an evidence summary without forcing those materials into front-facing product copy."
+    accent="slate"
+    ctas={[
+      { label: 'Open iRoot family page', href: '/products/iroot/' },
+      { label: 'Review applications', href: '/products/iroot/clinical-applications/', variant: 'secondary' },
+    ]}
+    visualLabel="Technical Reference Hub"
+  />
+
+  <DownloadsList
+    title="Downloads"
+    intro="Brochures, IFUs, SDS files, evidence summaries, and image assets can be managed by dropping files into a single public downloads directory."
+    items={downloads}
+  />
+
+  <FeatureGrid
+    eyebrow="Key Evidence Themes"
+    title="Evidence themes worth highlighting carefully"
+    intro="These themes belong on an evidence page because they benefit from literature support or more precise wording than a top-of-page marketing block allows."
+    items={evidenceThemes}
+    accent="slate"
+  />
+
+  <EvidenceCards
+    title="Evidence summary cards"
+    intro="Use concise cards to frame what a clinician can explore next, rather than placing long abstracts or dense claim language directly on the page."
+    items={evidenceCards}
+  />
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-20">
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Literature List</p>
+      <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Suggested bibliography format</h2>
+      <div class="mt-10 grid gap-4">
+        {literatureReferences.map((reference) => (
+          <article class="rounded-[1.5rem] border border-slate-200 bg-slate-50/70 p-6">
+            <p class="text-base leading-8 text-slate-900">{reference.citation}</p>
+            <p class="mt-3 text-sm leading-7 text-slate-600">{reference.note}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <DistributorCTA
+    title="Keep high-risk claims footnoted and evidence-aware"
+    body="Use this page for dimensional stability, bioactivity, alkaline setting, and other literature-linked topics. Keep front-facing product pages focused on clinical problems, practical workflow value, and clearly supportable material descriptions."
+    secondaryLabel="View iRoot SP"
+    secondaryHref="/products/iroot-sp/"
+  />
+</ProductLayout>

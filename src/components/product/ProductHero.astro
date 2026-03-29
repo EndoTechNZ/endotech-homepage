@@ -1,0 +1,126 @@
+---
+import type { CTAItem } from '../../data/iroot';
+import { withBasePath } from '../../utils/paths';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  description?: string;
+  accent?: 'teal' | 'violet' | 'slate';
+  ctas?: CTAItem[];
+  imageSrc?: string;
+  imageAlt?: string;
+  visualLabel?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  description,
+  accent = 'teal',
+  ctas = [],
+  imageSrc,
+  imageAlt = title,
+  visualLabel,
+} = Astro.props;
+
+const accentMap = {
+  teal: {
+    badge: 'text-teal-700 bg-teal-50 border-teal-200',
+    dot: 'bg-teal-500',
+    highlight: 'from-teal-100 via-cyan-50 to-white',
+    panel: 'from-teal-500/15 via-cyan-500/8 to-white',
+    shadow: 'shadow-[0_30px_90px_-45px_rgba(13,148,136,0.45)]',
+    button: 'bg-slate-900 text-white hover:bg-slate-800',
+    secondary: 'border-teal-200 text-teal-900 hover:border-teal-300 hover:bg-teal-50',
+  },
+  violet: {
+    badge: 'text-violet-700 bg-violet-50 border-violet-200',
+    dot: 'bg-violet-500',
+    highlight: 'from-violet-100 via-fuchsia-50 to-white',
+    panel: 'from-violet-500/15 via-fuchsia-500/8 to-white',
+    shadow: 'shadow-[0_30px_90px_-45px_rgba(124,58,237,0.45)]',
+    button: 'bg-slate-900 text-white hover:bg-slate-800',
+    secondary: 'border-violet-200 text-violet-900 hover:border-violet-300 hover:bg-violet-50',
+  },
+  slate: {
+    badge: 'text-slate-700 bg-slate-50 border-slate-200',
+    dot: 'bg-slate-500',
+    highlight: 'from-slate-100 via-slate-50 to-white',
+    panel: 'from-slate-500/12 via-slate-300/10 to-white',
+    shadow: 'shadow-[0_30px_90px_-45px_rgba(15,23,42,0.35)]',
+    button: 'bg-slate-900 text-white hover:bg-slate-800',
+    secondary: 'border-slate-200 text-slate-900 hover:border-slate-300 hover:bg-slate-50',
+  },
+}[accent];
+---
+
+<section class="relative overflow-hidden border-b border-slate-200/80 bg-white">
+  <div class={`absolute inset-0 bg-gradient-to-br ${accentMap.highlight}`}></div>
+  <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(rgba(15,23,42,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.08) 1px, transparent 1px); background-size: 32px 32px;"></div>
+  <div class="relative mx-auto max-w-7xl px-6 py-20 lg:py-24">
+    <div class="grid gap-14 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:items-center">
+      <div>
+        <div class={`inline-flex items-center gap-3 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] ${accentMap.badge}`}>
+          <span class={`h-2.5 w-2.5 rounded-full ${accentMap.dot}`}></span>
+          {eyebrow}
+        </div>
+        <h1 class="mt-8 max-w-4xl text-5xl font-bold tracking-tight text-slate-900 lg:text-6xl">{title}</h1>
+        <p class="mt-6 max-w-3xl text-2xl font-semibold leading-tight text-slate-700">{subtitle}</p>
+        {description && <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600">{description}</p>}
+        {ctas.length > 0 && (
+          <div class="mt-10 flex flex-wrap gap-4">
+            {ctas.map((cta) => (
+              <a
+                href={withBasePath(cta.href)}
+                class:list={[
+                  'inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold transition-all',
+                  cta.variant === 'ghost'
+                    ? 'text-slate-700 hover:text-slate-900'
+                    : cta.variant === 'secondary'
+                      ? `border ${accentMap.secondary}`
+                      : accentMap.button,
+                ]}
+              >
+                {cta.label}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div class="relative">
+        <div class={`absolute inset-x-8 top-10 h-56 rounded-full bg-gradient-to-r ${accentMap.panel} blur-3xl`}></div>
+        <div class={`relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 p-6 ${accentMap.shadow}`}>
+          <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at top left, rgba(15,23,42,0.14), transparent 36%), linear-gradient(rgba(15,23,42,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.08) 1px, transparent 1px); background-size: auto, 24px 24px, 24px 24px;"></div>
+          <div class="relative aspect-[4/3] rounded-[1.5rem] border border-slate-200/70 bg-gradient-to-br from-white via-slate-50 to-slate-100/80">
+            {imageSrc ? (
+              <img src={imageSrc} alt={imageAlt} class="h-full w-full object-contain p-6" />
+            ) : (
+              <div class="flex h-full flex-col justify-between p-8">
+                <div class={`inline-flex w-fit rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] ${accentMap.badge}`}>
+                  {visualLabel ?? title}
+                </div>
+                <div class="space-y-4">
+                  <div class={`h-3 w-24 rounded-full ${accentMap.dot} opacity-70`}></div>
+                  <div class="grid gap-3">
+                    <div class="rounded-2xl border border-slate-200 bg-white/90 p-4">
+                      <p class="text-sm font-semibold text-slate-900">Premixed bioceramic workflow</p>
+                      <p class="mt-2 text-sm leading-6 text-slate-600">Designed for sealing and repair steps where handling consistency and clinical control matter.</p>
+                    </div>
+                    <div class="rounded-2xl border border-slate-200 bg-white/90 p-4">
+                      <p class="text-sm font-semibold text-slate-900">Procedure-aligned delivery</p>
+                      <p class="mt-2 text-sm leading-6 text-slate-600">Built around concise, clinically readable messaging instead of broad promotional claims.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

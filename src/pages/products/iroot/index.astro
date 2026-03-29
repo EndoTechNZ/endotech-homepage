@@ -1,0 +1,83 @@
+---
+import ProductLayout from '../../../layouts/ProductLayout.astro';
+import ProductHero from '../../../components/product/ProductHero.astro';
+import FeatureGrid from '../../../components/product/FeatureGrid.astro';
+import ApplicationsGrid from '../../../components/product/ApplicationsGrid.astro';
+import DownloadsList from '../../../components/product/DownloadsList.astro';
+import ClinicalWorkflowStrip from '../../../components/product/ClinicalWorkflowStrip.astro';
+import DistributorCTA from '../../../components/product/DistributorCTA.astro';
+import { familyCards, familyPage, getProductDownloads, workflowSteps } from '../../../data/iroot';
+import { getIrootDownloads } from '../../../utils/downloads';
+import { withBasePath } from '../../../utils/paths';
+
+const downloads = getProductDownloads(getIrootDownloads());
+---
+
+<ProductLayout
+  title="iRoot Bioceramic Materials | EndoTech Singapore"
+  description="Premixed bioceramic materials for sealing, repair, and simplified endodontic workflows."
+  accent="teal"
+>
+  <ProductHero
+    eyebrow="iRoot Bioceramic Materials"
+    title={familyPage.headline}
+    subtitle={familyPage.subheadline}
+    description={familyPage.positioning}
+    accent="teal"
+    ctas={familyPage.ctas}
+    imageSrc={familyPage.heroImage.src}
+    imageAlt="iRoot bioceramic materials"
+  />
+
+  <FeatureGrid
+    eyebrow="Why iRoot"
+    title="A bioceramic platform built around clinical control"
+    intro="Each core material attribute is presented in relation to a real clinical problem: reducing variability, preserving workflow efficiency, and supporting a predictable final sealing or repair step."
+    items={familyPage.whyIroot}
+    accent="teal"
+  />
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-20">
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Two Products, One Bioceramic Logic</p>
+      <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Choose the material that matches the final clinical task</h2>
+      <div class="mt-10 grid gap-5 lg:grid-cols-2">
+        {familyCards.map((card) => (
+          <a href={withBasePath(card.slug)} class="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-7 transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white">
+            <p class={`text-xs font-semibold uppercase tracking-[0.22em] ${card.accent === 'violet' ? 'text-violet-700' : 'text-teal-700'}`}>
+              {card.accent === 'violet' ? 'Root Repair' : 'Canal Sealing'}
+            </p>
+            <h3 class="mt-4 text-2xl font-bold text-slate-900">{card.name}</h3>
+            <p class="mt-4 text-base leading-8 text-slate-600">{card.summary}</p>
+            <span class="mt-6 inline-flex text-sm font-semibold text-slate-900">Open page</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ClinicalWorkflowStrip
+    title="Clinical workflow fit"
+    intro="The value of a bioceramic material is not isolated to the final step. It depends on shaping control, irrigation quality, and a clean, reproducible sealing environment."
+    steps={workflowSteps}
+  />
+
+  <ApplicationsGrid
+    eyebrow="Applications"
+    title="Indications across sealing and repair"
+    intro="The iRoot family covers both obturation and repair use-cases while preserving a consistent bioceramic material logic."
+    items={familyPage.applications}
+    accent="teal"
+  />
+
+  <DownloadsList
+    title="Downloads"
+    intro="Access brochures, IFUs, SDS files, and supporting product resources for the iRoot bioceramic family."
+    items={downloads}
+  />
+
+  <DistributorCTA
+    title="Bring the iRoot platform into the EndoTech workflow"
+    body="Use the product pages for technical review, then contact EndoTech Singapore for distributor information, regional availability, or support aligning iRoot with your current shaping and obturation protocol."
+  />
+</ProductLayout>

@@ -1,0 +1,26 @@
+---
+import type { FAQItem } from '../../data/iroot';
+
+interface Props {
+  title: string;
+  items: FAQItem[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<section class="border-b border-slate-200/80 bg-slate-50/70">
+  <div class="mx-auto max-w-4xl px-6 py-20">
+    <h2 class="text-4xl font-bold tracking-tight text-slate-900">{title}</h2>
+    <div class="mt-10 space-y-4">
+      {items.map((item) => (
+        <details class="group rounded-[1.5rem] border border-slate-200 bg-white p-6">
+          <summary class="cursor-pointer list-none text-lg font-bold text-slate-900">
+            {item.question}
+          </summary>
+          <p class="mt-4 text-sm leading-7 text-slate-600">{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,105 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/product/ProductHero.astro';
+import FeatureGrid from '../../components/product/FeatureGrid.astro';
+import ApplicationsGrid from '../../components/product/ApplicationsGrid.astro';
+import ComparisonTable from '../../components/product/ComparisonTable.astro';
+import PackagingPanel from '../../components/product/PackagingPanel.astro';
+import FAQAccordion from '../../components/product/FAQAccordion.astro';
+import DistributorCTA from '../../components/product/DistributorCTA.astro';
+import { irootSP } from '../../data/iroot';
+
+const clinicalBenefitCards = irootSP.clinicalBenefits.map((benefit) => ({
+  title: benefit,
+  description: 'Link the material attribute back to procedural control, workflow simplicity, or sealing predictability.',
+  icon: 'workflow' as const,
+}));
+---
+
+<ProductLayout
+  title="iRoot SP | EndoTech Singapore"
+  description={irootSP.shortDescription}
+  accent="teal"
+>
+  <ProductHero
+    eyebrow="iRoot SP"
+    title={irootSP.name}
+    subtitle={irootSP.headline}
+    description={irootSP.subheadline}
+    ctas={irootSP.ctas}
+    accent="teal"
+    imageSrc={irootSP.heroImage?.src}
+    imageAlt="iRoot SP bioceramic root canal sealer"
+  />
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto grid max-w-7xl gap-6 px-6 py-20 lg:grid-cols-2">
+      <article class="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-7">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Clinical Problem</p>
+        <p class="mt-5 text-base leading-8 text-slate-600">{irootSP.clinicalProblem}</p>
+      </article>
+      <article class="rounded-[1.75rem] border border-slate-200 bg-slate-950 p-7 text-white">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">TransformX Solution</p>
+        <p class="mt-5 text-base leading-8 text-slate-300">{irootSP.transformxSolution}</p>
+      </article>
+    </div>
+  </section>
+
+  <FeatureGrid
+    eyebrow="Key Features"
+    title="Designed to simplify the sealing step without loosening clinical standards"
+    items={irootSP.featureBullets}
+    accent="teal"
+  />
+
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-20">
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Why Clinicians Choose iRoot SP</p>
+          <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">A sealer story built around consistency, not spectacle</h2>
+          <ul class="mt-8 grid gap-4">
+            {irootSP.clinicianReasons.map((reason) => (
+              <li class="rounded-[1.25rem] border border-slate-200 bg-white px-5 py-4 text-base font-semibold text-slate-900">{reason}</li>
+            ))}
+          </ul>
+        </div>
+        <article class="rounded-[1.75rem] border border-slate-200 bg-white p-7">
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Product Story</p>
+          <p class="mt-5 text-base leading-8 text-slate-600">{irootSP.story}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <ComparisonTable
+    title="Why move beyond conventional mixed sealers?"
+    intro="This comparison stays focused on delivery logic and workflow consequences. It avoids unsupported superiority language or named competitor comparisons."
+    rows={irootSP.comparisonRows}
+    irootLabel="iRoot SP"
+    conventionalLabel="Conventional mixed sealer"
+  />
+
+  <ApplicationsGrid
+    eyebrow="Clinical Indications"
+    title="Use-cases aligned with modern hydraulic obturation"
+    items={irootSP.applications}
+    accent="teal"
+  />
+
+  <FeatureGrid
+    eyebrow="Clinical Benefits"
+    title="Benefits stated in clinical terms"
+    items={clinicalBenefitCards}
+    accent="teal"
+  />
+
+  <PackagingPanel items={irootSP.packaging} />
+  <FAQAccordion title="iRoot SP FAQs" items={irootSP.faq} />
+  <DistributorCTA
+    title="Use iRoot SP where the final seal should feel simpler, not less controlled"
+    body={irootSP.regulatoryNote}
+    secondaryLabel="View family page"
+    secondaryHref="/products/iroot/"
+  />
+</ProductLayout>
