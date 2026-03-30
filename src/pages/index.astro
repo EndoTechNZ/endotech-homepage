@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import InsightCard from '../components/InsightCard.astro';
 import logo from '../assets/logo-wordmark.png';
 import logoDark from '../assets/logo-wordmark-dark.png';
 import heroProduct from '../assets/TransformX_All_In_Single_Image.png';
@@ -9,6 +10,28 @@ import irootProductHero from '../assets/iroot-sealer-bg.png';
 
 // Base URL for all internal links
 const base = import.meta.env.BASE_URL;
+const insightCards = [
+  {
+    title: 'Transform Technology',
+    body: "Variable-phase geometry shifts the file's behavior through the canal: more coronal stability during early shaping, more apical flexibility where transportation risk increases.",
+    iconPath: 'M13 10V3L4 14h7v7l9-11h-7z',
+  },
+  {
+    title: 'Avatar Tip',
+    body: 'Refined apical geometry is intended to improve guidance in the final millimeters and lower the chance of apical zipping, ledging, and transportation.',
+    iconPath: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+  },
+  {
+    title: 'Work Smarter, Not Different',
+    body: 'The system is positioned for clinicians who want performance gains without relearning their full shaping protocol or changing routine motor settings.',
+    iconPath: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
+  },
+  {
+    title: 'Shape Defines Seal',
+    body: 'More controlled taper development and better canal centring help create a preparation shape that supports more consistent irrigation and obturation.',
+    iconPath: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+  },
+];
 ---
 
 <Layout title="EndoTech Singapore | TransformX™ Rotary Endodontic Files">
@@ -366,49 +389,9 @@ const base = import.meta.env.BASE_URL;
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Card 1 -->
-        <div class="group relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-cyan-200 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 transition-all duration-300">
-          <div class="insight-icon w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
-            <svg class="insight-icon-glyph w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
-          </div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Transform Technology</h3>
-          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">Variable-phase geometry shifts the file's behavior through the canal: more coronal stability during early shaping, more apical flexibility where transportation risk increases.</p>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="group relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-cyan-200 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 transition-all duration-300">
-          <div class="insight-icon w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
-            <svg class="insight-icon-glyph w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Avatar™ Tip</h3>
-          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">Refined apical geometry is intended to improve guidance in the final millimeters and lower the chance of apical zipping, ledging, and transportation.</p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="group relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-cyan-200 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 transition-all duration-300">
-          <div class="insight-icon w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
-            <svg class="insight-icon-glyph w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-            </svg>
-          </div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Work Smarter, Not Different</h3>
-          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">The system is positioned for clinicians who want performance gains without relearning their full shaping protocol or changing routine motor settings.</p>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="group relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-cyan-200 dark:hover:border-cyan-700 hover:shadow-xl hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 transition-all duration-300">
-          <div class="insight-icon w-12 h-12 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 dark:group-hover:bg-cyan-500/30 transition-colors">
-            <svg class="insight-icon-glyph w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-            </svg>
-          </div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Shape Defines Seal</h3>
-          <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">More controlled taper development and better canal centring help create a preparation shape that supports more consistent irrigation and obturation.</p>
-        </div>
+        {insightCards.map((card) => (
+          <InsightCard title={card.title} body={card.body} iconPath={card.iconPath} />
+        ))}
       </div>
     </div>
   </section>
@@ -920,24 +903,6 @@ const base = import.meta.env.BASE_URL;
     transform: translate(-50%, -50%) scale(1);
   }
 
-  .insight-icon {
-    transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
-    transform-origin: center;
-  }
-
-  .insight-icon-glyph {
-    transition: transform 240ms ease;
-    transform-origin: center;
-  }
-
-  .group:hover .insight-icon {
-    transform: translateY(-3px) scale(1.04);
-    box-shadow: 0 14px 30px -18px rgba(14, 165, 233, 0.55);
-  }
-
-  .group:hover .insight-icon-glyph {
-    transform: scale(1.06);
-  }
 </style>
 
 <script>
@@ -1094,3 +1059,4 @@ const base = import.meta.env.BASE_URL;
     });
   });
 </script>
+

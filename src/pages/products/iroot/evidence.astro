@@ -13,14 +13,14 @@ const downloads = getProductDownloads(getIrootDownloads());
 
 <ProductLayout
   title="iRoot Evidence & Downloads | EndoTech Singapore"
-  description="Evidence themes, literature directions, and downloadable materials for the iRoot bioceramic family."
+  description="Clinical references and downloadable materials for the iRoot bioceramic family."
   accent="slate"
 >
   <ProductHero
     eyebrow="Evidence & Downloads"
     title="Clinical references and technical files for the iRoot family"
-    subtitle="Separate promotional copy from evidence-heavy claims and keep technical documents easy to access."
-    description="This page is designed to hold brochure PDFs, IFUs, SDS files, and an evidence summary without forcing those materials into front-facing product copy."
+    subtitle="Access product literature, supporting evidence themes, and technical documents in one place."
+    description="Use this page to review brochures, IFUs, SDS files, and selected evidence areas relevant to the iRoot bioceramic family."
     accent="slate"
     ctas={[
       { label: 'Open iRoot family page', href: '/products/iroot/' },
@@ -31,28 +31,28 @@ const downloads = getProductDownloads(getIrootDownloads());
 
   <DownloadsList
     title="Downloads"
-    intro="Brochures, IFUs, SDS files, evidence summaries, and image assets can be managed by dropping files into a single public downloads directory."
+    intro="Access brochures, IFUs, SDS files, evidence summaries, and supporting product resources for the iRoot bioceramic family."
     items={downloads}
   />
 
   <FeatureGrid
     eyebrow="Key Evidence Themes"
-    title="Evidence themes worth highlighting carefully"
-    intro="These themes belong on an evidence page because they benefit from literature support or more precise wording than a top-of-page marketing block allows."
+    title="Key evidence areas"
+    intro="These evidence areas support the material characteristics and clinical uses associated with the iRoot bioceramic family."
     items={evidenceThemes}
     accent="slate"
   />
 
   <EvidenceCards
-    title="Evidence summary cards"
-    intro="Use concise cards to frame what a clinician can explore next, rather than placing long abstracts or dense claim language directly on the page."
+    title="Evidence summaries"
+    intro="These summaries highlight the main evidence areas associated with bioceramic sealer and repair materials."
     items={evidenceCards}
   />
 
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto max-w-7xl px-6 py-20">
       <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Literature List</p>
-      <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Suggested bibliography format</h2>
+      <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Selected references</h2>
       <div class="mt-10 grid gap-4">
         {literatureReferences.map((reference) => (
           <article class="rounded-[1.5rem] border border-slate-200 bg-slate-50/70 p-6">
@@ -65,8 +65,8 @@ const downloads = getProductDownloads(getIrootDownloads());
   </section>
 
   <DistributorCTA
-    title="Keep high-risk claims footnoted and evidence-aware"
-    body="Use this page for dimensional stability, bioactivity, alkaline setting, and other literature-linked topics. Keep front-facing product pages focused on clinical problems, practical workflow value, and clearly supportable material descriptions."
+    title="Review the evidence alongside the product information"
+    body="Use this page to access technical documents and supporting literature relevant to material chemistry, handling, dimensional stability, and clinical use."
     secondaryLabel="View iRoot SP"
     secondaryHref="/products/iroot-sp/"
   />

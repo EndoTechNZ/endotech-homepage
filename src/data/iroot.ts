@@ -236,26 +236,26 @@ export const familyCards = [
 ];
 
 export const evidenceThemes: FeatureItem[] = [
-  { title: 'Moisture-assisted calcium silicate setting chemistry', description: 'Supports the core family message for sealer and repair workflows.', icon: 'hydrophilic' },
-  { title: 'High pH during setting', description: 'A recurring theme in the calcium silicate evidence base.', icon: 'alkaline' },
-  { title: 'Hydroxyapatite formation and bioactivity', description: 'Useful when describing the interfacial behaviour of bioceramic materials.', icon: 'bioactive' },
-  { title: 'Dimensional stability and no-shrinkage positioning', description: 'Best presented with careful, evidence-linked wording rather than broad superiority claims.', icon: 'stability' },
-  { title: 'Clinical suitability for obturation and repair workflows', description: 'Frames evidence around workflow fit instead of isolated feature promotion.', icon: 'workflow' },
+  { title: 'Moisture-assisted calcium silicate setting chemistry', description: 'Relevant to the setting behaviour of bioceramic sealer and repair materials.', icon: 'hydrophilic' },
+  { title: 'High pH during setting', description: 'A recognised characteristic of calcium silicate-based material chemistry.', icon: 'alkaline' },
+  { title: 'Hydroxyapatite formation and bioactivity', description: 'Supports discussion of the interfacial behaviour associated with bioceramic materials.', icon: 'bioactive' },
+  { title: 'Dimensional stability', description: 'Relevant when reviewing sealing performance and material adaptation.', icon: 'stability' },
+  { title: 'Clinical suitability for obturation and repair workflows', description: 'Useful when considering material selection across sealing and repair procedures.', icon: 'workflow' },
 ];
 
 export const evidenceCards = [
-  { title: 'Bioceramic sealer chemistry and moisture-based set', description: 'Focus on moisture-assisted setting as part of the calcium silicate platform logic.' },
-  { title: 'High pH during setting', description: 'Use carefully phrased references to the alkaline setting profile rather than blanket antibacterial promises.' },
-  { title: 'Dimensional stability rather than shrinkage', description: 'Keep dimensional claims anchored to literature summaries and IFU language.' },
-  { title: 'Hydroxyapatite precipitation and bioactive interface', description: 'Useful for explaining why bioceramic materials are positioned differently from conventional sealers and repair materials.' },
-  { title: 'Premixed delivery reduces mixing variability', description: 'A practical workflow argument that matters clinically and commercially.' },
+  { title: 'Bioceramic sealer chemistry and moisture-assisted setting', description: 'Supports understanding of how calcium silicate sealers set in the presence of moisture.' },
+  { title: 'High pH during setting', description: 'Relevant to the material profile associated with modern bioceramic sealers and repair materials.' },
+  { title: 'Dimensional stability', description: 'Important when reviewing sealing behaviour and material adaptation over time.' },
+  { title: 'Hydroxyapatite formation and bioactive interface', description: 'Supports discussion of the material-to-dentin interface associated with bioceramic chemistry.' },
+  { title: 'Premixed delivery and handling consistency', description: 'Highlights the practical advantages of a ready-to-use format in clinical workflows.' },
 ];
 
 export const literatureReferences = [
-  { citation: 'Zhang H, Shen Y, Ruse ND, Haapasalo M. Antibacterial activity of endodontic sealers by modified direct contact test against Enterococcus faecalis. Journal of Endodontics.', note: 'Included as an example evidence direction for alkaline setting and sealer chemistry discussions.' },
-  { citation: 'Loushine BA, Bryan TE, Looney SW, et al. Setting properties and cytotoxicity evaluation of a premixed bioceramic root canal sealer. Journal of Endodontics.', note: 'Useful for setting behaviour, material profile, and laboratory characterisation summaries.' },
-  { citation: 'Candeiro GTM, Correia FC, Duarte MAH, Ribeiro-Siqueira DC, Gavini G. Evaluation of radiopacity, pH, release of calcium ions, and flow of a bioceramic root canal sealer. Journal of Endodontics.', note: 'Supports the radiopacity, pH, and flow themes often used for sealer evidence summaries.' },
-  { citation: 'Tay FR, Pashley DH. Monoblocks in root canals: A hypothetical or a tangible goal. Journal of Endodontics.', note: 'Helpful context when discussing interfacial concepts, with care taken not to overclaim.' },
+  { citation: 'Zhang H, Shen Y, Ruse ND, Haapasalo M. Antibacterial activity of endodontic sealers by modified direct contact test against Enterococcus faecalis. Journal of Endodontics.', note: 'Relevant to the alkaline setting environment associated with bioceramic sealer chemistry.' },
+  { citation: 'Loushine BA, Bryan TE, Looney SW, et al. Setting properties and cytotoxicity evaluation of a premixed bioceramic root canal sealer. Journal of Endodontics.', note: 'Relevant to setting behaviour, material profile, and laboratory characterisation.' },
+  { citation: 'Candeiro GTM, Correia FC, Duarte MAH, Ribeiro-Siqueira DC, Gavini G. Evaluation of radiopacity, pH, release of calcium ions, and flow of a bioceramic root canal sealer. Journal of Endodontics.', note: 'Relevant to radiopacity, pH, calcium ion release, and flow characteristics.' },
+  { citation: 'Tay FR, Pashley DH. Monoblocks in root canals: A hypothetical or a tangible goal. Journal of Endodontics.', note: 'Provides context for discussion of the material interface within root canal treatment.' },
 ];
 
 export function getProductDownloads(downloads: DownloadItem[]) {
