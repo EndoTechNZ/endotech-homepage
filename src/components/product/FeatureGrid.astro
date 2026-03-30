@@ -12,9 +12,24 @@ interface Props {
 const { eyebrow, title, intro, items, accent = 'teal' } = Astro.props;
 
 const accentMap = {
-  teal: 'bg-teal-50 text-teal-700 border-teal-100',
-  violet: 'bg-violet-50 text-violet-700 border-violet-100',
-  slate: 'bg-slate-100 text-slate-700 border-slate-200',
+  teal: {
+    icon: 'bg-teal-50 text-teal-700 border-teal-100',
+    card: 'hover:border-teal-200 hover:shadow-teal-500/8',
+    iconHover: 'rgba(13, 148, 136, 0.18)',
+    iconGlow: 'rgba(13, 148, 136, 0.32)',
+  },
+  violet: {
+    icon: 'bg-violet-50 text-violet-700 border-violet-100',
+    card: 'hover:border-violet-200 hover:shadow-violet-500/8',
+    iconHover: 'rgba(124, 58, 237, 0.18)',
+    iconGlow: 'rgba(124, 58, 237, 0.32)',
+  },
+  slate: {
+    icon: 'bg-slate-100 text-slate-700 border-slate-200',
+    card: 'hover:border-slate-300 hover:shadow-slate-500/8',
+    iconHover: 'rgba(51, 65, 85, 0.14)',
+    iconGlow: 'rgba(51, 65, 85, 0.28)',
+  },
 }[accent];
 
 function iconPath(icon: FeatureItem['icon']) {
@@ -50,9 +65,20 @@ function iconPath(icon: FeatureItem['icon']) {
     {intro && <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{intro}</p>}
     <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
       {items.map((item) => (
-        <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.35)]">
-          <div class={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border ${accentMap}`}>
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <article
+          class:list={[
+            'feature-card rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl',
+            accentMap.card,
+          ]}
+        >
+          <div
+            class:list={[
+              'feature-icon inline-flex h-12 w-12 items-center justify-center rounded-2xl border transition-colors',
+              accentMap.icon,
+            ]}
+            style={`--feature-icon-hover:${accentMap.iconHover}; --feature-icon-glow:${accentMap.iconGlow};`}
+          >
+            <svg class="feature-icon-glyph h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d={iconPath(item.icon)}></path>
             </svg>
           </div>
@@ -63,3 +89,25 @@ function iconPath(icon: FeatureItem['icon']) {
     </div>
   </div>
 </section>
+
+<style>
+  .feature-icon {
+    transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+    transform-origin: center;
+  }
+
+  .feature-icon-glyph {
+    transition: transform 240ms ease;
+    transform-origin: center;
+  }
+
+  .feature-card:hover .feature-icon {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 14px 30px -18px var(--feature-icon-glow);
+    background-color: var(--feature-icon-hover);
+  }
+
+  .feature-card:hover .feature-icon-glyph {
+    transform: scale(1.06);
+  }
+</style>
