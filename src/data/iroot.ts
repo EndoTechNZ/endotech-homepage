@@ -73,14 +73,16 @@ export const irootSP: ProductRecord & {
   clinicalBenefits: string[];
   clinicianReasons: string[];
   story: string;
+  whatMakesItDifferent: string;
+  proofBlocks: { title: string; description: string }[];
   comparisonRows: ComparisonRow[];
   ctas: CTAItem[];
 } = {
   name: 'iRoot SP',
   slug: 'iroot-sp',
-  headline: 'Bioceramic root canal sealer for stable, moisture-assisted sealing',
+  headline: 'Bioceramic root canal sealer',
   subheadline:
-    'A premixed injectable bioceramic sealer developed for root canal filling and sealing applications. iRoot SP is hydrophilic, highly radiopaque, and designed to set in the presence of moisture naturally present within dentin.',
+    'Premixed. Hydrophilic. Designed for predictable sealing.',
   shortDescription:
     'A premixed bioceramic root canal sealer designed for hydrophilic, moisture-assisted setting and stable canal sealing.',
   heroImage: irootSealerHero,
@@ -122,6 +124,26 @@ export const irootSP: ProductRecord & {
   ],
   story:
     'Unlike conventional base-catalyst sealers, iRoot SP uses moisture naturally present in dentin to initiate its setting reaction. Its calcium silicate-based chemistry promotes a bioactive interface and supports hydroxyapatite formation during setting. The material is positioned for dimensional stability, clinical convenience, and integration with modern endodontic workflows.',
+  whatMakesItDifferent:
+    'Unlike conventional mixed sealers, iRoot SP uses moisture within dentin to initiate its setting reaction, creating a stable, bioactive sealing environment.',
+  proofBlocks: [
+    {
+      title: 'Moisture-activated setting',
+      description: 'Sets using dentinal moisture, without adding a mixing step at the point of obturation.',
+    },
+    {
+      title: 'High pH during setting',
+      description: 'Maintains an alkaline setting profile associated with modern calcium silicate sealers.',
+    },
+    {
+      title: 'Flow and adaptation',
+      description: 'Designed to flow into canal irregularities as part of a hydraulic obturation workflow.',
+    },
+    {
+      title: 'Bioactive interface',
+      description: 'Supports hydroxyapatite-forming chemistry during setting.',
+    },
+  ],
   comparisonRows: [
     { label: 'Premixed delivery', iroot: 'Supplied ready to use in a syringe format', conventional: 'Requires chairside proportioning or mixing' },
     { label: 'Moisture-assisted set', iroot: 'Designed to set with dentinal moisture', conventional: 'Typically depends on mixed chemistry and timing' },
