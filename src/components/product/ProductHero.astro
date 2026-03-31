@@ -26,6 +26,9 @@ const {
   visualLabel,
 } = Astro.props;
 
+const primaryCtas = ctas.filter((cta) => cta.row !== 'secondary');
+const secondaryCtas = ctas.filter((cta) => cta.row === 'secondary');
+
 const accentMap = {
   teal: {
     badge: 'text-teal-700 bg-teal-50 border-teal-200',
@@ -71,22 +74,46 @@ const accentMap = {
         <p class="mt-6 max-w-3xl text-2xl font-semibold leading-tight text-slate-700">{subtitle}</p>
         {description && <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600">{description}</p>}
         {ctas.length > 0 && (
-          <div class="mt-10 flex flex-wrap gap-4">
-            {ctas.map((cta) => (
-              <a
-                href={withBasePath(cta.href)}
-                class:list={[
-                  'inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold transition-all',
-                  cta.variant === 'ghost'
-                    ? 'text-slate-700 hover:text-slate-900'
-                    : cta.variant === 'secondary'
-                      ? `border ${accentMap.secondary}`
-                      : accentMap.button,
-                ]}
-              >
-                {cta.label}
-              </a>
-            ))}
+          <div class="mt-10 space-y-5">
+            {primaryCtas.length > 0 && (
+              <div class="flex flex-wrap items-center gap-x-6 gap-y-4">
+                {primaryCtas.map((cta) => (
+                  <a
+                    href={withBasePath(cta.href)}
+                    class:list={[
+                      'inline-flex items-center justify-center rounded-full text-sm font-semibold transition-all duration-250 ease-out hover:-translate-y-0.5',
+                      cta.variant === 'ghost'
+                        ? 'px-2 py-3 text-slate-700 hover:text-slate-900 hover:drop-shadow-[0_8px_16px_rgba(15,23,42,0.12)]'
+                        : cta.variant === 'secondary'
+                          ? `border px-6 py-3.5 hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.32)] ${accentMap.secondary}`
+                          : `px-6 py-3.5 hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.42)] ${accentMap.button}`,
+                    ]}
+                  >
+                    {cta.label}
+                  </a>
+                ))}
+              </div>
+            )}
+
+            {secondaryCtas.length > 0 && (
+              <div class="flex flex-wrap justify-center gap-4 sm:justify-start lg:justify-center">
+                {secondaryCtas.map((cta) => (
+                  <a
+                    href={withBasePath(cta.href)}
+                    class:list={[
+                      'inline-flex min-w-[15rem] items-center justify-center rounded-full text-sm font-semibold transition-all duration-250 ease-out hover:-translate-y-0.5',
+                      cta.variant === 'ghost'
+                        ? 'px-2 py-3 text-slate-700 hover:text-slate-900 hover:drop-shadow-[0_8px_16px_rgba(15,23,42,0.12)]'
+                        : cta.variant === 'secondary'
+                          ? `border px-6 py-3.5 hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.32)] ${accentMap.secondary}`
+                          : `px-6 py-3.5 hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.42)] ${accentMap.button}`,
+                    ]}
+                  >
+                    {cta.label}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>

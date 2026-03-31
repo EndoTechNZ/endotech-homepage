@@ -5,6 +5,7 @@ export interface CTAItem {
   label: string;
   href: string;
   variant?: 'primary' | 'secondary' | 'ghost';
+  row?: 'primary' | 'secondary';
 }
 
 export interface FeatureItem {
@@ -51,10 +52,10 @@ export const familyPage = {
     'The iRoot family is designed to simplify modern endodontics with premixed bioceramic materials that are hydrophilic, dimensionally stable, highly radiopaque, and easy to deliver. From canal sealing to root repair, iRoot supports efficient clinical workflows without the mixing variability and material waste associated with conventional systems.',
   heroImage: irootSealerHero,
   ctas: [
-    { label: 'Explore iRoot SP', href: '/products/iroot-sp/' },
-    { label: 'View evidence', href: '/products/iroot/evidence/', variant: 'secondary' as const },
-    { label: 'Explore iRoot BP Plus', href: '/products/iroot-bp-plus/', variant: 'ghost' as const },
-    { label: 'Download brochure', href: '/products/iroot/evidence/#downloads', variant: 'ghost' as const },
+    { label: 'Explore iRoot SP', href: '/products/iroot-sp/', row: 'primary' as const },
+    { label: 'Explore iRoot BP Plus', href: '/products/iroot-bp-plus/', variant: 'ghost' as const, row: 'primary' as const },
+    { label: 'Download brochure', href: '/products/iroot/evidence/#downloads', variant: 'ghost' as const, row: 'primary' as const },
+    { label: 'View evidence', href: '/products/iroot/evidence/', variant: 'secondary' as const, row: 'secondary' as const },
   ],
   whyIroot: [
     { title: 'Premixed and ready to use', description: 'Remove chairside mixing variability and start from a consistent delivery format.', icon: 'premixed' as const },
