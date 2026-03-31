@@ -52,9 +52,9 @@ export const familyPage = {
   heroImage: irootSealerHero,
   ctas: [
     { label: 'Explore iRoot SP', href: '/products/iroot-sp/' },
-    { label: 'Explore iRoot BP Plus', href: '/products/iroot-bp-plus/', variant: 'secondary' as const },
+    { label: 'View evidence', href: '/products/iroot/evidence/', variant: 'secondary' as const },
+    { label: 'Explore iRoot BP Plus', href: '/products/iroot-bp-plus/', variant: 'ghost' as const },
     { label: 'Download brochure', href: '/products/iroot/evidence/#downloads', variant: 'ghost' as const },
-    { label: 'View evidence', href: '/products/iroot/evidence/', variant: 'ghost' as const },
   ],
   whyIroot: [
     { title: 'Premixed and ready to use', description: 'Remove chairside mixing variability and start from a consistent delivery format.', icon: 'premixed' as const },
