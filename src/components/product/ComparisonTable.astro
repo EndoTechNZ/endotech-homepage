@@ -1,15 +1,15 @@
 ---
-import type { ComparisonRow } from '../../data/iroot';
+import type { ComparisonRow } from '../../data/bcs';
 
 interface Props {
   title: string;
   intro?: string;
   rows: ComparisonRow[];
-  irootLabel: string;
+  productLabel: string;
   conventionalLabel: string;
 }
 
-const { title, intro, rows, irootLabel, conventionalLabel } = Astro.props;
+const { title, intro, rows, productLabel, conventionalLabel } = Astro.props;
 ---
 
 <section class="border-b border-slate-200/80 bg-white">
@@ -21,7 +21,7 @@ const { title, intro, rows, irootLabel, conventionalLabel } = Astro.props;
         <thead class="bg-slate-50">
           <tr>
             <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Feature</th>
-            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">{irootLabel}</th>
+            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">{productLabel}</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">{conventionalLabel}</th>
           </tr>
         </thead>
@@ -29,7 +29,7 @@ const { title, intro, rows, irootLabel, conventionalLabel } = Astro.props;
           {rows.map((row) => (
             <tr>
               <td class="px-6 py-5 text-sm font-semibold text-slate-900">{row.label}</td>
-              <td class="px-6 py-5 text-sm leading-7 text-slate-600">{row.iroot}</td>
+              <td class="px-6 py-5 text-sm leading-7 text-slate-600">{row.product}</td>
               <td class="px-6 py-5 text-sm leading-7 text-slate-600">{row.conventional}</td>
             </tr>
           ))}

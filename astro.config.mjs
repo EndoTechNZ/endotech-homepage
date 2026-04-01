@@ -18,7 +18,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
-          exclude: ['/products/iroot/**'],
+          exclude: ['/products/bcs/**'],
         }),
       ],
       head: [
@@ -41,7 +41,7 @@ export default defineConfig({
             { label: 'Overview', slug: 'products/overview' },
             { label: 'ET TransformX Files', slug: 'products/et-transformx' },
             { label: 'PT TransformX Files', slug: 'products/pt-transformx' },
-            { label: 'iRoot Sealer', slug: 'products/iroot-sealer' },
+            { label: 'BCS BioCeramic Sealer', slug: 'products/bcs-bioceramic-sealer' },
           ],
         },
         {

@@ -8,7 +8,7 @@ export interface DownloadItem {
   fileName: string;
 }
 
-const DOWNLOAD_DIR = path.join(process.cwd(), 'public', 'downloads', 'iroot');
+const DOWNLOAD_DIR = path.join(process.cwd(), 'public', 'downloads', 'bcs');
 
 function titleCase(value: string) {
   return value
@@ -30,7 +30,7 @@ function inferType(fileName: string): DownloadItem['type'] {
   return 'Document';
 }
 
-export function getIrootDownloads(): DownloadItem[] {
+export function getBcsDownloads(): DownloadItem[] {
   if (!existsSync(DOWNLOAD_DIR)) {
     return [];
   }
@@ -40,7 +40,7 @@ export function getIrootDownloads(): DownloadItem[] {
     .filter((entry) => statSync(path.join(DOWNLOAD_DIR, entry)).isFile())
     .map((fileName) => ({
       label: titleCase(fileName),
-      href: `/downloads/iroot/${encodeURIComponent(fileName)}`,
+      href: `/downloads/bcs/${encodeURIComponent(fileName)}`,
       type: inferType(fileName),
       fileName,
     }))
