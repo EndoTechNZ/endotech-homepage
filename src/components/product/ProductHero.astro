@@ -1,5 +1,5 @@
 ---
-import type { CTAItem } from '../../data/iroot';
+import type { CTAItem } from '../../data/bcs';
 import { withBasePath } from '../../utils/paths';
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
   ctas?: CTAItem[];
   imageSrc?: string;
   imageAlt?: string;
+  imageStack?: { src: string; alt: string; href?: string; tone?: 'teal' | 'violet' | 'slate' }[];
   visualLabel?: string;
 }
 
@@ -23,6 +24,7 @@ const {
   ctas = [],
   imageSrc,
   imageAlt = title,
+  imageStack = [],
   visualLabel,
 } = Astro.props;
 
@@ -123,7 +125,50 @@ const accentMap = {
         <div class={`relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 p-6 ${accentMap.shadow}`}>
           <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at top left, rgba(15,23,42,0.14), transparent 36%), linear-gradient(rgba(15,23,42,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.08) 1px, transparent 1px); background-size: auto, 24px 24px, 24px 24px;"></div>
           <div class="relative aspect-[4/3] rounded-[1.5rem] border border-slate-200/70 bg-gradient-to-br from-white via-slate-50 to-slate-100/80">
-            {imageSrc ? (
+            {imageStack.length > 0 ? (
+              <div class="relative flex h-full items-center justify-center px-8 py-10">
+                <div class="absolute inset-x-12 bottom-12 h-10 rounded-full bg-slate-900/8 blur-2xl"></div>
+                <div class="relative flex w-full max-w-[30rem] items-end justify-center gap-4">
+                  {imageStack.map((image, index) => (
+                    <div class:list={['relative flex flex-1 items-end', index === 0 ? 'max-w-[13rem]' : 'max-w-[14.5rem]']}>
+                      <div class={`absolute inset-x-4 bottom-2 h-5 rounded-full blur-xl ${
+                        image.tone === 'violet'
+                          ? 'bg-violet-300/18'
+                          : image.tone === 'slate'
+                            ? 'bg-slate-300/16'
+                            : 'bg-teal-300/18'
+                      }`}></div>
+                      {image.href ? (
+                        <a
+                          href={withBasePath(image.href)}
+                          class="hero-pack-link relative z-10 block w-full overflow-hidden rounded-[1.2rem] border border-slate-200/85 bg-white/96 p-2 shadow-[0_22px_28px_rgba(15,23,42,0.10)] transition-all duration-250 ease-out hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_24px_32px_rgba(15,23,42,0.14)]"
+                        >
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            class:list={[
+                              'w-full self-end object-contain',
+                              index === 0 ? 'max-h-[19.5rem]' : 'max-h-[19.5rem]',
+                            ]}
+                          />
+                        </a>
+                      ) : (
+                        <div class="relative z-10 w-full overflow-hidden rounded-[1.2rem] border border-slate-200/85 bg-white/96 p-2 shadow-[0_22px_28px_rgba(15,23,42,0.10)]">
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            class:list={[
+                              'w-full self-end object-contain',
+                              index === 0 ? 'max-h-[19.5rem]' : 'max-h-[19.5rem]',
+                            ]}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : imageSrc ? (
               <img src={imageSrc} alt={imageAlt} class="h-full w-full object-contain p-6" />
             ) : (
               <div class="flex h-full flex-col justify-between p-8">
@@ -151,3 +196,58 @@ const accentMap = {
     </div>
   </div>
 </section>
+
+<style>
+  .hero-pack-link {
+    isolation: isolate;
+    --dot-x: 50%;
+    --dot-y: 50%;
+  }
+
+  .hero-pack-link::after {
+    content: '';
+    position: absolute;
+    left: var(--dot-x);
+    top: var(--dot-y);
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(188, 244, 244, 0.98) 0%, rgba(188, 244, 244, 0.55) 42%, rgba(188, 244, 244, 0) 78%);
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+    filter: blur(0.25px);
+    transition: opacity 140ms ease, transform 160ms ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-pack-link.is-hovering::after {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+ </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const packLinks = document.querySelectorAll<HTMLElement>('.hero-pack-link');
+
+    packLinks.forEach((link) => {
+      const updateDotPosition = (event: MouseEvent) => {
+        const rect = link.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        link.style.setProperty('--dot-x', `${x}px`);
+        link.style.setProperty('--dot-y', `${y}px`);
+      };
+
+      link.addEventListener('mouseenter', (event) => {
+        link.classList.add('is-hovering');
+        updateDotPosition(event);
+      });
+      link.addEventListener('mousemove', updateDotPosition);
+      link.addEventListener('mouseleave', () => {
+        link.classList.remove('is-hovering');
+      });
+    });
+  });
+</script>

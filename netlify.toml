@@ -5,7 +5,35 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# Redirect root to password page (already handled by index.html)
+[[redirects]]
+  from = "/products/iroot"
+  to = "/products/bcs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/iroot/*"
+  to = "/products/bcs/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/products/iroot-sp"
+  to = "/products/bcs-bioceramic-sealer/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/iroot-bp-plus"
+  to = "/products/bcs-bioceramic-putty/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/iroot-sealer"
+  to = "/products/bcs-bioceramic-sealer/"
+  status = 301
+  force = true
+
 # All other non-existent paths go to password page
 [[redirects]]
   from = "/*"

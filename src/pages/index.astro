@@ -5,11 +5,10 @@ import logo from '../assets/logo-wordmark.png';
 import logoDark from '../assets/logo-wordmark-dark.png';
 import heroProduct from '../assets/TransformX_All_In_Single_Image.png';
 import etProduct from '../assets/et-transformx.png';
-import irootProductCard from '../assets/iroot-sealer.png';
-import irootProductHero from '../assets/iroot-sealer-bg.png';
 
 // Base URL for all internal links
 const base = import.meta.env.BASE_URL;
+const bcsSealerImage = `${base}downloads/metallic-packshots/BCS-Sealer-metallic-silver.png`;
 const insightCards = [
   {
     title: 'Transform Technology',
@@ -181,20 +180,20 @@ const insightCards = [
               </div>
             </a>
 
-            <!-- Secondary iRoot card -->
+            <!-- Secondary BCS card -->
             <a
-              href={`${base}products/iroot/`}
+              href={`${base}products/bcs/`}
               class="group relative z-10 -mt-20 ml-auto block w-[21rem] rounded-[2rem] border border-amber-200/80 bg-white/95 p-4 shadow-[0_26px_70px_-32px_rgba(120,53,15,0.45)] backdrop-blur transition-transform duration-500 hover:-translate-y-1 dark:border-amber-900/70 dark:bg-slate-900/92 dark:shadow-[0_26px_70px_-32px_rgba(0,0,0,0.65)]"
             >
               <div class="rounded-[1.5rem] border border-slate-200/80 bg-gradient-to-br from-white via-amber-50/60 to-cyan-50/30 dark:border-slate-700/70 dark:from-slate-900 dark:via-slate-800 dark:to-cyan-950/20 overflow-hidden">
                 <div class="relative aspect-[4/3]">
                   <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at top left, rgba(245,158,11,0.12), transparent 32%), linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px); background-size: auto, 26px 26px, 26px 26px;"></div>
-                  <img src={irootProductHero.src} alt="iRoot Bioceramic Materials" class="relative z-10 h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105" />
+                  <img src={bcsSealerImage} alt="BCS BioCeramic Materials" class="relative z-10 h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105" />
                 </div>
               </div>
               <div class="mt-4 px-1">
                 <p class="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-amber-600 dark:text-amber-400">Bioceramic Family</p>
-                <p class="mt-2 text-xl font-bold leading-tight text-slate-900 dark:text-white">iRoot sealing and repair materials</p>
+                <p class="mt-2 text-xl font-bold leading-tight text-slate-900 dark:text-white">BCS sealing and repair materials</p>
                 <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Premixed bioceramic materials for clinicians building a controlled shaping-to-sealing workflow.</p>
               </div>
             </a>
@@ -456,14 +455,14 @@ const insightCards = [
           </div>
         </a>
 
-        <!-- iRoot Bioceramics -->
-        <a href={`${base}products/iroot/`} class="group block bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm hover:shadow-2xl hover:shadow-slate-200/50 dark:hover:shadow-black/30 transition-all duration-500 border border-slate-100 dark:border-slate-700 hover:border-cyan-100 dark:hover:border-cyan-800 hover:-translate-y-1 cursor-pointer">
+        <!-- BCS BioCeramics -->
+        <a href={`${base}products/bcs/`} class="group block bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm hover:shadow-2xl hover:shadow-slate-200/50 dark:hover:shadow-black/30 transition-all duration-500 border border-slate-100 dark:border-slate-700 hover:border-cyan-100 dark:hover:border-cyan-800 hover:-translate-y-1 cursor-pointer">
           <div class="aspect-[4/3] bg-gradient-to-br from-amber-50 to-slate-50 dark:from-amber-950 dark:to-slate-800 rounded-2xl mb-6 flex items-center justify-center overflow-hidden">
-            <img src={irootProductCard.src} alt="iRoot Bioceramic Materials" class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
+            <img src={bcsSealerImage} alt="BCS BioCeramic Materials" class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
           </div>
           <div class="space-y-4">
             <div class="flex items-start justify-between">
-              <h3 class="text-xl font-bold text-slate-900 dark:text-white">iRoot Bioceramic Materials</h3>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">BCS BioCeramic Materials</h3>
               <span class="text-sm font-semibold text-cyan-600 dark:text-cyan-400">Contact for details</span>
             </div>
             <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Premixed bioceramic materials for clinicians building a matched shaping-to-sealing and repair workflow around a modern endodontic protocol.</p>
@@ -507,7 +506,7 @@ const insightCards = [
                 <th class="px-6 py-4 font-semibold">Question</th>
                 <th class="px-6 py-4 font-semibold text-slate-900 dark:text-white">ET TransformX</th>
                 <th class="px-6 py-4 font-semibold text-slate-900 dark:text-white">PT TransformX</th>
-                <th class="px-6 py-4 font-semibold text-slate-900 dark:text-white">iRoot Bioceramics</th>
+                <th class="px-6 py-4 font-semibold text-slate-900 dark:text-white">BCS BioCeramics</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 text-sm dark:divide-slate-800">
@@ -533,7 +532,7 @@ const insightCards = [
                 <td class="px-6 py-5 font-semibold text-slate-900 dark:text-white">What to open next</td>
                 <td class="px-6 py-5 text-slate-600 dark:text-slate-300"><a href={`${base}downloads/ET-Technique-Work-Flow.pdf`} class="font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">ET workflow PDF</a></td>
                 <td class="px-6 py-5 text-slate-600 dark:text-slate-300"><a href={`${base}downloads/PT-Technique-Work-Flow.pdf`} class="font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">PT workflow PDF</a></td>
-                <td class="px-6 py-5 text-slate-600 dark:text-slate-300"><a href={`${base}products/iroot/`} class="font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">Family details</a></td>
+                <td class="px-6 py-5 text-slate-600 dark:text-slate-300"><a href={`${base}products/bcs/`} class="font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">Family details</a></td>
               </tr>
             </tbody>
           </table>
@@ -582,8 +581,8 @@ const insightCards = [
         <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
           <p class="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-400">For the full system story</p>
           <h3 class="mt-4 text-2xl font-bold text-slate-900 dark:text-white">Shape, then seal with confidence</h3>
-          <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">The iRoot family is positioned as part of the full treatment workflow, linking shaping outcomes to the final sealing or repair step instead of presenting a separate SKU in isolation.</p>
-          <a href={`${base}products/iroot/`} class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">Review iRoot Bioceramics</a>
+          <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">The BCS family is positioned as part of the full treatment workflow, linking shaping outcomes to the final sealing or repair step instead of presenting a separate SKU in isolation.</p>
+          <a href={`${base}products/bcs/`} class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">Review BCS BioCeramics</a>
         </div>
       </div>
     </div>
@@ -796,7 +795,7 @@ const insightCards = [
           <ul class="list-none space-y-3 text-slate-600 dark:text-slate-400">
             <li><a href={`${base}products/et-transformx/`} class="hover:text-slate-900 dark:hover:text-white transition-colors">ET TransformX</a></li>
             <li><a href={`${base}products/pt-transformx/`} class="hover:text-slate-900 dark:hover:text-white transition-colors">PT TransformX</a></li>
-            <li><a href={`${base}products/iroot/`} class="hover:text-slate-900 dark:hover:text-white transition-colors">iRoot Bioceramics</a></li>
+            <li><a href={`${base}products/bcs/`} class="hover:text-slate-900 dark:hover:text-white transition-colors">BCS BioCeramics</a></li>
           </ul>
         </div>
 
