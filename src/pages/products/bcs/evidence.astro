@@ -47,18 +47,55 @@ const downloads = getProductDownloads(getBcsDownloads());
       </div>
 
       <div class="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(360px,1fr)] lg:items-start">
-        <article class="rounded-[1.75rem] border border-slate-200 bg-white p-8 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.12)]">
-          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">What To Look For</p>
-          <h3 class="mt-3 text-2xl font-bold tracking-tight text-slate-900">Material consistency should be evaluated before obturation begins</h3>
-          <p class="mt-5 text-base leading-8 text-slate-600">
-            The purpose of the video is not to overload the page with media. It is there to support one clear clinical point: material condition should be assessed before delivery into the canal.
-          </p>
-          <ul class="mt-6 space-y-3 text-sm leading-7 text-slate-600">
-            <li>Visible separation can affect confidence in syringe delivery and placement control.</li>
-            <li>Uniform handling matters when a sealer is expected to perform as a premixed material.</li>
-            <li>A simple on-demand video review keeps the page clean while still supporting professional evaluation.</li>
-          </ul>
-        </article>
+        <div class="space-y-4">
+          <article class="rounded-[1.75rem] border border-slate-200 bg-white p-8 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.12)]">
+            <p class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">What To Look For</p>
+            <h3 class="mt-3 text-2xl font-bold tracking-tight text-slate-900">Material consistency should be evaluated before obturation begins</h3>
+            <p class="mt-5 text-base leading-8 text-slate-600">
+              The purpose of the video is not to overload the page with media. It is there to support one clear clinical point: material condition should be assessed before delivery into the canal.
+            </p>
+            <ul class="mt-6 space-y-3 text-sm leading-7 text-slate-600">
+              <li>Visible separation can affect confidence in syringe delivery and placement control.</li>
+              <li>Uniform handling matters when a sealer is expected to perform as a premixed material.</li>
+              <li>A simple on-demand video review keeps the page clean while still supporting professional evaluation.</li>
+            </ul>
+          </article>
+
+          <article class="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.12)]">
+            <div class="overflow-hidden rounded-[1.5rem] bg-black">
+              <div class="aspect-[9/16] bg-black">
+                <video
+                  class="h-full w-full object-contain bg-black"
+                  controls
+                  preload="metadata"
+                  playsinline
+                >
+                  <source src={withBasePath('/videos/bcs/material-consistency-inline.mp4')} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-slate-500">
+              Additional on-page example showing visible separation in a competitor bioceramic sealer sample before use.
+            </p>
+          </article>
+
+          <article class="flex min-h-[18rem] w-full flex-col justify-between rounded-[1.5rem] border border-slate-200 bg-slate-950 p-8 text-white shadow-[0_24px_60px_-42px_rgba(15,23,42,0.45)]">
+            <p class="text-sm leading-7 text-slate-300">
+              Video shown for professional evaluation purposes. Clinicians should assess material condition, handling, and manufacturer instructions before use.
+            </p>
+            <p class="mt-5 text-center text-sm font-semibold tracking-[0.04em] text-cyan-200">
+              Click for video training below
+            </p>
+            <button
+              type="button"
+              class="material-video-trigger mt-5 inline-flex items-center justify-center rounded-full border border-white/12 bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition-all duration-200 hover:-translate-y-0.5 hover:bg-cyan-200 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-200/70"
+              data-video-modal-open
+            >
+              Why Material Consistency is fundamental
+            </button>
+          </article>
+        </div>
 
         <div class="space-y-4">
           <article class="rounded-[1.5rem] border border-slate-200 bg-white p-6">
@@ -80,18 +117,6 @@ const downloads = getProductDownloads(getBcsDownloads());
             </ol>
           </article>
 
-          <article class="rounded-[1.5rem] border border-slate-200 bg-slate-950 p-6 text-white">
-            <p class="text-sm leading-7 text-slate-300">
-              Video shown for professional evaluation purposes. Clinicians should assess material condition, handling, and manufacturer instructions before use.
-            </p>
-            <button
-              type="button"
-              class="material-video-trigger mt-5 inline-flex items-center justify-center rounded-full border border-white/12 bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-white/40"
-              data-video-modal-open
-            >
-              Why Material Consistency is fundamental
-            </button>
-          </article>
         </div>
       </div>
     </div>
@@ -108,7 +133,7 @@ const downloads = getProductDownloads(getBcsDownloads());
         Close
       </button>
       <div class="overflow-hidden rounded-[1.5rem] bg-black">
-        <div class="aspect-[9/16] max-h-[78vh] bg-black">
+        <div class="aspect-video max-h-[78vh] bg-black">
           <video
             class="h-full w-full object-contain bg-black"
             controls
@@ -163,8 +188,8 @@ const downloads = getProductDownloads(getBcsDownloads());
 
 <style>
   .material-video-modal {
-    width: min(28rem, calc(100vw - 2rem));
-    max-width: 28rem;
+    width: min(64rem, calc(100vw - 2rem));
+    max-width: 64rem;
     padding: 0;
     border: 0;
     background: transparent;
