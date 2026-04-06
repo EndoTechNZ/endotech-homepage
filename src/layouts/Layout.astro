@@ -22,6 +22,8 @@ const {
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.toString();
 const defaultImage = Astro.site ? new URL(logoDark.src, Astro.site).toString() : undefined;
 const socialImage = image ? new URL(image, Astro.site ?? Astro.url).toString() : defaultImage;
+const googleSiteVerification =
+  import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION ?? '66rRw6fVQeHsCNpjSjIFm6tde0bpo4CXXigS2n2Vklg';
 const organizationSchema = Astro.site
   ? {
       '@context': 'https://schema.org',
@@ -50,6 +52,7 @@ const organizationSchema = Astro.site
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {socialImage && <meta name="twitter:image" content={socialImage} />}
+    {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
     <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}favicon-96x96.png`} sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <link rel="shortcut icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
