@@ -61,7 +61,7 @@ export const bcsFamilyPage = {
     { title: 'Premixed and ready to use', description: 'Remove chairside mixing variability and start from a consistent delivery format.', icon: 'premixed' as const },
     { title: 'Hydrophilic setting chemistry', description: 'Use moisture in the clinical environment as part of the setting reaction rather than fighting it.', icon: 'hydrophilic' as const },
     { title: 'High pH during setting', description: 'Support the material profile clinicians expect from modern calcium silicate systems.', icon: 'alkaline' as const },
-    { title: 'Zero-shrinkage positioning', description: 'Present dimensional stability carefully and keep performance claims anchored to evidence.', icon: 'stability' as const },
+    { title: 'Zero-shrinkage', description: 'Present dimensional stability carefully and keep performance claims anchored to evidence.', icon: 'stability' as const },
     { title: 'Bioactive mineral response', description: 'Highlight hydroxyapatite-forming behaviour without overreaching into unsupported promotional language.', icon: 'bioactive' as const },
     { title: 'Workflow compatibility', description: 'Fit naturally into modern shaping, irrigation, obturation, and repair protocols.', icon: 'workflow' as const },
   ],
