@@ -93,7 +93,7 @@ export const bcsSealer: ProductRecord & {
     { title: 'Hydroxyapatite-forming chemistry', description: 'Supports a bioactive interface during setting.', icon: 'bioactive' },
     { title: 'High radiopacity', description: 'Clear radiographic visibility for review and documentation.', icon: 'radiopaque' },
     { title: 'High alkaline pH during setting', description: 'Maintains the chemical profile clinicians expect from calcium silicate sealers.', icon: 'alkaline' },
-    { title: 'Zero-shrinkage positioning', description: 'Communicates dimensional stability in a careful, evidence-aware way.', icon: 'stability' },
+    { title: 'Zero-shrinkage', description: 'Communicates dimensional stability in a careful, evidence-aware way.', icon: 'stability' },
   ],
   applications: ['Root canal sealing', 'Hydraulic obturation workflows', 'Single-cone obturation techniques'],
   packaging: ['1 x 2.0 g syringe', '2 x tips'],
