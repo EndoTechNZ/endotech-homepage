@@ -32,7 +32,7 @@ export default defineConfig({
         replacesTitle: true,
       },
       social: [
-        { icon: 'email', label: 'Contact', href: 'mailto:info@endotechsg.com' },
+        { icon: 'email', label: 'Contact', href: 'mailto:Steveshepherdnz@gmail.com' },
       ],
       sidebar: [
         {
