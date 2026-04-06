@@ -5,6 +5,7 @@ import FeatureGrid from '../../components/product/FeatureGrid.astro';
 import ApplicationsGrid from '../../components/product/ApplicationsGrid.astro';
 import acrobatFiles from '../../assets/acrobat-glide-path-files.png';
 
+const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const keyFeatureItems = [
   {
     title: 'Rotary glide path preparation',
@@ -93,11 +94,34 @@ const standardRange = [
   { size: '15/.03', sku21: 'ACGP-150321RF', sku25: 'ACGP-150325RF', sku29: 'ACGP-150329RF' },
   { size: '17/.03', sku21: 'ACGP-170321RF', sku25: 'ACGP-170325RF', sku29: 'ACGP-170329RF' },
 ];
+const acrobatSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Acrobat Glide Path Files',
+  description:
+    'Rotary glide path files using Transform Metal Technology to create a controlled path to working length before shaping, with 13/.03, 15/.03, and 17/.03 sizes plus an MB2 option.',
+  brand: {
+    '@type': 'Brand',
+    name: 'EndoTech Singapore',
+  },
+  category: 'Endodontic glide path files',
+  image: [new URL(acrobatFiles.src, siteUrl).toString()],
+  url: new URL('/products/acrobat-glide-path/', siteUrl).toString(),
+  additionalProperty: [
+    { '@type': 'PropertyValue', name: 'System type', value: 'Rotary glide path files' },
+    { '@type': 'PropertyValue', name: 'Technology', value: 'Transform Metal Technology' },
+    { '@type': 'PropertyValue', name: 'Standard sizes', value: '13/.03, 15/.03, 17/.03' },
+    { '@type': 'PropertyValue', name: 'Lengths', value: '21 mm, 25 mm, 29 mm' },
+    { '@type': 'PropertyValue', name: 'MB2 option', value: '15/.05 17 mm' },
+  ],
+};
 ---
 
 <ProductLayout
-  title="Acrobat Glide Path Files | EndoTech Singapore"
-  description="Rotary glide path files using Transform Metal Technology to create a controlled path to working length before shaping."
+  title="Acrobat Glide Path Files | Rotary Glide Path Files for Endodontics"
+  description="Acrobat Glide Path Files are rotary glide path files for endodontics, using Transform Metal Technology to support controlled progression to working length before shaping."
+  image={acrobatFiles.src}
+  schema={acrobatSchema}
   accent="teal"
 >
   <ProductHero

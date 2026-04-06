@@ -5,9 +5,29 @@ import FeatureGrid from '../../components/product/FeatureGrid.astro';
 import etProduct from '../../assets/et-transformx.png';
 import { withBasePath } from '../../utils/paths';
 
+const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const etVideoSrc = withBasePath('/videos/et-transformx-promo_1.mp4');
 const workflowPdfSrc = withBasePath('/downloads/ET-Technique-Work-Flow.pdf');
 const partNumbersPdfSrc = withBasePath('/downloads/ET-Part-Numbers.pdf');
+const etSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'ET TransformX Files',
+  description:
+    'Rotary shaping files for clinicians who want to preserve established .04/.06-style sequence logic while improving apical control with Avatar Tip and Transform Technology.',
+  brand: {
+    '@type': 'Brand',
+    name: 'EndoTech Singapore',
+  },
+  category: 'Endodontic rotary files',
+  image: [new URL(etProduct.src, siteUrl).toString()],
+  url: new URL('/products/et-transformx/', siteUrl).toString(),
+  additionalProperty: [
+    { '@type': 'PropertyValue', name: 'Technique change', value: 'No technique change' },
+    { '@type': 'PropertyValue', name: 'Tip design', value: 'Avatar Tip' },
+    { '@type': 'PropertyValue', name: 'Metallurgy', value: 'Transform Technology' },
+  ],
+};
 
 const keyFeatureItems = [
   {
@@ -63,8 +83,10 @@ const ctas = [
 ---
 
 <ProductLayout
-  title="ET TransformX Files | EndoTech Singapore"
-  description="ET TransformX files for clinicians who want to preserve established .04/.06-style shaping technique while improving apical control."
+  title="ET TransformX Files | Rotary Endodontic Files for ET-Style Technique"
+  description="ET TransformX rotary endodontic files preserve established .04/.06-style shaping technique while improving apical control with Avatar Tip and Transform Technology."
+  image={etProduct.src}
+  schema={etSchema}
   accent="teal"
 >
   <ProductHero

@@ -10,17 +10,38 @@ import DistributorCTA from '../../components/product/DistributorCTA.astro';
 import { bcsPutty } from '../../data/bcs';
 import { withBasePath } from '../../utils/paths';
 
+const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const clinicalBenefitCards = bcsPutty.clinicalBenefits.map((benefit) => ({
   title: benefit,
   description: 'Expressed as workflow and handling value rather than unsupported comparative marketing.',
   icon: 'repair' as const,
 }));
 const puttyImage = withBasePath('/downloads/metallic-packshots/BCS-Putty-metallic-gold.png');
+const puttySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'BCS BioCeramic Putty',
+  description: bcsPutty.shortDescription,
+  brand: {
+    '@type': 'Brand',
+    name: 'EndoTech Singapore',
+  },
+  category: 'Bioceramic root repair material',
+  image: [new URL(puttyImage, siteUrl).toString()],
+  url: new URL('/products/bcs-bioceramic-putty/', siteUrl).toString(),
+  additionalProperty: bcsPutty.featureBullets.map((feature) => ({
+    '@type': 'PropertyValue',
+    name: feature.title,
+    value: feature.description,
+  })),
+};
 ---
 
 <ProductLayout
-  title="BCS BioCeramic Putty | EndoTech Singapore"
+  title="BCS BioCeramic Putty | Bioceramic Root Repair Material"
   description={bcsPutty.shortDescription}
+  image={puttyImage}
+  schema={puttySchema}
   accent="violet"
 >
   <ProductHero

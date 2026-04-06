@@ -5,8 +5,10 @@ import starlightLinksValidator from 'starlight-links-validator';
 import tailwindcss from '@tailwindcss/vite';
 
 const isGitHubPages = process.env.DEPLOY_TARGET === 'github-pages';
-const site = isGitHubPages ? 'https://endotechnz.github.io' : undefined;
+const netlifySite = process.env.URL || process.env.DEPLOY_PRIME_URL;
+const site = process.env.PUBLIC_SITE_URL || (isGitHubPages ? 'https://endotechnz.github.io' : netlifySite || 'https://endotechnz.github.io');
 const base = isGitHubPages ? '/endotech-homepage/' : '/';
+const shouldNoIndex = process.env.NETLIFY === 'true' && process.env.CONTEXT !== 'production';
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,9 +24,9 @@ export default defineConfig({
         }),
       ],
       head: [
-        ...(isGitHubPages ? [] : [
-          { tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' } },
-        ]),
+        ...(shouldNoIndex
+          ? [{ tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' } }]
+          : []),
       ],
       logo: {
         light: './src/assets/logo-wordmark.png',

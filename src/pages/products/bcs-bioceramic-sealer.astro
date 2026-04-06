@@ -10,6 +10,7 @@ import { bcsSealer, getProductDownloads } from '../../data/bcs';
 import { getBcsDownloads } from '../../utils/downloads';
 import { withBasePath } from '../../utils/paths';
 
+const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const clinicalBenefitCards = bcsSealer.clinicalBenefits.map((benefit) => ({
   title: benefit,
   description: 'Stated in practical clinical language rather than broad promotional language.',
@@ -18,11 +19,31 @@ const clinicalBenefitCards = bcsSealer.clinicalBenefits.map((benefit) => ({
 
 const downloads = getProductDownloads(getBcsDownloads());
 const sealerImage = withBasePath('/downloads/metallic-packshots/BCS-Sealer-metallic-silver.png');
+const sealerSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'BCS BioCeramic Sealer',
+  description: bcsSealer.shortDescription,
+  brand: {
+    '@type': 'Brand',
+    name: 'EndoTech Singapore',
+  },
+  category: 'Bioceramic root canal sealer',
+  image: [new URL(sealerImage, siteUrl).toString()],
+  url: new URL('/products/bcs-bioceramic-sealer/', siteUrl).toString(),
+  additionalProperty: bcsSealer.featureBullets.map((feature) => ({
+    '@type': 'PropertyValue',
+    name: feature.title,
+    value: feature.description,
+  })),
+};
 ---
 
 <ProductLayout
-  title="BCS BioCeramic Sealer | EndoTech Singapore"
+  title="BCS BioCeramic Sealer | Bioceramic Root Canal Sealer"
   description={bcsSealer.shortDescription}
+  image={sealerImage}
+  schema={sealerSchema}
   accent="teal"
 >
   <ProductHero
