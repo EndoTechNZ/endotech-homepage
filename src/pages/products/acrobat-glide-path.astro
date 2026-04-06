@@ -4,6 +4,7 @@ import ProductHero from '../../components/product/ProductHero.astro';
 import FeatureGrid from '../../components/product/FeatureGrid.astro';
 import ApplicationsGrid from '../../components/product/ApplicationsGrid.astro';
 import acrobatFiles from '../../assets/acrobat-glide-path-files.png';
+import { withBasePath } from '../../utils/paths';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const keyFeatureItems = [
@@ -88,6 +89,7 @@ const ctas = [
   { label: 'Open motor settings', href: '/technique/motor-settings/' },
   { label: 'Contact EndoTech', href: '/about/contact/', variant: 'secondary' as const },
 ];
+const acrobatClinicalBlueprintSrc = withBasePath('/downloads/Acrobat_Clinical_Blueprint.pdf');
 
 const standardRange = [
   { size: '13/.03', sku21: 'ACGP-130321RF', sku25: 'ACGP-130325RF', sku29: 'ACGP-130329RF' },
@@ -269,6 +271,24 @@ const acrobatSchema = {
             <li>Berutti E, et al. Use of nickel-titanium rotary PathFile to create the glide path: comparison with manual preflaring in simulated root canals. <em>J Endod.</em> 2009;35:408-412.</li>
             <li>Pasqualini D, et al. Computed micro-tomographic evaluation of glide path with nickel-titanium rotary PathFile in maxillary first molar curved canals. <em>J Endod.</em> 2012;38:389-393.</li>
           </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Downloads</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Acrobat slide deck</h2>
+      <div class="mt-8 grid gap-4 sm:mt-10">
+        <article class="flex flex-col gap-4 rounded-[1.35rem] border border-slate-200 bg-slate-50/60 p-4 sm:rounded-[1.5rem] sm:p-5 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Clinical Presentation</p>
+            <h3 class="mt-2 text-base font-bold text-slate-900 sm:text-lg">Acrobat Clinical Blueprint</h3>
+          </div>
+          <a href={acrobatClinicalBlueprintSrc} class="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 sm:w-auto">
+            Open PDF
+          </a>
         </article>
       </div>
     </div>
