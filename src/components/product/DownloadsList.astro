@@ -13,20 +13,20 @@ const hasDownloads = items.some((item) => item.href !== '#');
 ---
 
 <section id="downloads" class="border-b border-slate-200/80 bg-white">
-  <div class="mx-auto max-w-7xl px-6 py-20">
-    <h2 class="text-4xl font-bold tracking-tight text-slate-900">{title}</h2>
-    {intro && <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{intro}</p>}
-    <div class="mt-10 grid gap-4">
+  <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
+    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
+    {intro && <p class="mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8">{intro}</p>}
+    <div class="mt-8 grid gap-4 sm:mt-10">
       {items.map((item) => (
-        <article class="flex flex-col gap-4 rounded-[1.5rem] border border-slate-200 bg-slate-50/60 p-5 md:flex-row md:items-center md:justify-between">
+        <article class="flex flex-col gap-4 rounded-[1.35rem] border border-slate-200 bg-slate-50/60 p-4 sm:rounded-[1.5rem] sm:p-5 md:flex-row md:items-center md:justify-between">
           <div>
             <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{item.type}</p>
-            <h3 class="mt-2 text-lg font-bold text-slate-900">{item.label}</h3>
+            <h3 class="mt-2 text-base font-bold text-slate-900 sm:text-lg">{item.label}</h3>
           </div>
           {item.href === '#' ? (
             <span class="inline-flex items-center rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-500">Awaiting files</span>
           ) : (
-            <a href={withBasePath(item.href)} class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+            <a href={withBasePath(item.href)} class="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 sm:w-auto">
               Open download
             </a>
           )}

@@ -21,16 +21,16 @@ const {
 ---
 
 <section class="bg-white">
-  <div class="mx-auto max-w-7xl px-6 py-20">
-    <div class="rounded-[2rem] bg-gradient-to-br from-slate-900 to-slate-800 px-8 py-10 text-white">
+  <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
+    <div class="rounded-[1.5rem] bg-gradient-to-br from-slate-900 to-slate-800 px-5 py-7 text-white sm:rounded-[2rem] sm:px-8 sm:py-10">
       <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-300">Distributor Support</p>
-      <h2 class="mt-4 text-4xl font-bold tracking-tight">{title}</h2>
-      <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">{body}</p>
-      <div class="mt-8 flex flex-wrap gap-4">
-        <a href={withBasePath(primaryHref)} class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 hover:bg-slate-100">
+      <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{title}</h2>
+      <p class="mt-4 max-w-3xl text-base leading-7 text-slate-300 sm:mt-5 sm:text-lg sm:leading-8">{body}</p>
+      <div class="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4">
+        <a href={withBasePath(primaryHref)} class="inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 hover:bg-slate-100 sm:w-auto">
           {primaryLabel}
         </a>
-        <a href={withBasePath(secondaryHref)} class="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/8">
+        <a href={withBasePath(secondaryHref)} class="inline-flex w-full items-center justify-center rounded-full border border-white/20 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/8 sm:w-auto">
           {secondaryLabel}
         </a>
       </div>
