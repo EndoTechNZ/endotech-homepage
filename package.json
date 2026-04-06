@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && node scripts/validate-all-links.js",
-    "build:staging": "astro build && node scripts/setup-password-protection.js && node scripts/validate-all-links.js",
-    "build:github": "astro build && node scripts/validate-all-links.js",
+    "check:docs-links": "node scripts/validate-docs-links.js",
+    "build": "npm run check:docs-links && astro build && node scripts/validate-all-links.js",
+    "build:staging": "npm run check:docs-links && astro build && node scripts/setup-password-protection.js && node scripts/validate-all-links.js",
+    "build:github": "npm run check:docs-links && astro build && node scripts/validate-all-links.js",
     "preview": "astro preview",
     "astro": "astro",
     "video:start": "npm --prefix endotech-video start",
