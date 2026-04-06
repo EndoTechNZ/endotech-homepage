@@ -18,7 +18,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
-          exclude: ['/products/bcs/**'],
+          exclude: ['/products/bcs/**', '/products/acrobat-glide-path/**'],
         }),
       ],
       head: [
