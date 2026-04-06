@@ -1,0 +1,164 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/product/ProductHero.astro';
+import FeatureGrid from '../../components/product/FeatureGrid.astro';
+import etProduct from '../../assets/et-transformx.png';
+import { withBasePath } from '../../utils/paths';
+
+const etVideoSrc = withBasePath('/videos/et-transformx-promo_1.mp4');
+const workflowPdfSrc = withBasePath('/downloads/ET-Technique-Work-Flow.pdf');
+const partNumbersPdfSrc = withBasePath('/downloads/ET-Part-Numbers.pdf');
+
+const keyFeatureItems = [
+  {
+    title: 'No technique change',
+    description:
+      'Built for clinicians already shaping with ET, EdgeX7, Race Evo, and other .04/.06-style sequences, so the transition stays clinically familiar.',
+    icon: 'workflow' as const,
+  },
+  {
+    title: 'Avatar Tip follows challenging anatomy',
+    description:
+      'The apical geometry is designed to support more controlled progression where canal curvature and unpredictability increase procedural risk.',
+    icon: 'handling' as const,
+  },
+  {
+    title: 'Transform Technology varies the metallurgy along the file',
+    description:
+      'Different behaviour along the working length supports flexibility at the tip while preserving cutting efficiency through the mid-root and coronal canal.',
+    icon: 'stability' as const,
+  },
+];
+
+const clinicalBenefitItems = [
+  {
+    title: 'Maintain established sequence logic',
+    description:
+      'Reduces the learning burden for clinicians who want a different file system without rebuilding motor habits or file-order thinking.',
+    icon: 'workflow' as const,
+  },
+  {
+    title: 'Improve apical control in difficult canals',
+    description:
+      'Links the file design directly to the clinical challenge of staying centred and progressing with fewer procedural surprises.',
+    icon: 'handling' as const,
+  },
+  {
+    title: 'Balance flexibility and cutting behaviour',
+    description:
+      'Supports canal shaping efficiency without making the apical end feel over-aggressive in more demanding anatomy.',
+    icon: 'stability' as const,
+  },
+];
+
+const ctas = [
+  { label: 'Open ET workflow PDF', href: '/downloads/ET-Technique-Work-Flow.pdf', variant: 'primary' as const },
+  { label: 'Contact EndoTech', href: '/about/contact/', variant: 'secondary' as const },
+];
+---
+
+<ProductLayout
+  title="ET TransformX Files | EndoTech Singapore"
+  description="ET TransformX files for clinicians who want to preserve established .04/.06-style shaping technique while improving apical control."
+  accent="teal"
+>
+  <ProductHero
+    eyebrow="ET TransformX"
+    title="ET TransformX Files"
+    subtitle="Stay with your established technique."
+    description="TransformX ET is designed for clinicians already using ET, EdgeX7, Race Evo, and other .04/.06-style systems, preserving familiar sequence architecture while advancing apical control."
+    ctas={ctas}
+    accent="teal"
+    imageSrc={etProduct.src}
+    imageAlt="ET TransformX Files"
+    visualLabel="ET TransformX"
+  />
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto grid max-w-7xl gap-6 px-6 py-20 lg:grid-cols-2">
+      <article class="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-7">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Clinical Problem</p>
+        <p class="mt-5 text-base leading-8 text-slate-600">
+          Changing to a new rotary system often means relearning sequence logic, accepting less familiar apical behaviour, or sacrificing confidence in challenging anatomy.
+        </p>
+      </article>
+      <article class="rounded-[1.75rem] border border-slate-200 bg-slate-950 p-7 text-white">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">TransformX Solution</p>
+        <p class="mt-5 text-base leading-8 text-slate-300">
+          ET TransformX keeps the established ET-style technique intact while combining Avatar Tip guidance and variable metallurgy to improve control where anatomy is least forgiving.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-20">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-3xl">
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">ET Section</p>
+          <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">ET TransformX overview</h2>
+          <p class="mt-5 text-lg leading-8 text-slate-600">
+            This video now sits in the main ET product section so clinicians can see the compatibility story, Avatar Tip rationale, and Transform Technology message in one place.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-10 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-950 shadow-[0_30px_90px_-45px_rgba(15,23,42,0.55)]">
+        <video
+          controls
+          playsinline
+          preload="metadata"
+          class="block aspect-video w-full bg-slate-950"
+        >
+          <source src={etVideoSrc} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <FeatureGrid
+    eyebrow="Key Features"
+    title=""
+    items={keyFeatureItems}
+    accent="teal"
+    syncGroup="et-transformx-pairs"
+  />
+
+  <FeatureGrid
+    eyebrow="Clinical Benefits"
+    title="Clinical benefits"
+    intro="The page frames ET TransformX around control, safety, and adaptability within an established workflow."
+    items={clinicalBenefitItems}
+    accent="teal"
+    syncGroup="et-transformx-pairs"
+  />
+
+  <section id="downloads" class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-20">
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Downloads</p>
+      <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Open the technical files next</h2>
+      <div class="mt-10 grid gap-4">
+        <article class="flex flex-col gap-4 rounded-[1.5rem] border border-slate-200 bg-slate-50/60 p-5 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Technique Guide</p>
+            <h3 class="mt-2 text-lg font-bold text-slate-900">ET Technique Workflow</h3>
+          </div>
+          <a href={workflowPdfSrc} class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+            Open PDF
+          </a>
+        </article>
+        <article class="flex flex-col gap-4 rounded-[1.5rem] border border-slate-200 bg-slate-50/60 p-5 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Product File</p>
+            <h3 class="mt-2 text-lg font-bold text-slate-900">ET Part Numbers</h3>
+          </div>
+          <a href={partNumbersPdfSrc} class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+            Open PDF
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</ProductLayout>

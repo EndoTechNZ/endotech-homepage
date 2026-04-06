@@ -1,18 +1,22 @@
 import { Composition } from "remotion";
-import { EndoTechDemo } from "./EndoTechDemo";
-import timing from "./timing.json";
+import { PromoTemplate } from "./PromoTemplate";
+import { getTotalFrames, promoVideos } from "./promoData";
 
-export const RemotionRoot: React.FC = () => {
+export const RemotionRoot = () => {
   return (
     <>
-      <Composition
-        id="EndoTechDemo"
-        component={EndoTechDemo}
-        durationInFrames={timing.totalFrames}
-        fps={timing.fps}
-        width={1920}
-        height={1080}
-      />
+      {promoVideos.map((video) => (
+        <Composition
+          key={video.id}
+          id={`EndoTechPromo-${video.id}`}
+          component={PromoTemplate}
+          defaultProps={{ video }}
+          durationInFrames={getTotalFrames(video)}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+      ))}
     </>
   );
 };

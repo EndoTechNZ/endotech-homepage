@@ -7,9 +7,10 @@ interface Props {
   intro?: string;
   items: FeatureItem[];
   accent?: 'teal' | 'violet' | 'slate';
+  syncGroup?: string;
 }
 
-const { eyebrow, title, intro, items, accent = 'teal' } = Astro.props;
+const { eyebrow, title, intro, items, accent = 'teal', syncGroup } = Astro.props;
 
 const accentMap = {
   teal: {
@@ -17,18 +18,24 @@ const accentMap = {
     card: 'hover:border-teal-200 hover:shadow-teal-500/8',
     iconHover: 'rgba(13, 148, 136, 0.18)',
     iconGlow: 'rgba(13, 148, 136, 0.32)',
+    linkedBorder: 'rgba(45, 212, 191, 0.6)',
+    linkedBg: 'rgba(236, 253, 250, 0.9)',
   },
   violet: {
     icon: 'bg-violet-50 text-violet-700 border-violet-100',
     card: 'hover:border-violet-200 hover:shadow-violet-500/8',
     iconHover: 'rgba(124, 58, 237, 0.18)',
     iconGlow: 'rgba(124, 58, 237, 0.32)',
+    linkedBorder: 'rgba(167, 139, 250, 0.6)',
+    linkedBg: 'rgba(245, 243, 255, 0.92)',
   },
   slate: {
     icon: 'bg-slate-100 text-slate-700 border-slate-200',
     card: 'hover:border-slate-300 hover:shadow-slate-500/8',
     iconHover: 'rgba(51, 65, 85, 0.14)',
     iconGlow: 'rgba(51, 65, 85, 0.28)',
+    linkedBorder: 'rgba(148, 163, 184, 0.58)',
+    linkedBg: 'rgba(248, 250, 252, 0.96)',
   },
 }[accent];
 
@@ -70,13 +77,15 @@ function iconPath(icon: FeatureItem['icon']) {
             'feature-card rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl',
             accentMap.card,
           ]}
+          data-sync-group={syncGroup}
+          data-sync-index={items.indexOf(item)}
+          style={`--feature-linked-border:${accentMap.linkedBorder}; --feature-linked-bg:${accentMap.linkedBg}; --feature-icon-hover:${accentMap.iconHover}; --feature-icon-glow:${accentMap.iconGlow};`}
         >
           <div
             class:list={[
               'feature-icon inline-flex h-12 w-12 items-center justify-center rounded-2xl border transition-colors',
               accentMap.icon,
             ]}
-            style={`--feature-icon-hover:${accentMap.iconHover}; --feature-icon-glow:${accentMap.iconGlow};`}
           >
             <svg class="feature-icon-glyph h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d={iconPath(item.icon)}></path>
@@ -110,4 +119,60 @@ function iconPath(icon: FeatureItem['icon']) {
   .feature-card:hover .feature-icon-glyph {
     transform: scale(1.06);
   }
+
+  .feature-card.is-linked {
+    transform: translateY(-2px);
+    border-color: var(--feature-linked-border);
+    background-color: var(--feature-linked-bg);
+    box-shadow:
+      0 20px 36px -26px var(--feature-icon-glow),
+      0 0 0 1px var(--feature-linked-border),
+      0 10px 24px -20px var(--feature-icon-glow);
+  }
+
+  .feature-card.is-linked .feature-icon {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 14px 30px -18px var(--feature-icon-glow);
+    background-color: var(--feature-icon-hover);
+  }
+
+  .feature-card.is-linked .feature-icon-glyph {
+    transform: scale(1.06);
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.feature-card[data-sync-group][data-sync-index]'));
+
+    if (cards.length === 0) return;
+
+    const clearLinkedState = (group: string, index: string) => {
+      cards.forEach((card) => {
+        if (card.dataset.syncGroup === group && card.dataset.syncIndex === index) {
+          card.classList.remove('is-linked');
+        }
+      });
+    };
+
+    const applyLinkedState = (group: string, index: string) => {
+      cards.forEach((card) => {
+        if (card.dataset.syncGroup === group && card.dataset.syncIndex === index) {
+          card.classList.add('is-linked');
+        }
+      });
+    };
+
+    cards.forEach((card) => {
+      const group = card.dataset.syncGroup;
+      const index = card.dataset.syncIndex;
+
+      if (!group || !index) return;
+
+      card.addEventListener('mouseenter', () => applyLinkedState(group, index));
+      card.addEventListener('mouseleave', () => clearLinkedState(group, index));
+      card.addEventListener('focusin', () => applyLinkedState(group, index));
+      card.addEventListener('focusout', () => clearLinkedState(group, index));
+    });
+  });
+</script>

@@ -9,7 +9,9 @@
     "build:staging": "astro build && node scripts/setup-password-protection.js && node scripts/validate-all-links.js",
     "build:github": "astro build && node scripts/validate-all-links.js",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "video:start": "npm --prefix endotech-video start",
+    "video:render": "npm --prefix endotech-video render"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.37.6",

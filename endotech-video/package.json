@@ -8,7 +8,7 @@
     "audio:process": "node scripts/process-audio.js",
     "timing": "node scripts/generate-timing.js",
     "audio:all": "npm run narration && npm run audio:process && npm run timing",
-    "render": "remotion render EndoTechDemo ../public/videos/explainer.mp4",
+    "render": "remotion render EndoTechPromo-transformx ../public/videos/transformx-promo.mp4",
     "build": "npm run audio:all && npm run render",
     "upgrade": "remotion upgrade"
   },
