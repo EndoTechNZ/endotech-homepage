@@ -41,6 +41,7 @@ export default defineConfig({
           label: 'Products',
           items: [
             { label: 'Overview', slug: 'products/overview' },
+            { label: 'Rotary Glide Path Files', slug: 'products/rotary-glide-path-files' },
             { label: 'ET TransformX Files', slug: 'products/et-transformx' },
             { label: 'PT TransformX Files', slug: 'products/pt-transformx' },
             { label: 'BCS BioCeramic Sealer', slug: 'products/bcs-bioceramic-sealer' },
@@ -60,6 +61,8 @@ export default defineConfig({
             { label: 'ET Technique', slug: 'technique/et-technique' },
             { label: 'PT Technique', slug: 'technique/pt-technique' },
             { label: 'Motor Settings', slug: 'technique/motor-settings' },
+            { label: 'MB2 File', slug: 'technique/mb2-file' },
+            { label: 'Rotary Files for Curved Canals', slug: 'technique/rotary-files-for-curved-canals' },
           ],
         },
         {
