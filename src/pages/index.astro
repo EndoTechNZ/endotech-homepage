@@ -9,6 +9,14 @@ import etProduct from '../assets/et-transformx.png';
 // Base URL for all internal links
 const base = import.meta.env.BASE_URL;
 const bcsSealerImage = `${base}downloads/metallic-packshots/BCS-Sealer-metallic-silver.png`;
+const productMenu = [
+  { label: 'ET TransformX Files', href: `${base}products/et-transformx/` },
+  { label: 'PT TransformX Files', href: `${base}products/pt-transformx/` },
+  { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
+  { label: 'BCS BioCeramic Sealer', href: `${base}products/bcs-bioceramic-sealer/` },
+  { label: 'BCS BioCeramic Putty', href: `${base}products/bcs-bioceramic-putty/` },
+  { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
+];
 const insightCards = [
   {
     title: 'Transform Technology',
@@ -46,12 +54,33 @@ const insightCards = [
         <img src={logoDark.src} alt="EndoTech Singapore" class="h-10 w-auto hidden dark:block" />
       </a>
       <div class="hidden md:flex items-center gap-8">
-        <a href="#products" data-section-link="products" class="nav-link text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Products</a>
-        <a href={`${base}technology/avatar-tip/`} class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Technology</a>
-        <a href="#compare" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Compare</a>
-        <a href="#workflow" data-section-link="workflow" class="nav-link text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Workflow</a>
-        <a href={`${base}products/overview/`} class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Clinical Docs</a>
-        <a href="#contact" data-section-link="contact" class="inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all hover:shadow-lg hover:shadow-slate-900/20">
+        <a href={base} class="inline-flex origin-center text-base font-semibold text-slate-900 transition-transform transition-colors duration-200 hover:scale-110 hover:text-cyan-700 dark:text-white dark:hover:text-cyan-300">Home</a>
+        <div class="group products-menu relative">
+          <button id="products-menu-button" type="button" class="inline-flex origin-center items-center gap-2 text-sm font-medium text-slate-600 transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900 focus:outline-none focus:text-slate-900 dark:text-slate-400 dark:hover:text-white dark:focus:text-white" aria-haspopup="true" aria-expanded="false" aria-controls="products-menu-panel">
+            Products
+            <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-y-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 9l6 6 6-6"></path>
+            </svg>
+          </button>
+          <div class="pointer-events-none absolute left-1/2 top-full z-40 h-4 w-72 -translate-x-1/2 opacity-0 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100"></div>
+          <div id="products-menu-panel" class="products-menu-panel pointer-events-none absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
+            <div class="rounded-[1.6rem] border border-slate-200/80 bg-white/96 p-3 shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)] backdrop-blur-xl dark:border-slate-700/80 dark:bg-slate-900/96">
+              <div class="mb-2 px-3 pt-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-cyan-700 dark:text-cyan-300">Product Lineup</div>
+              <div class="grid gap-1">
+                {productMenu.map((item) => (
+                  <a href={item.href} class="rounded-2xl px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white">
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href={`${base}technology/avatar-tip/`} class="inline-flex origin-center text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-transform transition-colors duration-200 hover:scale-110">Technology</a>
+        <a href="#compare" class="inline-flex origin-center text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-transform transition-colors duration-200 hover:scale-110">Compare</a>
+        <a href="#workflow" data-section-link="workflow" class="nav-link inline-flex origin-center text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-transform transition-colors duration-200 hover:scale-110">Workflow</a>
+        <a href={`${base}products/overview/`} class="inline-flex origin-center text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-transform transition-colors duration-200 hover:scale-110">Clinical Docs</a>
+        <a href="#contact" data-section-link="contact" class="inline-flex origin-center items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-slate-900/20">
           Request Information
         </a>
       </div>
@@ -70,7 +99,18 @@ const insightCards = [
     </div>
     <div id="mobile-menu" class="hidden border-t border-slate-200/80 bg-white/95 px-6 pb-6 pt-4 shadow-2xl shadow-slate-900/5 dark:border-slate-800/80 dark:bg-slate-900/95 md:hidden">
       <div class="grid gap-3">
+        <a href={base} class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Home</a>
         <a href="#products" class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Browse product systems</a>
+        <div class="rounded-[1.6rem] border border-slate-200 bg-white/90 p-3 dark:border-slate-700 dark:bg-slate-900/80">
+          <div class="px-1 pb-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-cyan-700 dark:text-cyan-300">Products</div>
+          <div class="grid gap-2">
+            {productMenu.map((item) => (
+              <a href={item.href} class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
         <a href={`${base}technology/avatar-tip/`} class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Technology</a>
         <a href="#compare" class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Compare ET, PT, and sealer</a>
         <a href="#workflow" class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Review the workflow</a>
@@ -906,6 +946,16 @@ const insightCards = [
     transform: translate(-50%, -50%) scale(1);
   }
 
+  .products-menu.is-open > .products-menu-panel,
+  .products-menu.is-open > .pointer-events-none {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .products-menu.is-open #products-menu-button svg {
+    transform: translateY(1px) rotate(180deg);
+  }
+
 </style>
 
 <script>
@@ -952,6 +1002,8 @@ const insightCards = [
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileMenuLinks = document.querySelectorAll('.mobile-nav-link');
+    const productsMenu = document.querySelector<HTMLElement>('.products-menu');
+    const productsMenuButton = document.getElementById('products-menu-button');
     const proofCards = document.querySelectorAll<HTMLElement>('.proof-card');
     const actionCards = document.querySelectorAll<HTMLElement>('.action-card');
     const observedSections = ['products', 'workflow', 'contact']
@@ -962,6 +1014,12 @@ const insightCards = [
       if (!mobileMenu || !mobileMenuButton) return;
       mobileMenu.classList.toggle('hidden', !open);
       mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    function setProductsMenu(open: boolean) {
+      if (!productsMenu || !productsMenuButton) return;
+      productsMenu.classList.toggle('is-open', open);
+      productsMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
 
     function updateNavState() {
@@ -1000,8 +1058,17 @@ const insightCards = [
       const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
       setMobileMenu(!isOpen);
     });
+    productsMenuButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
+      setProductsMenu(!isOpen);
+    });
     mobileMenuLinks.forEach((link) => {
       link.addEventListener('click', () => setMobileMenu(false));
+    });
+    productsMenu?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setProductsMenu(false));
     });
     proofCards.forEach((card) => {
       const updateDotPosition = (event: MouseEvent) => {
@@ -1047,6 +1114,14 @@ const insightCards = [
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
         setMobileMenu(false);
+        setProductsMenu(false);
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!productsMenu) return;
+      if (!productsMenu.contains(event.target as Node)) {
+        setProductsMenu(false);
       }
     });
 

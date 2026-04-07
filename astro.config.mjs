@@ -6,9 +6,10 @@ import tailwindcss from '@tailwindcss/vite';
 
 const isGitHubPages = process.env.DEPLOY_TARGET === 'github-pages';
 const netlifySite = process.env.URL || process.env.DEPLOY_PRIME_URL;
-const site = process.env.PUBLIC_SITE_URL || (isGitHubPages ? 'https://endotechnz.github.io' : netlifySite || 'https://endotechnz.github.io');
+const site = process.env.PUBLIC_SITE_URL || (isGitHubPages ? 'https://endotechnz.github.io/endotech-homepage' : netlifySite || 'https://endotechsg.com');
 const base = isGitHubPages ? '/endotech-homepage/' : '/';
 const shouldNoIndex = process.env.NETLIFY === 'true' && process.env.CONTEXT !== 'production';
+const contactEmail = process.env.PUBLIC_CONTACT_EMAIL || 'Steveshepherdnz@gmail.com';
 
 // https://astro.build/config
 export default defineConfig({
@@ -34,7 +35,7 @@ export default defineConfig({
         replacesTitle: true,
       },
       social: [
-        { icon: 'email', label: 'Contact', href: 'mailto:Steveshepherdnz@gmail.com' },
+        { icon: 'email', label: 'Contact', href: `mailto:${contactEmail}` },
       ],
       sidebar: [
         {
@@ -90,6 +91,9 @@ export default defineConfig({
       customCss: [
         './src/styles/custom.css',
       ],
+      components: {
+        Header: './src/components/starlight/Header.astro',
+      },
       // Disable Starlight's default homepage - our custom page handles /
       disable404Route: false,
     }),
