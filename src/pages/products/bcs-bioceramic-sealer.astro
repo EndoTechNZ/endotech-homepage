@@ -9,6 +9,7 @@ import DistributorCTA from '../../components/product/DistributorCTA.astro';
 import { bcsSealer, getProductDownloads } from '../../data/bcs';
 import { getBcsDownloads } from '../../utils/downloads';
 import { withBasePath } from '../../utils/paths';
+import { siteConfig } from '../../config/site';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const clinicalBenefitCards = bcsSealer.clinicalBenefits.map((benefit) => ({
@@ -26,7 +27,7 @@ const sealerSchema = {
   description: bcsSealer.shortDescription,
   brand: {
     '@type': 'Brand',
-    name: 'EndoTech Singapore',
+    name: siteConfig.name,
   },
   category: 'Bioceramic root canal sealer',
   image: [new URL(sealerImage, siteUrl).toString()],

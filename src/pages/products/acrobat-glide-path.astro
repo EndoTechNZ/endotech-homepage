@@ -5,6 +5,7 @@ import FeatureGrid from '../../components/product/FeatureGrid.astro';
 import ApplicationsGrid from '../../components/product/ApplicationsGrid.astro';
 import acrobatFiles from '../../assets/acrobat-glide-path-files.png';
 import { withBasePath } from '../../utils/paths';
+import { siteConfig } from '../../config/site';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const keyFeatureItems = [
@@ -104,7 +105,7 @@ const acrobatSchema = {
     'Rotary glide path files using Transform Metal Technology to create a controlled path to working length before shaping, with 13/.03, 15/.03, and 17/.03 sizes plus an MB2 option.',
   brand: {
     '@type': 'Brand',
-    name: 'EndoTech Singapore',
+    name: siteConfig.name,
   },
   category: 'Endodontic glide path files',
   image: [new URL(acrobatFiles.src, siteUrl).toString()],

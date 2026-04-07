@@ -9,6 +9,7 @@ import FAQAccordion from '../../components/product/FAQAccordion.astro';
 import DistributorCTA from '../../components/product/DistributorCTA.astro';
 import { bcsPutty } from '../../data/bcs';
 import { withBasePath } from '../../utils/paths';
+import { siteConfig } from '../../config/site';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const clinicalBenefitCards = bcsPutty.clinicalBenefits.map((benefit) => ({
@@ -24,7 +25,7 @@ const puttySchema = {
   description: bcsPutty.shortDescription,
   brand: {
     '@type': 'Brand',
-    name: 'EndoTech Singapore',
+    name: siteConfig.name,
   },
   category: 'Bioceramic root repair material',
   image: [new URL(puttyImage, siteUrl).toString()],

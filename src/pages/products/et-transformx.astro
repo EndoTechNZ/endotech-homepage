@@ -4,6 +4,7 @@ import ProductHero from '../../components/product/ProductHero.astro';
 import FeatureGrid from '../../components/product/FeatureGrid.astro';
 import etProduct from '../../assets/et-transformx.png';
 import { withBasePath } from '../../utils/paths';
+import { siteConfig } from '../../config/site';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const etVideoSrc = withBasePath('/videos/et-transformx-promo_1.mp4');
@@ -17,7 +18,7 @@ const etSchema = {
     'Rotary shaping files for clinicians who want to preserve established .04/.06-style sequence logic while improving apical control with Avatar Tip and Transform Technology.',
   brand: {
     '@type': 'Brand',
-    name: 'EndoTech Singapore',
+    name: siteConfig.name,
   },
   category: 'Endodontic rotary files',
   image: [new URL(etProduct.src, siteUrl).toString()],
