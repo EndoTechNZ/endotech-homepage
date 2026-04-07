@@ -92,6 +92,9 @@ export default defineConfig({
       customCss: [
         './src/styles/custom.css',
       ],
+      components: {
+        Header: './src/components/starlight/Header.astro',
+      },
       // Disable Starlight's default homepage - our custom page handles /
       disable404Route: false,
     }),

@@ -1,6 +1,6 @@
 ---
 import Layout from './Layout.astro';
-import logo from '../assets/logo-wordmark.png';
+import logoIcon from '../assets/endotech-logo-2.png';
 import { siteConfig } from '../config/site';
 
 interface Props {
@@ -13,6 +13,14 @@ interface Props {
 
 const { title, description, image, schema, accent = 'teal' } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const productMenu = [
+  { label: 'ET TransformX Files', href: `${base}products/et-transformx/` },
+  { label: 'PT TransformX Files', href: `${base}products/pt-transformx/` },
+  { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
+  { label: 'BCS BioCeramic Sealer', href: `${base}products/bcs-bioceramic-sealer/` },
+  { label: 'BCS BioCeramic Putty', href: `${base}products/bcs-bioceramic-putty/` },
+  { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
+];
 const accentClass = {
   teal: 'text-teal-700',
   violet: 'text-violet-700',
@@ -25,17 +33,41 @@ const accentClass = {
   <header class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/92 backdrop-blur">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
       <a href={base} class="flex items-center gap-3">
-        <img src={logo.src} alt={siteConfig.name} class="h-10 w-auto" />
+        <img src={logoIcon.src} alt={siteConfig.name} class="h-10 w-auto" />
+        <div class="leading-none">
+          <div class="text-lg font-bold tracking-tight text-slate-900">EndoTechNZ</div>
+          <div class="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-slate-500">New Zealand</div>
+        </div>
       </a>
       <nav class="hidden items-center gap-6 text-sm font-semibold text-slate-600 lg:flex">
-        <a href={base} class="hover:text-slate-900">Home</a>
-        <a href={`${base}products/bcs/`} class={`hover:text-slate-900 ${accentClass}`}>Products</a>
-        <a href={`${base}technique/workflow/`} class="hover:text-slate-900">Clinical Workflow</a>
-        <a href={`${base}technology/transform-technology/`} class="hover:text-slate-900">Technology</a>
-        <a href={`${base}resources/clinical-tips/`} class="hover:text-slate-900">Education</a>
-        <a href={`${base}products/bcs/evidence/`} class="hover:text-slate-900">Evidence & Downloads</a>
-        <a href={`${base}about/company/`} class="hover:text-slate-900">About</a>
-        <a href={`${base}about/contact/`} class="rounded-full bg-slate-900 px-5 py-2.5 text-white hover:bg-slate-800">Contact</a>
+        <a href={base} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Home</a>
+        <div class="group products-menu relative">
+          <button id="products-menu-button" type="button" class={`inline-flex origin-center items-center gap-2 transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900 focus:outline-none focus:text-slate-900 ${accentClass}`} aria-haspopup="true" aria-expanded="false" aria-controls="products-menu-panel">
+            Products
+            <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-y-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 9l6 6 6-6"></path>
+            </svg>
+          </button>
+          <div class="pointer-events-none absolute left-1/2 top-full z-40 h-4 w-72 -translate-x-1/2 opacity-0 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100"></div>
+          <div id="products-menu-panel" class="products-menu-panel pointer-events-none absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
+            <div class="rounded-[1.6rem] border border-slate-200/80 bg-white/96 p-3 shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)] backdrop-blur-xl">
+              <div class="mb-2 px-3 pt-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-cyan-700">Product Lineup</div>
+              <div class="grid gap-1">
+                {productMenu.map((item) => (
+                  <a href={item.href} class="rounded-2xl px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900">
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href={`${base}technique/workflow/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Clinical Workflow</a>
+        <a href={`${base}technology/transform-technology/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Technology</a>
+        <a href={`${base}resources/clinical-tips/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Education</a>
+        <a href={`${base}products/bcs/evidence/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Evidence & Downloads</a>
+        <a href={`${base}about/company/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">About</a>
+        <a href={`${base}about/contact/`} class="inline-flex origin-center rounded-full bg-slate-900 px-5 py-2.5 text-white transition-all duration-200 hover:scale-105 hover:bg-slate-800">Contact</a>
       </nav>
     </div>
   </header>
@@ -43,6 +75,43 @@ const accentClass = {
   <main>
     <slot />
   </main>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const productsMenu = document.querySelector('.products-menu');
+      const productsMenuButton = document.getElementById('products-menu-button');
+
+      function setProductsMenu(open) {
+        if (!productsMenu || !productsMenuButton) return;
+        productsMenu.classList.toggle('is-open', open);
+        productsMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      productsMenuButton?.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
+        setProductsMenu(!isOpen);
+      });
+
+      productsMenu?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setProductsMenu(false));
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!productsMenu) return;
+        if (!productsMenu.contains(event.target)) {
+          setProductsMenu(false);
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          setProductsMenu(false);
+        }
+      });
+    });
+  </script>
 
   <footer class="border-t border-slate-200 bg-slate-50">
     <div class="mx-auto max-w-7xl px-6 py-10">
@@ -63,3 +132,15 @@ const accentClass = {
     </div>
   </footer>
 </Layout>
+
+<style is:global>
+  .products-menu.is-open > .products-menu-panel,
+  .products-menu.is-open > .pointer-events-none {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .products-menu.is-open #products-menu-button svg {
+    transform: translateY(1px) rotate(180deg);
+  }
+</style>

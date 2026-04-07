@@ -1,0 +1,381 @@
+---
+import config from 'virtual:starlight/user-config';
+
+import LanguageSelect from 'virtual:starlight/components/LanguageSelect';
+import Search from 'virtual:starlight/components/Search';
+import SocialIcons from 'virtual:starlight/components/SocialIcons';
+import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+import logoIcon from '../../assets/endotech-logo-2.png';
+
+const base = import.meta.env.BASE_URL;
+const productMenu = [
+  { label: 'ET TransformX Files', href: `${base}products/et-transformx/` },
+  { label: 'PT TransformX Files', href: `${base}products/pt-transformx/` },
+  { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
+  { label: 'BCS BioCeramic Sealer', href: `${base}products/bcs-bioceramic-sealer/` },
+  { label: 'BCS BioCeramic Putty', href: `${base}products/bcs-bioceramic-putty/` },
+  { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
+];
+
+const shouldRenderSearch =
+	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
+---
+
+<div class="endotech-docs-header">
+  <div class="endotech-topbar sl-hidden lg:sl-flex">
+    <nav class="endotech-topnav">
+      <a href={base} class="nav-grow">Home</a>
+      <div class="group products-menu relative">
+        <button id="docs-products-menu-button" type="button" class="nav-grow" aria-haspopup="true" aria-expanded="false" aria-controls="docs-products-menu-panel">
+          Products
+          <svg class="menu-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 9l6 6 6-6"></path>
+          </svg>
+        </button>
+        <div class="products-menu-bridge"></div>
+        <div id="docs-products-menu-panel" class="products-menu-panel">
+          <div class="products-menu-shell">
+            <div class="products-menu-label">Product Lineup</div>
+            <div class="products-menu-list">
+              {productMenu.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href={`${base}technique/workflow/`} class="nav-grow">Clinical Workflow</a>
+      <a href={`${base}technology/transform-technology/`} class="nav-grow">Technology</a>
+      <a href={`${base}resources/clinical-tips/`} class="nav-grow">Education</a>
+      <a href={`${base}products/bcs/evidence/`} class="nav-grow">Evidence & Downloads</a>
+      <a href={`${base}about/company/`} class="nav-grow">About</a>
+      <a href={`${base}about/contact/`} class="contact-pill">Contact</a>
+    </nav>
+  </div>
+
+  <div class="header">
+    <div class="title-wrapper sl-flex">
+      <a href={base} class="docs-brand" aria-label="EndoTechNZ home">
+        <img src={logoIcon.src} alt="EndoTechNZ" class="docs-brand-icon" />
+        <span class="docs-brand-copy">
+          <span class="docs-brand-name">EndoTechNZ</span>
+          <span class="docs-brand-region">New Zealand</span>
+        </span>
+      </a>
+    </div>
+    <div class="sl-flex print:hidden">
+      {shouldRenderSearch && <Search />}
+    </div>
+    <div class="sl-hidden md:sl-flex print:hidden right-group">
+      <div class="sl-flex social-icons">
+        <SocialIcons />
+      </div>
+      <ThemeSelect />
+      <LanguageSelect />
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const productsMenu = document.querySelector('.endotech-docs-header .products-menu');
+    const productsMenuButton = document.getElementById('docs-products-menu-button');
+
+    function setProductsMenu(open) {
+      if (!productsMenu || !productsMenuButton) return;
+      productsMenu.classList.toggle('is-open', open);
+      productsMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    productsMenuButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
+      setProductsMenu(!isOpen);
+    });
+
+    productsMenu?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setProductsMenu(false));
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!productsMenu) return;
+      if (!productsMenu.contains(event.target)) {
+        setProductsMenu(false);
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setProductsMenu(false);
+      }
+    });
+  });
+</script>
+
+<style>
+  @layer starlight.core {
+    .endotech-docs-header {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .endotech-topbar {
+      align-items: center;
+      justify-content: center;
+      padding-top: 0.15rem;
+    }
+
+    .endotech-topnav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--sl-color-gray-2);
+    }
+
+    .endotech-topnav > a,
+    .endotech-topnav > .products-menu > button {
+      color: inherit;
+      text-decoration: none;
+      transition: color 160ms ease, transform 180ms ease;
+      transform-origin: center;
+    }
+
+    .endotech-topnav > a:hover,
+    .endotech-topnav > .products-menu > button:hover {
+      color: var(--sl-color-black);
+      transform: scale(1.1);
+    }
+
+    .docs-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: inherit;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .docs-brand-icon {
+      height: 2.5rem;
+      width: auto;
+      flex: 0 0 auto;
+    }
+
+    .docs-brand-copy {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .docs-brand-name {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--sl-color-black);
+      white-space: nowrap;
+    }
+
+    .docs-brand-region {
+      margin-top: 0.2rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sl-color-gray-3);
+      white-space: nowrap;
+    }
+
+    .products-menu {
+      position: relative;
+    }
+
+    .products-menu > button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: none;
+      border: 0;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .menu-chevron {
+      width: 0.95rem;
+      height: 0.95rem;
+      transition: transform 180ms ease;
+    }
+
+    .products-menu-bridge {
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      z-index: 40;
+      height: 1rem;
+      width: 18rem;
+      transform: translateX(-50%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .products-menu-panel {
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      z-index: 50;
+      width: 18rem;
+      transform: translateX(-50%);
+      padding-top: 0.75rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+
+    .products-menu-shell {
+      border: 1px solid var(--sl-color-gray-5);
+      border-radius: 1.3rem;
+      background: color-mix(in srgb, white 96%, transparent);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 24px 60px -28px rgba(15, 23, 42, 0.28);
+      padding: 0.75rem;
+    }
+
+    .products-menu-label {
+      padding: 0.5rem 0.75rem 0.35rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #0e7490;
+    }
+
+    .products-menu-list {
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .products-menu-list a {
+      border-radius: 1rem;
+      padding: 0.7rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--sl-color-gray-2);
+      text-decoration: none;
+      transition: background-color 160ms ease, color 160ms ease;
+    }
+
+    .products-menu-list a:hover {
+      background: var(--sl-color-gray-6);
+      color: var(--sl-color-black);
+    }
+
+    .products-menu:hover .products-menu-bridge,
+    .products-menu:hover .products-menu-panel,
+    .products-menu:focus-within .products-menu-bridge,
+    .products-menu:focus-within .products-menu-panel,
+    .products-menu.is-open .products-menu-bridge,
+    .products-menu.is-open .products-menu-panel {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .products-menu.is-open .menu-chevron {
+      transform: translateY(1px) rotate(180deg);
+    }
+
+    .contact-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: var(--sl-color-black);
+      color: white !important;
+      padding: 0.55rem 1rem;
+    }
+
+    .contact-pill:hover {
+      color: white !important;
+      opacity: 0.92;
+    }
+
+    .header {
+      display: flex;
+      gap: var(--sl-nav-gap);
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+    }
+
+    .title-wrapper {
+      overflow: clip;
+      padding: 0.25rem;
+      margin: -0.25rem;
+      min-width: 0;
+    }
+
+    .right-group,
+    .social-icons {
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .social-icons::after {
+      content: '';
+      height: 2rem;
+      border-inline-end: 1px solid var(--sl-color-gray-5);
+    }
+
+    @media (max-width: 63.99rem) {
+      .docs-brand {
+        gap: 0.55rem;
+      }
+
+      .docs-brand-icon {
+        height: 2.2rem;
+      }
+
+      .docs-brand-name {
+        font-size: 0.95rem;
+      }
+
+      .docs-brand-region {
+        font-size: 0.54rem;
+        letter-spacing: 0.16em;
+      }
+    }
+
+    @media (min-width: 50rem) {
+      :global(:root[data-has-sidebar]) {
+        --__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
+      }
+      :global(:root:not([data-has-toc])) {
+        --__toc-width: 0rem;
+      }
+      .header {
+        --__sidebar-width: max(0rem, var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x));
+        --__main-column-fr: calc(
+          (
+              100% + var(--__sidebar-pad, 0rem) - var(--__toc-width, var(--sl-sidebar-width)) -
+                (2 * var(--__toc-width, var(--sl-nav-pad-x))) - var(--sl-content-inline-start, 0rem) -
+                var(--sl-content-width)
+            ) / 2
+        );
+        display: grid;
+        grid-template-columns:
+          minmax(
+            calc(var(--__sidebar-width) + max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))),
+            auto
+          )
+          1fr
+          auto;
+        align-content: center;
+      }
+    }
+  }
+</style>
