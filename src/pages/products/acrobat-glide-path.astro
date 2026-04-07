@@ -116,6 +116,31 @@ const liveShopifyFacts = [
   { label: 'Availability', value: liveShopifyStatus },
   { label: 'Pack format', value: '6 files per pack' },
 ].filter(Boolean);
+const fallbackShopifyProductUrl = shopifyStoreDomain
+  ? `https://${shopifyStoreDomain}/products/acrobat-glide-path-files-13-03-21mm-6-pack`
+  : null;
+const fallbackShopifyFacts = [
+  { label: 'Current NZ price', value: '$65.00 NZD' },
+  { label: 'SKU', value: 'ACGP-130321RF' },
+  { label: 'Availability', value: 'Available to order online' },
+  { label: 'Pack format', value: '6 files per pack' },
+];
+const orderPanelFacts = liveShopifyFacts.length > 0 ? liveShopifyFacts : fallbackShopifyFacts;
+const orderPanelDescription = liveShopifyProduct
+  ? 'Start with the first live NZ Acrobat SKU now available through Shopify. This gives the NZ site a direct ordering path while the broader Acrobat range is added.'
+  : 'The first NZ Acrobat SKU is now part of the NZ commerce rollout. If the live cart handoff is still syncing, use the Shopify listing below or contact EndoTechNZ directly.';
+const orderPanelPrimaryCta = liveShopifyCartHref
+  ? { label: 'Add 6-pack to cart', href: liveShopifyCartHref }
+  : fallbackShopifyProductUrl
+    ? { label: 'View Shopify product', href: fallbackShopifyProductUrl }
+    : { label: 'Contact EndoTechNZ', href: '/about/contact/' };
+const orderPanelSecondaryCta =
+  liveShopifyProduct?.onlineStoreUrl || fallbackShopifyProductUrl
+    ? {
+        label: 'Open Shopify listing',
+        href: liveShopifyProduct?.onlineStoreUrl ?? fallbackShopifyProductUrl!,
+      }
+    : { label: 'Contact EndoTechNZ', href: '/about/contact/' };
 
 const standardRange = [
   { size: '13/.03', sku21: 'ACGP-130321RF', sku25: 'ACGP-130325RF', sku29: 'ACGP-130329RF' },
@@ -164,23 +189,13 @@ const acrobatSchema = {
     visualLabel="Rotary Glide Path"
   />
 
-  {liveShopifyProduct && liveShopifyFacts.length > 0 && (
-    <ShopifyOrderPanel
-      title="Order Acrobat Glide Path Files online"
-      description="Start with the first live NZ Acrobat SKU now available through Shopify. This gives the NZ site a direct ordering path while the broader Acrobat range is added."
-      facts={liveShopifyFacts}
-      primaryCta={
-        liveShopifyCartHref
-          ? { label: 'Add 6-pack to cart', href: liveShopifyCartHref }
-          : undefined
-      }
-      secondaryCta={
-        liveShopifyProduct.onlineStoreUrl
-          ? { label: 'View Shopify product', href: liveShopifyProduct.onlineStoreUrl }
-          : undefined
-      }
-    />
-  )}
+  <ShopifyOrderPanel
+    title="Order Acrobat Glide Path Files online"
+    description={orderPanelDescription}
+    facts={orderPanelFacts}
+    primaryCta={orderPanelPrimaryCta}
+    secondaryCta={orderPanelSecondaryCta}
+  />
 
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto grid max-w-7xl gap-4 px-6 py-14 sm:gap-6 sm:py-16 lg:grid-cols-2 lg:py-20">
