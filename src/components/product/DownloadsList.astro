@@ -9,34 +9,26 @@ interface Props {
 }
 
 const { title, intro, items } = Astro.props;
-const hasDownloads = items.some((item) => item.href !== '#');
 ---
 
 <section id="downloads" class="border-b border-slate-200/80 bg-white">
   <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
     <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
     {intro && <p class="mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8">{intro}</p>}
-    <div class="mt-8 grid gap-4 sm:mt-10">
-      {items.map((item) => (
-        <article class="flex flex-col gap-4 rounded-[1.35rem] border border-slate-200 bg-slate-50/60 p-4 sm:rounded-[1.5rem] sm:p-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{item.type}</p>
-            <h3 class="mt-2 text-base font-bold text-slate-900 sm:text-lg">{item.label}</h3>
-          </div>
-          {item.href === '#' ? (
-            <span class="inline-flex items-center rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-500">Awaiting files</span>
-          ) : (
+    {items.length > 0 && (
+      <div class="mt-8 grid gap-4 sm:mt-10">
+        {items.map((item) => (
+          <article class="flex flex-col gap-4 rounded-[1.35rem] border border-slate-200 bg-slate-50/60 p-4 sm:rounded-[1.5rem] sm:p-5 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{item.type}</p>
+              <h3 class="mt-2 text-base font-bold text-slate-900 sm:text-lg">{item.label}</h3>
+            </div>
             <a href={withBasePath(item.href)} class="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 sm:w-auto">
               Open download
             </a>
-          )}
-        </article>
-      ))}
-    </div>
-    {!hasDownloads && (
-      <p class="mt-6 text-sm leading-7 text-slate-500">
-        Add brochure, IFU, SDS, or evidence files to <code>public/downloads/bcs/</code> and they will appear here automatically at build time.
-      </p>
+          </article>
+        ))}
+      </div>
     )}
   </div>
 </section>

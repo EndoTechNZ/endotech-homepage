@@ -260,7 +260,5 @@ export const literatureReferences = [
 ];
 
 export function getProductDownloads(downloads: DownloadItem[]) {
-  return downloads.length > 0
-    ? downloads
-    : [{ label: 'Drop brochure, IFU, SDS, or evidence files into public/downloads/bcs/', href: '#', type: 'Document' as const, fileName: 'placeholder' }];
+  return downloads;
 }
