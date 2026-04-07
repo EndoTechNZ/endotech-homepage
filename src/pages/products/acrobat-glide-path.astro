@@ -3,9 +3,11 @@ import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/product/ProductHero.astro';
 import FeatureGrid from '../../components/product/FeatureGrid.astro';
 import ApplicationsGrid from '../../components/product/ApplicationsGrid.astro';
+import ShopifyOrderPanel from '../../components/product/ShopifyOrderPanel.astro';
 import acrobatFiles from '../../assets/acrobat-glide-path-files.png';
 import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
+import { getShopifyProductByHandle, getShopifyStoreDomain } from '../../utils/shopify';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const keyFeatureItems = [
@@ -91,6 +93,29 @@ const ctas = [
   { label: 'Contact EndoTech', href: '/about/contact/', variant: 'secondary' as const },
 ];
 const acrobatClinicalBlueprintSrc = withBasePath('/downloads/Acrobat_Clinical_Blueprint.pdf');
+const shopifyStoreDomain = getShopifyStoreDomain();
+const liveShopifyProduct = await getShopifyProductByHandle('acrobat-glide-path-files-13-03-21mm-6-pack').catch(
+  () => null,
+);
+const liveShopifyVariant = liveShopifyProduct?.variants[0] ?? null;
+const liveShopifyPrice = liveShopifyVariant
+  ? new Intl.NumberFormat('en-NZ', {
+      style: 'currency',
+      currency: liveShopifyVariant.price.currencyCode,
+      minimumFractionDigits: 2,
+    }).format(Number(liveShopifyVariant.price.amount))
+  : null;
+const liveShopifyCartHref =
+  shopifyStoreDomain && liveShopifyVariant?.numericId
+    ? `https://${shopifyStoreDomain}/cart/${liveShopifyVariant.numericId}:1`
+    : null;
+const liveShopifyStatus = liveShopifyVariant?.availableForSale ? 'Available to order online' : 'Currently unavailable';
+const liveShopifyFacts = [
+  liveShopifyPrice ? { label: 'Current NZ price', value: liveShopifyPrice } : null,
+  liveShopifyVariant?.sku ? { label: 'SKU', value: liveShopifyVariant.sku } : null,
+  { label: 'Availability', value: liveShopifyStatus },
+  { label: 'Pack format', value: '6 files per pack' },
+].filter(Boolean);
 
 const standardRange = [
   { size: '13/.03', sku21: 'ACGP-130321RF', sku25: 'ACGP-130325RF', sku29: 'ACGP-130329RF' },
@@ -138,6 +163,24 @@ const acrobatSchema = {
     imageAlt="Acrobat Glide Path Files in sizes 13/.03, 15/.03, and 17/.03"
     visualLabel="Rotary Glide Path"
   />
+
+  {liveShopifyProduct && liveShopifyFacts.length > 0 && (
+    <ShopifyOrderPanel
+      title="Order Acrobat Glide Path Files online"
+      description="Start with the first live NZ Acrobat SKU now available through Shopify. This gives the NZ site a direct ordering path while the broader Acrobat range is added."
+      facts={liveShopifyFacts}
+      primaryCta={
+        liveShopifyCartHref
+          ? { label: 'Add 6-pack to cart', href: liveShopifyCartHref }
+          : undefined
+      }
+      secondaryCta={
+        liveShopifyProduct.onlineStoreUrl
+          ? { label: 'View Shopify product', href: liveShopifyProduct.onlineStoreUrl }
+          : undefined
+      }
+    />
+  )}
 
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto grid max-w-7xl gap-4 px-6 py-14 sm:gap-6 sm:py-16 lg:grid-cols-2 lg:py-20">
