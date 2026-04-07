@@ -5,6 +5,7 @@ import logo from '../assets/logo-wordmark.png';
 import logoDark from '../assets/logo-wordmark-dark.png';
 import heroProduct from '../assets/transformx-rotary-file-system.png';
 import etProduct from '../assets/et-transformx.png';
+import { siteConfig } from '../config/site';
 
 // Base URL for all internal links
 const base = import.meta.env.BASE_URL;
@@ -34,16 +35,16 @@ const insightCards = [
 ---
 
 <Layout
-  title="EndoTech Singapore | TransformX™ Rotary Endodontic Files"
-  description="Explore TransformX rotary endodontic files, Acrobat rotary glide path files, and BCS bioceramic materials with clinical workflow guidance, downloads, and product-specific technical pages."
+  title={siteConfig.homepageTitle}
+  description={siteConfig.defaultDescription}
   image={heroProduct.src}
 >
   <!-- Navigation -->
   <nav id="site-nav" class="fixed top-0 left-0 right-0 z-50 border-b border-slate-100/80 bg-white/78 backdrop-blur-md transition-all duration-300 dark:border-slate-800/80 dark:bg-slate-900/78">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between transition-all duration-300">
       <a href={base} class="flex items-center gap-3">
-        <img src={logo.src} alt="EndoTech Singapore" class="h-10 w-auto dark:hidden" />
-        <img src={logoDark.src} alt="EndoTech Singapore" class="h-10 w-auto hidden dark:block" />
+        <img src={logo.src} alt={siteConfig.name} class="h-10 w-auto dark:hidden" />
+        <img src={logoDark.src} alt={siteConfig.name} class="h-10 w-auto hidden dark:block" />
       </a>
       <div class="hidden md:flex items-center gap-8">
         <a href="#products" data-section-link="products" class="nav-link text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors">Products</a>
@@ -75,7 +76,7 @@ const insightCards = [
         <a href="#compare" class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Compare ET, PT, and sealer</a>
         <a href="#workflow" class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Review the workflow</a>
         <a href={`${base}resources/downloads/`} class="mobile-nav-link rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-cyan-700 dark:hover:text-white">Download the clinical pack</a>
-        <a href="mailto:Steveshepherdnz@gmail.com" class="mobile-nav-link inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white dark:bg-white dark:text-slate-900">Contact EndoTech</a>
+        <a href={`mailto:${siteConfig.email}`} class="mobile-nav-link inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white dark:bg-white dark:text-slate-900">Contact {siteConfig.shortName}</a>
       </div>
     </div>
   </nav>
@@ -117,8 +118,8 @@ const insightCards = [
             <a href={`${base}resources/downloads/`} class="inline-flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-8 py-4 rounded-full font-semibold border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
               Download Clinical Pack
             </a>
-            <a href="mailto:Steveshepherdnz@gmail.com" class="inline-flex items-center gap-2 px-2 py-4 font-semibold text-slate-900 transition-colors hover:text-cyan-600 dark:text-white dark:hover:text-cyan-400">
-              Talk to EndoTech
+            <a href={`mailto:${siteConfig.email}`} class="inline-flex items-center gap-2 px-2 py-4 font-semibold text-slate-900 transition-colors hover:text-cyan-600 dark:text-white dark:hover:text-cyan-400">
+              Talk to {siteConfig.shortName}
             </a>
           </div>
 
@@ -789,9 +790,9 @@ const insightCards = [
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid md:grid-cols-4 gap-12 mb-12">
         <div class="md:col-span-2">
-          <img src={logo.src} alt="EndoTech Singapore" class="h-12 w-auto mb-6 dark:hidden" />
-          <img src={logoDark.src} alt="EndoTech Singapore" class="h-12 w-auto mb-6 hidden dark:block opacity-90" />
-          <p class="text-slate-600 dark:text-slate-400 max-w-sm leading-relaxed">Advanced endodontic instruments for dental professionals across Singapore and the Asia-Pacific region.</p>
+          <img src={logo.src} alt={siteConfig.name} class="h-12 w-auto mb-6 dark:hidden" />
+          <img src={logoDark.src} alt={siteConfig.name} class="h-12 w-auto mb-6 hidden dark:block opacity-90" />
+          <p class="text-slate-600 dark:text-slate-400 max-w-sm leading-relaxed">Advanced endodontic instruments for dental professionals across {siteConfig.regionLabel} and the Asia-Pacific region.</p>
         </div>
 
         <div>
@@ -809,16 +810,16 @@ const insightCards = [
             <li><a href={`${base}products/overview/`} class="hover:text-slate-900 dark:hover:text-white transition-colors">Clinical Docs</a></li>
             <li><a href={`${base}technique/workflow/`} class="hover:text-slate-900 dark:hover:text-white transition-colors">Technique Guides</a></li>
             <li><a href={`${base}resources/downloads/`} class="hover:text-slate-900 dark:hover:text-white transition-colors">Downloads</a></li>
-            <li><a href="mailto:Steveshepherdnz@gmail.com" class="hover:text-slate-900 dark:hover:text-white transition-colors">Contact</a></li>
+            <li><a href={`mailto:${siteConfig.email}`} class="hover:text-slate-900 dark:hover:text-white transition-colors">Contact</a></li>
           </ul>
         </div>
       </div>
 
       <div class="border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-slate-500 text-sm">&copy; {new Date().getFullYear()} EndoTech Singapore. All rights reserved.</p>
+        <p class="text-slate-500 text-sm">&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
 
         <div class="flex items-center gap-4">
-          <p class="text-slate-500 text-sm">Steveshepherdnz@gmail.com</p>
+          <p class="text-slate-500 text-sm">{siteConfig.email}</p>
 
           <!-- Theme Picker -->
           <div class="flex items-center gap-1 bg-slate-200 dark:bg-slate-800 rounded-full p-1">

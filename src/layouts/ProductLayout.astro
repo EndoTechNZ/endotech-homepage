@@ -1,6 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import logo from '../assets/logo-wordmark.png';
+import { siteConfig } from '../config/site';
 
 interface Props {
   title: string;
@@ -24,7 +25,7 @@ const accentClass = {
   <header class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/92 backdrop-blur">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
       <a href={base} class="flex items-center gap-3">
-        <img src={logo.src} alt="EndoTech Singapore" class="h-10 w-auto" />
+        <img src={logo.src} alt={siteConfig.name} class="h-10 w-auto" />
       </a>
       <nav class="hidden items-center gap-6 text-sm font-semibold text-slate-600 lg:flex">
         <a href={base} class="hover:text-slate-900">Home</a>
@@ -47,9 +48,9 @@ const accentClass = {
     <div class="mx-auto max-w-7xl px-6 py-10">
       <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div>
-          <p class="text-lg font-bold text-slate-900">EndoTech Singapore</p>
+          <p class="text-lg font-bold text-slate-900">{siteConfig.name}</p>
           <p class="mt-2 max-w-xl text-sm leading-7 text-slate-600">
-            Clinical endodontic systems and bioceramic materials presented with a workflow-first, evidence-aware approach.
+            {siteConfig.organizationDescription}
           </p>
         </div>
         <div class="flex flex-wrap gap-4 text-sm font-semibold text-slate-600">

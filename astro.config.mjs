@@ -9,6 +9,8 @@ const netlifySite = process.env.URL || process.env.DEPLOY_PRIME_URL;
 const site = process.env.PUBLIC_SITE_URL || (isGitHubPages ? 'https://endotechnz.github.io' : netlifySite || 'https://endotechnz.github.io');
 const base = isGitHubPages ? '/endotech-homepage/' : '/';
 const shouldNoIndex = process.env.NETLIFY === 'true' && process.env.CONTEXT !== 'production';
+const docsTitle = process.env.PUBLIC_DOCS_TITLE || 'EndoTech Docs';
+const contactEmail = process.env.PUBLIC_CONTACT_EMAIL || 'Steveshepherdnz@gmail.com';
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,7 +18,7 @@ export default defineConfig({
   base,
   integrations: [
     starlight({
-      title: 'EndoTech Docs',
+      title: docsTitle,
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
@@ -34,7 +36,7 @@ export default defineConfig({
         replacesTitle: true,
       },
       social: [
-        { icon: 'email', label: 'Contact', href: 'mailto:Steveshepherdnz@gmail.com' },
+        { icon: 'email', label: 'Contact', href: `mailto:${contactEmail}` },
       ],
       sidebar: [
         {
