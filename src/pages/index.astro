@@ -142,74 +142,74 @@ const insightCards = [
     <div class="absolute top-32 left-20 w-px h-32 bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent hidden lg:block"></div>
     <div class="absolute top-48 left-32 w-16 h-px bg-gradient-to-r from-cyan-500/20 to-transparent hidden lg:block"></div>
 
-    <div class="relative max-w-7xl mx-auto px-6 py-14 lg:py-20">
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start lg:items-end">
-        <div class="space-y-8">
-            <h1 class="text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white leading-[1.1] tracking-tight">
+    <div class="relative mx-auto max-w-7xl px-6 py-14 lg:py-20">
+      <div class="grid items-start gap-12 lg:grid-cols-2 lg:items-end lg:gap-16">
+        <div class="min-w-0 space-y-8">
+            <h1 class="text-4xl font-bold leading-[1.08] tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl xl:text-7xl">
             Reduce the
             <span class="block text-cyan-600 dark:text-cyan-400">UNEXPECTED</span>
-            <span class="block text-slate-600 dark:text-slate-400 font-medium text-3xl lg:text-4xl xl:text-5xl mt-3">in Endodontics</span>
+            <span class="mt-3 block text-2xl font-medium text-slate-600 dark:text-slate-400 sm:text-3xl lg:text-4xl xl:text-5xl">in Endodontics</span>
           </h1>
 
-          <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
+          <p class="max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-400 sm:text-xl">
             Evaluate a rotary file system built to improve <span class="text-slate-900 dark:text-white font-semibold">working-length control</span>, maintain <span class="text-slate-900 dark:text-white font-semibold">canal centring</span>, and reduce the likelihood of <span class="text-slate-900 dark:text-white font-semibold">ledging, transportation, and file separation</span> in curved anatomy.
           </p>
 
-          <div class="flex flex-wrap gap-4 pt-2">
-            <a href="#products" class="group inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all hover:shadow-xl hover:shadow-slate-900/20 hover:-translate-y-0.5">
+          <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap sm:gap-4">
+            <a href="#products" class="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-center font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl hover:shadow-slate-900/20 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 sm:w-auto">
               View Product Systems
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
             </a>
-            <a href={`${base}resources/downloads/`} class="inline-flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-8 py-4 rounded-full font-semibold border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+            <a href={`${base}resources/downloads/`} class="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-slate-200 bg-white px-8 py-4 text-center font-semibold text-slate-900 transition-all hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:border-slate-600 dark:hover:bg-slate-700 sm:w-auto">
               Download Clinical Pack
             </a>
-            <a href={`mailto:${siteConfig.email}`} class="inline-flex items-center gap-2 px-2 py-4 font-semibold text-slate-900 transition-colors hover:text-cyan-600 dark:text-white dark:hover:text-cyan-400">
+            <a href={`mailto:${siteConfig.email}`} class="inline-flex w-full items-center justify-center gap-2 px-2 py-2 text-center font-semibold text-slate-900 transition-colors hover:text-cyan-600 dark:text-white dark:hover:text-cyan-400 sm:w-auto sm:justify-start sm:py-4">
               Talk to {siteConfig.shortName}
             </a>
           </div>
 
           <div class="grid gap-3 sm:grid-cols-2">
-            <div class="rounded-2xl border border-cyan-100 bg-white/90 px-4 py-4 shadow-sm shadow-cyan-100/40 backdrop-blur dark:border-cyan-900/60 dark:bg-slate-900/80 dark:shadow-black/20">
+            <div class="min-w-0 overflow-hidden rounded-2xl border border-cyan-100 bg-white/90 px-4 py-4 shadow-sm shadow-cyan-100/40 backdrop-blur dark:border-cyan-900/60 dark:bg-slate-900/80 dark:shadow-black/20">
               <p class="text-sm font-semibold text-slate-900 dark:text-white">Built around familiar PT and ET-style workflows</p>
               <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Designed to slot into existing sequence logic and established motor settings.</p>
             </div>
-            <div class="rounded-2xl border border-cyan-100 bg-white/90 px-4 py-4 shadow-sm shadow-cyan-100/40 backdrop-blur dark:border-cyan-900/60 dark:bg-slate-900/80 dark:shadow-black/20">
+            <div class="min-w-0 overflow-hidden rounded-2xl border border-cyan-100 bg-white/90 px-4 py-4 shadow-sm shadow-cyan-100/40 backdrop-blur dark:border-cyan-900/60 dark:bg-slate-900/80 dark:shadow-black/20">
               <p class="text-sm font-semibold text-slate-900 dark:text-white">Clinical evaluation comes first</p>
               <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Open workflow sheets, part numbers, and system comparisons before contacting sales.</p>
             </div>
           </div>
 
           <div class="grid gap-4 pt-6 border-t border-slate-100 dark:border-slate-800 sm:grid-cols-3">
-            <div class="rounded-3xl border border-slate-200/80 bg-white/92 p-5 shadow-lg shadow-slate-200/45 backdrop-blur dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-black/20">
+            <div class="min-w-0 overflow-hidden rounded-3xl border border-slate-200/80 bg-white/92 p-5 shadow-lg shadow-slate-200/45 backdrop-blur dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-black/20">
               <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 shadow-sm shadow-cyan-100 dark:bg-cyan-950/60 dark:text-cyan-400 dark:shadow-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 6h12M6 12h12M6 18h7"></path>
                 </svg>
               </div>
-              <div class="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-cyan-600/80 dark:text-cyan-400/80">Workflow Options</div>
-              <div class="mt-3 text-2xl font-bold leading-tight text-slate-900 dark:text-white">Three File Systems + One Glidepath</div>
+              <div class="mt-5 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-cyan-600/80 dark:text-cyan-400/80 sm:text-[0.7rem] sm:tracking-[0.28em]">Workflow Options</div>
+              <div class="mt-3 text-xl font-bold leading-tight text-slate-900 dark:text-white sm:text-2xl [overflow-wrap:anywhere]">Three File Systems + One Glidepath</div>
               <div class="mt-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Choose the shaping workflow that matches how you already work, with glidepath support coming too.</div>
             </div>
-            <div class="rounded-3xl border border-slate-200/80 bg-white/92 p-5 shadow-lg shadow-slate-200/45 backdrop-blur dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-black/20">
+            <div class="min-w-0 overflow-hidden rounded-3xl border border-slate-200/80 bg-white/92 p-5 shadow-lg shadow-slate-200/45 backdrop-blur dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-black/20">
               <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 shadow-sm shadow-cyan-100 dark:bg-cyan-950/60 dark:text-cyan-400 dark:shadow-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 5v14M5 12h14"></path>
                 </svg>
               </div>
-              <div class="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-cyan-600/80 dark:text-cyan-400/80">Clinical Access</div>
-              <div class="mt-3 text-2xl font-bold leading-tight text-slate-900 dark:text-white">Clinical Downloads</div>
+              <div class="mt-5 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-cyan-600/80 dark:text-cyan-400/80 sm:text-[0.7rem] sm:tracking-[0.28em]">Clinical Access</div>
+              <div class="mt-3 text-xl font-bold leading-tight text-slate-900 dark:text-white sm:text-2xl [overflow-wrap:anywhere]">Clinical Downloads</div>
               <div class="mt-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Open technique sheets, part numbers, and chairside handouts.</div>
             </div>
-            <div class="rounded-3xl border border-slate-200/80 bg-white/92 p-5 shadow-lg shadow-slate-200/45 backdrop-blur dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-black/20">
+            <div class="min-w-0 overflow-hidden rounded-3xl border border-slate-200/80 bg-white/92 p-5 shadow-lg shadow-slate-200/45 backdrop-blur dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-black/20">
               <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 shadow-sm shadow-cyan-100 dark:bg-cyan-950/60 dark:text-cyan-400 dark:shadow-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12h18M12 3v18"></path>
                 </svg>
               </div>
-              <div class="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-cyan-600/80 dark:text-cyan-400/80">Regional Help</div>
-              <div class="mt-3 text-2xl font-bold leading-tight text-slate-900 dark:text-white">US, AU, NZ, JP Support</div>
+              <div class="mt-5 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-cyan-600/80 dark:text-cyan-400/80 sm:text-[0.7rem] sm:tracking-[0.28em]">Regional Help</div>
+              <div class="mt-3 text-xl font-bold leading-tight text-slate-900 dark:text-white sm:text-2xl [overflow-wrap:anywhere]">US, AU, NZ, JP Support</div>
               <div class="mt-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400">US, AU, NZ, JP supply, product-fit help, and ordering support.</div>
             </div>
           </div>
@@ -302,24 +302,24 @@ const insightCards = [
       </div>
 
       <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <a href={`${base}downloads/ET-Technique-Work-Flow.pdf`} class="proof-card rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+        <a href={`${base}downloads/ET-Technique-Work-Flow.pdf`} class="proof-card min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
           <div class="relative z-10">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Technique</p>
             <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">ET Workflow PDF</h3>
             <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Open the ET sequence clinicians can review chairside or share with the team.</p>
           </div>
         </a>
-        <a href={`${base}downloads/PT-Technique-Work-Flow.pdf`} class="proof-card rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+        <a href={`${base}downloads/PT-Technique-Work-Flow.pdf`} class="proof-card min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
           <div class="relative z-10">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Technique</p>
             <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">PT Workflow PDF</h3>
             <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Stay inside a familiar PT-style sequence while checking order and shaping intent.</p>
           </div>
         </a>
-        <div class="proof-card part-number-card group relative rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+        <div class="proof-card part-number-card group relative min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
           <div class="relative z-10">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Ordering</p>
-            <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">Part-Number Sheets</h3>
+            <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white [overflow-wrap:anywhere]">Part-Number Sheets</h3>
             <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Give distributors and clinic buyers the practical ordering detail they expect. Choose the file system sheet on hover.</p>
           </div>
           <div class="part-number-menu pointer-events-none absolute inset-x-4 bottom-4 z-20 translate-y-2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100">
@@ -335,7 +335,7 @@ const insightCards = [
             </div>
           </div>
         </div>
-        <a href={`${base}research/evidence/`} class="proof-card rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
+        <a href={`${base}research/evidence/`} class="proof-card min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-white hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-cyan-700 dark:hover:bg-slate-900/90">
           <div class="relative z-10">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-400">Rationale</p>
             <h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">Clinical Evidence</h3>
