@@ -3,7 +3,6 @@ import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/product/ProductHero.astro';
 import FeatureGrid from '../../components/product/FeatureGrid.astro';
 import ApplicationsGrid from '../../components/product/ApplicationsGrid.astro';
-import ShopifyOrderPanel from '../../components/product/ShopifyOrderPanel.astro';
 import acrobatFiles from '../../assets/acrobat-glide-path-files.png';
 import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
@@ -94,61 +93,74 @@ const ctas = [
 ];
 const acrobatClinicalBlueprintSrc = withBasePath('/downloads/Acrobat_Clinical_Blueprint.pdf');
 const shopifyStoreDomain = getShopifyStoreDomain();
-const shopifyLookup = await getShopifyProductByHandle('acrobat-glide-path-files-13-03-21mm-6-pack');
-const liveShopifyProduct = shopifyLookup.product;
-const liveShopifyVariant =
-  liveShopifyProduct?.variants.find((variant) => variant.availableForSale) ??
-  liveShopifyProduct?.variants[0] ??
-  null;
-const liveShopifyPrice = liveShopifyVariant
-  ? new Intl.NumberFormat('en-NZ', {
-      style: 'currency',
-      currency: liveShopifyVariant.price.currencyCode,
-      minimumFractionDigits: 2,
-    }).format(Number(liveShopifyVariant.price.amount))
-  : null;
-const liveShopifyCartHref =
-  shopifyStoreDomain && liveShopifyVariant?.numericId
-    ? `https://${shopifyStoreDomain}/cart/${liveShopifyVariant.numericId}:1`
-    : null;
-const liveShopifyStatus = liveShopifyVariant?.availableForSale ? 'Available to order online' : 'Currently unavailable';
-const liveShopifyFacts = [
-  liveShopifyPrice ? { label: 'Current NZ price', value: liveShopifyPrice } : null,
-  liveShopifyVariant?.sku ? { label: 'SKU', value: liveShopifyVariant.sku } : null,
-  { label: 'Availability', value: liveShopifyStatus },
-  { label: 'Pack format', value: '6 files per pack' },
-].filter(Boolean);
-const fallbackShopifyProductUrl = shopifyStoreDomain
-  ? `https://${shopifyStoreDomain}/products/acrobat-glide-path-files-13-03-21mm-6-pack`
-  : null;
-const fallbackShopifyFacts = [
-  { label: 'Current NZ price', value: '$65.00 NZD' },
-  { label: 'SKU', value: 'ACGP-130321RF' },
-  { label: 'Availability', value: 'Available to order online' },
-  { label: 'Pack format', value: '6 files per pack' },
-];
-const orderPanelFacts = liveShopifyFacts.length > 0 ? liveShopifyFacts : fallbackShopifyFacts;
-const orderPanelDescription = liveShopifyProduct
-  ? 'Start with the first live NZ Acrobat SKU now available through Shopify. This gives the NZ site a direct ordering path while the broader Acrobat range is added.'
-  : 'The first NZ Acrobat SKU is now part of the NZ commerce rollout. If the live cart handoff is still syncing, use the Shopify listing below or contact EndoTechNZ directly.';
-const orderPanelPrimaryCta = liveShopifyCartHref
-  ? { label: 'Add 6-pack to cart', href: liveShopifyCartHref }
-  : fallbackShopifyProductUrl
-    ? { label: 'View Shopify product', href: fallbackShopifyProductUrl }
-    : { label: 'Contact EndoTechNZ', href: '/about/contact/' };
-const orderPanelSecondaryCta =
-  liveShopifyProduct?.onlineStoreUrl || fallbackShopifyProductUrl
-    ? {
-        label: 'Open Shopify listing',
-        href: liveShopifyProduct?.onlineStoreUrl ?? fallbackShopifyProductUrl!,
-      }
-    : { label: 'Contact EndoTechNZ', href: '/about/contact/' };
 
 const standardRange = [
-  { size: '13/.03', sku21: 'ACGP-130321RF', sku25: 'ACGP-130325RF', sku29: 'ACGP-130329RF' },
-  { size: '15/.03', sku21: 'ACGP-150321RF', sku25: 'ACGP-150325RF', sku29: 'ACGP-150329RF' },
-  { size: '17/.03', sku21: 'ACGP-170321RF', sku25: 'ACGP-170325RF', sku29: 'ACGP-170329RF' },
+  {
+    size: '13/.03',
+    items: [
+      { length: '21 mm', sku: 'ACGP-130321RF', handle: 'acrobat-glide-path-files-13-03-21mm-6-pack' },
+      { length: '25 mm', sku: 'ACGP-130325RF', handle: 'acrobat-glide-path-files-13-03-25mm-6-pack' },
+      { length: '29 mm', sku: 'ACGP-130329RF', handle: 'acrobat-glide-path-files-13-03-29mm-6-pack' },
+    ],
+  },
+  {
+    size: '15/.03',
+    items: [
+      { length: '21 mm', sku: 'ACGP-150321RF', handle: 'acrobat-glide-path-files-15-03-21mm-6-pack' },
+      { length: '25 mm', sku: 'ACGP-150325RF', handle: 'acrobat-glide-path-files-15-03-25mm-6-pack' },
+      { length: '29 mm', sku: 'ACGP-150329RF', handle: 'acrobat-glide-path-files-15-03-29mm-6-pack' },
+    ],
+  },
+  {
+    size: '17/.03',
+    items: [
+      { length: '21 mm', sku: 'ACGP-170321RF', handle: 'acrobat-glide-path-files-17-03-21mm-6-pack' },
+      { length: '25 mm', sku: 'ACGP-170325RF', handle: 'acrobat-glide-path-files-17-03-25mm-6-pack' },
+      { length: '29 mm', sku: 'ACGP-170329RF', handle: 'acrobat-glide-path-files-17-03-29mm-6-pack' },
+    ],
+  },
 ];
+const allAcrobatShopifyEntries = standardRange.flatMap((row) =>
+  row.items.map((item) => ({
+    ...item,
+    size: row.size,
+  })),
+);
+
+const formatNzPrice = (amount: string, currencyCode: string) =>
+  new Intl.NumberFormat('en-NZ', {
+    style: 'currency',
+    currency: currencyCode,
+    minimumFractionDigits: 2,
+  }).format(Number(amount));
+
+const acrobatShopifyCards = await Promise.all(
+  allAcrobatShopifyEntries.map(async (entry) => {
+    const lookup = await getShopifyProductByHandle(entry.handle);
+    const product = lookup.product;
+    const variant = product?.variants.find((item) => item.availableForSale) ?? product?.variants[0] ?? null;
+    const price = variant ? formatNzPrice(variant.price.amount, variant.price.currencyCode) : '$65.00 NZD';
+    const status = variant?.availableForSale ? 'Available to order online' : 'Currently unavailable';
+    const productUrl = product?.onlineStoreUrl ?? (shopifyStoreDomain ? `https://${shopifyStoreDomain}/products/${entry.handle}` : null);
+    const cartUrl =
+      shopifyStoreDomain && variant?.numericId ? `https://${shopifyStoreDomain}/cart/${variant.numericId}:1` : null;
+
+    return {
+      ...entry,
+      price,
+      status,
+      productUrl,
+      cartUrl,
+      hasLiveData: Boolean(product && variant),
+    };
+  }),
+);
+
+const availableAcrobatCount = acrobatShopifyCards.filter((entry) => entry.status === 'Available to order online').length;
+const orderPanelDescription =
+  availableAcrobatCount === acrobatShopifyCards.length
+    ? 'The full Acrobat .03 sequence is now available online across 21 mm, 25 mm, and 29 mm lengths. Choose the exact file and length needed for the glide path stage.'
+    : 'The Acrobat .03 sequence is being loaded into the NZ Shopify catalog. Use the cards below to open the exact file length required, and add directly to cart where live ordering is ready.';
 const acrobatSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -191,13 +203,83 @@ const acrobatSchema = {
     visualLabel="Rotary Glide Path"
   />
 
-  <ShopifyOrderPanel
-    title="Order Acrobat Glide Path Files online"
-    description={orderPanelDescription}
-    facts={orderPanelFacts}
-    primaryCta={orderPanelPrimaryCta}
-    secondaryCta={orderPanelSecondaryCta}
-  />
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
+      <div class="overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50/70 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.35)]">
+        <div class="border-b border-slate-200/80 px-6 py-8 sm:px-8 sm:py-10">
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">NZ Ordering</p>
+          <div class="mt-4 grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
+            <div>
+              <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Order the Acrobat sequence online</h2>
+              <p class="mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{orderPanelDescription}</p>
+            </div>
+            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              <article class="rounded-[1.15rem] border border-slate-200 bg-white px-4 py-4">
+                <p class="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-500">Sequence Coverage</p>
+                <p class="mt-2 text-base font-semibold leading-7 text-slate-900">{availableAcrobatCount} of {acrobatShopifyCards.length} SKUs live online</p>
+              </article>
+              <article class="rounded-[1.15rem] border border-slate-200 bg-white px-4 py-4">
+                <p class="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-500">Pack Format</p>
+                <p class="mt-2 text-base font-semibold leading-7 text-slate-900">6 files per pack</p>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="px-6 py-8 sm:px-8 sm:py-10">
+          <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {acrobatShopifyCards.map((entry) => (
+              <article class="rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_20px_45px_-35px_rgba(15,23,42,0.35)]">
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{entry.size}</p>
+                    <h3 class="mt-2 text-xl font-bold tracking-tight text-slate-900">{entry.length}</h3>
+                  </div>
+                  <span class={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
+                    entry.status === 'Available to order online'
+                      ? 'bg-emerald-50 text-emerald-700'
+                      : 'bg-slate-100 text-slate-600'
+                  }`}>
+                    {entry.status}
+                  </span>
+                </div>
+
+                <dl class="mt-5 grid gap-3">
+                  <div class="rounded-[1rem] border border-slate-200 bg-slate-50/80 px-4 py-3">
+                    <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">SKU</dt>
+                    <dd class="mt-2 text-sm font-semibold leading-6 text-slate-900">{entry.sku}</dd>
+                  </div>
+                  <div class="rounded-[1rem] border border-slate-200 bg-slate-50/80 px-4 py-3">
+                    <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Current NZ Price</dt>
+                    <dd class="mt-2 text-sm font-semibold leading-6 text-slate-900">{entry.price}</dd>
+                  </div>
+                </dl>
+
+                <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  {(entry.cartUrl || entry.productUrl) && (
+                    <a
+                      href={entry.cartUrl ?? entry.productUrl!}
+                      class="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                    >
+                      {entry.cartUrl ? 'Add 6-pack to cart' : 'View Shopify product'}
+                    </a>
+                  )}
+                  {entry.productUrl && (
+                    <a
+                      href={entry.productUrl}
+                      class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950"
+                    >
+                      Open Shopify listing
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto grid max-w-7xl gap-4 px-6 py-14 sm:gap-6 sm:py-16 lg:grid-cols-2 lg:py-20">
@@ -267,9 +349,9 @@ const acrobatSchema = {
               {standardRange.map((row, index) => (
                 <tr class={index % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'}>
                   <td class="px-5 py-4 text-base font-semibold text-slate-900">{row.size}</td>
-                  <td class="px-5 py-4 text-sm text-slate-600">{row.sku21}</td>
-                  <td class="px-5 py-4 text-sm text-slate-600">{row.sku25}</td>
-                  <td class="px-5 py-4 text-sm text-slate-600">{row.sku29}</td>
+                  <td class="px-5 py-4 text-sm text-slate-600">{row.items[0].sku}</td>
+                  <td class="px-5 py-4 text-sm text-slate-600">{row.items[1].sku}</td>
+                  <td class="px-5 py-4 text-sm text-slate-600">{row.items[2].sku}</td>
                 </tr>
               ))}
             </tbody>
