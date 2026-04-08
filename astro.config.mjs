@@ -11,6 +11,14 @@ const base = isGitHubPages ? '/endotech-homepage/' : '/';
 const shouldNoIndex = process.env.NETLIFY === 'true' && process.env.CONTEXT !== 'production';
 const docsTitle = process.env.PUBLIC_DOCS_TITLE || 'EndoTech Docs';
 const contactEmail = process.env.PUBLIC_CONTACT_EMAIL || 'Steveshepherdnz@gmail.com';
+const starlightHead = shouldNoIndex
+  ? [
+      {
+        tag: /** @type {'meta'} */ ('meta'),
+        attrs: { name: 'robots', content: 'noindex, nofollow' },
+      },
+    ]
+  : [];
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,11 +33,7 @@ export default defineConfig({
           exclude: ['/products/bcs/**', '/products/acrobat-glide-path/**'],
         }),
       ],
-      head: [
-        ...(shouldNoIndex
-          ? [{ tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' } }]
-          : []),
-      ],
+      head: starlightHead,
       logo: {
         light: './src/assets/logo-wordmark.png',
         dark: './src/assets/logo-wordmark-dark.png',
