@@ -46,17 +46,17 @@ export const acrobatOrderEntries: OrderCatalogEntryDefinition[] = [
 
 export const etOrderEntries: OrderCatalogEntryDefinition[] = [
   ...['17', '20', '25', '30', '35', '40', '45'].flatMap((tip) => [
-    { size: `${tip}/.04`, length: '21 mm', sku: `TXET-${tip}0421`, handle: null },
-    { size: `${tip}/.04`, length: '25 mm', sku: `TXET-${tip}0425`, handle: null },
-    { size: `${tip}/.04`, length: '29 mm', sku: `TXET-${tip}0429`, handle: null },
-    { size: `${tip}/.06`, length: '21 mm', sku: `TXET-${tip}0621`, handle: null },
-    { size: `${tip}/.06`, length: '25 mm', sku: `TXET-${tip}0625`, handle: null },
-    { size: `${tip}/.06`, length: '29 mm', sku: `TXET-${tip}0629`, handle: null },
+    { size: `${tip}/.04`, length: '21 mm', sku: `TXET-${tip}0421`, handle: `et-transformx-files-${tip}-04-21mm-6-pack` },
+    { size: `${tip}/.04`, length: '25 mm', sku: `TXET-${tip}0425`, handle: `et-transformx-files-${tip}-04-25mm-6-pack` },
+    { size: `${tip}/.04`, length: '29 mm', sku: `TXET-${tip}0429`, handle: `et-transformx-files-${tip}-04-29mm-6-pack` },
+    { size: `${tip}/.06`, length: '21 mm', sku: `TXET-${tip}0621`, handle: `et-transformx-files-${tip}-06-21mm-6-pack` },
+    { size: `${tip}/.06`, length: '25 mm', sku: `TXET-${tip}0625`, handle: `et-transformx-files-${tip}-06-25mm-6-pack` },
+    { size: `${tip}/.06`, length: '29 mm', sku: `TXET-${tip}0629`, handle: `et-transformx-files-${tip}-06-29mm-6-pack` },
   ]),
-  { size: '.04 assortment', length: '21 mm', sku: 'TXET-0421MM', handle: null },
-  { size: '.04 assortment', length: '25 mm', sku: 'TXET-0425MM', handle: null },
-  { size: '.06 assortment', length: '21 mm', sku: 'TXET-0621MM', handle: null },
-  { size: '.06 assortment', length: '25 mm', sku: 'TXET-0625MM', handle: null },
+  { size: '.04 assortment', length: '21 mm', sku: 'TXET-0421MM', handle: 'et-transformx-files-04-assortment-21mm-6-pack' },
+  { size: '.04 assortment', length: '25 mm', sku: 'TXET-0425MM', handle: 'et-transformx-files-04-assortment-25mm-6-pack' },
+  { size: '.06 assortment', length: '21 mm', sku: 'TXET-0621MM', handle: 'et-transformx-files-06-assortment-21mm-6-pack' },
+  { size: '.06 assortment', length: '25 mm', sku: 'TXET-0625MM', handle: 'et-transformx-files-06-assortment-25mm-6-pack' },
 ];
 
 export const ptOrderEntries: OrderCatalogEntryDefinition[] = [
