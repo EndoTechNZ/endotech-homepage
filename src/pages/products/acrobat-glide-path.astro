@@ -127,37 +127,7 @@ const fallbackShopifyFacts = [
   { label: 'Availability', value: 'Available to order online' },
   { label: 'Pack format', value: '6 files per pack' },
 ];
-const shopifyDebugFacts =
-  liveShopifyProduct
-    ? [
-        { label: 'Debug token type', value: shopifyLookup.debug.tokenType },
-        { label: 'Debug API version', value: shopifyLookup.debug.apiVersion },
-        { label: 'Debug product handle', value: liveShopifyProduct.handle },
-        { label: 'Debug variant count', value: String(liveShopifyProduct.variants.length) },
-        {
-          label: 'Debug selected SKU',
-          value: liveShopifyVariant?.sku ?? 'No SKU returned from Storefront API',
-        },
-        {
-          label: 'Debug availableForSale',
-          value: liveShopifyVariant ? String(liveShopifyVariant.availableForSale) : 'No variant returned',
-        },
-        {
-          label: 'Debug quantityAvailable',
-          value: liveShopifyVariant?.quantityAvailable != null ? String(liveShopifyVariant.quantityAvailable) : 'null',
-        },
-      ]
-    : [
-        { label: 'Debug token type', value: shopifyLookup.debug.tokenType },
-        { label: 'Debug API version', value: shopifyLookup.debug.apiVersion },
-        { label: 'Debug store domain', value: shopifyLookup.debug.storeDomain ?? 'null' },
-        {
-          label: 'Debug response status',
-          value: shopifyLookup.debug.responseStatus != null ? String(shopifyLookup.debug.responseStatus) : 'null',
-        },
-        { label: 'Debug Shopify lookup', value: shopifyLookup.debug.error ?? 'Product lookup returned null' },
-      ];
-const orderPanelFacts = [...(liveShopifyFacts.length > 0 ? liveShopifyFacts : fallbackShopifyFacts), ...shopifyDebugFacts];
+const orderPanelFacts = liveShopifyFacts.length > 0 ? liveShopifyFacts : fallbackShopifyFacts;
 const orderPanelDescription = liveShopifyProduct
   ? 'Start with the first live NZ Acrobat SKU now available through Shopify. This gives the NZ site a direct ordering path while the broader Acrobat range is added.'
   : 'The first NZ Acrobat SKU is now part of the NZ commerce rollout. If the live cart handoff is still syncing, use the Shopify listing below or contact EndoTechNZ directly.';
