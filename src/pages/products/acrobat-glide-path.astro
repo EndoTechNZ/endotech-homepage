@@ -94,9 +94,8 @@ const ctas = [
 ];
 const acrobatClinicalBlueprintSrc = withBasePath('/downloads/Acrobat_Clinical_Blueprint.pdf');
 const shopifyStoreDomain = getShopifyStoreDomain();
-const liveShopifyProduct = await getShopifyProductByHandle('acrobat-glide-path-files-13-03-21mm-6-pack').catch(
-  () => null,
-);
+const shopifyLookup = await getShopifyProductByHandle('acrobat-glide-path-files-13-03-21mm-6-pack');
+const liveShopifyProduct = shopifyLookup.product;
 const liveShopifyVariant =
   liveShopifyProduct?.variants.find((variant) => variant.availableForSale) ??
   liveShopifyProduct?.variants[0] ??
@@ -131,6 +130,8 @@ const fallbackShopifyFacts = [
 const shopifyDebugFacts =
   liveShopifyProduct
     ? [
+        { label: 'Debug token type', value: shopifyLookup.debug.tokenType },
+        { label: 'Debug API version', value: shopifyLookup.debug.apiVersion },
         { label: 'Debug product handle', value: liveShopifyProduct.handle },
         { label: 'Debug variant count', value: String(liveShopifyProduct.variants.length) },
         {
@@ -146,7 +147,16 @@ const shopifyDebugFacts =
           value: liveShopifyVariant?.quantityAvailable != null ? String(liveShopifyVariant.quantityAvailable) : 'null',
         },
       ]
-    : [{ label: 'Debug Shopify lookup', value: 'Product lookup returned null' }];
+    : [
+        { label: 'Debug token type', value: shopifyLookup.debug.tokenType },
+        { label: 'Debug API version', value: shopifyLookup.debug.apiVersion },
+        { label: 'Debug store domain', value: shopifyLookup.debug.storeDomain ?? 'null' },
+        {
+          label: 'Debug response status',
+          value: shopifyLookup.debug.responseStatus != null ? String(shopifyLookup.debug.responseStatus) : 'null',
+        },
+        { label: 'Debug Shopify lookup', value: shopifyLookup.debug.error ?? 'Product lookup returned null' },
+      ];
 const orderPanelFacts = [...(liveShopifyFacts.length > 0 ? liveShopifyFacts : fallbackShopifyFacts), ...shopifyDebugFacts];
 const orderPanelDescription = liveShopifyProduct
   ? 'Start with the first live NZ Acrobat SKU now available through Shopify. This gives the NZ site a direct ordering path while the broader Acrobat range is added.'

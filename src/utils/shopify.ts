@@ -27,6 +27,18 @@ export type ShopifyProduct = {
   variants: ShopifyVariant[];
 };
 
+export type ShopifyProductLookupResult = {
+  product: ShopifyProduct | null;
+  debug: {
+    tokenType: 'private' | 'public' | 'missing';
+    apiVersion: string;
+    storeDomain: string | null;
+    responseStatus: number | null;
+    error: string | null;
+    productFound: boolean;
+  };
+};
+
 type ShopifyProductResponse = {
   data?: {
     productByHandle?: {
@@ -86,57 +98,104 @@ export const getShopifyStoreDomain = (): string | null => {
   return import.meta.env.SHOPIFY_STORE_DOMAIN?.trim() || null;
 };
 
-export const getShopifyProductByHandle = async (handle: string): Promise<ShopifyProduct | null> => {
+export const getShopifyProductByHandle = async (handle: string): Promise<ShopifyProductLookupResult> => {
   const storeDomain = getShopifyStoreDomain();
   const privateToken = import.meta.env.SHOPIFY_STOREFRONT_PRIVATE_TOKEN?.trim();
   const publicToken = import.meta.env.SHOPIFY_STOREFRONT_PUBLIC_TOKEN?.trim();
   const apiVersion = import.meta.env.SHOPIFY_STOREFRONT_API_VERSION?.trim() || '2026-04';
+  const tokenType = privateToken ? 'private' : publicToken ? 'public' : 'missing';
+
+  const baseDebug = {
+    tokenType,
+    apiVersion,
+    storeDomain,
+    responseStatus: null,
+    error: null,
+    productFound: false,
+  } as ShopifyProductLookupResult['debug'];
 
   if (!storeDomain || (!privateToken && !publicToken)) {
-    return null;
+    return {
+      product: null,
+      debug: {
+        ...baseDebug,
+        error: !storeDomain ? 'Missing SHOPIFY_STORE_DOMAIN' : 'Missing storefront token',
+      },
+    };
   }
 
   const authHeader = privateToken
     ? { 'Shopify-Storefront-Private-Token': privateToken }
     : { 'X-Shopify-Storefront-Access-Token': publicToken! };
 
-  const response = await fetch(`https://${storeDomain}/api/${apiVersion}/graphql.json`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...authHeader,
-    },
-    body: JSON.stringify({
-      query: PRODUCT_BY_HANDLE_QUERY,
-      variables: { handle },
-    }),
-  });
+  try {
+    const response = await fetch(`https://${storeDomain}/api/${apiVersion}/graphql.json`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...authHeader,
+      },
+      body: JSON.stringify({
+        query: PRODUCT_BY_HANDLE_QUERY,
+        variables: { handle },
+      }),
+    });
 
-  if (!response.ok) {
-    throw new Error(`Shopify Storefront API request failed with status ${response.status}`);
+    if (!response.ok) {
+      return {
+        product: null,
+        debug: {
+          ...baseDebug,
+          responseStatus: response.status,
+          error: `Shopify Storefront API request failed with status ${response.status}`,
+        },
+      };
+    }
+
+    const payload = (await response.json()) as ShopifyProductResponse;
+    const product = payload.data?.productByHandle;
+
+    if (!product) {
+      return {
+        product: null,
+        debug: {
+          ...baseDebug,
+          responseStatus: response.status,
+          error: 'Shopify returned productByHandle: null',
+        },
+      };
+    }
+
+    return {
+      product: {
+        title: product.title,
+        handle: product.handle,
+        description: product.description ?? null,
+        onlineStoreUrl: product.onlineStoreUrl ?? null,
+        variants: product.variants.nodes.map((variant) => ({
+          id: variant.id,
+          numericId: getNumericVariantId(variant.id),
+          title: variant.title,
+          availableForSale: variant.availableForSale,
+          quantityAvailable: variant.quantityAvailable ?? null,
+          sku: variant.sku ?? null,
+          price: variant.price,
+          selectedOptions: variant.selectedOptions ?? [],
+        })),
+      },
+      debug: {
+        ...baseDebug,
+        responseStatus: response.status,
+        productFound: true,
+      },
+    };
+  } catch (error) {
+    return {
+      product: null,
+      debug: {
+        ...baseDebug,
+        error: error instanceof Error ? error.message : 'Unknown Shopify fetch error',
+      },
+    };
   }
-
-  const payload = (await response.json()) as ShopifyProductResponse;
-  const product = payload.data?.productByHandle;
-
-  if (!product) {
-    return null;
-  }
-
-  return {
-    title: product.title,
-    handle: product.handle,
-    description: product.description ?? null,
-    onlineStoreUrl: product.onlineStoreUrl ?? null,
-    variants: product.variants.nodes.map((variant) => ({
-      id: variant.id,
-      numericId: getNumericVariantId(variant.id),
-      title: variant.title,
-      availableForSale: variant.availableForSale,
-      quantityAvailable: variant.quantityAvailable ?? null,
-      sku: variant.sku ?? null,
-      price: variant.price,
-      selectedOptions: variant.selectedOptions ?? [],
-    })),
-  };
 };
