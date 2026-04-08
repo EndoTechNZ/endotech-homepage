@@ -120,10 +120,18 @@ const standardRange = [
     ],
   },
 ];
+const mb2Entry = {
+  size: '15/.05',
+  length: '17 mm',
+  sku: 'ACGP-150517RF',
+  handle: null,
+  isMb2: true,
+};
 const allAcrobatShopifyEntries = standardRange.flatMap((row) =>
   row.items.map((item) => ({
     ...item,
     size: row.size,
+    isMb2: false,
   })),
 );
 
@@ -135,7 +143,18 @@ const formatNzPrice = (amount: string, currencyCode: string) =>
   }).format(Number(amount));
 
 const acrobatShopifyCards = await Promise.all(
-  allAcrobatShopifyEntries.map(async (entry) => {
+  [...allAcrobatShopifyEntries, mb2Entry].map(async (entry) => {
+    if (!entry.handle) {
+      return {
+        ...entry,
+        price: 'Available on request',
+        status: 'Contact for availability',
+        productUrl: null,
+        cartUrl: null,
+        hasLiveData: false,
+      };
+    }
+
     const lookup = await getShopifyProductByHandle(entry.handle);
     const product = lookup.product;
     const variant = product?.variants.find((item) => item.availableForSale) ?? product?.variants[0] ?? null;
@@ -158,9 +177,9 @@ const acrobatShopifyCards = await Promise.all(
 
 const availableAcrobatCount = acrobatShopifyCards.filter((entry) => entry.status === 'Available to order online').length;
 const orderPanelDescription =
-  availableAcrobatCount === acrobatShopifyCards.length
-    ? 'The full Acrobat .03 sequence is now available online across 21 mm, 25 mm, and 29 mm lengths. Choose the exact file and length needed for the glide path stage.'
-    : 'The Acrobat .03 sequence is being loaded into the NZ Shopify catalog. Use the cards below to open the exact file length required, and add directly to cart where live ordering is ready.';
+  availableAcrobatCount === allAcrobatShopifyEntries.length
+    ? 'The full Acrobat .03 sequence is now available online across 21 mm, 25 mm, and 29 mm lengths, with the MB2 option shown alongside the core range. Choose the exact file and length needed for the glide path stage.'
+    : 'The Acrobat .03 sequence is being loaded into the NZ Shopify catalog. Use the cards below to open the exact file length required, and add directly to cart where live ordering is ready. The MB2 option is included alongside the core sequence.';
 const acrobatSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -232,7 +251,7 @@ const acrobatSchema = {
               <article class="rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_20px_45px_-35px_rgba(15,23,42,0.35)]">
                 <div class="flex items-start justify-between gap-4">
                   <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{entry.size}</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{entry.isMb2 ? 'MB2 Option' : entry.size}</p>
                     <h3 class="mt-2 text-xl font-bold tracking-tight text-slate-900">{entry.length}</h3>
                   </div>
                   <span class={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
@@ -245,6 +264,10 @@ const acrobatSchema = {
                 </div>
 
                 <dl class="mt-5 grid gap-3">
+                  <div class="rounded-[1rem] border border-slate-200 bg-slate-50/80 px-4 py-3">
+                    <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Configuration</dt>
+                    <dd class="mt-2 text-sm font-semibold leading-6 text-slate-900">{entry.size}</dd>
+                  </div>
                   <div class="rounded-[1rem] border border-slate-200 bg-slate-50/80 px-4 py-3">
                     <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">SKU</dt>
                     <dd class="mt-2 text-sm font-semibold leading-6 text-slate-900">{entry.sku}</dd>
@@ -270,6 +293,14 @@ const acrobatSchema = {
                       class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950"
                     >
                       Open Shopify listing
+                    </a>
+                  )}
+                  {!entry.cartUrl && !entry.productUrl && (
+                    <a
+                      href="/about/contact/"
+                      class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950"
+                    >
+                      Contact EndoTech
                     </a>
                   )}
                 </div>
