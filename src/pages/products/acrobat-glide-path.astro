@@ -97,7 +97,10 @@ const shopifyStoreDomain = getShopifyStoreDomain();
 const liveShopifyProduct = await getShopifyProductByHandle('acrobat-glide-path-files-13-03-21mm-6-pack').catch(
   () => null,
 );
-const liveShopifyVariant = liveShopifyProduct?.variants[0] ?? null;
+const liveShopifyVariant =
+  liveShopifyProduct?.variants.find((variant) => variant.availableForSale) ??
+  liveShopifyProduct?.variants[0] ??
+  null;
 const liveShopifyPrice = liveShopifyVariant
   ? new Intl.NumberFormat('en-NZ', {
       style: 'currency',
@@ -125,7 +128,26 @@ const fallbackShopifyFacts = [
   { label: 'Availability', value: 'Available to order online' },
   { label: 'Pack format', value: '6 files per pack' },
 ];
-const orderPanelFacts = liveShopifyFacts.length > 0 ? liveShopifyFacts : fallbackShopifyFacts;
+const shopifyDebugFacts =
+  liveShopifyProduct
+    ? [
+        { label: 'Debug product handle', value: liveShopifyProduct.handle },
+        { label: 'Debug variant count', value: String(liveShopifyProduct.variants.length) },
+        {
+          label: 'Debug selected SKU',
+          value: liveShopifyVariant?.sku ?? 'No SKU returned from Storefront API',
+        },
+        {
+          label: 'Debug availableForSale',
+          value: liveShopifyVariant ? String(liveShopifyVariant.availableForSale) : 'No variant returned',
+        },
+        {
+          label: 'Debug quantityAvailable',
+          value: liveShopifyVariant?.quantityAvailable != null ? String(liveShopifyVariant.quantityAvailable) : 'null',
+        },
+      ]
+    : [{ label: 'Debug Shopify lookup', value: 'Product lookup returned null' }];
+const orderPanelFacts = [...(liveShopifyFacts.length > 0 ? liveShopifyFacts : fallbackShopifyFacts), ...shopifyDebugFacts];
 const orderPanelDescription = liveShopifyProduct
   ? 'Start with the first live NZ Acrobat SKU now available through Shopify. This gives the NZ site a direct ordering path while the broader Acrobat range is added.'
   : 'The first NZ Acrobat SKU is now part of the NZ commerce rollout. If the live cart handoff is still syncing, use the Shopify listing below or contact EndoTechNZ directly.';
