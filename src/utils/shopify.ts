@@ -89,17 +89,22 @@ export const getShopifyStoreDomain = (): string | null => {
 export const getShopifyProductByHandle = async (handle: string): Promise<ShopifyProduct | null> => {
   const storeDomain = getShopifyStoreDomain();
   const privateToken = import.meta.env.SHOPIFY_STOREFRONT_PRIVATE_TOKEN?.trim();
+  const publicToken = import.meta.env.SHOPIFY_STOREFRONT_PUBLIC_TOKEN?.trim();
   const apiVersion = import.meta.env.SHOPIFY_STOREFRONT_API_VERSION?.trim() || '2026-04';
 
-  if (!storeDomain || !privateToken) {
+  if (!storeDomain || (!privateToken && !publicToken)) {
     return null;
   }
+
+  const authHeader = privateToken
+    ? { 'Shopify-Storefront-Private-Token': privateToken }
+    : { 'X-Shopify-Storefront-Access-Token': publicToken! };
 
   const response = await fetch(`https://${storeDomain}/api/${apiVersion}/graphql.json`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': privateToken,
+      ...authHeader,
     },
     body: JSON.stringify({
       query: PRODUCT_BY_HANDLE_QUERY,
