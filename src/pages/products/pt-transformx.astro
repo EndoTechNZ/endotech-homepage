@@ -8,32 +8,12 @@ import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
 import { getShopifyStoreDomain } from '../../utils/shopify';
 import { buildOrderSelectorItems, getOrderCoverageLabel } from '../../utils/productOrdering';
+import { ptOrderEntries } from '../../data/productOrderingCatalog';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const workflowPdfSrc = withBasePath('/downloads/PT-Technique-Work-Flow.pdf');
 const partNumbersPdfSrc = withBasePath('/downloads/PT-Part-Numbers.pdf');
 const shopifyStoreDomain = getShopifyStoreDomain();
-
-const ptOrderEntries = [
-  { size: 'SX', length: '19 mm', sku: 'TXPT-SX-19', handle: null },
-  { size: 'S1', length: '21 mm', sku: 'TXPT-S1-21', handle: null },
-  { size: 'S2', length: '21 mm', sku: 'TXPT-S2-21', handle: null },
-  { size: 'F1', length: '21 mm', sku: 'TXPT-F1-21', handle: null },
-  { size: 'F2', length: '21 mm', sku: 'TXPT-F2-21', handle: null },
-  { size: 'F3', length: '21 mm', sku: 'TXPT-F3-21', handle: null },
-  { size: 'S1', length: '25 mm', sku: 'TXPT-S1-25', handle: null },
-  { size: 'S2', length: '25 mm', sku: 'TXPT-S2-25', handle: null },
-  { size: 'F1', length: '25 mm', sku: 'TXPT-F1-25', handle: null },
-  { size: 'F2', length: '25 mm', sku: 'TXPT-F2-25', handle: null },
-  { size: 'F3', length: '25 mm', sku: 'TXPT-F3-25', handle: null },
-  { size: 'F4', length: '25 mm', sku: 'TXPT-F4-25', handle: null },
-  { size: 'F5', length: '25 mm', sku: 'TXPT-F5-25', handle: null },
-  { size: 'S1', length: '31 mm', sku: 'TXPT-S1-31', handle: null },
-  { size: 'S2', length: '31 mm', sku: 'TXPT-S2-31', handle: null },
-  { size: 'F1', length: '31 mm', sku: 'TXPT-F1-31', handle: null },
-  { size: 'F2', length: '31 mm', sku: 'TXPT-F2-31', handle: null },
-  { size: 'F3', length: '31 mm', sku: 'TXPT-F3-31', handle: null },
-];
 
 const ptOrderItems = await buildOrderSelectorItems(ptOrderEntries, shopifyStoreDomain);
 const orderPanelDescription = `To order

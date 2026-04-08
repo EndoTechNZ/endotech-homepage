@@ -8,6 +8,7 @@ import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
 import { getShopifyStoreDomain } from '../../utils/shopify';
 import { buildOrderSelectorItems, getOrderCoverageLabel } from '../../utils/productOrdering';
+import { etOrderEntries } from '../../data/productOrderingCatalog';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const etVideoSrc = withBasePath('/videos/et-transformx-promo_1.mp4');
@@ -20,20 +21,6 @@ const orderPanelDescription = `To order
 - Click 'Add to order'`;
 const etSelectionNote =
   'ET TransformX currently covers .04 and .06 sequences across 21 mm, 25 mm, and 29 mm lengths, with assortment options available in the current NZ part-number range.';
-const etOrderEntries = [
-  ...['17', '20', '25', '30', '35', '40', '45'].flatMap((tip) => [
-    { size: `${tip}/.04`, length: '21 mm', sku: `TXET-${tip}0421`, handle: null },
-    { size: `${tip}/.04`, length: '25 mm', sku: `TXET-${tip}0425`, handle: null },
-    { size: `${tip}/.04`, length: '29 mm', sku: `TXET-${tip}0429`, handle: null },
-    { size: `${tip}/.06`, length: '21 mm', sku: `TXET-${tip}0621`, handle: null },
-    { size: `${tip}/.06`, length: '25 mm', sku: `TXET-${tip}0625`, handle: null },
-    { size: `${tip}/.06`, length: '29 mm', sku: `TXET-${tip}0629`, handle: null },
-  ]),
-  { size: '.04 assortment', length: '21 mm', sku: 'TXET-0421MM', handle: null },
-  { size: '.04 assortment', length: '25 mm', sku: 'TXET-0425MM', handle: null },
-  { size: '.06 assortment', length: '21 mm', sku: 'TXET-0621MM', handle: null },
-  { size: '.06 assortment', length: '25 mm', sku: 'TXET-0625MM', handle: null },
-];
 const etOrderItems = await buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain);
 const etSchema = {
   '@context': 'https://schema.org',

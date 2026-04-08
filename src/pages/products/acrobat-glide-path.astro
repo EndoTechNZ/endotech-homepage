@@ -9,6 +9,7 @@ import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
 import { getShopifyStoreDomain } from '../../utils/shopify';
 import { buildOrderSelectorItems, getOrderCoverageLabel } from '../../utils/productOrdering';
+import { acrobatOrderEntries } from '../../data/productOrderingCatalog';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const keyFeatureItems = [
@@ -122,23 +123,9 @@ const standardRange = [
     ],
   },
 ];
-const mb2Entry = {
-  size: '15/.05',
-  length: '17 mm',
-  sku: 'ACGP-150517RF',
-  handle: 'acrobat-glide-path-files-15-05-17mm-6-pack-mb2',
-  isMb2: true,
-};
-const allAcrobatShopifyEntries = standardRange.flatMap((row) =>
-  row.items.map((item) => ({
-    ...item,
-    size: row.size,
-    isMb2: false,
-  })),
-);
 
 const acrobatShopifyCards = await buildOrderSelectorItems(
-  [...allAcrobatShopifyEntries, mb2Entry],
+  acrobatOrderEntries,
   shopifyStoreDomain,
   '$65.00 NZD',
 );
