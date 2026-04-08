@@ -179,10 +179,10 @@ const acrobatShopifyCards = await Promise.all(
 );
 
 const availableAcrobatCount = acrobatShopifyCards.filter((entry) => entry.status === 'Available to order online').length;
-const orderPanelDescription =
-  availableAcrobatCount === allAcrobatShopifyEntries.length
-    ? 'The full Acrobat .03 sequence is now available online across 21 mm, 25 mm, and 29 mm lengths, with the MB2 option shown alongside the core range. Choose the exact file and length needed for the glide path stage.'
-    : 'The Acrobat .03 sequence is being loaded into the NZ Shopify catalog. Use the cards below to open the exact file length required, and add directly to cart where live ordering is ready. The MB2 option is included alongside the core sequence.';
+const orderPanelDescription = `To order
+- Choose file Size (Step 1)
+- Choose file length (Step 2)
+- Click 'Add to order'`;
 const acrobatSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
