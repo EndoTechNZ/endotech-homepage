@@ -2,14 +2,39 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/product/ProductHero.astro';
 import FeatureGrid from '../../components/product/FeatureGrid.astro';
+import ProductOrderSelector from '../../components/product/ProductOrderSelector.astro';
 import etProduct from '../../assets/et-transformx.png';
 import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
+import { getShopifyStoreDomain } from '../../utils/shopify';
+import { buildOrderSelectorItems, getOrderCoverageLabel } from '../../utils/productOrdering';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const etVideoSrc = withBasePath('/videos/et-transformx-promo_1.mp4');
 const workflowPdfSrc = withBasePath('/downloads/ET-Technique-Work-Flow.pdf');
 const partNumbersPdfSrc = withBasePath('/downloads/ET-Part-Numbers.pdf');
+const shopifyStoreDomain = getShopifyStoreDomain();
+const orderPanelDescription = `To order
+- Choose file Size (Step 1)
+- Choose file length (Step 2)
+- Click 'Add to order'`;
+const etSelectionNote =
+  'ET TransformX currently covers .04 and .06 sequences across 21 mm, 25 mm, and 29 mm lengths, with assortment options available in the current NZ part-number range.';
+const etOrderEntries = [
+  ...['17', '20', '25', '30', '35', '40', '45'].flatMap((tip) => [
+    { size: `${tip}/.04`, length: '21 mm', sku: `TXET-${tip}0421`, handle: null },
+    { size: `${tip}/.04`, length: '25 mm', sku: `TXET-${tip}0425`, handle: null },
+    { size: `${tip}/.04`, length: '29 mm', sku: `TXET-${tip}0429`, handle: null },
+    { size: `${tip}/.06`, length: '21 mm', sku: `TXET-${tip}0621`, handle: null },
+    { size: `${tip}/.06`, length: '25 mm', sku: `TXET-${tip}0625`, handle: null },
+    { size: `${tip}/.06`, length: '29 mm', sku: `TXET-${tip}0629`, handle: null },
+  ]),
+  { size: '.04 assortment', length: '21 mm', sku: 'TXET-0421MM', handle: null },
+  { size: '.04 assortment', length: '25 mm', sku: 'TXET-0425MM', handle: null },
+  { size: '.06 assortment', length: '21 mm', sku: 'TXET-0621MM', handle: null },
+  { size: '.06 assortment', length: '25 mm', sku: 'TXET-0625MM', handle: null },
+];
+const etOrderItems = await buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain);
 const etSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -100,6 +125,16 @@ const ctas = [
     imageSrc={etProduct.src}
     imageAlt="ET TransformX rotary files for established ET-style shaping sequences"
     visualLabel="ET TransformX"
+  />
+
+  <ProductOrderSelector
+    title="Order the ET sequence online"
+    description={orderPanelDescription}
+    coverageLabel={getOrderCoverageLabel(etOrderItems)}
+    packFormat="6 files per pack"
+    items={etOrderItems}
+    shopifyStoreDomain={shopifyStoreDomain}
+    selectionNote={etSelectionNote}
   />
 
   <section class="border-b border-slate-200/80 bg-white">

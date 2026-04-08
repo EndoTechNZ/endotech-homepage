@@ -19,6 +19,7 @@ type Props = {
   coverageLabel: string;
   packFormat: string;
   shopifyStoreDomain?: string | null;
+  selectionNote?: string;
 };
 
 const {
@@ -29,6 +30,7 @@ const {
   coverageLabel,
   packFormat,
   shopifyStoreDomain = null,
+  selectionNote = '',
 } = Astro.props;
 
 const configurations = Array.from(
@@ -115,9 +117,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
                 </button>
               ))}
             </div>
-            <p class="mt-5 text-sm leading-6 text-slate-600">
-              The MB2 option is limited to 17 mm. Standard Acrobat sequence files are available in 21 mm, 25 mm, and 29 mm.
-            </p>
+            {selectionNote && <p class="mt-5 text-sm leading-6 text-slate-600">{selectionNote}</p>}
           </div>
 
           <div class="mt-4 rounded-[1.35rem] border border-dashed border-slate-300 bg-white p-5 sm:p-6" data-order-fallback>
