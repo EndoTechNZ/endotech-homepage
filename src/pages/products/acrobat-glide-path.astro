@@ -152,6 +152,7 @@ const acrobatShopifyCards = await Promise.all(
         status: 'Contact for availability',
         productUrl: null,
         cartUrl: null,
+        cartVariantId: null,
         hasLiveData: false,
       };
     }
@@ -171,6 +172,7 @@ const acrobatShopifyCards = await Promise.all(
       status,
       productUrl,
       cartUrl,
+      cartVariantId: variant?.numericId ? String(variant.numericId) : null,
       hasLiveData: Boolean(product && variant),
     };
   }),
@@ -229,6 +231,7 @@ const acrobatSchema = {
     coverageLabel={`${availableAcrobatCount} of ${acrobatShopifyCards.length} SKUs live online`}
     packFormat="6 files per pack"
     items={acrobatShopifyCards}
+    shopifyStoreDomain={shopifyStoreDomain}
   />
 
   <section class="border-b border-slate-200/80 bg-white">

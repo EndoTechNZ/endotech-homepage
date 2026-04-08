@@ -7,6 +7,7 @@ type OrderItem = {
   status: string;
   productUrl: string | null;
   cartUrl: string | null;
+  cartVariantId: string | null;
   isMb2?: boolean;
 };
 
@@ -17,6 +18,7 @@ type Props = {
   items: OrderItem[];
   coverageLabel: string;
   packFormat: string;
+  shopifyStoreDomain?: string | null;
 };
 
 const {
@@ -26,6 +28,7 @@ const {
   items,
   coverageLabel,
   packFormat,
+  shopifyStoreDomain = null,
 } = Astro.props;
 
 const configurations = Array.from(
@@ -201,11 +204,20 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
           </dl>
 
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            {(defaultItem.cartUrl || defaultItem.productUrl) && (
+            {defaultItem.cartVariantId && defaultItem.status === 'Available to order online' ? (
+              <button
+                type="button"
+                class="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                data-summary-primary-button
+              >
+                Add 6-pack to order
+              </button>
+            ) : null}
+            {!(defaultItem.cartVariantId && defaultItem.status === 'Available to order online') && (defaultItem.cartUrl || defaultItem.productUrl) && (
               <a
                 href={defaultItem.cartUrl ?? defaultItem.productUrl ?? '/about/contact/'}
                 class="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-                data-summary-primary
+                data-summary-primary-link
               >
                 {defaultItem.cartUrl ? 'Add 6-pack to cart' : 'View Shopify product'}
               </a>
@@ -214,7 +226,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
               <a
                 href="/about/contact/"
                 class="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-                data-summary-primary
+                data-summary-primary-link
               >
                 Contact EndoTech
               </a>
@@ -229,13 +241,54 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
               Open Shopify listing
             </a>
           </div>
+
+          <div class="mt-8 rounded-[1.2rem] border border-slate-200 bg-slate-50/70 p-4 sm:p-5" data-order-builder>
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Current Order</p>
+                <h4 class="mt-2 text-lg font-bold tracking-tight text-slate-900">Selected packs</h4>
+              </div>
+              <p class="text-sm font-semibold text-slate-600" data-order-total-packs>0 packs</p>
+            </div>
+
+            <div class="mt-4 overflow-hidden rounded-[1rem] border border-slate-200 bg-white">
+              <table class="min-w-full border-collapse text-left text-sm">
+                <thead class="bg-slate-50/80">
+                  <tr>
+                    <th class="px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">File</th>
+                    <th class="px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Length</th>
+                    <th class="px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Qty</th>
+                  </tr>
+                </thead>
+                <tbody data-order-lines>
+                  <tr data-order-empty-state>
+                    <td colspan="3" class="px-4 py-5 text-sm leading-6 text-slate-500">
+                      Add file packs from the selector to build one combined Shopify checkout.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p class="text-sm leading-6 text-slate-600" data-order-total-price>Total: $0.00</p>
+              <a
+                href="/about/contact/"
+                class="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 opacity-50 pointer-events-none"
+                data-order-checkout
+                aria-disabled="true"
+              >
+                Checkout selected items
+              </a>
+            </div>
+          </div>
         </aside>
       </div>
     </div>
   </div>
 </section>
 
-<script define:vars={{ items, configurations, defaultConfiguration, selectorId }}>
+<script define:vars={{ items, configurations, defaultConfiguration, selectorId, shopifyStoreDomain }}>
   const orderItems = items;
   const configurationMeta = configurations;
 
@@ -262,13 +315,104 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
     const price = summaryRoot.querySelector('[data-summary-price]');
     const status = summaryRoot.querySelector('[data-summary-status]');
     const statusBadge = summaryRoot.querySelector('[data-summary-status-badge]');
-    const primary = summaryRoot.querySelector('[data-summary-primary]');
+    const primaryButton = summaryRoot.querySelector('[data-summary-primary-button]');
+    const primaryLink = summaryRoot.querySelector('[data-summary-primary-link]');
     const secondary = summaryRoot.querySelector('[data-summary-secondary]');
+    const orderLines = summaryRoot.querySelector('[data-order-lines]');
+    const emptyState = summaryRoot.querySelector('[data-order-empty-state]');
+    const totalPacks = summaryRoot.querySelector('[data-order-total-packs]');
+    const totalPrice = summaryRoot.querySelector('[data-order-total-price]');
+    const checkout = summaryRoot.querySelector('[data-order-checkout]');
+    const orderSelections = new Map();
 
     const getStatusClasses = (value) => {
       if (value === 'Available to order online') return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-emerald-50 text-emerald-700';
       if (value === 'Contact for availability') return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-amber-50 text-amber-700';
       return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-slate-100 text-slate-600';
+    };
+
+    const parsePrice = (value) => {
+      const numericValue = Number.parseFloat(value.replace(/[^0-9.]/g, ''));
+      return Number.isFinite(numericValue) ? numericValue : 0;
+    };
+
+    const currentSelection = () =>
+      orderItems.find((entry) => entry.size === activeConfiguration && entry.length === activeLength) ??
+      orderItems.find((entry) => entry.size === activeConfiguration) ??
+      null;
+
+    const updateCheckoutState = () => {
+      if (!(checkout instanceof HTMLAnchorElement)) return;
+
+      const lines = Array.from(orderSelections.values()).filter((entry) => entry.item.cartVariantId && entry.quantity > 0);
+      const totalQuantity = lines.reduce((sum, entry) => sum + entry.quantity, 0);
+      const totalAmount = lines.reduce((sum, entry) => sum + parsePrice(entry.item.price) * entry.quantity, 0);
+
+      if (totalPacks) totalPacks.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'pack' : 'packs'}`;
+      if (totalPrice) totalPrice.textContent = `Total: ${new Intl.NumberFormat('en-NZ', { style: 'currency', currency: 'NZD' }).format(totalAmount)}`;
+
+      if (!lines.length || !shopifyStoreDomain) {
+        checkout.setAttribute('href', '/about/contact/');
+        checkout.setAttribute('aria-disabled', 'true');
+        checkout.classList.add('opacity-50', 'pointer-events-none');
+        return;
+      }
+
+      const cartPath = lines.map((entry) => `${entry.item.cartVariantId}:${entry.quantity}`).join(',');
+      checkout.setAttribute('href', `https://${shopifyStoreDomain}/cart/${cartPath}`);
+      checkout.setAttribute('aria-disabled', 'false');
+      checkout.classList.remove('opacity-50', 'pointer-events-none');
+    };
+
+    const renderOrderLines = () => {
+      if (!(orderLines instanceof HTMLElement)) return;
+
+      const entries = Array.from(orderSelections.values());
+      orderLines.querySelectorAll('[data-order-line]').forEach((line) => line.remove());
+
+      if (emptyState instanceof HTMLElement) {
+        emptyState.classList.toggle('hidden', entries.length > 0);
+      }
+
+      entries.forEach((entry) => {
+        const row = document.createElement('tr');
+        row.setAttribute('data-order-line', 'true');
+        row.className = 'border-t border-slate-200';
+
+        row.innerHTML = `
+          <td class="px-4 py-3 font-semibold text-slate-900">${entry.label}</td>
+          <td class="px-4 py-3 text-slate-600">${entry.item.length}</td>
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-2">
+              <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-decrement="${entry.key}" aria-label="Reduce quantity">-</button>
+              <span class="min-w-[1.5rem] text-center font-semibold text-slate-900">${entry.quantity}</span>
+              <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-increment="${entry.key}" aria-label="Increase quantity">+</button>
+            </div>
+          </td>
+        `;
+
+        orderLines.appendChild(row);
+      });
+
+      updateCheckoutState();
+    };
+
+    const addCurrentSelection = () => {
+      const item = currentSelection();
+      if (!item || !item.cartVariantId || item.status !== 'Available to order online') return;
+
+      const configLabel = configurationMeta.find((entry) => entry.value === item.size)?.label ?? item.size;
+      const key = `${item.size}__${item.length}`;
+      const existingEntry = orderSelections.get(key);
+
+      orderSelections.set(key, {
+        key,
+        label: configLabel,
+        item,
+        quantity: existingEntry ? existingEntry.quantity + 1 : 1,
+      });
+
+      renderOrderLines();
     };
 
     const renderLengths = () => {
@@ -292,9 +436,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
     };
 
     const renderSummary = () => {
-      const item =
-        orderItems.find((entry) => entry.size === activeConfiguration && entry.length === activeLength) ??
-        orderItems.find((entry) => entry.size === activeConfiguration);
+      const item = currentSelection();
 
       if (!item) return;
 
@@ -309,9 +451,16 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
         statusBadge.textContent = item.status;
         statusBadge.className = getStatusClasses(item.status);
       }
-      if (primary) {
-        primary.textContent = item.cartUrl ? 'Add 6-pack to cart' : item.productUrl ? 'View Shopify product' : 'Contact EndoTech';
-        primary.setAttribute('href', item.cartUrl ?? item.productUrl ?? '/about/contact/');
+      if (primaryButton instanceof HTMLButtonElement) {
+        const canAdd = Boolean(item.cartVariantId && item.status === 'Available to order online');
+        primaryButton.disabled = !canAdd;
+        primaryButton.classList.toggle('hidden', !canAdd);
+      }
+      if (primaryLink instanceof HTMLAnchorElement) {
+        const useLinkAction = !(item.cartVariantId && item.status === 'Available to order online');
+        primaryLink.classList.toggle('hidden', !useLinkAction);
+        primaryLink.textContent = item.cartUrl ? 'Add 6-pack to cart' : item.productUrl ? 'View Shopify product' : 'Contact EndoTech';
+        primaryLink.setAttribute('href', item.cartUrl ?? item.productUrl ?? '/about/contact/');
       }
       if (secondary) {
         if (item.productUrl) {
@@ -323,6 +472,40 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
         }
       }
     };
+
+    if (primaryButton instanceof HTMLButtonElement) {
+      primaryButton.addEventListener('click', addCurrentSelection);
+    }
+
+    if (orderLines instanceof HTMLElement) {
+      orderLines.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+
+        const incrementKey = target.closest('[data-order-increment]')?.getAttribute('data-order-increment');
+        const decrementKey = target.closest('[data-order-decrement]')?.getAttribute('data-order-decrement');
+        const key = incrementKey ?? decrementKey;
+
+        if (!key) return;
+
+        const entry = orderSelections.get(key);
+        if (!entry) return;
+
+        if (incrementKey) {
+          entry.quantity += 1;
+          orderSelections.set(key, entry);
+        } else if (decrementKey) {
+          entry.quantity -= 1;
+          if (entry.quantity <= 0) {
+            orderSelections.delete(key);
+          } else {
+            orderSelections.set(key, entry);
+          }
+        }
+
+        renderOrderLines();
+      });
+    }
 
     configurationContainer.addEventListener('click', (event) => {
       const target = event.target;
@@ -374,5 +557,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
 
       renderSummary();
     });
+
+    updateCheckoutState();
   }
 </script>
