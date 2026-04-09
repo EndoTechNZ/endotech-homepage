@@ -84,5 +84,5 @@ export const ptOrderEntries: OrderCatalogEntryDefinition[] = [
   { size: 'F5', length: '31 mm', sku: 'TXPT-F5-31', handle: 'pt-transformx-files-f5-31mm-6-pack' },
   { size: 'Assortment', length: '21 mm', sku: 'TXPT-ASS21', handle: 'pt-transformx-files-assortment-21mm-6-pack' },
   { size: 'Assortment', length: '25 mm', sku: 'TXPT-ASS25', handle: 'pt-transformx-files-assortment-25mm-6-pack' },
-  { size: 'Assortment', length: '31 mm', sku: 'TXPT-ASS29', handle: 'pt-transformx-files-assortment-31mm-6-pack' },
+  { size: 'Assortment', length: '31 mm', sku: 'TXPT-ASS31', handle: 'pt-transformx-files-assortment-31mm-6-pack' },
 ];
