@@ -50,7 +50,8 @@ export default defineConfig({
             { label: 'Rotary Glide Path Files', slug: 'products/rotary-glide-path-files' },
             { label: 'ET TransformX Files', slug: 'products/et-transformx' },
             { label: 'PT TransformX Files', slug: 'products/pt-transformx' },
-            { label: 'BCS BioCeramic Sealer', slug: 'products/bcs-bioceramic-sealer' },
+            { label: 'VortiFlow Irrigation Needle', slug: 'products/vortiflow-irrigation-needle' },
+            { label: 'BCS BioCeramics Family', slug: 'products/bcs' },
           ],
         },
         {
