@@ -2,7 +2,6 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import ProductLayout from '../../layouts/ProductLayout.astro';
-import ProductHero from '../../components/product/ProductHero.astro';
 import FeatureGrid from '../../components/product/FeatureGrid.astro';
 import EvidenceCards from '../../components/product/EvidenceCards.astro';
 import ClinicalWorkflowStrip from '../../components/product/ClinicalWorkflowStrip.astro';
@@ -11,11 +10,13 @@ import FAQAccordion from '../../components/product/FAQAccordion.astro';
 import DistributorCTA from '../../components/product/DistributorCTA.astro';
 import vortiflowTechnicalRender from '../../assets/vortiflow/vortiflow-technical-cad-render.png';
 import vortiflowComparisonChart from '../../assets/vortiflow/vortiflow-irrigation-modality-comparison.png';
+import vortiflowVortexFlow from '../../assets/vortiflow/vortiflow-vortex-flow-dynamics.png';
 import vortiflowHelicalFigure from '../../assets/vortiflow/vortiflow-helical-channel-figure.png';
 import vortiflowVortexFigure from '../../assets/vortiflow/vortiflow-vortex-concept-figure.png';
 import vortiflowCadTip1 from '../../assets/vortiflow/vortiflow-cad-tip-render-1.jpg';
 import vortiflowCadTip2 from '../../assets/vortiflow/vortiflow-cad-tip-render-2.jpg';
 import { siteConfig } from '../../config/site';
+import { withBasePath } from '../../utils/paths';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const evidencePdfHref = '/downloads/VortiFlow-Evidence-Overview.pdf';
@@ -43,7 +44,7 @@ const vortiflowSchema = {
     name: siteConfig.name,
   },
   category: 'Endodontic irrigation needle',
-  image: [new URL(vortiflowTechnicalRender.src, siteUrl).toString()],
+  image: [new URL(vortiflowVortexFlow.src, siteUrl).toString()],
   url: new URL('/products/vortiflow-irrigation-needle/', siteUrl).toString(),
   additionalProperty: [
     { '@type': 'PropertyValue', name: 'Flow concept', value: 'Helical channel lateral flow' },
@@ -149,21 +150,72 @@ const ctas = [
 <ProductLayout
   title="VortiFlow Irrigation Needle | EndoTech NZ"
   description="Learn how the VortiFlow irrigation needle concept supports controlled lateral irrigant flow, debris transport, and workflow integration in modern endodontics."
-  image={vortiflowTechnicalRender.src}
+  image={vortiflowVortexFlow.src}
   schema={vortiflowSchema}
   accent="teal"
 >
-  <ProductHero
-    eyebrow="EndoTech Irrigation Concept"
-    title="VortiFlow Irrigation Needle"
-    subtitle="Engineered lateral-flow irrigation with a helical channel concept intended to support fluid exchange inside the canal."
-    description="VortiFlow is positioned as an EndoTech irrigation concept that connects shaping to cleaning through helical channel geometry, lateral irrigant exit, and workflow-first design thinking."
-    ctas={ctas}
-    accent="teal"
-    imageSrc={vortiflowTechnicalRender.src}
-    imageAlt="Technical CAD render of the VortiFlow irrigation needle"
-    visualLabel="VortiFlow"
-  />
+  <section class="relative overflow-hidden border-b border-slate-200/80 bg-white">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(191,219,254,0.42),transparent_34%),radial-gradient(circle_at_bottom_center,rgba(219,234,254,0.55),transparent_38%)]"></div>
+    <div class="relative mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-24">
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:items-center lg:gap-8">
+        <div class="min-w-0">
+          <div class="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">
+            <span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
+            EndoTech Irrigation Concept
+          </div>
+          <h1 class="mt-6 max-w-4xl text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">VortiFlow Irrigation Needle</h1>
+          <p class="mt-6 max-w-3xl text-lg font-semibold leading-tight text-slate-800 sm:text-2xl">
+            Engineered lateral-flow irrigation with a helical channel concept intended to support fluid exchange inside the canal.
+          </p>
+          <p class="mt-6 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+            VortiFlow is positioned as an EndoTech irrigation concept that connects shaping to cleaning through helical channel geometry, lateral irrigant exit, and workflow-first design thinking.
+          </p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-4">
+            {ctas.map((cta) => (
+              <a
+                href={withBasePath(cta.href)}
+                class:list={[
+                  'inline-flex w-full items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold transition-all duration-250 ease-out hover:-translate-y-0.5 sm:w-auto',
+                  cta.variant === 'secondary'
+                    ? 'border border-slate-200 bg-white/85 text-slate-600 hover:border-slate-300 hover:bg-white hover:text-slate-900'
+                    : 'bg-slate-900 text-white hover:bg-slate-800',
+                ]}
+              >
+                {cta.label}
+              </a>
+            ))}
+          </div>
+        </div>
+        <div class="relative">
+          <div class="pointer-events-none absolute inset-y-[7%] left-[7%] right-[2%] rounded-[2.5rem] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.85),transparent_28%),radial-gradient(circle_at_bottom_center,rgba(191,219,254,0.35),transparent_36%)] blur-2xl"></div>
+          <img
+            src={vortiflowVortexFlow.src}
+            alt="Helical flow dynamics illustration showing a vortex-style fluid path"
+            class="relative z-10 w-full rounded-[1.75rem] object-contain"
+          />
+          <div class="pointer-events-none absolute right-[5%] top-[28%] z-20 text-right text-white drop-shadow-[0_3px_12px_rgba(15,23,42,0.35)]">
+            <p class="text-xl font-semibold leading-tight sm:text-3xl">Helical Flow</p>
+            <p class="text-xl font-semibold leading-tight sm:text-3xl">Dynamics</p>
+          </div>
+          <div class="pointer-events-none absolute bottom-[6%] right-[6%] z-20 text-right text-white/95 drop-shadow-[0_3px_12px_rgba(15,23,42,0.28)]">
+            <p class="text-base font-medium leading-tight sm:text-2xl">Lateral exchange. Not apical pressure.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-8 sm:py-10 lg:py-12">
+      <div class="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_30px_90px_-48px_rgba(15,23,42,0.18)]">
+        <img
+          src={vortiflowTechnicalRender.src}
+          alt="Technical CAD render of the VortiFlow irrigation needle"
+          class="w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
 
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto max-w-7xl px-6 py-8 sm:py-10 lg:py-12">
