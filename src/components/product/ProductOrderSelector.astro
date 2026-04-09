@@ -180,7 +180,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
                   ? 'bg-emerald-50 text-emerald-700'
                   : defaultItem.status === 'Contact for availability'
                     ? 'bg-amber-50 text-amber-700'
-                    : 'bg-slate-100 text-slate-600'
+                    : 'bg-slate-100 text-red-600'
               }`}
               data-summary-status-badge
             >
@@ -386,7 +386,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
     const getStatusClasses = (value) => {
       if (value === 'Available to order online') return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-emerald-50 text-emerald-700';
       if (value === 'Contact for availability') return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-amber-50 text-amber-700';
-      return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-slate-100 text-slate-600';
+      return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-slate-100 text-red-600';
     };
 
     const parsePrice = (value) => {
