@@ -1,0 +1,323 @@
+---
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductHero from '../../components/product/ProductHero.astro';
+import FeatureGrid from '../../components/product/FeatureGrid.astro';
+import EvidenceCards from '../../components/product/EvidenceCards.astro';
+import ClinicalWorkflowStrip from '../../components/product/ClinicalWorkflowStrip.astro';
+import DownloadsList from '../../components/product/DownloadsList.astro';
+import FAQAccordion from '../../components/product/FAQAccordion.astro';
+import DistributorCTA from '../../components/product/DistributorCTA.astro';
+import vortiflowPackaging from '../../assets/vortiflow/vortiflow-packaging-artwork.jpg';
+import vortiflowHelicalFigure from '../../assets/vortiflow/vortiflow-helical-channel-figure.png';
+import vortiflowVortexFigure from '../../assets/vortiflow/vortiflow-vortex-concept-figure.png';
+import vortiflowCadTip1 from '../../assets/vortiflow/vortiflow-cad-tip-render-1.jpg';
+import vortiflowCadTip2 from '../../assets/vortiflow/vortiflow-cad-tip-render-2.jpg';
+import { siteConfig } from '../../config/site';
+
+const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const evidencePdfHref = '/downloads/VortiFlow-Evidence-Overview.pdf';
+const hasEvidencePdf = existsSync(path.join(process.cwd(), 'public', 'downloads', 'VortiFlow-Evidence-Overview.pdf'));
+
+const evidenceDownloads = hasEvidencePdf
+  ? [
+      {
+        label: 'VortiFlow Evidence Overview',
+        href: evidencePdfHref,
+        type: 'Evidence Summary' as const,
+        fileName: 'VortiFlow-Evidence-Overview.pdf',
+      },
+    ]
+  : [];
+
+const vortiflowSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'VortiFlow Irrigation Needle',
+  description:
+    'An educational overview of the VortiFlow irrigation needle concept, positioned around engineered lateral flow, helical channel geometry, and workflow integration after shaping.',
+  brand: {
+    '@type': 'Brand',
+    name: siteConfig.name,
+  },
+  category: 'Endodontic irrigation needle',
+  image: [new URL(vortiflowPackaging.src, siteUrl).toString()],
+  url: new URL('/products/vortiflow-irrigation-needle/', siteUrl).toString(),
+  additionalProperty: [
+    { '@type': 'PropertyValue', name: 'Flow concept', value: 'Helical channel lateral flow' },
+    { '@type': 'PropertyValue', name: 'Tip concept', value: 'Closed-end style lateral outlet' },
+    { '@type': 'PropertyValue', name: 'Workflow position', value: 'After shaping and before obturation' },
+  ],
+};
+
+const featureItems = [
+  {
+    title: 'Helical channel geometry',
+    description:
+      'The concept is built around helical channels on the needle wall so irrigant delivery is directed laterally rather than relying on a direct apical outlet.',
+    icon: 'workflow' as const,
+  },
+  {
+    title: 'Closed-end style tip concept',
+    description:
+      'The smooth distal form and lateral outlet geometry are intended to support controlled delivery while reducing emphasis on direct apical jetting.',
+    icon: 'handling' as const,
+  },
+  {
+    title: 'System placement after shaping',
+    description:
+      'VortiFlow is positioned as the cleaning step after TransformX shaping, helping the overall EndoTech workflow read as one connected treatment sequence.',
+    icon: 'stability' as const,
+  },
+];
+
+const clinicalBenefitItems = [
+  {
+    title: 'Support fluid exchange',
+    description:
+      'The VortiFlow concept is presented to support more controlled irrigant movement within the prepared canal rather than treating the needle as a commodity accessory.',
+    icon: 'workflow' as const,
+  },
+  {
+    title: 'Support debris transport',
+    description:
+      'The lateral-flow concept is intended to help with irrigant replacement and debris transport in shaped canals, especially where geometry influences flow behaviour.',
+    icon: 'handling' as const,
+  },
+  {
+    title: 'Keep cleaning inside the workflow story',
+    description:
+      'It gives the EndoTech system a more explicit shaping-to-cleaning transition before sealing, linking instrumentation and irrigation more clearly.',
+    icon: 'stability' as const,
+  },
+];
+
+const evidenceItems = [
+  {
+    title: 'Needle design influences irrigation behavior',
+    description:
+      'Published CFD and experimental work suggests that outlet geometry, venting pattern, and working depth can materially affect irrigant flow behaviour, wall shear, and safety considerations.',
+  },
+  {
+    title: 'Design matters more in constrained canal shapes',
+    description:
+      'Curved and minimally invasive canal preparations make irrigation more sensitive to anatomy, insertion depth, and directed flow behaviour.',
+  },
+  {
+    title: 'Evidence-led, clinically grounded',
+    description:
+      'VortiFlow is positioned as an engineered irrigation delivery concept within the EndoTech workflow, not as a substitute for every activation method.',
+  },
+  {
+    title: 'From shaping to cleaning',
+    description:
+      'The role of VortiFlow in the EndoTech system is to strengthen the transition from canal shaping into active irrigation before obturation.',
+  },
+];
+
+const faqItems = [
+  {
+    question: 'Is VortiFlow a replacement for activated irrigation?',
+    answer:
+      'No. VortiFlow is not presented here as a replacement for every activation method. It is positioned as an engineered needle-based irrigation delivery concept within a broader endodontic cleaning protocol.',
+  },
+  {
+    question: 'How does this differ from a standard side-vented needle?',
+    answer:
+      'The VortiFlow concept is differentiated by the helical channel and lateral-flow design approach shown in the supplied engineering material, rather than by a conventional straight side-vent alone.',
+  },
+  {
+    question: 'Where does VortiFlow sit in the EndoTech workflow?',
+    answer:
+      'VortiFlow is intended to sit after shaping and before obturation, linking the prepared canal form created by Acrobat and TransformX to the cleaning phase before BCS or iRoot sealing.',
+  },
+  {
+    question: 'Is VortiFlow intended for minimally invasive shaping approaches?',
+    answer:
+      'The page positions VortiFlow as relevant to modern shaping approaches where canal anatomy, working depth, and flow behaviour all matter. It does not make a superiority claim for any specific preparation philosophy.',
+  },
+];
+
+const ctas = [
+  { label: 'Contact EndoTech', href: '/about/contact/' },
+  { label: 'Review evidence', href: '#evidence', variant: 'secondary' as const },
+];
+---
+
+<ProductLayout
+  title="VortiFlow Irrigation Needle | EndoTech NZ"
+  description="Learn how the VortiFlow irrigation needle concept supports controlled lateral irrigant flow, debris transport, and workflow integration in modern endodontics."
+  image={vortiflowPackaging.src}
+  schema={vortiflowSchema}
+  accent="teal"
+>
+  <ProductHero
+    eyebrow="EndoTech Irrigation Concept"
+    title="VortiFlow Irrigation Needle"
+    subtitle="Engineered lateral-flow irrigation with a helical channel concept designed to improve fluid movement inside the canal."
+    description="VortiFlow is positioned as an EndoTech irrigation concept that connects shaping to cleaning through helical channel geometry, lateral irrigant exit, and workflow-first design thinking."
+    ctas={ctas}
+    accent="teal"
+    imageSrc={vortiflowPackaging.src}
+    imageAlt="Packaging artwork for VortiFlow dental irrigation needle"
+    visualLabel="VortiFlow"
+  />
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto grid max-w-7xl gap-4 px-6 py-14 sm:gap-6 sm:py-16 lg:grid-cols-2 lg:py-20">
+      <article class="rounded-[1.35rem] border border-slate-200 bg-slate-50/70 p-5 sm:rounded-[1.75rem] sm:p-7">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Clinical Problem</p>
+        <p class="mt-4 text-base leading-7 text-slate-600 sm:mt-5 sm:leading-8">
+          Irrigation performance depends not only on solution choice, but also on delivery geometry, insertion depth, canal shape, and the way fluid is directed inside constrained anatomy.
+        </p>
+      </article>
+      <article class="rounded-[1.35rem] border border-slate-200 bg-slate-950 p-5 text-white sm:rounded-[1.75rem] sm:p-7">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">TransformX Solution</p>
+        <p class="mt-4 text-base leading-7 text-slate-300 sm:mt-5 sm:leading-8">
+          After TransformX shaping has created the intended canal form, VortiFlow extends the EndoTech control story into irrigation through a helical-channel, lateral-flow delivery concept positioned between shaping and sealing.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <FeatureGrid
+    eyebrow="Key Features"
+    title="Engineered around delivery geometry"
+    intro="VortiFlow is presented as an irrigation delivery concept where outlet design, tip form, and workflow placement are all clinically relevant."
+    items={featureItems}
+    accent="teal"
+  />
+
+  <FeatureGrid
+    eyebrow="Clinical Benefits"
+    title="Why the delivery concept matters"
+    intro="The value story stays careful: more controlled delivery, cleaner workflow logic, and a stronger transition from shaping into irrigation."
+    items={clinicalBenefitItems}
+    accent="teal"
+  />
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">How It Works</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Helical channel flow design</h2>
+        <p class="mt-4 text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8">
+          VortiFlow is built around a lateral-flow concept in which irrigant exits through helical channels rather than being directed straight through an open apical outlet. The design is intended to create controlled flow movement within the canal space while reducing dependence on a direct apical jet.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-start">
+        <div class="grid gap-5">
+          <article class="rounded-[1.5rem] border border-slate-200 bg-slate-50/70 p-5">
+            <img src={vortiflowHelicalFigure.src} alt="Diagram showing helical channel geometry for VortiFlow irrigation concept" class="mx-auto w-full max-w-[18rem] object-contain" />
+            <h3 class="mt-5 text-xl font-bold text-slate-900">Spiral channel geometry</h3>
+            <p class="mt-3 text-sm leading-7 text-slate-600">
+              The helical figure illustrates the wall-channel concept that underpins the lateral delivery story.
+            </p>
+          </article>
+          <article class="rounded-[1.5rem] border border-slate-200 bg-slate-50/70 p-5">
+            <img src={vortiflowVortexFigure.src} alt="Engineering illustration of vortex-style flow path within an irrigation needle concept" class="mx-auto w-full max-w-[20rem] object-contain" />
+            <h3 class="mt-5 text-xl font-bold text-slate-900">Intended vortex-style movement</h3>
+            <p class="mt-3 text-sm leading-7 text-slate-600">
+              The engineering concept emphasises lateral movement and fluid exchange within the prepared canal space rather than a simple direct apical stream.
+            </p>
+          </article>
+        </div>
+
+        <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-teal-700">Mechanism Summary</p>
+          <h3 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">Why irrigation delivery design matters</h3>
+          <div class="mt-6 space-y-4 text-base leading-8 text-slate-600">
+            <p>
+              Published CFD and experimental studies indicate that irrigation behaviour changes with canal anatomy, working depth, vent geometry, and outlet design.
+            </p>
+            <p>
+              VortiFlow is positioned around the idea that a needle can be engineered to influence fluid movement more deliberately, with controlled lateral exit and less emphasis on direct apical jetting.
+            </p>
+            <p>
+              The concept should be understood as evidence-led engineering rationale within the irrigation step, not as a blanket claim of superiority over every activation method.
+            </p>
+          </div>
+          <ul class="mt-6 space-y-3 text-sm leading-7 text-slate-600">
+            <li>Helical channels on the needle wall support the lateral-flow concept.</li>
+            <li>Closed-end style geometry reduces reliance on a tip-open outlet.</li>
+            <li>The workflow intent is cleaner transition from shaping into active irrigation.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Engineering Detail</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Tip geometry and lateral outlet detail</h2>
+        <p class="mt-4 text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8">
+          The CAD views support the core message: lateral outlet design, a smooth closed-end style tip concept, and channel-led flow direction.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-[0_20px_50px_-38px_rgba(15,23,42,0.18)]">
+            <img src={vortiflowCadTip1.src} alt="CAD rendering of lateral outlet tip geometry for irrigation needle design" class="w-full rounded-[1rem] object-cover" />
+          </article>
+          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-[0_20px_50px_-38px_rgba(15,23,42,0.18)]">
+            <img src={vortiflowCadTip2.src} alt="CAD rendering of closed-end lateral outlet irrigation needle tip concept" class="w-full rounded-[1rem] object-cover" />
+          </article>
+        </div>
+        <article class="rounded-[1.5rem] border border-slate-200 bg-white p-6">
+          <h3 class="text-2xl font-bold tracking-tight text-slate-900">Key design callouts</h3>
+          <div class="mt-6 space-y-5">
+            <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/75 p-4">
+              <p class="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">Lateral outlet design</p>
+              <p class="mt-2 text-sm leading-7 text-slate-600">The concept prioritises side-directed irrigant delivery into the canal space rather than relying on an open apical exit.</p>
+            </div>
+            <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/75 p-4">
+              <p class="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">Smooth closed-end style concept</p>
+              <p class="mt-2 text-sm leading-7 text-slate-600">The distal geometry is intended to support more controlled placement while reducing emphasis on direct apical jetting.</p>
+            </div>
+            <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/75 p-4">
+              <p class="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">Channel-led flow direction</p>
+              <p class="mt-2 text-sm leading-7 text-slate-600">The helical-channel concept is presented to influence fluid exchange and debris transport inside the prepared canal.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="evidence">
+    <EvidenceCards
+      title="Evidence & Rationale"
+      intro="Recent literature supports the broader principle that irrigation needle design affects fluid behaviour, insertion safety, and irrigant replacement. VortiFlow is presented here as an engineered irrigation delivery concept rather than a commodity accessory."
+      items={evidenceItems}
+    />
+  </section>
+
+  {evidenceDownloads.length > 0 && (
+    <DownloadsList
+      title="Evidence Overview"
+      intro="Open the curated VortiFlow evidence overview if you want the supporting rationale collected in one file."
+      items={evidenceDownloads}
+    />
+  )}
+
+  <ClinicalWorkflowStrip
+    title="Complete Endodontic Workflow"
+    intro="Glide path, shaping, irrigation, and sealing should work as one connected treatment sequence."
+    steps={['Acrobat', 'TransformX', 'VortiFlow', 'BCS / iRoot']}
+  />
+
+  <FAQAccordion title="VortiFlow FAQ" items={faqItems} />
+
+  <DistributorCTA
+    title="See where VortiFlow fits before you evaluate the full workflow"
+    body="Use VortiFlow as the cleaning bridge between canal shaping and final sealing. The page is built to explain the concept carefully, without overclaiming what the engineering rationale can support."
+    primaryLabel="Contact EndoTech"
+    primaryHref="/about/contact/"
+    secondaryLabel={hasEvidencePdf ? 'Open evidence overview' : 'View BCS materials'}
+    secondaryHref={hasEvidencePdf ? evidencePdfHref : '/products/bcs/'}
+  />
+</ProductLayout>
