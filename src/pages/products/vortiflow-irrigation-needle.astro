@@ -150,6 +150,19 @@ const ctas = [
   { label: 'Contact EndoTech', href: '/about/contact/' },
   { label: 'Review evidence', href: '#evidence', variant: 'secondary' as const },
 ];
+
+const heroVisualEmailSubject = 'VortiFlow further details';
+const heroVisualEmailBody = `Hello ${siteConfig.shortName},
+
+I would like further details about the VortiFlow irrigation concept shown on the product page.
+
+Please send more information about:
+- clinical rationale
+- product availability
+- next steps for enquiry
+
+Thank you.`;
+const heroVisualMailtoHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent(heroVisualEmailSubject)}&body=${encodeURIComponent(heroVisualEmailBody)}`;
 ---
 
 <ProductLayout
@@ -191,9 +204,17 @@ const ctas = [
             ))}
           </div>
         </div>
-        <div class="relative">
+        <a
+          href={heroVisualMailtoHref}
+          class="group relative block rounded-[1.9rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20 focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+          aria-label="Email EndoTech for further details about VortiFlow"
+          data-vortiflow-visual-link
+        >
           <div class="pointer-events-none absolute inset-y-[6%] left-[5%] right-[4%] rounded-[2.5rem] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.88),transparent_28%),radial-gradient(circle_at_bottom_center,rgba(191,219,254,0.32),transparent_38%)] blur-2xl"></div>
           <div class="relative z-10 overflow-hidden rounded-[1.9rem] border border-slate-200/80 bg-white/88 p-3 shadow-[0_34px_90px_-52px_rgba(15,23,42,0.28)] backdrop-blur-sm sm:p-4">
+            <div class="pointer-events-none absolute right-5 top-5 z-20 inline-flex translate-y-1 items-center rounded-full border border-slate-200/80 bg-white/92 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-slate-600 opacity-0 shadow-[0_12px_28px_-18px_rgba(15,23,42,0.35)] transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 group-active:translate-y-0 group-active:opacity-100">
+              Click for further details
+            </div>
             <div class="grid gap-3 sm:gap-4">
               <div class="overflow-hidden rounded-[1.45rem] border border-slate-200/80 bg-slate-50 px-4 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] sm:px-5 sm:py-6">
                 <img
@@ -211,10 +232,57 @@ const ctas = [
               </div>
             </div>
           </div>
-        </div>
+          <div
+            class="pointer-events-none absolute bottom-5 left-5 z-20 max-w-[16rem] rounded-[1rem] border border-slate-200/80 bg-white/95 px-3 py-2 text-xs font-medium leading-5 text-slate-600 opacity-0 shadow-[0_16px_32px_-22px_rgba(15,23,42,0.32)] transition-all duration-200"
+            data-vortiflow-visual-feedback
+            aria-live="polite"
+          ></div>
+        </a>
       </div>
     </div>
   </section>
+
+  <script define:vars={{ heroVisualMailtoHref, heroVisualEmailBody }}>
+    document.querySelectorAll('[data-vortiflow-visual-link]').forEach((link) => {
+      const feedback = link.querySelector('[data-vortiflow-visual-feedback]');
+      let feedbackTimer;
+
+      const showFeedback = (message) => {
+        if (!feedback) return;
+        feedback.textContent = message;
+        feedback.style.opacity = '1';
+        clearTimeout(feedbackTimer);
+        feedbackTimer = window.setTimeout(() => {
+          feedback.style.opacity = '0';
+        }, 2600);
+      };
+
+      link.addEventListener('click', async (event) => {
+        event.preventDefault();
+
+        let copied = false;
+
+        if (navigator.clipboard?.writeText) {
+          try {
+            await navigator.clipboard.writeText(heroVisualEmailBody);
+            copied = true;
+          } catch {
+            copied = false;
+          }
+        }
+
+        showFeedback(
+          copied
+            ? 'Details copied. Your email editor should open now.'
+            : 'Opening your email editor for further details.',
+        );
+
+        window.setTimeout(() => {
+          window.location.href = heroVisualMailtoHref;
+        }, 80);
+      });
+    });
+  </script>
 
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto max-w-7xl px-6 py-8 sm:py-10 lg:py-12">
