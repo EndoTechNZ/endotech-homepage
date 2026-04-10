@@ -11,6 +11,7 @@ import DistributorCTA from '../../components/product/DistributorCTA.astro';
 import vortiflowTechnicalRender from '../../assets/vortiflow/vortiflow-technical-cad-render.png';
 import vortiflowComparisonChart from '../../assets/vortiflow/vortiflow-irrigation-modality-comparison.png';
 import vortiflowVortexFlow from '../../assets/vortiflow/vortiflow-vortex-flow-dynamics.png';
+import vortiflowWaterFlowMarketingImage from '../../assets/vortiflow/vortiflow-water-flow-marketing-image.png';
 import vortiflowHelicalFigure from '../../assets/vortiflow/vortiflow-helical-channel-figure.png';
 import vortiflowVortexFigure from '../../assets/vortiflow/vortiflow-vortex-concept-figure.png';
 import vortiflowCadTip1 from '../../assets/vortiflow/vortiflow-cad-tip-render-1.jpg';
@@ -191,18 +192,24 @@ const ctas = [
           </div>
         </div>
         <div class="relative">
-          <div class="pointer-events-none absolute inset-y-[7%] left-[7%] right-[2%] rounded-[2.5rem] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.85),transparent_28%),radial-gradient(circle_at_bottom_center,rgba(191,219,254,0.35),transparent_36%)] blur-2xl"></div>
-          <img
-            src={vortiflowVortexFlow.src}
-            alt="Helical flow dynamics illustration showing a vortex-style fluid path"
-            class="relative z-10 w-full rounded-[1.75rem] object-contain"
-          />
-          <div class="pointer-events-none absolute right-[5%] top-[28%] z-20 text-right text-white drop-shadow-[0_3px_12px_rgba(15,23,42,0.35)]">
-            <p class="text-xl font-semibold leading-tight sm:text-3xl">Helical Flow</p>
-            <p class="text-xl font-semibold leading-tight sm:text-3xl">Dynamics</p>
-          </div>
-          <div class="pointer-events-none absolute bottom-[6%] right-[6%] z-20 text-right text-white/95 drop-shadow-[0_3px_12px_rgba(15,23,42,0.28)]">
-            <p class="text-base font-medium leading-tight sm:text-2xl">Lateral exchange. Not apical pressure.</p>
+          <div class="pointer-events-none absolute inset-y-[6%] left-[5%] right-[4%] rounded-[2.5rem] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.88),transparent_28%),radial-gradient(circle_at_bottom_center,rgba(191,219,254,0.32),transparent_38%)] blur-2xl"></div>
+          <div class="relative z-10 overflow-hidden rounded-[1.9rem] border border-slate-200/80 bg-white/88 p-3 shadow-[0_34px_90px_-52px_rgba(15,23,42,0.28)] backdrop-blur-sm sm:p-4">
+            <div class="grid gap-3 sm:gap-4">
+              <div class="overflow-hidden rounded-[1.45rem] border border-slate-200/80 bg-slate-50 px-4 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] sm:px-5 sm:py-6">
+                <img
+                  src={vortiflowTechnicalRender.src}
+                  alt="Technical CAD render of the VortiFlow irrigation needle"
+                  class="block w-full h-auto"
+                />
+              </div>
+              <div class="overflow-hidden rounded-[1.45rem] border border-slate-200/80 bg-[linear-gradient(180deg,#eef8ff_0%,#dff3fb_100%)] px-4 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] sm:px-5 sm:py-6">
+                <img
+                  src={vortiflowWaterFlowMarketingImage.src}
+                  alt="VortiFlow water-flow marketing image showing the irrigation concept with fluid movement"
+                  class="block w-full h-auto"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
