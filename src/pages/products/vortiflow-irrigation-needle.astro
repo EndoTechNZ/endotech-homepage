@@ -19,6 +19,11 @@ import { siteConfig } from '../../config/site';
 import { withBasePath } from '../../utils/paths';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const pageTitle = `VortiFlow Irrigation Needle for Controlled Endodontic Irrigation | ${siteConfig.name}`;
+const pageDescription =
+  'VortiFlow is an irrigation needle concept designed for controlled lateral irrigant flow, fluid exchange, and debris transport after canal shaping.';
+const heroHeading = 'VortiFlow Irrigation Needle for Controlled Lateral Flow';
+const heroLead = 'Controlled lateral irrigant flow after shaping, built around a helical channel needle concept.';
 const evidencePdfHref = '/downloads/VortiFlow-Evidence-Overview.pdf';
 const hasEvidencePdf = existsSync(path.join(process.cwd(), 'public', 'downloads', 'VortiFlow-Evidence-Overview.pdf'));
 
@@ -37,8 +42,7 @@ const vortiflowSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'VortiFlow Irrigation Needle',
-  description:
-    'An educational overview of the VortiFlow irrigation needle concept, positioned around engineered lateral flow, helical channel geometry, and workflow integration after shaping.',
+  description: pageDescription,
   brand: {
     '@type': 'Brand',
     name: siteConfig.name,
@@ -148,8 +152,8 @@ const ctas = [
 ---
 
 <ProductLayout
-  title="VortiFlow Irrigation Needle | EndoTech NZ"
-  description="Learn how the VortiFlow irrigation needle concept supports controlled lateral irrigant flow, debris transport, and workflow integration in modern endodontics."
+  title={pageTitle}
+  description={pageDescription}
   image={vortiflowVortexFlow.src}
   schema={vortiflowSchema}
   accent="teal"
@@ -163,12 +167,12 @@ const ctas = [
             <span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
             EndoTech Irrigation Concept
           </div>
-          <h1 class="mt-6 max-w-4xl text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">VortiFlow Irrigation Needle</h1>
+          <h1 class="mt-6 max-w-4xl text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">{heroHeading}</h1>
           <p class="mt-6 max-w-3xl text-lg font-semibold leading-tight text-slate-800 sm:text-2xl">
-            Engineered lateral-flow irrigation with a helical channel concept intended to support fluid exchange inside the canal.
+            {heroLead}
           </p>
           <p class="mt-6 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-            VortiFlow is positioned as an EndoTech irrigation concept that connects shaping to cleaning through helical channel geometry, lateral irrigant exit, and workflow-first design thinking.
+            VortiFlow is positioned as an EndoTech irrigation concept that supports controlled irrigant exchange, debris transport, and a clearer transition from shaping to cleaning.
           </p>
           <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-4">
             {ctas.map((cta) => (
