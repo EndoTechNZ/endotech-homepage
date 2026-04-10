@@ -163,6 +163,8 @@ Please send more information about:
 
 Thank you.`;
 const heroVisualMailtoHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent(heroVisualEmailSubject)}&body=${encodeURIComponent(heroVisualEmailBody)}`;
+const factsSheetModalId = 'vortiflow-facts-sheet-modal';
+const factsSheetViewerHref = `${withBasePath(evidencePdfHref)}#toolbar=0&navpanes=0&scrollbar=1&view=Fit&zoom=page-fit`;
 ---
 
 <ProductLayout
@@ -284,17 +286,129 @@ const heroVisualMailtoHref = `mailto:${siteConfig.email}?subject=${encodeURIComp
     });
   </script>
 
-  <section class="border-b border-slate-200/80 bg-white">
-    <div class="mx-auto max-w-7xl px-6 py-8 sm:py-10 lg:py-12">
-      <div class="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_30px_90px_-48px_rgba(15,23,42,0.18)]">
-        <img
-          src={vortiflowTechnicalRender.src}
-          alt="Technical CAD render of the VortiFlow irrigation needle"
-          class="w-full object-contain"
-        />
+  {hasEvidencePdf && (
+    <>
+      <section class="border-b border-slate-200/80 bg-white">
+        <div class="mx-auto max-w-7xl px-6 py-8 sm:py-10 lg:py-12">
+          <div class="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-[radial-gradient(circle_at_top_left,rgba(239,246,255,0.92),rgba(255,255,255,0.96)_44%,rgba(248,250,252,0.98)_100%)] shadow-[0_30px_90px_-48px_rgba(15,23,42,0.18)]">
+            <div class="flex flex-col gap-6 px-6 py-7 sm:px-8 sm:py-9 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+              <div class="max-w-3xl">
+                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Facts Sheet</p>
+                <h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Review the VortiFlow facts sheet in-page</h2>
+                <p class="mt-4 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+                  Open the full Engineered Endodontic Irrigation facts sheet in a scrollable viewer without leaving the product page.
+                </p>
+              </div>
+              <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+                <button
+                  type="button"
+                  class="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
+                  data-facts-sheet-open
+                  aria-haspopup="dialog"
+                  aria-controls={factsSheetModalId}
+                >
+                  Review Facts Sheet
+                </button>
+                <a
+                  href={withBasePath(evidencePdfHref)}
+                  class="inline-flex w-full items-center justify-center rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950 sm:w-auto"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open download
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div
+        id={factsSheetModalId}
+        class="fixed inset-0 z-50 hidden"
+        data-facts-sheet-modal
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`${factsSheetModalId}-title`}
+      >
+        <div class="absolute inset-0 bg-slate-950/55 backdrop-blur-[2px]" data-facts-sheet-close></div>
+        <div class="absolute inset-x-0 bottom-0 top-auto flex max-h-[99vh] min-h-[92vh] flex-col overflow-hidden rounded-t-[1.75rem] border border-slate-200 bg-white shadow-[0_40px_120px_-40px_rgba(15,23,42,0.45)] sm:inset-y-60 sm:inset-x-6 sm:max-h-none sm:min-h-0 sm:rounded-[1.75rem] lg:left-1/2 lg:right-auto lg:w-[min(81vw,67rem)] lg:-translate-x-1/2">
+          <div class="flex items-center justify-between gap-4 border-b border-slate-200/80 px-5 py-3 sm:px-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Facts Sheet Viewer</p>
+              <h3 id={`${factsSheetModalId}-title`} class="mt-2 text-lg font-bold tracking-tight text-slate-900 sm:text-xl">Engineered Endodontic Irrigation Facts Sheet</h3>
+            </div>
+            <button
+              type="button"
+              class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900"
+              data-facts-sheet-close
+              aria-label="Close facts sheet viewer"
+            >
+              ×
+            </button>
+          </div>
+          <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/70 px-5 py-2.5 text-sm sm:px-6">
+            <p class="text-slate-600">If the inline viewer does not load, use the fallback link.</p>
+            <a
+              href={withBasePath(evidencePdfHref)}
+              class="inline-flex shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white px-4 py-2 font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open / Download PDF
+            </a>
+          </div>
+          <div class="min-h-0 flex-1 overflow-y-auto bg-slate-100 p-2 sm:p-3">
+            <div class="mx-auto flex h-full min-h-full flex-col rounded-[1.25rem] border border-slate-200 bg-white shadow-[0_24px_60px_-40px_rgba(15,23,42,0.25)]">
+              <iframe
+                src={factsSheetViewerHref}
+                title="VortiFlow facts sheet PDF viewer"
+                class="h-[78vh] w-full rounded-[1.25rem] sm:h-full sm:min-h-0"
+              ></iframe>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+
+      <script define:vars={{ factsSheetModalId }}>
+        const factsSheetModal = document.getElementById(factsSheetModalId);
+        const factsSheetOpenButtons = document.querySelectorAll('[data-facts-sheet-open]');
+        const factsSheetCloseButtons = factsSheetModal?.querySelectorAll('[data-facts-sheet-close]') ?? [];
+        let factsSheetLastTrigger = null;
+
+        const setFactsSheetOpen = (isOpen) => {
+          if (!factsSheetModal) return;
+
+          factsSheetModal.classList.toggle('hidden', !isOpen);
+          document.body.classList.toggle('overflow-hidden', isOpen);
+
+          if (isOpen) {
+            const closeButton = factsSheetModal.querySelector('[aria-label="Close facts sheet viewer"]');
+            closeButton?.focus();
+          } else {
+            factsSheetLastTrigger?.focus();
+          }
+        };
+
+        factsSheetOpenButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            factsSheetLastTrigger = button;
+            setFactsSheetOpen(true);
+          });
+        });
+
+        factsSheetCloseButtons.forEach((button) => {
+          button.addEventListener('click', () => setFactsSheetOpen(false));
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && factsSheetModal && !factsSheetModal.classList.contains('hidden')) {
+            setFactsSheetOpen(false);
+          }
+        });
+      </script>
+    </>
+  )}
 
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto max-w-7xl px-6 py-8 sm:py-10 lg:py-12">
