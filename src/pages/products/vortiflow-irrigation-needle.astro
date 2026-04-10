@@ -31,9 +31,9 @@ const hasEvidencePdf = existsSync(path.join(process.cwd(), 'public', 'downloads'
 const evidenceDownloads = hasEvidencePdf
   ? [
       {
-        label: 'VortiFlow Evidence Overview',
+        label: 'Engineered Endodontic Irrigation Facts Sheet',
         href: evidencePdfHref,
-        type: 'Evidence Summary' as const,
+        type: 'Facts Sheet' as const,
         fileName: 'VortiFlow-Evidence-Overview.pdf',
       },
     ]
@@ -443,7 +443,7 @@ const heroVisualMailtoHref = `mailto:${siteConfig.email}?subject=${encodeURIComp
   {evidenceDownloads.length > 0 && (
     <DownloadsList
       title="Evidence Overview"
-      intro="Open the curated VortiFlow evidence overview if you want the supporting rationale collected in one file."
+      intro="Open the VortiFlow facts sheet if you want the supporting rationale collected in one file."
       items={evidenceDownloads}
     />
   )}
