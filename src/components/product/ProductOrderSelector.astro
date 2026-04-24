@@ -1,0 +1,798 @@
+---
+type OrderItem = {
+  size: string;
+  length: string;
+  sku: string;
+  price: string;
+  status: string;
+  productUrl: string | null;
+  cartUrl: string | null;
+  cartVariantId: string | null;
+  isMb2?: boolean;
+};
+
+type Props = {
+  eyebrow?: string;
+  title: string;
+  description: string;
+  items: OrderItem[];
+  coverageLabel: string;
+  packFormat: string;
+  shopifyStoreDomain?: string | null;
+  selectionNote?: string;
+};
+
+const {
+  eyebrow = 'NZ Ordering',
+  title,
+  description,
+  items,
+  coverageLabel,
+  packFormat,
+  shopifyStoreDomain = null,
+  selectionNote = '',
+} = Astro.props;
+
+const configurations = Array.from(
+  new Map(
+    items.map((item) => [
+      item.size,
+      {
+        value: item.size,
+        label: item.isMb2 ? `${item.size} MB2` : item.size,
+        isMb2: Boolean(item.isMb2),
+      },
+    ]),
+  ).values(),
+);
+
+const defaultItem = items.find((item) => item.status === 'Available to order online') ?? items[0];
+const defaultConfiguration = defaultItem.size;
+const defaultLengths = items.filter((item) => item.size === defaultConfiguration);
+const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
+---
+
+<section class="border-b border-slate-200/80 bg-white" data-order-selector={selectorId}>
+  <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
+    <div class="order-selector-shell overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50/70 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.35)]">
+      <div class="order-selector-intro border-b border-slate-200/80 px-6 py-8 sm:px-8 sm:py-10">
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
+          <div>
+            <p class="order-selector-marker text-base font-semibold uppercase tracking-[0.24em] text-[#5076B8]">{eyebrow}</p>
+            <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
+            <p class="mt-4 max-w-3xl whitespace-pre-line text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{description}</p>
+          </div>
+          <div class="order-selector-meta grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+            <article class="rounded-[1.15rem] border border-slate-200 bg-white px-4 py-4">
+              <p class="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-500">Sequence Coverage</p>
+              <p class="mt-2 text-base font-semibold leading-7 text-slate-900">{coverageLabel}</p>
+            </article>
+            <article class="rounded-[1.15rem] border border-slate-200 bg-white px-4 py-4">
+              <p class="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-500">Pack Format</p>
+              <p class="mt-2 text-base font-semibold leading-7 text-slate-900">{packFormat}</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-selector-layout grid gap-6 px-6 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)] lg:items-start">
+        <div>
+          <div class="order-step-panel rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_8px_16px_-14px_rgba(15,23,42,0.3)] sm:p-6">
+            <p class="order-selector-marker text-base font-extrabold uppercase tracking-[0.24em] text-[#5076B8]">Step 1</p>
+            <h3 class="mt-2 text-xl font-bold tracking-tight text-slate-900">Choose file configuration</h3>
+            <div class="order-choice-group mt-5 flex flex-wrap gap-3" data-order-configurations>
+              {configurations.map((configuration) => (
+                <button
+                  type="button"
+                  class={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                    configuration.value === defaultConfiguration
+                      ? 'border-slate-900 bg-slate-900 text-white'
+                      : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:text-slate-950'
+                  }`}
+                  data-configuration-button
+                  data-configuration={configuration.value}
+                >
+                  {configuration.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div class="order-step-panel mt-4 rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_8px_16px_-14px_rgba(15,23,42,0.3)] sm:p-6">
+            <p class="order-selector-marker text-base font-extrabold uppercase tracking-[0.24em] text-[#5076B8]">Step 2</p>
+            <h3 class="mt-2 text-xl font-bold tracking-tight text-slate-900">Choose file length</h3>
+            <div class="order-choice-group mt-5 flex flex-wrap gap-3" data-order-lengths>
+              {defaultLengths.map((item) => (
+                <button
+                  type="button"
+                  class={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                    item.length === defaultItem.length
+                      ? 'border-teal-700 bg-teal-50 text-teal-800'
+                      : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:text-slate-950'
+                  }`}
+                  data-length-button
+                  data-length={item.length}
+                >
+                  {item.length}
+                </button>
+              ))}
+            </div>
+            {selectionNote && <p class="mt-5 text-sm leading-6 text-slate-600">{selectionNote}</p>}
+          </div>
+
+          <div class="order-fallback-panel mt-4 rounded-[1.35rem] border border-dashed border-slate-300 bg-white p-5 sm:p-6" data-order-fallback>
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">All Order Options</p>
+            <p class="mt-2 text-sm leading-6 text-slate-600">
+              If interactive selection is unavailable, use the direct links below to open the exact file listing.
+            </p>
+            <div class="mt-5 grid gap-3">
+              {items.map((item) => (
+                <article class="rounded-[1rem] border border-slate-200 bg-slate-50/80 px-4 py-4">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p class="text-sm font-semibold text-slate-900">{item.isMb2 ? `${item.size} MB2` : item.size} · {item.length}</p>
+                      <p class="mt-1 text-sm text-slate-600">SKU: {item.sku}</p>
+                    </div>
+                    <p class="text-sm font-semibold text-slate-900">{item.price}</p>
+                  </div>
+                  <div class="mt-3 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                    {(item.cartUrl || item.productUrl) && (
+                      <a
+                        href={item.cartUrl ?? item.productUrl ?? '/about/contact/'}
+                        class="inline-flex items-center justify-center rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+                      >
+                        {item.cartUrl ? 'Add 6-pack to cart' : 'View Shopify product'}
+                      </a>
+                    )}
+                    {item.productUrl && (
+                      <a
+                        href={item.productUrl}
+                        class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950"
+                      >
+                        Open Shopify listing
+                      </a>
+                    )}
+                    {!item.cartUrl && !item.productUrl && (
+                      <a
+                        href="/about/contact/"
+                        class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950"
+                      >
+                        Contact EndoTech
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <aside class="order-summary-panel rounded-[1.45rem] border border-slate-200 bg-white p-5 shadow-[0_10px_22px_-16px_rgba(15,23,42,0.3)] sm:p-6" data-order-summary>
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Selected File</p>
+              <h3 class="mt-2 text-2xl font-bold tracking-tight text-slate-900" data-summary-heading>{defaultItem.size}</h3>
+              <p class="mt-2 text-base font-semibold text-slate-600" data-summary-length>{defaultItem.length}</p>
+            </div>
+            <span
+              class={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
+                defaultItem.status === 'Available to order online'
+                  ? 'bg-emerald-50 text-emerald-700'
+                  : defaultItem.status === 'Contact for availability'
+                    ? 'bg-amber-50 text-amber-700'
+                    : 'bg-slate-100 text-red-600'
+              }`}
+              data-summary-status-badge
+            >
+              {defaultItem.status}
+            </span>
+          </div>
+
+          <dl class="mt-6 grid gap-3">
+            <div class="rounded-[1rem] border border-slate-200 bg-slate-50/80 px-4 py-3">
+              <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">SKU</dt>
+              <dd class="mt-2 text-sm font-semibold leading-6 text-slate-900" data-summary-sku>{defaultItem.sku}</dd>
+            </div>
+            <div class="rounded-[1rem] border border-slate-200 bg-slate-50/80 px-4 py-3">
+              <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Current NZ Price</dt>
+              <dd class="mt-2 text-sm font-semibold leading-6 text-slate-900" data-summary-price>{defaultItem.price}</dd>
+            </div>
+            <div class="rounded-[1rem] border border-slate-200 bg-slate-50/80 px-4 py-3">
+              <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Availability</dt>
+              <dd class="mt-2 text-sm font-semibold leading-6 text-slate-900" data-summary-status>{defaultItem.status}</dd>
+            </div>
+          </dl>
+
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            {defaultItem.cartVariantId && defaultItem.status === 'Available to order online' ? (
+              <button
+                type="button"
+                class="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
+                data-summary-primary-button
+              >
+                Add to order
+              </button>
+            ) : null}
+            {!(defaultItem.cartVariantId && defaultItem.status === 'Available to order online') && (defaultItem.cartUrl || defaultItem.productUrl) && (
+              <a
+                href={defaultItem.cartUrl ?? defaultItem.productUrl ?? '/about/contact/'}
+                class="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
+                data-summary-primary-link
+              >
+                {defaultItem.cartUrl ? 'Add 6-pack to cart' : 'View Shopify product'}
+              </a>
+            )}
+            {!defaultItem.cartUrl && !defaultItem.productUrl && (
+              <a
+                href="/about/contact/"
+                class="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
+                data-summary-primary-link
+              >
+                Contact EndoTech
+              </a>
+            )}
+            <a
+              href={defaultItem.productUrl ?? '/about/contact/'}
+              class={`inline-flex w-full items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950 sm:w-auto ${
+                defaultItem.productUrl ? '' : 'hidden'
+              }`}
+              data-summary-secondary
+            >
+              Open Shopify listing
+            </a>
+          </div>
+
+          <div class="mt-8 rounded-[1.2rem] border border-slate-200 bg-slate-50/70 p-4 sm:p-5" data-order-builder>
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Current Order</p>
+                <h4 class="mt-2 text-lg font-bold tracking-tight text-slate-900">Selected packs</h4>
+              </div>
+              <p class="text-sm font-semibold text-slate-600" data-order-total-packs>0 packs</p>
+            </div>
+
+            <div class="mt-4 grid gap-3 sm:hidden" data-order-cards>
+              <article class="rounded-[1rem] border border-slate-200 bg-white px-4 py-4 text-sm leading-6 text-slate-500" data-order-empty-card>
+                Add file packs from the selector to build one combined Shopify checkout.
+              </article>
+            </div>
+
+            <div class="mt-4 hidden overflow-hidden rounded-[1rem] border border-slate-200 bg-white sm:block">
+              <table class="min-w-full border-collapse text-left text-sm">
+                <thead class="bg-slate-50/80">
+                  <tr>
+                    <th class="px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">File</th>
+                    <th class="px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Length</th>
+                    <th class="px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Qty</th>
+                  </tr>
+                </thead>
+                <tbody data-order-lines>
+                  <tr data-order-empty-state>
+                    <td colspan="3" class="px-4 py-5 text-sm leading-6 text-slate-500">
+                      Add file packs from the selector to build one combined Shopify checkout.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p class="text-sm leading-6 text-slate-600" data-order-total-price>Total: $0.00</p>
+              <a
+                href="/about/contact/"
+                class="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 opacity-50 pointer-events-none sm:w-auto"
+                data-order-checkout
+                aria-disabled="true"
+              >
+                Checkout selected items
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .order-selector-marker {
+    font-family: 'Sora', system-ui, sans-serif;
+  }
+
+  @media (max-width: 720px) {
+    [data-order-selector] .order-selector-shell {
+      border-radius: 1.3rem;
+    }
+
+    [data-order-selector] .order-selector-intro {
+      padding: 1.35rem 1.15rem;
+    }
+
+    [data-order-selector] .order-selector-intro h2 {
+      margin-top: 0.6rem;
+      font-size: 1.9rem;
+      line-height: 1.05;
+    }
+
+    [data-order-selector] .order-selector-intro p:not(.order-selector-marker) {
+      margin-top: 0.9rem;
+      font-size: 0.96rem;
+      line-height: 1.65;
+    }
+
+    [data-order-selector] .order-selector-meta {
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+
+    [data-order-selector] .order-selector-layout {
+      padding: 1rem 1rem 1.15rem;
+      gap: 0.9rem;
+    }
+
+    [data-order-selector] .order-summary-panel {
+      order: -1;
+      padding: 1rem;
+      border-radius: 1.2rem;
+    }
+
+    [data-order-selector] .order-summary-panel h3 {
+      font-size: 1.55rem;
+      line-height: 1.02;
+    }
+
+    [data-order-selector] .order-summary-panel dl {
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+
+    [data-order-selector] .order-summary-panel dl > div,
+    [data-order-selector] [data-order-builder] {
+      padding: 0.85rem 0.9rem;
+      border-radius: 0.95rem;
+    }
+
+    [data-order-selector] .order-summary-panel > .mt-6.flex {
+      margin-top: 1rem;
+    }
+
+    [data-order-selector] .order-step-panel,
+    [data-order-selector] .order-fallback-panel {
+      padding: 1rem;
+      border-radius: 1.2rem;
+    }
+
+    [data-order-selector] .order-step-panel h3 {
+      margin-top: 0.45rem;
+      font-size: 1.02rem;
+      line-height: 1.22;
+    }
+
+    [data-order-selector] .order-choice-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.55rem;
+      margin-top: 0.9rem;
+    }
+
+    [data-order-selector] .order-choice-group > * {
+      width: 100%;
+      justify-content: center;
+      padding: 0.72rem 0.8rem;
+      font-size: 0.82rem;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    [data-order-selector] [data-order-lengths].order-choice-group {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    [data-order-selector] .order-step-panel .mt-5.text-sm,
+    [data-order-selector] .order-fallback-panel p.text-sm {
+      margin-top: 0.85rem;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    [data-order-selector] [data-order-fallback] .mt-5.grid {
+      gap: 0.7rem;
+    }
+
+    [data-order-selector] [data-order-fallback] article {
+      padding: 0.85rem 0.9rem;
+      border-radius: 0.95rem;
+    }
+
+    [data-order-selector] [data-order-fallback] article .mt-3 {
+      margin-top: 0.7rem;
+    }
+
+    [data-order-selector] [data-order-fallback] article a {
+      min-height: 2.6rem;
+      padding: 0 0.95rem;
+      font-size: 0.82rem;
+    }
+
+    [data-order-selector] [data-order-cards] article,
+    [data-order-selector] [data-order-cards] [data-order-empty-card] {
+      padding: 0.85rem 0.9rem;
+      border-radius: 0.95rem;
+    }
+
+    [data-order-selector] [data-order-cards] article .mt-4 {
+      margin-top: 0.75rem;
+    }
+
+    [data-order-selector] [data-order-cards] button {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+  }
+</style>
+
+<script define:vars={{ items, configurations, defaultConfiguration, selectorId, shopifyStoreDomain }}>
+  const orderItems = items;
+  const configurationMeta = configurations;
+  const CART_STORAGE_KEY = 'endotech-order-cart-v1';
+
+  const selectorRoot = document.querySelector(`[data-order-selector="${selectorId}"]`);
+  const configurationContainer = selectorRoot?.querySelector('[data-order-configurations]');
+  const lengthContainer = selectorRoot?.querySelector('[data-order-lengths]');
+  const summaryRoot = selectorRoot?.querySelector('[data-order-summary]');
+  const fallbackRoot = selectorRoot?.querySelector('[data-order-fallback]');
+
+  if (configurationContainer && lengthContainer && summaryRoot && selectorRoot) {
+    if (fallbackRoot instanceof HTMLElement) {
+      fallbackRoot.classList.add('hidden');
+    }
+
+    let activeConfiguration = defaultConfiguration;
+    let activeLength =
+      orderItems.find((item) => item.size === activeConfiguration && item.status === 'Available to order online')?.length ??
+      orderItems.find((item) => item.size === activeConfiguration)?.length ??
+      '';
+
+    const heading = summaryRoot.querySelector('[data-summary-heading]');
+    const length = summaryRoot.querySelector('[data-summary-length]');
+    const sku = summaryRoot.querySelector('[data-summary-sku]');
+    const price = summaryRoot.querySelector('[data-summary-price]');
+    const status = summaryRoot.querySelector('[data-summary-status]');
+    const statusBadge = summaryRoot.querySelector('[data-summary-status-badge]');
+    const primaryButton = summaryRoot.querySelector('[data-summary-primary-button]');
+    const primaryLink = summaryRoot.querySelector('[data-summary-primary-link]');
+    const secondary = summaryRoot.querySelector('[data-summary-secondary]');
+    const orderLines = summaryRoot.querySelector('[data-order-lines]');
+    const orderCards = summaryRoot.querySelector('[data-order-cards]');
+    const emptyState = summaryRoot.querySelector('[data-order-empty-state]');
+    const emptyCard = summaryRoot.querySelector('[data-order-empty-card]');
+    const totalPacks = summaryRoot.querySelector('[data-order-total-packs]');
+    const totalPrice = summaryRoot.querySelector('[data-order-total-price]');
+    const checkout = summaryRoot.querySelector('[data-order-checkout]');
+    const orderSelections = new Map();
+
+    const saveOrderSelections = () => {
+      try {
+        const payload = Array.from(orderSelections.values()).map((entry) => ({
+          key: entry.key,
+          label: entry.label,
+          quantity: entry.quantity,
+          item: entry.item,
+        }));
+        window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(payload));
+      } catch {}
+    };
+
+    const loadOrderSelections = () => {
+      try {
+        const raw = window.localStorage.getItem(CART_STORAGE_KEY);
+        if (!raw) return;
+
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return;
+
+        parsed.forEach((entry) => {
+          if (
+            !entry ||
+            typeof entry.key !== 'string' ||
+            typeof entry.label !== 'string' ||
+            typeof entry.quantity !== 'number' ||
+            entry.quantity <= 0 ||
+            typeof entry.item !== 'object' ||
+            entry.item === null
+          ) {
+            return;
+          }
+
+          orderSelections.set(entry.key, {
+            key: entry.key,
+            label: entry.label,
+            quantity: entry.quantity,
+            item: entry.item,
+          });
+        });
+      } catch {}
+    };
+
+    const getStatusClasses = (value) => {
+      if (value === 'Available to order online') return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-emerald-50 text-emerald-700';
+      if (value === 'Contact for availability') return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-amber-50 text-amber-700';
+      return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-slate-100 text-red-600';
+    };
+
+    const parsePrice = (value) => {
+      const numericValue = Number.parseFloat(value.replace(/[^0-9.]/g, ''));
+      return Number.isFinite(numericValue) ? numericValue : 0;
+    };
+
+    const currentSelection = () =>
+      orderItems.find((entry) => entry.size === activeConfiguration && entry.length === activeLength) ??
+      orderItems.find((entry) => entry.size === activeConfiguration) ??
+      null;
+
+    const updateCheckoutState = () => {
+      if (!(checkout instanceof HTMLAnchorElement)) return;
+
+      const lines = Array.from(orderSelections.values()).filter((entry) => entry.item.cartVariantId && entry.quantity > 0);
+      const totalQuantity = lines.reduce((sum, entry) => sum + entry.quantity, 0);
+      const totalAmount = lines.reduce((sum, entry) => sum + parsePrice(entry.item.price) * entry.quantity, 0);
+
+      if (totalPacks) totalPacks.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'pack' : 'packs'}`;
+      if (totalPrice) totalPrice.textContent = `Total: ${new Intl.NumberFormat('en-NZ', { style: 'currency', currency: 'NZD' }).format(totalAmount)}`;
+
+      if (!lines.length || !shopifyStoreDomain) {
+        checkout.setAttribute('href', '/about/contact/');
+        checkout.setAttribute('aria-disabled', 'true');
+        checkout.classList.add('opacity-50', 'pointer-events-none');
+        return;
+      }
+
+      const cartPath = lines.map((entry) => `${entry.item.cartVariantId}:${entry.quantity}`).join(',');
+      checkout.setAttribute('href', `https://${shopifyStoreDomain}/cart/${cartPath}`);
+      checkout.setAttribute('aria-disabled', 'false');
+      checkout.classList.remove('opacity-50', 'pointer-events-none');
+    };
+
+    const renderOrderLines = () => {
+      if (orderLines instanceof HTMLElement) {
+        const entries = Array.from(orderSelections.values());
+        orderLines.querySelectorAll('[data-order-line]').forEach((line) => line.remove());
+
+        if (emptyState instanceof HTMLElement) {
+          emptyState.classList.toggle('hidden', entries.length > 0);
+        }
+
+        entries.forEach((entry) => {
+          const row = document.createElement('tr');
+          row.setAttribute('data-order-line', 'true');
+          row.className = 'border-t border-slate-200';
+
+          row.innerHTML = `
+            <td class="px-4 py-3 font-semibold text-slate-900">${entry.label}</td>
+            <td class="px-4 py-3 text-slate-600">${entry.item.length}</td>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-2">
+                <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-decrement="${entry.key}" aria-label="Reduce quantity">-</button>
+                <span class="min-w-[1.5rem] text-center font-semibold text-slate-900">${entry.quantity}</span>
+                <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-increment="${entry.key}" aria-label="Increase quantity">+</button>
+              </div>
+            </td>
+          `;
+
+          orderLines.appendChild(row);
+        });
+      }
+
+      if (orderCards instanceof HTMLElement) {
+        const entries = Array.from(orderSelections.values());
+        orderCards.querySelectorAll('[data-order-card]').forEach((card) => card.remove());
+
+        if (emptyCard instanceof HTMLElement) {
+          emptyCard.classList.toggle('hidden', entries.length > 0);
+        }
+
+        entries.forEach((entry) => {
+          const card = document.createElement('article');
+          card.setAttribute('data-order-card', 'true');
+          card.className = 'rounded-[1rem] border border-slate-200 bg-white px-4 py-4';
+
+          card.innerHTML = `
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">File</p>
+                <p class="mt-2 text-sm font-semibold text-slate-900">${entry.label}</p>
+              </div>
+              <div class="text-right">
+                <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Length</p>
+                <p class="mt-2 text-sm text-slate-600">${entry.item.length}</p>
+              </div>
+            </div>
+            <div class="mt-4 flex items-center justify-between gap-3">
+              <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Qty</p>
+              <div class="flex items-center gap-2">
+                <button type="button" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-decrement="${entry.key}" aria-label="Reduce quantity">-</button>
+                <span class="min-w-[1.75rem] text-center font-semibold text-slate-900">${entry.quantity}</span>
+                <button type="button" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-increment="${entry.key}" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+          `;
+
+          orderCards.appendChild(card);
+        });
+      }
+
+      saveOrderSelections();
+      updateCheckoutState();
+    };
+
+    const addCurrentSelection = () => {
+      const item = currentSelection();
+      if (!item || !item.cartVariantId || item.status !== 'Available to order online') return;
+
+      const configLabel = configurationMeta.find((entry) => entry.value === item.size)?.label ?? item.size;
+      const key = item.cartVariantId ?? item.sku;
+      const existingEntry = orderSelections.get(key);
+
+      orderSelections.set(key, {
+        key,
+        label: configLabel,
+        item,
+        quantity: existingEntry ? existingEntry.quantity + 1 : 1,
+      });
+
+      renderOrderLines();
+    };
+
+    const renderLengths = () => {
+      const filtered = orderItems.filter((item) => item.size === activeConfiguration);
+      activeLength =
+        filtered.find((item) => item.length === activeLength)?.length ??
+        filtered.find((item) => item.status === 'Available to order online')?.length ??
+        filtered[0]?.length ??
+        '';
+
+      lengthContainer.innerHTML = filtered
+        .map((item) => {
+          const activeClasses =
+            item.length === activeLength
+              ? 'border-teal-700 bg-teal-50 text-teal-800'
+              : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:text-slate-950';
+
+          return `<button type="button" class="rounded-full border px-4 py-2 text-sm font-semibold transition ${activeClasses}" data-length-button data-length="${item.length}">${item.length}</button>`;
+        })
+        .join('');
+    };
+
+    const renderSummary = () => {
+      const item = currentSelection();
+
+      if (!item) return;
+
+      const configLabel = configurationMeta.find((entry) => entry.value === item.size)?.label ?? item.size;
+
+      if (heading) heading.textContent = configLabel;
+      if (length) length.textContent = item.length;
+      if (sku) sku.textContent = item.sku;
+      if (price) price.textContent = item.price;
+      if (status) status.textContent = item.status;
+      if (statusBadge) {
+        statusBadge.textContent = item.status;
+        statusBadge.className = getStatusClasses(item.status);
+      }
+      if (primaryButton instanceof HTMLButtonElement) {
+        const canAdd = Boolean(item.cartVariantId && item.status === 'Available to order online');
+        primaryButton.disabled = !canAdd;
+        primaryButton.classList.toggle('hidden', !canAdd);
+      }
+      if (primaryLink instanceof HTMLAnchorElement) {
+        const useLinkAction = !(item.cartVariantId && item.status === 'Available to order online');
+        primaryLink.classList.toggle('hidden', !useLinkAction);
+        primaryLink.textContent = item.cartUrl ? 'Add 6-pack to cart' : item.productUrl ? 'View Shopify product' : 'Contact EndoTech';
+        primaryLink.setAttribute('href', item.cartUrl ?? item.productUrl ?? '/about/contact/');
+      }
+      if (secondary) {
+        if (item.productUrl) {
+          secondary.classList.remove('hidden');
+          secondary.setAttribute('href', item.productUrl);
+        } else {
+          secondary.classList.add('hidden');
+          secondary.setAttribute('href', '/about/contact/');
+        }
+      }
+    };
+
+    if (primaryButton instanceof HTMLButtonElement) {
+      primaryButton.addEventListener('click', addCurrentSelection);
+    }
+
+    const handleOrderLineClick = (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+
+        const incrementKey = target.closest('[data-order-increment]')?.getAttribute('data-order-increment');
+        const decrementKey = target.closest('[data-order-decrement]')?.getAttribute('data-order-decrement');
+        const key = incrementKey ?? decrementKey;
+
+        if (!key) return;
+
+        const entry = orderSelections.get(key);
+        if (!entry) return;
+
+        if (incrementKey) {
+          entry.quantity += 1;
+          orderSelections.set(key, entry);
+        } else if (decrementKey) {
+          entry.quantity -= 1;
+          if (entry.quantity <= 0) {
+            orderSelections.delete(key);
+          } else {
+            orderSelections.set(key, entry);
+          }
+        }
+
+        renderOrderLines();
+    };
+
+    if (orderLines instanceof HTMLElement) {
+      orderLines.addEventListener('click', handleOrderLineClick);
+    }
+
+    if (orderCards instanceof HTMLElement) {
+      orderCards.addEventListener('click', handleOrderLineClick);
+    }
+
+    configurationContainer.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+
+      const button = target.closest('[data-configuration-button]');
+      if (!(button instanceof HTMLElement)) return;
+
+      const nextConfiguration = button.dataset.configuration;
+      if (!nextConfiguration || nextConfiguration === activeConfiguration) return;
+
+      activeConfiguration = nextConfiguration;
+
+      configurationContainer.querySelectorAll('[data-configuration-button]').forEach((entry) => {
+        if (!(entry instanceof HTMLElement)) return;
+        const isActive = entry.dataset.configuration === activeConfiguration;
+        entry.className = `rounded-full border px-4 py-2 text-sm font-semibold transition ${
+          isActive
+            ? 'border-slate-900 bg-slate-900 text-white'
+            : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:text-slate-950'
+        }`;
+      });
+
+      renderLengths();
+      renderSummary();
+    });
+
+    lengthContainer.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+
+      const button = target.closest('[data-length-button]');
+      if (!(button instanceof HTMLElement)) return;
+
+      const nextLength = button.dataset.length;
+      if (!nextLength) return;
+
+      activeLength = nextLength;
+
+      lengthContainer.querySelectorAll('[data-length-button]').forEach((entry) => {
+        if (!(entry instanceof HTMLElement)) return;
+        const isActive = entry.dataset.length === activeLength;
+        entry.className = `rounded-full border px-4 py-2 text-sm font-semibold transition ${
+          isActive
+            ? 'border-teal-700 bg-teal-50 text-teal-800'
+            : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:text-slate-950'
+        }`;
+      });
+
+      renderSummary();
+    });
+
+    loadOrderSelections();
+    renderOrderLines();
+  }
+</script>

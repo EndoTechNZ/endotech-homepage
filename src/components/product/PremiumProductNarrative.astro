@@ -1,0 +1,680 @@
+---
+import WorkflowStrip from '../navigation/WorkflowStrip.astro';
+import type { WorkflowStepId } from '../../data/workflowStrip';
+
+interface LinkItem {
+  label: string;
+  href: string;
+}
+
+interface NarrativeItem {
+  title: string;
+  description: string;
+}
+
+interface SequenceItem {
+  step: string;
+  role: string;
+  detail: string;
+}
+
+interface DownloadItem {
+  label: string;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  imageSrc: string;
+  imageAlt: string;
+  visualTitle: string;
+  visualText: string;
+  primaryCta: LinkItem;
+  secondaryCta: LinkItem;
+  tertiaryCta?: LinkItem;
+  clinicalProblem: string;
+  solution: string;
+  engineeringTitle: string;
+  features: NarrativeItem[];
+  sequenceTitle: string;
+  sequenceItems: SequenceItem[];
+  benefitsTitle: string;
+  benefits: NarrativeItem[];
+  downloadsTitle?: string;
+  downloads?: DownloadItem[];
+  workflowActiveStep?: WorkflowStepId;
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  imageSrc,
+  imageAlt,
+  visualTitle,
+  visualText,
+  primaryCta,
+  secondaryCta,
+  tertiaryCta,
+  clinicalProblem,
+  solution,
+  engineeringTitle,
+  features,
+  sequenceTitle,
+  sequenceItems,
+  benefitsTitle,
+  benefits,
+  downloadsTitle = 'Technical files for clinical evaluation and ordering.',
+  downloads = [],
+  workflowActiveStep,
+} = Astro.props;
+---
+
+<div class="premium-product">
+  <section class="premium-product-hero" aria-labelledby="premium-product-title">
+    <div>
+      <p class="premium-eyebrow">{eyebrow}</p>
+      <h1 id="premium-product-title">{title}</h1>
+      <p class="premium-lede">{lede}</p>
+      <div class="premium-actions">
+        <a class="premium-button primary" href={primaryCta.href}>{primaryCta.label}</a>
+        <a class="premium-button secondary" href={secondaryCta.href}>{secondaryCta.label}</a>
+        {tertiaryCta && <a class="premium-button evidence" href={tertiaryCta.href}>{tertiaryCta.label}</a>}
+      </div>
+    </div>
+
+    <figure class="premium-figure">
+      <img src={imageSrc} alt={imageAlt} />
+      <figcaption>
+        <strong>{visualTitle}</strong>
+        <span>{visualText}</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  {workflowActiveStep && <WorkflowStrip activeStep={workflowActiveStep} />}
+
+  <section class="premium-section premium-section-white" aria-labelledby="premium-positioning-title">
+    <div class="premium-section-heading">
+      <p class="premium-eyebrow">Clinical Positioning</p>
+      <h2 id="premium-positioning-title">A product role defined by the clinical risk it helps control.</h2>
+    </div>
+
+    <div class="premium-problem-response">
+      <article>
+        <span>01</span>
+        <div>
+          <h3>Clinical Problem</h3>
+          <p>{clinicalProblem}</p>
+        </div>
+      </article>
+      <article>
+        <span>02</span>
+        <div>
+          <h3>EndoTech Response</h3>
+          <p>{solution}</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="premium-section premium-section-grey" aria-labelledby="premium-engineering-title">
+    <div class="premium-section-heading">
+      <p class="premium-eyebrow">Engineering Logic</p>
+      <h2 id="premium-engineering-title">{engineeringTitle}</h2>
+    </div>
+
+    <div class="premium-engineering-grid">
+      {features.map((feature, index) => (
+        <article>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <h3>{feature.title}</h3>
+          <p>{feature.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <slot name="detail" />
+
+  <section class="premium-section premium-section-grey" aria-labelledby="premium-sequence-title">
+    <div class="premium-section-heading">
+      <p class="premium-eyebrow">Workflow Architecture</p>
+      <h2 id="premium-sequence-title">{sequenceTitle}</h2>
+    </div>
+
+    <ol class="premium-sequence-map">
+      {sequenceItems.map((item) => (
+        <li>
+          <strong>{item.step}</strong>
+          <span>{item.role}</span>
+          <p>{item.detail}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="premium-section premium-section-white" aria-labelledby="premium-benefits-title">
+    <div class="premium-section-heading">
+      <p class="premium-eyebrow">Clinical Benefits</p>
+      <h2 id="premium-benefits-title">{benefitsTitle}</h2>
+    </div>
+
+    <div class="premium-benefit-list">
+      {benefits.map((benefit) => (
+        <article data-premium-benefit-row>
+          <h3>{benefit.title}</h3>
+          <span class="premium-benefit-arrow" aria-hidden="true"></span>
+          <p>{benefit.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <slot name="order" />
+
+  {downloads.length > 0 && (
+    <section id="downloads" class="premium-section premium-section-white" aria-labelledby="premium-downloads-title">
+      <div class="premium-section-heading">
+        <p class="premium-eyebrow">Downloads</p>
+        <h2 id="premium-downloads-title">{downloadsTitle}</h2>
+      </div>
+
+      <div class="premium-download-list">
+        {downloads.map((download) => (
+          <a href={download.href}>
+            <span>{download.label}</span>
+            <strong>{download.title}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+</div>
+
+<style>
+  .premium-product {
+    color: #101827;
+    background: #f7f9fb;
+  }
+
+  .premium-product-hero,
+  .premium-section {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .premium-product-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(420px, 0.85fr);
+    gap: 76px;
+    align-items: center;
+    min-height: 720px;
+    padding-top: 72px;
+    padding-bottom: 86px;
+    background:
+      linear-gradient(90deg, #f7f9fb 0%, #f7f9fb 54%, #e3ebf1 54%, #e3ebf1 100%);
+  }
+
+  .premium-eyebrow {
+    margin: 0 0 18px;
+    color: #876a2b;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .premium-product-hero h1,
+  .premium-section-heading h2 {
+    margin: 0;
+    color: #0b1424;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .premium-product-hero h1 {
+    max-width: 880px;
+    font-size: 5rem;
+    line-height: 1;
+  }
+
+  .premium-section-heading h2 {
+    max-width: 1040px;
+    font-size: 3.35rem;
+    line-height: 1.08;
+  }
+
+  .premium-lede {
+    max-width: 720px;
+    margin: 28px 0 0;
+    color: #4b5c70;
+    font-size: 1.14rem;
+    line-height: 1.76;
+  }
+
+  .premium-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  .premium-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border-radius: 4px;
+    padding: 0 24px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .premium-button.primary {
+    background: #0b1424;
+    color: #ffffff;
+  }
+
+  .premium-button.secondary {
+    border: 1px solid #b8c4cf;
+    color: #0b1424;
+  }
+
+  .premium-button.evidence {
+    border: 1px solid #6fa8ad;
+    background: #6fa8ad;
+    color: #ffffff;
+  }
+
+  .premium-figure {
+    margin: 0;
+    border-top: 1px solid #b8c4cf;
+    border-bottom: 1px solid #b8c4cf;
+    padding: 42px 0 30px;
+  }
+
+  .premium-figure img {
+    width: 100%;
+    max-height: 430px;
+    object-fit: contain;
+    filter: drop-shadow(0 26px 28px rgba(15, 23, 42, 0.14));
+  }
+
+  .premium-figure figcaption {
+    display: grid;
+    gap: 5px;
+    width: calc(100% + 42px);
+    margin-top: 22px;
+    margin-left: -42px;
+    color: #536478;
+    line-height: 1.55;
+  }
+
+  .premium-figure strong {
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+  }
+
+  .premium-section {
+    padding-top: 104px;
+    padding-bottom: 112px;
+    border-top: 1px solid #dbe3ea;
+  }
+
+  .premium-section-white {
+    background: #ffffff;
+  }
+
+  .premium-section-grey {
+    background: #f7f9fb;
+  }
+
+  .premium-section-heading {
+    margin-bottom: 44px;
+  }
+
+  .premium-problem-response,
+  .premium-engineering-grid,
+  .premium-sequence-map {
+    display: grid;
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+    background: #ffffff;
+  }
+
+  .premium-problem-response {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .premium-engineering-grid,
+  .premium-sequence-map {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .premium-problem-response article,
+  .premium-engineering-grid article,
+  .premium-sequence-map li {
+    min-height: 320px;
+    padding: 34px;
+    border-right: 1px solid #c8d2dc;
+  }
+
+  .premium-problem-response article {
+    display: grid;
+    gap: 34px;
+  }
+
+  .premium-problem-response article:last-child,
+  .premium-engineering-grid article:last-child,
+  .premium-sequence-map li:last-child {
+    border-right: 0;
+  }
+
+  .premium-problem-response article:last-child {
+    background: #0b1424;
+  }
+
+  .premium-problem-response article:last-child h3,
+  .premium-problem-response article:last-child p {
+    color: #ffffff;
+  }
+
+  .premium-problem-response span,
+  .premium-engineering-grid span,
+  .premium-download-list span,
+  .premium-sequence-map span {
+    color: #876a2b;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .premium-problem-response h3,
+  .premium-engineering-grid h3,
+  .premium-benefit-list h3 {
+    margin: 0;
+    color: #0b1424;
+    font-size: 1.22rem;
+    line-height: 1.26;
+  }
+
+  .premium-problem-response p,
+  .premium-engineering-grid p,
+  .premium-sequence-map p,
+  .premium-benefit-list p {
+    margin: 14px 0 0;
+    color: #536478;
+    line-height: 1.68;
+  }
+
+  .premium-engineering-grid h3 {
+    margin-top: 72px;
+  }
+
+  .premium-sequence-map {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .premium-sequence-map strong {
+    display: block;
+    margin-bottom: 48px;
+    color: #0f5878;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 2.3rem;
+  }
+
+  .premium-benefit-list,
+  .premium-download-list {
+    display: grid;
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+  }
+
+  .premium-benefit-list article,
+  .premium-download-list a {
+    display: grid;
+    grid-template-columns: minmax(0, 0.52fr) minmax(180px, 0.34fr) minmax(0, 1.14fr);
+    gap: 34px;
+    align-items: center;
+    padding: 30px 0;
+    border-bottom: 1px solid #dbe3ea;
+  }
+
+  .premium-download-list a {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 48px;
+  }
+
+  .premium-benefit-list article:last-child,
+  .premium-download-list a:last-child {
+    border-bottom: 0;
+  }
+
+  .premium-benefit-list h3 {
+    align-self: center;
+  }
+
+  .premium-benefit-list p {
+    margin-top: 0;
+  }
+
+  .premium-benefit-arrow {
+    position: relative;
+    display: block;
+    width: min(100%, 230px);
+    height: 18px;
+    justify-self: center;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .premium-benefit-arrow::before,
+  .premium-benefit-arrow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+  }
+
+  .premium-benefit-arrow::before {
+    left: 0;
+    height: 1px;
+    background: #0f5878;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .premium-benefit-arrow::after {
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid #0f5878;
+    border-right: 1px solid #0f5878;
+    transform: translate(-210px, -50%) rotate(45deg) scale(1);
+    transform-origin: center;
+  }
+
+  .premium-benefit-list article.is-benefit-arrow-active .premium-benefit-arrow,
+  .premium-benefit-list article.is-benefit-arrow-leaving .premium-benefit-arrow,
+  .premium-benefit-list article:focus-within .premium-benefit-arrow {
+    opacity: 1;
+  }
+
+  .premium-benefit-list article.is-benefit-arrow-active .premium-benefit-arrow::before,
+  .premium-benefit-list article.is-benefit-arrow-leaving .premium-benefit-arrow::before,
+  .premium-benefit-list article:focus-within .premium-benefit-arrow::before {
+    animation: premium-benefit-line-draw 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .premium-benefit-list article.is-benefit-arrow-active .premium-benefit-arrow::after,
+  .premium-benefit-list article:focus-within .premium-benefit-arrow::after {
+    animation: premium-benefit-arrow-travel 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .premium-benefit-list article.is-benefit-arrow-leaving .premium-benefit-arrow {
+    animation: premium-benefit-arrow-fade 360ms ease forwards;
+  }
+
+  .premium-benefit-list article.is-benefit-arrow-leaving .premium-benefit-arrow::after {
+    transform: translate(0, -50%) rotate(45deg) scale(1);
+    transition: transform 110ms ease;
+  }
+
+  .premium-download-list a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .premium-download-list strong {
+    color: #0b1424;
+    font-size: 1.1rem;
+  }
+
+  @keyframes premium-benefit-line-draw {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes premium-benefit-arrow-travel {
+    0% {
+      transform: translate(-210px, -50%) rotate(45deg) scale(1);
+    }
+
+    88% {
+      transform: translate(0, -50%) rotate(45deg) scale(1);
+    }
+
+    to {
+      transform: translate(0, -50%) rotate(45deg) scale(1.5);
+    }
+  }
+
+  @keyframes premium-benefit-arrow-fade {
+    0%,
+    58% {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 1320px) {
+    .premium-product-hero h1 {
+      font-size: 5.6rem;
+    }
+
+    .premium-section-heading h2 {
+      font-size: 3.8rem;
+    }
+  }
+
+  @media (max-width: 1120px) {
+    .premium-product-hero,
+    .premium-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .premium-product-hero {
+      grid-template-columns: 1fr;
+      background: #f7f9fb;
+    }
+
+    .premium-problem-response,
+    .premium-engineering-grid,
+    .premium-sequence-map {
+      grid-template-columns: 1fr;
+    }
+
+    .premium-problem-response article,
+    .premium-engineering-grid article,
+    .premium-sequence-map li {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid #c8d2dc;
+    }
+
+    .premium-problem-response article:last-child,
+    .premium-engineering-grid article:last-child,
+    .premium-sequence-map li:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .premium-product-hero,
+    .premium-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .premium-product-hero {
+      min-height: auto;
+      gap: 32px;
+      padding-top: 44px;
+      padding-bottom: 56px;
+    }
+
+    .premium-product-hero h1 {
+      font-size: 3.15rem;
+    }
+
+    .premium-section-heading h2 {
+      font-size: 2.25rem;
+    }
+
+    .premium-lede {
+      font-size: 1rem;
+    }
+
+    .premium-figure figcaption {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .premium-actions {
+      display: grid;
+    }
+
+    .premium-benefit-list article,
+    .premium-download-list a {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .premium-benefit-arrow {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-premium-benefit-row]').forEach((row) => {
+    let leaveTimer;
+
+    row.addEventListener('pointerenter', () => {
+      window.clearTimeout(leaveTimer);
+      row.classList.remove('is-benefit-arrow-leaving');
+      row.classList.add('is-benefit-arrow-active');
+    });
+
+    row.addEventListener('pointerleave', () => {
+      row.classList.remove('is-benefit-arrow-active');
+      row.classList.add('is-benefit-arrow-leaving');
+
+      leaveTimer = window.setTimeout(() => {
+        row.classList.remove('is-benefit-arrow-leaving');
+      }, 360);
+    });
+  });
+</script>

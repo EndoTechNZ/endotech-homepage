@@ -1,14 +1,26 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
-import ProductHero from '../../components/product/ProductHero.astro';
-import FeatureGrid from '../../components/product/FeatureGrid.astro';
+import PremiumProductNarrative from '../../components/product/PremiumProductNarrative.astro';
+import ProductOrderSelector from '../../components/product/ProductOrderSelector.astro';
 import etProduct from '../../assets/et-transformx.png';
 import { withBasePath } from '../../utils/paths';
+import { siteConfig } from '../../config/site';
+import { getShopifyStoreDomain } from '../../utils/shopify';
+import { buildOrderSelectorItems, getOrderCoverageLabel } from '../../utils/productOrdering';
+import { etOrderEntries } from '../../data/productOrderingCatalog';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const etVideoSrc = withBasePath('/videos/et-transformx-promo_1.mp4');
 const workflowPdfSrc = withBasePath('/downloads/ET-Technique-Work-Flow.pdf');
 const partNumbersPdfSrc = withBasePath('/downloads/ET-Part-Numbers.pdf');
+const shopifyStoreDomain = getShopifyStoreDomain();
+const orderPanelDescription = `To order
+- Choose file Size (Step 1)
+- Choose file length (Step 2)
+- Click 'Add to order'`;
+const etSelectionNote =
+  'ET TransformX currently covers .04 and .06 sequences across 21 mm, 25 mm, and 29 mm lengths, with assortment options available in the current NZ part-number range.';
+const etOrderItems = await buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain);
 const etSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -17,7 +29,7 @@ const etSchema = {
     'Rotary shaping files for clinicians who want to preserve established .04/.06-style sequence logic while improving apical control with Avatar Tip and Transform Technology.',
   brand: {
     '@type': 'Brand',
-    name: 'EndoTech Singapore',
+    name: siteConfig.name,
   },
   category: 'Endodontic rotary files',
   image: [new URL(etProduct.src, siteUrl).toString()],
@@ -71,14 +83,30 @@ const clinicalBenefitItems = [
   },
 ];
 
-const mobileEtStoryCards = keyFeatureItems.map((feature, index) => ({
-  feature,
-  benefit: clinicalBenefitItems[index],
-}));
+const sequenceItems = [
+  {
+    step: '.04',
+    role: 'Conservative shaping',
+    detail:
+      'Maintains familiar ET-style sequence logic while supporting controlled shaping in narrower or more conservative preparations.',
+  },
+  {
+    step: '.06',
+    role: 'Standard shaping',
+    detail:
+      'Supports clinicians who want a familiar taper strategy with improved file behaviour where canal demand increases.',
+  },
+  {
+    step: '21-29',
+    role: 'Length selection',
+    detail:
+      'The current NZ range keeps the ET workflow available across routine and longer canal lengths.',
+  },
+];
 
-const ctas = [
-  { label: 'Open ET workflow PDF', href: '/downloads/ET-Technique-Work-Flow.pdf', variant: 'primary' as const },
-  { label: 'Contact EndoTech', href: '/about/contact/', variant: 'secondary' as const },
+const downloads = [
+  { label: 'Technique Guide', title: 'ET Technique Workflow', href: workflowPdfSrc },
+  { label: 'Product File', title: 'ET Part Numbers', href: partNumbersPdfSrc },
 ];
 ---
 
@@ -89,48 +117,33 @@ const ctas = [
   schema={etSchema}
   accent="teal"
 >
-  <ProductHero
+  <PremiumProductNarrative
     eyebrow="ET TransformX"
-    title="ET TransformX Files"
-    subtitle="Stay with your established technique."
-    description="TransformX ET is designed for clinicians already using ET, EdgeX7, Race Evo, and other .04/.06-style systems, preserving familiar sequence architecture while advancing apical control."
-    ctas={ctas}
-    accent="teal"
+    title="Established technique, engineered for greater control."
+    lede="ET TransformX is designed for clinicians already using ET, EdgeX7, Race Evo, and other .04/.06-style systems, preserving familiar sequence architecture while advancing apical control."
     imageSrc={etProduct.src}
     imageAlt="ET TransformX rotary files for established ET-style shaping sequences"
-    visualLabel="ET TransformX"
-  />
-
-  <section class="border-b border-slate-200/80 bg-white">
-    <div class="mx-auto grid max-w-7xl gap-4 px-6 py-14 sm:gap-6 sm:py-16 lg:grid-cols-2 lg:py-20">
-      <article class="rounded-[1.35rem] border border-slate-200 bg-slate-50/70 p-5 sm:rounded-[1.75rem] sm:p-7">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Clinical Problem</p>
-        <p class="mt-4 text-base leading-7 text-slate-600 sm:mt-5 sm:leading-8">
-          Changing to a new rotary system often means relearning sequence logic, accepting less familiar apical behaviour, or sacrificing confidence in challenging anatomy.
-        </p>
-      </article>
-      <article class="rounded-[1.35rem] border border-slate-200 bg-slate-950 p-5 text-white sm:rounded-[1.75rem] sm:p-7">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">TransformX Solution</p>
-        <p class="mt-4 text-base leading-7 text-slate-300 sm:mt-5 sm:leading-8">
-          ET TransformX keeps the established ET-style technique intact while combining Avatar Tip guidance and variable metallurgy to improve control where anatomy is least forgiving.
-        </p>
-      </article>
-    </div>
-  </section>
-
-  <section class="border-b border-slate-200/80 bg-slate-50/70">
-    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <div class="max-w-3xl">
-          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">ET Section</p>
-          <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">ET TransformX overview</h2>
-          <p class="mt-4 text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8">
-            Avatar Tip rationale, and Transform Technology
-          </p>
-        </div>
+    visualTitle="ET TransformX system"
+    visualText="Familiar .04/.06-style shaping logic positioned inside the EndoTech clinical workflow."
+    primaryCta={{ label: 'Configure ET sequence', href: '#order' }}
+    secondaryCta={{ label: 'Technical files', href: '#downloads' }}
+    clinicalProblem="Changing to a new rotary system often means relearning sequence logic, accepting less familiar apical behaviour, or sacrificing confidence in challenging anatomy."
+    solution="ET TransformX keeps the established ET-style technique intact while combining Avatar Tip guidance and variable metallurgy to improve control where anatomy is least forgiving."
+    engineeringTitle="The file behaviour is engineered around familiar technique rather than technique disruption."
+    features={keyFeatureItems}
+    sequenceTitle="The ET workflow remains readable across taper and length selection."
+    sequenceItems={sequenceItems}
+    benefitsTitle="Designed to improve apical control without rebuilding clinician habits."
+    benefits={clinicalBenefitItems}
+    downloads={downloads}
+    workflowActiveStep="shape"
+  >
+    <section slot="detail" class="et-media-section" aria-labelledby="et-media-title">
+      <div>
+        <p class="et-eyebrow">Technology Overview</p>
+        <h2 id="et-media-title">Avatar Tip rationale and Transform Technology in motion.</h2>
       </div>
-
-      <div class="mt-8 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-950 shadow-[0_30px_90px_-45px_rgba(15,23,42,0.55)] sm:mt-10 sm:rounded-[2rem]">
+      <div class="et-video-shell">
         <video
           controls
           playsinline
@@ -141,76 +154,82 @@ const ctas = [
           Your browser does not support the video tag.
         </video>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="hidden md:block">
-    <FeatureGrid
-      eyebrow="Key Features"
-      title=""
-      items={keyFeatureItems}
-      accent="teal"
-      syncGroup="et-transformx-pairs"
-    />
-  </div>
-
-  <div class="hidden md:block">
-    <FeatureGrid
-      eyebrow="Clinical Benefits"
-      title="Clinical benefits"
-      intro="ET TransformX - control, safety, and adaptability within an established workflow."
-      items={clinicalBenefitItems}
-      accent="teal"
-      syncGroup="et-transformx-pairs"
-    />
-  </div>
-
-  <section class="border-b border-slate-200/80 bg-white md:hidden">
-    <div class="mx-auto max-w-7xl px-6 py-14">
-      <div class="mt-8 grid gap-4">
-        {mobileEtStoryCards.map(({ feature, benefit }, index) => (
-          <article class="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_24px_60px_-42px_rgba(15,23,42,0.35)]">
-            <div class="border-b border-slate-200/80 bg-slate-50/80 px-5 py-4">
-              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Feature 0{index + 1}</p>
-              <h3 class="mt-2 text-xl font-bold leading-tight text-slate-900">{feature.title}</h3>
-              <p class="mt-3 text-sm leading-6 text-slate-600">{feature.description}</p>
-            </div>
-            <div class="bg-teal-50/55 px-5 py-4">
-              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Clinical Benefit</p>
-              <h4 class="mt-2 text-lg font-bold leading-tight text-slate-900">{benefit.title}</h4>
-              <p class="mt-3 text-sm leading-6 text-slate-600">{benefit.description}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section id="downloads" class="border-b border-slate-200/80 bg-white">
-    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Downloads</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Open the technical files next</h2>
-      <div class="mt-8 grid gap-4 sm:mt-10">
-        <article class="flex flex-col gap-4 rounded-[1.35rem] border border-slate-200 bg-slate-50/60 p-4 sm:rounded-[1.5rem] sm:p-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Technique Guide</p>
-            <h3 class="mt-2 text-base font-bold text-slate-900 sm:text-lg">ET Technique Workflow</h3>
-          </div>
-          <a href={workflowPdfSrc} class="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 sm:w-auto">
-            Open PDF
-          </a>
-        </article>
-        <article class="flex flex-col gap-4 rounded-[1.35rem] border border-slate-200 bg-slate-50/60 p-4 sm:rounded-[1.5rem] sm:p-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Product File</p>
-            <h3 class="mt-2 text-base font-bold text-slate-900 sm:text-lg">ET Part Numbers</h3>
-          </div>
-          <a href={partNumbersPdfSrc} class="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 sm:w-auto">
-            Open PDF
-          </a>
-        </article>
-      </div>
-    </div>
-  </section>
+    <section id="order" slot="order" class="premium-order-anchor" aria-label="ET ordering selector">
+      <ProductOrderSelector
+        title="Order the ET sequence online"
+        description={orderPanelDescription}
+        coverageLabel={getOrderCoverageLabel(etOrderItems)}
+        packFormat="6 files per pack"
+        items={etOrderItems}
+        shopifyStoreDomain={shopifyStoreDomain}
+        selectionNote={etSelectionNote}
+      />
+    </section>
+  </PremiumProductNarrative>
 
 </ProductLayout>
+
+<style>
+  .premium-order-anchor {
+    scroll-margin-top: 96px;
+  }
+
+  .et-media-section {
+    display: grid;
+    gap: 44px;
+    border-top: 1px solid #dbe3ea;
+    background: #ffffff;
+    padding: 104px 56px 112px;
+  }
+
+  .et-eyebrow {
+    margin: 0 0 18px;
+    color: #876a2b;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .et-media-section h2 {
+    max-width: 1040px;
+    margin: 0;
+    color: #0b1424;
+    font-size: 3.35rem;
+    font-weight: 700;
+    line-height: 1.08;
+  }
+
+  .et-video-shell {
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+    padding: 28px 0;
+  }
+
+  .et-video-shell video {
+    display: block;
+    width: 100%;
+    max-height: 640px;
+    background: #0b1424;
+  }
+
+  @media (max-width: 1120px) {
+    .et-media-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .et-media-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .et-media-section h2 {
+      font-size: 2.25rem;
+    }
+  }
+</style>

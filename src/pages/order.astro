@@ -1,0 +1,512 @@
+---
+import ProductLayout from '../layouts/ProductLayout.astro';
+import ProductOrderSelector from '../components/product/ProductOrderSelector.astro';
+import acrobatFiles from '../assets/acrobat-glide-path-files.png';
+import etProduct from '../assets/et-transformx.png';
+import ptProduct from '../assets/pt-transformx.png';
+import bcsSealer from '../assets/bcs-sealer.png';
+import vortiflowFlow from '../assets/vortiflow/vortiflow-fluid-dynamics-clean.png';
+import { getShopifyStoreDomain } from '../utils/shopify';
+import { buildOrderSelectorItems, getOrderCoverageLabel } from '../utils/productOrdering';
+import { acrobatOrderEntries, etOrderEntries, ptOrderEntries } from '../data/productOrderingCatalog';
+
+const base = import.meta.env.BASE_URL;
+const shopifyStoreDomain = getShopifyStoreDomain();
+
+const orderPanelDescription = `To order
+- Choose file Size (Step 1)
+- Choose file length (Step 2)
+- Click 'Add to order'`;
+
+const acrobatSelectionNote =
+  'The MB2 option is limited to 17 mm. Standard Acrobat sequence files are available in 21 mm, 25 mm, and 29 mm.';
+const etSelectionNote =
+  'ET TransformX currently covers .04 and .06 sequences across 21 mm, 25 mm, and 29 mm lengths, with assortment options available in the current NZ part-number range.';
+const ptSelectionNote =
+  'SX is supplied in 19 mm. Shaping and finishing files run across 21 mm, 25 mm, and 31 mm lengths, with PT assortment packs also available across the current NZ range.';
+
+const [acrobatItems, etItems, ptItems] = await Promise.all([
+  buildOrderSelectorItems(acrobatOrderEntries, shopifyStoreDomain, '$65.00 NZD'),
+  buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain),
+  buildOrderSelectorItems(ptOrderEntries, shopifyStoreDomain),
+]);
+
+const quickLinks = [
+  { label: 'Acrobat', href: '#acrobat-order' },
+  { label: 'ET TransformX', href: '#et-order' },
+  { label: 'PT TransformX', href: '#pt-order' },
+  { label: 'BCS', href: '#contact-products' },
+  { label: 'VortiFlow', href: '#contact-products' },
+];
+
+const contactProducts = [
+  {
+    title: 'VortiFlow Irrigation Needle',
+    text: 'Use the same page to move from shaping orders into cleaning-stage enquiries.',
+    image: vortiflowFlow.src,
+    href: `${base}products/vortiflow-irrigation-needle/`,
+    cta: 'View VortiFlow',
+  },
+  {
+    title: 'BCS BioCeramic Materials',
+    text: 'Request availability for sealing and repair materials without leaving the ordering flow.',
+    image: bcsSealer.src,
+    href: `${base}products/bcs/`,
+    cta: 'View BCS family',
+  },
+];
+
+const orderModules = [
+  {
+    id: 'acrobat-order',
+    eyebrow: 'Glide',
+    title: 'Acrobat Glide Path',
+    text: 'Build the glide path stage first, then continue directly into shaping on the same page.',
+    image: acrobatFiles.src,
+    alt: 'Acrobat Glide Path Files',
+    orderTitle: 'Order the Acrobat sequence online',
+    items: acrobatItems,
+    selectionNote: acrobatSelectionNote,
+  },
+  {
+    id: 'et-order',
+    eyebrow: 'Shape',
+    title: 'ET TransformX',
+    text: 'For clinicians already working in ET, EdgeX7, and .04/.06-style sequence logic.',
+    image: etProduct.src,
+    alt: 'ET TransformX rotary files',
+    orderTitle: 'Order the ET sequence online',
+    items: etItems,
+    selectionNote: etSelectionNote,
+  },
+  {
+    id: 'pt-order',
+    eyebrow: 'Shape',
+    title: 'PT TransformX',
+    text: 'For ProTaper-style shaping workflows that need a more controlled apical response.',
+    image: ptProduct.src,
+    alt: 'PT TransformX rotary files',
+    orderTitle: 'Order the PT sequence online',
+    items: ptItems,
+    selectionNote: ptSelectionNote,
+  },
+];
+---
+
+<ProductLayout
+  title="NZ Ordering | EndoTech NZ"
+  description="A single ordering page for Acrobat Glide Path, ET TransformX, and PT TransformX, with contact pathways for the wider EndoTech product family."
+  image={ptProduct.src}
+  accent="slate"
+>
+  <main class="order-page">
+    <section class="order-hero" aria-labelledby="order-title">
+      <div>
+        <p class="order-eyebrow">NZ Ordering</p>
+        <h1 id="order-title">Build the order in one place.</h1>
+        <p class="order-lede">
+          Scroll from glide path to shaping without jumping between product pages. Acrobat, ET TransformX, and PT TransformX all use the same combined order logic.
+        </p>
+      </div>
+
+      <div class="order-hero-side">
+        <p>Selections made in any section stay in the same combined Shopify cart.</p>
+        <nav class="order-quick-nav" aria-label="Order section shortcuts">
+          {quickLinks.map((link) => (
+            <a href={link.href}>{link.label}</a>
+          ))}
+        </nav>
+      </div>
+    </section>
+
+    <section class="order-flow-note" aria-label="Ordering note">
+      <div>
+        <strong>One combined order</strong>
+        <p>Add Glide Path, ET, and PT packs as you scroll. Each selector contributes to the same order state.</p>
+      </div>
+      <a href={`${base}resources/downloads/`}>Open technical files</a>
+    </section>
+
+    {orderModules.map((module) => (
+      <section id={module.id} class="order-module" aria-labelledby={`${module.id}-title`}>
+        <div class="order-module-intro">
+          <div>
+            <p class="order-eyebrow">{module.eyebrow}</p>
+            <h2 id={`${module.id}-title`}>{module.title}</h2>
+            <p>{module.text}</p>
+          </div>
+          <figure>
+            <img src={module.image} alt={module.alt} />
+          </figure>
+        </div>
+
+        <ProductOrderSelector
+          title={module.orderTitle}
+          description={orderPanelDescription}
+          coverageLabel={getOrderCoverageLabel(module.items)}
+          packFormat="6 files per pack"
+          items={module.items}
+          shopifyStoreDomain={shopifyStoreDomain}
+          selectionNote={module.selectionNote}
+        />
+      </section>
+    ))}
+
+    <section id="contact-products" class="contact-products-section" aria-labelledby="contact-products-title">
+      <div class="contact-products-heading">
+        <div>
+          <p class="order-eyebrow">Contact Products</p>
+          <h2 id="contact-products-title">Keep the whole product family on one ordering page.</h2>
+          <p>
+            VortiFlow and BCS are included here as direct enquiry routes so you do not need to leave the ordering flow to continue the conversation.
+          </p>
+        </div>
+        <a href={`${base}about/contact/`}>Contact EndoTech NZ</a>
+      </div>
+
+      <div class="contact-products-grid">
+        {contactProducts.map((product) => (
+          <article>
+            <figure>
+              <img src={product.image} alt="" />
+            </figure>
+            <div>
+              <h3>{product.title}</h3>
+              <p>{product.text}</p>
+              <a href={product.href}>{product.cta}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</ProductLayout>
+
+<style>
+  .order-page {
+    background: #f7f9fb;
+    color: #0b1424;
+  }
+
+  .order-hero,
+  .order-flow-note,
+  .order-module,
+  .contact-products-section {
+    max-width: 1260px;
+    margin: 0 auto;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .order-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.78fr);
+    gap: clamp(40px, 6vw, 84px);
+    align-items: end;
+    min-height: min(640px, calc(100vh - 82px));
+    padding-top: 64px;
+    padding-bottom: 56px;
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.018) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  .order-eyebrow {
+    margin: 0 0 18px;
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+  }
+
+  .order-hero h1,
+  .order-module h2,
+  .contact-products-heading h2,
+  .contact-products-grid h3 {
+    margin: 0;
+    color: #090f1d;
+    font-family: 'Sora', system-ui, sans-serif;
+    letter-spacing: 0;
+  }
+
+  .order-hero h1 {
+    max-width: 9ch;
+    font-size: clamp(3.2rem, 4.8vw, 5.6rem);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .order-lede,
+  .order-hero-side p,
+  .order-flow-note p,
+  .order-module-intro p,
+  .contact-products-heading p,
+  .contact-products-grid p {
+    margin: 0;
+    color: #536478;
+    font-size: 1.04rem;
+    line-height: 1.76;
+  }
+
+  .order-lede {
+    max-width: 50rem;
+    margin-top: 28px;
+  }
+
+  .order-hero-side {
+    border-top: 1px solid #cfd9e2;
+    padding-top: 26px;
+  }
+
+  .order-quick-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .order-quick-nav a,
+  .order-flow-note a,
+  .contact-products-heading > a,
+  .contact-products-grid a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border: 1px solid #c8d2dc;
+    border-radius: 999px;
+    padding: 0 16px;
+    color: #0b1424;
+    font-weight: 800;
+    text-decoration: none;
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .order-quick-nav a:hover,
+  .order-quick-nav a:focus-visible,
+  .order-flow-note a:hover,
+  .order-flow-note a:focus-visible,
+  .contact-products-heading > a:hover,
+  .contact-products-heading > a:focus-visible,
+  .contact-products-grid a:hover,
+  .contact-products-grid a:focus-visible {
+    transform: translateY(-1px);
+    border-color: #9eb3c4;
+  }
+
+  .order-flow-note {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    border-top: 1px solid #dbe3ea;
+    border-bottom: 1px solid #dbe3ea;
+    background: #ffffff;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .order-flow-note strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1rem;
+  }
+
+  .order-module {
+    padding-top: 56px;
+    padding-bottom: 0;
+  }
+
+  .order-module + .order-module {
+    padding-top: 72px;
+  }
+
+  .order-module-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 0.98fr) minmax(280px, 0.72fr);
+    gap: 36px;
+    align-items: end;
+    margin-bottom: 24px;
+  }
+
+  .order-module-intro h2 {
+    font-size: clamp(2rem, 2.5vw, 3rem);
+    line-height: 1.06;
+  }
+
+  .order-module-intro p {
+    max-width: 44rem;
+    margin-top: 18px;
+  }
+
+  .order-module-intro figure {
+    margin: 0;
+    border-top: 1px solid #cfd9e2;
+    border-bottom: 1px solid #cfd9e2;
+    padding: 22px 0;
+  }
+
+  .order-module-intro img {
+    display: block;
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+
+  .contact-products-section {
+    border-top: 1px solid #dbe3ea;
+    padding-top: 96px;
+    padding-bottom: 112px;
+    background: #ffffff;
+  }
+
+  .contact-products-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: end;
+  }
+
+  .contact-products-heading h2 {
+    max-width: 15ch;
+    font-size: clamp(2rem, 2.6vw, 3.15rem);
+    line-height: 1.08;
+  }
+
+  .contact-products-heading p {
+    max-width: 48rem;
+    margin-top: 18px;
+  }
+
+  .contact-products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 42px;
+  }
+
+  .contact-products-grid article {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 22px;
+    border: 1px solid #dbe3ea;
+    border-radius: 18px;
+    background: #f8fafc;
+    padding: 22px;
+  }
+
+  .contact-products-grid figure {
+    display: grid;
+    place-items: center;
+    margin: 0;
+    border-radius: 14px;
+    background: #ffffff;
+    padding: 16px;
+  }
+
+  .contact-products-grid img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+  }
+
+  .contact-products-grid div {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+  }
+
+  .contact-products-grid h3 {
+    font-size: 1.4rem;
+    line-height: 1.18;
+  }
+
+  .contact-products-grid a {
+    width: fit-content;
+    margin-top: 6px;
+  }
+
+  @media (max-width: 1120px) {
+    .order-hero,
+    .order-flow-note,
+    .order-module,
+    .contact-products-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .order-hero,
+    .order-module-intro,
+    .contact-products-heading,
+    .contact-products-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .order-hero {
+      min-height: auto;
+      padding-top: 48px;
+      padding-bottom: 52px;
+    }
+
+    .order-flow-note {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-products-grid article {
+      grid-template-columns: 200px minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .order-hero,
+    .order-flow-note,
+    .order-module,
+    .contact-products-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .order-hero h1 {
+      font-size: clamp(2.8rem, 11.8vw, 4.2rem);
+      line-height: 0.98;
+    }
+
+    .order-quick-nav {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .order-flow-note,
+    .contact-products-section {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .order-module + .order-module {
+      padding-top: 56px;
+    }
+
+    .order-module-intro figure {
+      padding: 18px 0;
+    }
+
+    .contact-products-grid {
+      gap: 16px;
+    }
+
+    .contact-products-grid article {
+      grid-template-columns: 1fr;
+      padding: 18px;
+    }
+
+    .contact-products-grid a,
+    .contact-products-heading > a {
+      width: 100%;
+    }
+  }
+</style>

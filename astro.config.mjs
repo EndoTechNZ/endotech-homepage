@@ -6,10 +6,19 @@ import tailwindcss from '@tailwindcss/vite';
 
 const isGitHubPages = process.env.DEPLOY_TARGET === 'github-pages';
 const netlifySite = process.env.URL || process.env.DEPLOY_PRIME_URL;
-const site = process.env.PUBLIC_SITE_URL || (isGitHubPages ? 'https://endotechnz.github.io/endotech-homepage' : netlifySite || 'https://endotechsg.com');
+const site = process.env.PUBLIC_SITE_URL || (isGitHubPages ? 'https://endotechnz.github.io' : netlifySite || 'https://endotechnz.github.io');
 const base = isGitHubPages ? '/endotech-homepage/' : '/';
 const shouldNoIndex = process.env.NETLIFY === 'true' && process.env.CONTEXT !== 'production';
+const docsTitle = process.env.PUBLIC_DOCS_TITLE || 'EndoTech Docs';
 const contactEmail = process.env.PUBLIC_CONTACT_EMAIL || 'Steveshepherdnz@gmail.com';
+const starlightHead = shouldNoIndex
+  ? [
+      {
+        tag: /** @type {'meta'} */ ('meta'),
+        attrs: { name: 'robots', content: 'noindex, nofollow' },
+      },
+    ]
+  : [];
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,18 +26,14 @@ export default defineConfig({
   base,
   integrations: [
     starlight({
-      title: 'EndoTech Docs',
+      title: docsTitle,
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
           exclude: ['/products/bcs/**', '/products/acrobat-glide-path/**'],
         }),
       ],
-      head: [
-        ...(shouldNoIndex
-          ? [{ tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' } }]
-          : []),
-      ],
+      head: starlightHead,
       logo: {
         light: './src/assets/logo-wordmark.png',
         dark: './src/assets/logo-wordmark-dark.png',
@@ -45,7 +50,8 @@ export default defineConfig({
             { label: 'Rotary Glide Path Files', slug: 'products/rotary-glide-path-files' },
             { label: 'ET TransformX Files', slug: 'products/et-transformx' },
             { label: 'PT TransformX Files', slug: 'products/pt-transformx' },
-            { label: 'BCS BioCeramic Sealer', slug: 'products/bcs-bioceramic-sealer' },
+            { label: 'VortiFlow Irrigation Needle', slug: 'products/vortiflow-irrigation-needle' },
+            { label: 'BCS BioCeramics Family', slug: 'products/bcs' },
           ],
         },
         {

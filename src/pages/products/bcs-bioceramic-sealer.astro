@@ -1,6 +1,7 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import ProductHero from '../../components/product/ProductHero.astro';
+import WorkflowStrip from '../../components/navigation/WorkflowStrip.astro';
 import FeatureGrid from '../../components/product/FeatureGrid.astro';
 import ApplicationsGrid from '../../components/product/ApplicationsGrid.astro';
 import PackagingPanel from '../../components/product/PackagingPanel.astro';
@@ -9,6 +10,7 @@ import DistributorCTA from '../../components/product/DistributorCTA.astro';
 import { bcsSealer, getProductDownloads } from '../../data/bcs';
 import { getBcsDownloads } from '../../utils/downloads';
 import { withBasePath } from '../../utils/paths';
+import { siteConfig } from '../../config/site';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const clinicalBenefitCards = bcsSealer.clinicalBenefits.map((benefit) => ({
@@ -26,7 +28,7 @@ const sealerSchema = {
   description: bcsSealer.shortDescription,
   brand: {
     '@type': 'Brand',
-    name: 'EndoTech Singapore',
+    name: siteConfig.name,
   },
   category: 'Bioceramic root canal sealer',
   image: [new URL(sealerImage, siteUrl).toString()],
@@ -56,6 +58,8 @@ const sealerSchema = {
     imageSrc={sealerImage}
     imageAlt="BCS BioCeramic Sealer premixed root canal sealer syringe"
   />
+
+  <WorkflowStrip activeStep="seal" />
 
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto grid max-w-7xl gap-4 px-6 py-14 sm:gap-6 sm:py-16 lg:grid-cols-2 lg:py-20">

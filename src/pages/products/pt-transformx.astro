@@ -1,0 +1,648 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import WorkflowStrip from '../../components/navigation/WorkflowStrip.astro';
+import ProductOrderSelector from '../../components/product/ProductOrderSelector.astro';
+import ptProduct from '../../assets/pt-transformx.png';
+import { withBasePath } from '../../utils/paths';
+import { siteConfig } from '../../config/site';
+import { getShopifyStoreDomain } from '../../utils/shopify';
+import { buildOrderSelectorItems, getOrderCoverageLabel } from '../../utils/productOrdering';
+import { ptOrderEntries } from '../../data/productOrderingCatalog';
+
+const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const workflowPdfSrc = withBasePath('/downloads/PT-Technique-Work-Flow.pdf');
+const partNumbersPdfSrc = withBasePath('/downloads/PT-Part-Numbers.pdf');
+const shopifyStoreDomain = getShopifyStoreDomain();
+
+const ptOrderItems = await buildOrderSelectorItems(ptOrderEntries, shopifyStoreDomain);
+const orderPanelDescription = `To order
+- Choose file Size (Step 1)
+- Choose file length (Step 2)
+- Click 'Add to order'`;
+const ptSelectionNote =
+  'SX is supplied in 19 mm. Shaping and finishing files run across 21 mm, 25 mm, and 31 mm lengths, with PT assortment packs also available across the current NZ range.';
+
+const keyFeatureItems = [
+  {
+    title: 'Progressive PT sequence architecture',
+    description:
+      'Built for clinicians already shaping with ProTaper-style coronal, shaping, and finishing logic, so the sequence remains clinically familiar from SX through to the finishing files.',
+    icon: 'workflow' as const,
+  },
+  {
+    title: 'Avatar Tip for centred progression',
+    description:
+      'The apical design supports more controlled advancement through curvature, helping the file follow canal anatomy with less tendency to drift away from the original path.',
+    icon: 'handling' as const,
+  },
+  {
+    title: 'Transform Technology through the working length',
+    description:
+      'Variable metallurgy is used to balance flexibility, torsional control, and cutting response along the file, especially where the shaping sequence becomes more demanding.',
+    icon: 'stability' as const,
+  },
+];
+
+const clinicalBenefitItems = [
+  {
+    title: 'Keep a familiar PT workflow',
+    description:
+      'Supports clinicians who want the feel of a ProTaper-style sequence without rebuilding their preparation logic from the start.',
+    icon: 'workflow' as const,
+  },
+  {
+    title: 'Improve control through coronal to apical shaping',
+    description:
+      'Links the file design directly to the clinical challenge of maintaining centred preparation as taper and canal demand increase.',
+    icon: 'handling' as const,
+  },
+  {
+    title: 'Match file choice to apical anatomy',
+    description:
+      'The familiar finishing sequence keeps clinical decision-making readable when selecting F1, F2, F3, and larger finishing files according to canal size.',
+    icon: 'stability' as const,
+  },
+];
+
+const ptSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'PT TransformX Files',
+  description:
+    'PT TransformX rotary shaping files for clinicians using a ProTaper-style workflow, combining progressive sequence logic with Avatar Tip and Transform Technology.',
+  brand: {
+    '@type': 'Brand',
+    name: siteConfig.name,
+  },
+  category: 'Endodontic rotary files',
+  image: [new URL(ptProduct.src, siteUrl).toString()],
+  url: new URL('/products/pt-transformx/', siteUrl).toString(),
+  additionalProperty: [
+    { '@type': 'PropertyValue', name: 'Workflow compatibility', value: 'ProTaper Gold and ProTaper-style shaping' },
+    { '@type': 'PropertyValue', name: 'Tip design', value: 'Avatar Tip' },
+    { '@type': 'PropertyValue', name: 'Metallurgy', value: 'Transform Technology' },
+  ],
+};
+
+const sequenceItems = [
+  {
+    step: 'SX',
+    role: 'Coronal access',
+    detail:
+      'Creates early coronal shape and reduces restrictive forces before the shaping sequence progresses deeper.',
+  },
+  {
+    step: 'S1 / S2',
+    role: 'Progressive shaping',
+    detail:
+      'Carries the familiar PT progression toward working length while preserving clear sequence logic.',
+  },
+  {
+    step: 'F1-F5',
+    role: 'Apical finishing',
+    detail:
+      'Allows the final preparation to stay matched to apical anatomy and clinical target size.',
+  },
+];
+---
+
+<ProductLayout
+  title="PT TransformX Files | Rotary Endodontic Files for ProTaper-Style Workflows"
+  description="PT TransformX rotary shaping files preserve a familiar ProTaper-style sequence while improving canal-centred control with Avatar Tip and Transform Technology."
+  image={ptProduct.src}
+  schema={ptSchema}
+  accent="teal"
+>
+  <div class="pt-model-page">
+    <section class="pt-hero" aria-labelledby="pt-title">
+      <div class="pt-hero-copy">
+        <p class="pt-eyebrow">PT TransformX</p>
+        <h1 id="pt-title">Familiar progressive shaping, engineered for greater apical control.</h1>
+        <p class="pt-lede">
+          PT TransformX is designed for clinicians who want to preserve ProTaper-style sequence logic while improving guidance, flexibility, and control through demanding anatomy.
+        </p>
+        <div class="pt-actions">
+          <a class="pt-button primary" href="#order">Configure PT sequence</a>
+          <a class="pt-button secondary" href="#downloads">Technical files</a>
+        </div>
+      </div>
+
+      <figure class="pt-hero-figure">
+        <img src={ptProduct.src} alt="PT TransformX rotary file system for ProTaper-style shaping workflows" />
+        <figcaption>
+          <strong>PT TransformX system</strong>
+          <span>Progressive shaping logic positioned inside the EndoTech clinical workflow.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <WorkflowStrip activeStep="shape" />
+
+    <section class="pt-positioning" aria-labelledby="pt-positioning-title">
+      <div class="pt-section-heading">
+        <p class="pt-eyebrow">Clinical Positioning</p>
+        <h2 id="pt-positioning-title">A PT-style sequence for controlled shaping where canal demand increases.</h2>
+      </div>
+
+      <div class="pt-problem-response">
+        <article>
+          <span>01</span>
+          <div>
+            <h3>Clinical Problem</h3>
+            <p>
+              Moving to a different progressive shaping system can disrupt familiar coronal-to-apical sequence logic, especially when curvature and taper increase procedural demand.
+            </p>
+          </div>
+        </article>
+        <article>
+          <span>02</span>
+          <div>
+            <h3>TransformX Solution</h3>
+            <p>
+              PT TransformX preserves familiar progression while adding Avatar Tip guidance and Transform Technology to improve control, safety, and adaptability across the full sequence.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="pt-engineering" aria-labelledby="pt-engineering-title">
+      <div class="pt-section-heading">
+        <p class="pt-eyebrow">Engineering Logic</p>
+        <h2 id="pt-engineering-title">Each feature is linked to a clinical control problem.</h2>
+      </div>
+
+      <div class="pt-engineering-grid">
+        {keyFeatureItems.map((feature, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{feature.title}</h3>
+            <p>{feature.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="pt-sequence" aria-labelledby="pt-sequence-title">
+      <div class="pt-section-heading">
+        <p class="pt-eyebrow">Sequence Architecture</p>
+        <h2 id="pt-sequence-title">The workflow remains clinically readable from SX to finishing files.</h2>
+      </div>
+
+      <ol class="pt-sequence-map">
+        {sequenceItems.map((item) => (
+          <li>
+            <strong>{item.step}</strong>
+            <span>{item.role}</span>
+            <p>{item.detail}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pt-benefits" aria-labelledby="pt-benefits-title">
+      <div class="pt-section-heading">
+        <p class="pt-eyebrow">Clinical Benefits</p>
+        <h2 id="pt-benefits-title">Designed to improve control without asking clinicians to relearn the case logic.</h2>
+      </div>
+
+      <div class="pt-benefit-list">
+        {clinicalBenefitItems.map((benefit) => (
+          <article>
+            <h3>{benefit.title}</h3>
+            <p>{benefit.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="order" class="pt-order-section" aria-label="PT ordering selector">
+      <ProductOrderSelector
+        title="Order the PT sequence online"
+        description={orderPanelDescription}
+        coverageLabel={getOrderCoverageLabel(ptOrderItems)}
+        packFormat="6 files per pack"
+        items={ptOrderItems}
+        shopifyStoreDomain={shopifyStoreDomain}
+        selectionNote={ptSelectionNote}
+      />
+    </section>
+
+    <section id="downloads" class="pt-downloads" aria-labelledby="pt-downloads-title">
+      <div class="pt-section-heading">
+        <p class="pt-eyebrow">Downloads</p>
+        <h2 id="pt-downloads-title">Technical files for clinical evaluation and ordering.</h2>
+      </div>
+
+      <div class="pt-download-list">
+        <a href={workflowPdfSrc}>
+          <span>Technique Guide</span>
+          <strong>PT Technique Workflow</strong>
+        </a>
+        <a href={partNumbersPdfSrc}>
+          <span>Product File</span>
+          <strong>PT Part Numbers</strong>
+        </a>
+      </div>
+    </section>
+  </div>
+</ProductLayout>
+
+<style>
+  .pt-model-page {
+    color: #101827;
+    background: #f7f9fb;
+  }
+
+  .pt-hero,
+  .pt-positioning,
+  .pt-engineering,
+  .pt-sequence,
+  .pt-benefits,
+  .pt-downloads {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .pt-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(420px, 0.85fr);
+    gap: 76px;
+    align-items: center;
+    min-height: 720px;
+    padding-top: 72px;
+    padding-bottom: 86px;
+    background:
+      linear-gradient(90deg, #f7f9fb 0%, #f7f9fb 54%, #e3ebf1 54%, #e3ebf1 100%);
+  }
+
+  .pt-eyebrow {
+    margin: 0 0 18px;
+    color: #876a2b;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .pt-hero h1,
+  .pt-section-heading h2 {
+    margin: 0;
+    color: #0b1424;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .pt-hero h1 {
+    max-width: 850px;
+    font-size: 5rem;
+    line-height: 1;
+  }
+
+  .pt-section-heading h2 {
+    max-width: 1040px;
+    font-size: 3.35rem;
+    line-height: 1.08;
+  }
+
+  .pt-lede {
+    max-width: 720px;
+    margin: 28px 0 0;
+    color: #4b5c70;
+    font-size: 1.14rem;
+    line-height: 1.76;
+  }
+
+  .pt-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  .pt-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border-radius: 4px;
+    padding: 0 24px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .pt-button.primary {
+    background: #0b1424;
+    color: #ffffff;
+  }
+
+  .pt-button.secondary {
+    border: 1px solid #b8c4cf;
+    color: #0b1424;
+  }
+
+  .pt-hero-figure {
+    margin: 0;
+    border-top: 1px solid #b8c4cf;
+    border-bottom: 1px solid #b8c4cf;
+    padding: 42px 0 30px;
+  }
+
+  .pt-hero-figure img {
+    width: 100%;
+    max-height: 430px;
+    object-fit: contain;
+    filter: drop-shadow(0 26px 28px rgba(15, 23, 42, 0.14));
+  }
+
+  .pt-hero-figure figcaption {
+    display: grid;
+    gap: 5px;
+    width: calc(100% + 42px);
+    margin-top: 22px;
+    margin-left: -42px;
+    color: #536478;
+    line-height: 1.55;
+  }
+
+  .pt-hero-figure strong {
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+  }
+
+  .pt-positioning,
+  .pt-engineering,
+  .pt-sequence,
+  .pt-benefits,
+  .pt-downloads {
+    padding-top: 104px;
+    padding-bottom: 112px;
+    border-top: 1px solid #dbe3ea;
+  }
+
+  .pt-positioning,
+  .pt-benefits,
+  .pt-downloads {
+    background: #ffffff;
+  }
+
+  .pt-engineering,
+  .pt-sequence {
+    background: #f7f9fb;
+  }
+
+  .pt-section-heading {
+    margin-bottom: 44px;
+  }
+
+  .pt-problem-response {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+    background: #ffffff;
+  }
+
+  .pt-problem-response article {
+    display: grid;
+    gap: 34px;
+    min-height: 320px;
+    padding: 34px;
+    border-right: 1px solid #c8d2dc;
+  }
+
+  .pt-problem-response article:last-child {
+    border-right: 0;
+    background: #0b1424;
+  }
+
+  .pt-problem-response article:last-child h3,
+  .pt-problem-response article:last-child p {
+    color: #ffffff;
+  }
+
+  .pt-problem-response span,
+  .pt-engineering-grid span,
+  .pt-download-list span,
+  .pt-sequence-map span {
+    color: #876a2b;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .pt-problem-response h3,
+  .pt-engineering-grid h3,
+  .pt-benefit-list h3 {
+    margin: 0;
+    color: #0b1424;
+    font-size: 1.22rem;
+    line-height: 1.26;
+  }
+
+  .pt-problem-response p,
+  .pt-engineering-grid p,
+  .pt-sequence-map p,
+  .pt-benefit-list p {
+    margin: 14px 0 0;
+    color: #536478;
+    line-height: 1.68;
+  }
+
+  .pt-engineering-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+    background: #ffffff;
+  }
+
+  .pt-engineering-grid article {
+    min-height: 330px;
+    padding: 30px;
+    border-right: 1px solid #c8d2dc;
+  }
+
+  .pt-engineering-grid article:last-child {
+    border-right: 0;
+  }
+
+  .pt-engineering-grid h3 {
+    margin-top: 72px;
+  }
+
+  .pt-sequence-map {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+    background: #ffffff;
+    list-style: none;
+  }
+
+  .pt-sequence-map li {
+    min-height: 300px;
+    padding: 30px;
+    border-right: 1px solid #c8d2dc;
+  }
+
+  .pt-sequence-map li:last-child {
+    border-right: 0;
+  }
+
+  .pt-sequence-map strong {
+    display: block;
+    margin-bottom: 48px;
+    color: #0f5878;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 2.3rem;
+  }
+
+  .pt-benefit-list {
+    display: grid;
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+  }
+
+  .pt-benefit-list article {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 48px;
+    padding: 30px 0;
+    border-bottom: 1px solid #dbe3ea;
+  }
+
+  .pt-benefit-list article:last-child {
+    border-bottom: 0;
+  }
+
+  .pt-benefit-list p {
+    margin-top: 0;
+  }
+
+  .pt-order-section {
+    scroll-margin-top: 96px;
+  }
+
+  .pt-download-list {
+    display: grid;
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+  }
+
+  .pt-download-list a {
+    display: grid;
+    grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr);
+    gap: 48px;
+    padding: 26px 0;
+    border-bottom: 1px solid #dbe3ea;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .pt-download-list a:last-child {
+    border-bottom: 0;
+  }
+
+  .pt-download-list strong {
+    color: #0b1424;
+    font-size: 1.1rem;
+  }
+
+  @media (min-width: 1320px) {
+    .pt-hero h1 {
+      font-size: 5.6rem;
+    }
+
+    .pt-section-heading h2 {
+      font-size: 3.8rem;
+    }
+  }
+
+  @media (max-width: 1120px) {
+    .pt-hero,
+    .pt-positioning,
+    .pt-engineering,
+    .pt-sequence,
+    .pt-benefits,
+    .pt-downloads {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .pt-hero {
+      grid-template-columns: 1fr;
+      background: #f7f9fb;
+    }
+
+    .pt-problem-response,
+    .pt-engineering-grid,
+    .pt-sequence-map {
+      grid-template-columns: 1fr;
+    }
+
+    .pt-problem-response article,
+    .pt-engineering-grid article,
+    .pt-sequence-map li {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid #c8d2dc;
+    }
+
+    .pt-problem-response article:last-child,
+    .pt-engineering-grid article:last-child,
+    .pt-sequence-map li:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .pt-hero,
+    .pt-positioning,
+    .pt-engineering,
+    .pt-sequence,
+    .pt-benefits,
+    .pt-downloads {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .pt-hero {
+      min-height: auto;
+      gap: 32px;
+      padding-top: 44px;
+      padding-bottom: 56px;
+    }
+
+    .pt-hero h1 {
+      font-size: 3.15rem;
+    }
+
+    .pt-section-heading h2 {
+      font-size: 2.25rem;
+    }
+
+    .pt-lede {
+      font-size: 1rem;
+    }
+
+    .pt-hero-figure figcaption {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .pt-actions {
+      display: grid;
+    }
+
+    .pt-benefit-list article,
+    .pt-download-list a {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+</style>

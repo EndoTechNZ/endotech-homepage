@@ -1,7 +1,7 @@
 ---
 import Layout from './Layout.astro';
-import logo from '../assets/logo-wordmark.png';
-import logoDark from '../assets/logo-wordmark-dark.png';
+import logoIcon from '../assets/endotech-logo-2.png';
+import { siteConfig } from '../config/site';
 
 interface Props {
   title: string;
@@ -14,62 +14,82 @@ interface Props {
 const { title, description, image, schema, accent = 'teal' } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const productMenu = [
+  { label: 'Product Overview', href: `${base}products/overview/` },
   { label: 'ET TransformX Files', href: `${base}products/et-transformx/` },
   { label: 'PT TransformX Files', href: `${base}products/pt-transformx/` },
   { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
-  { label: 'BCS BioCeramic Sealer', href: `${base}products/bcs-bioceramic-sealer/` },
-  { label: 'BCS BioCeramic Putty', href: `${base}products/bcs-bioceramic-putty/` },
+  { label: 'VortiFlow Irrigation Needle', href: `${base}products/vortiflow-irrigation-needle/` },
   { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
 ];
-const accentClass = {
-  teal: 'text-teal-700',
-  violet: 'text-violet-700',
-  slate: 'text-slate-700',
-}[accent];
 ---
 
 <Layout title={title} description={description} image={image}>
   {schema && <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />}
-  <header class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/92 backdrop-blur">
-    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-      <a href={base} class="flex items-center gap-3">
-        <img src={logo.src} alt="EndoTech Singapore" class="h-10 w-auto dark:hidden" />
-        <img src={logoDark.src} alt="EndoTech Singapore" class="hidden h-10 w-auto dark:block" />
+  <header class="product-site-header">
+    <div class="product-site-header-inner">
+      <a href={base} class="product-site-brand" aria-label={`${siteConfig.name} home`}>
+        <img src={logoIcon.src} alt="" />
+        <span>
+          <strong>{siteConfig.name}</strong>
+          <small>Engineered endodontics</small>
+        </span>
       </a>
-      <nav class="hidden items-center gap-6 text-sm font-semibold text-slate-600 lg:flex">
-        <a href={base} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Home</a>
-        <div class="group products-menu relative">
-          <button id="products-menu-button" type="button" class={`inline-flex origin-center items-center gap-2 transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900 focus:outline-none focus:text-slate-900 ${accentClass}`} aria-haspopup="true" aria-expanded="false" aria-controls="products-menu-panel">
+
+      <nav aria-label="Primary navigation">
+        <a href={base}>Home</a>
+        <div class="products-menu">
+          <button id="products-menu-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="products-menu-panel">
             Products
-            <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-y-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 9l6 6 6-6"></path>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"></path>
             </svg>
           </button>
-          <div class="pointer-events-none absolute left-1/2 top-full z-40 h-4 w-72 -translate-x-1/2 opacity-0 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100"></div>
-          <div id="products-menu-panel" class="products-menu-panel pointer-events-none absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
-            <div class="rounded-[1.6rem] border border-slate-200/80 bg-white/96 p-3 shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)] backdrop-blur-xl">
-              <div class="mb-2 px-3 pt-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-cyan-700">Product Lineup</div>
-              <div class="grid gap-1">
-                {productMenu.map((item) => (
-                  <a href={item.href} class="rounded-2xl px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900">
-                    {item.label}
-                  </a>
-                ))}
-              </div>
+          <div class="products-menu-bridge"></div>
+          <div id="products-menu-panel" class="products-menu-panel">
+            <div class="products-menu-shell">
+              <span>Product lineup</span>
+              {productMenu.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))}
             </div>
           </div>
         </div>
-        <a href={`${base}technique/workflow/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Clinical Workflow</a>
-        <a href={`${base}technology/transform-technology/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Technology</a>
-        <a href={`${base}resources/clinical-tips/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Education</a>
-        <a href={`${base}products/bcs/evidence/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">Evidence & Downloads</a>
-        <a href={`${base}about/company/`} class="inline-flex origin-center transition-transform transition-colors duration-200 hover:scale-110 hover:text-slate-900">About</a>
-        <a href={`${base}about/contact/`} class="inline-flex origin-center rounded-full bg-slate-900 px-5 py-2.5 text-white transition-all duration-200 hover:scale-105 hover:bg-slate-800">Contact</a>
+        <a href={`${base}technique/workflow/`}>Clinical Workflow</a>
+        <a href={`${base}technology/transform-technology/`}>Technology</a>
+        <a href={`${base}order/`}>Order</a>
+        <a href={`${base}resources/clinical-tips/`}>Education</a>
+        <a href={`${base}products/bcs/evidence/`}>Evidence & Downloads</a>
+        <a href={`${base}about/company/`}>About</a>
       </nav>
+
+      <div class="product-header-actions">
+        <a class="product-header-action" href={`${base}about/contact/`}>Contact</a>
+        <button class="product-menu-toggle" id="product-mobile-menu-button" type="button" aria-expanded="false" aria-controls="product-mobile-menu">
+          Menu
+        </button>
+      </div>
+    </div>
+
+    <div id="product-mobile-menu" class="product-mobile-menu">
+      <div class="product-mobile-menu-shell">
+        <a href={base}>Home</a>
+        <a href={`${base}products/overview/`}>Shape Overview</a>
+        <a href={`${base}products/et-transformx/`}>ET TransformX</a>
+        <a href={`${base}products/pt-transformx/`}>PT TransformX</a>
+        <a href={`${base}products/acrobat-glide-path/`}>Acrobat Glide Path</a>
+        <a href={`${base}products/vortiflow-irrigation-needle/`}>VortiFlow</a>
+        <a href={`${base}products/bcs/`}>BCS Family</a>
+        <a href={`${base}technique/workflow/`}>Clinical Workflow</a>
+        <a href={`${base}technology/transform-technology/`}>Technology</a>
+        <a href={`${base}order/`}>Order</a>
+        <a href={`${base}resources/clinical-tips/`}>Education</a>
+        <a href={`${base}products/bcs/evidence/`}>Evidence & Downloads</a>
+        <a href={`${base}about/company/`}>About</a>
+      </div>
     </div>
   </header>
 
-  <main>
+  <main class="product-site-main" data-accent={accent}>
     <slot />
   </main>
 
@@ -77,11 +97,19 @@ const accentClass = {
     document.addEventListener('DOMContentLoaded', () => {
       const productsMenu = document.querySelector('.products-menu');
       const productsMenuButton = document.getElementById('products-menu-button');
+      const mobileMenu = document.getElementById('product-mobile-menu');
+      const mobileMenuButton = document.getElementById('product-mobile-menu-button');
 
       function setProductsMenu(open) {
         if (!productsMenu || !productsMenuButton) return;
         productsMenu.classList.toggle('is-open', open);
         productsMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      function setMobileMenu(open) {
+        if (!mobileMenu || !mobileMenuButton) return;
+        mobileMenu.classList.toggle('is-open', open);
+        mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
       }
 
       productsMenuButton?.addEventListener('click', (event) => {
@@ -91,8 +119,17 @@ const accentClass = {
         setProductsMenu(!isOpen);
       });
 
+      mobileMenuButton?.addEventListener('click', () => {
+        const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        setMobileMenu(!isOpen);
+      });
+
       productsMenu?.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', () => setProductsMenu(false));
+      });
+
+      mobileMenu?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMobileMenu(false));
       });
 
       document.addEventListener('click', (event) => {
@@ -100,44 +137,352 @@ const accentClass = {
         if (!productsMenu.contains(event.target)) {
           setProductsMenu(false);
         }
+        if (mobileMenu && mobileMenuButton && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+          setMobileMenu(false);
+        }
       });
 
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
           setProductsMenu(false);
+          setMobileMenu(false);
         }
       });
     });
   </script>
 
-  <footer class="border-t border-slate-200 bg-slate-50">
-    <div class="mx-auto max-w-7xl px-6 py-10">
-      <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p class="text-lg font-bold text-slate-900">EndoTech Singapore</p>
-          <p class="mt-2 max-w-xl text-sm leading-7 text-slate-600">
-            Clinical endodontic systems and bioceramic materials presented with a workflow-first, evidence-aware approach.
-          </p>
-        </div>
-        <div class="flex flex-wrap gap-4 text-sm font-semibold text-slate-600">
-          <a href={`${base}products/bcs/`} class="hover:text-slate-900">BCS Family</a>
-          <a href={`${base}products/bcs-bioceramic-sealer/`} class="hover:text-slate-900">BCS BioCeramic Sealer</a>
-          <a href={`${base}products/bcs-bioceramic-putty/`} class="hover:text-slate-900">BCS BioCeramic Putty</a>
-          <a href={`${base}products/bcs/evidence/`} class="hover:text-slate-900">Downloads</a>
-        </div>
-      </div>
+  <footer class="product-site-footer">
+    <div>
+      <strong>{siteConfig.name}</strong>
+      <span>{siteConfig.organizationDescription}</span>
     </div>
+    <nav aria-label="Product footer navigation">
+      <a href={`${base}products/acrobat-glide-path/`}>Acrobat Glide Path</a>
+      <a href={`${base}products/vortiflow-irrigation-needle/`}>VortiFlow</a>
+      <a href={`${base}products/bcs/`}>BCS Family</a>
+      <a href={`${base}resources/downloads/`}>Downloads</a>
+    </nav>
   </footer>
 </Layout>
 
 <style is:global>
-  .products-menu.is-open > .products-menu-panel,
-  .products-menu.is-open > .pointer-events-none {
-    opacity: 1;
-    pointer-events: auto;
+  .product-site-header {
+    position: sticky;
+    top: 0;
+    z-index: 70;
+    border-bottom: 1px solid #dbe3ea;
+    background: rgba(247, 249, 251, 0.94);
+    backdrop-filter: blur(14px);
   }
 
-  .products-menu.is-open #products-menu-button svg {
-    transform: translateY(1px) rotate(180deg);
+  .product-site-header-inner {
+    display: grid;
+    grid-template-columns: minmax(210px, auto) 1fr auto;
+    gap: 28px;
+    align-items: center;
+    min-height: 82px;
+    padding: 0 56px;
+  }
+
+  .product-site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .product-site-brand img {
+    width: 42px;
+  }
+
+  .product-site-brand span {
+    display: grid;
+    gap: 3px;
+    line-height: 1;
+  }
+
+  .product-site-brand strong,
+  .product-site-footer strong {
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .product-site-brand small {
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .product-site-header nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    color: #334155;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .product-site-header nav a,
+  .products-menu button,
+  .product-header-action,
+  .product-menu-toggle {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .products-menu {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .products-menu button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .products-menu svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 180ms ease;
+  }
+
+  .products-menu path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .products-menu-bridge {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 280px;
+    height: 16px;
+    transform: translateX(-50%);
+  }
+
+  .products-menu-panel {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    z-index: 90;
+    width: 300px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 8px);
+    transition:
+      opacity 180ms ease,
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .products-menu-shell {
+    display: grid;
+    gap: 2px;
+    border: 1px solid #d8e1e8;
+    border-radius: 6px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 24px 55px -34px rgba(15, 23, 42, 0.34);
+    backdrop-filter: blur(16px);
+  }
+
+  .products-menu-shell span {
+    padding: 6px 8px 8px;
+    color: #876a2b;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .products-menu-shell a {
+    border-radius: 4px;
+    padding: 10px 8px;
+    color: #344357;
+    font-size: 0.86rem;
+    font-weight: 700;
+    transition:
+      background 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .products-menu-shell a:hover,
+  .products-menu-shell a:focus-visible {
+    background: #f3f7fa;
+    color: #0b1424;
+    transform: translateX(2px);
+  }
+
+  .products-menu:hover .products-menu-panel,
+  .products-menu:focus-within .products-menu-panel,
+  .products-menu.is-open .products-menu-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
+
+  .products-menu:hover svg,
+  .products-menu:focus-within svg,
+  .products-menu.is-open svg {
+    transform: translateY(1px);
+  }
+
+  .product-header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .product-header-action,
+  .product-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border: 1px solid #c8d2dc;
+    border-radius: 4px;
+    padding: 0 18px;
+    color: #0b1424;
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .product-menu-toggle {
+    display: none;
+    background: #ffffff;
+    cursor: pointer;
+  }
+
+  .product-mobile-menu {
+    display: none;
+    border-top: 1px solid #dbe3ea;
+    background: rgba(247, 249, 251, 0.98);
+  }
+
+  .product-mobile-menu-shell {
+    display: grid;
+    gap: 8px;
+    padding: 14px 18px 18px;
+  }
+
+  .product-mobile-menu-shell a {
+    border: 1px solid #dbe3ea;
+    border-radius: 6px;
+    padding: 12px 14px;
+    color: #0b1424;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .product-site-main {
+    background: #f7f9fb;
+  }
+
+  .product-site-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 28px;
+    align-items: start;
+    border-top: 1px solid #dbe3ea;
+    background: #ffffff;
+    padding: 34px 56px;
+  }
+
+  .product-site-footer div {
+    display: grid;
+    gap: 8px;
+  }
+
+  .product-site-footer span {
+    max-width: 760px;
+    color: #536478;
+    line-height: 1.6;
+  }
+
+  .product-site-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: flex-end;
+    color: #475569;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .product-site-footer a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @media (max-width: 1120px) {
+    .product-site-header-inner,
+    .product-site-footer {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .product-site-header-inner {
+      grid-template-columns: auto auto;
+    }
+
+    .product-site-header nav {
+      display: none;
+    }
+
+    .product-menu-toggle {
+      display: inline-flex;
+    }
+
+    .product-mobile-menu.is-open {
+      display: block;
+    }
+
+    .product-site-footer {
+      grid-template-columns: 1fr;
+    }
+
+    .product-site-footer nav {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .product-site-header-inner,
+    .product-site-footer {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .product-site-header-inner {
+      min-height: 70px;
+    }
+
+    .product-site-brand small {
+      display: none;
+    }
+
+    .product-header-action,
+    .product-menu-toggle {
+      padding: 0 12px;
+      font-size: 0.8rem;
+    }
   }
 </style>

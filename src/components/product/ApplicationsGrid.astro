@@ -22,11 +22,11 @@ const accentClass = {
     {intro && <p class="mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8">{intro}</p>}
     <div class="mt-8 grid gap-4 sm:mt-10 md:grid-cols-2 xl:grid-cols-3">
       {items.map((item, index) => (
-        <article class="rounded-[1.35rem] border border-slate-200 bg-white p-5 sm:rounded-[1.5rem]">
+        <article class="min-w-0 overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white p-5 sm:rounded-[1.5rem]">
           <div class={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] ${accentClass}`}>
             Application {index + 1}
           </div>
-          <h3 class="mt-4 text-lg font-bold text-slate-900">{item}</h3>
+          <h3 class="mt-4 text-lg font-bold text-slate-900 [overflow-wrap:anywhere]">{item}</h3>
         </article>
       ))}
     </div>

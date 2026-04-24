@@ -1,0 +1,544 @@
+---
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import PremiumProductNarrative from '../../components/product/PremiumProductNarrative.astro';
+import vortiflowTechnicalRender from '../../assets/vortiflow/vortiflow-technical-cad-render.png';
+import vortiflowComparisonChart from '../../assets/vortiflow/vortiflow-irrigation-modality-comparison.png';
+import vortiflowVortexFlow from '../../assets/vortiflow/vortiflow-fluid-dynamics-clean.png';
+import vortiflowWaterFlowMarketingImage from '../../assets/vortiflow/vortiflow-water-flow-marketing-image.png';
+import vortiflowHelicalFigure from '../../assets/vortiflow/vortiflow-helical-channel-figure.png';
+import vortiflowVortexFigure from '../../assets/vortiflow/vortiflow-vortex-concept-figure.png';
+import vortiflowCadTip1 from '../../assets/vortiflow/vortiflow-cad-tip-render-1.jpg';
+import vortiflowCadTip2 from '../../assets/vortiflow/vortiflow-cad-tip-render-2.jpg';
+import { siteConfig } from '../../config/site';
+import { withBasePath } from '../../utils/paths';
+
+const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const evidencePdfHref = '/downloads/VortiFlow-Evidence-Overview.pdf';
+const hasEvidencePdf = existsSync(path.join(process.cwd(), 'public', 'downloads', 'VortiFlow-Evidence-Overview.pdf'));
+
+const pageTitle = `VortiFlow Irrigation Needle for Controlled Endodontic Irrigation | ${siteConfig.name}`;
+const pageDescription =
+  'VortiFlow is an irrigation needle concept designed for controlled lateral irrigant flow, fluid exchange, and debris transport after canal shaping.';
+
+const vortiflowSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'VortiFlow Irrigation Needle',
+  description: pageDescription,
+  brand: {
+    '@type': 'Brand',
+    name: siteConfig.name,
+  },
+  category: 'Endodontic irrigation needle',
+  image: [new URL(vortiflowVortexFlow.src, siteUrl).toString()],
+  url: new URL('/products/vortiflow-irrigation-needle/', siteUrl).toString(),
+  additionalProperty: [
+    { '@type': 'PropertyValue', name: 'Flow concept', value: 'Helical channel lateral flow' },
+    { '@type': 'PropertyValue', name: 'Tip concept', value: 'Closed-end style lateral outlet' },
+    { '@type': 'PropertyValue', name: 'Workflow position', value: 'After shaping and before obturation' },
+  ],
+};
+
+const featureItems = [
+  {
+    title: 'Helical channel geometry',
+    description:
+      'The concept is built around helical channels on the needle wall so irrigant delivery is directed laterally rather than relying on a direct apical outlet.',
+  },
+  {
+    title: 'Closed-end style tip concept',
+    description:
+      'The smooth distal form and lateral outlet geometry are intended to support controlled delivery while reducing emphasis on direct apical jetting.',
+  },
+  {
+    title: 'System placement after shaping',
+    description:
+      'VortiFlow is positioned as the cleaning step after TransformX shaping, keeping irrigation connected to the broader EndoTech workflow.',
+  },
+];
+
+const clinicalBenefitItems = [
+  {
+    title: 'Support fluid exchange',
+    description:
+      'The VortiFlow concept is presented to support more controlled irrigant movement within the prepared canal rather than treating the needle as a commodity accessory.',
+  },
+  {
+    title: 'Support debris transport',
+    description:
+      'The lateral-flow concept is intended to help with irrigant replacement and debris transport in shaped canals, especially where geometry influences flow behaviour.',
+  },
+  {
+    title: 'Keep cleaning inside the system story',
+    description:
+      'It gives the EndoTech workflow a clearer shaping-to-cleaning transition before final sealing with BCS or iRoot materials.',
+  },
+];
+
+const sequenceItems = [
+  {
+    step: 'Shape',
+    role: 'Prepared canal form',
+    detail:
+      'TransformX shaping creates the canal geometry that determines how irrigant can move through the preparation.',
+  },
+  {
+    step: 'Clean',
+    role: 'Controlled lateral flow',
+    detail:
+      'VortiFlow is positioned to support irrigant exchange and debris transport after shaping and before sealing.',
+  },
+  {
+    step: 'Seal',
+    role: 'Bioceramic completion',
+    detail:
+      'The cleaning stage then leads into a predictable final seal within the EndoTech treatment sequence.',
+  },
+];
+
+const evidenceItems = [
+  {
+    title: 'Needle design influences irrigation behaviour',
+    description:
+      'Published CFD and experimental work suggests outlet geometry, venting pattern, and working depth can affect irrigant flow behaviour, wall shear, and safety considerations.',
+  },
+  {
+    title: 'Design matters in constrained anatomy',
+    description:
+      'Curved and minimally invasive canal preparations make irrigation more sensitive to canal shape, insertion depth, and directed flow behaviour.',
+  },
+  {
+    title: 'Evidence-led, carefully positioned',
+    description:
+      'VortiFlow is presented as an engineered irrigation delivery concept within the EndoTech workflow, not as a replacement for every activation method.',
+  },
+];
+
+const downloads = hasEvidencePdf
+  ? [
+      {
+        label: 'Facts Sheet',
+        title: 'VortiFlow Evidence Overview',
+        href: withBasePath(evidencePdfHref),
+      },
+    ]
+  : [];
+---
+
+<ProductLayout
+  title={pageTitle}
+  description={pageDescription}
+  image={vortiflowVortexFlow.src}
+  schema={vortiflowSchema}
+  accent="teal"
+>
+  <PremiumProductNarrative
+    eyebrow="VortiFlow Irrigation"
+    title="Vortex cleaning system."
+    lede="VortiFlow is an irrigation needle concept built around controlled lateral irrigant flow, fluid exchange, and debris transport after canal shaping."
+    imageSrc={vortiflowTechnicalRender.src}
+    imageAlt="Technical CAD render of the VortiFlow irrigation needle"
+    visualTitle="VortiFlow irrigation concept"
+    visualText="Helical channel geometry positioned as the cleaning bridge between shaping and sealing."
+    primaryCta={{ label: 'Contact EndoTech', href: withBasePath('/about/contact/') }}
+    secondaryCta={{ label: 'Review evidence', href: '#evidence' }}
+    tertiaryCta={hasEvidencePdf ? { label: 'VortiFlow Evidence Overview', href: withBasePath(evidencePdfHref) } : undefined}
+    clinicalProblem="Irrigation performance depends not only on solution choice, but also on delivery geometry, insertion depth, canal shape, and the way fluid is directed inside constrained anatomy."
+    solution="After TransformX shaping has created the intended canal form, VortiFlow extends the EndoTech control story into irrigation through a helical-channel, lateral-flow delivery concept positioned between shaping and sealing."
+    engineeringTitle="The design story is built around outlet geometry, tip form, and workflow placement."
+    features={featureItems}
+    sequenceTitle="VortiFlow sits between shaping and sealing as the controlled cleaning step."
+    sequenceItems={sequenceItems}
+    benefitsTitle="The value is controlled delivery, cleaner workflow logic, and a stronger transition into sealing."
+    benefits={clinicalBenefitItems}
+    downloads={downloads}
+    downloadsTitle="Evidence and technical rationale for the VortiFlow concept."
+    workflowActiveStep="clean"
+  >
+    <section slot="detail" class="vortiflow-media-section" aria-labelledby="vortiflow-media-title">
+      <div class="vortiflow-section-heading">
+        <p class="vortiflow-eyebrow">Flow Concept</p>
+        <h2 id="vortiflow-media-title">Irrigation delivery is presented as an engineered system, not a commodity needle.</h2>
+        <p>
+          The VortiFlow page uses restrained engineering visuals to explain why lateral outlet design, helical channels, and prepared canal geometry all matter to the cleaning stage.
+        </p>
+      </div>
+
+      <div class="vortiflow-comparison">
+        <img
+          src={vortiflowComparisonChart.src}
+          alt="Irrigation modality comparison chart showing conventional open-ended stainless steel, conventional side-vented stainless steel, and VortiFlow polymer"
+        />
+      </div>
+
+      <div class="vortiflow-visual-grid">
+        <article>
+          <img src={vortiflowVortexFlow.src} alt="VortiFlow micro fluid dynamics visual" />
+          <h3>Micro fluid dynamics view</h3>
+          <p>Used as the calm visual anchor for fluid movement, exchange, and cleaning-phase behaviour.</p>
+        </article>
+        <article>
+          <img src={vortiflowWaterFlowMarketingImage.src} alt="VortiFlow water-flow marketing image showing fluid movement" />
+          <h3>Cleaning-phase positioning</h3>
+          <p>Connects the irrigation concept back to the shaped canal rather than presenting the needle as an isolated accessory.</p>
+        </article>
+      </div>
+    </section>
+
+    <section slot="detail" class="vortiflow-engineering-detail" aria-labelledby="vortiflow-detail-title">
+      <div class="vortiflow-section-heading">
+        <p class="vortiflow-eyebrow">Engineering Detail</p>
+        <h2 id="vortiflow-detail-title">Helical channel flow design and lateral outlet control.</h2>
+      </div>
+
+      <div class="vortiflow-detail-grid">
+        <article>
+          <img src={vortiflowHelicalFigure.src} alt="Diagram showing helical channel geometry for VortiFlow irrigation concept" />
+          <h3>Spiral channel geometry</h3>
+          <p>The helical figure illustrates the wall-channel concept that underpins the lateral delivery story.</p>
+        </article>
+        <article>
+          <img src={vortiflowVortexFigure.src} alt="Engineering illustration of vortex-style flow path within an irrigation needle concept" />
+          <h3>Intended vortex-style movement</h3>
+          <p>The engineering concept emphasises lateral movement and fluid exchange within the prepared canal space.</p>
+        </article>
+        <article>
+          <div class="vortiflow-cad-pair">
+            <img src={vortiflowCadTip1.src} alt="CAD rendering of lateral outlet tip geometry for irrigation needle design" />
+            <img src={vortiflowCadTip2.src} alt="CAD rendering of closed-end lateral outlet irrigation needle tip concept" />
+          </div>
+          <h3>Tip geometry</h3>
+          <p>The CAD views support the core message: lateral outlet design, smooth distal form, and channel-led flow direction.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="evidence" slot="detail" class="vortiflow-evidence" aria-labelledby="vortiflow-evidence-title">
+      <div class="vortiflow-section-heading">
+        <p class="vortiflow-eyebrow">Evidence & Rationale</p>
+        <h2 id="vortiflow-evidence-title">Evidence supports the principle that irrigation design affects fluid behaviour.</h2>
+      </div>
+
+      <div class="vortiflow-evidence-list">
+        {evidenceItems.map((item) => (
+          <article data-vortiflow-evidence-row>
+            <h3>{item.title}</h3>
+            <span class="vortiflow-evidence-arrow" aria-hidden="true"></span>
+            <p>{item.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </PremiumProductNarrative>
+</ProductLayout>
+
+<style>
+  .vortiflow-media-section,
+  .vortiflow-engineering-detail,
+  .vortiflow-evidence {
+    border-top: 1px solid #dbe3ea;
+    padding: 104px 56px 112px;
+  }
+
+  .vortiflow-media-section,
+  .vortiflow-evidence {
+    background: #ffffff;
+  }
+
+  .vortiflow-engineering-detail {
+    background: #f7f9fb;
+  }
+
+  .vortiflow-section-heading {
+    margin-bottom: 44px;
+  }
+
+  .vortiflow-eyebrow {
+    margin: 0 0 18px;
+    color: #876a2b;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .vortiflow-section-heading h2 {
+    max-width: 1040px;
+    margin: 0;
+    color: #0b1424;
+    font-size: 3.35rem;
+    font-weight: 700;
+    line-height: 1.08;
+  }
+
+  .vortiflow-section-heading p:not(.vortiflow-eyebrow) {
+    max-width: 820px;
+    margin: 22px 0 0;
+    color: #536478;
+    font-size: 1.08rem;
+    line-height: 1.72;
+  }
+
+  .vortiflow-comparison {
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+    padding: 28px 0;
+  }
+
+  .vortiflow-comparison img {
+    display: block;
+    width: 100%;
+    background: #0b1424;
+  }
+
+  .vortiflow-visual-grid,
+  .vortiflow-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+    background: #ffffff;
+  }
+
+  .vortiflow-visual-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 44px;
+  }
+
+  .vortiflow-visual-grid article,
+  .vortiflow-detail-grid article {
+    padding: 30px;
+    border-right: 1px solid #c8d2dc;
+  }
+
+  .vortiflow-visual-grid article:last-child,
+  .vortiflow-detail-grid article:last-child {
+    border-right: 0;
+  }
+
+  .vortiflow-visual-grid img,
+  .vortiflow-detail-grid img {
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+    background: #f7f9fb;
+  }
+
+  .vortiflow-detail-grid img {
+    height: 230px;
+  }
+
+  .vortiflow-cad-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .vortiflow-cad-pair img {
+    height: 230px;
+    object-fit: cover;
+  }
+
+  .vortiflow-visual-grid h3,
+  .vortiflow-detail-grid h3,
+  .vortiflow-evidence-list h3 {
+    margin: 28px 0 0;
+    color: #0b1424;
+    font-size: 1.22rem;
+    line-height: 1.26;
+  }
+
+  .vortiflow-visual-grid p,
+  .vortiflow-detail-grid p,
+  .vortiflow-evidence-list p {
+    margin: 14px 0 0;
+    color: #536478;
+    line-height: 1.68;
+  }
+
+  .vortiflow-evidence-list {
+    display: grid;
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+  }
+
+  .vortiflow-evidence-list article {
+    display: grid;
+    grid-template-columns: minmax(0, 0.52fr) minmax(180px, 0.34fr) minmax(0, 1.14fr);
+    gap: 34px;
+    align-items: center;
+    padding: 30px 0;
+    border-bottom: 1px solid #dbe3ea;
+  }
+
+  .vortiflow-evidence-list article:last-child {
+    border-bottom: 0;
+  }
+
+  .vortiflow-evidence-list h3,
+  .vortiflow-evidence-list p {
+    margin-top: 0;
+  }
+
+  .vortiflow-evidence-arrow {
+    position: relative;
+    display: block;
+    width: min(100%, 230px);
+    height: 18px;
+    justify-self: center;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .vortiflow-evidence-arrow::before,
+  .vortiflow-evidence-arrow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+  }
+
+  .vortiflow-evidence-arrow::before {
+    left: 0;
+    height: 1px;
+    background: #0f5878;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .vortiflow-evidence-arrow::after {
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid #0f5878;
+    border-right: 1px solid #0f5878;
+    transform: translate(-210px, -50%) rotate(45deg) scale(1);
+    transform-origin: center;
+  }
+
+  .vortiflow-evidence-list article.is-vortiflow-arrow-active .vortiflow-evidence-arrow,
+  .vortiflow-evidence-list article.is-vortiflow-arrow-leaving .vortiflow-evidence-arrow,
+  .vortiflow-evidence-list article:focus-within .vortiflow-evidence-arrow {
+    opacity: 1;
+  }
+
+  .vortiflow-evidence-list article.is-vortiflow-arrow-active .vortiflow-evidence-arrow::before,
+  .vortiflow-evidence-list article.is-vortiflow-arrow-leaving .vortiflow-evidence-arrow::before,
+  .vortiflow-evidence-list article:focus-within .vortiflow-evidence-arrow::before {
+    animation: vortiflow-evidence-line-draw 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .vortiflow-evidence-list article.is-vortiflow-arrow-active .vortiflow-evidence-arrow::after,
+  .vortiflow-evidence-list article:focus-within .vortiflow-evidence-arrow::after {
+    animation: vortiflow-evidence-arrow-travel 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .vortiflow-evidence-list article.is-vortiflow-arrow-leaving .vortiflow-evidence-arrow {
+    animation: vortiflow-evidence-arrow-fade 360ms ease forwards;
+  }
+
+  .vortiflow-evidence-list article.is-vortiflow-arrow-leaving .vortiflow-evidence-arrow::after {
+    transform: translate(0, -50%) rotate(45deg) scale(1);
+    transition: transform 110ms ease;
+  }
+
+  @keyframes vortiflow-evidence-line-draw {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes vortiflow-evidence-arrow-travel {
+    0% {
+      transform: translate(-210px, -50%) rotate(45deg) scale(1);
+    }
+
+    88% {
+      transform: translate(0, -50%) rotate(45deg) scale(1);
+    }
+
+    to {
+      transform: translate(0, -50%) rotate(45deg) scale(1.5);
+    }
+  }
+
+  @keyframes vortiflow-evidence-arrow-fade {
+    0%,
+    58% {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 1120px) {
+    .vortiflow-media-section,
+    .vortiflow-engineering-detail,
+    .vortiflow-evidence {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .vortiflow-visual-grid,
+    .vortiflow-detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .vortiflow-visual-grid article,
+    .vortiflow-detail-grid article {
+      border-right: 0;
+      border-bottom: 1px solid #c8d2dc;
+    }
+
+    .vortiflow-visual-grid article:last-child,
+    .vortiflow-detail-grid article:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .vortiflow-media-section,
+    .vortiflow-engineering-detail,
+    .vortiflow-evidence {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .vortiflow-section-heading h2 {
+      font-size: 2.25rem;
+    }
+
+    .vortiflow-evidence-list article {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .vortiflow-evidence-arrow {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-vortiflow-evidence-row]').forEach((row) => {
+    let leaveTimer;
+
+    row.addEventListener('pointerenter', () => {
+      window.clearTimeout(leaveTimer);
+      row.classList.remove('is-vortiflow-arrow-leaving');
+      row.classList.add('is-vortiflow-arrow-active');
+    });
+
+    row.addEventListener('pointerleave', () => {
+      row.classList.remove('is-vortiflow-arrow-active');
+      row.classList.add('is-vortiflow-arrow-leaving');
+
+      leaveTimer = window.setTimeout(() => {
+        row.classList.remove('is-vortiflow-arrow-leaving');
+      }, 360);
+    });
+  });
+</script>

@@ -1,0 +1,490 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import WorkflowStrip from '../../components/navigation/WorkflowStrip.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const workflowSteps = [
+  {
+    step: 'Step 1',
+    title: 'Glide Path',
+    text: 'Establish a reproducible glide path to working length.',
+  },
+  {
+    step: 'Step 2',
+    title: 'Shaping',
+    text: 'Use the TransformX sequence appropriate for your system:',
+    bullets: [
+      'ET system: For .04/.06 taper workflows',
+      'PT system: For progressive taper workflows',
+    ],
+  },
+  {
+    step: 'Step 3',
+    title: 'Finishing',
+    text: 'Complete the preparation with final apical sizing as needed.',
+  },
+];
+
+const keyPrinciples = [
+  'Irrigate thoroughly',
+  'Recapitulate with a small hand file',
+  'Re-irrigate before the next rotary file',
+];
+
+const guides = [
+  {
+    label: 'ET Technique Guide',
+    description: 'For EdgeTaper-style workflows',
+    href: `${base}technique/et-technique/`,
+  },
+  {
+    label: 'PT Technique Guide',
+    description: 'For ProTaper-style workflows',
+    href: `${base}technique/pt-technique/`,
+  },
+];
+
+const downloads = [
+  {
+    label: 'ET Technique Workflow (PDF)',
+    href: `${base}downloads/ET-Technique-Work-Flow.pdf`,
+  },
+  {
+    label: 'PT Technique Workflow (PDF)',
+    href: `${base}downloads/PT-Technique-Work-Flow.pdf`,
+  },
+];
+---
+
+<ProductLayout
+  title="Workflow Overview | EndoTech NZ"
+  description="TransformX clinical workflow showing glide path, shaping, and finishing steps for rotary endodontic treatment."
+  accent="slate"
+>
+  <main class="workflow-page">
+    <section class="workflow-hero" aria-labelledby="workflow-title">
+      <div>
+        <p class="page-eyebrow">Clinical Workflow</p>
+        <h1 id="workflow-title">Workflow Overview</h1>
+      </div>
+      <div class="workflow-hero-copy">
+        <p>
+          The TransformX system follows a straightforward 3-step workflow designed to integrate seamlessly with your existing technique.
+        </p>
+        <div class="workflow-actions">
+          <a href={`${base}resources/clinical-tips/`}>Clinical guidance</a>
+          <a href={`${base}resources/downloads/`}>Open downloads</a>
+        </div>
+      </div>
+    </section>
+
+    <WorkflowStrip />
+
+    <section class="workflow-section workflow-steps-section" aria-labelledby="three-step-title">
+      <div class="section-intro">
+        <p class="page-eyebrow">The 3-Step Workflow</p>
+        <h2 id="three-step-title">A clean sequence from glide path to final preparation.</h2>
+      </div>
+
+      <div class="workflow-step-grid">
+        {workflowSteps.map((item) => (
+          <article>
+            <span>{item.step}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+            {item.bullets && (
+              <ul>
+                {item.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="workflow-section principles-section" aria-labelledby="principles-title">
+      <div class="section-intro">
+        <p class="page-eyebrow">Key Principles</p>
+        <h2 id="principles-title">Irrigate &rarr; Recapitulate &rarr; Re-irrigate</h2>
+      </div>
+
+      <div class="principles-layout">
+        <div class="principles-copy">
+          <p>Between each file:</p>
+          <ol>
+            {keyPrinciples.map((principle) => (
+              <li>{principle}</li>
+            ))}
+          </ol>
+          <p class="principles-note">
+            This sequence ensures debris removal and reduces the risk of blockage or ledging.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow-section guides-section" aria-labelledby="guides-title">
+      <div class="section-intro">
+        <p class="page-eyebrow">System-Specific Guides</p>
+        <h2 id="guides-title">Use the technique guide that matches your sequence logic.</h2>
+      </div>
+
+      <div class="guides-grid">
+        {guides.map((guide) => (
+          <article>
+            <h3>{guide.label}</h3>
+            <p>{guide.description}</p>
+            <a href={guide.href}>Open guide</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="workflow-section downloads-section" aria-labelledby="downloads-title">
+      <div class="section-intro">
+        <p class="page-eyebrow">Downloads</p>
+        <h2 id="downloads-title">Technique workflow PDFs for ET and PT systems.</h2>
+      </div>
+
+      <div class="download-list">
+        {downloads.map((item) => (
+          <a href={item.href}>
+            <span>{item.label}</span>
+            <strong>Open</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+</ProductLayout>
+
+<style>
+  .workflow-page {
+    background: #f7f9fb;
+    color: #0b1424;
+  }
+
+  .workflow-hero,
+  .workflow-section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(56px, 6vw, 96px) 48px;
+  }
+
+  .workflow-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.98fr) minmax(340px, 0.74fr);
+    gap: clamp(44px, 6vw, 84px);
+    align-items: end;
+    min-height: min(640px, calc(100vh - 82px));
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.018) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  .page-eyebrow {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+  }
+
+  .workflow-hero h1,
+  .section-intro h2 {
+    margin: 0;
+    color: #090f1d;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .workflow-hero h1 {
+    max-width: 8.2ch;
+    margin-top: 28px;
+    font-size: clamp(3.1rem, 4.6vw, 5.4rem);
+    line-height: 1.02;
+  }
+
+  .workflow-hero-copy {
+    border-top: 1px solid #cfd9e2;
+    padding-top: 28px;
+  }
+
+  .workflow-hero-copy p,
+  .principles-copy p,
+  .guides-grid p {
+    margin: 0;
+    color: #536478;
+    font-size: clamp(1rem, 0.95vw, 1.14rem);
+    line-height: 1.78;
+  }
+
+  .workflow-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  .workflow-actions a,
+  .guides-grid a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border: 1px solid #c8d2dc;
+    border-radius: 4px;
+    padding: 0 18px;
+    color: #0b1424;
+    font-weight: 850;
+    text-decoration: none;
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .workflow-actions a:first-child,
+  .guides-grid a {
+    border-color: #0b1424;
+    background: #0b1424;
+    color: #ffffff;
+  }
+
+  .workflow-actions a:hover,
+  .workflow-actions a:focus-visible,
+  .guides-grid a:hover,
+  .guides-grid a:focus-visible,
+  .download-list a:hover,
+  .download-list a:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  .workflow-steps-section,
+  .guides-section,
+  .downloads-section {
+    border-top: 1px solid #dbe3ea;
+    background: #ffffff;
+  }
+
+  .principles-section {
+    border-top: 1px solid #dbe3ea;
+  }
+
+  .section-intro {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .section-intro h2 {
+    max-width: 760px;
+    font-size: clamp(1.9rem, 2.45vw, 3.05rem);
+    line-height: 1.08;
+  }
+
+  .workflow-step-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 54px;
+  }
+
+  .workflow-step-grid article,
+  .guides-grid article {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    min-height: 100%;
+    border: 1px solid #dbe3ea;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 24px;
+  }
+
+  .workflow-step-grid article > span {
+    color: #64748b;
+    font-size: 0.74rem;
+    font-weight: 900;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .workflow-step-grid h3,
+  .guides-grid h3 {
+    margin: 0;
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.26rem;
+    line-height: 1.18;
+  }
+
+  .workflow-step-grid p,
+  .workflow-step-grid li {
+    margin: 0;
+    color: #536478;
+    font-size: 0.98rem;
+    line-height: 1.68;
+  }
+
+  .workflow-step-grid ul,
+  .principles-copy ol {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .workflow-step-grid li + li,
+  .principles-copy li + li {
+    margin-top: 0.45rem;
+  }
+
+  .principles-layout {
+    margin-top: 54px;
+  }
+
+  .principles-copy {
+    max-width: 760px;
+    border-top: 1px solid #cfd9e2;
+    padding-top: 28px;
+  }
+
+  .principles-copy > p:first-child {
+    margin-bottom: 18px;
+    color: #0b1424;
+    font-weight: 700;
+  }
+
+  .principles-copy li {
+    color: #536478;
+    font-size: 1rem;
+    line-height: 1.72;
+  }
+
+  .principles-note {
+    margin-top: 24px;
+  }
+
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 54px;
+  }
+
+  .guides-grid article {
+    gap: 12px;
+    background: #ffffff;
+  }
+
+  .guides-grid a {
+    width: fit-content;
+    margin-top: 10px;
+  }
+
+  .download-list {
+    display: grid;
+    gap: 14px;
+    margin-top: 54px;
+  }
+
+  .download-list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid #dbe3ea;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 18px 20px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .download-list a:hover,
+  .download-list a:focus-visible {
+    border-color: #c8d2dc;
+    background: #ffffff;
+  }
+
+  .download-list span {
+    color: #0b1424;
+    font-weight: 700;
+  }
+
+  .download-list strong {
+    color: #64748b;
+    font-size: 0.86rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 980px) {
+    .workflow-hero,
+    .workflow-section {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+    .workflow-hero,
+    .section-intro,
+    .workflow-step-grid,
+    .guides-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .workflow-hero {
+      min-height: auto;
+      gap: 32px;
+      padding-top: 48px;
+      padding-bottom: 56px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .workflow-hero,
+    .workflow-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .workflow-hero h1 {
+      font-size: clamp(2.78rem, 11.6vw, 4.1rem);
+      line-height: 0.98;
+    }
+
+    .section-intro h2 {
+      font-size: 2rem;
+    }
+
+    .workflow-step-grid,
+    .guides-grid,
+    .download-list {
+      margin-top: 36px;
+    }
+
+    .workflow-step-grid article,
+    .guides-grid article,
+    .download-list a {
+      padding: 18px;
+    }
+
+    .workflow-actions {
+      display: grid;
+    }
+
+    .guides-grid a {
+      width: 100%;
+    }
+
+    .download-list a {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+</style>

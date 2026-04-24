@@ -1,22 +1,13 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
-import ProductHero from '../../components/product/ProductHero.astro';
-import FeatureGrid from '../../components/product/FeatureGrid.astro';
-import ApplicationsGrid from '../../components/product/ApplicationsGrid.astro';
-import ComparisonTable from '../../components/product/ComparisonTable.astro';
-import PackagingPanel from '../../components/product/PackagingPanel.astro';
-import FAQAccordion from '../../components/product/FAQAccordion.astro';
-import DistributorCTA from '../../components/product/DistributorCTA.astro';
+import PremiumProductNarrative from '../../components/product/PremiumProductNarrative.astro';
 import { bcsPutty } from '../../data/bcs';
 import { withBasePath } from '../../utils/paths';
+import { siteConfig } from '../../config/site';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
-const clinicalBenefitCards = bcsPutty.clinicalBenefits.map((benefit) => ({
-  title: benefit,
-  description: 'Expressed as workflow and handling value rather than unsupported comparative marketing.',
-  icon: 'repair' as const,
-}));
 const puttyImage = withBasePath('/downloads/metallic-packshots/BCS-Putty-metallic-gold.png');
+
 const puttySchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -24,7 +15,7 @@ const puttySchema = {
   description: bcsPutty.shortDescription,
   brand: {
     '@type': 'Brand',
-    name: 'EndoTech Singapore',
+    name: siteConfig.name,
   },
   category: 'Bioceramic root repair material',
   image: [new URL(puttyImage, siteUrl).toString()],
@@ -35,6 +26,46 @@ const puttySchema = {
     value: feature.description,
   })),
 };
+
+const features = bcsPutty.featureBullets.map((feature) => ({
+  title: feature.title,
+  description: feature.description,
+}));
+
+const sequenceItems = [
+  {
+    step: 'Prepare',
+    role: 'Controlled clinical field',
+    detail:
+      'Repair procedures still depend on disciplined access, cleaning, haemostasis, and visibility before material placement begins.',
+  },
+  {
+    step: 'Place',
+    role: 'Premixed repair material',
+    detail:
+      'BCS BioCeramic Putty removes chairside mixing and supports controlled delivery where placement accuracy matters.',
+  },
+  {
+    step: 'Restore',
+    role: 'Stable treatment endpoint',
+    detail:
+      'The repair material decision remains connected to the broader treatment plan and final restorative objective.',
+  },
+];
+
+const benefitItems = bcsPutty.clinicalBenefits.map((benefit) => ({
+  title: benefit,
+  description:
+    'Presented as a practical procedure-level advantage connected to handling, placement control, and repair workflow consistency.',
+}));
+
+const downloads = [
+  {
+    label: 'BCS Resources',
+    title: 'Brochures, IFUs, SDS files, and evidence documents',
+    href: withBasePath('/products/bcs/evidence/#downloads'),
+  },
+];
 ---
 
 <ProductLayout
@@ -42,88 +73,458 @@ const puttySchema = {
   description={bcsPutty.shortDescription}
   image={puttyImage}
   schema={puttySchema}
-  accent="violet"
+  accent="slate"
 >
-  <ProductHero
+  <PremiumProductNarrative
     eyebrow="BCS BioCeramic Putty"
-    title={bcsPutty.name}
-    subtitle={bcsPutty.headline}
-    description={bcsPutty.subheadline}
-    ctas={bcsPutty.ctas}
-    accent="violet"
+    title="Premixed repair material for controlled clinical placement."
+    lede={bcsPutty.subheadline}
     imageSrc={puttyImage}
     imageAlt="BCS BioCeramic Putty"
-    visualLabel={bcsPutty.visualLabel}
-  />
+    visualTitle="BCS BioCeramic Putty"
+    visualText="A premixed repair material positioned where handling, placement control, and biologically aligned case management matter."
+    primaryCta={{ label: 'Download brochure', href: withBasePath('/products/bcs/evidence/#downloads') }}
+    secondaryCta={{ label: 'View applications', href: withBasePath('/products/bcs/clinical-applications/') }}
+    tertiaryCta={{ label: 'View evidence', href: withBasePath('/products/bcs/evidence/') }}
+    clinicalProblem={bcsPutty.clinicalProblem}
+    solution={bcsPutty.transformxSolution}
+    engineeringTitle="The material story is built around premixed delivery, controlled handling, and repair-oriented consistency."
+    features={features}
+    sequenceTitle="BCS BioCeramic Putty sits at the repair stage, after the field has been prepared and before final restoration."
+    sequenceItems={sequenceItems}
+    benefitsTitle="Clinical value is expressed through handling control, workflow consistency, and repair indication fit."
+    benefits={benefitItems}
+    downloads={downloads}
+    downloadsTitle="BCS technical resources for clinical evaluation and ordering."
+    workflowActiveStep="seal"
+  >
+    <section slot="detail" class="putty-product-switcher" aria-labelledby="putty-switcher-title">
+      <p class="putty-eyebrow">BCS Product Choice</p>
+      <h2 id="putty-switcher-title">Move between sealing and repair materials.</h2>
+      <div class="putty-switcher-actions">
+        <a class="is-primary" href={withBasePath('/products/bcs-bioceramic-sealer/')}>View sealer</a>
+        <a href={withBasePath('/products/bcs-bioceramic-putty/')}>View putty</a>
+      </div>
+    </section>
 
-  <section class="border-b border-slate-200/80 bg-white">
-    <div class="mx-auto grid max-w-7xl gap-4 px-6 py-14 sm:gap-6 sm:py-16 lg:grid-cols-2 lg:py-20">
-      <article class="rounded-[1.35rem] border border-slate-200 bg-slate-50/70 p-5 sm:rounded-[1.75rem] sm:p-7">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Clinical Problem</p>
-        <p class="mt-4 text-base leading-7 text-slate-600 sm:mt-5 sm:leading-8">{bcsPutty.clinicalProblem}</p>
-      </article>
-      <article class="rounded-[1.35rem] border border-slate-200 bg-slate-950 p-5 text-white sm:rounded-[1.75rem] sm:p-7">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">TransformX Solution</p>
-        <p class="mt-4 text-base leading-7 text-slate-300 sm:mt-5 sm:leading-8">{bcsPutty.transformxSolution}</p>
-      </article>
-    </div>
-  </section>
+    <section slot="detail" class="putty-applications" aria-labelledby="putty-applications-title">
+      <div class="putty-section-heading">
+        <p class="putty-eyebrow">Main Applications</p>
+        <h2 id="putty-applications-title">Designed for repair and vital pulp procedures where placement control matters.</h2>
+      </div>
 
-  <FeatureGrid
-    eyebrow="Key Features"
-    title="Repair-oriented bioceramic handling without chairside mixing"
-    items={bcsPutty.featureBullets}
-    accent="violet"
-  />
+      <div class="putty-application-list">
+        {bcsPutty.applications.map((application, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{application}</h3>
+          </article>
+        ))}
+      </div>
+    </section>
 
-  <ApplicationsGrid
-    eyebrow="Main Applications"
-    title="Designed for repair and vital pulp procedures"
-    items={bcsPutty.applications}
-    accent="violet"
-  />
+    <section slot="detail" class="putty-rationale" aria-labelledby="putty-rationale-title">
+      <div class="putty-section-heading">
+        <p class="putty-eyebrow">Why Clinicians Choose It</p>
+        <h2 id="putty-rationale-title">Handling is part of the clinical value, not a secondary detail.</h2>
+      </div>
 
-  <section class="border-b border-slate-200/80 bg-slate-50/70">
-    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-      <div class="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-        <div>
-          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Why Clinicians Choose BCS BioCeramic Putty</p>
-          <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Handling and workflow are part of the clinical value</h2>
-          <ul class="mt-6 grid gap-3 sm:mt-8 sm:gap-4">
-            {bcsPutty.clinicianReasons.map((reason) => (
-              <li class="rounded-[1.1rem] border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-900 sm:rounded-[1.25rem] sm:px-5 sm:py-4 sm:text-base">{reason}</li>
-            ))}
-          </ul>
+      <div class="putty-rationale-grid">
+        <div class="putty-reason-list">
+          {bcsPutty.clinicianReasons.map((reason) => (
+            <p>{reason}</p>
+          ))}
         </div>
-        <article class="rounded-[1.35rem] border border-slate-200 bg-white p-5 sm:rounded-[1.75rem] sm:p-7">
-          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Product Story</p>
-          <p class="mt-4 text-base leading-7 text-slate-600 sm:mt-5 sm:leading-8">{bcsPutty.story}</p>
+        <article>
+          <span>Product Story</span>
+          <p>{bcsPutty.story}</p>
         </article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <ComparisonTable
-    title="Why move beyond conventional mixed repair materials?"
-    intro="The focus here is handling logic, washout positioning, and workflow efficiency, not aggressive superiority claims."
-    rows={bcsPutty.comparisonRows}
-    productLabel="BCS BioCeramic Putty"
-    conventionalLabel="Conventional mixed repair material"
-  />
+    <section slot="detail" class="putty-comparison" aria-labelledby="putty-comparison-title">
+      <div class="putty-section-heading">
+        <p class="putty-eyebrow">Material Comparison</p>
+        <h2 id="putty-comparison-title">Why move beyond conventional mixed repair materials?</h2>
+        <p>
+          The comparison focuses on handling logic, chairside consistency, and repair workflow control rather than broad superiority claims.
+        </p>
+      </div>
 
-  <FeatureGrid
-    eyebrow="Clinical Benefits"
-    title="Repair benefits translated into procedure-level language"
-    items={clinicalBenefitCards}
-    accent="violet"
-  />
+      <div class="putty-comparison-table">
+        <div class="putty-table-head">
+          <span>Clinical factor</span>
+          <span>BCS BioCeramic Putty</span>
+          <span>Conventional mixed repair material</span>
+        </div>
+        {bcsPutty.comparisonRows.map((row) => (
+          <div class="putty-table-row">
+            <strong>{row.label}</strong>
+            <p>{row.product}</p>
+            <p>{row.conventional}</p>
+          </div>
+        ))}
+      </div>
+    </section>
 
-  <PackagingPanel items={bcsPutty.packaging} />
-  <FAQAccordion title="BCS BioCeramic Putty FAQs" items={bcsPutty.faq} />
-  <DistributorCTA
-    title="Use BCS BioCeramic Putty where repair procedures need controlled handling"
-    body={bcsPutty.regulatoryNote}
-    secondaryLabel="View applications"
-    secondaryHref="/products/bcs/clinical-applications/"
-  />
+    <section slot="detail" class="putty-support" aria-labelledby="putty-support-title">
+      <div>
+        <p class="putty-eyebrow">Packaging & Questions</p>
+        <h2 id="putty-support-title">Technical details kept close to the clinical story.</h2>
+      </div>
+
+      <div class="putty-support-grid">
+        <article class="putty-packaging">
+          <span>Packaging</span>
+          {bcsPutty.packaging.map((item) => (
+            <p>{item}</p>
+          ))}
+        </article>
+
+        <div class="putty-faq-list">
+          {bcsPutty.faq.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section slot="order" class="putty-close" aria-labelledby="putty-close-title">
+      <p class="putty-eyebrow">Professional Use</p>
+      <h2 id="putty-close-title">Use BCS BioCeramic Putty where repair procedures need controlled handling.</h2>
+      <p>{bcsPutty.regulatoryNote}</p>
+      <div class="putty-close-actions">
+        <a href={withBasePath('/products/bcs/clinical-applications/')}>View applications</a>
+        <a href={withBasePath('/about/contact/')}>Contact EndoTech</a>
+      </div>
+    </section>
+  </PremiumProductNarrative>
 </ProductLayout>
+
+<style>
+  .putty-applications,
+  .putty-rationale,
+  .putty-comparison,
+  .putty-support,
+  .putty-product-switcher,
+  .putty-close {
+    border-top: 1px solid #dbe3ea;
+    padding: 104px 56px 112px;
+  }
+
+  .putty-applications,
+  .putty-comparison,
+  .putty-product-switcher,
+  .putty-close {
+    background: #ffffff;
+  }
+
+  .putty-rationale,
+  .putty-support {
+    background: #f7f9fb;
+  }
+
+  .putty-section-heading {
+    margin-bottom: 44px;
+  }
+
+  .putty-eyebrow,
+  .putty-rationale-grid article span,
+  .putty-packaging span {
+    margin: 0 0 18px;
+    color: #876a2b;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .putty-section-heading h2,
+  .putty-product-switcher h2,
+  .putty-support h2,
+  .putty-close h2 {
+    max-width: 980px;
+    margin: 0;
+    color: #0b1424;
+    font-size: 3.05rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .putty-product-switcher {
+    padding-top: 70px;
+    padding-bottom: 78px;
+  }
+
+  .putty-product-switcher h2 {
+    margin-top: 0;
+    font-size: 2.2rem;
+  }
+
+  .putty-switcher-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 30px;
+  }
+
+  .putty-switcher-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 190px;
+    min-height: 64px;
+    border: 1px solid #c8d2dc;
+    border-radius: 4px;
+    padding: 0 28px;
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .putty-switcher-actions a.is-primary {
+    border-color: #0b1424;
+    background: #0b1424;
+    color: #ffffff;
+  }
+
+  .putty-section-heading p:not(.putty-eyebrow),
+  .putty-close p:not(.putty-eyebrow) {
+    max-width: 820px;
+    margin: 22px 0 0;
+    color: #536478;
+    font-size: 1.04rem;
+    line-height: 1.72;
+  }
+
+  .putty-application-list {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+  }
+
+  .putty-application-list article {
+    min-height: 190px;
+    border-right: 1px solid #c8d2dc;
+    padding: 28px 24px;
+  }
+
+  .putty-application-list article:last-child {
+    border-right: 0;
+  }
+
+  .putty-application-list span {
+    color: #876a2b;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+  }
+
+  .putty-application-list h3 {
+    margin: 56px 0 0;
+    color: #0b1424;
+    font-size: 1.1rem;
+    line-height: 1.32;
+  }
+
+  .putty-rationale-grid,
+  .putty-support-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 0.82fr);
+    gap: 64px;
+    align-items: start;
+  }
+
+  .putty-reason-list,
+  .putty-rationale-grid article,
+  .putty-packaging,
+  .putty-faq-list {
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+  }
+
+  .putty-reason-list p,
+  .putty-rationale-grid article,
+  .putty-packaging {
+    margin: 0;
+    padding: 26px 0;
+  }
+
+  .putty-reason-list p + p {
+    border-top: 1px solid #dbe3ea;
+  }
+
+  .putty-reason-list p,
+  .putty-rationale-grid article p,
+  .putty-packaging p,
+  .putty-faq-list p {
+    color: #536478;
+    line-height: 1.7;
+  }
+
+  .putty-rationale-grid article p,
+  .putty-packaging p {
+    margin: 12px 0 0;
+  }
+
+  .putty-comparison-table {
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+  }
+
+  .putty-table-head,
+  .putty-table-row {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.72fr) minmax(0, 1.14fr) minmax(0, 1.14fr);
+    gap: 30px;
+    border-bottom: 1px solid #dbe3ea;
+    padding: 24px 0;
+  }
+
+  .putty-table-head {
+    color: #876a2b;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .putty-table-row:last-child {
+    border-bottom: 0;
+  }
+
+  .putty-table-row strong {
+    color: #0b1424;
+  }
+
+  .putty-table-row p {
+    margin: 0;
+    color: #536478;
+    line-height: 1.68;
+  }
+
+  .putty-support > div:first-child {
+    margin-bottom: 44px;
+  }
+
+  .putty-faq-list details {
+    border-bottom: 1px solid #dbe3ea;
+    padding: 20px 0;
+  }
+
+  .putty-faq-list details:first-child {
+    border-top: 0;
+  }
+
+  .putty-faq-list summary {
+    cursor: pointer;
+    color: #0b1424;
+    font-weight: 800;
+    line-height: 1.5;
+  }
+
+  .putty-faq-list p {
+    margin: 14px 0 0;
+  }
+
+  .putty-close-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  .putty-close-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border: 1px solid #c8d2dc;
+    border-radius: 4px;
+    padding: 0 18px;
+    color: #0b1424;
+    font-weight: 850;
+    text-decoration: none;
+  }
+
+  .putty-close-actions a:first-child {
+    border-color: #0b1424;
+    background: #0b1424;
+    color: #ffffff;
+  }
+
+  @media (max-width: 1120px) {
+    .putty-applications,
+    .putty-rationale,
+    .putty-comparison,
+    .putty-support,
+    .putty-product-switcher,
+    .putty-close {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .putty-application-list,
+    .putty-rationale-grid,
+    .putty-support-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .putty-application-list article {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid #c8d2dc;
+    }
+
+    .putty-application-list article:last-child {
+      border-bottom: 0;
+    }
+
+    .putty-application-list h3 {
+      margin-top: 28px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .putty-applications,
+    .putty-rationale,
+    .putty-comparison,
+    .putty-support,
+    .putty-product-switcher,
+    .putty-close {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .putty-section-heading h2,
+    .putty-product-switcher h2,
+    .putty-support h2,
+    .putty-close h2 {
+      font-size: 2.25rem;
+    }
+
+    .putty-switcher-actions {
+      display: grid;
+    }
+
+    .putty-switcher-actions a {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .putty-table-head {
+      display: none;
+    }
+
+    .putty-table-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+</style>

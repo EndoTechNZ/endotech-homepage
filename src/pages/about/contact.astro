@@ -1,0 +1,350 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const email = 'Steveshepherdnz@gmail.com';
+
+const enquiryPanels = [
+  {
+    eyebrow: 'Product Enquiries',
+    heading: 'Product Enquiries',
+    intro: "Interested in TransformX files or BCS BioCeramic Sealer? We'd love to hear from you.",
+    includeList: [
+      'Your clinic/practice name',
+      'Location (city/country)',
+      "Products you're interested in",
+      'Approximate quantities',
+    ],
+    closing: "We'll respond with availability and next steps for your region.",
+  },
+  {
+    eyebrow: 'General Enquiries',
+    heading: 'General Enquiries',
+    intro: 'For product questions, technical support, or general information:',
+  },
+  {
+    eyebrow: 'Distribution Enquiries',
+    heading: 'Distribution Enquiries',
+    intro: 'Interested in distributing EndoTech products in your region?',
+    includeList: [
+      'Your company name and website',
+      'Regions you serve',
+      'Current product lines you distribute',
+    ],
+  },
+];
+---
+
+<ProductLayout
+  title="Contact & Orders | EndoTech NZ"
+  description="Get in touch with EndoTech New Zealand for product enquiries, general support, and distribution discussions."
+  accent="slate"
+>
+  <main class="contact-page">
+    <section class="contact-hero" aria-labelledby="contact-title">
+      <div>
+        <p class="page-eyebrow">Contact</p>
+        <h1 id="contact-title">Contact &amp; Orders</h1>
+      </div>
+      <div class="contact-hero-copy">
+        <p>Get in touch with EndoTech New Zealand.</p>
+        <div class="contact-actions">
+          <a href={`mailto:${email}`}>Email EndoTech NZ</a>
+          <a href={`${base}resources/downloads/`}>Open downloads</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section enquiries-section" aria-labelledby="enquiries-title">
+      <div class="section-intro">
+        <p class="page-eyebrow">Enquiries</p>
+        <h2 id="enquiries-title">Clear pathways for product, technical, and distribution questions.</h2>
+      </div>
+
+      <div class="enquiry-grid">
+        {enquiryPanels.map((panel) => (
+          <article>
+            <p class="panel-eyebrow">{panel.eyebrow}</p>
+            <h3>{panel.heading}</h3>
+            <p>{panel.intro}</p>
+            <p class="email-line">
+              <strong>Email:</strong> <a href={`mailto:${email}`}>{email}</a>
+            </p>
+            {panel.includeList && (
+              <>
+                <p class="include-label">Please include:</p>
+                <ul>
+                  {panel.includeList.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {panel.closing && <p>{panel.closing}</p>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="contact-section details-section" aria-labelledby="location-title">
+      <div class="details-grid">
+        <article class="detail-card">
+          <p class="panel-eyebrow">Location</p>
+          <h2 id="location-title">Location</h2>
+          <p>EndoTech New Zealand</p>
+          <p>New Zealand</p>
+        </article>
+
+        <article class="detail-card">
+          <p class="panel-eyebrow">Response Time</p>
+          <h2>Response Time</h2>
+          <p>We aim to respond to all enquiries within 1-2 business days.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</ProductLayout>
+
+<style>
+  .contact-page {
+    background: #f7f9fb;
+    color: #0b1424;
+  }
+
+  .contact-hero,
+  .contact-section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(56px, 6vw, 96px) 48px;
+  }
+
+  .contact-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.74fr);
+    gap: clamp(44px, 6vw, 84px);
+    align-items: end;
+    min-height: min(620px, calc(100vh - 82px));
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.018) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  .page-eyebrow,
+  .panel-eyebrow {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+  }
+
+  .contact-hero h1,
+  .section-intro h2,
+  .enquiry-grid h3,
+  .detail-card h2 {
+    margin: 0;
+    color: #090f1d;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .contact-hero h1 {
+    max-width: 8.4ch;
+    margin-top: 28px;
+    font-size: clamp(3.1rem, 4.6vw, 5.4rem);
+    line-height: 1.02;
+  }
+
+  .contact-hero-copy {
+    border-top: 1px solid #cfd9e2;
+    padding-top: 28px;
+  }
+
+  .contact-hero-copy p,
+  .enquiry-grid article > p,
+  .enquiry-grid li,
+  .detail-card p {
+    margin: 0;
+    color: #536478;
+    font-size: clamp(1rem, 0.95vw, 1.14rem);
+    line-height: 1.78;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  .contact-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border: 1px solid #c8d2dc;
+    border-radius: 4px;
+    padding: 0 18px;
+    color: #0b1424;
+    font-weight: 850;
+    text-decoration: none;
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .contact-actions a:first-child {
+    border-color: #0b1424;
+    background: #0b1424;
+    color: #ffffff;
+  }
+
+  .contact-actions a:hover,
+  .contact-actions a:focus-visible,
+  .enquiry-grid a:hover,
+  .enquiry-grid a:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  .enquiries-section,
+  .details-section {
+    border-top: 1px solid #dbe3ea;
+    background: #ffffff;
+  }
+
+  .section-intro {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .section-intro h2 {
+    max-width: 760px;
+    font-size: clamp(1.9rem, 2.45vw, 3.05rem);
+    line-height: 1.08;
+  }
+
+  .enquiry-grid,
+  .details-grid {
+    display: grid;
+    gap: 16px;
+    margin-top: 54px;
+  }
+
+  .enquiry-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .enquiry-grid article,
+  .detail-card {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    min-height: 100%;
+    border: 1px solid #dbe3ea;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 24px;
+  }
+
+  .enquiry-grid h3,
+  .detail-card h2 {
+    font-size: 1.36rem;
+    line-height: 1.16;
+  }
+
+  .email-line {
+    color: #0b1424;
+  }
+
+  .email-line strong {
+    color: #0b1424;
+  }
+
+  .enquiry-grid a {
+    color: #2d6f92;
+    font-weight: 800;
+    text-decoration-color: rgba(45, 111, 146, 0.24);
+    text-underline-offset: 0.2em;
+    transition: color 180ms ease, text-decoration-color 180ms ease, transform 180ms ease;
+  }
+
+  .enquiry-grid a:hover,
+  .enquiry-grid a:focus-visible {
+    color: #0b1424;
+    text-decoration-color: rgba(11, 20, 36, 0.4);
+  }
+
+  .include-label {
+    color: #0b1424;
+    font-weight: 700;
+  }
+
+  .enquiry-grid ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .enquiry-grid li + li {
+    margin-top: 0.45rem;
+  }
+
+  @media (max-width: 980px) {
+    .contact-hero,
+    .contact-section {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+    .contact-hero,
+    .section-intro,
+    .enquiry-grid,
+    .details-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-hero {
+      min-height: auto;
+      gap: 32px;
+      padding-top: 48px;
+      padding-bottom: 56px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .contact-hero,
+    .contact-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .contact-hero h1 {
+      font-size: clamp(2.78rem, 11.6vw, 4.1rem);
+      line-height: 0.98;
+    }
+
+    .section-intro h2 {
+      font-size: 2rem;
+    }
+
+    .enquiry-grid,
+    .details-grid {
+      margin-top: 36px;
+    }
+
+    .enquiry-grid article,
+    .detail-card {
+      padding: 18px;
+    }
+
+    .contact-actions {
+      display: grid;
+    }
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import '../styles/tailwind.css';
-import logoDark from '../assets/logo-wordmark-dark.png';
+import logoDefault from '../assets/endotech-logo-2.png';
+import { siteConfig } from '../config/site';
 
 interface Props {
   title: string;
@@ -9,18 +10,15 @@ interface Props {
   noindex?: boolean;
 }
 
-const defaultDescription =
-  'EndoTech Singapore offers TransformX rotary endodontic files, Acrobat glide path instruments, and bioceramic materials for clinically controlled shaping and sealing workflows.';
-
 const {
   title,
-  description = defaultDescription,
+  description = siteConfig.defaultDescription,
   image,
   noindex = false,
 } = Astro.props;
 
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.toString();
-const defaultImage = Astro.site ? new URL(logoDark.src, Astro.site).toString() : undefined;
+const defaultImage = Astro.site ? new URL(logoDefault.src, Astro.site).toString() : undefined;
 const socialImage = image ? new URL(image, Astro.site ?? Astro.url).toString() : defaultImage;
 const googleSiteVerification =
   import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION ?? '66rRw6fVQeHsCNpjSjIFm6tde0bpo4CXXigS2n2Vklg';
@@ -28,9 +26,9 @@ const organizationSchema = Astro.site
   ? {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: 'EndoTech Singapore',
+      name: siteConfig.name,
       url: Astro.site.toString(),
-      email: 'mailto:Steveshepherdnz@gmail.com',
+      email: `mailto:${siteConfig.email}`,
     }
   : null;
 ---
@@ -42,7 +40,7 @@ const organizationSchema = Astro.site
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    <meta property="og:site_name" content="EndoTech Singapore" />
+    <meta property="og:site_name" content={siteConfig.name} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -79,8 +77,8 @@ const organizationSchema = Astro.site
   <body class="landing-page bg-white font-sans text-slate-900 antialiased transition-colors dark:bg-slate-900 dark:text-slate-100">
     <slot />
 
-    <script is:inline define:vars={{ logoDarkSrc: logoDark.src }}>
-      window.logoDarkSrc = logoDarkSrc;
+    <script is:inline define:vars={{ logoDefaultSrc: logoDefault.src }}>
+      window.logoDarkSrc = logoDefaultSrc;
     </script>
   </body>
 </html>
