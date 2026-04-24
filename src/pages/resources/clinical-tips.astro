@@ -155,7 +155,7 @@ const avatarPoints = [
         <p class="education-eyebrow">Avatar Tip</p>
         <h2 id="avatar-title">Apical guidance should feel controlled, not forced.</h2>
         <p>
-          Avatar Tip is presented clinically as a guidance feature. Its purpose is to support smoother progression and canal centering where anatomy becomes more demanding.
+          Avatar Tip is a guidance feature. Its purpose is to support smoother progression and canal centering where anatomy becomes more demanding.
         </p>
       </div>
 
@@ -451,10 +451,25 @@ const avatarPoints = [
 
   .avatar-section {
     background: #f7f9fb;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: clamp(56px, 7vw, 112px);
   }
 
   .avatar-section ul {
     margin-top: 0;
+  }
+
+  .avatar-section li {
+    display: flex;
+    align-items: center;
+    min-height: 140px;
+    padding: 0 0 0 40px;
+  }
+
+  .avatar-section li::before {
+    margin-right: 1rem;
+    vertical-align: middle;
+    flex: 0 0 auto;
   }
 
   .education-close {
