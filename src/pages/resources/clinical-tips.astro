@@ -1,0 +1,532 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import WorkflowStrip from '../../components/navigation/WorkflowStrip.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const principles = [
+  {
+    number: '01',
+    title: 'Establish a reproducible glide path first',
+    text: 'Before introducing rotary shaping, confirm a smooth path to working length. This remains the single most important control step before file progression.',
+  },
+  {
+    number: '02',
+    title: 'Irrigate, recapitulate, re-irrigate',
+    text: 'Between files, flush debris, confirm patency with a small hand file, and irrigate again before moving to the next rotary instrument.',
+  },
+  {
+    number: '03',
+    title: 'Let the file work without excess apical pressure',
+    text: 'TransformX is designed for controlled advancement. Excessive apical pressure can reduce the benefit of the file geometry and increase procedural stress.',
+  },
+  {
+    number: '04',
+    title: 'Inspect files before reuse',
+    text: 'Watch for unwinding, visible distortion, or repeated use in calcified anatomy. Discard files when fatigue signs appear.',
+  },
+];
+
+const systems = [
+  {
+    label: 'ET TransformX',
+    href: `${base}products/et-transformx/`,
+    guide: `${base}downloads/ET-Technique-Work-Flow.pdf`,
+    points: [
+      'Designed around familiar EdgeTaper / EdgeX7-style sequence logic.',
+      'No motor setting change is required for established ET-style workflows.',
+      'Use the same clinical selection logic while evaluating file behaviour in demanding anatomy.',
+    ],
+  },
+  {
+    label: 'PT TransformX',
+    href: `${base}products/pt-transformx/`,
+    guide: `${base}downloads/PT-Technique-Work-Flow.pdf`,
+    points: [
+      'Follows a familiar ProTaper-style progressive shaping philosophy.',
+      'No motor setting change is required for established PT-style workflows.',
+      'Supports crown-down progression with added apical guidance and metallurgical adaptability.',
+    ],
+  },
+];
+
+const avatarPoints = [
+  'Canal centering in the apical third',
+  'Controlled engagement as curvature increases',
+  'Reduced tendency toward abrupt wall contact',
+  'Smoother progression toward working length',
+];
+---
+
+<ProductLayout
+  title="Clinical Education | EndoTech NZ"
+  description="Clinical tips for using TransformX files with controlled glide path, shaping, irrigation, and apical guidance principles."
+  accent="slate"
+>
+  <main class="education-page">
+    <section class="education-hero" aria-labelledby="education-title">
+      <div>
+        <p class="education-eyebrow">Education</p>
+        <h1 id="education-title">Clinical guidance for controlled shaping.</h1>
+      </div>
+      <div class="hero-copy">
+        <p>
+          Concise technique principles for integrating TransformX into familiar clinical workflows, with emphasis on glide path control, irrigation discipline, and careful apical advancement.
+        </p>
+        <div class="education-actions">
+          <a href={`${base}technique/workflow/`}>Review workflow</a>
+          <a href={`${base}resources/downloads/`}>Open downloads</a>
+          <a href={`${base}about/contact/`}>Ask a clinical question</a>
+        </div>
+      </div>
+    </section>
+
+    <WorkflowStrip activeStep="restore" />
+
+    <section class="principles-section" aria-labelledby="principles-title">
+      <div class="section-intro">
+        <p class="education-eyebrow">General Principles</p>
+        <h2 id="principles-title">A calmer sequence begins before the first shaping file.</h2>
+      </div>
+
+      <div class="principle-list">
+        {principles.map((principle) => (
+          <article>
+            <span>{principle.number}</span>
+            <div>
+              <h3>{principle.title}</h3>
+              <p>{principle.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="protocol-section" aria-labelledby="protocol-title">
+      <div class="section-label">Between Each File</div>
+      <div>
+        <h2 id="protocol-title">Irrigate → Recapitulate → Re-irrigate</h2>
+        <p>
+          The sequence is deliberately simple. It supports debris removal, patency confirmation, and preparation continuity before the next rotary file is introduced.
+        </p>
+        <ol class="protocol-steps">
+          <li>
+            <span>Irrigate</span>
+            <p>Flush debris from the canal before advancing the sequence.</p>
+          </li>
+          <li>
+            <span>Recapitulate</span>
+            <p>Use a small hand file to confirm patency and maintain the pathway.</p>
+          </li>
+          <li>
+            <span>Re-irrigate</span>
+            <p>Refresh the canal before the next rotary instrument.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="systems-section" aria-labelledby="systems-title">
+      <div class="section-intro">
+        <p class="education-eyebrow">System-Specific Guidance</p>
+        <h2 id="systems-title">Use familiar sequence logic with a more controlled file response.</h2>
+      </div>
+
+      <div class="system-grid">
+        {systems.map((system) => (
+          <article>
+            <h3>{system.label}</h3>
+            <ul>
+              {system.points.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+            <div>
+              <a href={system.href}>View product</a>
+              <a href={system.guide}>Technique guide</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="avatar-section" aria-labelledby="avatar-title">
+      <div>
+        <p class="education-eyebrow">Avatar Tip</p>
+        <h2 id="avatar-title">Apical guidance should feel controlled, not forced.</h2>
+        <p>
+          Avatar Tip is presented clinically as a guidance feature. Its purpose is to support smoother progression and canal centering where anatomy becomes more demanding.
+        </p>
+      </div>
+
+      <ul>
+        {avatarPoints.map((point) => (
+          <li>{point}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="education-close" aria-labelledby="close-title">
+      <p class="education-eyebrow">Next Step</p>
+      <h2 id="close-title">Review the workflow, then match the system to the technique.</h2>
+      <div class="education-actions">
+        <a href={`${base}technique/workflow/`}>Clinical workflow</a>
+        <a href={`${base}technology/transform-technology/`}>Technology overview</a>
+        <a href={`${base}resources/downloads/`}>Downloads</a>
+      </div>
+    </section>
+  </main>
+</ProductLayout>
+
+<style>
+  .education-page {
+    background: #f7f9fb;
+    color: #0b1424;
+  }
+
+  .education-hero,
+  .principles-section,
+  .protocol-section,
+  .systems-section,
+  .avatar-section,
+  .education-close {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(56px, 6vw, 96px) 48px;
+  }
+
+  .education-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.98fr) minmax(420px, 0.74fr);
+    gap: clamp(44px, 6vw, 84px);
+    align-items: end;
+    min-height: min(680px, calc(100vh - 82px));
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.018) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  .education-eyebrow,
+  .section-label {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+  }
+
+  .education-hero h1,
+  .section-intro h2,
+  .protocol-section h2,
+  .avatar-section h2,
+  .education-close h2 {
+    margin: 0;
+    color: #090f1d;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.12;
+  }
+
+  .education-hero h1 {
+    max-width: 10.5ch;
+    margin-top: 28px;
+    font-size: clamp(3.1rem, 4.4vw, 5.3rem);
+    line-height: 1.02;
+  }
+
+  .hero-copy {
+    border-top: 1px solid #cfd9e2;
+    padding-top: 28px;
+  }
+
+  .hero-copy p,
+  .protocol-section > div > p,
+  .avatar-section p {
+    max-width: 650px;
+    margin: 0;
+    color: #536478;
+    font-size: clamp(1rem, 0.95vw, 1.14rem);
+    line-height: 1.78;
+  }
+
+  .education-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  .education-actions a,
+  .system-grid article > div a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border: 1px solid #c8d2dc;
+    border-radius: 4px;
+    padding: 0 18px;
+    color: #0b1424;
+    font-weight: 850;
+    text-decoration: none;
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .education-actions a:first-child,
+  .system-grid article > div a:first-child {
+    border-color: #0b1424;
+    background: #0b1424;
+    color: #ffffff;
+  }
+
+  .education-actions a:hover,
+  .education-actions a:focus-visible,
+  .system-grid article > div a:hover,
+  .system-grid article > div a:focus-visible {
+    transform: translateY(-1px);
+    border-color: #8aa5b8;
+    background: #ffffff;
+    color: #0b1424;
+  }
+
+  .principles-section,
+  .systems-section,
+  .education-close {
+    border-top: 1px solid #dbe3ea;
+    background: #ffffff;
+  }
+
+  .section-intro {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .section-intro h2,
+  .protocol-section h2,
+  .avatar-section h2,
+  .education-close h2 {
+    max-width: 760px;
+    font-size: clamp(1.9rem, 2.45vw, 3.05rem);
+  }
+
+  .principle-list {
+    margin-top: 54px;
+    border-top: 1px solid #cfd9e2;
+  }
+
+  .principle-list article {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 42px;
+    border-bottom: 1px solid #dbe3ea;
+    padding: 30px 0;
+  }
+
+  .principle-list article > span {
+    color: #876a2b;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+  }
+
+  .principle-list h3,
+  .system-grid h3 {
+    margin: 0;
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.14rem;
+    line-height: 1.3;
+  }
+
+  .principle-list p {
+    max-width: 760px;
+    margin: 12px 0 0;
+    color: #536478;
+    line-height: 1.74;
+  }
+
+  .protocol-section,
+  .avatar-section {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    border-top: 1px solid #dbe3ea;
+  }
+
+  .protocol-section h2,
+  .avatar-section h2 {
+    margin-bottom: 24px;
+  }
+
+  .protocol-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin: 48px 0 0;
+    padding: 0;
+    border-top: 1px solid #cfd9e2;
+    border-bottom: 1px solid #cfd9e2;
+    list-style: none;
+  }
+
+  .protocol-steps li {
+    min-height: 190px;
+    padding: 28px 24px 28px 0;
+  }
+
+  .protocol-steps li + li {
+    border-left: 1px solid #dbe3ea;
+    padding-left: 24px;
+  }
+
+  .protocol-steps span {
+    color: #876a2b;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .protocol-steps p {
+    margin: 18px 0 0;
+    color: #536478;
+    line-height: 1.7;
+  }
+
+  .system-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 56px;
+    margin-top: 54px;
+  }
+
+  .system-grid article {
+    border-top: 1px solid #cfd9e2;
+    padding-top: 28px;
+  }
+
+  .system-grid ul,
+  .avatar-section ul {
+    display: grid;
+    gap: 0;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .system-grid li,
+  .avatar-section li {
+    border-bottom: 1px solid #dbe3ea;
+    padding: 16px 0;
+    color: #536478;
+    line-height: 1.65;
+  }
+
+  .system-grid li:first-child,
+  .avatar-section li:first-child {
+    border-top: 1px solid #dbe3ea;
+  }
+
+  .system-grid li::before,
+  .avatar-section li::before {
+    content: '';
+    display: inline-block;
+    width: 0.38rem;
+    height: 0.38rem;
+    margin-right: 0.75rem;
+    border-radius: 999px;
+    background: #876a2b;
+    vertical-align: 0.12em;
+  }
+
+  .system-grid article > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+  }
+
+  .avatar-section {
+    background: #f7f9fb;
+  }
+
+  .avatar-section ul {
+    margin-top: 0;
+  }
+
+  .education-close {
+    text-align: left;
+  }
+
+  .education-close h2 {
+    margin-top: 22px;
+  }
+
+  @media (max-width: 980px) {
+    .education-hero,
+    .section-intro,
+    .protocol-section,
+    .avatar-section,
+    .system-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .education-hero,
+    .principles-section,
+    .protocol-section,
+    .systems-section,
+    .avatar-section,
+    .education-close {
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+
+    .protocol-steps {
+      grid-template-columns: 1fr;
+      border-bottom: 0;
+    }
+
+    .protocol-steps li,
+    .protocol-steps li + li {
+      min-height: auto;
+      border-left: 0;
+      border-bottom: 1px solid #dbe3ea;
+      padding: 24px 0;
+    }
+
+    .avatar-section ul {
+      margin-top: 28px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .education-hero,
+    .principles-section,
+    .protocol-section,
+    .systems-section,
+    .avatar-section,
+    .education-close {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .education-hero {
+      min-height: auto;
+      gap: 28px;
+      padding-top: 44px;
+      padding-bottom: 56px;
+    }
+
+    .education-hero h1 {
+      font-size: clamp(3rem, 13vw, 4.9rem);
+    }
+
+    .principle-list article {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  }
+</style>

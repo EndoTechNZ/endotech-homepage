@@ -1,0 +1,286 @@
+---
+import { getWorkflowStripItems, type WorkflowStepId } from '../../data/workflowStrip';
+
+interface Props {
+  activeStep?: WorkflowStepId;
+}
+
+const { activeStep } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const workflow = getWorkflowStripItems(base);
+---
+
+<section class="workflow-strip" aria-labelledby="workflow-strip-title">
+  <h2 id="workflow-strip-title" class="sr-only">Clinical workflow strip</h2>
+  <div class="workflow-strip-shell">
+    <div class="workflow-strip-grid" role="list">
+      {workflow.map((item) => (
+        <a
+          class:list={['workflow-strip-card', activeStep === item.id && 'is-active']}
+          href={item.href}
+          role="listitem"
+          aria-current={activeStep === item.id ? 'page' : undefined}
+        >
+          <span class="workflow-strip-icon" aria-hidden="true">
+            {item.icon === 'assess' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="6.5"></circle>
+                <path d="M16 16l4 4"></path>
+              </svg>
+            )}
+            {item.icon === 'access' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 18c4.2-4.2 7.8-5.8 12-10"></path>
+                <path d="M6 18l2.5-5.2"></path>
+                <circle cx="7" cy="7" r="2.5"></circle>
+                <circle cx="17" cy="6" r="2.5"></circle>
+              </svg>
+            )}
+            {item.icon === 'glide' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M8 5l4 14"></path>
+                <path d="M12 5l4 14"></path>
+                <path d="M6 9l10-4"></path>
+                <path d="M8 15l10-4"></path>
+              </svg>
+            )}
+            {item.icon === 'shape' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M8 4l8 16"></path>
+                <path d="M10.2 6.8l5.4-2.5"></path>
+                <path d="M11.7 10l5.4-2.5"></path>
+                <path d="M13.2 13.2l5.3-2.5"></path>
+              </svg>
+            )}
+            {item.icon === 'clean' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 4c2.6 3.6 4.2 6 4.2 8.4A4.2 4.2 0 1111 8.3"></path>
+                <path d="M12 4c-2.6 3.6-4.2 6-4.2 8.4"></path>
+              </svg>
+            )}
+            {item.icon === 'seal' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 4l6 2.7v5.7c0 3.6-2.3 5.9-6 7.6-3.7-1.7-6-4-6-7.6V6.7L12 4z"></path>
+                <path d="M9.5 12.2l1.7 1.7 3.4-3.8"></path>
+              </svg>
+            )}
+            {item.icon === 'restore' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7.5 6.5c.3-1.5 1.6-2.5 3.1-2.5 1.1 0 1.8.4 2.4 1 .6-.6 1.3-1 2.4-1 1.6 0 2.9 1.1 3.1 2.7.2 1.3-.3 2.6-1.3 3.4-.7.6-1.4 1.6-1.8 2.7L15 19H9l-.5-6.2c-.3-1.2-1-2.1-1.8-2.7-1-.8-1.5-2.2-1.2-3.6z"></path>
+              </svg>
+            )}
+          </span>
+          <strong>{item.step}</strong>
+          <span>{item.note}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .workflow-strip {
+    padding: 52px 56px 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f6f9 100%);
+  }
+
+  .workflow-strip-shell {
+    max-width: 1260px;
+    margin: 0 auto;
+    border: 1px solid #dbe3ea;
+    background: rgba(247, 248, 250, 0.92);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.85) inset,
+      0 18px 38px -34px rgba(15, 23, 42, 0.18);
+  }
+
+  .workflow-strip-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px;
+    background: transparent;
+  }
+
+  .workflow-strip-card {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: 8px;
+    min-height: 164px;
+    padding: 18px 12px 16px;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.62);
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      background-color 210ms ease,
+      transform 210ms ease,
+      box-shadow 210ms ease,
+      color 190ms ease,
+      border-color 210ms ease;
+  }
+
+  .workflow-strip-card:hover,
+  .workflow-strip-card:focus-visible {
+    border-color: #d4dce5;
+    background: #f4f7fa;
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 0 0 1px #d7dee7,
+      0 12px 22px -20px rgba(15, 23, 42, 0.22);
+  }
+
+  .workflow-strip-card.is-active {
+    border-color: #cad4df;
+    background: #eef3f7;
+    box-shadow: inset 0 0 0 1px #d6dee7;
+  }
+
+  .workflow-strip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: #334155;
+    transition: color 190ms ease, transform 210ms ease;
+  }
+
+  .workflow-strip-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .workflow-strip-icon circle,
+  .workflow-strip-icon path {
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .workflow-strip-card strong {
+    color: #1f2937;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.06;
+    transition: color 190ms ease;
+  }
+
+  .workflow-strip-card span:last-child {
+    max-width: 16ch;
+    color: #6b7280;
+    font-size: 0.84rem;
+    line-height: 1.34;
+    text-wrap: balance;
+    transition: color 190ms ease;
+  }
+
+  .workflow-strip-card:hover .workflow-strip-icon,
+  .workflow-strip-card:focus-visible .workflow-strip-icon {
+    color: #1f3b57;
+    transform: translateY(-1px);
+  }
+
+  .workflow-strip-card:hover strong,
+  .workflow-strip-card:focus-visible strong,
+  .workflow-strip-card.is-active strong {
+    color: #0f172a;
+  }
+
+  .workflow-strip-card:hover span:last-child,
+  .workflow-strip-card:focus-visible span:last-child,
+  .workflow-strip-card.is-active span:last-child {
+    color: #596474;
+  }
+
+  .workflow-strip-card.is-active .workflow-strip-icon {
+    color: #1f3b57;
+  }
+
+  @media (max-width: 1120px) {
+    .workflow-strip {
+      padding: 40px 30px 0;
+    }
+
+    .workflow-strip-shell {
+      max-width: 100%;
+    }
+
+    .workflow-strip-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .workflow-strip {
+      padding: 22px 18px 0;
+    }
+
+    .workflow-strip-shell {
+      box-shadow: none;
+    }
+
+    .workflow-strip-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px;
+      padding: 5px;
+    }
+
+    .workflow-strip-card {
+      min-height: 0;
+      justify-items: start;
+      gap: 4px;
+      padding: 12px 10px 11px;
+      text-align: left;
+      transform: none;
+      border-radius: 10px;
+    }
+
+    .workflow-strip-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .workflow-strip-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .workflow-strip-card strong {
+      font-size: 0.96rem;
+      line-height: 1.05;
+    }
+
+    .workflow-strip-card span:last-child {
+      max-width: 100%;
+      font-size: 0.76rem;
+      line-height: 1.22;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-wrap: pretty;
+    }
+
+    .workflow-strip-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

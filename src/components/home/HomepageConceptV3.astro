@@ -1,0 +1,1669 @@
+---
+import logoIcon from '../../assets/endotech-logo-2.png';
+import WorkflowStrip from '../navigation/WorkflowStrip.astro';
+import transformxSystem from '../../assets/transformx-rotary-file-system.png';
+import etProduct from '../../assets/et-transformx.png';
+import ptProduct from '../../assets/pt-transformx.png';
+import acrobatProduct from '../../assets/acrobat-glide-path-files.png';
+import bcsSealer from '../../assets/bcs-sealer.png';
+import vortiflowFlow from '../../assets/vortiflow/vortiflow-fluid-dynamics-clean.png';
+import { siteConfig } from '../../config/site';
+import { getWorkflowStripItems } from '../../data/workflowStrip';
+
+const base = import.meta.env.BASE_URL;
+const avatarTipVideo = `${base}videos/avatar-tip/avatar-tip-rounded.mp4`;
+
+const navItems = [
+  { label: 'Clinical Workflow', href: '#workflow' },
+  { label: 'Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Order', href: `${base}order/` },
+  { label: 'Products', href: '#products' },
+  { label: 'Education', href: `${base}resources/clinical-tips/` },
+  { label: 'Evidence', href: '#evidence' },
+  { label: 'Contact', href: `${base}about/contact/` },
+];
+
+const productMenu = [
+  { label: 'Product Overview', href: `${base}products/overview/` },
+  { label: 'ET TransformX Files', href: `${base}products/et-transformx/` },
+  { label: 'PT TransformX Files', href: `${base}products/pt-transformx/` },
+  { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
+  { label: 'VortiFlow Irrigation Needle', href: `${base}products/vortiflow-irrigation-needle/` },
+  { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
+];
+
+const clinicalPairs = [
+  {
+    problem: 'Curved canals increase restoring forces and concentrate procedural risk near working length.',
+    response: 'Avatar Tip and TransformX file behaviour support apical guidance, canal centring, and controlled advancement where tolerance for error is lowest.',
+  },
+  {
+    problem: 'Preparation shape affects irrigation exchange, obturation control, and the quality of the final seal.',
+    response: 'EndoTech links glide path, shaping, cleaning support, and bioceramic sealing as one clinical sequence, not separate product decisions.',
+  },
+  {
+    problem: 'Clinicians need more control without disrupting familiar technique or sequence logic.',
+    response: 'TransformX is positioned for predictable shaping behaviour within familiar workflows, helping clinicians adapt to demanding anatomy without unnecessary complexity.',
+  },
+];
+
+const workflow = getWorkflowStripItems(base);
+
+const products = [
+  {
+    eyebrow: 'Contact for details',
+    title: 'ET TransformX Files',
+    description: 'For clinicians already shaping with ET, EdgeX7, or other .04/.06-style sequences.',
+    tags: ['EdgeTaper', 'EdgeX7', '.04/.06'],
+    image: etProduct.src,
+    href: `${base}products/et-transformx/`,
+  },
+  {
+    eyebrow: 'Contact for details',
+    title: 'PT TransformX Files',
+    description: 'For clinicians using ProTaper-style systems who want familiar progression with more control.',
+    tags: ['ProTaper Gold', 'ProTaper Next'],
+    image: ptProduct.src,
+    href: `${base}products/pt-transformx/`,
+  },
+  {
+    eyebrow: 'Educational overview',
+    title: 'VortiFlow Irrigation Needle',
+    description: 'Engineered lateral-flow irrigation positioned between shaping and final sealing.',
+    tags: ['Irrigation', 'Lateral Flow', 'Helical Channel'],
+    image: vortiflowFlow.src,
+    href: `${base}products/vortiflow-irrigation-needle/`,
+  },
+  {
+    eyebrow: 'Contact for details',
+    title: 'BCS BioCeramic Materials',
+    description: 'Premixed bioceramic materials for practices building a matched shaping-to-sealing workflow.',
+    tags: ['Sealing + Repair', 'Bioceramic'],
+    image: bcsSealer.src,
+    href: `${base}products/bcs/`,
+  },
+];
+
+const productChooserNote =
+  'Request pricing, pack configuration, and New Zealand availability directly from EndoTech.';
+
+const evidence = [
+  'Transform Technology overview',
+  'Avatar Tip and apical control',
+  'Technique sheets and part numbers',
+  'Clinical education resources',
+];
+---
+
+<header class="v3-header">
+  <a class="brand" href={base} aria-label={`${siteConfig.name} home`}>
+    <img src={logoIcon.src} alt="" />
+    <span>
+      <strong>{siteConfig.name}</strong>
+      <small>Engineered endodontics</small>
+    </span>
+  </a>
+
+  <nav aria-label="Primary navigation">
+    {navItems.map((item) => (
+      item.label === 'Products' ? (
+        <div class="products-menu">
+          <button
+            id="homepage-products-menu-button"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="homepage-products-menu-panel"
+          >
+            Products
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </button>
+          <div class="products-menu-bridge"></div>
+          <div id="homepage-products-menu-panel" class="products-menu-panel">
+            <div class="products-menu-shell">
+              <span>Product lineup</span>
+              {productMenu.map((product) => (
+                <a href={product.href}>{product.label}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <a href={item.href}>{item.label}</a>
+      )
+    ))}
+  </nav>
+
+  <div class="header-actions">
+    <a class="header-action" href={`${base}resources/downloads/`}>Downloads</a>
+    <button class="header-menu-toggle" id="homepage-mobile-menu-button" type="button" aria-expanded="false" aria-controls="homepage-mobile-menu">
+      Menu
+    </button>
+  </div>
+</header>
+
+<div id="homepage-mobile-menu" class="homepage-mobile-menu">
+  <div class="homepage-mobile-menu-shell">
+    <a href="#workflow">Clinical Workflow</a>
+    <a href={`${base}technology/transform-technology/`}>Technology</a>
+    <a href={`${base}order/`}>Order</a>
+    <a href={`${base}products/overview/`}>Shape Overview</a>
+    <a href={`${base}products/acrobat-glide-path/`}>Acrobat Glide Path</a>
+    <a href={`${base}products/et-transformx/`}>ET TransformX</a>
+    <a href={`${base}products/pt-transformx/`}>PT TransformX</a>
+    <a href={`${base}products/vortiflow-irrigation-needle/`}>VortiFlow</a>
+    <a href={`${base}products/bcs/`}>BCS Family</a>
+    <a href={`${base}resources/clinical-tips/`}>Education</a>
+    <a href="#evidence">Evidence</a>
+    <a href={`${base}about/contact/`}>Contact</a>
+  </div>
+</div>
+
+<main class="homepage-v3">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">EndoTech NZ</p>
+      <h1 id="hero-title">
+        <span class="hero-title-line hero-title-line--primary">Reduce the unexpected</span>
+        <span class="hero-title-line hero-title-line--context">in Endodontics</span>
+        <span class="hero-title-line hero-title-line--support">Products Engineered for Success</span>
+      </h1>
+      <p>
+        Engineered endodontic systems for controlled shaping, predictable sealing, and clinical confidence from glide path to final restoration.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="#workflow">Review the workflow</a>
+        <a class="button secondary" href="#technology">Explore technology</a>
+        <a class="button secondary" href="#products">View products</a>
+      </div>
+    </div>
+
+    <figure class="hero-figure">
+      <img src={transformxSystem.src} alt="TransformX rotary file system" />
+      <figcaption>
+        <strong>TransformX system</strong>
+        <span>Shaping technology positioned inside a complete clinical workflow.</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <WorkflowStrip />
+
+  <section class="statement" aria-labelledby="statement-title">
+    <p class="eyebrow">Clinical Positioning</p>
+    <h2 id="statement-title">A system-first approach to safer shaping, cleaner preparation, and more predictable sealing.</h2>
+  </section>
+
+  <section class="problem-response" aria-label="Clinical problem and EndoTech response">
+    {clinicalPairs.map((pair, index) => (
+      <article data-response-row>
+        <span>{String(index + 1).padStart(2, '0')}</span>
+        <div class="problem-copy">
+          <h3>Clinical problem</h3>
+          <p>{pair.problem}</p>
+        </div>
+        <div class="response-arrow" aria-hidden="true"></div>
+        <div class="response-copy">
+          <h3>EndoTech response</h3>
+          <p>{pair.response}</p>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section id="workflow" class="workflow-section" aria-labelledby="workflow-title">
+    <div class="section-heading">
+      <p class="eyebrow">Workflow Architecture</p>
+      <h2 id="workflow-title">A sequence designed for control, not a loose collection of instruments.</h2>
+      <p>
+        Each stage has a defined clinical role. The homepage introduces the sequence first, then guides clinicians into the products, technique documents, and evidence that support it.
+      </p>
+    </div>
+
+    <ol class="workflow-map">
+      {workflow.map((item) => (
+        <li>
+          <strong>{item.step}</strong>
+          <p>{item.note}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section id="technology" class="technology-section" aria-labelledby="technology-title">
+    <div class="section-heading">
+      <p class="eyebrow">Technology</p>
+      <h2 id="technology-title">Technology is presented through the clinical risks it helps control.</h2>
+      <p>
+        Transform Technology and Avatar Tip are not presented as isolated features. They are connected directly to shaping behaviour, apical control, and predictable preparation geometry.
+      </p>
+    </div>
+
+    <div class="technology-grid">
+      <figure>
+        <video
+          data-avatar-tip-video
+          autoplay
+          loop
+          muted
+          playsinline
+          preload="auto"
+          aria-label="Avatar Tip rounded leading geometry video"
+        >
+          <source src={avatarTipVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <figcaption>Avatar Tip / apical guidance</figcaption>
+      </figure>
+      <figure class="fluid-dynamics-figure">
+        <img src={vortiflowFlow.src} alt="VortiFlow irrigation flow dynamics" />
+        <figcaption>VortiFlow / micro fluid dynamics</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="products" class="products-section" aria-labelledby="products-title">
+    <div class="section-heading">
+      <p class="eyebrow">Products</p>
+      <h2 id="products-title">Choose your system.</h2>
+    </div>
+
+    <div class="product-chooser" role="list">
+      {products.map((product) => (
+        <a href={product.href} role="listitem">
+          <figure>
+            <img src={product.image} alt="" />
+          </figure>
+          <div class="product-chooser-copy">
+            <div class="product-chooser-heading">
+              <h3>{product.title}</h3>
+              <span>{product.eyebrow}</span>
+            </div>
+            <p>{product.description}</p>
+            <div class="product-chooser-tags" aria-hidden="true">
+              {product.tags.map((tag) => (
+                <small>{tag}</small>
+              ))}
+            </div>
+            <strong>View details</strong>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <p class="product-chooser-note">{productChooserNote}</p>
+  </section>
+
+  <section id="evidence" class="evidence-section" aria-labelledby="evidence-title">
+    <div>
+      <p class="eyebrow">Evidence & Education</p>
+      <h2 id="evidence-title">Evidence, education, and downloads support clinical evaluation before product selection.</h2>
+    </div>
+
+    <ul>
+      {evidence.map((item) => (
+        <li>
+          <span>{item}</span>
+          <a href={`${base}resources/downloads/`}>
+            <span>Open</span>
+            <span aria-hidden="true" class="evidence-link-arrow">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="closing" aria-labelledby="closing-title">
+    <div>
+      <p class="eyebrow">Next Step</p>
+      <h2 id="closing-title">Review the system, then choose the product path that matches the case.</h2>
+      <p>
+        Start with the clinical workflow, review the technology, then move into product detail or contact EndoTech NZ for clinical and distribution enquiries.
+      </p>
+    </div>
+    <div class="closing-actions">
+      <a class="button primary" href={`${base}products/overview/`}>View product system</a>
+      <a class="button secondary" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
+    </div>
+  </section>
+</main>
+
+<footer class="v3-footer">
+  <strong>{siteConfig.name}</strong>
+  <span>{siteConfig.organizationDescription}</span>
+  <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+</footer>
+
+<script>
+  const productsMenu = document.querySelector('.v3-header .products-menu');
+  const productsMenuButton = document.getElementById('homepage-products-menu-button');
+  const mobileMenu = document.getElementById('homepage-mobile-menu');
+  const mobileMenuButton = document.getElementById('homepage-mobile-menu-button');
+
+  const setProductsMenu = (open) => {
+    if (!productsMenu || !productsMenuButton) return;
+    productsMenu.classList.toggle('is-open', open);
+    productsMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
+  const setMobileMenu = (open) => {
+    if (!mobileMenu || !mobileMenuButton) return;
+    mobileMenu.classList.toggle('is-open', open);
+    mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
+  productsMenuButton?.addEventListener('click', (event) => {
+    event.preventDefault();
+    const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
+    setProductsMenu(!isOpen);
+  });
+
+  productsMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setProductsMenu(false));
+  });
+
+  mobileMenuButton?.addEventListener('click', () => {
+    const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+    setMobileMenu(!isOpen);
+  });
+
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setMobileMenu(false));
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Node) || !productsMenu) return;
+    if (!productsMenu.contains(event.target)) setProductsMenu(false);
+    if (mobileMenu && mobileMenuButton && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+      setMobileMenu(false);
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      setProductsMenu(false);
+      setMobileMenu(false);
+    }
+  });
+
+  document.querySelectorAll('[data-response-row]').forEach((row) => {
+    let leaveTimer;
+
+    row.addEventListener('pointerenter', () => {
+      window.clearTimeout(leaveTimer);
+      row.classList.remove('is-arrow-leaving');
+      row.classList.add('is-arrow-active');
+    });
+
+    row.addEventListener('pointerleave', () => {
+      row.classList.remove('is-arrow-active');
+      row.classList.add('is-arrow-leaving');
+
+      leaveTimer = window.setTimeout(() => {
+        row.classList.remove('is-arrow-leaving');
+      }, 360);
+    });
+  });
+
+  document.querySelectorAll('[data-avatar-tip-video]').forEach((element) => {
+    if (!(element instanceof HTMLVideoElement)) return;
+
+    const setSlowLoop = () => {
+      element.defaultPlaybackRate = 0.5;
+      element.playbackRate = 0.5;
+    };
+
+    setSlowLoop();
+    element.addEventListener('loadedmetadata', setSlowLoop);
+    element.addEventListener(
+      'canplay',
+      () => {
+        element.play().catch(() => {});
+      },
+      { once: true }
+    );
+  });
+</script>
+
+<style>
+  :global(html) {
+    scroll-padding-top: 96px;
+  }
+
+  :global(body.landing-page) {
+    background: #f7f9fb;
+    color: #101827;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .v3-header,
+  .hero,
+  .statement,
+  .problem-response,
+  .workflow-section,
+  .technology-section,
+  .products-section,
+  .evidence-section,
+  .closing,
+  .v3-footer {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .v3-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: minmax(210px, auto) 1fr auto;
+    gap: 28px;
+    align-items: center;
+    min-height: 82px;
+    border-bottom: 1px solid #dbe3ea;
+    background: rgba(247, 249, 251, 0.94);
+    backdrop-filter: blur(14px);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand img {
+    width: 42px;
+  }
+
+  .brand span {
+    display: grid;
+    gap: 3px;
+    line-height: 1;
+  }
+
+  .brand strong,
+  .v3-footer strong {
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .brand small {
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .v3-header nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    color: #334155;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .v3-header nav a,
+  .products-menu button {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .products-menu {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .products-menu button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .products-menu svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 180ms ease;
+  }
+
+  .products-menu path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .products-menu-bridge {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 280px;
+    height: 16px;
+    transform: translateX(-50%);
+  }
+
+  .products-menu-panel {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    z-index: 80;
+    width: 300px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 8px);
+    transition:
+      opacity 180ms ease,
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .products-menu-shell {
+    display: grid;
+    gap: 2px;
+    border: 1px solid #d8e1e8;
+    border-radius: 6px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 24px 55px -34px rgba(15, 23, 42, 0.34);
+    backdrop-filter: blur(16px);
+  }
+
+  .products-menu-shell span {
+    padding: 6px 8px 8px;
+    color: #876a2b;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .products-menu-shell a {
+    border-radius: 4px;
+    padding: 10px 8px;
+    color: #344357;
+    font-size: 0.86rem;
+    font-weight: 700;
+    transition:
+      background 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .products-menu-shell a:hover,
+  .products-menu-shell a:focus-visible {
+    background: #f3f7fa;
+    color: #0b1424;
+    transform: translateX(2px);
+  }
+
+  .products-menu:hover .products-menu-panel,
+  .products-menu:focus-within .products-menu-panel,
+  .products-menu.is-open .products-menu-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
+
+  .products-menu:hover svg,
+  .products-menu:focus-within svg,
+  .products-menu.is-open svg {
+    transform: translateY(1px);
+  }
+
+  .header-action,
+  .header-menu-toggle,
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .header-action {
+    padding: 0 18px;
+    border: 1px solid #c8d2dc;
+    color: #0b1424;
+  }
+
+  .header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-menu-toggle {
+    display: none;
+    border: 1px solid #c8d2dc;
+    padding: 0 16px;
+    background: #ffffff;
+    color: #0b1424;
+    cursor: pointer;
+  }
+
+  .homepage-mobile-menu {
+    display: none;
+    border-bottom: 1px solid #dbe3ea;
+    background: rgba(247, 249, 251, 0.98);
+  }
+
+  .homepage-mobile-menu-shell {
+    display: grid;
+    gap: 8px;
+    padding: 14px 18px 18px;
+  }
+
+  .homepage-mobile-menu-shell a {
+    border: 1px solid #dbe3ea;
+    border-radius: 6px;
+    padding: 12px 14px;
+    color: #0b1424;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(420px, 0.86fr);
+    gap: 76px;
+    align-items: center;
+    min-height: 720px;
+    padding-top: 72px;
+    padding-bottom: 84px;
+    background:
+      linear-gradient(90deg, #f7f9fb 0%, #f7f9fb 54%, #e3ebf1 54%, #e3ebf1 100%);
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    color: #876a2b;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+
+  h1 {
+    display: grid;
+    gap: 8px;
+    max-width: 760px;
+    margin-bottom: 26px;
+    color: #0b1424;
+    font-size: 4.8rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 0.94;
+    text-wrap: balance;
+  }
+
+  .hero-title-line {
+    display: block;
+  }
+
+  .hero-title-line--primary {
+    max-width: 12ch;
+  }
+
+  .hero-title-line--context {
+    color: #24384f;
+    font-size: 0.54em;
+    font-weight: 650;
+    line-height: 1.08;
+  }
+
+  .hero-title-line--support {
+    width: fit-content;
+    margin-top: 12px;
+    border-top: 1px solid #b8c4cf;
+    padding-top: 16px;
+    color: #41556c;
+    font-size: 0.32em;
+    font-weight: 700;
+    line-height: 1.16;
+  }
+
+  h2 {
+    color: #0b1424;
+    font-size: 3.35rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.08;
+  }
+
+  h3 {
+    color: #0b1424;
+    font-size: 1.22rem;
+    line-height: 1.26;
+  }
+
+  .hero-copy p,
+  .section-heading p,
+  .closing p {
+    max-width: 700px;
+    color: #4b5c70;
+    font-size: 1.14rem;
+    line-height: 1.76;
+  }
+
+  .hero-actions,
+  .closing-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  .button {
+    padding: 0 24px;
+  }
+
+  .button.primary {
+    background: #0b1424;
+    color: #ffffff;
+  }
+
+  .button.secondary {
+    border: 1px solid #b8c4cf;
+    color: #0b1424;
+  }
+
+  .hero-figure {
+    margin: 0;
+    border-top: 1px solid #b8c4cf;
+    border-bottom: 1px solid #b8c4cf;
+    padding: 42px 0 30px;
+  }
+
+  .hero-figure img {
+    width: 100%;
+    max-height: 430px;
+    object-fit: contain;
+    filter: drop-shadow(0 26px 28px rgba(15, 23, 42, 0.14));
+  }
+
+  figcaption {
+    display: grid;
+    gap: 5px;
+    margin-top: 22px;
+    color: #536478;
+    line-height: 1.55;
+  }
+
+  figcaption strong {
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+  }
+
+  .statement {
+    max-width: none;
+    padding-top: 94px;
+    padding-bottom: 98px;
+    background: #ffffff;
+  }
+
+  .workflow-strip {
+    padding: 52px 56px 0;
+    background:
+      linear-gradient(180deg, #ffffff 0%, #f3f6f9 100%);
+  }
+
+  .workflow-strip-shell {
+    max-width: 1260px;
+    margin: 0 auto;
+    border: 1px solid #dbe3ea;
+    background: rgba(247, 248, 250, 0.92);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.85) inset,
+      0 18px 38px -34px rgba(15, 23, 42, 0.18);
+  }
+
+  .workflow-strip-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px;
+    background: transparent;
+  }
+
+  .workflow-strip-card {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: 8px;
+    min-height: 164px;
+    padding: 18px 12px 16px;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.62);
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      background-color 210ms ease,
+      transform 210ms ease,
+      box-shadow 210ms ease,
+      color 190ms ease,
+      border-color 210ms ease;
+  }
+
+  .workflow-strip-card:hover,
+  .workflow-strip-card:focus-visible {
+    border-color: #d4dce5;
+    background: #f4f7fa;
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 0 0 1px #d7dee7,
+      0 12px 22px -20px rgba(15, 23, 42, 0.22);
+  }
+
+  .workflow-strip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: #334155;
+    transition: color 190ms ease, transform 210ms ease;
+  }
+
+  .workflow-strip-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .workflow-strip-icon circle,
+  .workflow-strip-icon path {
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .workflow-strip-card strong {
+    color: #1f2937;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.06;
+    transition: color 190ms ease;
+  }
+
+  .workflow-strip-card span:last-child {
+    max-width: 16ch;
+    color: #6b7280;
+    font-size: 0.84rem;
+    line-height: 1.34;
+    text-wrap: balance;
+    transition: color 190ms ease;
+  }
+
+  .workflow-strip-card:hover .workflow-strip-icon,
+  .workflow-strip-card:focus-visible .workflow-strip-icon {
+    color: #1f3b57;
+    transform: translateY(-1px);
+  }
+
+  .workflow-strip-card:hover strong,
+  .workflow-strip-card:focus-visible strong {
+    color: #0f172a;
+  }
+
+  .workflow-strip-card:hover span:last-child,
+  .workflow-strip-card:focus-visible span:last-child {
+    color: #596474;
+  }
+
+  .statement h2 {
+    max-width: 1100px;
+  }
+
+  .problem-response {
+    border-top: 1px solid #dbe3ea;
+    border-bottom: 1px solid #dbe3ea;
+    background: #ffffff;
+  }
+
+  .problem-response article {
+    display: grid;
+    grid-template-columns: 80px minmax(320px, 0.8fr) 220px minmax(0, 1.2fr);
+    grid-template-areas: 'number problem arrow response';
+    gap: 24px;
+    align-items: center;
+    padding: 34px 0;
+    border-bottom: 1px solid #dbe3ea;
+  }
+
+  .problem-response article:last-child {
+    border-bottom: 0;
+  }
+
+  .problem-response article > span {
+    grid-area: number;
+    align-self: start;
+  }
+
+  .problem-copy {
+    grid-area: problem;
+  }
+
+  .response-copy {
+    grid-area: response;
+  }
+
+  .problem-response span {
+    color: #876a2b;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .problem-response p,
+  .workflow-map p,
+  .v3-footer span {
+    color: #536478;
+    line-height: 1.68;
+  }
+
+  .response-arrow {
+    grid-area: arrow;
+    position: relative;
+    align-self: center;
+    height: 18px;
+    margin-top: -2px;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .response-arrow::before,
+  .response-arrow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    background: #0f5878;
+  }
+
+  .response-arrow::before {
+    left: 0;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .response-arrow::after {
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid #0f5878;
+    border-right: 1px solid #0f5878;
+    background: transparent;
+    transform: translate(0, -50%) rotate(45deg) scale(1);
+    transform-origin: center;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .problem-response article.is-arrow-active .response-arrow,
+  .problem-response article.is-arrow-leaving .response-arrow,
+  .problem-response article:focus-within .response-arrow {
+    opacity: 1;
+  }
+
+  .problem-response article.is-arrow-active .response-arrow::before,
+  .problem-response article.is-arrow-leaving .response-arrow::before,
+  .problem-response article:focus-within .response-arrow::before {
+    animation: response-line-draw 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .problem-response article.is-arrow-active .response-arrow::after,
+  .problem-response article:focus-within .response-arrow::after {
+    animation: response-arrow-travel 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .problem-response article.is-arrow-leaving .response-arrow {
+    animation: response-arrow-fade 360ms ease forwards;
+  }
+
+  .problem-response article.is-arrow-leaving .response-arrow::after {
+    transform: translate(0, -50%) rotate(45deg) scale(1);
+  }
+
+  @keyframes response-line-draw {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes response-arrow-travel {
+    0% {
+      transform: translate(-204px, -50%) rotate(45deg) scale(1);
+    }
+
+    90% {
+      transform: translate(0, -50%) rotate(45deg) scale(1);
+    }
+
+    to {
+      transform: translate(0, -50%) rotate(45deg) scale(1.5);
+    }
+  }
+
+  @keyframes response-arrow-fade {
+    0%,
+    58% {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  .workflow-section,
+  .technology-section,
+  .products-section,
+  .evidence-section {
+    padding-top: 104px;
+    padding-bottom: 112px;
+  }
+
+  .workflow-section,
+  .products-section {
+    background: #f7f9fb;
+  }
+
+  .technology-section,
+  .evidence-section {
+    background: #ffffff;
+  }
+
+  .section-heading {
+    max-width: 930px;
+    margin-bottom: 56px;
+  }
+
+  .workflow-map {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(132px, 1fr));
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+    overflow-x: auto;
+  }
+
+  .workflow-map li {
+    min-height: 220px;
+    padding: 28px 22px;
+    border-right: 1px solid #c8d2dc;
+    background: #ffffff;
+  }
+
+  .workflow-map li:last-child {
+    border-right: 0;
+  }
+
+  .workflow-map strong {
+    display: block;
+    margin-bottom: 42px;
+    color: #0f5878;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.08rem;
+  }
+
+  .technology-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+    gap: 44px;
+  }
+
+  .technology-grid figure {
+    margin: 0;
+    border-top: 1px solid #c8d2dc;
+    padding-top: 28px;
+  }
+
+  .technology-grid img,
+  .technology-grid video {
+    width: 100%;
+    height: 360px;
+    object-fit: contain;
+    background: #f7f9fb;
+  }
+
+  .technology-grid video {
+    display: block;
+  }
+
+  .fluid-dynamics-figure img {
+    height: 360px;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .products-section .section-heading {
+    max-width: none;
+    margin-bottom: 52px;
+    text-align: center;
+  }
+
+  .products-section .section-heading .eyebrow {
+    margin-bottom: 18px;
+    color: #4d96c7;
+  }
+
+  .products-section .section-heading h2 {
+    max-width: none;
+    font-size: clamp(3rem, 4.4vw, 4.55rem);
+    line-height: 1.04;
+  }
+
+  .product-chooser {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .product-chooser > a {
+    display: grid;
+    align-content: start;
+    gap: 22px;
+    min-height: 100%;
+    border: 1px solid #dde6ed;
+    border-radius: 26px;
+    background: #ffffff;
+    padding: 22px 22px 24px;
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 22px 48px -46px rgba(15, 23, 42, 0.22);
+    transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .product-chooser > a:hover,
+  .product-chooser > a:focus-visible {
+    transform: translateY(-2px);
+    border-color: #d0dbe4;
+    box-shadow: 0 28px 54px -46px rgba(15, 23, 42, 0.28);
+  }
+
+  .product-chooser figure {
+    display: grid;
+    place-items: center;
+    min-height: 210px;
+    margin: 0;
+    border-radius: 22px;
+    background: linear-gradient(180deg, #f0fbfd 0%, #f7fcfe 100%);
+    padding: 24px;
+  }
+
+  .product-chooser > a:nth-child(4) figure {
+    background: linear-gradient(180deg, #fff8df 0%, #fffdf2 100%);
+  }
+
+  .product-chooser img {
+    width: 100%;
+    max-height: 142px;
+    object-fit: contain;
+  }
+
+  .product-chooser-copy {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+  }
+
+  .product-chooser-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .product-chooser-heading h3 {
+    margin: 0;
+    max-width: 8ch;
+    color: #0b1424;
+    font-size: 1.32rem;
+    line-height: 1.24;
+  }
+
+  .product-chooser-heading span {
+    max-width: 7ch;
+    color: #4d96c7;
+    font-size: 0.88rem;
+    line-height: 1.42;
+    text-align: right;
+  }
+
+  .product-chooser-copy p {
+    margin: 0;
+    color: #536478;
+    font-size: 0.98rem;
+    line-height: 1.82;
+  }
+
+  .product-chooser-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 2px;
+  }
+
+  .product-chooser-tags small {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    border-radius: 999px;
+    background: #eef2f7;
+    padding: 0 12px;
+    color: #617286;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .product-chooser > a:nth-child(4) .product-chooser-tags small:first-child {
+    background: #ffe8a1;
+    color: #a36a00;
+  }
+
+  .product-chooser-copy strong {
+    margin-top: 4px;
+    color: #4d96c7;
+    font-size: 0.98rem;
+    font-weight: 700;
+  }
+
+  .product-chooser-note {
+    max-width: none;
+    margin: 42px 0 0;
+    color: #5c6f82;
+    text-align: center;
+  }
+
+  .evidence-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(360px, 0.9fr);
+    gap: 72px;
+  }
+
+  .evidence-section ul {
+    border-top: 1px solid #c8d2dc;
+  }
+
+  .evidence-section li {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid #c8d2dc;
+  }
+
+  .evidence-section li span {
+    color: #0b1424;
+    font-weight: 800;
+  }
+
+  .evidence-section li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #0b6f98;
+    font-weight: 800;
+    text-decoration: none;
+    transition: color 180ms ease, gap 180ms ease;
+  }
+
+  .evidence-link-arrow {
+    transition: transform 180ms ease;
+  }
+
+  .evidence-section li a:hover,
+  .evidence-section li a:focus-visible {
+    gap: 10px;
+  }
+
+  .evidence-section li a:hover .evidence-link-arrow,
+  .evidence-section li a:focus-visible .evidence-link-arrow {
+    transform: translateX(2px);
+  }
+
+  .closing {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) auto;
+    gap: 48px;
+    align-items: center;
+    padding-top: 88px;
+    padding-bottom: 92px;
+    background: #0b1424;
+  }
+
+  .closing h2 {
+    max-width: 900px;
+    color: #ffffff;
+  }
+
+  .closing p {
+    color: #cbd7e3;
+  }
+
+  .closing .button.primary {
+    background: #ffffff;
+    color: #0b1424;
+  }
+
+  .closing .button.secondary {
+    border-color: rgba(255, 255, 255, 0.28);
+    color: #ffffff;
+  }
+
+  .v3-footer {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 28px;
+    align-items: start;
+    padding-top: 34px;
+    padding-bottom: 34px;
+    border-top: 1px solid #dbe3ea;
+    background: #ffffff;
+  }
+
+  .v3-footer a {
+    color: #475569;
+    font-weight: 700;
+  }
+
+  @media (min-width: 1320px) {
+    h1 {
+      font-size: 5.6rem;
+    }
+
+    .hero-title-line--support {
+      font-size: 0.3em;
+    }
+
+    h2 {
+      font-size: 3.8rem;
+    }
+  }
+
+  @media (max-width: 1120px) {
+    .v3-header,
+    .hero,
+    .workflow-strip,
+    .statement,
+    .problem-response,
+    .workflow-section,
+    .technology-section,
+    .products-section,
+    .evidence-section,
+    .closing,
+    .v3-footer {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .v3-header {
+      grid-template-columns: auto auto;
+    }
+
+    .v3-header nav {
+      display: none;
+    }
+
+    .header-menu-toggle {
+      display: inline-flex;
+    }
+
+    .homepage-mobile-menu.is-open {
+      display: block;
+    }
+
+    .hero,
+    .evidence-section,
+    .closing {
+      grid-template-columns: 1fr;
+    }
+
+    .hero {
+      background: #f7f9fb;
+    }
+
+    .workflow-strip {
+      padding-top: 40px;
+    }
+
+    .workflow-strip-shell {
+      max-width: 100%;
+    }
+
+    .workflow-strip-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    h1 {
+      max-width: 680px;
+      font-size: 4rem;
+    }
+
+    .hero-title-line--primary {
+      max-width: 12ch;
+    }
+
+    .problem-response article {
+      grid-template-areas:
+        'number'
+        'problem'
+        'response';
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .response-arrow {
+      display: none;
+    }
+
+    .technology-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .product-chooser {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .v3-header,
+    .hero,
+    .workflow-strip,
+    .statement,
+    .problem-response,
+    .workflow-section,
+    .technology-section,
+    .products-section,
+    .evidence-section,
+    .closing,
+    .v3-footer {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .v3-header {
+      min-height: 70px;
+    }
+
+    .brand small {
+      display: none;
+    }
+
+    .header-action,
+    .header-menu-toggle {
+      padding: 0 12px;
+      font-size: 0.8rem;
+    }
+
+    .workflow-strip {
+      padding-top: 28px;
+    }
+
+    .workflow-strip-shell {
+      box-shadow: none;
+    }
+
+    .workflow-strip-grid {
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 6px;
+    }
+
+    .workflow-strip-card {
+      min-height: 0;
+      justify-items: start;
+      gap: 6px;
+      padding: 16px 14px;
+      text-align: left;
+      transform: none;
+    }
+
+    .workflow-strip-card span:last-child {
+      max-width: 100%;
+      text-wrap: initial;
+    }
+
+    h1 {
+      gap: 7px;
+      max-width: 11.1ch;
+      font-size: 2.92rem;
+      line-height: 0.98;
+    }
+
+    .hero {
+      min-height: auto;
+      gap: 32px;
+      padding-top: 40px;
+      padding-bottom: 56px;
+    }
+
+    .hero-title-line--primary {
+      max-width: 10.6ch;
+    }
+
+    .hero-title-line--context {
+      font-size: 0.5em;
+      line-height: 1.04;
+    }
+
+    .hero-title-line--support {
+      max-width: 16ch;
+      margin-top: 7px;
+      padding-top: 11px;
+      font-size: 0.37em;
+      line-height: 1.16;
+    }
+
+    h2 {
+      font-size: 2.25rem;
+    }
+
+    .hero-copy p,
+    .section-heading p,
+    .closing p {
+      font-size: 1rem;
+    }
+
+    .hero-actions,
+    .closing-actions {
+      display: grid;
+    }
+
+    .workflow-map {
+      grid-template-columns: 1fr;
+      overflow: visible;
+    }
+
+    .workflow-map li {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid #c8d2dc;
+    }
+
+    .workflow-map li:last-child {
+      border-bottom: 0;
+    }
+
+    .workflow-map strong {
+      margin-bottom: 12px;
+    }
+
+    .technology-grid,
+    .v3-footer {
+      grid-template-columns: 1fr;
+    }
+
+    .technology-grid img,
+    .technology-grid video {
+      height: 260px;
+      min-height: 0;
+    }
+
+    .product-chooser {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .product-chooser > a {
+      gap: 18px;
+      padding: 18px 18px 20px;
+      border-radius: 22px;
+    }
+
+    .product-chooser figure {
+      min-height: 176px;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .product-chooser-heading {
+      grid-template-columns: 1fr auto;
+    }
+
+    .product-chooser-heading h3 {
+      max-width: 9ch;
+      font-size: 1.2rem;
+    }
+
+    .product-chooser-heading span {
+      font-size: 0.84rem;
+    }
+  }
+</style>

@@ -1,8 +1,6 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
-import ProductHero from '../../components/product/ProductHero.astro';
-import FeatureGrid from '../../components/product/FeatureGrid.astro';
-import ApplicationsGrid from '../../components/product/ApplicationsGrid.astro';
+import PremiumProductNarrative from '../../components/product/PremiumProductNarrative.astro';
 import ProductOrderSelector from '../../components/product/ProductOrderSelector.astro';
 import acrobatFiles from '../../assets/acrobat-glide-path-files.png';
 import { withBasePath } from '../../utils/paths';
@@ -90,10 +88,6 @@ const clinicalBenefitItems = [
   },
 ];
 
-const ctas = [
-  { label: 'Open motor settings', href: '/technique/motor-settings/' },
-  { label: 'Contact EndoTech', href: '/about/contact/', variant: 'secondary' as const },
-];
 const acrobatClinicalBlueprintSrc = withBasePath('/downloads/Acrobat_Clinical_Blueprint.pdf');
 const shopifyStoreDomain = getShopifyStoreDomain();
 
@@ -156,6 +150,31 @@ const acrobatSchema = {
     { '@type': 'PropertyValue', name: 'MB2 option', value: '15/.05 17 mm' },
   ],
 };
+
+const sequenceItems = [
+  {
+    step: '13/.03',
+    role: 'Initial rotary glide path',
+    detail:
+      'Begins rotary progression after canal negotiation and helps establish a controlled route toward working length.',
+  },
+  {
+    step: '15/.03',
+    role: 'Progressive enlargement',
+    detail:
+      'Extends the pathway before shaping files are introduced, keeping the glide stage clinically separate.',
+  },
+  {
+    step: '17/.03',
+    role: 'Shaping handoff',
+    detail:
+      'Creates a more reproducible transition into TransformX shaping, with length options across routine and longer canals.',
+  },
+];
+
+const downloads = [
+  { label: 'Clinical Presentation', title: 'Acrobat Clinical Blueprint', href: acrobatClinicalBlueprintSrc },
+];
 ---
 
 <ProductLayout
@@ -165,82 +184,37 @@ const acrobatSchema = {
   schema={acrobatSchema}
   accent="teal"
 >
-  <ProductHero
+  <PremiumProductNarrative
     eyebrow="Acrobat Glide Path"
-    title="Acrobat Glide Path Files"
-    subtitle="Rotary glide path control before shaping begins."
-    description="Acrobat Glide Path Files use Transform Metal Technology to support controlled progression to working length before the shaping sequence, with a simple 13/.03, 15/.03, and 17/.03 rotary range plus a dedicated MB2 option."
-    ctas={ctas}
-    accent="teal"
+    title="Controlled rotary access before shaping begins."
+    lede="Acrobat Glide Path Files support controlled progression to working length before the shaping sequence, with a simple 13/.03, 15/.03, and 17/.03 range plus a dedicated MB2 option."
     imageSrc={acrobatFiles.src}
     imageAlt="Acrobat Glide Path Files in sizes 13/.03, 15/.03, and 17/.03"
-    visualLabel="Rotary Glide Path"
-  />
-
-  <ProductOrderSelector
-    title="Order the Acrobat sequence online"
-    description={orderPanelDescription}
-    coverageLabel={getOrderCoverageLabel(acrobatShopifyCards)}
-    packFormat="6 files per pack"
-    items={acrobatShopifyCards}
-    shopifyStoreDomain={shopifyStoreDomain}
-    selectionNote={acrobatSelectionNote}
-  />
-
-  <section class="border-b border-slate-200/80 bg-white">
-    <div class="mx-auto grid max-w-7xl gap-4 px-6 py-14 sm:gap-6 sm:py-16 lg:grid-cols-2 lg:py-20">
-      <article class="rounded-[1.35rem] border border-slate-200 bg-slate-50/70 p-5 sm:rounded-[1.75rem] sm:p-7">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Clinical Problem</p>
-        <p class="mt-4 text-base leading-7 text-slate-600 sm:mt-5 sm:leading-8">
-          The glide path stage is where clinicians often lose control early. Narrow canals, apical curvature, and restricted access can make it difficult to reach working length reproducibly before the shaping sequence begins.
+    visualTitle="Acrobat Glide Path"
+    visualText="A dedicated glide stage positioned before TransformX shaping."
+    primaryCta={{ label: 'Configure Acrobat sequence', href: '#order' }}
+    secondaryCta={{ label: 'Motor settings', href: '/technique/motor-settings/' }}
+    clinicalProblem="The glide path stage is where clinicians often lose control early. Narrow canals, apical curvature, and restricted access can make it difficult to reach working length reproducibly before shaping begins."
+    solution="Acrobat Glide Path Files apply rotary progression and Transform Metal Technology to the negotiation stage, helping clinicians establish a controlled path to working length before introducing their shaping system."
+    engineeringTitle="The glide path range is deliberately simple, staged, and clinically readable."
+    features={keyFeatureItems.slice(0, 3)}
+    sequenceTitle="Acrobat creates the controlled access pathway that shaping depends on."
+    sequenceItems={sequenceItems}
+    benefitsTitle="The clinical value is control before larger shaping files enter the canal."
+    benefits={clinicalBenefitItems.slice(0, 3)}
+    downloads={downloads}
+    workflowActiveStep="glide"
+  >
+    <section slot="detail" class="acrobat-range-section" aria-labelledby="acrobat-range-title">
+      <div>
+        <p class="acrobat-eyebrow">Product Range</p>
+        <h2 id="acrobat-range-title">Sizes, lengths, and part numbers.</h2>
+        <p>
+          The core Acrobat range is built around 13/.03, 15/.03, and 17/.03 rotary glide path files in 21 mm, 25 mm, and 29 mm lengths, with an additional 15/.05 17 mm MB2 file.
         </p>
-      </article>
-      <article class="rounded-[1.35rem] border border-slate-200 bg-slate-950 p-5 text-white sm:rounded-[1.75rem] sm:p-7">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">TransformX Solution</p>
-        <p class="mt-4 text-base leading-7 text-slate-300 sm:mt-5 sm:leading-8">
-          Acrobat Glide Path Files apply rotary progression and Transform Metal Technology to the negotiation stage, helping clinicians establish a more controlled path to working length before introducing their shaping system.
-        </p>
-      </article>
-    </div>
-  </section>
+      </div>
 
-  <FeatureGrid
-    eyebrow="Key Features"
-    title="The glide path range in practical terms"
-    intro="Acrobat keeps the rotary glide path message simple: a clear .03 progression for routine cases, length options across the range, and a dedicated MB2 file where access is tighter."
-    items={keyFeatureItems}
-    accent="teal"
-  />
-
-  <FeatureGrid
-    eyebrow="Clinical Benefits"
-    title="Why the glide path stage matters"
-    intro="Each product detail is tied back to the same clinical goal: reach working length with more control before shaping places greater demand on the canal."
-    items={clinicalBenefitItems}
-    accent="teal"
-  />
-
-  <ApplicationsGrid
-    eyebrow="Clinical Use"
-    title="Where Acrobat fits"
-    items={[
-      'Routine rotary glide path establishment',
-      'Curved canals where early flexibility matters',
-      'Narrow canals before shaping progression',
-      'MB2 access using a shorter 17 mm file option',
-    ]}
-    accent="teal"
-  />
-
-  <section class="border-b border-slate-200/80 bg-slate-50/70">
-    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Product Range</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Sizes, lengths, and part numbers</h2>
-      <p class="mt-4 max-w-4xl text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8">
-        The core Acrobat range is built around 13/.03, 15/.03, and 17/.03 rotary glide path files in 21 mm, 25 mm, and 29 mm lengths, with an additional 15/.05 17 mm MB2 file.
-      </p>
-
-      <div class="mt-8 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_24px_60px_-42px_rgba(15,23,42,0.35)] sm:mt-10">
+      <div class="acrobat-table-shell">
         <div class="overflow-x-auto">
           <table class="min-w-full border-collapse text-left">
             <thead class="bg-slate-900 text-white">
@@ -265,81 +239,114 @@ const acrobatSchema = {
         </div>
       </div>
 
-      <div class="mt-6 rounded-[1.35rem] border border-slate-200 bg-white p-5 sm:rounded-[1.5rem] sm:p-6">
-        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">MB2 Option</p>
-        <div class="mt-3 grid gap-3 sm:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] sm:items-start">
-          <p class="text-xl font-bold tracking-tight text-slate-900">15/.05 17 mm</p>
-          <div class="space-y-2 text-sm leading-7 text-slate-600 sm:text-base">
+      <div class="acrobat-mb2">
+        <p class="acrobat-eyebrow">MB2 Option</p>
+        <div>
+          <h3>15/.05 17 mm</h3>
+          <div>
             <p>SKU: ACGP-150517RF</p>
             <p>Shorter file format positioned for MB2 access and other cases where reduced coronal headroom changes the feel of a standard-length glide path instrument.</p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="border-b border-slate-200/80 bg-white">
-    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Technique Reference</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Documented ET starting point</h2>
-      <div class="mt-8 grid gap-4 sm:mt-10 sm:gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-        <article class="rounded-[1.35rem] border border-slate-200 bg-slate-50/70 p-5 sm:rounded-[1.75rem] sm:p-7">
-          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">Current documented setting</p>
-          <h3 class="mt-3 text-2xl font-bold tracking-tight text-slate-900">Acrobat 13/.03</h3>
-          <p class="mt-4 text-base leading-7 text-slate-600 sm:leading-8">
-            The current ET technique and motor settings pages both position Acrobat 13/.03 as the opening glide path instrument at 300 RPM (with maximum 500RPM) and 2.0-2.5 Ncm before the main shaping sequence begins.
-          </p>
-        </article>
-        <article class="rounded-[1.35rem] border border-slate-200 bg-slate-950 p-5 text-white sm:rounded-[1.75rem] sm:p-7">
-          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Why it matters</p>
-          <p class="mt-4 text-base leading-7 text-slate-300 sm:leading-8">
-            This gives the Acrobat page a direct clinical anchor: it is not presented as an abstract accessory, but as the first controlled rotary stage before ET shaping begins.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="border-b border-slate-200/80 bg-slate-50/70">
-    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Evidence Support</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Why glide path preparation deserves its own stage</h2>
-      <div class="mt-8 grid gap-4 sm:mt-10 sm:gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-        <article class="rounded-[1.35rem] border border-slate-200 bg-white p-5 sm:rounded-[1.75rem] sm:p-7">
-          <p class="text-base leading-7 text-slate-600 sm:leading-8">
-            A recent review on glide path preparation summarised the same category-level rationale that supports Acrobat: glide path creation helps reduce torsional stress, improves the safety of subsequent rotary shaping, and supports preservation of original canal morphology before larger instruments are introduced.
-          </p>
-          <p class="mt-4 text-base leading-7 text-slate-600 sm:leading-8">
-            The review also highlights why rotary glide path files matter most in narrow, calcified, and curved canals, where controlled progression to working length becomes harder to reproduce with consistency.
-          </p>
-        </article>
-        <article class="rounded-[1.35rem] border border-slate-200 bg-slate-950 p-5 text-white sm:rounded-[1.75rem] sm:p-7">
-          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Reference Summary</p>
-          <ul class="mt-4 space-y-3 text-base leading-7 text-slate-300 sm:leading-8">
-            <li>Sivas Yilmaz O. <em>Glide Path in endodontics.</em> Turk Endod J. 2021;6:24-30.</li>
-            <li>Berutti E, et al. Use of nickel-titanium rotary PathFile to create the glide path: comparison with manual preflaring in simulated root canals. <em>J Endod.</em> 2009;35:408-412.</li>
-            <li>Pasqualini D, et al. Computed micro-tomographic evaluation of glide path with nickel-titanium rotary PathFile in maxillary first molar curved canals. <em>J Endod.</em> 2012;38:389-393.</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="border-b border-slate-200/80 bg-white">
-    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Downloads</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Acrobat slide deck</h2>
-      <div class="mt-8 grid gap-4 sm:mt-10">
-        <article class="flex flex-col gap-4 rounded-[1.35rem] border border-slate-200 bg-slate-50/60 p-4 sm:rounded-[1.5rem] sm:p-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Clinical Presentation</p>
-            <h3 class="mt-2 text-base font-bold text-slate-900 sm:text-lg">Acrobat Clinical Blueprint</h3>
-          </div>
-          <a href={acrobatClinicalBlueprintSrc} class="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 sm:w-auto">
-            Open PDF
-          </a>
-        </article>
-      </div>
-    </div>
-  </section>
+    <section id="order" slot="order" class="premium-order-anchor" aria-label="Acrobat ordering selector">
+      <ProductOrderSelector
+        title="Order the Acrobat sequence online"
+        description={orderPanelDescription}
+        coverageLabel={getOrderCoverageLabel(acrobatShopifyCards)}
+        packFormat="6 files per pack"
+        items={acrobatShopifyCards}
+        shopifyStoreDomain={shopifyStoreDomain}
+        selectionNote={acrobatSelectionNote}
+      />
+    </section>
+  </PremiumProductNarrative>
 </ProductLayout>
+
+<style>
+  .premium-order-anchor {
+    scroll-margin-top: 96px;
+  }
+
+  .acrobat-range-section {
+    display: grid;
+    gap: 34px;
+    border-top: 1px solid #dbe3ea;
+    background: #ffffff;
+    padding: 104px 56px 112px;
+  }
+
+  .acrobat-eyebrow {
+    margin: 0 0 18px;
+    color: #876a2b;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .acrobat-range-section h2 {
+    max-width: 1040px;
+    margin: 0;
+    color: #0b1424;
+    font-size: 3.35rem;
+    font-weight: 700;
+    line-height: 1.08;
+  }
+
+  .acrobat-range-section > div > p:not(.acrobat-eyebrow),
+  .acrobat-mb2 p {
+    max-width: 900px;
+    color: #536478;
+    line-height: 1.68;
+  }
+
+  .acrobat-table-shell {
+    overflow: hidden;
+    border: 1px solid #c8d2dc;
+    background: #ffffff;
+  }
+
+  .acrobat-mb2 {
+    border-top: 1px solid #c8d2dc;
+    border-bottom: 1px solid #c8d2dc;
+    padding: 28px 0;
+  }
+
+  .acrobat-mb2 > div {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 48px;
+  }
+
+  .acrobat-mb2 h3 {
+    margin: 0;
+    color: #0b1424;
+    font-size: 1.4rem;
+  }
+
+  @media (max-width: 1120px) {
+    .acrobat-range-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .acrobat-range-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .acrobat-range-section h2 {
+      font-size: 2.25rem;
+    }
+
+    .acrobat-mb2 > div {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+</style>

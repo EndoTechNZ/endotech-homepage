@@ -54,15 +54,15 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
 
 <section class="border-b border-slate-200/80 bg-white" data-order-selector={selectorId}>
   <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-    <div class="overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50/70 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.35)]">
-      <div class="border-b border-slate-200/80 px-6 py-8 sm:px-8 sm:py-10">
+    <div class="order-selector-shell overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50/70 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.35)]">
+      <div class="order-selector-intro border-b border-slate-200/80 px-6 py-8 sm:px-8 sm:py-10">
         <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
           <div>
             <p class="order-selector-marker text-base font-semibold uppercase tracking-[0.24em] text-[#5076B8]">{eyebrow}</p>
             <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
             <p class="mt-4 max-w-3xl whitespace-pre-line text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{description}</p>
           </div>
-          <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div class="order-selector-meta grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             <article class="rounded-[1.15rem] border border-slate-200 bg-white px-4 py-4">
               <p class="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-500">Sequence Coverage</p>
               <p class="mt-2 text-base font-semibold leading-7 text-slate-900">{coverageLabel}</p>
@@ -75,12 +75,12 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
         </div>
       </div>
 
-      <div class="grid gap-6 px-6 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)] lg:items-start">
+      <div class="order-selector-layout grid gap-6 px-6 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)] lg:items-start">
         <div>
-          <div class="rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_8px_16px_-14px_rgba(15,23,42,0.3)] sm:p-6">
+          <div class="order-step-panel rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_8px_16px_-14px_rgba(15,23,42,0.3)] sm:p-6">
             <p class="order-selector-marker text-base font-extrabold uppercase tracking-[0.24em] text-[#5076B8]">Step 1</p>
             <h3 class="mt-2 text-xl font-bold tracking-tight text-slate-900">Choose file configuration</h3>
-            <div class="mt-5 flex flex-wrap gap-3" data-order-configurations>
+            <div class="order-choice-group mt-5 flex flex-wrap gap-3" data-order-configurations>
               {configurations.map((configuration) => (
                 <button
                   type="button"
@@ -98,10 +98,10 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
             </div>
           </div>
 
-          <div class="mt-4 rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_8px_16px_-14px_rgba(15,23,42,0.3)] sm:p-6">
+          <div class="order-step-panel mt-4 rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_8px_16px_-14px_rgba(15,23,42,0.3)] sm:p-6">
             <p class="order-selector-marker text-base font-extrabold uppercase tracking-[0.24em] text-[#5076B8]">Step 2</p>
             <h3 class="mt-2 text-xl font-bold tracking-tight text-slate-900">Choose file length</h3>
-            <div class="mt-5 flex flex-wrap gap-3" data-order-lengths>
+            <div class="order-choice-group mt-5 flex flex-wrap gap-3" data-order-lengths>
               {defaultLengths.map((item) => (
                 <button
                   type="button"
@@ -120,7 +120,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
             {selectionNote && <p class="mt-5 text-sm leading-6 text-slate-600">{selectionNote}</p>}
           </div>
 
-          <div class="mt-4 rounded-[1.35rem] border border-dashed border-slate-300 bg-white p-5 sm:p-6" data-order-fallback>
+          <div class="order-fallback-panel mt-4 rounded-[1.35rem] border border-dashed border-slate-300 bg-white p-5 sm:p-6" data-order-fallback>
             <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">All Order Options</p>
             <p class="mt-2 text-sm leading-6 text-slate-600">
               If interactive selection is unavailable, use the direct links below to open the exact file listing.
@@ -167,7 +167,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
           </div>
         </div>
 
-        <aside class="rounded-[1.45rem] border border-slate-200 bg-white p-5 shadow-[0_10px_22px_-16px_rgba(15,23,42,0.3)] sm:p-6" data-order-summary>
+        <aside class="order-summary-panel rounded-[1.45rem] border border-slate-200 bg-white p-5 shadow-[0_10px_22px_-16px_rgba(15,23,42,0.3)] sm:p-6" data-order-summary>
           <div class="flex items-start justify-between gap-4">
             <div>
               <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Selected File</p>
@@ -297,6 +297,137 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
 <style>
   .order-selector-marker {
     font-family: 'Sora', system-ui, sans-serif;
+  }
+
+  @media (max-width: 720px) {
+    [data-order-selector] .order-selector-shell {
+      border-radius: 1.3rem;
+    }
+
+    [data-order-selector] .order-selector-intro {
+      padding: 1.35rem 1.15rem;
+    }
+
+    [data-order-selector] .order-selector-intro h2 {
+      margin-top: 0.6rem;
+      font-size: 1.9rem;
+      line-height: 1.05;
+    }
+
+    [data-order-selector] .order-selector-intro p:not(.order-selector-marker) {
+      margin-top: 0.9rem;
+      font-size: 0.96rem;
+      line-height: 1.65;
+    }
+
+    [data-order-selector] .order-selector-meta {
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+
+    [data-order-selector] .order-selector-layout {
+      padding: 1rem 1rem 1.15rem;
+      gap: 0.9rem;
+    }
+
+    [data-order-selector] .order-summary-panel {
+      order: -1;
+      padding: 1rem;
+      border-radius: 1.2rem;
+    }
+
+    [data-order-selector] .order-summary-panel h3 {
+      font-size: 1.55rem;
+      line-height: 1.02;
+    }
+
+    [data-order-selector] .order-summary-panel dl {
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+
+    [data-order-selector] .order-summary-panel dl > div,
+    [data-order-selector] [data-order-builder] {
+      padding: 0.85rem 0.9rem;
+      border-radius: 0.95rem;
+    }
+
+    [data-order-selector] .order-summary-panel > .mt-6.flex {
+      margin-top: 1rem;
+    }
+
+    [data-order-selector] .order-step-panel,
+    [data-order-selector] .order-fallback-panel {
+      padding: 1rem;
+      border-radius: 1.2rem;
+    }
+
+    [data-order-selector] .order-step-panel h3 {
+      margin-top: 0.45rem;
+      font-size: 1.02rem;
+      line-height: 1.22;
+    }
+
+    [data-order-selector] .order-choice-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.55rem;
+      margin-top: 0.9rem;
+    }
+
+    [data-order-selector] .order-choice-group > * {
+      width: 100%;
+      justify-content: center;
+      padding: 0.72rem 0.8rem;
+      font-size: 0.82rem;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    [data-order-selector] [data-order-lengths].order-choice-group {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    [data-order-selector] .order-step-panel .mt-5.text-sm,
+    [data-order-selector] .order-fallback-panel p.text-sm {
+      margin-top: 0.85rem;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    [data-order-selector] [data-order-fallback] .mt-5.grid {
+      gap: 0.7rem;
+    }
+
+    [data-order-selector] [data-order-fallback] article {
+      padding: 0.85rem 0.9rem;
+      border-radius: 0.95rem;
+    }
+
+    [data-order-selector] [data-order-fallback] article .mt-3 {
+      margin-top: 0.7rem;
+    }
+
+    [data-order-selector] [data-order-fallback] article a {
+      min-height: 2.6rem;
+      padding: 0 0.95rem;
+      font-size: 0.82rem;
+    }
+
+    [data-order-selector] [data-order-cards] article,
+    [data-order-selector] [data-order-cards] [data-order-empty-card] {
+      padding: 0.85rem 0.9rem;
+      border-radius: 0.95rem;
+    }
+
+    [data-order-selector] [data-order-cards] article .mt-4 {
+      margin-top: 0.75rem;
+    }
+
+    [data-order-selector] [data-order-cards] button {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
   }
 </style>
 
