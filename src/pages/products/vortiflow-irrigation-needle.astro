@@ -17,6 +17,7 @@ import { withBasePath } from '../../utils/paths';
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const evidencePdfHref = '/downloads/VortiFlow-Evidence-Overview.pdf';
 const hasEvidencePdf = existsSync(path.join(process.cwd(), 'public', 'downloads', 'VortiFlow-Evidence-Overview.pdf'));
+const vortiflowVideoHref = withBasePath('/videos/vortiflow-clean-hero.mp4');
 
 const pageTitle = `VortiFlow Irrigation Needle for Controlled Endodontic Irrigation | ${siteConfig.name}`;
 const pageDescription =
@@ -157,6 +158,30 @@ const downloads = hasEvidencePdf
     downloadsTitle="Evidence and technical rationale for the VortiFlow concept."
     workflowActiveStep="clean"
   >
+    <section slot="lead" class="vortiflow-video-intro" aria-labelledby="vortiflow-video-title">
+      <div class="vortiflow-video-copy">
+        <p class="vortiflow-eyebrow">Flow Video</p>
+        <h2 id="vortiflow-video-title">Flexible by design. Precise where it matters.</h2>
+        <p>
+          Engineered flexibility helps VortiFlow navigate curved canals while maintaining controlled irrigant delivery.
+        </p>
+      </div>
+
+      <div class="vortiflow-video-frame">
+        <video
+          src={vortiflowVideoHref}
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="VortiFlow vortex and biofilm demonstration video"
+        >
+          Your browser does not support the VortiFlow video.
+        </video>
+      </div>
+    </section>
+
     <section slot="detail" class="vortiflow-media-section" aria-labelledby="vortiflow-media-title">
       <div class="vortiflow-section-heading">
         <p class="vortiflow-eyebrow">Flow Concept</p>
@@ -235,11 +260,62 @@ const downloads = hasEvidencePdf
 </ProductLayout>
 
 <style>
+  .vortiflow-video-intro,
   .vortiflow-media-section,
   .vortiflow-engineering-detail,
   .vortiflow-evidence {
     border-top: 1px solid #dbe3ea;
     padding: 104px 56px 112px;
+  }
+
+  .vortiflow-video-intro {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.5fr) minmax(260px, 0.42fr);
+    gap: 28px;
+    align-items: start;
+    justify-content: space-between;
+    background: #ffffff;
+    padding-top: 88px;
+    padding-bottom: 92px;
+  }
+
+  .vortiflow-video-copy {
+    max-width: 360px;
+  }
+
+  .vortiflow-video-copy h2 {
+    margin: 0;
+    color: #0b1424;
+    font-size: 2.75rem;
+    font-weight: 700;
+    line-height: 1.08;
+  }
+
+  .vortiflow-video-copy p:not(.vortiflow-eyebrow) {
+    margin: 18px 0 0;
+    color: #536478;
+    font-size: 1rem;
+    line-height: 1.72;
+  }
+
+  .vortiflow-video-frame {
+    width: min(100%, 580px);
+    justify-self: end;
+    border: 1px solid #dbe3ea;
+    border-radius: 12px;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(237, 243, 247, 0.98), rgba(228, 237, 243, 0.98));
+    box-shadow: 0 22px 48px -38px rgba(15, 23, 42, 0.28);
+  }
+
+  .vortiflow-video-frame video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    height: auto;
+    object-fit: cover;
+    background: #dfe8ee;
   }
 
   .vortiflow-media-section,
@@ -475,11 +551,21 @@ const downloads = hasEvidencePdf
   }
 
   @media (max-width: 1120px) {
+    .vortiflow-video-intro,
     .vortiflow-media-section,
     .vortiflow-engineering-detail,
     .vortiflow-evidence {
       padding-left: 30px;
       padding-right: 30px;
+    }
+
+    .vortiflow-video-intro {
+      grid-template-columns: 1fr;
+    }
+
+    .vortiflow-video-frame {
+      width: min(100%, 520px);
+      justify-self: start;
     }
 
     .vortiflow-visual-grid,
@@ -500,6 +586,7 @@ const downloads = hasEvidencePdf
   }
 
   @media (max-width: 720px) {
+    .vortiflow-video-intro,
     .vortiflow-media-section,
     .vortiflow-engineering-detail,
     .vortiflow-evidence {
@@ -507,8 +594,19 @@ const downloads = hasEvidencePdf
       padding-right: 18px;
     }
 
+    .vortiflow-video-copy h2,
     .vortiflow-section-heading h2 {
       font-size: 2.25rem;
+    }
+
+    .vortiflow-video-intro {
+      gap: 24px;
+      padding-top: 76px;
+      padding-bottom: 84px;
+    }
+
+    .vortiflow-video-frame {
+      width: 100%;
     }
 
     .vortiflow-evidence-list article {
