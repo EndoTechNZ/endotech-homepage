@@ -270,17 +270,17 @@ const downloads = hasEvidencePdf
 
   .vortiflow-video-intro {
     display: grid;
-    grid-template-columns: minmax(280px, 0.5fr) minmax(260px, 0.42fr);
-    gap: 28px;
-    align-items: start;
-    justify-content: space-between;
+    grid-template-columns: minmax(320px, 460px) minmax(320px, 580px);
+    gap: clamp(32px, 4vw, 72px);
+    align-items: center;
+    justify-content: center;
     background: #ffffff;
     padding-top: 88px;
     padding-bottom: 92px;
   }
 
   .vortiflow-video-copy {
-    max-width: 360px;
+    max-width: 460px;
   }
 
   .vortiflow-video-copy h2 {
@@ -300,7 +300,7 @@ const downloads = hasEvidencePdf
 
   .vortiflow-video-frame {
     width: min(100%, 580px);
-    justify-self: end;
+    justify-self: center;
     border: 1px solid #dbe3ea;
     border-radius: 12px;
     overflow: hidden;
@@ -561,11 +561,12 @@ const downloads = hasEvidencePdf
 
     .vortiflow-video-intro {
       grid-template-columns: 1fr;
+      justify-items: center;
     }
 
     .vortiflow-video-frame {
       width: min(100%, 520px);
-      justify-self: start;
+      justify-self: center;
     }
 
     .vortiflow-visual-grid,
@@ -603,10 +604,12 @@ const downloads = hasEvidencePdf
       gap: 24px;
       padding-top: 76px;
       padding-bottom: 84px;
+      justify-items: start;
     }
 
     .vortiflow-video-frame {
       width: 100%;
+      justify-self: stretch;
     }
 
     .vortiflow-evidence-list article {
