@@ -1,15 +1,12 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import PremiumProductNarrative from '../../components/product/PremiumProductNarrative.astro';
-import ProductOrderSelector from '../../components/product/ProductOrderSelector.astro';
 import acrobatFiles from '../../assets/acrobat-glide-path-files.png';
 import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
-import { getShopifyStoreDomain } from '../../utils/shopify';
-import { buildOrderSelectorItems, getOrderCoverageLabel } from '../../utils/productOrdering';
-import { acrobatOrderEntries } from '../../data/productOrderingCatalog';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const base = import.meta.env.BASE_URL;
 const keyFeatureItems = [
   {
     title: 'Rotary glide path preparation',
@@ -89,7 +86,7 @@ const clinicalBenefitItems = [
 ];
 
 const acrobatClinicalBlueprintSrc = withBasePath('/downloads/Acrobat_Clinical_Blueprint.pdf');
-const shopifyStoreDomain = getShopifyStoreDomain();
+const acrobatOrderHref = `${base}order/#acrobat-order`;
 
 const standardRange = [
   {
@@ -118,17 +115,6 @@ const standardRange = [
   },
 ];
 
-const acrobatShopifyCards = await buildOrderSelectorItems(
-  acrobatOrderEntries,
-  shopifyStoreDomain,
-  '$65.00 NZD',
-);
-const orderPanelDescription = `To order
-- Choose file Size (Step 1)
-- Choose file length (Step 2)
-- Click 'Add to order'`;
-const acrobatSelectionNote =
-  'The MB2 option is limited to 17 mm. Standard Acrobat sequence files are available in 21 mm, 25 mm, and 29 mm.';
 const acrobatSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -192,7 +178,7 @@ const downloads = [
     imageAlt="Acrobat Glide Path Files in sizes 13/.03, 15/.03, and 17/.03"
     visualTitle="Acrobat Glide Path"
     visualText="A dedicated glide stage positioned before TransformX shaping."
-    primaryCta={{ label: 'Configure Acrobat sequence', href: '#order' }}
+    primaryCta={{ label: 'Order Acrobat Glide Path', href: acrobatOrderHref }}
     secondaryCta={{ label: 'Motor settings', href: '/technique/motor-settings/' }}
     clinicalProblem="The glide path stage is where clinicians often lose control early. Narrow canals, apical curvature, and restricted access can make it difficult to reach working length reproducibly before shaping begins."
     solution="Acrobat Glide Path Files apply rotary progression and Transform Metal Technology to the negotiation stage, helping clinicians establish a controlled path to working length before introducing their shaping system."
@@ -251,25 +237,20 @@ const downloads = [
       </div>
     </section>
 
-    <section id="order" slot="order" class="premium-order-anchor" aria-label="Acrobat ordering selector">
-      <ProductOrderSelector
-        title="Order the Acrobat sequence online"
-        description={orderPanelDescription}
-        coverageLabel={getOrderCoverageLabel(acrobatShopifyCards)}
-        packFormat="6 files per pack"
-        items={acrobatShopifyCards}
-        shopifyStoreDomain={shopifyStoreDomain}
-        selectionNote={acrobatSelectionNote}
-      />
+    <section slot="order" class="product-order-cta" aria-labelledby="acrobat-order-cta-title">
+      <div>
+        <p class="acrobat-eyebrow">Ordering</p>
+        <h2 id="acrobat-order-cta-title">Select Acrobat Glide Path files in the central ordering section.</h2>
+        <p>
+          Configure 13/.03, 15/.03, 17/.03, and MB2 options on the dedicated ordering page, where glide path and shaping files can be combined in one order.
+        </p>
+      </div>
+      <a href={acrobatOrderHref}>Order Acrobat Glide Path</a>
     </section>
   </PremiumProductNarrative>
 </ProductLayout>
 
 <style>
-  .premium-order-anchor {
-    scroll-margin-top: 96px;
-  }
-
   .acrobat-range-section {
     display: grid;
     gap: 34px;
@@ -327,8 +308,55 @@ const downloads = [
     font-size: 1.4rem;
   }
 
+  .product-order-cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 36px;
+    align-items: end;
+    border-top: 1px solid #dbe3ea;
+    background: #f7f9fb;
+    padding: 72px 56px;
+  }
+
+  .product-order-cta h2 {
+    max-width: 920px;
+    margin: 0;
+    color: #0b1424;
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .product-order-cta p:not(.acrobat-eyebrow) {
+    max-width: 760px;
+    margin: 18px 0 0;
+    color: #536478;
+    line-height: 1.68;
+  }
+
+  .product-order-cta a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border-radius: 4px;
+    background: #0b1424;
+    padding: 0 24px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
   @media (max-width: 1120px) {
     .acrobat-range-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .product-order-cta {
+      grid-template-columns: 1fr;
       padding-left: 30px;
       padding-right: 30px;
     }
@@ -347,6 +375,18 @@ const downloads = [
     .acrobat-mb2 > div {
       grid-template-columns: 1fr;
       gap: 12px;
+    }
+
+    .product-order-cta {
+      padding: 56px 18px;
+    }
+
+    .product-order-cta h2 {
+      font-size: 2rem;
+    }
+
+    .product-order-cta a {
+      width: 100%;
     }
   }
 </style>

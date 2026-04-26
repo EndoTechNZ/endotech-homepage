@@ -39,6 +39,8 @@ const quickLinks = [
   { label: 'VortiFlow', href: '#contact-products' },
 ];
 
+const upcomingFileFamilies = ['RECI X', 'Hand files', 'Additional rotary systems'];
+
 const contactProducts = [
   {
     title: 'VortiFlow Irrigation Needle',
@@ -127,6 +129,21 @@ const orderModules = [
       <a href={`${base}resources/downloads/`}>Open technical files</a>
     </section>
 
+    <section class="order-category-heading" aria-labelledby="file-systems-title">
+      <div>
+        <p class="order-eyebrow">File Systems</p>
+        <h2 id="file-systems-title">Active ordering for glide path and shaping files.</h2>
+        <p>
+          Acrobat, ET TransformX, and PT TransformX are grouped here as the current file ordering area. This section is structured to expand as RECI X, hand files, and additional rotary systems are added.
+        </p>
+      </div>
+      <div class="upcoming-family-list" aria-label="Upcoming file families">
+        {upcomingFileFamilies.map((family) => (
+          <span>{family}</span>
+        ))}
+      </div>
+    </section>
+
     {orderModules.map((module) => (
       <section id={module.id} class="order-module" aria-labelledby={`${module.id}-title`}>
         <div class="order-module-intro">
@@ -156,9 +173,9 @@ const orderModules = [
       <div class="contact-products-heading">
         <div>
           <p class="order-eyebrow">Contact Products</p>
-          <h2 id="contact-products-title">Keep the whole product family on one ordering page.</h2>
+          <h2 id="contact-products-title">Materials and irrigation stay connected to ordering.</h2>
           <p>
-            VortiFlow and BCS are included here as direct enquiry routes so you do not need to leave the ordering flow to continue the conversation.
+            VortiFlow and BCS are included here as direct enquiry routes. Future obturation and bioceramic ordering modules can sit in their own product-family sections.
           </p>
         </div>
         <a href={`${base}about/contact/`}>Contact EndoTech NZ</a>
@@ -190,6 +207,7 @@ const orderModules = [
 
   .order-hero,
   .order-flow-note,
+  .order-category-heading,
   .order-module,
   .contact-products-section {
     max-width: 1260px;
@@ -222,6 +240,7 @@ const orderModules = [
   }
 
   .order-hero h1,
+  .order-category-heading h2,
   .order-module h2,
   .contact-products-heading h2,
   .contact-products-grid h3 {
@@ -241,6 +260,7 @@ const orderModules = [
   .order-lede,
   .order-hero-side p,
   .order-flow-note p,
+  .order-category-heading p,
   .order-module-intro p,
   .contact-products-heading p,
   .contact-products-grid p {
@@ -316,8 +336,48 @@ const orderModules = [
     font-size: 1rem;
   }
 
+  .order-category-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+    gap: 36px;
+    align-items: end;
+    padding-top: 80px;
+    padding-bottom: 16px;
+  }
+
+  .order-category-heading h2 {
+    max-width: 17ch;
+    font-size: clamp(2.35rem, 3vw, 3.75rem);
+    line-height: 1.06;
+  }
+
+  .order-category-heading p {
+    max-width: 52rem;
+    margin-top: 20px;
+  }
+
+  .upcoming-family-list {
+    display: grid;
+    gap: 10px;
+    border-top: 1px solid #cfd9e2;
+    padding-top: 18px;
+  }
+
+  .upcoming-family-list span {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    border: 1px solid #dbe3ea;
+    border-radius: 999px;
+    background: #ffffff;
+    padding: 0 16px;
+    color: #334155;
+    font-size: 0.86rem;
+    font-weight: 800;
+  }
+
   .order-module {
-    padding-top: 56px;
+    padding-top: 40px;
     padding-bottom: 0;
   }
 
@@ -434,6 +494,7 @@ const orderModules = [
   @media (max-width: 1120px) {
     .order-hero,
     .order-flow-note,
+    .order-category-heading,
     .order-module,
     .contact-products-section {
       padding-left: 30px;
@@ -441,6 +502,7 @@ const orderModules = [
     }
 
     .order-hero,
+    .order-category-heading,
     .order-module-intro,
     .contact-products-heading,
     .contact-products-grid {
@@ -465,6 +527,7 @@ const orderModules = [
   @media (max-width: 720px) {
     .order-hero,
     .order-flow-note,
+    .order-category-heading,
     .order-module,
     .contact-products-section {
       padding-left: 18px;
@@ -482,6 +545,7 @@ const orderModules = [
     }
 
     .order-flow-note,
+    .order-category-heading,
     .contact-products-section {
       padding-top: 20px;
       padding-bottom: 20px;

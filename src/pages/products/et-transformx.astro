@@ -1,26 +1,16 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import PremiumProductNarrative from '../../components/product/PremiumProductNarrative.astro';
-import ProductOrderSelector from '../../components/product/ProductOrderSelector.astro';
 import etProduct from '../../assets/et-transformx.png';
 import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
-import { getShopifyStoreDomain } from '../../utils/shopify';
-import { buildOrderSelectorItems, getOrderCoverageLabel } from '../../utils/productOrdering';
-import { etOrderEntries } from '../../data/productOrderingCatalog';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const base = import.meta.env.BASE_URL;
 const etVideoSrc = withBasePath('/videos/et-transformx-promo_1.mp4');
 const workflowPdfSrc = withBasePath('/downloads/ET-Technique-Work-Flow.pdf');
 const partNumbersPdfSrc = withBasePath('/downloads/ET-Part-Numbers.pdf');
-const shopifyStoreDomain = getShopifyStoreDomain();
-const orderPanelDescription = `To order
-- Choose file Size (Step 1)
-- Choose file length (Step 2)
-- Click 'Add to order'`;
-const etSelectionNote =
-  'ET TransformX currently covers .04 and .06 sequences across 21 mm, 25 mm, and 29 mm lengths, with assortment options available in the current NZ part-number range.';
-const etOrderItems = await buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain);
+const etOrderHref = `${base}order/#et-order`;
 const etSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -125,7 +115,7 @@ const downloads = [
     imageAlt="ET TransformX rotary files for established ET-style shaping sequences"
     visualTitle="ET TransformX system"
     visualText="Familiar .04/.06-style shaping logic positioned inside the EndoTech clinical workflow."
-    primaryCta={{ label: 'Configure ET sequence', href: '#order' }}
+    primaryCta={{ label: 'Order ET TransformX', href: etOrderHref }}
     secondaryCta={{ label: 'Technical files', href: '#downloads' }}
     clinicalProblem="Changing to a new rotary system often means relearning sequence logic, accepting less familiar apical behaviour, or sacrificing confidence in challenging anatomy."
     solution="ET TransformX keeps the established ET-style technique intact while combining Avatar Tip guidance and variable metallurgy to improve control where anatomy is least forgiving."
@@ -156,26 +146,21 @@ const downloads = [
       </div>
     </section>
 
-    <section id="order" slot="order" class="premium-order-anchor" aria-label="ET ordering selector">
-      <ProductOrderSelector
-        title="Order the ET sequence online"
-        description={orderPanelDescription}
-        coverageLabel={getOrderCoverageLabel(etOrderItems)}
-        packFormat="6 files per pack"
-        items={etOrderItems}
-        shopifyStoreDomain={shopifyStoreDomain}
-        selectionNote={etSelectionNote}
-      />
+    <section slot="order" class="product-order-cta" aria-labelledby="et-order-cta-title">
+      <div>
+        <p class="et-eyebrow">Ordering</p>
+        <h2 id="et-order-cta-title">Select ET TransformX sizes in the central ordering section.</h2>
+        <p>
+          Configure .04 and .06 sequences by size and length on the dedicated ordering page, where ET can be combined with Acrobat and PT in one order.
+        </p>
+      </div>
+      <a href={etOrderHref}>Order ET TransformX</a>
     </section>
   </PremiumProductNarrative>
 
 </ProductLayout>
 
 <style>
-  .premium-order-anchor {
-    scroll-margin-top: 96px;
-  }
-
   .et-media-section {
     display: grid;
     gap: 44px;
@@ -215,8 +200,55 @@ const downloads = [
     background: #0b1424;
   }
 
+  .product-order-cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 36px;
+    align-items: end;
+    border-top: 1px solid #dbe3ea;
+    background: #f7f9fb;
+    padding: 72px 56px;
+  }
+
+  .product-order-cta h2 {
+    max-width: 920px;
+    margin: 0;
+    color: #0b1424;
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .product-order-cta p:not(.et-eyebrow) {
+    max-width: 760px;
+    margin: 18px 0 0;
+    color: #536478;
+    line-height: 1.68;
+  }
+
+  .product-order-cta a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border-radius: 4px;
+    background: #0b1424;
+    padding: 0 24px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
   @media (max-width: 1120px) {
     .et-media-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .product-order-cta {
+      grid-template-columns: 1fr;
       padding-left: 30px;
       padding-right: 30px;
     }
@@ -230,6 +262,18 @@ const downloads = [
 
     .et-media-section h2 {
       font-size: 2.25rem;
+    }
+
+    .product-order-cta {
+      padding: 56px 18px;
+    }
+
+    .product-order-cta h2 {
+      font-size: 2rem;
+    }
+
+    .product-order-cta a {
+      width: 100%;
     }
   }
 </style>
