@@ -20,6 +20,8 @@ type Props = {
   packFormat: string;
   shopifyStoreDomain?: string | null;
   selectionNote?: string;
+  productFamily?: string;
+  productLabel?: string;
 };
 
 const {
@@ -31,6 +33,8 @@ const {
   packFormat,
   shopifyStoreDomain = null,
   selectionNote = '',
+  productFamily = 'File Systems',
+  productLabel = title.replace(/^Order the\s+/i, '').replace(/\s+online$/i, ''),
 } = Astro.props;
 
 const configurations = Array.from(
@@ -50,6 +54,7 @@ const defaultItem = items.find((item) => item.status === 'Available to order onl
 const defaultConfiguration = defaultItem.size;
 const defaultLengths = items.filter((item) => item.size === defaultConfiguration);
 const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
+const localPreviewOrdering = import.meta.env.DEV && !shopifyStoreDomain;
 ---
 
 <section class="border-b border-slate-200/80 bg-white" data-order-selector={selectorId}>
@@ -204,7 +209,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
           </dl>
 
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            {defaultItem.cartVariantId && defaultItem.status === 'Available to order online' ? (
+            {(defaultItem.cartVariantId && defaultItem.status === 'Available to order online') || localPreviewOrdering ? (
               <button
                 type="button"
                 class="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
@@ -248,7 +253,16 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
                 <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Current Order</p>
                 <h4 class="mt-2 text-lg font-bold tracking-tight text-slate-900">Selected packs</h4>
               </div>
-              <p class="text-sm font-semibold text-slate-600" data-order-total-packs>0 packs</p>
+              <div class="grid gap-2 text-left sm:justify-items-end sm:text-right">
+                <p class="text-sm font-semibold text-slate-600" data-order-total-packs>0 packs</p>
+                <button
+                  type="button"
+                  class="hidden text-sm font-semibold text-slate-500 underline decoration-slate-300 underline-offset-4 transition hover:text-slate-900"
+                  data-order-clear
+                >
+                  Clear order
+                </button>
+              </div>
             </div>
 
             <div class="mt-4 grid gap-3 sm:hidden" data-order-cards>
@@ -277,7 +291,10 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
             </div>
 
             <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p class="text-sm leading-6 text-slate-600" data-order-total-price>Total: $0.00</p>
+              <div>
+                <p class="text-sm leading-6 text-slate-600" data-order-total-price>Total: $0.00</p>
+                <p class="mt-1 text-xs leading-5 text-slate-500">Product total only. Freight and handling are calculated separately at checkout.</p>
+              </div>
               <a
                 href="/about/contact/"
                 class="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 opacity-50 pointer-events-none sm:w-auto"
@@ -431,10 +448,106 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
   }
 </style>
 
-<script define:vars={{ items, configurations, defaultConfiguration, selectorId, shopifyStoreDomain }}>
+<script define:vars={{ items, configurations, defaultConfiguration, selectorId, shopifyStoreDomain, productFamily, productLabel, localPreviewOrdering }}>
   const orderItems = items;
   const configurationMeta = configurations;
   const CART_STORAGE_KEY = 'endotech-order-cart-v1';
+  const ORDER_CART_GLOBAL_KEY = '__endotechOrderCartV1';
+
+  const getSharedOrderCart = () => {
+    if (window[ORDER_CART_GLOBAL_KEY]) return window[ORDER_CART_GLOBAL_KEY];
+
+    const selections = new Map();
+    const subscribers = new Set();
+
+    const save = () => {
+      try {
+        const payload = Array.from(selections.values()).map((entry) => ({
+          key: entry.key,
+          label: entry.label,
+          productFamily: entry.productFamily,
+          productLabel: entry.productLabel,
+          quantity: entry.quantity,
+          item: entry.item,
+        }));
+        window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(payload));
+      } catch {}
+    };
+
+    const load = () => {
+      try {
+        const raw = window.localStorage.getItem(CART_STORAGE_KEY);
+        if (!raw) return;
+
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return;
+
+        parsed.forEach((entry) => {
+          if (
+            !entry ||
+            typeof entry.key !== 'string' ||
+            typeof entry.label !== 'string' ||
+            typeof entry.quantity !== 'number' ||
+            entry.quantity <= 0 ||
+            typeof entry.item !== 'object' ||
+            entry.item === null
+          ) {
+            return;
+          }
+
+          selections.set(entry.key, {
+            key: entry.key,
+            label: entry.label,
+            productFamily: typeof entry.productFamily === 'string' ? entry.productFamily : 'File Systems',
+            productLabel: typeof entry.productLabel === 'string' ? entry.productLabel : entry.label,
+            quantity: entry.quantity,
+            item: entry.item,
+          });
+        });
+      } catch {}
+    };
+
+    const notify = () => {
+      subscribers.forEach((callback) => callback());
+    };
+
+    const update = (key, updater) => {
+      const existing = selections.get(key);
+      const next = updater(existing);
+
+      if (!next || next.quantity <= 0) {
+        selections.delete(key);
+      } else {
+        selections.set(key, next);
+      }
+
+      save();
+      notify();
+    };
+
+    const clear = () => {
+      selections.clear();
+      save();
+      notify();
+    };
+
+    const subscribe = (callback) => {
+      subscribers.add(callback);
+      return () => subscribers.delete(callback);
+    };
+
+    load();
+
+    window[ORDER_CART_GLOBAL_KEY] = {
+      selections,
+      save,
+      update,
+      clear,
+      subscribe,
+    };
+
+    return window[ORDER_CART_GLOBAL_KEY];
+  };
 
   const selectorRoot = document.querySelector(`[data-order-selector="${selectorId}"]`);
   const configurationContainer = selectorRoot?.querySelector('[data-order-configurations]');
@@ -469,50 +582,25 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
     const totalPacks = summaryRoot.querySelector('[data-order-total-packs]');
     const totalPrice = summaryRoot.querySelector('[data-order-total-price]');
     const checkout = summaryRoot.querySelector('[data-order-checkout]');
-    const orderSelections = new Map();
+    const clearOrder = summaryRoot.querySelector('[data-order-clear]');
+    const sharedOrderCart = getSharedOrderCart();
+    const orderSelections = sharedOrderCart.selections;
 
     const saveOrderSelections = () => {
-      try {
-        const payload = Array.from(orderSelections.values()).map((entry) => ({
-          key: entry.key,
-          label: entry.label,
-          quantity: entry.quantity,
-          item: entry.item,
-        }));
-        window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(payload));
-      } catch {}
+      sharedOrderCart.save();
     };
 
-    const loadOrderSelections = () => {
-      try {
-        const raw = window.localStorage.getItem(CART_STORAGE_KEY);
-        if (!raw) return;
-
-        const parsed = JSON.parse(raw);
-        if (!Array.isArray(parsed)) return;
-
-        parsed.forEach((entry) => {
-          if (
-            !entry ||
-            typeof entry.key !== 'string' ||
-            typeof entry.label !== 'string' ||
-            typeof entry.quantity !== 'number' ||
-            entry.quantity <= 0 ||
-            typeof entry.item !== 'object' ||
-            entry.item === null
-          ) {
-            return;
-          }
-
-          orderSelections.set(entry.key, {
-            key: entry.key,
-            label: entry.label,
-            quantity: entry.quantity,
-            item: entry.item,
-          });
-        });
-      } catch {}
-    };
+    const groupOrderEntries = (entries) =>
+      entries.reduce((groups, entry) => {
+        const groupName = entry.productFamily || 'File Systems';
+        const existingGroup = groups.find((group) => group.name === groupName);
+        if (existingGroup) {
+          existingGroup.entries.push(entry);
+        } else {
+          groups.push({ name: groupName, entries: [entry] });
+        }
+        return groups;
+      }, []);
 
     const getStatusClasses = (value) => {
       if (value === 'Available to order online') return 'inline-flex rounded-full px-3 py-1 text-xs font-semibold bg-emerald-50 text-emerald-700';
@@ -533,91 +621,118 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
     const updateCheckoutState = () => {
       if (!(checkout instanceof HTMLAnchorElement)) return;
 
-      const lines = Array.from(orderSelections.values()).filter((entry) => entry.item.cartVariantId && entry.quantity > 0);
+      const lines = Array.from(orderSelections.values()).filter((entry) => entry.quantity > 0);
+      const checkoutLines = lines.filter((entry) => entry.item.cartVariantId);
       const totalQuantity = lines.reduce((sum, entry) => sum + entry.quantity, 0);
       const totalAmount = lines.reduce((sum, entry) => sum + parsePrice(entry.item.price) * entry.quantity, 0);
 
       if (totalPacks) totalPacks.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'pack' : 'packs'}`;
       if (totalPrice) totalPrice.textContent = `Total: ${new Intl.NumberFormat('en-NZ', { style: 'currency', currency: 'NZD' }).format(totalAmount)}`;
+      if (clearOrder instanceof HTMLElement) clearOrder.classList.toggle('hidden', totalQuantity === 0);
 
-      if (!lines.length || !shopifyStoreDomain) {
+      if (!checkoutLines.length || !shopifyStoreDomain) {
         checkout.setAttribute('href', '/about/contact/');
         checkout.setAttribute('aria-disabled', 'true');
         checkout.classList.add('opacity-50', 'pointer-events-none');
         return;
       }
 
-      const cartPath = lines.map((entry) => `${entry.item.cartVariantId}:${entry.quantity}`).join(',');
+      const cartPath = checkoutLines.map((entry) => `${entry.item.cartVariantId}:${entry.quantity}`).join(',');
       checkout.setAttribute('href', `https://${shopifyStoreDomain}/cart/${cartPath}`);
       checkout.setAttribute('aria-disabled', 'false');
       checkout.classList.remove('opacity-50', 'pointer-events-none');
     };
 
     const renderOrderLines = () => {
+      const entries = Array.from(orderSelections.values());
+      const groupedEntries = groupOrderEntries(entries);
+
       if (orderLines instanceof HTMLElement) {
-        const entries = Array.from(orderSelections.values());
         orderLines.querySelectorAll('[data-order-line]').forEach((line) => line.remove());
+        orderLines.querySelectorAll('[data-order-group]').forEach((line) => line.remove());
 
         if (emptyState instanceof HTMLElement) {
           emptyState.classList.toggle('hidden', entries.length > 0);
         }
 
-        entries.forEach((entry) => {
-          const row = document.createElement('tr');
-          row.setAttribute('data-order-line', 'true');
-          row.className = 'border-t border-slate-200';
-
-          row.innerHTML = `
-            <td class="px-4 py-3 font-semibold text-slate-900">${entry.label}</td>
-            <td class="px-4 py-3 text-slate-600">${entry.item.length}</td>
-            <td class="px-4 py-3">
-              <div class="flex items-center gap-2">
-                <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-decrement="${entry.key}" aria-label="Reduce quantity">-</button>
-                <span class="min-w-[1.5rem] text-center font-semibold text-slate-900">${entry.quantity}</span>
-                <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-increment="${entry.key}" aria-label="Increase quantity">+</button>
-              </div>
-            </td>
+        groupedEntries.forEach((group) => {
+          const groupRow = document.createElement('tr');
+          groupRow.setAttribute('data-order-group', 'true');
+          groupRow.className = 'border-t border-slate-200 bg-slate-50/80';
+          groupRow.innerHTML = `
+            <td colspan="3" class="px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">${group.name}</td>
           `;
+          orderLines.appendChild(groupRow);
 
-          orderLines.appendChild(row);
+          group.entries.forEach((entry) => {
+            const row = document.createElement('tr');
+            row.setAttribute('data-order-line', 'true');
+            row.className = 'border-t border-slate-200';
+
+            row.innerHTML = `
+              <td class="px-4 py-3">
+                <p class="font-semibold text-slate-900">${entry.productLabel || entry.label}</p>
+                <p class="mt-1 text-xs font-semibold text-slate-500">${entry.label} · SKU ${entry.item.sku}</p>
+              </td>
+              <td class="px-4 py-3 text-slate-600">${entry.item.length}</td>
+              <td class="px-4 py-3">
+                <div class="flex items-center gap-2">
+                  <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-decrement="${entry.key}" aria-label="Reduce quantity">-</button>
+                  <span class="min-w-[1.5rem] text-center font-semibold text-slate-900">${entry.quantity}</span>
+                  <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-increment="${entry.key}" aria-label="Increase quantity">+</button>
+                </div>
+              </td>
+            `;
+
+            orderLines.appendChild(row);
+          });
         });
       }
 
       if (orderCards instanceof HTMLElement) {
-        const entries = Array.from(orderSelections.values());
         orderCards.querySelectorAll('[data-order-card]').forEach((card) => card.remove());
+        orderCards.querySelectorAll('[data-order-group-card]').forEach((card) => card.remove());
 
         if (emptyCard instanceof HTMLElement) {
           emptyCard.classList.toggle('hidden', entries.length > 0);
         }
 
-        entries.forEach((entry) => {
-          const card = document.createElement('article');
-          card.setAttribute('data-order-card', 'true');
-          card.className = 'rounded-[1rem] border border-slate-200 bg-white px-4 py-4';
+        groupedEntries.forEach((group) => {
+          const groupCard = document.createElement('div');
+          groupCard.setAttribute('data-order-group-card', 'true');
+          groupCard.className = 'text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500';
+          groupCard.textContent = group.name;
+          orderCards.appendChild(groupCard);
 
-          card.innerHTML = `
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">File</p>
-                <p class="mt-2 text-sm font-semibold text-slate-900">${entry.label}</p>
-              </div>
-              <div class="text-right">
-                <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Length</p>
-                <p class="mt-2 text-sm text-slate-600">${entry.item.length}</p>
-              </div>
-            </div>
-            <div class="mt-4 flex items-center justify-between gap-3">
-              <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Qty</p>
-              <div class="flex items-center gap-2">
-                <button type="button" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-decrement="${entry.key}" aria-label="Reduce quantity">-</button>
-                <span class="min-w-[1.75rem] text-center font-semibold text-slate-900">${entry.quantity}</span>
-                <button type="button" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-increment="${entry.key}" aria-label="Increase quantity">+</button>
-              </div>
-            </div>
-          `;
+          group.entries.forEach((entry) => {
+            const card = document.createElement('article');
+            card.setAttribute('data-order-card', 'true');
+            card.className = 'rounded-[1rem] border border-slate-200 bg-white px-4 py-4';
 
-          orderCards.appendChild(card);
+            card.innerHTML = `
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Product</p>
+                  <p class="mt-2 text-sm font-semibold text-slate-900">${entry.productLabel || entry.label}</p>
+                  <p class="mt-1 text-xs font-semibold text-slate-500">${entry.label} · SKU ${entry.item.sku}</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Length</p>
+                  <p class="mt-2 text-sm text-slate-600">${entry.item.length}</p>
+                </div>
+              </div>
+              <div class="mt-4 flex items-center justify-between gap-3">
+                <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Qty</p>
+                <div class="flex items-center gap-2">
+                  <button type="button" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-decrement="${entry.key}" aria-label="Reduce quantity">-</button>
+                  <span class="min-w-[1.75rem] text-center font-semibold text-slate-900">${entry.quantity}</span>
+                  <button type="button" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950" data-order-increment="${entry.key}" aria-label="Increase quantity">+</button>
+                </div>
+              </div>
+            `;
+
+            orderCards.appendChild(card);
+          });
         });
       }
 
@@ -627,20 +742,19 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
 
     const addCurrentSelection = () => {
       const item = currentSelection();
-      if (!item || !item.cartVariantId || item.status !== 'Available to order online') return;
+      if (!item) return;
+      if (!localPreviewOrdering && (!item.cartVariantId || item.status !== 'Available to order online')) return;
 
       const configLabel = configurationMeta.find((entry) => entry.value === item.size)?.label ?? item.size;
       const key = item.cartVariantId ?? item.sku;
-      const existingEntry = orderSelections.get(key);
-
-      orderSelections.set(key, {
+      sharedOrderCart.update(key, (existingEntry) => ({
         key,
         label: configLabel,
+        productFamily,
+        productLabel,
         item,
         quantity: existingEntry ? existingEntry.quantity + 1 : 1,
-      });
-
-      renderOrderLines();
+      }));
     };
 
     const renderLengths = () => {
@@ -680,12 +794,12 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
         statusBadge.className = getStatusClasses(item.status);
       }
       if (primaryButton instanceof HTMLButtonElement) {
-        const canAdd = Boolean(item.cartVariantId && item.status === 'Available to order online');
+        const canAdd = localPreviewOrdering || Boolean(item.cartVariantId && item.status === 'Available to order online');
         primaryButton.disabled = !canAdd;
         primaryButton.classList.toggle('hidden', !canAdd);
       }
       if (primaryLink instanceof HTMLAnchorElement) {
-        const useLinkAction = !(item.cartVariantId && item.status === 'Available to order online');
+        const useLinkAction = !localPreviewOrdering && !(item.cartVariantId && item.status === 'Available to order online');
         primaryLink.classList.toggle('hidden', !useLinkAction);
         primaryLink.textContent = item.cartUrl ? 'Add 6-pack to cart' : item.productUrl ? 'View Shopify product' : 'Contact EndoTech';
         primaryLink.setAttribute('href', item.cartUrl ?? item.productUrl ?? '/about/contact/');
@@ -715,22 +829,17 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
 
         if (!key) return;
 
-        const entry = orderSelections.get(key);
-        if (!entry) return;
-
         if (incrementKey) {
-          entry.quantity += 1;
-          orderSelections.set(key, entry);
+          sharedOrderCart.update(key, (entry) => {
+            if (!entry) return null;
+            return { ...entry, quantity: entry.quantity + 1 };
+          });
         } else if (decrementKey) {
-          entry.quantity -= 1;
-          if (entry.quantity <= 0) {
-            orderSelections.delete(key);
-          } else {
-            orderSelections.set(key, entry);
-          }
+          sharedOrderCart.update(key, (entry) => {
+            if (!entry) return null;
+            return { ...entry, quantity: entry.quantity - 1 };
+          });
         }
-
-        renderOrderLines();
     };
 
     if (orderLines instanceof HTMLElement) {
@@ -739,6 +848,10 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
 
     if (orderCards instanceof HTMLElement) {
       orderCards.addEventListener('click', handleOrderLineClick);
+    }
+
+    if (clearOrder instanceof HTMLButtonElement) {
+      clearOrder.addEventListener('click', () => sharedOrderCart.clear());
     }
 
     configurationContainer.addEventListener('click', (event) => {
@@ -792,7 +905,7 @@ const selectorId = `order-selector-${defaultItem.sku.toLowerCase()}`;
       renderSummary();
     });
 
-    loadOrderSelections();
+    sharedOrderCart.subscribe(renderOrderLines);
     renderOrderLines();
   }
 </script>

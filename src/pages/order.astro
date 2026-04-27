@@ -17,6 +17,7 @@ const orderPanelDescription = `To order
 - Choose file Size (Step 1)
 - Choose file length (Step 2)
 - Click 'Add to order'`;
+const filePackFallbackPrice = '$65.00 NZD';
 
 const acrobatSelectionNote =
   'The MB2 option is limited to 17 mm. Standard Acrobat sequence files are available in 21 mm, 25 mm, and 29 mm.';
@@ -26,9 +27,9 @@ const ptSelectionNote =
   'SX is supplied in 19 mm. Shaping and finishing files run across 21 mm, 25 mm, and 31 mm lengths, with PT assortment packs also available across the current NZ range.';
 
 const [acrobatItems, etItems, ptItems] = await Promise.all([
-  buildOrderSelectorItems(acrobatOrderEntries, shopifyStoreDomain, '$65.00 NZD'),
-  buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain),
-  buildOrderSelectorItems(ptOrderEntries, shopifyStoreDomain),
+  buildOrderSelectorItems(acrobatOrderEntries, shopifyStoreDomain, filePackFallbackPrice),
+  buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain, filePackFallbackPrice),
+  buildOrderSelectorItems(ptOrderEntries, shopifyStoreDomain, filePackFallbackPrice),
 ]);
 
 const quickLinks = [
@@ -67,6 +68,8 @@ const orderModules = [
     image: acrobatFiles.src,
     alt: 'Acrobat Glide Path Files',
     orderTitle: 'Order the Acrobat sequence online',
+    productFamily: 'Glide Path',
+    productLabel: 'Acrobat Glide Path',
     items: acrobatItems,
     selectionNote: acrobatSelectionNote,
   },
@@ -78,6 +81,8 @@ const orderModules = [
     image: etProduct.src,
     alt: 'ET TransformX rotary files',
     orderTitle: 'Order the ET sequence online',
+    productFamily: 'Rotary Files',
+    productLabel: 'ET TransformX',
     items: etItems,
     selectionNote: etSelectionNote,
   },
@@ -89,6 +94,8 @@ const orderModules = [
     image: ptProduct.src,
     alt: 'PT TransformX rotary files',
     orderTitle: 'Order the PT sequence online',
+    productFamily: 'Rotary Files',
+    productLabel: 'PT TransformX',
     items: ptItems,
     selectionNote: ptSelectionNote,
   },
@@ -165,6 +172,8 @@ const orderModules = [
           items={module.items}
           shopifyStoreDomain={shopifyStoreDomain}
           selectionNote={module.selectionNote}
+          productFamily={module.productFamily}
+          productLabel={module.productLabel}
         />
       </section>
     ))}
