@@ -112,7 +112,7 @@ const orderModules = [
     <section class="order-hero" aria-labelledby="order-title">
       <div>
         <p class="order-eyebrow">NZ Ordering</p>
-        <h1 id="order-title">Build the order in one place.</h1>
+        <h1 id="order-title">Order here</h1>
         <p class="order-lede">
           Scroll from glide path to shaping without jumping between product pages. Acrobat, ET TransformX, and PT TransformX all use the same combined order logic.
         </p>
@@ -151,30 +151,37 @@ const orderModules = [
       </div>
     </section>
 
-    {orderModules.map((module) => (
+    {orderModules.map((module, index) => (
       <section id={module.id} class="order-module" aria-labelledby={`${module.id}-title`}>
-        <div class="order-module-intro">
-          <div>
-            <p class="order-eyebrow">{module.eyebrow}</p>
-            <h2 id={`${module.id}-title`}>{module.title}</h2>
-            <p>{module.text}</p>
+        <div class="order-module-card">
+          <div class="order-module-index" aria-hidden="true">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <small>{module.eyebrow}</small>
           </div>
-          <figure>
-            <img src={module.image} alt={module.alt} />
-          </figure>
-        </div>
 
-        <ProductOrderSelector
-          title={module.orderTitle}
-          description={orderPanelDescription}
-          coverageLabel={getOrderCoverageLabel(module.items)}
-          packFormat="6 files per pack"
-          items={module.items}
-          shopifyStoreDomain={shopifyStoreDomain}
-          selectionNote={module.selectionNote}
-          productFamily={module.productFamily}
-          productLabel={module.productLabel}
-        />
+          <div class="order-module-intro">
+            <div>
+              <p class="order-eyebrow">{module.eyebrow}</p>
+              <h2 id={`${module.id}-title`}>{module.title}</h2>
+              <p>{module.text}</p>
+            </div>
+            <figure>
+              <img src={module.image} alt={module.alt} />
+            </figure>
+          </div>
+
+          <ProductOrderSelector
+            title={module.orderTitle}
+            description={orderPanelDescription}
+            coverageLabel={getOrderCoverageLabel(module.items)}
+            packFormat="6 files per pack"
+            items={module.items}
+            shopifyStoreDomain={shopifyStoreDomain}
+            selectionNote={module.selectionNote}
+            productFamily={module.productFamily}
+            productLabel={module.productLabel}
+          />
+        </div>
       </section>
     ))}
 
@@ -386,12 +393,71 @@ const orderModules = [
   }
 
   .order-module {
+    scroll-margin-top: 104px;
     padding-top: 40px;
     padding-bottom: 0;
   }
 
   .order-module + .order-module {
-    padding-top: 72px;
+    padding-top: 84px;
+  }
+
+  .order-module-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ccd8e3;
+    border-left: 7px solid #0f5878;
+    border-radius: 10px;
+    background:
+      linear-gradient(90deg, rgba(15, 88, 120, 0.055), transparent 38%),
+      #ffffff;
+    padding: 34px 32px 32px;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.92) inset,
+      0 26px 62px -52px rgba(15, 23, 42, 0.34);
+  }
+
+  .order-module-card::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: #b7c6d4;
+    content: '';
+  }
+
+  .order-module-index {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 34px;
+    margin-bottom: 28px;
+    border: 1px solid #c8d5e0;
+    border-radius: 999px;
+    background: #f7fafc;
+    padding: 0 14px 0 5px;
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-weight: 800;
+  }
+
+  .order-module-index span {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: #0b1424;
+    color: #ffffff;
+    font-size: 0.7rem;
+  }
+
+  .order-module-index small {
+    color: #5076b8;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
   }
 
   .order-module-intro {
@@ -399,7 +465,7 @@ const orderModules = [
     grid-template-columns: minmax(0, 0.98fr) minmax(280px, 0.72fr);
     gap: 36px;
     align-items: end;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
 
   .order-module-intro h2 {
@@ -413,10 +479,18 @@ const orderModules = [
   }
 
   .order-module-intro figure {
+    display: grid;
+    place-items: center;
+    min-height: 190px;
     margin: 0;
-    border-top: 1px solid #cfd9e2;
-    border-bottom: 1px solid #cfd9e2;
-    padding: 22px 0;
+    border: 1px solid #d6e0e8;
+    border-radius: 8px;
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.022) 1px, transparent 1px),
+      #f8fafc;
+    background-size: 22px 22px;
+    padding: 26px;
   }
 
   .order-module-intro img {
@@ -425,6 +499,23 @@ const orderModules = [
     max-height: 240px;
     object-fit: contain;
     margin: 0 auto;
+  }
+
+  .order-module-card :global([data-order-selector]) {
+    border-bottom: 0;
+    background: transparent;
+  }
+
+  .order-module-card :global([data-order-selector] > div) {
+    max-width: none;
+    padding: 0;
+  }
+
+  .order-module-card :global(.order-selector-shell) {
+    border-color: #cbd8e2;
+    border-radius: 8px;
+    background: rgba(248, 250, 252, 0.84);
+    box-shadow: 0 28px 62px -52px rgba(15, 23, 42, 0.38);
   }
 
   .contact-products-section {
@@ -564,7 +655,22 @@ const orderModules = [
       padding-top: 56px;
     }
 
+    .order-module-card {
+      border-left-width: 5px;
+      padding: 22px 16px 18px;
+    }
+
+    .order-module-index {
+      margin-bottom: 22px;
+    }
+
+    .order-module-intro {
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
     .order-module-intro figure {
+      min-height: 160px;
       padding: 18px 0;
     }
 
