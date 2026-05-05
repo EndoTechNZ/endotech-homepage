@@ -143,26 +143,25 @@ const evidence = [
       Menu
     </button>
   </div>
-</header>
-
-<div id="homepage-mobile-menu" class="homepage-mobile-menu">
-  <div class="homepage-mobile-menu-shell">
-    <a href={base}>Home</a>
-    <a href={`${base}products/overview/`}>Product Overview</a>
-    <a href={`${base}technique/workflow/`}>Clinical Workflow</a>
-    <a href={`${base}technology/transform-technology/`}>Technology</a>
-    <a href={`${base}order/`}>Order</a>
-    <a href={`${base}products/acrobat-glide-path/`}>Acrobat Glide Path</a>
-    <a href={`${base}products/et-transformx/`}>ET TransformX</a>
-    <a href={`${base}products/pt-transformx/`}>PT TransformX</a>
-    <a href={`${base}products/vortiflow-irrigation-needle/`}>VortiFlow</a>
-    <a href={`${base}products/bcs/`}>BCS Family</a>
-    <a href={`${base}resources/clinical-tips/`}>Education</a>
-    <a href={`${base}products/bcs/evidence/`}>Evidence & Downloads</a>
-    <a href={`${base}about/company/`}>About</a>
-    <a href={`${base}about/contact/`}>Contact</a>
+  <div id="homepage-mobile-menu" class="homepage-mobile-menu">
+    <div class="homepage-mobile-menu-shell">
+      <a href={base}>Home</a>
+      <a href={`${base}products/overview/`}>Product Overview</a>
+      <a href={`${base}technique/workflow/`}>Clinical Workflow</a>
+      <a href={`${base}technology/transform-technology/`}>Technology</a>
+      <a href={`${base}order/`}>Order</a>
+      <a href={`${base}products/acrobat-glide-path/`}>Acrobat Glide Path</a>
+      <a href={`${base}products/et-transformx/`}>ET TransformX</a>
+      <a href={`${base}products/pt-transformx/`}>PT TransformX</a>
+      <a href={`${base}products/vortiflow-irrigation-needle/`}>VortiFlow</a>
+      <a href={`${base}products/bcs/`}>BCS Family</a>
+      <a href={`${base}resources/clinical-tips/`}>Education</a>
+      <a href={`${base}products/bcs/evidence/`}>Evidence & Downloads</a>
+      <a href={`${base}about/company/`}>About</a>
+      <a href={`${base}about/contact/`}>Contact</a>
+    </div>
   </div>
-</div>
+</header>
 
 <main class="homepage-v3">
   <section class="hero" aria-labelledby="hero-title">
@@ -367,9 +366,15 @@ const evidence = [
     link.addEventListener('click', () => setProductsMenu(false));
   });
 
-  mobileMenuButton?.addEventListener('click', () => {
+  mobileMenuButton?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
     setMobileMenu(!isOpen);
+  });
+
+  mobileMenu?.addEventListener('click', (event) => {
+    event.stopPropagation();
   });
 
   mobileMenu?.querySelectorAll('a').forEach((link) => {
@@ -470,6 +475,7 @@ const evidence = [
     position: sticky;
     top: 0;
     z-index: 50;
+    overflow: visible;
     display: grid;
     grid-template-columns: minmax(210px, auto) 1fr auto;
     gap: 28px;
@@ -670,8 +676,14 @@ const evidence = [
 
   .homepage-mobile-menu {
     display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 49;
     border-bottom: 1px solid #dbe3ea;
     background: rgba(247, 249, 251, 0.98);
+    box-shadow: 0 22px 44px rgba(15, 23, 42, 0.14);
   }
 
   .homepage-mobile-menu-shell {
