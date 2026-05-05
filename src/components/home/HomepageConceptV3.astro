@@ -14,13 +14,14 @@ const base = import.meta.env.BASE_URL;
 const avatarTipVideo = `${base}videos/avatar-tip/avatar-tip-rounded.mp4`;
 
 const navItems = [
-  { label: 'Clinical Workflow', href: '#workflow' },
+  { label: 'Home', href: base },
+  { label: 'Products', href: `${base}products/overview/` },
+  { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
   { label: 'Technology', href: `${base}technology/transform-technology/` },
   { label: 'Order', href: `${base}order/` },
-  { label: 'Products', href: '#products' },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
-  { label: 'Evidence', href: '#evidence' },
-  { label: 'Contact', href: `${base}about/contact/` },
+  { label: 'Evidence & Downloads', href: `${base}products/bcs/evidence/` },
+  { label: 'About', href: `${base}about/company/` },
 ];
 
 const productMenu = [
@@ -137,7 +138,7 @@ const evidence = [
   </nav>
 
   <div class="header-actions">
-    <a class="header-action" href={`${base}resources/downloads/`}>Downloads</a>
+    <a class="header-action" href={`${base}about/contact/`}>Contact</a>
     <button class="header-menu-toggle" id="homepage-mobile-menu-button" type="button" aria-expanded="false" aria-controls="homepage-mobile-menu">
       Menu
     </button>
@@ -146,17 +147,19 @@ const evidence = [
 
 <div id="homepage-mobile-menu" class="homepage-mobile-menu">
   <div class="homepage-mobile-menu-shell">
-    <a href="#workflow">Clinical Workflow</a>
+    <a href={base}>Home</a>
+    <a href={`${base}products/overview/`}>Product Overview</a>
+    <a href={`${base}technique/workflow/`}>Clinical Workflow</a>
     <a href={`${base}technology/transform-technology/`}>Technology</a>
     <a href={`${base}order/`}>Order</a>
-    <a href={`${base}products/overview/`}>Shape Overview</a>
     <a href={`${base}products/acrobat-glide-path/`}>Acrobat Glide Path</a>
     <a href={`${base}products/et-transformx/`}>ET TransformX</a>
     <a href={`${base}products/pt-transformx/`}>PT TransformX</a>
     <a href={`${base}products/vortiflow-irrigation-needle/`}>VortiFlow</a>
     <a href={`${base}products/bcs/`}>BCS Family</a>
     <a href={`${base}resources/clinical-tips/`}>Education</a>
-    <a href="#evidence">Evidence</a>
+    <a href={`${base}products/bcs/evidence/`}>Evidence & Downloads</a>
+    <a href={`${base}about/company/`}>About</a>
     <a href={`${base}about/contact/`}>Contact</a>
   </div>
 </div>
