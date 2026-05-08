@@ -5,7 +5,6 @@ import transformxSystem from '../../assets/transformx-rotary-file-system.png';
 import etProduct from '../../assets/et-transformx.png';
 import ptProduct from '../../assets/pt-transformx.png';
 import acrobatProduct from '../../assets/acrobat-glide-path-files.png';
-import bcsSealer from '../../assets/bcs-sealer.png';
 import vortiflowFlow from '../../assets/vortiflow/vortiflow-fluid-dynamics-clean.png';
 import { siteConfig } from '../../config/site';
 import { getHomepageMobileNavItems, getPrimaryNavItems, getProductMenu } from '../../data/navigation';
@@ -17,67 +16,126 @@ const avatarTipVideo = `${base}videos/avatar-tip/avatar-tip-rounded.mp4`;
 const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
 const mobileNavItems = getHomepageMobileNavItems(base);
-
-const clinicalPairs = [
-  {
-    problem: 'Curved canals increase restoring forces and concentrate procedural risk near working length.',
-    response: 'Avatar Tip and TransformX file behaviour support apical guidance, canal centring, and controlled advancement where tolerance for error is lowest.',
-  },
-  {
-    problem: 'Preparation shape affects irrigation exchange, obturation control, and the quality of the final seal.',
-    response: 'EndoTech links glide path, shaping, cleaning support, and bioceramic sealing as one clinical sequence, not separate product decisions.',
-  },
-  {
-    problem: 'Clinicians need more control without disrupting familiar technique or sequence logic.',
-    response: 'TransformX is positioned for predictable shaping behaviour within familiar workflows, helping clinicians adapt to demanding anatomy without unnecessary complexity.',
-  },
-];
-
 const workflow = getWorkflowStripItems(base);
 
-const products = [
+const heroHighlights = [
+  'Engineered endodontic systems for New Zealand clinicians.',
+  'Designed around control, safety, and adaptable shaping behaviour.',
+  'Supported by evidence, downloads, and direct local enquiry pathways.',
+];
+
+const systemOverview = [
   {
-    eyebrow: 'Contact for details',
-    title: 'ET TransformX Files',
-    description: 'For clinicians already shaping with ET, EdgeX7, or other .04/.06-style sequences.',
-    tags: ['EdgeTaper', 'EdgeX7', '.04/.06'],
-    image: etProduct.src,
+    label: 'TransformX ET',
+    role: 'Shape',
+    summary: 'ET-style shaping for clinicians preserving .04/.06 sequence logic with better apical guidance.',
     href: `${base}products/et-transformx/`,
   },
   {
-    eyebrow: 'Contact for details',
-    title: 'PT TransformX Files',
-    description: 'For clinicians using ProTaper-style systems who want familiar progression with more control.',
-    tags: ['ProTaper Gold', 'ProTaper Next'],
-    image: ptProduct.src,
+    label: 'TransformX PT',
+    role: 'Shape',
+    summary: 'PT-style progression for practices wanting familiar crown-down rhythm with greater control.',
     href: `${base}products/pt-transformx/`,
   },
   {
-    eyebrow: 'Educational overview',
-    title: 'VortiFlow Irrigation Needle',
-    description: 'Engineered lateral-flow irrigation positioned between shaping and final sealing.',
-    tags: ['Irrigation', 'Lateral Flow', 'Helical Channel'],
-    image: vortiflowFlow.src,
-    href: `${base}products/vortiflow-irrigation-needle/`,
+    label: 'Acrobat',
+    role: 'Glide',
+    summary: 'Rotary glide path files that establish a reproducible route before shaping becomes demanding.',
+    href: `${base}products/acrobat-glide-path/`,
   },
   {
-    eyebrow: 'Contact for details',
-    title: 'BCS BioCeramic Materials',
-    description: 'Premixed bioceramic materials for practices building a matched shaping-to-sealing workflow.',
-    tags: ['Sealing + Repair', 'Bioceramic'],
-    image: bcsSealer.src,
+    label: 'BCS / iRoot',
+    role: 'Seal',
+    summary: 'Premixed bioceramic materials for final sealing and repair across a matched obturation pathway.',
     href: `${base}products/bcs/`,
+  },
+  {
+    label: 'VortiFlow',
+    role: 'Clean 3D',
+    summary: 'Irrigation support engineered around controlled fluid behaviour after preparation is complete.',
+    href: `${base}products/vortiflow-irrigation-needle/`,
   },
 ];
 
-const productChooserNote =
-  'Request pricing, pack configuration, and New Zealand availability directly from EndoTech.';
+const featuredProducts = [
+  {
+    eyebrow: 'Shaping System',
+    title: 'ET TransformX Files',
+    description:
+      'For clinicians already shaping with ET, EdgeX7, or other .04/.06-style systems who want safer progression toward working length.',
+    bullets: ['Avatar Tip guidance', 'Transform Technology metallurgy', 'Familiar ET-style sequence logic'],
+    image: etProduct.src,
+    href: `${base}products/et-transformx/`,
+    cta: 'Review ET TransformX',
+  },
+  {
+    eyebrow: 'Shaping System',
+    title: 'PT TransformX Files',
+    description:
+      'For ProTaper-style workflows that need a more controlled shaping response without abandoning familiar progression.',
+    bullets: ['Progressive PT-style rhythm', 'Apical adaptability', 'Lower switching curve for existing users'],
+    image: ptProduct.src,
+    href: `${base}products/pt-transformx/`,
+    cta: 'Review PT TransformX',
+  },
+  {
+    eyebrow: 'Glide Path',
+    title: 'Acrobat Glide Path Files',
+    description:
+      'Rotary glide path files positioned before shaping to create a controlled, reproducible path through demanding anatomy.',
+    bullets: ['Transform Metal Technology', 'Working-length progression', 'Useful before full shaping sequence'],
+    image: acrobatProduct.src,
+    href: `${base}products/acrobat-glide-path/`,
+    cta: 'Review Acrobat',
+  },
+  {
+    eyebrow: 'Irrigation & Seal',
+    title: 'VortiFlow and BCS BioCeramics',
+    description:
+      'A clean-to-seal pairing that connects irrigant exchange and premixed bioceramic sealing to the final restorative endpoint.',
+    bullets: ['3D irrigation support', 'Premixed sealer workflow', 'Matched system thinking after shaping'],
+    image: vortiflowFlow.src,
+    href: `${base}products/bcs/evidence/`,
+    cta: 'Review evidence and downloads',
+  },
+];
 
-const evidence = [
-  'Transform Technology overview',
-  'Avatar Tip and apical control',
-  'Technique sheets and part numbers',
-  'Clinical education resources',
+const evidenceLinks = [
+  {
+    label: 'Downloads',
+    detail: 'Technique sheets, workflow PDFs, and technical support files for evaluation and ordering.',
+    href: `${base}resources/downloads/`,
+  },
+  {
+    label: 'Clinical workflow',
+    detail: 'Assess to restore, structured as a practical sequence rather than isolated product claims.',
+    href: `${base}technique/workflow/`,
+  },
+  {
+    label: 'Clinical education',
+    detail: 'Education material that links anatomy, shaping behaviour, irrigation, and final sealing decisions.',
+    href: `${base}resources/clinical-tips/`,
+  },
+  {
+    label: 'Technology rationale',
+    detail: 'Transform Technology and Avatar Tip are framed by what they help clinicians control clinically.',
+    href: `${base}technology/transform-technology/`,
+  },
+];
+
+const supportPanels = [
+  {
+    title: 'NZ availability',
+    text: 'Request current New Zealand availability, pack configuration, and product guidance directly from EndoTech NZ.',
+  },
+  {
+    title: 'Clinical support',
+    text: 'Use the workflow, technology, and education pages to review how each product fits the treatment sequence.',
+  },
+  {
+    title: 'Clinic purchasing',
+    text: 'The site is structured to support both product evaluation and practical next-step ordering conversations.',
+  },
 ];
 ---
 
@@ -128,6 +186,7 @@ const evidence = [
       Menu
     </button>
   </div>
+
   <div id="homepage-mobile-menu" class="homepage-mobile-menu">
     <div class="homepage-mobile-menu-shell">
       {mobileNavItems.map((item) => (
@@ -139,176 +198,232 @@ const evidence = [
 
 <main class="homepage-v3">
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <p class="eyebrow">EndoTech NZ</p>
-      <h1 id="hero-title">
-        <span class="hero-title-line hero-title-line--primary">Reduce the unexpected</span>
-        <span class="hero-title-line hero-title-line--context">in Endodontics</span>
-        <span class="hero-title-line hero-title-line--support">Products Engineered for Success</span>
-      </h1>
-      <p>
-        Engineered endodontic systems for controlled shaping, predictable sealing, and clinical confidence from glide path to final restoration.
-      </p>
-      <div class="hero-actions">
-        <a class="button primary" href="#workflow">Review the workflow</a>
-        <a class="button secondary" href="#technology">Explore technology</a>
-        <a class="button secondary" href="#products">View products</a>
+    <div class="section-shell">
+      <div class="hero-copy">
+        <p class="eyebrow">EndoTech NZ</p>
+        <h1 id="hero-title">Engineered endodontics for New Zealand clinicians.</h1>
+        <p class="hero-lead">
+          Evidence-led shaping, irrigation, and sealing systems presented as one clinical pathway for safer preparation, cleaner canals, and more predictable obturation.
+        </p>
+
+        <ul class="hero-highlights" aria-label="Homepage highlights">
+          {heroHighlights.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+
+        <div class="hero-actions">
+          <a class="button primary" href={`${base}products/overview/`}>View product overview</a>
+          <a class="button secondary" href="#workflow">Review workflow</a>
+          <a class="button secondary" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-device">
+          <div class="hero-device-header">
+            <span>Clinical system overview</span>
+            <small>Assess to restore</small>
+          </div>
+          <figure class="hero-system-figure">
+            <img src={transformxSystem.src} alt="TransformX rotary file system" />
+            <figcaption>
+              <strong>TransformX system</strong>
+              <span>Shaping technology positioned inside a complete endodontic workflow.</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="hero-sidecards" aria-hidden="true">
+          <article>
+            <span>Clinical focus</span>
+            <strong>Control near working length</strong>
+            <p>Avatar Tip and Transform Technology support canal-centred progression where tolerance for error is lowest.</p>
+          </article>
+          <article>
+            <span>Commercial focus</span>
+            <strong>NZ-ready product pathway</strong>
+            <p>Product pages, downloads, and enquiry routes are structured for clinics evaluating supply and fit.</p>
+          </article>
+        </div>
       </div>
     </div>
-
-    <figure class="hero-figure">
-      <img src={transformxSystem.src} alt="TransformX rotary file system" />
-      <figcaption>
-        <strong>TransformX system</strong>
-        <span>Shaping technology positioned inside a complete clinical workflow.</span>
-      </figcaption>
-    </figure>
   </section>
 
-  <WorkflowStrip />
+  <section class="system-overview" aria-labelledby="system-overview-title">
+    <div class="section-shell">
+      <div class="section-heading compact">
+        <p class="eyebrow">Product System Overview</p>
+        <h2 id="system-overview-title">A coordinated system from glide path to final seal.</h2>
+        <p>
+          EndoTech NZ is presented as a workflow architecture first. Each product family is positioned by the clinical problem it helps control, not as a disconnected catalogue item.
+        </p>
+      </div>
 
-  <section class="statement" aria-labelledby="statement-title">
-    <p class="eyebrow">Clinical Positioning</p>
-    <h2 id="statement-title">A system-first approach to safer shaping, cleaner preparation, and more predictable sealing.</h2>
-  </section>
-
-  <section class="problem-response" aria-label="Clinical problem and EndoTech response">
-    {clinicalPairs.map((pair, index) => (
-      <article data-response-row>
-        <span>{String(index + 1).padStart(2, '0')}</span>
-        <div class="problem-copy">
-          <h3>Clinical problem</h3>
-          <p>{pair.problem}</p>
-        </div>
-        <div class="response-arrow" aria-hidden="true"></div>
-        <div class="response-copy">
-          <h3>EndoTech response</h3>
-          <p>{pair.response}</p>
-        </div>
-      </article>
-    ))}
+      <div class="system-grid" role="list">
+        {systemOverview.map((item) => (
+          <a class="system-card" href={item.href} role="listitem">
+            <div class="system-card-top">
+              <span>{item.role}</span>
+              <strong>{item.label}</strong>
+            </div>
+            <p>{item.summary}</p>
+            <em>Open page</em>
+          </a>
+        ))}
+      </div>
+    </div>
   </section>
 
   <section id="workflow" class="workflow-section" aria-labelledby="workflow-title">
-    <div class="section-heading">
-      <p class="eyebrow">Workflow Architecture</p>
-      <h2 id="workflow-title">A sequence designed for control, not a loose collection of instruments.</h2>
-      <p>
-        Each stage has a defined clinical role. The homepage introduces the sequence first, then guides clinicians into the products, technique documents, and evidence that support it.
-      </p>
-    </div>
+    <div class="section-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Clinical Workflow</p>
+        <h2 id="workflow-title">Assess to restore, structured as one clinical pathway.</h2>
+        <p>
+          The sequence is designed to help clinicians review instrumentation, irrigation, and sealing decisions in order. The homepage introduces the logic first, then points into detailed product, evidence, and education pages.
+        </p>
+      </div>
 
-    <ol class="workflow-map">
-      {workflow.map((item) => (
-        <li>
-          <strong>{item.step}</strong>
-          <p>{item.note}</p>
-        </li>
-      ))}
-    </ol>
-  </section>
+      <WorkflowStrip />
 
-  <section id="technology" class="technology-section" aria-labelledby="technology-title">
-    <div class="section-heading">
-      <p class="eyebrow">Technology</p>
-      <h2 id="technology-title">Technology is presented through the clinical risks it helps control.</h2>
-      <p>
-        Transform Technology and Avatar Tip are not presented as isolated features. They are connected directly to shaping behaviour, apical control, and predictable preparation geometry.
-      </p>
-    </div>
-
-    <div class="technology-grid">
-      <figure>
-        <video
-          data-avatar-tip-video
-          autoplay
-          loop
-          muted
-          playsinline
-          preload="auto"
-          aria-label="Avatar Tip rounded leading geometry video"
-        >
-          <source src={avatarTipVideo} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <figcaption>Avatar Tip / apical guidance</figcaption>
-      </figure>
-      <figure class="fluid-dynamics-figure">
-        <img src={vortiflowFlow.src} alt="VortiFlow irrigation flow dynamics" />
-        <figcaption>VortiFlow / micro fluid dynamics</figcaption>
-      </figure>
+      <ol class="workflow-rail" aria-label="Clinical workflow summary">
+        {workflow.map((item, index) => (
+          <li>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <strong>{item.step}</strong>
+            <p>{item.note}</p>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
-  <section id="products" class="products-section" aria-labelledby="products-title">
-    <div class="section-heading">
-      <p class="eyebrow">Products</p>
-      <h2 id="products-title">Choose your system.</h2>
-    </div>
+  <section class="featured-products" id="products" aria-labelledby="featured-products-title">
+    <div class="section-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Featured Product Cards</p>
+        <h2 id="featured-products-title">Featured systems for shaping, irrigation, and sealing.</h2>
+        <p>
+          Each card connects product features back to the clinical problem being solved: path creation, canal-centred shaping, disciplined irrigant exchange, and consistent final sealing.
+        </p>
+      </div>
 
-    <div class="product-chooser" role="list">
-      {products.map((product) => (
-        <a href={product.href} role="listitem">
-          <figure>
-            <img src={product.image} alt="" />
-          </figure>
-          <div class="product-chooser-copy">
-            <div class="product-chooser-heading">
+      <div class="featured-grid">
+        {featuredProducts.map((product) => (
+          <article class="featured-card">
+            <figure>
+              <img src={product.image} alt="" />
+            </figure>
+            <div class="featured-card-copy">
+              <p class="card-eyebrow">{product.eyebrow}</p>
               <h3>{product.title}</h3>
-              <span>{product.eyebrow}</span>
+              <p>{product.description}</p>
+              <ul>
+                {product.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+              <a href={product.href}>{product.cta}</a>
             </div>
-            <p>{product.description}</p>
-            <div class="product-chooser-tags" aria-hidden="true">
-              {product.tags.map((tag) => (
-                <small>{tag}</small>
-              ))}
-            </div>
-            <strong>View details</strong>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="evidence-section" aria-labelledby="evidence-title">
+    <div class="section-shell evidence-shell">
+      <div class="evidence-copy">
+        <p class="eyebrow">Evidence & Downloads</p>
+        <h2 id="evidence-title">Evidence-led pages support product evaluation before ordering.</h2>
+        <p>
+          Downloads, workflow sheets, and technology pages are available for practices that want to review rationale, technique, and support documents before selecting a system.
+        </p>
+
+        <div class="evidence-panel">
+          <video
+            data-avatar-tip-video
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="auto"
+            aria-label="Avatar Tip rounded leading geometry video"
+          >
+            <source src={avatarTipVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div>
+            <strong>Technology shown through clinical relevance</strong>
+            <p>Transform Technology and Avatar Tip are positioned by their effect on shaping behaviour, not by generic feature claims.</p>
           </div>
-        </a>
-      ))}
-    </div>
+        </div>
+      </div>
 
-    <p class="product-chooser-note">{productChooserNote}</p>
-  </section>
-
-  <section id="evidence" class="evidence-section" aria-labelledby="evidence-title">
-    <div>
-      <p class="eyebrow">Evidence & Education</p>
-      <h2 id="evidence-title">Evidence, education, and downloads support clinical evaluation before product selection.</h2>
-    </div>
-
-    <ul>
-      {evidence.map((item) => (
-        <li>
-          <span>{item}</span>
-          <a href={`${base}resources/downloads/`}>
+      <div class="evidence-links" role="list">
+        {evidenceLinks.map((item) => (
+          <a href={item.href} role="listitem">
+            <strong>{item.label}</strong>
+            <p>{item.detail}</p>
             <span>Open</span>
-            <span aria-hidden="true" class="evidence-link-arrow">→</span>
           </a>
-        </li>
-      ))}
-    </ul>
+        ))}
+      </div>
+    </div>
   </section>
 
-  <section class="closing" aria-labelledby="closing-title">
-    <div>
-      <p class="eyebrow">Next Step</p>
-      <h2 id="closing-title">Review the system, then choose the product path that matches the case.</h2>
-      <p>
-        Start with the clinical workflow, review the technology, then move into product detail or contact EndoTech NZ for clinical and distribution enquiries.
-      </p>
+  <section class="support-section" aria-labelledby="support-title">
+    <div class="section-shell support-shell">
+      <div class="section-heading compact">
+        <p class="eyebrow">NZ Availability & Local Support</p>
+        <h2 id="support-title">Clear pathways for New Zealand dentists, clinics, and distributors.</h2>
+        <p>
+          EndoTech NZ should feel both clinical and commercially ready: a site that supports product review, technical questions, and practical next-step enquiries without friction.
+        </p>
+      </div>
+
+      <div class="support-grid">
+        {supportPanels.map((panel) => (
+          <article>
+            <h3>{panel.title}</h3>
+            <p>{panel.text}</p>
+          </article>
+        ))}
+      </div>
     </div>
-    <div class="closing-actions">
-      <a class="button primary" href={`${base}products/overview/`}>View product system</a>
-      <a class="button secondary" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
+  </section>
+
+  <section class="cta-section" aria-labelledby="cta-title">
+    <div class="section-shell cta-shell">
+      <div>
+        <p class="eyebrow">Next Step</p>
+        <h2 id="cta-title">Review the workflow, compare the systems, then request the right next step for your practice.</h2>
+        <p>
+          Start with the product overview, move into the workflow and downloads, or contact EndoTech NZ directly for pricing, availability, and clinical questions.
+        </p>
+      </div>
+
+      <div class="cta-actions">
+        <a class="button primary" href={`${base}products/overview/`}>View product system</a>
+        <a class="button secondary" href={`${base}order/`}>Review order options</a>
+        <a class="button tertiary" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
+      </div>
     </div>
   </section>
 </main>
 
 <footer class="v3-footer">
-  <strong>{siteConfig.name}</strong>
-  <span>{siteConfig.organizationDescription}</span>
+  <div>
+    <strong>{siteConfig.name}</strong>
+    <span>{siteConfig.organizationDescription}</span>
+  </div>
+  <nav aria-label="Homepage footer links">
+    <a href={`${base}products/overview/`}>Products</a>
+    <a href={`${base}technique/workflow/`}>Clinical Workflow</a>
+    <a href={`${base}resources/downloads/`}>Downloads</a>
+    <a href={`${base}about/contact/`}>Contact</a>
+  </nav>
   <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
 </footer>
 
@@ -370,25 +485,6 @@ const evidence = [
     }
   });
 
-  document.querySelectorAll('[data-response-row]').forEach((row) => {
-    let leaveTimer;
-
-    row.addEventListener('pointerenter', () => {
-      window.clearTimeout(leaveTimer);
-      row.classList.remove('is-arrow-leaving');
-      row.classList.add('is-arrow-active');
-    });
-
-    row.addEventListener('pointerleave', () => {
-      row.classList.remove('is-arrow-active');
-      row.classList.add('is-arrow-leaving');
-
-      leaveTimer = window.setTimeout(() => {
-        row.classList.remove('is-arrow-leaving');
-      }, 360);
-    });
-  });
-
   document.querySelectorAll('[data-avatar-tip-video]').forEach((element) => {
     if (!(element instanceof HTMLVideoElement)) return;
 
@@ -415,32 +511,45 @@ const evidence = [
   }
 
   :global(body.landing-page) {
-    background: #f7f9fb;
-    color: #101827;
+    background: #ffffff;
+    color: #102033;
   }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  .homepage-v3 {
+    --canvas: #ffffff;
+    --canvas-soft: #f6f9fc;
+    --canvas-clinical: #f3f6f8;
+    --surface: #ffffff;
+    --surface-soft: #f8fafc;
+    --surface-blue: #eef6fb;
+    --surface-steel: #e8edf2;
+    --ink: #102033;
+    --ink-secondary: #273951;
+    --ink-muted: #64748d;
+    --ink-subtle: #8a94a3;
+    --primary: #0b75b7;
+    --primary-hover: #09639b;
+    --primary-deep: #064b78;
+    --primary-soft: #dceff8;
+    --accent-green: #4bae73;
+    --hairline: #e3e8ee;
+    --hairline-strong: #cad5e0;
+    --gradient-clinical-hero: linear-gradient(135deg, #ffffff 0%, #f6f9fc 45%, #eef6fb 100%);
+    --gradient-technical-blue: radial-gradient(circle at 30% 20%, rgba(11, 117, 183, 0.16), transparent 34%), linear-gradient(135deg, #ffffff 0%, #f3f7fb 100%);
+    font-family: Inter, 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--canvas);
+    color: var(--ink);
   }
 
   .v3-header,
-  .hero,
-  .statement,
-  .problem-response,
-  .workflow-section,
-  .technology-section,
-  .products-section,
-  .evidence-section,
-  .closing,
   .v3-footer {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .section-shell {
+    max-width: 1240px;
+    margin: 0 auto;
     padding-left: 56px;
     padding-right: 56px;
   }
@@ -448,22 +557,23 @@ const evidence = [
   .v3-header {
     position: sticky;
     top: 0;
-    z-index: 50;
-    overflow: visible;
+    z-index: 60;
     display: grid;
     grid-template-columns: minmax(210px, auto) 1fr auto;
     gap: 28px;
     align-items: center;
     min-height: 82px;
-    border-bottom: 1px solid #dbe3ea;
-    background: rgba(247, 249, 251, 0.94);
-    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--hairline);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(18px);
   }
 
   .brand {
     display: inline-flex;
     align-items: center;
     gap: 12px;
+    color: inherit;
+    text-decoration: none;
   }
 
   .brand img {
@@ -478,17 +588,18 @@ const evidence = [
 
   .brand strong,
   .v3-footer strong {
-    color: #0b1424;
-    font-family: 'Sora', system-ui, sans-serif;
+    color: var(--ink);
+    font-family: Inter, 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   .brand small {
-    color: #64748b;
+    color: var(--ink-muted);
     font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
@@ -496,16 +607,44 @@ const evidence = [
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
-    color: #334155;
-    font-size: 0.9rem;
-    font-weight: 700;
+    gap: clamp(1rem, 1.8vw, 1.75rem);
+    color: var(--ink-secondary);
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .v3-header nav a,
+  .products-menu button,
+  .v3-footer a {
+    color: inherit;
+    text-decoration: none;
   }
 
   .v3-header nav a,
   .products-menu button {
-    color: inherit;
-    text-decoration: none;
+    position: relative;
+  }
+
+  .v3-header nav a::after,
+  .products-menu button::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.45rem;
+    height: 1px;
+    background: var(--hairline-strong);
+    opacity: 0;
+    transform: scaleX(0.6);
+    transition: opacity 180ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .v3-header nav a:hover::after,
+  .v3-header nav a:focus-visible::after,
+  .products-menu button:hover::after,
+  .products-menu button:focus-visible::after {
+    opacity: 1;
+    transform: scaleX(1);
   }
 
   .products-menu {
@@ -521,6 +660,7 @@ const evidence = [
     border: 0;
     padding: 0;
     background: transparent;
+    color: inherit;
     font: inherit;
     cursor: pointer;
   }
@@ -557,19 +697,17 @@ const evidence = [
     opacity: 0;
     pointer-events: none;
     transform: translate(-50%, 8px);
-    transition:
-      opacity 180ms ease,
-      transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 180ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .products-menu-shell {
     display: grid;
     gap: 2px;
-    border: 1px solid #d8e1e8;
-    border-radius: 6px;
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
     padding: 12px;
     background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 24px 55px -34px rgba(15, 23, 42, 0.34);
+    box-shadow: 0 24px 55px -34px rgba(15, 23, 42, 0.22);
     backdrop-filter: blur(16px);
   }
 
@@ -577,27 +715,24 @@ const evidence = [
     padding: 6px 8px 8px;
     color: #876a2b;
     font-size: 0.68rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
   .products-menu-shell a {
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 10px 8px;
-    color: #344357;
+    color: var(--ink-secondary);
     font-size: 0.86rem;
-    font-weight: 700;
-    transition:
-      background 160ms ease,
-      color 160ms ease,
-      transform 160ms ease;
+    font-weight: 600;
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease;
   }
 
   .products-menu-shell a:hover,
   .products-menu-shell a:focus-visible {
-    background: #f3f7fa;
-    color: #0b1424;
+    background: var(--surface-soft);
+    color: var(--ink);
     transform: translateX(2px);
   }
 
@@ -612,7 +747,13 @@ const evidence = [
   .products-menu:hover svg,
   .products-menu:focus-within svg,
   .products-menu.is-open svg {
-    transform: translateY(1px);
+    transform: translateY(1px) rotate(180deg);
+  }
+
+  .header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .header-action,
@@ -622,29 +763,33 @@ const evidence = [
     align-items: center;
     justify-content: center;
     min-height: 44px;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 0.9rem;
-    font-weight: 800;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, transform 180ms ease;
   }
 
   .header-action {
+    border: 1px solid var(--hairline-strong);
+    background: var(--surface);
+    color: var(--ink);
     padding: 0 18px;
-    border: 1px solid #c8d2dc;
-    color: #0b1424;
   }
 
-  .header-actions {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+  .header-action:hover,
+  .header-action:focus-visible,
+  .button:hover,
+  .button:focus-visible {
+    transform: translateY(-1px);
   }
 
   .header-menu-toggle {
     display: none;
-    border: 1px solid #c8d2dc;
+    border: 1px solid var(--hairline-strong);
     padding: 0 16px;
-    background: #ffffff;
-    color: #0b1424;
+    background: var(--surface);
+    color: var(--ink);
     cursor: pointer;
   }
 
@@ -654,10 +799,8 @@ const evidence = [
     top: 100%;
     left: 0;
     right: 0;
-    z-index: 49;
-    border-bottom: 1px solid #dbe3ea;
-    background: rgba(247, 249, 251, 0.98);
-    box-shadow: 0 22px 44px rgba(15, 23, 42, 0.14);
+    border-top: 1px solid var(--hairline);
+    background: rgba(255, 255, 255, 0.98);
   }
 
   .homepage-mobile-menu-shell {
@@ -667,757 +810,613 @@ const evidence = [
   }
 
   .homepage-mobile-menu-shell a {
-    border: 1px solid #dbe3ea;
-    border-radius: 6px;
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
     padding: 12px 14px;
-    color: #0b1424;
+    color: var(--ink);
     font-size: 0.92rem;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
-    background: rgba(255, 255, 255, 0.92);
+    background: var(--surface);
+  }
+
+  .hero,
+  .system-overview,
+  .workflow-section,
+  .featured-products,
+  .evidence-section,
+  .support-section,
+  .cta-section {
+    position: relative;
   }
 
   .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.92fr) minmax(420px, 0.86fr);
-    gap: 76px;
-    align-items: center;
-    min-height: 720px;
-    padding-top: 72px;
-    padding-bottom: 84px;
-    background:
-      linear-gradient(90deg, #f7f9fb 0%, #f7f9fb 54%, #e3ebf1 54%, #e3ebf1 100%);
+    background: var(--gradient-clinical-hero);
+    padding: 72px 0 88px;
   }
 
-  .eyebrow {
-    margin: 0 0 18px;
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 78% 18%, rgba(11, 117, 183, 0.08), transparent 22%),
+      radial-gradient(circle at 18% 82%, rgba(27, 166, 166, 0.07), transparent 18%);
+    pointer-events: none;
+  }
+
+  .hero,
+  .system-overview,
+  .workflow-section,
+  .featured-products,
+  .evidence-section,
+  .support-section,
+  .cta-section {
+    overflow: clip;
+  }
+
+  .hero > *,
+  .system-overview > *,
+  .workflow-section > *,
+  .featured-products > *,
+  .evidence-section > *,
+  .support-section > *,
+  .cta-section > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero .section-shell,
+  .evidence-shell,
+  .cta-shell,
+  .support-shell {
+    display: grid;
+  }
+
+  .hero .section-shell {
+    grid-template-columns: minmax(0, 0.9fr) minmax(420px, 0.88fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .eyebrow,
+  .card-eyebrow {
+    margin: 0 0 14px;
     color: #876a2b;
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.2em;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
   }
 
   h1,
   h2,
   h3,
-  p {
+  p,
+  ul,
+  ol {
     margin-top: 0;
   }
 
+  h1,
+  h2,
+  h3 {
+    color: var(--ink);
+    font-family: Inter, 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
   h1 {
-    display: grid;
-    gap: 8px;
-    max-width: 760px;
-    margin-bottom: 26px;
-    color: #0b1424;
-    font-size: 4.8rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 0.94;
+    max-width: 10.8ch;
+    margin-bottom: 20px;
+    font-size: clamp(3.35rem, 6vw, 5.3rem);
+    line-height: 1.02;
     text-wrap: balance;
   }
 
-  .hero-title-line {
-    display: block;
-  }
-
-  .hero-title-line--primary {
-    max-width: 12ch;
-  }
-
-  .hero-title-line--context {
-    color: #24384f;
-    font-size: 0.54em;
-    font-weight: 650;
-    line-height: 1.08;
-  }
-
-  .hero-title-line--support {
-    width: fit-content;
-    margin-top: 12px;
-    border-top: 1px solid #b8c4cf;
-    padding-top: 16px;
-    color: #41556c;
-    font-size: 0.32em;
-    font-weight: 700;
-    line-height: 1.16;
-  }
-
   h2 {
-    color: #0b1424;
-    font-size: 3.35rem;
-    font-weight: 700;
-    letter-spacing: 0;
+    max-width: 15ch;
+    margin-bottom: 18px;
+    font-size: clamp(2.3rem, 4vw, 3.55rem);
     line-height: 1.08;
+    text-wrap: balance;
   }
 
   h3 {
-    color: #0b1424;
+    margin-bottom: 12px;
     font-size: 1.22rem;
     line-height: 1.26;
   }
 
-  .hero-copy p,
-  .section-heading p,
-  .closing p {
-    max-width: 700px;
-    color: #4b5c70;
+  p,
+  li {
+    color: var(--ink-muted);
+    font-size: 1rem;
+    line-height: 1.66;
+  }
+
+  .hero-lead {
+    max-width: 64ch;
+    margin-bottom: 24px;
+    color: var(--ink-secondary);
     font-size: 1.14rem;
-    line-height: 1.76;
+    line-height: 1.7;
+  }
+
+  .hero-highlights {
+    display: grid;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .hero-highlights li {
+    position: relative;
+    padding-left: 18px;
+  }
+
+  .hero-highlights li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--primary);
+    transform: translateY(-50%);
   }
 
   .hero-actions,
-  .closing-actions {
+  .cta-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
-    margin-top: 34px;
+    margin-top: 30px;
   }
 
   .button {
-    padding: 0 24px;
+    padding: 0 22px;
   }
 
   .button.primary {
-    background: #0b1424;
+    border: 1px solid var(--primary);
+    background: var(--primary);
     color: #ffffff;
   }
 
+  .button.primary:hover,
+  .button.primary:focus-visible {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
+
   .button.secondary {
-    border: 1px solid #b8c4cf;
-    color: #0b1424;
+    border: 1px solid var(--hairline-strong);
+    background: var(--surface);
+    color: var(--ink);
   }
 
-  .hero-figure {
-    margin: 0;
-    border-top: 1px solid #b8c4cf;
-    border-bottom: 1px solid #b8c4cf;
-    padding: 42px 0 30px;
-  }
-
-  .hero-figure img {
-    width: 100%;
-    max-height: 430px;
-    object-fit: contain;
-    filter: drop-shadow(0 26px 28px rgba(15, 23, 42, 0.14));
-  }
-
-  figcaption {
-    display: grid;
-    gap: 5px;
-    margin-top: 22px;
-    color: #536478;
-    line-height: 1.55;
-  }
-
-  figcaption strong {
-    color: #0b1424;
-    font-family: 'Sora', system-ui, sans-serif;
-  }
-
-  .statement {
-    max-width: none;
-    padding-top: 94px;
-    padding-bottom: 98px;
-    background: #ffffff;
-  }
-
-  .workflow-strip {
-    padding: 52px 56px 0;
-    background:
-      linear-gradient(180deg, #ffffff 0%, #f3f6f9 100%);
-  }
-
-  .workflow-strip-shell {
-    max-width: 1260px;
-    margin: 0 auto;
-    border: 1px solid #dbe3ea;
-    background: rgba(247, 248, 250, 0.92);
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.85) inset,
-      0 18px 38px -34px rgba(15, 23, 42, 0.18);
-  }
-
-  .workflow-strip-grid {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    align-items: stretch;
-    gap: 8px;
-    padding: 8px;
+  .button.tertiary {
+    border: 1px solid transparent;
     background: transparent;
+    color: var(--primary-deep);
   }
 
-  .workflow-strip-card {
+  .hero-visual {
     display: grid;
-    justify-items: center;
-    align-content: start;
-    gap: 8px;
-    min-height: 164px;
-    padding: 18px 12px 16px;
-    border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.62);
-    color: inherit;
-    text-align: center;
-    text-decoration: none;
-    transition:
-      background-color 210ms ease,
-      transform 210ms ease,
-      box-shadow 210ms ease,
-      color 190ms ease,
-      border-color 210ms ease;
+    gap: 18px;
   }
 
-  .workflow-strip-card:hover,
-  .workflow-strip-card:focus-visible {
-    border-color: #d4dce5;
-    background: #f4f7fa;
-    transform: translateY(-2px);
+  .hero-device {
+    border: 1px solid var(--hairline);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.86);
     box-shadow:
-      inset 0 0 0 1px #d7dee7,
-      0 12px 22px -20px rgba(15, 23, 42, 0.22);
+      0 1px 0 rgba(255, 255, 255, 0.9) inset,
+      0 32px 70px -54px rgba(15, 23, 42, 0.24);
+    overflow: hidden;
   }
 
-  .workflow-strip-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    color: #334155;
-    transition: color 190ms ease, transform 210ms ease;
+  .hero-device-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--hairline);
+    background: rgba(248, 250, 252, 0.92);
   }
 
-  .workflow-strip-icon svg {
-    width: 24px;
-    height: 24px;
+  .hero-device-header span,
+  .hero-device-header small {
+    color: var(--ink-secondary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
   }
 
-  .workflow-strip-icon circle,
-  .workflow-strip-icon path {
-    stroke: currentColor;
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .workflow-strip-card strong {
-    color: #1f2937;
-    font-size: 1.1rem;
-    font-weight: 500;
-    line-height: 1.06;
-    transition: color 190ms ease;
-  }
-
-  .workflow-strip-card span:last-child {
-    max-width: 16ch;
-    color: #6b7280;
-    font-size: 0.84rem;
-    line-height: 1.34;
-    text-wrap: balance;
-    transition: color 190ms ease;
-  }
-
-  .workflow-strip-card:hover .workflow-strip-icon,
-  .workflow-strip-card:focus-visible .workflow-strip-icon {
-    color: #1f3b57;
-    transform: translateY(-1px);
-  }
-
-  .workflow-strip-card:hover strong,
-  .workflow-strip-card:focus-visible strong {
-    color: #0f172a;
-  }
-
-  .workflow-strip-card:hover span:last-child,
-  .workflow-strip-card:focus-visible span:last-child {
-    color: #596474;
-  }
-
-  .statement h2 {
-    max-width: 1100px;
-  }
-
-  .problem-response {
-    border-top: 1px solid #dbe3ea;
-    border-bottom: 1px solid #dbe3ea;
-    background: #ffffff;
-  }
-
-  .problem-response article {
+  .hero-system-figure {
     display: grid;
-    grid-template-columns: 80px minmax(320px, 0.8fr) 220px minmax(0, 1.2fr);
-    grid-template-areas: 'number problem arrow response';
-    gap: 24px;
-    align-items: center;
-    padding: 34px 0;
-    border-bottom: 1px solid #dbe3ea;
+    gap: 18px;
+    margin: 0;
+    padding: 26px 26px 24px;
   }
 
-  .problem-response article:last-child {
-    border-bottom: 0;
+  .hero-system-figure img {
+    width: 100%;
+    max-height: 340px;
+    object-fit: contain;
+    filter: drop-shadow(0 28px 28px rgba(15, 23, 42, 0.12));
   }
 
-  .problem-response article > span {
-    grid-area: number;
-    align-self: start;
+  .hero-system-figure figcaption,
+  .evidence-panel div {
+    display: grid;
+    gap: 6px;
   }
 
-  .problem-copy {
-    grid-area: problem;
+  .hero-system-figure strong,
+  .evidence-panel strong {
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 600;
   }
 
-  .response-copy {
-    grid-area: response;
+  .hero-sidecards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 
-  .problem-response span {
-    color: #876a2b;
-    font-size: 0.75rem;
-    font-weight: 800;
+  .hero-sidecards article,
+  .support-grid article,
+  .system-card,
+  .featured-card,
+  .evidence-links a {
+    border: 1px solid var(--hairline);
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: 0 24px 44px -42px rgba(15, 23, 42, 0.18);
+  }
+
+  .hero-sidecards article {
+    padding: 18px;
+  }
+
+  .hero-sidecards span,
+  .system-card-top span {
+    color: var(--primary-deep);
+    font-size: 0.72rem;
+    font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
-  .problem-response p,
-  .workflow-map p,
-  .v3-footer span {
-    color: #536478;
-    line-height: 1.68;
+  .hero-sidecards strong,
+  .system-card-top strong {
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.28;
   }
 
-  .response-arrow {
-    grid-area: arrow;
-    position: relative;
-    align-self: center;
-    height: 18px;
-    margin-top: -2px;
-    opacity: 0;
-    transition: opacity 180ms ease;
+  .hero-sidecards article p {
+    margin: 10px 0 0;
+    font-size: 0.95rem;
+    line-height: 1.58;
   }
 
-  .response-arrow::before,
-  .response-arrow::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0;
-    background: #0f5878;
+  .system-overview,
+  .featured-products,
+  .support-section {
+    background: var(--canvas);
+    padding: 96px 0;
   }
 
-  .response-arrow::before {
-    left: 0;
-    height: 1px;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  .workflow-section {
+    background: var(--canvas-soft);
+    padding: 96px 0 104px;
   }
 
-  .response-arrow::after {
-    width: 8px;
-    height: 8px;
-    border-top: 1px solid #0f5878;
-    border-right: 1px solid #0f5878;
+  .workflow-section :global(.workflow-strip) {
+    padding-left: 0;
+    padding-right: 0;
     background: transparent;
-    transform: translate(0, -50%) rotate(45deg) scale(1);
-    transform-origin: center;
-    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .problem-response article.is-arrow-active .response-arrow,
-  .problem-response article.is-arrow-leaving .response-arrow,
-  .problem-response article:focus-within .response-arrow {
-    opacity: 1;
+  .workflow-section :global(.workflow-strip-shell) {
+    max-width: none;
   }
 
-  .problem-response article.is-arrow-active .response-arrow::before,
-  .problem-response article.is-arrow-leaving .response-arrow::before,
-  .problem-response article:focus-within .response-arrow::before {
-    animation: response-line-draw 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  .problem-response article.is-arrow-active .response-arrow::after,
-  .problem-response article:focus-within .response-arrow::after {
-    animation: response-arrow-travel 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  .problem-response article.is-arrow-leaving .response-arrow {
-    animation: response-arrow-fade 360ms ease forwards;
-  }
-
-  .problem-response article.is-arrow-leaving .response-arrow::after {
-    transform: translate(0, -50%) rotate(45deg) scale(1);
-  }
-
-  @keyframes response-line-draw {
-    to {
-      transform: scaleX(1);
-    }
-  }
-
-  @keyframes response-arrow-travel {
-    0% {
-      transform: translate(-204px, -50%) rotate(45deg) scale(1);
-    }
-
-    90% {
-      transform: translate(0, -50%) rotate(45deg) scale(1);
-    }
-
-    to {
-      transform: translate(0, -50%) rotate(45deg) scale(1.5);
-    }
-  }
-
-  @keyframes response-arrow-fade {
-    0%,
-    58% {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-
-  .workflow-section,
-  .technology-section,
-  .products-section,
   .evidence-section {
-    padding-top: 104px;
-    padding-bottom: 112px;
+    background: var(--canvas-clinical);
+    padding: 96px 0;
   }
 
-  .workflow-section,
-  .products-section {
-    background: #f7f9fb;
-  }
-
-  .technology-section,
-  .evidence-section {
-    background: #ffffff;
+  .cta-section {
+    background: var(--gradient-technical-blue);
+    padding: 88px 0 96px;
+    border-top: 1px solid var(--hairline);
   }
 
   .section-heading {
-    max-width: 930px;
-    margin-bottom: 56px;
+    max-width: 760px;
+    margin-bottom: 46px;
   }
 
-  .workflow-map {
+  .section-heading.compact {
+    margin-bottom: 38px;
+  }
+
+  .section-heading p:last-child {
+    max-width: 66ch;
+  }
+
+  .system-grid {
     display: grid;
-    grid-template-columns: repeat(7, minmax(132px, 1fr));
-    border-top: 1px solid #c8d2dc;
-    border-bottom: 1px solid #c8d2dc;
-    overflow-x: auto;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
   }
 
-  .workflow-map li {
-    min-height: 220px;
-    padding: 28px 22px;
-    border-right: 1px solid #c8d2dc;
-    background: #ffffff;
-  }
-
-  .workflow-map li:last-child {
-    border-right: 0;
-  }
-
-  .workflow-map strong {
-    display: block;
-    margin-bottom: 42px;
-    color: #0f5878;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1.08rem;
-  }
-
-  .technology-grid {
+  .system-card {
     display: grid;
-    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
-    gap: 44px;
-  }
-
-  .technology-grid figure {
-    margin: 0;
-    border-top: 1px solid #c8d2dc;
-    padding-top: 28px;
-  }
-
-  .technology-grid img,
-  .technology-grid video {
-    width: 100%;
-    height: 360px;
-    object-fit: contain;
-    background: #f7f9fb;
-  }
-
-  .technology-grid video {
-    display: block;
-  }
-
-  .fluid-dynamics-figure img {
-    height: 360px;
-    object-fit: contain;
-    object-position: center;
-  }
-
-  .products-section .section-heading {
-    max-width: none;
-    margin-bottom: 52px;
-    text-align: center;
-  }
-
-  .products-section .section-heading .eyebrow {
-    margin-bottom: 18px;
-    color: #4d96c7;
-  }
-
-  .products-section .section-heading h2 {
-    max-width: none;
-    font-size: clamp(3rem, 4.4vw, 4.55rem);
-    line-height: 1.04;
-  }
-
-  .product-chooser {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 18px;
-  }
-
-  .product-chooser > a {
-    display: grid;
-    align-content: start;
-    gap: 22px;
-    min-height: 100%;
-    border: 1px solid #dde6ed;
-    border-radius: 26px;
-    background: #ffffff;
-    padding: 22px 22px 24px;
+    padding: 22px 20px;
     color: inherit;
     text-decoration: none;
-    box-shadow: 0 22px 48px -46px rgba(15, 23, 42, 0.22);
     transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
   }
 
-  .product-chooser > a:hover,
-  .product-chooser > a:focus-visible {
+  .system-card:hover,
+  .system-card:focus-visible,
+  .featured-card:hover,
+  .featured-card:focus-within,
+  .evidence-links a:hover,
+  .evidence-links a:focus-visible {
     transform: translateY(-2px);
-    border-color: #d0dbe4;
-    box-shadow: 0 28px 54px -46px rgba(15, 23, 42, 0.28);
+    border-color: var(--hairline-strong);
+    box-shadow: 0 30px 54px -44px rgba(15, 23, 42, 0.22);
   }
 
-  .product-chooser figure {
+  .system-card-top {
+    display: grid;
+    gap: 8px;
+  }
+
+  .system-card p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+  }
+
+  .system-card em {
+    color: var(--primary);
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .workflow-rail {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 14px;
+    padding: 0;
+    margin: 26px 0 0;
+    list-style: none;
+  }
+
+  .workflow-rail li {
+    min-height: 190px;
+    border: 1px solid var(--hairline);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 20px 18px;
+  }
+
+  .workflow-rail span {
+    display: block;
+    margin-bottom: 28px;
+    color: var(--primary-deep);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .workflow-rail strong {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.22;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .featured-card {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1fr);
+    overflow: hidden;
+    transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .featured-card figure {
     display: grid;
     place-items: center;
-    min-height: 210px;
+    min-height: 100%;
     margin: 0;
-    border-radius: 22px;
-    background: linear-gradient(180deg, #f0fbfd 0%, #f7fcfe 100%);
-    padding: 24px;
+    padding: 28px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(11, 117, 183, 0.12), transparent 32%),
+      linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
+    border-right: 1px solid var(--hairline);
   }
 
-  .product-chooser > a:nth-child(4) figure {
-    background: linear-gradient(180deg, #fff8df 0%, #fffdf2 100%);
-  }
-
-  .product-chooser img {
+  .featured-card img {
     width: 100%;
-    max-height: 142px;
+    max-height: 180px;
     object-fit: contain;
   }
 
-  .product-chooser-copy {
+  .featured-card-copy {
     display: grid;
-    align-content: start;
-    gap: 18px;
+    gap: 14px;
+    padding: 26px;
   }
 
-  .product-chooser-heading {
+  .featured-card-copy p {
+    margin-bottom: 0;
+  }
+
+  .featured-card-copy ul {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 14px;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .featured-card-copy li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 0.95rem;
+  }
+
+  .featured-card-copy li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.68rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--accent-green);
+    transform: translateY(-50%);
+  }
+
+  .featured-card-copy a,
+  .evidence-links a span {
+    color: var(--primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .evidence-shell {
+    grid-template-columns: minmax(0, 0.9fr) minmax(360px, 0.88fr);
+    gap: 36px;
     align-items: start;
   }
 
-  .product-chooser-heading h3 {
-    margin: 0;
-    max-width: 8ch;
-    color: #0b1424;
-    font-size: 1.32rem;
-    line-height: 1.24;
-  }
-
-  .product-chooser-heading span {
-    max-width: 7ch;
-    color: #4d96c7;
-    font-size: 0.88rem;
-    line-height: 1.42;
-    text-align: right;
-  }
-
-  .product-chooser-copy p {
-    margin: 0;
-    color: #536478;
-    font-size: 0.98rem;
-    line-height: 1.82;
-  }
-
-  .product-chooser-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 2px;
-  }
-
-  .product-chooser-tags small {
-    display: inline-flex;
-    align-items: center;
-    min-height: 32px;
-    border-radius: 999px;
-    background: #eef2f7;
-    padding: 0 12px;
-    color: #617286;
-    font-size: 0.82rem;
-    font-weight: 700;
-  }
-
-  .product-chooser > a:nth-child(4) .product-chooser-tags small:first-child {
-    background: #ffe8a1;
-    color: #a36a00;
-  }
-
-  .product-chooser-copy strong {
-    margin-top: 4px;
-    color: #4d96c7;
-    font-size: 0.98rem;
-    font-weight: 700;
-  }
-
-  .product-chooser-note {
-    max-width: none;
-    margin: 42px 0 0;
-    color: #5c6f82;
-    text-align: center;
-  }
-
-  .evidence-section {
+  .evidence-copy {
     display: grid;
-    grid-template-columns: minmax(0, 0.88fr) minmax(360px, 0.9fr);
-    gap: 72px;
+    gap: 24px;
   }
 
-  .evidence-section ul {
-    border-top: 1px solid #c8d2dc;
-  }
-
-  .evidence-section li {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 24px 0;
-    border-bottom: 1px solid #c8d2dc;
-  }
-
-  .evidence-section li span {
-    color: #0b1424;
-    font-weight: 800;
-  }
-
-  .evidence-section li a {
-    display: inline-flex;
+  .evidence-panel {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1fr);
+    gap: 18px;
     align-items: center;
-    gap: 8px;
-    color: #0b6f98;
-    font-weight: 800;
+    border: 1px solid var(--hairline);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.78);
+    padding: 18px;
+  }
+
+  .evidence-panel video {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #f8fbfd 0%, #edf5fa 100%);
+  }
+
+  .evidence-links {
+    display: grid;
+    gap: 14px;
+  }
+
+  .evidence-links a {
+    display: grid;
+    gap: 10px;
+    padding: 22px;
+    color: inherit;
     text-decoration: none;
-    transition: color 180ms ease, gap 180ms ease;
+    transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
   }
 
-  .evidence-link-arrow {
-    transition: transform 180ms ease;
+  .support-shell {
+    gap: 0;
   }
 
-  .evidence-section li a:hover,
-  .evidence-section li a:focus-visible {
-    gap: 10px;
-  }
-
-  .evidence-section li a:hover .evidence-link-arrow,
-  .evidence-section li a:focus-visible .evidence-link-arrow {
-    transform: translateX(2px);
-  }
-
-  .closing {
+  .support-grid {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) auto;
-    gap: 48px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .support-grid article {
+    padding: 24px;
+  }
+
+  .cta-shell {
+    grid-template-columns: minmax(0, 0.96fr) auto;
+    gap: 32px;
     align-items: center;
-    padding-top: 88px;
-    padding-bottom: 92px;
-    background: #0b1424;
   }
 
-  .closing h2 {
-    max-width: 900px;
-    color: #ffffff;
-  }
-
-  .closing p {
-    color: #cbd7e3;
-  }
-
-  .closing .button.primary {
-    background: #ffffff;
-    color: #0b1424;
-  }
-
-  .closing .button.secondary {
-    border-color: rgba(255, 255, 255, 0.28);
-    color: #ffffff;
+  .cta-shell p:last-child {
+    max-width: 60ch;
+    margin-bottom: 0;
   }
 
   .v3-footer {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 28px;
     align-items: start;
-    padding-top: 34px;
-    padding-bottom: 34px;
-    border-top: 1px solid #dbe3ea;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    border-top: 1px solid var(--hairline);
     background: #ffffff;
   }
 
-  .v3-footer a {
-    color: #475569;
-    font-weight: 700;
+  .v3-footer div {
+    display: grid;
+    gap: 8px;
   }
 
-  @media (min-width: 1320px) {
-    h1 {
-      font-size: 5.6rem;
-    }
+  .v3-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    color: var(--ink-secondary);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
 
-    .hero-title-line--support {
-      font-size: 0.3em;
-    }
-
-    h2 {
-      font-size: 3.8rem;
-    }
+  .v3-footer span,
+  .v3-footer a {
+    color: var(--ink-muted);
+    font-size: 0.94rem;
+    line-height: 1.6;
   }
 
   @media (max-width: 1120px) {
     .v3-header,
-    .hero,
-    .workflow-strip,
-    .statement,
-    .problem-response,
-    .workflow-section,
-    .technology-section,
-    .products-section,
-    .evidence-section,
-    .closing,
     .v3-footer {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .section-shell {
       padding-left: 30px;
       padding-right: 30px;
     }
@@ -1438,71 +1437,45 @@ const evidence = [
       display: block;
     }
 
-    .hero,
-    .evidence-section,
-    .closing {
+    .hero .section-shell,
+    .evidence-shell,
+    .cta-shell {
       grid-template-columns: 1fr;
     }
 
-    .hero {
-      background: #f7f9fb;
-    }
-
-    .workflow-strip {
-      padding-top: 40px;
-    }
-
-    .workflow-strip-shell {
-      max-width: 100%;
-    }
-
-    .workflow-strip-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    h1 {
-      max-width: 680px;
-      font-size: 4rem;
-    }
-
-    .hero-title-line--primary {
-      max-width: 12ch;
-    }
-
-    .problem-response article {
-      grid-template-areas:
-        'number'
-        'problem'
-        'response';
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .response-arrow {
-      display: none;
-    }
-
-    .technology-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .product-chooser {
+    .system-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .workflow-rail {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .support-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .v3-footer {
+      grid-template-columns: 1fr;
     }
   }
 
   @media (max-width: 720px) {
+    :global(html) {
+      scroll-padding-top: 76px;
+    }
+
     .v3-header,
-    .hero,
-    .workflow-strip,
-    .statement,
-    .problem-response,
-    .workflow-section,
-    .technology-section,
-    .products-section,
-    .evidence-section,
-    .closing,
     .v3-footer {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .section-shell {
       padding-left: 18px;
       padding-right: 18px;
     }
@@ -1516,143 +1489,68 @@ const evidence = [
     }
 
     .header-action,
-    .header-menu-toggle {
-      padding: 0 12px;
-      font-size: 0.8rem;
+    .header-menu-toggle,
+    .button {
+      min-height: 42px;
+      padding-left: 14px;
+      padding-right: 14px;
+      font-size: 0.84rem;
     }
 
-    .workflow-strip {
-      padding-top: 28px;
+    .hero,
+    .system-overview,
+    .workflow-section,
+    .featured-products,
+    .evidence-section,
+    .support-section,
+    .cta-section {
+      padding-top: 56px;
+      padding-bottom: 60px;
     }
 
-    .workflow-strip-shell {
-      box-shadow: none;
-    }
-
-    .workflow-strip-grid {
-      grid-template-columns: 1fr;
-      gap: 6px;
-      padding: 6px;
-    }
-
-    .workflow-strip-card {
-      min-height: 0;
-      justify-items: start;
-      gap: 6px;
-      padding: 16px 14px;
-      text-align: left;
-      transform: none;
-    }
-
-    .workflow-strip-card span:last-child {
-      max-width: 100%;
-      text-wrap: initial;
+    .hero .section-shell {
+      gap: 32px;
     }
 
     h1 {
-      gap: 7px;
-      max-width: 11.1ch;
-      font-size: 2.92rem;
-      line-height: 0.98;
-    }
-
-    .hero {
-      min-height: auto;
-      gap: 32px;
-      padding-top: 40px;
-      padding-bottom: 56px;
-    }
-
-    .hero-title-line--primary {
-      max-width: 10.6ch;
-    }
-
-    .hero-title-line--context {
-      font-size: 0.5em;
-      line-height: 1.04;
-    }
-
-    .hero-title-line--support {
-      max-width: 16ch;
-      margin-top: 7px;
-      padding-top: 11px;
-      font-size: 0.37em;
-      line-height: 1.16;
+      max-width: 11ch;
+      font-size: 2.9rem;
+      line-height: 1.02;
     }
 
     h2 {
-      font-size: 2.25rem;
+      max-width: none;
+      font-size: 2.2rem;
     }
 
-    .hero-copy p,
-    .section-heading p,
-    .closing p {
-      font-size: 1rem;
+    .hero-lead,
+    p,
+    li {
+      font-size: 0.98rem;
     }
 
     .hero-actions,
-    .closing-actions {
+    .cta-actions {
       display: grid;
     }
 
-    .workflow-map {
+    .hero-sidecards,
+    .system-grid,
+    .workflow-rail {
       grid-template-columns: 1fr;
-      overflow: visible;
     }
 
-    .workflow-map li {
-      min-height: 0;
+    .featured-card {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-card figure {
       border-right: 0;
-      border-bottom: 1px solid #c8d2dc;
+      border-bottom: 1px solid var(--hairline);
     }
 
-    .workflow-map li:last-child {
-      border-bottom: 0;
-    }
-
-    .workflow-map strong {
-      margin-bottom: 12px;
-    }
-
-    .technology-grid,
-    .v3-footer {
+    .evidence-panel {
       grid-template-columns: 1fr;
-    }
-
-    .technology-grid img,
-    .technology-grid video {
-      height: 260px;
-      min-height: 0;
-    }
-
-    .product-chooser {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .product-chooser > a {
-      gap: 18px;
-      padding: 18px 18px 20px;
-      border-radius: 22px;
-    }
-
-    .product-chooser figure {
-      min-height: 176px;
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .product-chooser-heading {
-      grid-template-columns: 1fr auto;
-    }
-
-    .product-chooser-heading h3 {
-      max-width: 9ch;
-      font-size: 1.2rem;
-    }
-
-    .product-chooser-heading span {
-      font-size: 0.84rem;
     }
   }
 </style>
