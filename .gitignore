@@ -13,6 +13,27 @@ yarn-error.log*
 pnpm-debug.log*
 .dev-server.log
 .dev-server.err
+.codex-devserver.*
+.codex-local-dev.*
+.codex-staticserver.pid
+.homepage-concept-dev.*
+.preview-nz.*
+.preview*.log
+.preview*.err.log
+.prototype-server.*
+.tmp-*
+.tmp_*
+debug.log
+gcm-diagnose.log
+scripts/__pycache__/
+temp-*/
+ppt_biblio_preview/
+ppt_conclusion_preview/
+ppt_edit_work/
+ppt_extract_all/
+ppt_media_extract/
+tmp-bcs-evidence.html
+homepage-hero-prototype.html
 
 
 # environment variables
@@ -21,6 +42,7 @@ pnpm-debug.log*
 
 # local tooling cache
 .npm-cache/
+.gmail-export/
 
 # macOS-specific files
 .DS_Store

@@ -1,0 +1,774 @@
+---
+interface WorkflowStep {
+  key: string;
+  number: string;
+  title: string;
+  description: string;
+  products?: string;
+  color: string;
+  href: string;
+}
+
+interface Props {
+  base?: string;
+  defaultStepKey?: string;
+  steps?: WorkflowStep[];
+}
+
+const {
+  base = import.meta.env.BASE_URL,
+  defaultStepKey = 'shape',
+  steps = [
+    {
+      key: 'assess',
+      number: '01',
+      title: 'Assess',
+      description: 'Identify anatomy, curvature, and clinical risk.',
+      color: '#9abbb5',
+      href: `${base}technique/workflow/`,
+    },
+    {
+      key: 'access',
+      number: '02',
+      title: 'Access',
+      description: 'Create controlled entry and visibility.',
+      color: '#8ba7bf',
+      href: `${base}technique/workflow/`,
+    },
+    {
+      key: 'glide',
+      number: '03',
+      title: 'Glide',
+      description: 'Establish reproducible rotary access before shaping.',
+      products: 'Acrobat Glide Path',
+      color: '#d5c98d',
+      href: `${base}products/acrobat-glide-path/`,
+    },
+    {
+      key: 'shape',
+      number: '04',
+      title: 'Shape',
+      description: 'Develop taper while preserving working length.',
+      products: 'TransformX ET / TransformX PT',
+      color: '#718aa6',
+      href: `${base}products/overview/`,
+    },
+    {
+      key: 'clean-3d',
+      number: '05',
+      title: 'Clean 3D',
+      description: 'Support irrigant exchange through disciplined preparation.',
+      products: 'VortiFlow',
+      color: '#86b4ba',
+      href: `${base}products/vortiflow-irrigation-needle/`,
+    },
+    {
+      key: 'seal',
+      number: '06',
+      title: 'Seal',
+      description: 'Complete the prepared canal with bioceramic consistency.',
+      products: 'Bioceramic sealer, matched gutta-percha, matched paper points',
+      color: '#8ea69f',
+      href: `${base}products/bcs/`,
+    },
+    {
+      key: 'restore',
+      number: '07',
+      title: 'Restore',
+      description: 'Move to a stable restorative endpoint.',
+      color: '#a8aeb7',
+      href: `${base}about/contact/`,
+    },
+  ],
+} = Astro.props;
+
+const selectedStep = steps.find((step) => step.key === defaultStepKey) ?? steps[3] ?? steps[0];
+
+const size = 680;
+const center = size / 2;
+const outerRadius = 276;
+const innerRadius = 168;
+const labelRadius = 224;
+const stepSweep = 360 / steps.length;
+const gapDegrees = 2.4;
+
+function polarToCartesian(cx: number, cy: number, radius: number, angleDegrees: number) {
+  const angle = ((angleDegrees - 90) * Math.PI) / 180.0;
+  return {
+    x: cx + radius * Math.cos(angle),
+    y: cy + radius * Math.sin(angle),
+  };
+}
+
+function describeArcSegment(
+  cx: number,
+  cy: number,
+  innerR: number,
+  outerR: number,
+  startAngle: number,
+  endAngle: number,
+) {
+  const outerStart = polarToCartesian(cx, cy, outerR, startAngle);
+  const outerEnd = polarToCartesian(cx, cy, outerR, endAngle);
+  const innerEnd = polarToCartesian(cx, cy, innerR, endAngle);
+  const innerStart = polarToCartesian(cx, cy, innerR, startAngle);
+  const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+
+  return [
+    `M ${outerStart.x} ${outerStart.y}`,
+    `A ${outerR} ${outerR} 0 ${largeArcFlag} 1 ${outerEnd.x} ${outerEnd.y}`,
+    `L ${innerEnd.x} ${innerEnd.y}`,
+    `A ${innerR} ${innerR} 0 ${largeArcFlag} 0 ${innerStart.x} ${innerStart.y}`,
+    'Z',
+  ].join(' ');
+}
+
+const segmentData = steps.map((step, index) => {
+  const start = -90 + index * stepSweep + gapDegrees / 2;
+  const end = -90 + (index + 1) * stepSweep - gapDegrees / 2;
+  const mid = (start + end) / 2;
+  const labelPoint = polarToCartesian(center, center, labelRadius, mid);
+  const numberPoint = polarToCartesian(center, center, labelRadius - 34, mid);
+  const offsetPoint = polarToCartesian(0, 0, 4, mid);
+
+  return {
+    ...step,
+    path: describeArcSegment(center, center, innerRadius, outerRadius, start, end),
+    labelX: labelPoint.x,
+    labelY: labelPoint.y,
+    numberX: numberPoint.x,
+    numberY: numberPoint.y,
+    offsetX: offsetPoint.x,
+    offsetY: offsetPoint.y,
+  };
+});
+---
+
+<section
+  class="workflow-wheel-section"
+  aria-labelledby="workflow-wheel-title"
+  data-workflow-wheel-root
+  data-default-step={selectedStep.key}
+>
+  <div class="workflow-wheel-shell">
+    <div class="workflow-wheel-heading">
+      <p class="workflow-wheel-eyebrow">Clinical workflow</p>
+      <h2 id="workflow-wheel-title">A focused clinical sequence from assessment to restoration.</h2>
+      <p>
+        EndoTech NZ supports a more structured pathway through access, glide path, shaping, irrigation, sealing, and final restorative planning.
+      </p>
+    </div>
+
+    <div class="workflow-wheel-desktop" aria-hidden="false">
+      <svg
+        class="workflow-wheel-svg"
+        viewBox={`0 0 ${size} ${size}`}
+        role="group"
+        aria-label="EndoTech clinical workflow wheel"
+      >
+        <circle class="workflow-wheel-base" cx={center} cy={center} r={outerRadius + 20}></circle>
+        <circle class="workflow-wheel-guide" cx={center} cy={center} r={outerRadius - 8}></circle>
+        <circle class="workflow-wheel-guide workflow-wheel-guide--inner" cx={center} cy={center} r={innerRadius + 20}></circle>
+
+        {segmentData.map((step) => (
+          <g
+            class={`workflow-wheel-segment${step.key === selectedStep.key ? ' is-active' : ''}`}
+            data-workflow-step={step.key}
+            data-step-key={step.key}
+            data-step-title={step.title}
+            data-step-description={step.description}
+            data-step-products={step.products ?? ''}
+            data-step-href={step.href}
+            style={`--segment-color:${step.color}; --segment-offset-x:${step.offsetX}px; --segment-offset-y:${step.offsetY}px;`}
+            role="link"
+            tabindex="0"
+            aria-label={`Open ${step.title}. ${step.description}${step.products ? ` Products: ${step.products}.` : ''}`}
+          >
+            <path class="workflow-wheel-segment-body" d={step.path}></path>
+            <path class="workflow-wheel-segment-outline" d={step.path}></path>
+            <text class="workflow-wheel-number" x={step.numberX} y={step.numberY} text-anchor="middle">
+              {step.number}
+            </text>
+            <text class="workflow-wheel-label" x={step.labelX} y={step.labelY} text-anchor="middle">
+              {step.title}
+            </text>
+          </g>
+        ))}
+      </svg>
+
+      <div class="workflow-wheel-hub" data-workflow-hub data-workflow-hub-card>
+        <span class="workflow-wheel-hub-kicker">Selected step</span>
+        <h3 data-workflow-hub-title>{selectedStep.title}</h3>
+        <p data-workflow-hub-description>{selectedStep.description}</p>
+        <div class:list={['workflow-wheel-hub-products', !selectedStep.products && 'is-hidden']} data-workflow-hub-products-wrap>
+          <span>Products</span>
+          <strong data-workflow-hub-products>{selectedStep.products}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="workflow-wheel-mobile">
+      <div class="workflow-wheel-mobile-list" role="list">
+        {steps.map((step) => (
+          <button
+            class={`workflow-wheel-mobile-step${step.key === selectedStep.key ? ' is-active' : ''}`}
+            type="button"
+            role="listitem"
+            data-workflow-mobile-step={step.key}
+            data-step-key={step.key}
+            data-step-title={step.title}
+            data-step-description={step.description}
+            data-step-products={step.products ?? ''}
+            data-step-href={step.href}
+            aria-pressed={step.key === selectedStep.key ? 'true' : 'false'}
+            aria-label={`Open ${step.title}. ${step.description}${step.products ? ` Products: ${step.products}.` : ''}`}
+          >
+            <span class="workflow-wheel-mobile-number">{step.number}</span>
+            <span class="workflow-wheel-mobile-copy">
+              <strong>{step.title}</strong>
+              <small>{step.description}</small>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <div class="workflow-wheel-mobile-detail" data-workflow-hub-card>
+        <span class="workflow-wheel-hub-kicker">Selected step</span>
+        <h3 data-workflow-hub-title>{selectedStep.title}</h3>
+        <p data-workflow-hub-description>{selectedStep.description}</p>
+        <div class:list={['workflow-wheel-hub-products', !selectedStep.products && 'is-hidden']} data-workflow-hub-products-wrap>
+          <span>Products</span>
+          <strong data-workflow-hub-products>{selectedStep.products}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="workflow-wheel-actions">
+      <a class="workflow-wheel-button workflow-wheel-button--primary" href={`${base}technique/workflow/`}>View Full Workflow</a>
+      <a class="workflow-wheel-button workflow-wheel-button--secondary" href={`${base}products/overview/`}>Related Product Systems</a>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-workflow-wheel-root]').forEach((root) => {
+      const hubTitles = root.querySelectorAll('[data-workflow-hub-title]');
+      const hubDescriptions = root.querySelectorAll('[data-workflow-hub-description]');
+      const hubProducts = root.querySelectorAll('[data-workflow-hub-products]');
+      const hubProductWraps = root.querySelectorAll('[data-workflow-hub-products-wrap]');
+      const hubCards = root.querySelectorAll('[data-workflow-hub-card]');
+      const desktopSteps = root.querySelectorAll('[data-workflow-step]');
+      const mobileSteps = root.querySelectorAll('[data-workflow-mobile-step]');
+      let activeKey = root.dataset.defaultStep;
+      let fadeTimeout;
+
+      const applyState = (source) => {
+        if (!source) return;
+
+        activeKey = source.dataset.stepKey || activeKey;
+        const title = source.dataset.stepTitle || '';
+        const description = source.dataset.stepDescription || '';
+        const products = source.dataset.stepProducts || '';
+
+        clearTimeout(fadeTimeout);
+
+        desktopSteps.forEach((step) => {
+          const isActive = step.dataset.stepKey === activeKey;
+          step.classList.toggle('is-active', isActive);
+          step.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        mobileSteps.forEach((step) => {
+          const isActive = step.dataset.stepKey === activeKey;
+          step.classList.toggle('is-active', isActive);
+          step.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        hubCards.forEach((card) => {
+          card.classList.add('is-fading');
+        });
+
+        fadeTimeout = setTimeout(() => {
+          hubTitles.forEach((node) => {
+            node.textContent = title;
+          });
+
+          hubDescriptions.forEach((node) => {
+            node.textContent = description;
+          });
+
+          hubProducts.forEach((node) => {
+            node.textContent = products;
+          });
+
+          hubProductWraps.forEach((node) => {
+            node.classList.toggle('is-hidden', !products);
+          });
+
+          hubCards.forEach((card) => {
+            card.classList.remove('is-fading');
+          });
+        }, 180);
+      };
+
+      const bindInteractiveState = (node) => {
+        node.addEventListener('mouseenter', () => applyState(node));
+        node.addEventListener('focus', () => applyState(node));
+        node.addEventListener('click', () => {
+          applyState(node);
+          const href = node.dataset.stepHref;
+          if (href) window.location.href = href;
+        });
+        node.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            applyState(node);
+            const href = node.dataset.stepHref;
+            if (href) window.location.href = href;
+          }
+        });
+      };
+
+      desktopSteps.forEach(bindInteractiveState);
+      mobileSteps.forEach(bindInteractiveState);
+
+      applyState(root.querySelector(`[data-step-key="${activeKey}"]`) || desktopSteps[0] || mobileSteps[0]);
+    });
+  });
+</script>
+
+<style>
+  .workflow-wheel-section {
+    padding: 88px 56px 92px;
+    border-top: 1px solid #e3e8ee;
+    background: linear-gradient(180deg, #f9fbfd 0%, #ffffff 100%);
+  }
+
+  .workflow-wheel-shell {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .workflow-wheel-heading {
+    max-width: 760px;
+    margin: 0 auto 34px;
+    text-align: center;
+  }
+
+  .workflow-wheel-eyebrow,
+  .workflow-wheel-hub-kicker,
+  .workflow-wheel-hub-products span {
+    margin: 0 0 12px;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .workflow-wheel-heading h2,
+  .workflow-wheel-hub h3,
+  .workflow-wheel-mobile-detail h3 {
+    margin: 0;
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .workflow-wheel-heading h2 {
+    font-size: clamp(2rem, 4vw, 2.95rem);
+    line-height: 1.05;
+  }
+
+  .workflow-wheel-heading p,
+  .workflow-wheel-hub p,
+  .workflow-wheel-mobile-detail p,
+  .workflow-wheel-mobile-copy small {
+    margin: 18px 0 0;
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    line-height: 1.68;
+  }
+
+  .workflow-wheel-desktop {
+    position: relative;
+    display: block;
+    min-height: 760px;
+  }
+
+  .workflow-wheel-svg {
+    display: block;
+    width: min(100%, 880px);
+    height: auto;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  .workflow-wheel-base {
+    fill: #ffffff;
+    stroke: rgba(220, 229, 239, 0.9);
+    stroke-width: 1;
+  }
+
+  .workflow-wheel-guide {
+    fill: none;
+    stroke: rgba(210, 220, 232, 0.46);
+    stroke-width: 1;
+  }
+
+  .workflow-wheel-guide--inner {
+    stroke: rgba(210, 220, 232, 0.34);
+  }
+
+  .workflow-wheel-segment {
+    cursor: pointer;
+    outline: none;
+    transition: transform 420ms cubic-bezier(0.32, 0.02, 0.16, 1);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .workflow-wheel-segment-body,
+  .workflow-wheel-segment-outline {
+    vector-effect: non-scaling-stroke;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  .workflow-wheel-segment-body {
+    fill: color-mix(in srgb, var(--segment-color) 72%, white 28%);
+    stroke: rgba(255, 255, 255, 0.92);
+    stroke-width: 4;
+    transition:
+      fill 420ms cubic-bezier(0.32, 0.02, 0.16, 1),
+      stroke 420ms cubic-bezier(0.32, 0.02, 0.16, 1),
+      stroke-width 420ms cubic-bezier(0.32, 0.02, 0.16, 1),
+      filter 420ms cubic-bezier(0.32, 0.02, 0.16, 1),
+      opacity 420ms cubic-bezier(0.32, 0.02, 0.16, 1);
+    opacity: 0.92;
+    filter: drop-shadow(0 12px 24px rgba(15, 23, 42, 0.045));
+  }
+
+  .workflow-wheel-segment-outline {
+    fill: none;
+    stroke: color-mix(in srgb, var(--segment-color) 82%, #37d6cf 18%);
+    stroke-width: 1.35;
+    opacity: 0;
+    transition:
+      opacity 340ms cubic-bezier(0.55, 0, 0.18, 1),
+      stroke-width 340ms cubic-bezier(0.55, 0, 0.18, 1);
+  }
+
+  .workflow-wheel-segment:hover,
+  .workflow-wheel-segment:focus,
+  .workflow-wheel-segment.is-active {
+    transform: translate(var(--segment-offset-x), var(--segment-offset-y)) scale(1.012);
+  }
+
+  .workflow-wheel-segment:hover .workflow-wheel-segment-body,
+  .workflow-wheel-segment:focus .workflow-wheel-segment-body,
+  .workflow-wheel-segment.is-active .workflow-wheel-segment-body {
+    fill: color-mix(in srgb, var(--segment-color) 88%, white 12%);
+    stroke: color-mix(in srgb, var(--segment-color) 90%, white 10%);
+    stroke-width: 7;
+    opacity: 1;
+    filter: drop-shadow(0 18px 30px rgba(15, 23, 42, 0.075));
+  }
+
+  .workflow-wheel-segment:hover .workflow-wheel-segment-outline,
+  .workflow-wheel-segment:focus .workflow-wheel-segment-outline,
+  .workflow-wheel-segment.is-active .workflow-wheel-segment-outline {
+    opacity: 1;
+    stroke-width: 1.5;
+  }
+
+  .workflow-wheel-segment:focus-visible .workflow-wheel-segment-outline {
+    opacity: 1;
+  }
+
+  .workflow-wheel-number,
+  .workflow-wheel-label {
+    pointer-events: none;
+    fill: #0f172a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    text-anchor: middle;
+  }
+
+  .workflow-wheel-number {
+    fill: #6f7f93;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+  }
+
+  .workflow-wheel-label {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .workflow-wheel-hub,
+  .workflow-wheel-mobile-detail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(296px, calc(100% - 40px));
+    transform: translate(-50%, -50%);
+    padding: 28px 26px;
+    border: 1px solid #dce5ef;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.96),
+      0 20px 40px rgba(15, 23, 42, 0.06),
+      0 3px 8px rgba(15, 23, 42, 0.04);
+    text-align: center;
+    backdrop-filter: blur(8px);
+    transition:
+      opacity 360ms cubic-bezier(0.32, 0.02, 0.16, 1),
+      transform 360ms cubic-bezier(0.32, 0.02, 0.16, 1);
+  }
+
+  .workflow-wheel-hub.is-fading,
+  .workflow-wheel-mobile-detail.is-fading {
+    opacity: 0;
+  }
+
+  .workflow-wheel-hub p,
+  .workflow-wheel-mobile-detail p {
+    margin-top: 14px;
+    font-size: 0.98rem;
+  }
+
+  .workflow-wheel-hub-products,
+  .workflow-wheel-mobile-detail .workflow-wheel-hub-products {
+    display: grid;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid #e5ebf2;
+  }
+
+  .workflow-wheel-hub-products.is-hidden {
+    display: none;
+  }
+
+  .workflow-wheel-hub-products strong {
+    color: #213142;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .workflow-wheel-mobile {
+    display: none;
+  }
+
+  .workflow-wheel-mobile-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .workflow-wheel-mobile-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid #dce5ef;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.96),
+      0 8px 18px rgba(15, 23, 42, 0.04);
+    color: #181c20;
+    text-align: left;
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      box-shadow 260ms ease,
+      background-color 220ms ease;
+  }
+
+  .workflow-wheel-mobile-step:hover,
+  .workflow-wheel-mobile-step:focus-visible,
+  .workflow-wheel-mobile-step.is-active {
+    border-color: #b8cad9;
+    background: #ffffff;
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.98),
+      0 14px 28px rgba(15, 23, 42, 0.06);
+  }
+
+  .workflow-wheel-mobile-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 38px;
+    border-radius: 12px;
+    background: #eef3f9;
+    color: #58739b;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.96rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .workflow-wheel-mobile-copy {
+    display: grid;
+    gap: 6px;
+  }
+
+  .workflow-wheel-mobile-copy strong {
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .workflow-wheel-mobile-copy small {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .workflow-wheel-mobile-detail {
+    position: static;
+    width: 100%;
+    margin-top: 16px;
+    transform: none;
+  }
+
+  .workflow-wheel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 26px;
+  }
+
+  .workflow-wheel-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border-radius: 999px;
+    padding: 0 18px;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 180ms ease,
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .workflow-wheel-button:hover,
+  .workflow-wheel-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow:
+      0 12px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
+  }
+
+  .workflow-wheel-button--primary {
+    background: #005c92;
+    border: 1px solid #005c92;
+    color: #ffffff;
+  }
+
+  .workflow-wheel-button--primary:hover,
+  .workflow-wheel-button--primary:focus-visible {
+    background: #0a6ca8;
+    border-color: #0a6ca8;
+    color: #ffffff;
+  }
+
+  .workflow-wheel-button--secondary {
+    background: #ffffff;
+    border: 1px solid #c0c7d2;
+    color: #404750;
+  }
+
+  .workflow-wheel-button--secondary:hover,
+  .workflow-wheel-button--secondary:focus-visible {
+    background: #f8fbfd;
+    border-color: #aeb8c5;
+    color: #1f2937;
+  }
+
+  @media (max-width: 1120px) {
+    .workflow-wheel-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .workflow-wheel-desktop {
+      min-height: 680px;
+    }
+
+    .workflow-wheel-svg {
+      width: min(100%, 760px);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .workflow-wheel-section {
+      padding-top: 72px;
+      padding-bottom: 76px;
+    }
+
+    .workflow-wheel-desktop {
+      display: none;
+    }
+
+    .workflow-wheel-mobile {
+      display: block;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .workflow-wheel-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .workflow-wheel-heading {
+      margin-bottom: 24px;
+    }
+
+    .workflow-wheel-heading h2 {
+      font-size: clamp(2rem, 10vw, 2.9rem);
+    }
+
+    .workflow-wheel-actions {
+      display: grid;
+      width: 100%;
+      max-width: 354px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .workflow-wheel-button {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .workflow-wheel-segment path,
+    .workflow-wheel-mobile-step,
+    .workflow-wheel-button {
+      transition: none;
+    }
+  }
+</style>

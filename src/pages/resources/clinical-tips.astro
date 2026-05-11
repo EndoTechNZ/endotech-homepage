@@ -8,7 +8,7 @@ const principles = [
   {
     number: '01',
     title: 'Establish a reproducible glide path first',
-    text: 'Before introducing rotary shaping, confirm a smooth path to working length. This remains the single most important control step before file progression.',
+    text: 'Before introducing rotary shaping, confirm a smooth path to working length. This remains the most important control step before file progression.',
   },
   {
     number: '02',
@@ -23,30 +23,30 @@ const principles = [
   {
     number: '04',
     title: 'Inspect files before reuse',
-    text: 'Watch for unwinding, visible distortion, or repeated use in calcified anatomy. Discard files when fatigue signs appear.',
+    text: 'Watch for unwinding, visible distortion, or repeated use in difficult anatomy. Discard files when fatigue signs appear.',
   },
 ];
 
 const systems = [
   {
-    label: 'ET TransformX',
+    title: 'ET TransformX',
+    points: [
+      'Designed around familiar ET-style sequence logic.',
+      'No motor setting change is required for established ET workflows.',
+      'Use existing clinical selection logic while evaluating file behaviour in demanding anatomy.',
+    ],
     href: `${base}products/et-transformx/`,
     guide: `${base}downloads/ET-Technique-Work-Flow.pdf`,
-    points: [
-      'Designed around familiar EdgeTaper / EdgeX7-style sequence logic.',
-      'No motor setting change is required for established ET-style workflows.',
-      'Use the same clinical selection logic while evaluating file behaviour in demanding anatomy.',
-    ],
   },
   {
-    label: 'PT TransformX',
-    href: `${base}products/pt-transformx/`,
-    guide: `${base}downloads/PT-Technique-Work-Flow.pdf`,
+    title: 'PT TransformX',
     points: [
-      'Follows a familiar ProTaper-style progressive shaping philosophy.',
-      'No motor setting change is required for established PT-style workflows.',
+      'Follows familiar PT-style progressive shaping philosophy.',
+      'No motor setting change is required for established PT workflows.',
       'Supports crown-down progression with added apical guidance and metallurgical adaptability.',
     ],
+    href: `${base}products/pt-transformx/`,
+    guide: `${base}downloads/PT-Technique-Work-Flow.pdf`,
   },
 ];
 
@@ -60,488 +60,158 @@ const avatarPoints = [
 
 <ProductLayout
   title="Clinical Education | EndoTech NZ"
-  description="Clinical tips for using TransformX files with controlled glide path, shaping, irrigation, and apical guidance principles."
+  description="Clinical guidance for using TransformX with controlled glide path, shaping, irrigation, and apical guidance principles."
   accent="slate"
 >
-  <main class="education-page">
-    <section class="education-hero" aria-labelledby="education-title">
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:py-20 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:items-center lg:py-24">
       <div>
-        <p class="education-eyebrow">Education</p>
-        <h1 id="education-title">Clinical guidance for controlled shaping.</h1>
-      </div>
-      <div class="hero-copy">
-        <p>
-          Concise technique principles for integrating TransformX into familiar clinical workflows, with emphasis on glide path control, irrigation discipline, and careful apical advancement.
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Education</p>
+        <h1 class="mt-5 max-w-[11ch] text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          Clinical guidance for controlled shaping.
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
+          Concise technique principles for integrating TransformX into familiar workflows, with emphasis on glide path control, irrigation discipline, and careful apical advancement.
         </p>
-        <div class="education-actions">
-          <a href={`${base}technique/workflow/`}>Review workflow</a>
-          <a href={`${base}resources/downloads/`}>Open downloads</a>
-          <a href={`${base}about/contact/`}>Ask a clinical question</a>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a
+            href={`${base}technique/workflow/`}
+            class="inline-flex min-w-[15rem] items-center justify-center rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+          >
+            Review workflow
+          </a>
+          <a
+            href={`${base}resources/downloads/`}
+            class="inline-flex min-w-[15rem] items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+          >
+            Open downloads
+          </a>
         </div>
       </div>
-    </section>
 
-    <WorkflowStrip activeStep="restore" />
+      <div class="rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff,#f5f8fb)] p-6 shadow-[0_28px_80px_-48px_rgba(15,23,42,0.16)] sm:p-8">
+        <div class="grid gap-3">
+          <div class="rounded-[1.2rem] border border-slate-200 bg-white p-5">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Core sequence</p>
+            <p class="mt-2 text-sm leading-7 text-slate-700">Glide path, controlled shaping, irrigation discipline, and careful apical progression.</p>
+          </div>
+          <div class="rounded-[1.2rem] border border-slate-200 bg-[#123d78] p-5 text-white">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100/90">Clinical objective</p>
+            <p class="mt-2 text-sm leading-7 text-slate-100">Help clinicians preserve familiar technique while improving sequence control in more demanding anatomy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section class="principles-section" aria-labelledby="principles-title">
-      <div class="section-intro">
-        <p class="education-eyebrow">General Principles</p>
-        <h2 id="principles-title">A calmer sequence begins before the first shaping file.</h2>
+  <WorkflowStrip activeStep="restore" />
+
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">General Principles</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          A calmer sequence begins before the first shaping file.
+        </h2>
       </div>
 
-      <div class="principle-list">
+      <div class="mt-10 grid gap-4 md:grid-cols-2">
         {principles.map((principle) => (
-          <article>
-            <span>{principle.number}</span>
-            <div>
-              <h3>{principle.title}</h3>
-              <p>{principle.text}</p>
-            </div>
+          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-[0_20px_48px_-42px_rgba(15,23,42,0.12)]">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{principle.number}</p>
+            <h3 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">{principle.title}</h3>
+            <p class="mt-4 text-sm leading-7 text-slate-600">{principle.text}</p>
           </article>
         ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="protocol-section" aria-labelledby="protocol-title">
-      <div class="section-label">Between Each File</div>
-      <div>
-        <h2 id="protocol-title">Irrigate → Recapitulate → Re-irrigate</h2>
-        <p>
-          The sequence is deliberately simple. It supports debris removal, patency confirmation, and preparation continuity before the next rotary file is introduced.
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto grid max-w-7xl gap-5 px-6 py-16 sm:py-18 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:py-20">
+      <article class="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Between Each File</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Irrigate, recapitulate, re-irrigate.
+        </h2>
+        <p class="mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+          Keep the sequence simple and repeatable. The technique value comes from how consistently those control steps are maintained.
         </p>
-        <ol class="protocol-steps">
-          <li>
-            <span>Irrigate</span>
-            <p>Flush debris from the canal before advancing the sequence.</p>
-          </li>
-          <li>
-            <span>Recapitulate</span>
-            <p>Use a small hand file to confirm patency and maintain the pathway.</p>
-          </li>
-          <li>
-            <span>Re-irrigate</span>
-            <p>Refresh the canal before the next rotary instrument.</p>
-          </li>
-        </ol>
-      </div>
-    </section>
+      </article>
 
-    <section class="systems-section" aria-labelledby="systems-title">
-      <div class="section-intro">
-        <p class="education-eyebrow">System-Specific Guidance</p>
-        <h2 id="systems-title">Use familiar sequence logic with a more controlled file response.</h2>
+      <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)]">
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Avatar Tip</p>
+        <ul class="mt-5 space-y-3">
+          {avatarPoints.map((item) => (
+            <li class="rounded-[1.15rem] border border-slate-200 bg-slate-50/80 px-4 py-4 text-sm leading-7 text-slate-600">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">System-Specific Guidance</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Use familiar sequence logic with a more controlled file response.
+        </h2>
       </div>
 
-      <div class="system-grid">
+      <div class="mt-10 grid gap-5 lg:grid-cols-2">
         {systems.map((system) => (
-          <article>
-            <h3>{system.label}</h3>
-            <ul>
+          <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+            <h3 class="text-2xl font-bold tracking-tight text-slate-900">{system.title}</h3>
+            <ul class="mt-5 space-y-3">
               {system.points.map((point) => (
-                <li>{point}</li>
+                <li class="text-sm leading-7 text-slate-600">{point}</li>
               ))}
             </ul>
-            <div>
-              <a href={system.href}>View product</a>
-              <a href={system.guide}>Technique guide</a>
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={system.href}
+                class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+              >
+                View product
+              </a>
+              <a
+                href={system.guide}
+                class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+              >
+                Open PDF
+              </a>
             </div>
           </article>
         ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="avatar-section" aria-labelledby="avatar-title">
-      <div>
-        <p class="education-eyebrow">Avatar Tip</p>
-        <h2 id="avatar-title">Apical guidance should feel controlled, not forced.</h2>
-        <p>
-          Avatar Tip is a guidance feature. Its purpose is to support smoother progression and canal centering where anatomy becomes more demanding.
-        </p>
+  <section class="bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
+      <div class="rounded-[2rem] bg-gradient-to-br from-slate-900 to-slate-800 px-6 py-10 text-white shadow-[0_30px_70px_-45px_rgba(15,23,42,0.45)] sm:px-8 sm:py-12">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Next Step</p>
+        <h2 class="mt-4 max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl">
+          Review the workflow, then connect the technique to the system.
+        </h2>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a
+            href={`${base}technology/transform-technology/`}
+            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_2px_rgba(2,6,23,0.08)] transition-[background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_12px_24px_rgba(2,6,23,0.18),0_2px_6px_rgba(2,6,23,0.08)]"
+          >
+            Technology overview
+          </a>
+          <a
+            href={`${base}about/contact/`}
+            class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-sm transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-white/35 hover:bg-white/[0.08] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_12px_24px_rgba(2,6,23,0.18)]"
+          >
+            Ask a clinical question
+          </a>
+        </div>
       </div>
-
-      <ul>
-        {avatarPoints.map((point) => (
-          <li>{point}</li>
-        ))}
-      </ul>
-    </section>
-
-    <section class="education-close" aria-labelledby="close-title">
-      <p class="education-eyebrow">Next Step</p>
-      <h2 id="close-title">Review the workflow, then match the system to the technique.</h2>
-      <div class="education-actions">
-        <a href={`${base}technique/workflow/`}>Clinical workflow</a>
-        <a href={`${base}technology/transform-technology/`}>Technology overview</a>
-        <a href={`${base}resources/downloads/`}>Downloads</a>
-      </div>
-    </section>
-  </main>
+    </div>
+  </section>
 </ProductLayout>
-
-<style>
-  .education-page {
-    background: #f7f9fb;
-    color: #0b1424;
-  }
-
-  .education-hero,
-  .principles-section,
-  .protocol-section,
-  .systems-section,
-  .avatar-section,
-  .education-close {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: clamp(56px, 6vw, 96px) 48px;
-  }
-
-  .education-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.98fr) minmax(420px, 0.74fr);
-    gap: clamp(44px, 6vw, 84px);
-    align-items: end;
-    min-height: min(680px, calc(100vh - 82px));
-    background:
-      linear-gradient(rgba(15, 23, 42, 0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(15, 23, 42, 0.018) 1px, transparent 1px);
-    background-size: 34px 34px;
-  }
-
-  .education-eyebrow,
-  .section-label {
-    color: #64748b;
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.34em;
-    text-transform: uppercase;
-  }
-
-  .education-hero h1,
-  .section-intro h2,
-  .protocol-section h2,
-  .avatar-section h2,
-  .education-close h2 {
-    margin: 0;
-    color: #090f1d;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 1.12;
-  }
-
-  .education-hero h1 {
-    max-width: 10.5ch;
-    margin-top: 28px;
-    font-size: clamp(3.1rem, 4.4vw, 5.3rem);
-    line-height: 1.02;
-  }
-
-  .hero-copy {
-    border-top: 1px solid #cfd9e2;
-    padding-top: 28px;
-  }
-
-  .hero-copy p,
-  .protocol-section > div > p,
-  .avatar-section p {
-    max-width: 650px;
-    margin: 0;
-    color: #536478;
-    font-size: clamp(1rem, 0.95vw, 1.14rem);
-    line-height: 1.78;
-  }
-
-  .education-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 34px;
-  }
-
-  .education-actions a,
-  .system-grid article > div a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 46px;
-    border: 1px solid #c8d2dc;
-    border-radius: 4px;
-    padding: 0 18px;
-    color: #0b1424;
-    font-weight: 850;
-    text-decoration: none;
-    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
-  }
-
-  .education-actions a:first-child,
-  .system-grid article > div a:first-child {
-    border-color: #0b1424;
-    background: #0b1424;
-    color: #ffffff;
-  }
-
-  .education-actions a:hover,
-  .education-actions a:focus-visible,
-  .system-grid article > div a:hover,
-  .system-grid article > div a:focus-visible {
-    transform: translateY(-1px);
-    border-color: #8aa5b8;
-    background: #ffffff;
-    color: #0b1424;
-  }
-
-  .principles-section,
-  .systems-section,
-  .education-close {
-    border-top: 1px solid #dbe3ea;
-    background: #ffffff;
-  }
-
-  .section-intro {
-    display: grid;
-    grid-template-columns: 190px minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 72px);
-    align-items: start;
-  }
-
-  .section-intro h2,
-  .protocol-section h2,
-  .avatar-section h2,
-  .education-close h2 {
-    max-width: 760px;
-    font-size: clamp(1.9rem, 2.45vw, 3.05rem);
-  }
-
-  .principle-list {
-    margin-top: 54px;
-    border-top: 1px solid #cfd9e2;
-  }
-
-  .principle-list article {
-    display: grid;
-    grid-template-columns: 88px minmax(0, 1fr);
-    gap: 42px;
-    border-bottom: 1px solid #dbe3ea;
-    padding: 30px 0;
-  }
-
-  .principle-list article > span {
-    color: #876a2b;
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.18em;
-  }
-
-  .principle-list h3,
-  .system-grid h3 {
-    margin: 0;
-    color: #0b1424;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1.14rem;
-    line-height: 1.3;
-  }
-
-  .principle-list p {
-    max-width: 760px;
-    margin: 12px 0 0;
-    color: #536478;
-    line-height: 1.74;
-  }
-
-  .protocol-section,
-  .avatar-section {
-    display: grid;
-    grid-template-columns: 190px minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 72px);
-    border-top: 1px solid #dbe3ea;
-  }
-
-  .protocol-section h2,
-  .avatar-section h2 {
-    margin-bottom: 24px;
-  }
-
-  .protocol-steps {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-    margin: 48px 0 0;
-    padding: 0;
-    border-top: 1px solid #cfd9e2;
-    border-bottom: 1px solid #cfd9e2;
-    list-style: none;
-  }
-
-  .protocol-steps li {
-    min-height: 190px;
-    padding: 28px 24px 28px 0;
-  }
-
-  .protocol-steps li + li {
-    border-left: 1px solid #dbe3ea;
-    padding-left: 24px;
-  }
-
-  .protocol-steps span {
-    color: #876a2b;
-    font-size: 0.76rem;
-    font-weight: 900;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  .protocol-steps p {
-    margin: 18px 0 0;
-    color: #536478;
-    line-height: 1.7;
-  }
-
-  .system-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 56px;
-    margin-top: 54px;
-  }
-
-  .system-grid article {
-    border-top: 1px solid #cfd9e2;
-    padding-top: 28px;
-  }
-
-  .system-grid ul,
-  .avatar-section ul {
-    display: grid;
-    gap: 0;
-    margin: 24px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .system-grid li,
-  .avatar-section li {
-    border-bottom: 1px solid #dbe3ea;
-    padding: 16px 0;
-    color: #536478;
-    line-height: 1.65;
-  }
-
-  .system-grid li:first-child,
-  .avatar-section li:first-child {
-    border-top: 1px solid #dbe3ea;
-  }
-
-  .system-grid li::before,
-  .avatar-section li::before {
-    content: '';
-    display: inline-block;
-    width: 0.38rem;
-    height: 0.38rem;
-    margin-right: 0.75rem;
-    border-radius: 999px;
-    background: #876a2b;
-    vertical-align: 0.12em;
-  }
-
-  .system-grid article > div {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 26px;
-  }
-
-  .avatar-section {
-    background: #f7f9fb;
-    grid-template-columns: 240px minmax(0, 1fr);
-    gap: clamp(56px, 7vw, 112px);
-  }
-
-  .avatar-section ul {
-    margin-top: 0;
-  }
-
-  .avatar-section li {
-    display: flex;
-    align-items: center;
-    min-height: 140px;
-    padding: 0 0 0 40px;
-  }
-
-  .avatar-section li::before {
-    margin-right: 1rem;
-    vertical-align: middle;
-    flex: 0 0 auto;
-  }
-
-  .education-close {
-    text-align: left;
-  }
-
-  .education-close h2 {
-    margin-top: 22px;
-  }
-
-  @media (max-width: 980px) {
-    .education-hero,
-    .section-intro,
-    .protocol-section,
-    .avatar-section,
-    .system-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .education-hero,
-    .principles-section,
-    .protocol-section,
-    .systems-section,
-    .avatar-section,
-    .education-close {
-      padding-left: 28px;
-      padding-right: 28px;
-    }
-
-    .protocol-steps {
-      grid-template-columns: 1fr;
-      border-bottom: 0;
-    }
-
-    .protocol-steps li,
-    .protocol-steps li + li {
-      min-height: auto;
-      border-left: 0;
-      border-bottom: 1px solid #dbe3ea;
-      padding: 24px 0;
-    }
-
-    .avatar-section ul {
-      margin-top: 28px;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .education-hero,
-    .principles-section,
-    .protocol-section,
-    .systems-section,
-    .avatar-section,
-    .education-close {
-      padding-left: 18px;
-      padding-right: 18px;
-    }
-
-    .education-hero {
-      min-height: auto;
-      gap: 28px;
-      padding-top: 44px;
-      padding-bottom: 56px;
-    }
-
-    .education-hero h1 {
-      font-size: clamp(3rem, 13vw, 4.9rem);
-    }
-
-    .principle-list article {
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-  }
-</style>

@@ -2,16 +2,25 @@
 
 ## Purpose
 
-This file defines the visual design system for EndoTech SG and EndoTech NZ websites, product pages, clinical education pages, ecommerce pages, evidence pages, and AI-generated components.
+This file defines the visual design system for EndoTech NZ and EndoTech SG across:
 
-Use this file as the single source of truth for visual direction. It blends:
+- homepage and landing pages
+- product overview and product detail pages
+- workflow and technology pages
+- evidence and downloads pages
+- contact, company, and support pages
+- ecommerce and enquiry pages
 
-- **Stripe**: clean commercial polish, confident product sections, conversion clarity, subtle technical/commercial energy.
-- **Linear**: precision, restrained spacing, sharp hierarchy, technical confidence, minimal chrome.
-- **Mintlify**: documentation clarity, evidence structure, clinical education readability, dense but legible information pages.
-- **Apple**: premium product presentation, quiet confidence, photography-first hero sections, disciplined simplicity.
+Use this file as the single source of truth for visual direction.
 
-EndoTech must feel like a **premium clinical dental technology company**, not a generic SaaS startup, consumer-electronics brand, automotive/lifestyle brand, or playful AI tool.
+The current EndoTech redesign direction is led by:
+
+- **Google Stitch**: centered product heroes, modular section rhythm, premium studio presentation, calm page composition
+- **Linear**: disciplined spacing, sharp hierarchy, minimal chrome, exact UI structure
+- **Apple**: product confidence, white space, clean imagery, restrained clarity
+- **Documentation clarity where needed**: dense information made readable, especially for evidence and downloads
+
+EndoTech must feel like a **premium clinical dental technology company**. It must not feel like a generic SaaS startup, consumer electronics brand, lifestyle brand, or playful AI product.
 
 ---
 
@@ -19,51 +28,70 @@ EndoTech must feel like a **premium clinical dental technology company**, not a 
 
 EndoTech is:
 
-- Clinical, precise, engineered, premium, trustworthy.
-- Evidence-led, calm, and commercially polished.
-- Modern but not trendy.
-- Technical but not cold.
-- Premium but not luxury-fashion.
-- Confident but not overclaimed.
+- Clinical
+- Precise
+- Engineered
+- Premium
+- Trustworthy
+- Evidence-led
+- Calm
+- Commercially credible
 
 EndoTech should communicate:
 
-- Better endodontic workflow design.
-- Safer and more controlled canal shaping.
-- Clean 3D irrigation and obturation logic.
-- Regulatory and clinical seriousness.
-- Dealer/distributor confidence.
-- Dentist-friendly product clarity.
+- Better endodontic workflow design
+- Safer and more controlled canal shaping
+- Clear system logic from glide path to final seal
+- Clinical seriousness
+- Distributor and dealer credibility
+- Dentist-friendly product clarity
 
 Avoid:
 
-- Generic SaaS gradients.
-- Overly playful startup illustrations.
-- Consumer-electronics styling that feels like phones or headphones.
-- Over-dark futuristic sci-fi interfaces.
-- Automotive drama unless used very lightly for engineering precision.
-- Excessive animation or decorative effects.
-- Aggressive sales language.
-- Crowded dental-supply catalogue styling.
+- Generic SaaS gradients
+- Playful startup illustrations
+- Consumer electronics styling
+- Dark futuristic sci-fi interfaces
+- Automotive drama
+- Excessive animation
+- Crowded dental-supply catalogue styling
+- Aggressive marketing language
 
 ---
 
-## Core Visual Formula
+## Core Visual Direction
 
-The EndoTech design direction is:
+The EndoTech design direction is now:
 
 ```text
-70% Stripe + Linear
-20% Mintlify
-10% Apple
+60% Google Stitch
+20% Linear
+15% Apple
+5% documentation clarity
 ```
 
-Use this interpretation:
+Interpret that as:
 
-- **Stripe influence**: white canvas, polished commercial sections, clean CTA structure, soft off-white bands, subtle product mockups, refined conversion flow.
-- **Linear influence**: exact spacing, quiet hairline borders, disciplined cards, precise typography, minimal UI chrome.
-- **Mintlify influence**: documentation pages, evidence blocks, clinical references, tables, comparison grids, code/technical-style clarity where needed.
-- **Apple influence**: product-first hero sections, large clean product renders, strong white/grey negative space, concise headlines, minimal distractions.
+- **Google Stitch influence**:
+  - centered heroes
+  - modular product-landing-page sections
+  - clean white and soft-grey surfaces
+  - calm premium composition
+  - strong product-image framing
+- **Linear influence**:
+  - exact spacing
+  - minimal chrome
+  - quiet borders
+  - disciplined typography
+- **Apple influence**:
+  - product confidence
+  - large isolated renders
+  - negative space
+  - concise messaging
+- **Documentation clarity**:
+  - only where useful for evidence, downloads, workflow, and technical pages
+
+EndoTech should now look less like a mixed docs/marketing site and more like a **premium clinical product-system website**.
 
 ---
 
@@ -71,23 +99,23 @@ Use this interpretation:
 
 ### Primary Palette
 
-Use EndoTech’s own clinical palette, not the source brands’ palettes.
+Use EndoTech's own clinical palette.
 
 ```yaml
 colors:
   canvas: "#FFFFFF"
-  canvas_soft: "#F6F9FC"
+  canvas_soft: "#F7F9FC"
   canvas_clinical: "#F3F6F8"
-  canvas_parchment: "#F5F5F7"
+  canvas_warm: "#F5F5F7"
+
   surface: "#FFFFFF"
   surface_soft: "#F8FAFC"
-  surface_lifted: "#FFFFFF"
   surface_blue_tint: "#EEF6FB"
   surface_steel: "#E8EDF2"
 
-  ink: "#102033"
-  ink_secondary: "#273951"
-  ink_muted: "#64748D"
+  ink: "#111827"
+  ink_secondary: "#24364A"
+  ink_muted: "#607084"
   ink_subtle: "#8A94A3"
   ink_inverse: "#FFFFFF"
 
@@ -99,7 +127,6 @@ colors:
 
   accent_teal: "#1BA6A6"
   accent_green: "#4BAE73"
-  accent_purple: "#6E6BD9"
   accent_warning: "#B7791F"
   accent_error: "#C2413A"
 
@@ -107,36 +134,38 @@ colors:
   hairline_strong: "#CAD5E0"
   hairline_blue: "#B8D8EA"
 
-  dark_canvas: "#07111D"
-  dark_surface: "#0D1A2A"
-  dark_surface_lifted: "#122236"
+  dark_canvas: "#0C1730"
+  dark_surface: "#0F1C38"
   dark_hairline: "#24364A"
-  dark_ink: "#F7FAFC"
-  dark_ink_muted: "#B8C4D1"
+  dark_ink: "#F8FAFC"
+  dark_ink_muted: "#C4CFDB"
 ```
 
 ### Color Principles
 
 - Default to **white and soft clinical grey** surfaces.
 - Use EndoTech blue as the primary action colour.
-- Use teal/green only for success, flow, irrigation, confirmation, or clinical-positive signals.
-- Use purple/lavender sparingly for TransformX technology, metallurgy, or premium technical accents.
-- Use dark navy only for product mockups, technical panels, or selected dramatic product sections.
-- Do not use Stripe-style rainbow gradients directly. If a gradient is needed, make it clinical: blue-grey, pale cyan, soft steel, or very subtle blue-to-white.
-- Avoid red except for warnings or clinical cautions.
+- Use teal or green only for irrigation, flow, confirmation, or positive clinical signals.
+- Use dark navy only for:
+  - CTA endings
+  - technical proof cards
+  - occasional product-support sections
+- Avoid heavy gradients.
 - Avoid bright consumer colours.
+- Avoid decorative colour systems that compete with the products.
 
-### Approved Gradients
+### Approved Surface Treatments
 
-Use very subtle gradients only.
+Use subtle surfaces only.
 
 ```css
---gradient-clinical-hero: linear-gradient(135deg, #ffffff 0%, #f6f9fc 45%, #eef6fb 100%);
---gradient-technical-blue: radial-gradient(circle at 30% 20%, rgba(11,117,183,0.16), transparent 34%), linear-gradient(135deg, #ffffff 0%, #f3f7fb 100%);
---gradient-dark-technical: radial-gradient(circle at 70% 20%, rgba(27,166,166,0.18), transparent 34%), linear-gradient(135deg, #07111d 0%, #0d1a2a 100%);
+--surface-hero: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+--surface-panel: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+--surface-blue-panel: linear-gradient(180deg, #eef6fb 0%, #f8fbfd 100%);
+--surface-dark-cta: linear-gradient(180deg, #0c1730 0%, #101b36 100%);
 ```
 
-Never use saturated rainbow mesh gradients as the main EndoTech look.
+Do not use rainbow mesh gradients, startup glows, or overly dramatic lighting.
 
 ---
 
@@ -144,13 +173,13 @@ Never use saturated rainbow mesh gradients as the main EndoTech look.
 
 ### Font Stack
 
-Use system-safe premium sans typography.
+Use Inter as the primary typeface.
 
 ```css
 font-family: Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 ```
 
-For mono, evidence tags, part numbers, SKU references, and technical data:
+For mono, technical references, and SKUs:
 
 ```css
 font-family: "Geist Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
@@ -163,100 +192,100 @@ typography:
   hero_display:
     size: 64px
     weight: 600
-    line_height: 1.06
-    letter_spacing: -1.8px
+    line_height: 1.02
+    letter_spacing: -2px
 
   display_lg:
     size: 48px
     weight: 600
-    line_height: 1.10
+    line_height: 1.08
     letter_spacing: -1.2px
 
   display_md:
     size: 36px
     weight: 600
-    line_height: 1.16
-    letter_spacing: -0.6px
+    line_height: 1.14
+    letter_spacing: -0.8px
 
   heading_lg:
     size: 28px
     weight: 600
-    line_height: 1.22
+    line_height: 1.2
     letter_spacing: -0.3px
 
   heading_md:
     size: 22px
     weight: 600
-    line_height: 1.30
+    line_height: 1.28
     letter_spacing: -0.1px
 
   heading_sm:
     size: 18px
     weight: 600
-    line_height: 1.38
-    letter_spacing: 0
+    line_height: 1.36
 
   lead:
     size: 20px
     weight: 400
-    line_height: 1.50
-    letter_spacing: -0.1px
+    line_height: 1.5
 
   body:
     size: 16px
     weight: 400
-    line_height: 1.55
-    letter_spacing: 0
+    line_height: 1.65
 
   body_sm:
     size: 14px
     weight: 400
-    line_height: 1.50
-    letter_spacing: 0
-
-  caption:
-    size: 13px
-    weight: 400
-    line_height: 1.40
-    letter_spacing: 0
+    line_height: 1.55
 
   eyebrow:
     size: 12px
     weight: 600
-    line_height: 1.30
-    letter_spacing: 0.6px
+    line_height: 1.3
+    letter_spacing: 0.18em
     text_transform: uppercase
 
   button:
     size: 14px
     weight: 600
-    line_height: 1.20
-    letter_spacing: 0
+    line_height: 1.2
 
   mono:
     size: 13px
     weight: 400
-    line_height: 1.50
-    letter_spacing: 0
+    line_height: 1.5
 ```
 
 ### Typography Principles
 
-- Use **negative tracking** for large headings, inspired by Stripe, Linear, and Apple.
-- Use **600 weight**, not heavy 700/800, for premium clinical confidence.
-- Body text should be readable and calm, closer to Mintlify documentation clarity than marketing hype.
-- Use 14–16px body type for dense evidence and product tables.
-- Use mono only for SKUs, file sequences, ISO sizes, GTIN/UDI references, code-like labels, or regulatory identifiers.
-- Avoid overly thin 300-weight typography for clinical claims; it can feel fragile.
-- Avoid huge all-caps marketing headlines.
+- Use Inter consistently.
+- Use negative tracking on larger headings.
+- Prefer 600 weight over heavy 700 or 800.
+- Headlines should feel calm and exact, not shouty.
+- Body text should stay clinically readable, not ad-like.
+- Avoid self-referential design copy.
+- Avoid giant blocks of explanatory marketing text.
 
 ---
 
 ## Layout and Spacing
 
+### Grid
+
+Use a **12-column grid** with a **1280px max content width** for major landing and product pages.
+
+```yaml
+containers:
+  narrow: 760px
+  prose: 820px
+  standard: 1180px
+  wide: 1280px
+```
+
 ### Spacing Scale
 
-Use an 8px rhythm with 4px fine increments.
+Use an 8px system with 4px fine increments.
 
 ```yaml
 spacing:
@@ -272,82 +301,52 @@ spacing:
   hero: 120px
 ```
 
-### Containers
-
-```yaml
-containers:
-  narrow: 760px
-  prose: 820px
-  standard: 1180px
-  wide: 1280px
-  product: 1440px
-```
-
 ### Layout Principles
 
-- Use generous whitespace like Apple, but not empty consumer-electronics minimalism.
-- Use Linear’s precise card and grid discipline.
-- Use Stripe’s polished section flow: hero → proof → product explanation → workflow → evidence → CTA.
-- Use Mintlify’s 3-column or 2-column layouts for clinical/evidence pages.
-- Do not make pages look like a dense dental catalogue.
-- Do not make pages feel like a developer-only documentation site unless it is an evidence/downloads page.
+- Favor centered composition on major heroes.
+- Use clean modular sections instead of long mixed-content blocks.
+- Keep sections visually distinct, but restrained.
+- Use whitespace generously, but do not make pages feel empty.
+- Use product-image dominance where appropriate.
+- Keep evidence pages structured and controlled, not cluttered.
 
-### Recommended Page Rhythm
+### Preferred Section Rhythm
 
-For product pages:
+For major product and landing pages, prefer this structure:
 
-1. Premium product hero.
-2. Short clinical positioning line.
-3. Product render or clinical mechanism visual.
-4. Workflow placement: Assess → Access → Glide → Shape → Clean 3D → Seal → Restore.
-5. Key design/technology section.
-6. Clinical benefit cards.
-7. Evidence or references.
-8. Product variants/SKUs.
-9. Dealer/contact CTA.
+1. Centered hero
+2. Primary product image or system visual
+3. One or two primary CTAs
+4. Two-card proof or feature band
+5. Workflow split section
+6. Supporting product or system block
+7. Evidence or downloads module
+8. Dark CTA ending
 
-For evidence pages:
-
-1. Page title and evidence promise.
-2. Summary cards.
-3. Study table.
-4. Clinical interpretation blocks.
-5. Limitations / responsible claims.
-6. Downloads and citations.
-
-For ecommerce pages:
-
-1. Clean product title.
-2. Product image/render.
-3. Clear pack size and SKU information.
-4. Clinical use summary.
-5. Sequence/size table.
-6. Add-to-cart or enquiry CTA.
-7. IFU/SDS/download links.
+This is now the clearest EndoTech page grammar.
 
 ---
 
-## Elevation and Depth
+## Elevation and Borders
 
-EndoTech should use restrained elevation.
+EndoTech should use restrained depth.
 
 ```yaml
 elevation:
   flat: none
   hairline: "1px solid #E3E8EE"
-  card: "0 1px 3px rgba(0, 55, 112, 0.08)"
+  card: "0 1px 3px rgba(0, 55, 112, 0.06)"
   floating_panel: "0 8px 24px rgba(0, 55, 112, 0.08), 0 2px 6px rgba(0, 55, 112, 0.04)"
-  product_shadow: "0 24px 48px rgba(16, 32, 51, 0.12)"
+  product_shadow: "0 24px 48px rgba(16, 32, 51, 0.10)"
 ```
 
 ### Elevation Principles
 
-- Use shadows sparingly.
-- Cards should mostly rely on white surface + hairline border.
-- Product renders may have soft Apple-like product shadow.
-- Technical mockups can float gently like Stripe panels.
-- Do not add heavy drop shadows to every card.
-- Do not use neon glow effects.
+- Rely mostly on white surfaces and hairline borders.
+- Use shadow sparingly.
+- Product renders may carry soft studio depth.
+- Do not make every card float heavily.
+- Do not use glow effects.
 
 ---
 
@@ -355,7 +354,6 @@ elevation:
 
 ```yaml
 rounded:
-  none: 0px
   xs: 4px
   sm: 6px
   md: 8px
@@ -363,16 +361,14 @@ rounded:
   xl: 16px
   xxl: 24px
   pill: 9999px
-  full: 9999px
 ```
 
 ### Radius Principles
 
-- Use 12px for standard cards.
-- Use 16px for product mockups and larger panels.
-- Use pill radius for CTAs, tags, and chips.
-- Avoid overly bubbly, playful rounded corners.
-- Avoid sharp corporate 0px corners except in full-width sections or technical diagrams.
+- Use 8px to 12px for most cards.
+- Use 16px for larger product panels or media frames.
+- Use pill radius for buttons and small badges.
+- Avoid playful, overly round UI.
 
 ---
 
@@ -382,7 +378,12 @@ rounded:
 
 #### Primary Button
 
-Use for main action: Buy, Enquire, Request Samples, Contact Distributor.
+Use for:
+- Product Systems
+- Contact
+- Order
+- View Product
+- View Evidence
 
 ```yaml
 button_primary:
@@ -396,8 +397,6 @@ button_primary:
 
 #### Secondary Button
 
-Use for Learn More, View Evidence, Download IFU.
-
 ```yaml
 button_secondary:
   background: "#FFFFFF"
@@ -407,33 +406,19 @@ button_secondary:
   radius: "9999px"
 ```
 
-#### Ghost Button
-
-Use for quiet secondary navigation.
-
-```yaml
-button_ghost:
-  background: "transparent"
-  text: "#273951"
-  padding: "8px 12px"
-  radius: "8px"
-```
-
-#### Dark-Surface Button
-
-Use on dark navy technical sections.
+#### Dark CTA Button
 
 ```yaml
 button_on_dark:
   background: "#FFFFFF"
-  text: "#07111D"
+  text: "#0C1730"
   padding: "10px 20px"
   radius: "9999px"
 ```
 
 ### Cards
 
-#### Standard Clinical Card
+#### Clinical Card
 
 ```yaml
 clinical_card:
@@ -441,22 +426,40 @@ clinical_card:
   border: "1px solid #E3E8EE"
   radius: "12px"
   padding: "24px"
-  shadow: "none or subtle card shadow"
 ```
 
-Use for product benefits, clinical notes, workflow steps, feature explanations.
+Use for:
+- workflow steps
+- clinical notes
+- feature summaries
+- contact blocks
 
-#### Technical Feature Card
+#### Proof Card
 
 ```yaml
-technical_card:
-  background: "#F8FAFC"
+proof_card:
+  background: "#FFFFFF"
   border: "1px solid #E3E8EE"
   radius: "16px"
-  padding: "32px"
+  padding: "28px"
 ```
 
-Use for Transform Technology, Avatar Tip, metallurgy, fatigue, file design, irrigation mechanism.
+Use in:
+- two-card technical bands
+- product proof modules
+- evidence highlights
+
+#### Dark Proof Card
+
+```yaml
+proof_card_dark:
+  background: "#0B75B7"
+  text: "#FFFFFF"
+  radius: "16px"
+  padding: "28px"
+```
+
+Use sparingly to create the Stitch-style white-card / blue-card contrast.
 
 #### Evidence Card
 
@@ -466,60 +469,17 @@ evidence_card:
   border: "1px solid #E3E8EE"
   radius: "12px"
   padding: "24px"
-  title_style: "heading_sm"
-  body_style: "body_sm"
 ```
 
-Must include:
+Use for:
+- evidence areas
+- literature summaries
+- document previews
+- downloads modules
 
-- Study title or topic.
-- Clinical meaning.
-- Responsible limitation if needed.
-- Optional PubMed/download link.
-
-#### Product Render Panel
-
-```yaml
-product_render_panel:
-  background: "linear-gradient(135deg, #ffffff 0%, #f6f9fc 100%)"
-  radius: "24px"
-  padding: "48px"
-  shadow: "0 24px 48px rgba(16, 32, 51, 0.12)"
-```
-
-Use for premium product imagery, packaging, files, irrigation needles, sealers.
-
-### Badges and Tags
-
-Use for SKU, ISO size, taper, sterile, single-use, evidence level, workflow step.
-
-```yaml
-badge:
-  background: "#EEF8FC"
-  text: "#064B78"
-  border: "1px solid #B8D8EA"
-  radius: "9999px"
-  padding: "4px 10px"
-  typography: "caption / 600"
-```
-
-Approved badge examples:
-
-- Sterile
-- Single-use
-- NiTi Rotary
-- Glide Path
-- Shape
-- Finish
-- ISO 25
-- .04 Taper
-- Evidence
-- IFU
-- SDS
+Do not duplicate multiple evidence-card systems on the same page unless there is a clear hierarchy.
 
 ### Tables
-
-Use tables for clinical evidence, SKU lists, GTIN/UDI, sequence comparisons, pricing, and distributor information.
 
 ```yaml
 table:
@@ -527,22 +487,19 @@ table:
   row_background: "#FFFFFF"
   row_alt_background: "#FAFCFE"
   border: "1px solid #E3E8EE"
-  text: "#102033"
-  muted_text: "#64748D"
+  text: "#111827"
+  muted_text: "#607084"
   radius: "12px"
 ```
 
-Table rules:
-
-- Use 14px body text.
-- Use mono for SKU, GTIN, UDI, REF, ISO size, taper.
-- Keep row height comfortable.
-- Use clear column names.
-- Avoid decorative colours in clinical tables.
+Use tables for:
+- product comparisons
+- technical files
+- SKUs
+- evidence summaries
+- downloads listings
 
 ### Navigation
-
-Use a clean white or frosted white nav.
 
 ```yaml
 nav:
@@ -550,11 +507,33 @@ nav:
   backdrop_filter: "blur(16px)"
   border_bottom: "1px solid #E3E8EE"
   height: "64px"
-  text: "#273951"
+  text: "#24364A"
   active: "#0B75B7"
 ```
 
-Navigation should feel premium and restrained. Do not use a black Apple-style global nav as the default EndoTech nav.
+Navigation should feel:
+- light
+- minimal
+- premium
+- calm
+
+### Footer
+
+Footer direction is now:
+- more corporate
+- more structured
+- multi-column
+- restrained
+- useful rather than decorative
+
+Use:
+- brand block
+- product links
+- clinical/resource links
+- company/support links
+- lower legal or guidance row
+
+Do not use a casual lightweight footer on primary pages.
 
 ---
 
@@ -562,41 +541,40 @@ Navigation should feel premium and restrained. Do not use a black Apple-style gl
 
 ### Product Imagery Principles
 
-- Product renders should be crisp, isolated, and high resolution.
-- Use white, soft grey, or clinical blue-grey backgrounds.
-- Allow product imagery to breathe.
-- Packaging and file renders should sit on premium studio surfaces.
+- Product renders should be crisp, isolated, and high-resolution.
+- Use white, pale grey, or soft clinical backgrounds.
+- Let product imagery breathe.
+- Prefer studio-style product presentation.
 - Avoid cluttered catalogue imagery.
-- Avoid stock photos of dentists unless authentic, restrained, and high quality.
-- Prefer clinical mechanism diagrams, engineering sketches, product renders, and macro material detail.
+- Avoid decorative stock-photo dependency.
 
 ### Hero Imagery
 
-Use Apple-like product confidence:
+Preferred hero pattern:
 
-- Large product render on right or centered.
-- Short headline.
-- One-line clinical promise.
-- Two CTAs maximum.
-- Plenty of whitespace.
+- centered composition
+- one short eyebrow
+- one short headline
+- one restrained subhead
+- one dominant product or system image
+- one or two CTAs maximum
 
-Do not create a hero with too many claims, badges, icons, and buttons.
+### Media Placement
 
-### Technical Diagrams
+Videos should be treated as:
+- evidence modules
+- workflow support modules
+- product-support visuals
 
-Use EndoTech’s established engineering sketch style:
+Not as decorative media dumps.
 
-- Pencil/technical linework.
-- Precise labels.
-- Clean grey/blue surfaces.
-- Minimal accent colours.
-- Dotted callouts or fine leader lines where needed.
+Frame videos carefully and pair them closely with the text that explains why they matter.
 
 ---
 
 ## Clinical Claim Style
 
-EndoTech must use responsible clinical language.
+Use responsible clinical language.
 
 Prefer:
 
@@ -608,66 +586,95 @@ Prefer:
 - “evidence-informed workflow”
 - “supports safer, more predictable preparation”
 
-Avoid unsupported absolutes:
+Avoid:
 
 - “eliminates risk”
-- “guarantees no separation”
-- “prevents all ledging”
+- “guarantees”
+- “prevents all”
 - “best in the world”
-- “clinically proven superior” unless supported directly and specifically
+- “clinically proven superior” unless directly and specifically supported
 
 ---
 
 ## Page Type Guidance
 
-### Home Page
+### Homepage
 
-Design direction: Stripe + Apple + Linear.
+Design direction:
+- Google Stitch + Linear + Apple restraint
 
-- White clinical hero.
-- Premium product or workflow visual.
-- One strong positioning statement.
-- Clear product family navigation.
-- Dealer/distributor credibility.
-- Evidence-led product sections.
+Use:
+- centered product-systems hero
+- core system cards
+- workflow split section
+- supporting BCS or system block
+- evidence/downloads block
+- dark CTA ending
 
 ### Product Page
 
-Design direction: Apple + Stripe + Linear.
+Design direction:
+- Stitch-led product landing page
 
-- Product first.
-- Short clinical reason to care.
-- Clear technology explanation.
-- Sequence/SKU clarity.
-- Evidence or IFU/download links.
-- Strong CTA.
+Use:
+- centered hero
+- large product render
+- two-card proof band
+- workflow or mechanism section
+- supporting system block
+- comparison or evidence module
+- dark CTA ending
 
 ### Evidence and Downloads Page
 
-Design direction: Mintlify + Linear.
+Design direction:
+- cleaner, sharper, more controlled than old docs pages
 
-- Dense but readable.
-- Use filters, tables, cards, citations, downloads.
-- White/soft grey backgrounds.
-- Minimal decoration.
-- Strong document hierarchy.
+Use:
+- centered title and evidence promise
+- featured document block
+- clearly grouped downloads
+- controlled evidence cards
+- carefully framed videos
+- no duplicated card systems
+- no self-referential design language
 
 ### Clinical Workflow Page
 
-Design direction: Stripe + Mintlify.
+Design direction:
+- Stitch composition with clinical clarity
 
-- Use workflow steps: Assess → Access → Glide → Shape → Clean 3D → Seal → Restore.
-- Each step should have: clinical objective, EndoTech product fit, evidence/education link.
-- Use diagrams and structured cards.
+Use:
+- centered hero
+- workflow cards
+- supporting product associations
+- structured progression from assess to restore
 
-### Ecommerce / NZ Product Catalogue
+### Technology Page
 
-Design direction: Shopify lightly + Stripe + Linear.
+Design direction:
+- product-tech explanation, not generic education page
 
-- Clean product cards.
-- Clear SKU/pack/price/stock status.
-- Trust and regulatory readiness.
-- Avoid marketplace clutter.
+Use:
+- hero
+- design/technology modules
+- controlled diagrams or videos
+- direct link back to product system
+
+### Ecommerce / Order Pages
+
+Design direction:
+- clean and trustworthy
+- commerce-ready
+- less stylized than marketing pages
+
+Use:
+- clear product grouping
+- clear SKU/pack/order logic
+- strong trust signals
+- minimal visual distraction
+
+Do not risk breaking Shopify or ordering logic for visual flourish.
 
 ---
 
@@ -676,31 +683,149 @@ Design direction: Shopify lightly + Stripe + Linear.
 Motion must be subtle and purposeful.
 
 Use:
+- 150ms to 250ms transitions
+- gentle hover lift
+- soft border and shadow transitions
+- restrained reveals
 
-- 150–250ms transitions.
-- Gentle hover lift on cards.
-- Soft button colour transitions.
-- Subtle reveal animations for product/diagram sections.
-- Carefully controlled scroll animations for mechanism explanations.
+Avoid:
+- bouncy interactions
+- parallax-heavy motion
+- neon or glow effects
+- decorative animation
+
+---
+
+## WebGL and Three.js Guidance
+
+WebGL and Three.js are optional tools for EndoTech, not a default design layer.
+
+They may be used only when motion or interactive 3D materially improves clinical or product understanding, such as:
+
+- rotating product inspection for files, instruments, or packaging
+- Transform Technology visualisation
+- Avatar Tip explanation
+- canal-shaping pathway demonstration
+- VortiFlow irrigation or fluid-movement explanation
+- controlled engineering or material-behaviour visualisations
+
+WebGL must never be used as decoration alone. Do not use it for:
+
+- ambient background effects
+- abstract motion with no clinical meaning
+- gaming-style interaction
+- black or neon sci-fi visuals
+- flashy hero gimmicks
+- motion that reduces trust, clarity, or page readability
+
+### Preferred Media Hierarchy
+
+Use the simplest medium that communicates the idea clearly.
+
+Prefer **CSS, SVG, Lottie, video, or static imagery** when they can explain the concept well enough.
+
+Use:
+
+- **CSS** for subtle interface motion, hover states, reveals, and small transitions
+- **SVG** for diagrams, linework, process explanation, and scalable technical visuals
+- **Lottie** for lightweight instructional animations with fixed paths and repeatable motion
+- **Video** for real product footage, clinical demonstrations, irrigation flow clips, and controlled explanatory media
+- **WebGL / Three.js** only when true 3D interaction, spatial understanding, or live viewpoint control adds clear educational value
+
+If a concept works well as video or SVG, do not rebuild it in WebGL.
+
+### Performance Requirements
+
+All WebGL usage must be lightweight, progressive, and isolated.
+
+Requirements:
+
+- lazy load all WebGL code and assets
+- never block first contentful render or core page content
+- provide a static fallback image or poster state before interaction loads
+- keep mobile performance as a first-class requirement, not an afterthought
+- avoid heavy particle systems, complex physics, or large scene graphs
+- keep GPU usage restrained and clinically calm
+- ensure pages remain usable if WebGL fails or is unsupported
+- do not make WebGL a dependency for primary navigation, product selection, ordering, or core content understanding
+
+On mobile:
+
+- default to simpler scenes, lower fidelity, or static/video fallback where needed
+- avoid battery-heavy continuous rendering
+- pause or reduce rendering when off-screen
+
+### Accessibility Requirements
+
+WebGL components must remain accessible and optional.
+
+Requirements:
+
+- honor `prefers-reduced-motion`
+- provide a reduced-motion or static alternative
+- do not autoplay aggressive or disorienting motion
+- ensure essential information is also available in text, labels, captions, or static visuals
+- do not rely on motion alone to explain a clinical claim
+- preserve keyboard accessibility where controls are interactive
+- maintain sufficient contrast and legibility around overlays, labels, and annotations
+
+### Visual Tone
+
+Any WebGL or Three.js component must match EndoTech's clinical visual tone:
+
+- clean
+- premium
+- medical
+- evidence-led
+- calm
+- trustworthy
+- precise
+- restrained
+
+3D scenes should feel like product or clinical explanation tools, not tech demos.
+
+Use:
+
+- white, soft grey, and restrained blue-grey environments
+- clean studio lighting
+- disciplined camera movement
+- minimal UI chrome
+- simple labels or callouts where useful
 
 Avoid:
 
-- Bouncy interactions.
-- Overly playful hover effects.
-- Excessive parallax.
-- Neon glow animations.
-- Motion that distracts from clinical credibility.
+- neon glows
+- dark sci-fi environments
+- decorative particles
+- glossy gaming aesthetics
+- dramatic cinematic effects
+- excessive camera motion
+
+### Implementation Guidance
+
+WebGL must be isolated to specific components, never used as the foundation of the whole site.
+
+Implementation rules:
+
+- confine WebGL to self-contained modules such as `ProductViewer`, `TechnologyExplainer`, or `FlowVisualization`
+- keep the rest of the page in standard HTML/CSS/Astro
+- load WebGL only inside the section that needs it
+- ensure every component has a static fallback state
+- keep content architecture independent from the WebGL layer
+- do not build whole-page layouts, navigation, or general page backgrounds in WebGL
+
+EndoTech should remain a fast, clinically credible website first. WebGL is permitted only as a focused explanatory tool where it improves understanding of the product, workflow, or clinical mechanism.
 
 ---
 
 ## Accessibility
 
-- Maintain high contrast for all text.
-- Body text should not drop below 14px except legal fine print.
-- Buttons must have clear focus states.
-- Do not rely on colour alone for clinical status or warnings.
-- Ensure evidence tables are readable on mobile.
-- Avoid tiny grey text for important clinical or regulatory information.
+- Maintain strong contrast.
+- Do not drop important body text below 14px.
+- Ensure button focus states are clear.
+- Do not rely on colour alone.
+- Make tables and downloads readable on mobile.
+- Keep evidence videos and documents understandable in context.
 
 ---
 
@@ -708,25 +833,23 @@ Avoid:
 
 When generating EndoTech pages or components:
 
-1. Use this DESIGN.md as the single source of visual truth.
-2. Build with a premium clinical technology feel.
-3. Use white, soft grey, EndoTech blue, restrained teal/green, and dark navy only when needed.
-4. Use generous but disciplined spacing.
-5. Keep product imagery or diagrams central.
-6. Use cards, tables, and evidence blocks for clinical information.
+1. Use this file as the visual source of truth.
+2. Favor Google Stitch-style composition adapted for a serious clinical brand.
+3. Use white, soft grey, EndoTech blue, and restrained dark navy.
+4. Build around modular sections, not long mixed-content blocks.
+5. Keep product imagery central and well-framed.
+6. Use evidence, downloads, and workflow content in clean controlled modules.
 7. Keep claims responsible and evidence-led.
-8. Avoid generic SaaS visual clichés.
-9. Avoid consumer-electronics or automotive styling.
-10. Make the final result look suitable for a serious dental medical-device company.
+8. Avoid generic SaaS patterns.
+9. Avoid consumer electronics tone.
+10. Avoid self-referential filler copy about design or layout.
 
 ---
 
 ## Quick Build Prompt
 
-Use this prompt with Codex, Stitch, Cursor, Claude, or another AI build tool:
-
 ```text
-Use the DESIGN.md file as the visual design system for the EndoTech website. Build a premium clinical dental technology page with Stripe-level commercial polish, Linear-level precision and spacing, Mintlify-level documentation clarity, and Apple-level product presentation. Keep the design white, clinical, restrained, evidence-led, and product-focused. Avoid generic SaaS gradients, playful startup illustrations, consumer electronics styling, automotive drama, and over-dark futuristic UI.
+Use the DESIGN.md file as the visual design system for the EndoTech website. Build a premium clinical dental technology page in a Google Stitch-inspired style, with centered product heroes, crisp white and soft-grey surfaces, restrained blue accents, strong product imagery, modular landing-page sections, disciplined spacing, and evidence-led clarity. Keep the result clinical, precise, premium, and commercially credible. Avoid generic SaaS gradients, playful startup illustrations, consumer electronics styling, dark futuristic UI, messy documentation layouts, and overclaimed marketing language.
 ```
 
 ---
@@ -735,19 +858,20 @@ Use the DESIGN.md file as the visual design system for the EndoTech website. Bui
 
 ### Do
 
-- Use premium white/grey clinical surfaces.
-- Use EndoTech blue as the main CTA colour.
-- Use restrained cards and hairline borders.
-- Use precise spacing and clear hierarchy.
-- Use product renders, diagrams, workflow visuals, and evidence blocks.
+- Use centered heroes where appropriate.
+- Use premium white and soft-grey clinical surfaces.
+- Use EndoTech blue for key actions.
+- Use modular sections with clear spacing.
+- Use crisp product renders and controlled videos.
+- Use a darker CTA ending sparingly and deliberately.
 - Make pages feel trustworthy to dentists, dealers, and regulators.
 
 ### Do Not
 
-- Copy Stripe’s colourful mesh gradient directly.
-- Copy Linear’s nearly black full-site canvas as the default.
-- Copy Mintlify’s playful atmospheric SaaS hero too strongly.
-- Copy Apple’s consumer-electronics tone too literally.
-- Use generic AI/startup design clichés.
+- Use generic startup gradients.
+- Use heavy decorative effects.
+- Use duplicated card systems on evidence pages.
+- Use playful or consumer-tech styling.
 - Overload pages with claims, icons, or badges.
+- Let downloads or evidence pages fall back into cluttered legacy layouts.
 - Make the website feel like a commodity dental catalogue.

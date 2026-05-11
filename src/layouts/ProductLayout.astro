@@ -2,7 +2,7 @@
 import Layout from './Layout.astro';
 import logoIcon from '../assets/endotech-logo-2.png';
 import { siteConfig } from '../config/site';
-import { getPrimaryNavItems, getProductMenu, getProductMobileNavItems } from '../data/navigation';
+import { getFooterSections, getFooterUtilityLinks, getPrimaryNavItems, getProductMenu, getProductMobileNavItems } from '../data/navigation';
 
 interface Props {
   title: string;
@@ -17,6 +17,8 @@ const base = import.meta.env.BASE_URL;
 const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
 const mobileNavItems = getProductMobileNavItems(base);
+const footerSections = getFooterSections(base);
+const footerUtilityLinks = getFooterUtilityLinks(base);
 ---
 
 <Layout title={title} description={description} image={image}>
@@ -50,12 +52,13 @@ const mobileNavItems = getProductMobileNavItems(base);
             </div>
           </div>
         </div>
-        {navItems.slice(2).map((item) => (
+        {navItems.slice(2).filter((item) => item.label !== 'Order').map((item) => (
           <a href={item.href}>{item.label}</a>
         ))}
       </nav>
 
       <div class="product-header-actions">
+        <a class="product-header-action" href={`${base}order/`}>Order</a>
         <a class="product-header-action" href={`${base}about/contact/`}>Contact</a>
         <button class="product-menu-toggle" id="product-mobile-menu-button" type="button" aria-expanded="false" aria-controls="product-mobile-menu">
           Menu
@@ -135,16 +138,38 @@ const mobileNavItems = getProductMobileNavItems(base);
   </script>
 
   <footer class="product-site-footer">
-    <div>
-      <strong>{siteConfig.name}</strong>
-      <span>{siteConfig.organizationDescription}</span>
+    <div class="product-site-footer-shell">
+      <div class="product-site-footer-brand">
+        <span class="product-site-footer-kicker">EndoTech NZ</span>
+        <strong>{siteConfig.name}</strong>
+        <p>Clinical endodontic systems for New Zealand dentists.</p>
+        <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+      </div>
+
+      <div class="product-site-footer-links">
+        {footerSections.map((section) => (
+          <section>
+            <h2>{section.title}</h2>
+            <nav aria-label={`${section.title} footer navigation`}>
+              {section.links.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))}
+            </nav>
+          </section>
+        ))}
+      </div>
     </div>
-    <nav aria-label="Product footer navigation">
-      <a href={`${base}products/acrobat-glide-path/`}>Acrobat Glide Path</a>
-      <a href={`${base}products/vortiflow-irrigation-needle/`}>VortiFlow</a>
-      <a href={`${base}products/bcs/`}>BCS Family</a>
-      <a href={`${base}resources/downloads/`}>Downloads</a>
-    </nav>
+
+    <div class="product-site-footer-bottom">
+      <p>
+        Review technique guidance, product files, and supporting evidence before ordering.
+      </p>
+      <nav aria-label="Footer utility navigation">
+        {footerUtilityLinks.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </nav>
+    </div>
   </footer>
 </Layout>
 
@@ -153,9 +178,9 @@ const mobileNavItems = getProductMobileNavItems(base);
     position: sticky;
     top: 0;
     z-index: 70;
-    border-bottom: 1px solid #dbe3ea;
-    background: rgba(247, 249, 251, 0.94);
-    backdrop-filter: blur(14px);
+    border-bottom: 1px solid #e3e8ee;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
   }
 
   .product-site-header-inner {
@@ -163,8 +188,10 @@ const mobileNavItems = getProductMobileNavItems(base);
     grid-template-columns: minmax(210px, auto) 1fr auto;
     gap: 28px;
     align-items: center;
-    min-height: 82px;
+    min-height: 72px;
     padding: 0 56px;
+    max-width: 1280px;
+    margin: 0 auto;
   }
 
   .product-site-brand {
@@ -176,28 +203,29 @@ const mobileNavItems = getProductMobileNavItems(base);
   }
 
   .product-site-brand img {
-    width: 42px;
+    width: 34px;
   }
 
   .product-site-brand span {
     display: grid;
-    gap: 3px;
+    gap: 2px;
     line-height: 1;
   }
 
   .product-site-brand strong,
   .product-site-footer strong {
     color: #0b1424;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   .product-site-brand small {
-    color: #64748b;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
+    color: #707881;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
@@ -205,10 +233,10 @@ const mobileNavItems = getProductMobileNavItems(base);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 28px;
-    color: #334155;
-    font-size: 0.9rem;
-    font-weight: 700;
+    gap: 24px;
+    color: #404750;
+    font-size: 0.82rem;
+    font-weight: 500;
   }
 
   .product-site-header nav a,
@@ -276,29 +304,29 @@ const mobileNavItems = getProductMobileNavItems(base);
   .products-menu-shell {
     display: grid;
     gap: 2px;
-    border: 1px solid #d8e1e8;
-    border-radius: 6px;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
     padding: 12px;
     background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 24px 55px -34px rgba(15, 23, 42, 0.34);
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08);
     backdrop-filter: blur(16px);
   }
 
   .products-menu-shell span {
     padding: 6px 8px 8px;
-    color: #876a2b;
+    color: #707881;
     font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.18em;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
   .products-menu-shell a {
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 10px 8px;
     color: #344357;
-    font-size: 0.86rem;
-    font-weight: 700;
+    font-size: 0.84rem;
+    font-weight: 500;
     transition:
       background 160ms ease,
       color 160ms ease,
@@ -337,13 +365,32 @@ const mobileNavItems = getProductMobileNavItems(base);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
-    border: 1px solid #c8d2dc;
-    border-radius: 4px;
-    padding: 0 18px;
-    color: #0b1424;
-    font-size: 0.9rem;
-    font-weight: 800;
+    min-height: 38px;
+    border: 1px solid #c0c7d2;
+    border-radius: 8px;
+    padding: 0 16px;
+    color: #102033;
+    font-size: 0.82rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition:
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .product-header-action:hover,
+  .product-header-action:focus-visible,
+  .product-menu-toggle:hover,
+  .product-menu-toggle:focus-visible {
+    background: #f8fbfd;
+    border-color: #aeb8c5;
+    box-shadow:
+      0 10px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
+    transform: translateY(-1px);
   }
 
   .product-menu-toggle {
@@ -354,8 +401,8 @@ const mobileNavItems = getProductMobileNavItems(base);
 
   .product-mobile-menu {
     display: none;
-    border-top: 1px solid #dbe3ea;
-    background: rgba(247, 249, 251, 0.98);
+    border-top: 1px solid #e3e8ee;
+    background: rgba(255, 255, 255, 0.98);
   }
 
   .product-mobile-menu-shell {
@@ -365,14 +412,14 @@ const mobileNavItems = getProductMobileNavItems(base);
   }
 
   .product-mobile-menu-shell a {
-    border: 1px solid #dbe3ea;
-    border-radius: 6px;
+    border: 1px solid #e3e8ee;
+    border-radius: 10px;
     padding: 12px 14px;
     color: #0b1424;
-    font-size: 0.92rem;
-    font-weight: 700;
+    font-size: 0.88rem;
+    font-weight: 600;
     text-decoration: none;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(248, 250, 252, 0.92);
   }
 
   .product-site-main {
@@ -380,39 +427,110 @@ const mobileNavItems = getProductMobileNavItems(base);
   }
 
   .product-site-footer {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 28px;
-    align-items: start;
-    border-top: 1px solid #dbe3ea;
-    background: #ffffff;
-    padding: 34px 56px;
+    border-top: 1px solid #e3e8ee;
+    background: #fbfcfe;
+    padding: 0 56px;
+    max-width: 1280px;
+    margin: 0 auto;
   }
 
-  .product-site-footer div {
+  .product-site-footer-shell {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.95fr) minmax(0, 2.05fr);
+    gap: 44px;
+    padding: 48px 0 28px;
+  }
+
+  .product-site-footer-brand {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+
+  .product-site-footer-kicker {
+    color: #7b8794;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .product-site-footer-brand p,
+  .product-site-footer-bottom p {
+    color: #5f6b78;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .product-site-footer-brand p {
+    max-width: 34ch;
+    margin: 0;
+  }
+
+  .product-site-footer-brand a,
+  .product-site-footer-bottom a {
+    color: #25364a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.83rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .product-site-footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .product-site-footer-links section {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+
+  .product-site-footer-links h2 {
+    margin: 0;
+    color: #7b8794;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .product-site-footer-links nav {
     display: grid;
     gap: 8px;
   }
 
-  .product-site-footer span {
-    max-width: 760px;
-    color: #536478;
-    line-height: 1.6;
+  .product-site-footer-links nav a {
+    color: #25364a;
+    font-size: 0.84rem;
+    font-weight: 450;
+    line-height: 1.5;
   }
 
-  .product-site-footer nav {
+  .product-site-footer-bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    padding: 18px 0 28px;
+    border-top: 1px solid #e3e8ee;
+  }
+
+  .product-site-footer-bottom p {
+    margin: 0;
+    max-width: 78ch;
+    font-size: 0.79rem;
+  }
+
+  .product-site-footer-bottom nav {
     display: flex;
     flex-wrap: wrap;
     gap: 18px;
-    justify-content: flex-end;
-    color: #475569;
-    font-size: 0.9rem;
-    font-weight: 700;
-  }
-
-  .product-site-footer a {
-    color: inherit;
-    text-decoration: none;
+    row-gap: 10px;
   }
 
   @media (max-width: 1120px) {
@@ -438,11 +556,17 @@ const mobileNavItems = getProductMobileNavItems(base);
       display: block;
     }
 
-    .product-site-footer {
+    .product-site-footer-shell,
+    .product-site-footer-links,
+    .product-site-footer-bottom {
       grid-template-columns: 1fr;
     }
 
-    .product-site-footer nav {
+    .product-site-footer-shell {
+      gap: 32px;
+    }
+
+    .product-site-footer-bottom nav {
       justify-content: flex-start;
     }
   }

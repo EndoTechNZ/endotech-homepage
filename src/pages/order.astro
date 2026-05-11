@@ -110,7 +110,7 @@ const orderModules = [
 >
   <main class="order-page">
     <section class="order-hero" aria-labelledby="order-title">
-      <div>
+      <div class="order-hero-copy">
         <p class="order-eyebrow">NZ Ordering</p>
         <h1 id="order-title">Order here</h1>
         <p class="order-lede">
@@ -119,7 +119,10 @@ const orderModules = [
       </div>
 
       <div class="order-hero-side">
-        <p>Selections made in any section stay in the same combined Shopify cart.</p>
+        <div class="order-hero-side-intro">
+          <span>Combined cart</span>
+          <p>Selections made in any section stay in the same combined Shopify cart.</p>
+        </div>
         <nav class="order-quick-nav" aria-label="Order section shortcuts">
           {quickLinks.map((link) => (
             <a href={link.href}>{link.label}</a>
@@ -129,7 +132,8 @@ const orderModules = [
     </section>
 
     <section class="order-flow-note" aria-label="Ordering note">
-      <div>
+      <div class="order-flow-note-copy">
+        <span>Unified workflow ordering</span>
         <strong>One combined order</strong>
         <p>Add Glide Path, ET, and PT packs as you scroll. Each selector contributes to the same order state.</p>
       </div>
@@ -137,17 +141,23 @@ const orderModules = [
     </section>
 
     <section class="order-category-heading" aria-labelledby="file-systems-title">
-      <div>
+      <div class="order-category-copy">
         <p class="order-eyebrow">File Systems</p>
         <h2 id="file-systems-title">Active ordering for glide path and shaping files.</h2>
         <p>
           Acrobat, ET TransformX, and PT TransformX are grouped here as the current file ordering area. This section is structured to expand as RECI X, hand files, and additional rotary systems are added.
         </p>
       </div>
-      <div class="upcoming-family-list" aria-label="Upcoming file families">
-        {upcomingFileFamilies.map((family) => (
-          <span>{family}</span>
-        ))}
+      <div class="order-category-side">
+        <div class="order-category-side-intro">
+          <span>Next file families</span>
+          <p>Additional file families can extend the same ordering framework as they are introduced.</p>
+        </div>
+        <div class="upcoming-family-list" aria-label="Upcoming file families">
+          {upcomingFileFamilies.map((family) => (
+            <span>{family}</span>
+          ))}
+        </div>
       </div>
     </section>
 
@@ -191,7 +201,7 @@ const orderModules = [
           <p class="order-eyebrow">Contact Products</p>
           <h2 id="contact-products-title">Materials and irrigation stay connected to ordering.</h2>
           <p>
-            VortiFlow and BCS are included here as direct enquiry routes. Future obturation and bioceramic ordering modules can sit in their own product-family sections.
+            VortiFlow and BCS are included here as direct enquiry - they will be available soon.
           </p>
         </div>
         <a href={`${base}about/contact/`}>Contact EndoTech NZ</a>
@@ -236,14 +246,18 @@ const orderModules = [
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.78fr);
     gap: clamp(40px, 6vw, 84px);
-    align-items: end;
-    min-height: min(640px, calc(100vh - 82px));
-    padding-top: 64px;
-    padding-bottom: 56px;
+    align-items: center;
+    min-height: min(620px, calc(100vh - 82px));
+    padding-top: 72px;
+    padding-bottom: 52px;
     background:
       linear-gradient(rgba(15, 23, 42, 0.018) 1px, transparent 1px),
       linear-gradient(90deg, rgba(15, 23, 42, 0.018) 1px, transparent 1px);
     background-size: 34px 34px;
+  }
+
+  .order-hero-copy {
+    max-width: 54rem;
   }
 
   .order-eyebrow {
@@ -267,10 +281,10 @@ const orderModules = [
   }
 
   .order-hero h1 {
-    max-width: 9ch;
-    font-size: clamp(3.2rem, 4.8vw, 5.6rem);
+    max-width: 8ch;
+    font-size: clamp(3.45rem, 5.2vw, 6rem);
     font-weight: 700;
-    line-height: 1;
+    line-height: 0.98;
   }
 
   .order-lede,
@@ -287,20 +301,40 @@ const orderModules = [
   }
 
   .order-lede {
-    max-width: 50rem;
-    margin-top: 28px;
+    max-width: 42rem;
+    margin-top: 30px;
   }
 
   .order-hero-side {
-    border-top: 1px solid #cfd9e2;
-    padding-top: 26px;
+    display: grid;
+    gap: 22px;
+    align-self: stretch;
+    border: 1px solid #dbe3ea;
+    border-radius: 32px;
+    padding: 32px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(247, 250, 252, 0.96) 100%);
+    box-shadow: 0 28px 80px -54px rgba(15, 23, 42, 0.16);
+  }
+
+  .order-hero-side-intro {
+    display: grid;
+    gap: 12px;
+  }
+
+  .order-hero-side-intro span,
+  .order-flow-note-copy > span {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
   }
 
   .order-quick-nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 24px;
+    gap: 12px;
+    align-content: start;
   }
 
   .order-quick-nav a,
@@ -314,10 +348,18 @@ const orderModules = [
     border: 1px solid #c8d2dc;
     border-radius: 999px;
     padding: 0 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      0 1px 2px rgba(15, 23, 42, 0.04);
     color: #0b1424;
     font-weight: 800;
     text-decoration: none;
-    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    transition:
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      background 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .order-quick-nav a:hover,
@@ -330,6 +372,11 @@ const orderModules = [
   .contact-products-grid a:focus-visible {
     transform: translateY(-1px);
     border-color: #9eb3c4;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f6fa 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      0 12px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
   }
 
   .order-flow-note {
@@ -337,46 +384,83 @@ const orderModules = [
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 24px;
     align-items: center;
-    border-top: 1px solid #dbe3ea;
-    border-bottom: 1px solid #dbe3ea;
-    background: #ffffff;
-    padding-top: 24px;
-    padding-bottom: 24px;
+    border: 1px solid #dbe3ea;
+    border-radius: 28px;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+    padding-top: 28px;
+    padding-bottom: 28px;
+    margin-top: 6px;
+    margin-bottom: 20px;
+    box-shadow: 0 22px 48px -42px rgba(15, 23, 42, 0.12);
+  }
+
+  .order-flow-note-copy {
+    display: grid;
+    gap: 6px;
   }
 
   .order-flow-note strong {
-    display: block;
-    margin-bottom: 6px;
     color: #0b1424;
     font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 
   .order-category-heading {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
-    gap: 36px;
-    align-items: end;
-    padding-top: 80px;
-    padding-bottom: 16px;
+    gap: 34px;
+    align-items: stretch;
+    padding-top: 76px;
+    padding-bottom: 22px;
+  }
+
+  .order-category-copy {
+    max-width: 52rem;
   }
 
   .order-category-heading h2 {
-    max-width: 17ch;
-    font-size: clamp(2.35rem, 3vw, 3.75rem);
-    line-height: 1.06;
+    max-width: 15ch;
+    font-size: clamp(2.45rem, 3.2vw, 4rem);
+    line-height: 1.02;
   }
 
   .order-category-heading p {
-    max-width: 52rem;
     margin-top: 20px;
   }
 
-  .upcoming-family-list {
+  .order-category-side {
+    display: grid;
+    gap: 18px;
+    border: 1px solid #dbe3ea;
+    border-radius: 28px;
+    padding: 26px;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+    box-shadow: 0 22px 48px -42px rgba(15, 23, 42, 0.12);
+  }
+
+  .order-category-side-intro {
     display: grid;
     gap: 10px;
-    border-top: 1px solid #cfd9e2;
-    padding-top: 18px;
+  }
+
+  .order-category-side-intro span {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .order-category-side-intro p {
+    margin-top: 0;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .upcoming-family-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .upcoming-family-list span {
@@ -385,11 +469,14 @@ const orderModules = [
     min-height: 42px;
     border: 1px solid #dbe3ea;
     border-radius: 999px;
-    background: #ffffff;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     padding: 0 16px;
     color: #334155;
     font-size: 0.86rem;
     font-weight: 800;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
   .order-module {

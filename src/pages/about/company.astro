@@ -2,90 +2,76 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 
 const base = import.meta.env.BASE_URL;
-const email = 'Steveshepherdnz@gmail.com';
 
-const enquiryPanels = [
+const focusAreas = [
+  'Rotary shaping systems designed to fit familiar clinical workflows',
+  'Clinical control, adaptability, and predictable sequence behaviour',
+  'Evidence-led presentation for New Zealand dentists and regional partners',
+];
+
+const technologies = [
   {
-    eyebrow: 'Product enquiries',
-    heading: 'Product and ordering questions',
-    intro: 'For interest in TransformX, Acrobat, VortiFlow, or BCS materials.',
-    includeList: [
-      'Your clinic or practice name',
-      'Location and region',
-      'Products of interest',
-      'Approximate quantities or intended use',
-    ],
+    title: 'Transform Technology',
+    text: 'Variable-phase NiTi engineering designed to support stability coronally and greater adaptability toward the apex.',
+    href: `${base}technology/transform-technology/`,
   },
   {
-    eyebrow: 'Clinical enquiries',
-    heading: 'Technique and product support',
-    intro: 'For workflow questions, file selection, clinical guidance, and supporting product information.',
-    includeList: [
-      'Which system you are using',
-      'Clinical question or case context',
-      'Any files or guides already reviewed',
-    ],
-  },
-  {
-    eyebrow: 'Distribution enquiries',
-    heading: 'Distribution and regional support',
-    intro: 'For distribution discussions and broader regional supply enquiries.',
-    includeList: [
-      'Company name and website',
-      'Regions served',
-      'Current product lines represented',
-    ],
+    title: 'Avatar Tip',
+    text: 'Guidance-focused apical geometry intended to support centered advancement and calmer control in demanding anatomy.',
+    href: `${base}technology/avatar-tip/`,
   },
 ];
 ---
 
 <ProductLayout
-  title="Contact & Orders | EndoTech NZ"
-  description="Get in touch with EndoTech New Zealand for product enquiries, clinical support, and distribution discussions."
+  title="About EndoTech New Zealand | EndoTech NZ"
+  description="Learn about EndoTech New Zealand, our clinical focus, and the technology platform behind TransformX."
   accent="slate"
 >
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:py-20 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:items-center lg:py-24">
       <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Contact</p>
-        <h1 class="mt-5 max-w-[10ch] text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-          Contact and support for EndoTech NZ.
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">About</p>
+        <h1 class="mt-5 max-w-[12ch] text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          <span class="block">EndoTech</span>
+          <span class="block">New Zealand</span>
         </h1>
         <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
-          Clear routes for product enquiries, clinical questions, and distribution discussions, presented with the same calmer structure as the rest of the redesign.
+          Advanced endodontic systems presented with a clinical, evidence-led focus for New Zealand dentists and regional partners.
         </p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <a
-            href={`mailto:${email}`}
+            href={`${base}products/overview/`}
             class="inline-flex min-w-[15rem] items-center justify-center rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
           >
-            Email EndoTech NZ
+            View product systems
           </a>
           <a
-            href={`${base}resources/downloads/`}
+            href={`${base}about/contact/`}
             class="inline-flex min-w-[15rem] items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
           >
-            Open downloads
+            Contact EndoTech NZ
           </a>
         </div>
       </div>
 
       <div class="rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff,#f5f8fb)] p-6 shadow-[0_28px_80px_-48px_rgba(15,23,42,0.16)] sm:p-8">
         <div class="rounded-[1.5rem] border border-slate-200 bg-white p-6">
-          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Primary contact</p>
-          <p class="mt-4 text-2xl font-bold tracking-tight text-slate-900">{email}</p>
-          <p class="mt-4 text-sm leading-7 text-slate-600">
-            Use this email for product questions, technique support, distributor enquiries, and follow-up on NZ availability.
-          </p>
+          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Clinical focus</p>
+          <ul class="mt-5 space-y-3">
+            {focusAreas.map((item) => (
+              <li class="text-sm leading-7 text-slate-600">{item}</li>
+            ))}
+          </ul>
         </div>
         <div class="mt-5 grid gap-3 sm:grid-cols-2">
           <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Location</p>
-            <p class="mt-2 text-sm leading-7 text-slate-700">New Zealand</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Region</p>
+            <p class="mt-2 text-sm leading-7 text-slate-700">New Zealand and wider Asia-Pacific support conversations.</p>
           </div>
           <div class="rounded-[1.2rem] border border-slate-200 bg-[#123d78] p-4 text-white">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100/90">Response time</p>
-            <p class="mt-2 text-sm leading-7 text-slate-100">Most enquiries should receive a reply within one to two business days.</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100/90">Approach</p>
+            <p class="mt-2 text-sm leading-7 text-slate-100">Clinical, precise, and deliberately aligned with established endodontic workflows.</p>
           </div>
         </div>
       </div>
@@ -95,26 +81,23 @@ const enquiryPanels = [
   <section class="border-b border-slate-200/80 bg-slate-50/70">
     <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
       <div class="max-w-3xl">
-        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Enquiries</p>
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Technology Platform</p>
         <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-          Direct paths for product, clinical, and distribution questions.
+          Two connected technology stories behind the shaping systems.
         </h2>
       </div>
 
-      <div class="mt-10 grid gap-5 lg:grid-cols-3">
-        {enquiryPanels.map((panel) => (
+      <div class="mt-10 grid gap-5 lg:grid-cols-2">
+        {technologies.map((item) => (
           <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
-            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{panel.eyebrow}</p>
-            <h3 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">{panel.heading}</h3>
-            <p class="mt-4 text-base leading-8 text-slate-600">{panel.intro}</p>
-            <p class="mt-4 text-sm leading-7 text-slate-600">
-              <strong class="text-slate-900">Email:</strong> <a href={`mailto:${email}`} class="text-slate-900 underline decoration-slate-300 underline-offset-4">{email}</a>
-            </p>
-            <ul class="mt-5 space-y-3">
-              {panel.includeList.map((item) => (
-                <li class="text-sm leading-7 text-slate-600">{item}</li>
-              ))}
-            </ul>
+            <h3 class="text-2xl font-bold tracking-tight text-slate-900">{item.title}</h3>
+            <p class="mt-4 text-base leading-8 text-slate-600">{item.text}</p>
+            <a
+              href={item.href}
+              class="mt-6 inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+            >
+              Explore technology
+            </a>
           </article>
         ))}
       </div>
@@ -124,22 +107,22 @@ const enquiryPanels = [
   <section class="bg-white">
     <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
       <div class="rounded-[2rem] bg-gradient-to-br from-slate-900 to-slate-800 px-6 py-10 text-white shadow-[0_30px_70px_-45px_rgba(15,23,42,0.45)] sm:px-8 sm:py-12">
-        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Related pages</p>
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Next Step</p>
         <h2 class="mt-4 max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl">
-          Review products, downloads, and workflow before you get in touch.
+          The endodontic workflow, simplified.
         </h2>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <a
-            href={`${base}products/overview/`}
+            href={`${base}technique/workflow/`}
             class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_2px_rgba(2,6,23,0.08)] transition-[background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_12px_24px_rgba(2,6,23,0.18),0_2px_6px_rgba(2,6,23,0.08)]"
           >
-            Product overview
+            Clinical workflow
           </a>
           <a
-            href={`${base}technique/workflow/`}
+            href={`${base}resources/downloads/`}
             class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-sm transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-white/35 hover:bg-white/[0.08] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_12px_24px_rgba(2,6,23,0.18)]"
           >
-            Clinical workflow
+            Evidence and downloads
           </a>
         </div>
       </div>

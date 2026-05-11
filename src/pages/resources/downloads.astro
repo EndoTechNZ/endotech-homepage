@@ -1,0 +1,104 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import { withBasePath } from '../../utils/paths';
+
+const documentGroups = [
+  {
+    label: 'Technique Guides',
+    description: 'Workflow PDFs for the ET and PT shaping systems.',
+    files: [
+      { name: 'ET Technique Workflow (PDF)', href: '/downloads/ET-Technique-Work-Flow.pdf' },
+      { name: 'PT Technique Workflow (PDF)', href: '/downloads/PT-Technique-Work-Flow.pdf' },
+    ],
+  },
+  {
+    label: 'Part Numbers & Ordering',
+    description: 'Core ordering references for ET and PT systems.',
+    files: [
+      { name: 'ET Part Numbers (PDF)', href: '/downloads/ET-Part-Numbers.pdf' },
+      { name: 'PT Part Numbers (PDF)', href: '/downloads/PT-Part-Numbers.pdf' },
+    ],
+  },
+  {
+    label: 'Company Information',
+    description: 'Supporting company and presentation material.',
+    files: [
+      { name: 'Mission Statement (PDF)', href: '/downloads/Mission-Statement-Paula.pdf' },
+    ],
+  },
+];
+---
+
+<ProductLayout
+  title="Downloads | EndoTech NZ"
+  description="Product documentation, technique guides, part numbers, and supporting EndoTech files."
+  accent="slate"
+>
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:py-20 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:items-center lg:py-24">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Evidence & Downloads</p>
+        <h1 class="mt-5 max-w-[11ch] text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.7rem]">
+          Technical files in one clean library.
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
+          Technique guides, part numbers, and supporting company files presented in the same premium clinical system as the redesigned product pages.
+        </p>
+      </div>
+
+      <div class="rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff,#f5f8fb)] p-6 shadow-[0_28px_80px_-48px_rgba(15,23,42,0.16)] sm:p-8">
+        <div class="rounded-[1.5rem] border border-slate-200 bg-white p-6">
+          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Library structure</p>
+          <p class="mt-4 text-sm leading-7 text-slate-600">
+            Files are grouped so clinicians can move quickly between workflow guides, ordering references, and supporting company material.
+          </p>
+        </div>
+        <div class="mt-5 grid gap-3 sm:grid-cols-3">
+          <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Guides</p>
+            <p class="mt-2 text-sm leading-7 text-slate-700">ET and PT technique PDFs.</p>
+          </div>
+          <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Ordering</p>
+            <p class="mt-2 text-sm leading-7 text-slate-700">Part numbers and reference files.</p>
+          </div>
+          <div class="rounded-[1.2rem] border border-slate-200 bg-[#123d78] p-4 text-white">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100/90">Support</p>
+            <p class="mt-2 text-sm leading-7 text-slate-100">Ask EndoTech NZ for anything not listed here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
+      <div class="grid gap-5">
+        {documentGroups.map((group) => (
+          <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">{group.label}</p>
+            <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">{group.label}</h2>
+            <p class="mt-3 text-base leading-8 text-slate-600">{group.description}</p>
+
+            <div class="mt-6 grid gap-4">
+              {group.files.map((file) => (
+                <div class="flex flex-col gap-3 rounded-[1.35rem] border border-slate-200 bg-slate-50/80 p-5 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">PDF document</p>
+                    <h3 class="mt-2 text-lg font-bold tracking-tight text-slate-900">{file.name}</h3>
+                  </div>
+                  <a
+                    href={withBasePath(file.href)}
+                    class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+                  >
+                    Open PDF
+                  </a>
+                </div>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</ProductLayout>

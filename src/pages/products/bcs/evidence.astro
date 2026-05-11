@@ -1,15 +1,47 @@
 ---
 import ProductLayout from '../../../layouts/ProductLayout.astro';
-import ProductHero from '../../../components/product/ProductHero.astro';
-import FeatureGrid from '../../../components/product/FeatureGrid.astro';
-import EvidenceCards from '../../../components/product/EvidenceCards.astro';
-import DownloadsList from '../../../components/product/DownloadsList.astro';
 import DistributorCTA from '../../../components/product/DistributorCTA.astro';
-import { evidenceCards, evidenceThemes, getProductDownloads, literatureReferences } from '../../../data/bcs';
+import { evidenceCards, getProductDownloads, literatureReferences } from '../../../data/bcs';
 import { getBcsDownloads } from '../../../utils/downloads';
 import { withBasePath } from '../../../utils/paths';
 
 const downloads = getProductDownloads(getBcsDownloads());
+const leadDownload = downloads[0];
+const supportingDownloads = downloads.slice(1);
+const competitorSeparationVideoSrc = withBasePath('/videos/bcs/competitor-sealer-separation.mp4');
+const materialConsistencyVideoSrc = withBasePath('/videos/bcs/material-consistency-fundamental.mp4');
+const sealerPackshotSrc = withBasePath('/downloads/metallic-packshots/BCS-Sealer-metallic-silver.png');
+const puttyPackshotSrc = withBasePath('/downloads/metallic-packshots/BCS-Putty-metallic-gold.png');
+
+function getDownloadMeta(fileName: string) {
+  const extension = fileName.split('.').pop()?.toLowerCase() ?? '';
+
+  if (extension === 'pdf') {
+    return {
+      typeLabel: 'PDF document',
+      ctaLabel: 'Open PDF',
+    };
+  }
+
+  if (extension === 'ppt' || extension === 'pptx') {
+    return {
+      typeLabel: 'PowerPoint file',
+      ctaLabel: 'Download PowerPoint',
+    };
+  }
+
+  if (extension === 'png' || extension === 'jpg' || extension === 'jpeg' || extension === 'webp') {
+    return {
+      typeLabel: 'Image asset',
+      ctaLabel: 'Open image',
+    };
+  }
+
+  return {
+    typeLabel: 'Technical file',
+    ctaLabel: 'Download file',
+  };
+}
 ---
 
 <ProductLayout
@@ -17,159 +49,325 @@ const downloads = getProductDownloads(getBcsDownloads());
   description="Access BCS bioceramic sealer and putty downloads, clinical references, IFUs, SDS files, and technical documents in one place."
   accent="slate"
 >
-  <ProductHero
-    eyebrow="Evidence & Downloads"
-    title="Clinical references and technical files for the BCS family"
-    subtitle="Access product literature, supporting evidence themes, and technical documents in one place."
-    description="Use this page to review brochures, IFUs, SDS files, and selected evidence areas relevant to the BCS bioceramic family."
-    accent="slate"
-    ctas={[
-      { label: 'Open BCS family page', href: '/products/bcs/' },
-      { label: 'Review applications', href: '/products/bcs/clinical-applications/', variant: 'secondary' },
-    ]}
-    visualLabel="Technical Reference Hub"
-  />
-
-  <DownloadsList
-    title="Downloads"
-    intro="Access brochures, IFUs, SDS files, evidence summaries, and supporting product resources for the BCS bioceramic family."
-    items={downloads}
-  />
-
-  <section class="border-b border-slate-200/80 bg-slate-50/70">
-    <div class="mx-auto max-w-7xl px-6 py-20">
-      <div class="max-w-3xl">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Material Consistency</p>
-        <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Evaluate sealer consistency before clinical use</h2>
-        <p class="mt-5 text-lg leading-8 text-slate-600">
-          Handling consistency matters at the point of obturation. This video is presented as an example of visible separation observed in a competitor bioceramic sealer sample before use.
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-4xl text-center">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Clinical Evidence & Downloads</p>
+        <h1 class="mt-5 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          BCS BioCeramic evidence built as a clean reference page
+        </h1>
+        <p class="mt-5 text-lg leading-8 text-slate-600 sm:text-xl">
+          Technical files, material-review videos, and supporting literature presented with the same sharp, restrained rhythm used across the Stitch-inspired redesign.
         </p>
+        <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a
+            href={withBasePath('/products/bcs/')}
+            class="inline-flex min-w-[15rem] items-center justify-center rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+          >
+            Open BCS family
+          </a>
+          <a
+            href={withBasePath('/products/bcs/clinical-applications/')}
+            class="inline-flex min-w-[15rem] items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+          >
+            Review applications
+          </a>
+        </div>
       </div>
 
-      <div class="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(360px,1fr)] lg:items-start">
-        <div class="space-y-4">
-          <article class="rounded-[1.75rem] border border-slate-200 bg-white p-8 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.12)]">
-            <p class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">What To Look For</p>
-            <h3 class="mt-3 text-2xl font-bold tracking-tight text-slate-900">Material consistency should be evaluated before obturation begins</h3>
-            <p class="mt-5 text-base leading-8 text-slate-600">
-              The purpose of the video is not to overload the page with media. It is there to support one clear clinical point: material condition should be assessed before delivery into the canal.
-            </p>
-            <ul class="mt-6 space-y-3 text-sm leading-7 text-slate-600">
-              <li>Visible separation can affect confidence in syringe delivery and placement control.</li>
-              <li>Uniform handling matters when a sealer is expected to perform as a premixed material.</li>
-              <li>A simple on-demand video review keeps the page clean while still supporting professional evaluation.</li>
-            </ul>
-          </article>
-
-          <article class="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.12)]">
-            <div class="overflow-hidden rounded-[1.5rem] bg-black">
-              <div class="aspect-[9/16] bg-black">
-                <video
-                  class="h-full w-full object-contain bg-black"
-                  controls
-                  preload="metadata"
-                  playsinline
-                >
-                  <source src={withBasePath('/videos/bcs/material-consistency-inline.mp4')} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+      <div class="mx-auto mt-12 max-w-5xl rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff,#f5f8fb)] p-6 shadow-[0_28px_80px_-48px_rgba(15,23,42,0.16)] sm:p-8">
+        <div class="grid gap-5 lg:grid-cols-[minmax(0,0.92fr)_minmax(280px,0.7fr)] lg:items-center">
+          <div class="rounded-[1.75rem] border border-slate-200 bg-white p-6 sm:p-8">
+            <p class="text-xs font-semibold uppercase tracking-[0.26em] text-slate-500">Reference structure</p>
+                <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              A cleaner evidence desk for the BCS material family
+                </h2>
+                <p class="mt-4 text-base leading-8 text-slate-600">
+              Move cleanly between documents, material review, and literature without losing the premium clinical rhythm established on the product pages.
+                </p>
+            <div class="mt-6 grid gap-3 sm:grid-cols-3">
+              <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Files</p>
+                <p class="mt-2 text-sm leading-6 text-slate-700">Technical assets presented as primary references.</p>
+              </div>
+              <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Review</p>
+                <p class="mt-2 text-sm leading-6 text-slate-700">Competitor and consistency videos framed clinically.</p>
+              </div>
+              <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Evidence</p>
+                <p class="mt-2 text-sm leading-6 text-slate-700">Published themes and literature kept easy to scan.</p>
               </div>
             </div>
-            <p class="mt-4 text-sm leading-7 text-slate-500">
-              Additional on-page example showing visible separation in a competitor bioceramic sealer sample before use.
+          </div>
+
+          <div class="rounded-[1.75rem] border border-slate-200 bg-[#123d78] p-6 text-white shadow-[0_24px_60px_-42px_rgba(15,23,42,0.42)]">
+            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/90">BCS system</p>
+            <h3 class="mt-4 text-2xl font-bold tracking-tight">Evidence-led presentation</h3>
+            <p class="mt-4 text-sm leading-7 text-slate-200">
+              BCS Sealer and Putty are shown here as a coordinated material family, with downloads and evidence arranged like a premium clinical catalogue.
             </p>
-          </article>
-
-          <article class="flex min-h-[18rem] w-full flex-col justify-between rounded-[1.5rem] border border-slate-200 bg-slate-950 p-8 text-white shadow-[0_24px_60px_-42px_rgba(15,23,42,0.45)]">
-            <p class="text-sm leading-7 text-slate-300">
-              Video shown for professional evaluation purposes. Clinicians should assess material condition, handling, and manufacturer instructions before use.
-            </p>
-            <p class="mt-5 text-center text-sm font-semibold tracking-[0.04em] text-cyan-200">
-              Click for video training below
-            </p>
-            <button
-              type="button"
-              class="material-video-trigger mt-5 inline-flex items-center justify-center rounded-full border border-white/12 bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition-all duration-200 hover:-translate-y-0.5 hover:bg-cyan-200 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-200/70"
-              data-video-modal-open
-            >
-              Why Material Consistency is fundamental
-            </button>
-          </article>
-        </div>
-
-        <div class="space-y-4">
-          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-6">
-            <h3 class="text-xl font-bold text-slate-900">Why this matters clinically</h3>
-            <ul class="mt-4 space-y-3 text-sm leading-7 text-slate-600">
-              <li>Delivery consistency affects placement control.</li>
-              <li>Material uniformity matters before obturation begins.</li>
-              <li>Handling variability can complicate a simplified workflow.</li>
-            </ul>
-          </article>
-
-          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-6">
-            <h3 class="text-xl font-bold text-slate-900">How BCS BioCeramic Sealer is presented</h3>
-            <ol class="mt-4 space-y-3 pl-5 text-sm leading-7 text-slate-600 list-decimal">
-              <li>Premixed syringe delivery</li>
-              <li>No chairside mixing</li>
-              <li>Designed for predictable handling and moisture-assisted setting</li>
-              <li>WITHOUT IN-TUBE SPLITING into solid and liquid forms (see video)</li>
-            </ol>
-          </article>
-
+            <div class="mt-6 flex items-end justify-center gap-3">
+              <div class="w-[44%] rounded-[1.15rem] border border-white/10 bg-white/96 p-2 shadow-[0_18px_30px_-24px_rgba(2,6,23,0.55)]">
+                <img src={sealerPackshotSrc} alt="BCS BioCeramic Sealer packshot" class="w-full object-contain" />
+              </div>
+              <div class="w-[44%] rounded-[1.15rem] border border-white/10 bg-white/96 p-2 shadow-[0_18px_30px_-24px_rgba(2,6,23,0.55)]">
+                <img src={puttyPackshotSrc} alt="BCS BioCeramic Putty packshot" class="w-full object-contain" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <dialog class="material-video-modal" data-video-modal>
-    <div class="material-video-panel">
-      <button
-        type="button"
-        class="material-video-close"
-        aria-label="Close video"
-        data-video-modal-close
-      >
-        Close
-      </button>
-      <div class="overflow-hidden rounded-[1.5rem] bg-black">
-        <div class="aspect-video max-h-[78vh] bg-black">
-          <video
-            class="h-full w-full object-contain bg-black"
-            controls
-            preload="metadata"
-            playsinline
-            data-material-video
-          >
-            <source src={withBasePath('/videos/bcs/material-consistency-fundamental.mp4')} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
+      <div class="grid gap-5 lg:grid-cols-[minmax(0,0.98fr)_minmax(320px,0.72fr)]">
+        <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.12)] sm:p-8">
+          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Document library</p>
+          <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            Featured technical file
+          </h2>
+          {leadDownload && (
+            <>
+              <p class="mt-4 text-base leading-8 text-slate-600">
+                Keep the lead file prominent and direct. The page should foreground the main BCS reference instead of hiding it inside a long list.
+              </p>
+              <div class="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5 sm:p-6">
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+                  {getDownloadMeta(leadDownload.fileName).typeLabel}
+                </p>
+                <h3 class="mt-3 text-2xl font-bold tracking-tight text-slate-900">
+                  {leadDownload.label}
+                </h3>
+                <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <a
+                    href={withBasePath(leadDownload.href)}
+                    class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+                  >
+                    {getDownloadMeta(leadDownload.fileName).ctaLabel}
+                  </a>
+                  <span class="text-sm leading-7 text-slate-500">
+                    If the preview browser does not download it, the direct file link still works in a standard browser.
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
+        </article>
+
+        <article class="rounded-[1.75rem] border border-slate-200 bg-[#0f2850] p-6 text-white shadow-[0_24px_60px_-42px_rgba(15,23,42,0.45)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/90">Included here</p>
+          <h3 class="mt-4 text-2xl font-bold tracking-tight">Sharper file presentation</h3>
+          <p class="mt-4 text-sm leading-7 text-slate-200">
+            Brochures, presentation files, technical references, and evidence-linked materials should all feel part of the same controlled system.
+          </p>
+          <div class="mt-6 space-y-3 rounded-[1.5rem] border border-white/12 bg-white/6 p-5">
+            <p class="text-sm leading-7 text-slate-200">Brochures and presentation files</p>
+            <p class="text-sm leading-7 text-slate-200">Supporting technical documents</p>
+            <p class="text-sm leading-7 text-slate-200">Evidence-linked review materials</p>
+          </div>
+        </article>
+      </div>
+
+      {supportingDownloads.length > 0 && (
+        <div class="mt-5 grid gap-4">
+          {supportingDownloads.map((item) => (
+            <article class="flex flex-col gap-4 rounded-[1.5rem] border border-slate-200 bg-white p-5 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+                  {getDownloadMeta(item.fileName).typeLabel}
+                </p>
+                <h3 class="mt-2 text-lg font-bold text-slate-900">{item.label}</h3>
+              </div>
+              <a
+                href={withBasePath(item.href)}
+                class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+              >
+                {getDownloadMeta(item.fileName).ctaLabel}
+              </a>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
+      <div class="grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.62fr)] lg:items-stretch">
+        <article class="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-6 shadow-[0_20px_48px_-40px_rgba(15,23,42,0.14)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Evidence logic</p>
+          <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            What the evidence page should help a clinician review
+          </h2>
+          <div class="mt-6 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-[1.2rem] border border-slate-200 bg-white p-4">
+              <p class="text-sm font-semibold text-slate-900">Material condition</p>
+              <p class="mt-2 text-sm leading-7 text-slate-600">How the sealer presents before entering the canal.</p>
+            </div>
+            <div class="rounded-[1.2rem] border border-slate-200 bg-white p-4">
+              <p class="text-sm font-semibold text-slate-900">Handling consistency</p>
+              <p class="mt-2 text-sm leading-7 text-slate-600">Whether the premixed workflow remains stable and readable.</p>
+            </div>
+            <div class="rounded-[1.2rem] border border-slate-200 bg-white p-4">
+              <p class="text-sm font-semibold text-slate-900">Published support</p>
+              <p class="mt-2 text-sm leading-7 text-slate-600">How the material story connects back to literature.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rounded-[1.75rem] border border-slate-200 bg-[#123d78] p-6 text-white shadow-[0_24px_60px_-42px_rgba(15,23,42,0.42)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/90">Material review</p>
+          <h3 class="mt-4 text-2xl font-bold tracking-tight">Competitor observations should feel structured, not sensational</h3>
+          <p class="mt-4 text-sm leading-7 text-slate-200">
+            These sections need the same clinical discipline as the rest of the redesign: calm language, clear framing, and evidence modules that look intentional.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Competitor Sealer Issues</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Video review presented as a sharper evidence module
+        </h2>
+        <p class="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
+          These examples are included for professional review of visible separation, handling variation, and delivery readiness before use.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-8">
+        <section id="competitor-video-example" class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+          <div class="grid gap-8 lg:grid-cols-[minmax(320px,1fr)_minmax(280px,320px)] lg:items-center">
+            <div class="space-y-5">
+              <div class="max-w-xl">
+                <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Video 1</p>
+                <h3 class="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Visible separation example</h3>
+                <p class="mt-4 text-base leading-8 text-slate-600">
+                  A competitor-sample example presented for professional review of visible phase separation before use. It sits here as material context, not as a broad comparative claim.
+                </p>
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-3">
+                <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Observe</p>
+                  <p class="mt-2 text-sm leading-7 text-slate-700">Visible separation before delivery.</p>
+                </div>
+                <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Consider</p>
+                  <p class="mt-2 text-sm leading-7 text-slate-700">Possible implications for placement control.</p>
+                </div>
+                <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Context</p>
+                  <p class="mt-2 text-sm leading-7 text-slate-700">Why condition review matters before obturation.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="justify-self-center lg:justify-self-end">
+              <div class="w-[min(100%,320px)] overflow-hidden rounded-[1.75rem] border border-slate-200 bg-[linear-gradient(180deg,#f8fafc,#edf3f8)] shadow-[0_24px_60px_-42px_rgba(15,23,42,0.2)]">
+                <div class="aspect-[9/16] w-full">
+                  <video
+                    class="h-full w-full object-cover object-center bg-transparent"
+                    controls
+                    preload="metadata"
+                    playsinline
+                  >
+                    <source src={competitorSeparationVideoSrc} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="competitor-video-context" class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+          <div class="grid gap-8 lg:grid-cols-[minmax(280px,0.72fr)_minmax(0,1.18fr)] lg:items-center">
+            <div class="space-y-5">
+              <div class="max-w-xl">
+                <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Video 2</p>
+                <h3 class="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Why consistency matters before use</h3>
+                <p class="mt-4 text-base leading-8 text-slate-600">
+                  A supporting video used to frame why clinicians may want to evaluate syringe behaviour, material uniformity, and delivery readiness before the sealer enters the canal.
+                </p>
+              </div>
+
+              <div class="rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5">
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Key review points</p>
+                <ul class="mt-4 space-y-3 text-sm leading-7 text-slate-600">
+                  <li>Uniformity before delivery</li>
+                  <li>Handling consistency at the point of use</li>
+                  <li>Clinical relevance of material-condition review</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-[linear-gradient(180deg,#f8fafc,#edf3f8)] shadow-[0_24px_60px_-42px_rgba(15,23,42,0.2)]">
+              <div class="aspect-video w-full">
+                <video
+                  class="h-full w-full object-contain bg-transparent"
+                  controls
+                  preload="metadata"
+                  playsinline
+                >
+                  <source src={materialConsistencyVideoSrc} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Evidence Areas</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Key material evidence
+        </h2>
+        <p class="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
+          Review the main material areas relevant to bioceramic sealer and repair workflows.
+        </p>
+      </div>
+
+      <div class="mt-10 rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#f8fafc,#eef4f8)] p-6 shadow-[0_28px_80px_-50px_rgba(15,23,42,0.14)] sm:p-8">
+        <div class="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+          {evidenceCards.map((item) => (
+            <article class="rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_20px_48px_-42px_rgba(15,23,42,0.12)]">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Evidence area</p>
+              <h3 class="mt-3 text-lg font-bold tracking-tight text-slate-900">{item.title}</h3>
+              <p class="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
+            </article>
+          ))}
         </div>
       </div>
     </div>
-  </dialog>
+  </section>
 
-  <FeatureGrid
-    eyebrow="Key Evidence Themes"
-    title="Key evidence areas"
-    intro="These evidence areas support the material characteristics and clinical uses associated with the BCS bioceramic family."
-    items={evidenceThemes}
-    accent="slate"
-  />
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Selected References</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Literature held back as a clean appendix
+        </h2>
+        <p class="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
+          The references remain visible, but they sit as a final technical layer instead of competing with the main evidence modules.
+        </p>
+      </div>
 
-  <EvidenceCards
-    title="Evidence summaries"
-    intro="These summaries highlight the main evidence areas associated with bioceramic sealer and repair materials."
-    items={evidenceCards}
-  />
-
-  <section class="border-b border-slate-200/80 bg-white">
-    <div class="mx-auto max-w-7xl px-6 py-20">
-      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Literature List</p>
-      <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Selected references</h2>
       <div class="mt-10 grid gap-4">
         {literatureReferences.map((reference) => (
-          <article class="rounded-[1.5rem] border border-slate-200 bg-slate-50/70 p-6">
+          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-6">
             <p class="text-base leading-8 text-slate-900">{reference.citation}</p>
             <p class="mt-3 text-sm leading-7 text-slate-600">{reference.note}</p>
           </article>
@@ -180,105 +378,8 @@ const downloads = getProductDownloads(getBcsDownloads());
 
   <DistributorCTA
     title="Review the evidence alongside the product information"
-    body="Use this page to access technical documents and supporting literature relevant to material chemistry, handling, dimensional stability, and clinical use."
+    body="Use this page to access technical files, supporting literature, and material-review videos relevant to the BCS bioceramic family."
     secondaryLabel="View BCS BioCeramic Sealer"
     secondaryHref="/products/bcs-bioceramic-sealer/"
   />
 </ProductLayout>
-
-<style>
-  .material-video-modal {
-    width: min(64rem, calc(100vw - 2rem));
-    max-width: 64rem;
-    padding: 0;
-    border: 0;
-    background: transparent;
-  }
-
-  .material-video-modal::backdrop {
-    background: rgba(2, 6, 23, 0.72);
-    backdrop-filter: blur(8px);
-  }
-
-  .material-video-panel {
-    position: relative;
-    border-radius: 1.75rem;
-    border: 1px solid rgba(226, 232, 240, 0.7);
-    background: rgba(255, 255, 255, 0.96);
-    padding: 1rem;
-    box-shadow: 0 28px 80px -32px rgba(15, 23, 42, 0.5);
-  }
-
-  .material-video-close {
-    margin: 0 0 0.75rem auto;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    border: 1px solid rgba(148, 163, 184, 0.35);
-    background: white;
-    padding: 0.55rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: rgb(15 23 42);
-    transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
-  }
-
-  .material-video-close:hover {
-    transform: translateY(-1px);
-    background: rgb(248 250 252);
-    border-color: rgba(148, 163, 184, 0.55);
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.querySelector<HTMLDialogElement>('[data-video-modal]');
-    const openButton = document.querySelector<HTMLButtonElement>('[data-video-modal-open]');
-    const closeButton = document.querySelector<HTMLButtonElement>('[data-video-modal-close]');
-    const video = document.querySelector<HTMLVideoElement>('[data-material-video]');
-    let lastTrigger: HTMLElement | null = null;
-
-    if (!modal || !openButton || !closeButton || !video) return;
-
-    const closeModal = () => {
-      video.pause();
-      video.currentTime = 0;
-      if (modal.open) {
-        modal.close();
-      }
-      lastTrigger?.focus();
-    };
-
-    openButton.addEventListener('click', () => {
-      lastTrigger = openButton;
-      modal.showModal();
-      video.currentTime = 0;
-      void video.play().catch(() => {
-        // Playback may require an additional user action on some browsers.
-      });
-    });
-
-    closeButton.addEventListener('click', closeModal);
-
-    modal.addEventListener('click', (event) => {
-      const bounds = modal.getBoundingClientRect();
-      const clickedOutside =
-        event.clientX < bounds.left ||
-        event.clientX > bounds.right ||
-        event.clientY < bounds.top ||
-        event.clientY > bounds.bottom;
-
-      if (clickedOutside) {
-        closeModal();
-      }
-    });
-
-    video.addEventListener('ended', closeModal);
-
-    modal.addEventListener('close', () => {
-      video.pause();
-      video.currentTime = 0;
-    });
-  });
-</script>

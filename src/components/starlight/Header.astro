@@ -39,9 +39,10 @@ const shouldRenderSearch =
           </div>
         </div>
       </div>
-      {navItems.slice(2).map((item) => (
+      {navItems.slice(2).filter((item) => item.label !== 'Order').map((item) => (
         <a href={item.href} class="nav-grow">{item.label}</a>
       ))}
+      <a href={`${base}order/`} class="contact-pill">Order</a>
       <a href={`${base}about/contact/`} class="contact-pill">Contact</a>
     </nav>
   </div>

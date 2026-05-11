@@ -9,12 +9,12 @@ const phases = [
   {
     label: 'Austenite',
     role: 'Coronal stability',
-    text: 'A firmer response where cutting efficiency and torsional control matter.',
+    text: 'A firmer response where cutting efficiency and torsional control matter most.',
   },
   {
     label: 'R-phase',
     role: 'Transition behaviour',
-    text: 'A controlled intermediate response as anatomy becomes more demanding.',
+    text: 'An intermediate response as anatomy and shaping demands become more complex.',
   },
   {
     label: 'Martensite',
@@ -26,426 +26,160 @@ const phases = [
 const benefits = [
   {
     title: 'Progressive stress management',
-    text: 'The file response changes through the working length, supporting efficient shaping coronally and greater adaptability near the apex.',
+    text: 'Support a more controlled response through the working length instead of asking one material state to do everything.',
   },
   {
-    title: 'Reduced iatrogenic risk',
-    text: 'Lower restoring forces help reduce the tendency toward transportation, ledging, zipping, and apical deviation in curved anatomy.',
+    title: 'Lower restoring-force pressure',
+    text: 'Help reduce the tendency toward transportation, ledging, zipping, and other iatrogenic movement in curved anatomy.',
   },
   {
     title: 'Familiar clinical workflow',
-    text: 'Transform Technology is designed to improve file behaviour without asking clinicians to abandon familiar sequence logic or technique.',
+    text: 'The technology is intended to improve file behaviour without asking clinicians to abandon established sequence logic.',
   },
 ];
 ---
 
 <ProductLayout
   title="Transform Technology | EndoTech NZ"
-  description="How Transform Technology uses variable-phase NiTi metallurgy to support controlled shaping, apical adaptability, and clinical confidence."
+  description="How Transform Technology uses variable-phase NiTi metallurgy to support controlled shaping and apical adaptability."
   accent="slate"
 >
-  <main class="technology-page">
-    <section class="tech-hero" aria-labelledby="technology-title">
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:py-20 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.82fr)] lg:items-center lg:py-24">
       <div>
-        <p class="tech-eyebrow">Technology</p>
-        <h1 id="technology-title">Transform Technology</h1>
-        <p class="tech-lede">
-          Variable-phase NiTi engineering designed to give the file a calmer, more adaptive response as canal anatomy becomes less forgiving.
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Technology</p>
+        <h1 class="mt-5 max-w-[9ch] text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.8rem]">
+          Transform Technology
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
+          Variable-phase NiTi engineering designed to deliver a calmer shaping response as canal anatomy becomes more demanding.
         </p>
-        <div class="tech-actions">
-          <a href={`${base}products/et-transformx/`}>View ET TransformX</a>
-          <a href={`${base}products/pt-transformx/`}>View PT TransformX</a>
-          <a href={`${base}technology/avatar-tip/`}>Avatar Tip</a>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a
+            href={`${base}products/et-transformx/`}
+            class="inline-flex min-w-[15rem] items-center justify-center rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+          >
+            View ET TransformX
+          </a>
+          <a
+            href={`${base}products/pt-transformx/`}
+            class="inline-flex min-w-[15rem] items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+          >
+            View PT TransformX
+          </a>
         </div>
       </div>
 
-      <figure class="tech-visual">
-        <img src={transformxSystem.src} alt="TransformX rotary file system" />
-        <figcaption>
-          <strong>Controlled shaping response</strong>
-          <span>Engineering behaviour through the working length, not only at the cutting edge.</span>
-        </figcaption>
-      </figure>
-    </section>
-
-    <WorkflowStrip activeStep="assess" />
-
-    <section class="quiet-section problem-section" aria-labelledby="problem-title">
-      <div class="section-kicker">Clinical Problem</div>
-      <div class="section-copy">
-        <h2 id="problem-title">Traditional files ask one material response to solve two different clinical demands.</h2>
-        <p>
-          Coronal shaping needs strength and stability. Apical shaping needs flexibility, control, and reduced lateral stress. A uniform file response can compromise one zone while trying to serve the other.
-        </p>
-      </div>
-    </section>
-
-    <section class="quiet-section system-section" aria-labelledby="system-title">
-      <div class="section-kicker">How It Works</div>
-      <div class="section-copy">
-        <h2 id="system-title">A progressive response through the active working length.</h2>
-        <p>
-          Transform Technology uses controlled phase transitions in nickel-titanium metallurgy to tune file behaviour. The intent is simple: stability where shaping forces are higher, adaptability where anatomy becomes more demanding.
-        </p>
-
-        <div class="phase-rail" aria-label="Transform Technology material phase sequence">
-          {phases.map((phase) => (
-            <article>
-              <span>{phase.label}</span>
-              <h3>{phase.role}</h3>
-              <p>{phase.text}</p>
-            </article>
-          ))}
+      <div class="rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff,#f5f8fb)] p-6 shadow-[0_28px_80px_-48px_rgba(15,23,42,0.16)] sm:p-8">
+        <div class="rounded-[1.5rem] border border-slate-200 bg-white p-4">
+          <img src={transformxSystem.src} alt="TransformX rotary file system" class="w-full object-contain" />
+        </div>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Technology aim</p>
+            <p class="mt-2 text-sm leading-7 text-slate-700">Stability coronally and greater adaptability as the file approaches the apex.</p>
+          </div>
+          <div class="rounded-[1.2rem] border border-slate-200 bg-[#123d78] p-4 text-white">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100/90">Clinical frame</p>
+            <p class="mt-2 text-sm leading-7 text-slate-100">The same shaping logic, with a more controlled material response through the canal.</p>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="benefits-section" aria-labelledby="benefits-title">
-      <div class="benefits-heading">
-        <p class="tech-eyebrow">Clinical Benefits</p>
-        <h2 id="benefits-title">Technology framed by what it helps control.</h2>
+  <WorkflowStrip activeStep="assess" />
+
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto grid max-w-7xl gap-5 px-6 py-20 sm:py-20 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:py-24">
+      <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Clinical Problem</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          One uniform file response has to serve two different shaping demands.
+        </h2>
+        <p class="mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+          Coronal shaping needs strength and efficiency. Apical shaping needs flexibility and reduced lateral stress. A uniform material response can compromise one zone while trying to serve the other.
+        </p>
+      </article>
+
+      <article class="rounded-[1.75rem] border border-slate-200 bg-[#123d78] p-6 text-white shadow-[0_24px_60px_-42px_rgba(15,23,42,0.42)]">
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/90">TransformX Solution</p>
+        <p class="mt-4 text-sm leading-7 text-slate-100">
+          Use controlled phase transitions in nickel-titanium metallurgy to tune behaviour through the active working length.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Phase Sequence</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          A progressive response through the working length.
+        </h2>
+        <p class="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
+          The file is not being framed as uniformly rigid or uniformly flexible. The idea is controlled response where different parts of the canal demand different behaviour.
+        </p>
       </div>
 
-      <div class="benefit-list">
-        {benefits.map((benefit, index) => (
-          <article>
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <div>
-              <h3>{benefit.title}</h3>
-              <p>{benefit.text}</p>
-            </div>
+      <div class="mt-10 grid gap-4 md:grid-cols-3">
+        {phases.map((phase) => (
+          <article class="rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-6 shadow-[0_20px_48px_-42px_rgba(15,23,42,0.12)]">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{phase.label}</p>
+            <h3 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">{phase.role}</h3>
+            <p class="mt-4 text-sm leading-7 text-slate-600">{phase.text}</p>
           </article>
         ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="insight-section" aria-labelledby="insight-title">
-      <p class="tech-eyebrow">Key Insight</p>
-      <h2 id="insight-title">Same technique. More controlled file behaviour.</h2>
-      <p>
-        TransformX does not ask clinicians to work differently. It is designed to help the file respond more intelligently from coronal access toward apical finishing.
-      </p>
-      <div class="tech-actions">
-        <a href={`${base}technology/avatar-tip/`}>Explore Avatar Tip</a>
-        <a href={`${base}technique/workflow/`}>Review workflow</a>
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Clinical Benefits</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Technology framed by what it helps control.
+        </h2>
       </div>
-    </section>
-  </main>
+
+      <div class="mt-10 grid gap-5 lg:grid-cols-3">
+        {benefits.map((benefit) => (
+          <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)]">
+            <h3 class="text-2xl font-bold tracking-tight text-slate-900">{benefit.title}</h3>
+            <p class="mt-4 text-base leading-8 text-slate-600">{benefit.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
+      <div class="rounded-[2rem] bg-gradient-to-br from-slate-900 to-slate-800 px-6 py-10 text-white shadow-[0_30px_70px_-45px_rgba(15,23,42,0.45)] sm:px-8 sm:py-12">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Next Step</p>
+        <h2 class="mt-4 max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl">
+          Same technique. More controlled file behaviour.
+        </h2>
+        <p class="mt-4 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
+          Review the shaping systems or move into Avatar Tip to see how the apical guidance story connects to the same technology platform.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a
+            href={`${base}technology/avatar-tip/`}
+            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_2px_rgba(2,6,23,0.08)] transition-[background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_12px_24px_rgba(2,6,23,0.18),0_2px_6px_rgba(2,6,23,0.08)]"
+          >
+            Explore Avatar Tip
+          </a>
+          <a
+            href={`${base}technique/workflow/`}
+            class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-sm transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-white/35 hover:bg-white/[0.08] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_12px_24px_rgba(2,6,23,0.18)]"
+          >
+            Review workflow
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </ProductLayout>
-
-<style>
-  .technology-page {
-    background: #f7f9fb;
-    color: #0b1424;
-  }
-
-  .tech-hero,
-  .quiet-section,
-  .benefits-section,
-  .insight-section {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: clamp(56px, 6vw, 96px) 48px;
-  }
-
-  .tech-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.78fr);
-    gap: clamp(44px, 6vw, 84px);
-    align-items: center;
-    min-height: min(780px, calc(100vh - 82px));
-    background:
-      linear-gradient(rgba(15, 23, 42, 0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(15, 23, 42, 0.018) 1px, transparent 1px);
-    background-size: 34px 34px;
-  }
-
-  .tech-eyebrow,
-  .section-kicker {
-    color: #64748b;
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.34em;
-    text-transform: uppercase;
-  }
-
-  .tech-hero h1,
-  .quiet-section h2,
-  .benefits-heading h2,
-  .insight-section h2 {
-    margin: 0;
-    color: #090f1d;
-    font-family: 'Sora', system-ui, sans-serif;
-    letter-spacing: 0;
-  }
-
-  .tech-hero h1 {
-    margin-top: 28px;
-    max-width: 9.5ch;
-    font-size: clamp(3.2rem, 4.6vw, 5.6rem);
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .tech-lede {
-    max-width: 640px;
-    margin: 28px 0 0;
-    color: #506176;
-    font-size: clamp(1.08rem, 1.05vw, 1.28rem);
-    line-height: 1.7;
-  }
-
-  .tech-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 38px;
-  }
-
-  .tech-actions a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 48px;
-    border: 1px solid #c8d2dc;
-    border-radius: 4px;
-    padding: 0 20px;
-    color: #0b1424;
-    font-weight: 850;
-    text-decoration: none;
-    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
-  }
-
-  .tech-actions a:first-child {
-    border-color: #0b1424;
-    background: #0b1424;
-    color: #ffffff;
-  }
-
-  .tech-actions a:hover,
-  .tech-actions a:focus-visible {
-    transform: translateY(-1px);
-    border-color: #8aa5b8;
-    background: #ffffff;
-    color: #0b1424;
-  }
-
-  .tech-visual {
-    margin: 0;
-    border-top: 1px solid #cfd9e2;
-    border-bottom: 1px solid #cfd9e2;
-    padding: 34px 0;
-  }
-
-  .tech-visual img {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
-  .tech-visual figcaption {
-    display: grid;
-    gap: 8px;
-    margin-top: 26px;
-    color: #536478;
-    line-height: 1.65;
-  }
-
-  .tech-visual strong {
-    color: #0b1424;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1.05rem;
-  }
-
-  .quiet-section {
-    display: grid;
-    grid-template-columns: 190px minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 72px);
-    border-top: 1px solid #dbe3ea;
-    background: #ffffff;
-  }
-
-  .system-section {
-    background: #f7f9fb;
-  }
-
-  .quiet-section h2,
-  .benefits-heading h2,
-  .insight-section h2 {
-    max-width: 760px;
-    font-size: clamp(1.9rem, 2.45vw, 3.05rem);
-    font-weight: 700;
-    line-height: 1.12;
-  }
-
-  .section-copy > p,
-  .insight-section > p {
-    max-width: 680px;
-    margin: 24px 0 0;
-    color: #536478;
-    font-size: clamp(1rem, 0.95vw, 1.14rem);
-    line-height: 1.78;
-  }
-
-  .phase-rail {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-    margin-top: 46px;
-    border-top: 1px solid #cfd9e2;
-    border-bottom: 1px solid #cfd9e2;
-  }
-
-  .phase-rail::before {
-    content: '';
-    position: absolute;
-    left: 7px;
-    right: 7px;
-    top: -1px;
-    height: 1px;
-    background: linear-gradient(90deg, #876a2b, #8aa5b8, #2d6f92);
-  }
-
-  .phase-rail article {
-    min-height: 220px;
-    padding: 30px 26px 30px 0;
-  }
-
-  .phase-rail article + article {
-    border-left: 1px solid #dbe3ea;
-    padding-left: 28px;
-  }
-
-  .phase-rail span {
-    color: #876a2b;
-    font-size: 0.72rem;
-    font-weight: 900;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-
-  .phase-rail h3,
-  .benefit-list h3 {
-    margin: 16px 0 0;
-    color: #0b1424;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1.12rem;
-    line-height: 1.25;
-  }
-
-  .phase-rail p,
-  .benefit-list p {
-    margin: 14px 0 0;
-    color: #536478;
-    line-height: 1.7;
-  }
-
-  .benefits-section {
-    display: grid;
-    grid-template-columns: minmax(0, 0.84fr) minmax(420px, 0.74fr);
-    gap: clamp(44px, 6vw, 84px);
-    border-top: 1px solid #dbe3ea;
-    background: #ffffff;
-  }
-
-  .benefits-heading h2 {
-    margin-top: 22px;
-  }
-
-  .benefit-list {
-    display: grid;
-    align-content: start;
-    border-top: 1px solid #cfd9e2;
-  }
-
-  .benefit-list article {
-    display: grid;
-    grid-template-columns: 64px minmax(0, 1fr);
-    gap: 28px;
-    border-bottom: 1px solid #dbe3ea;
-    padding: 28px 0;
-  }
-
-  .benefit-list article > span {
-    color: #876a2b;
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.18em;
-  }
-
-  .insight-section {
-    border-top: 1px solid #dbe3ea;
-    background: #f7f9fb;
-  }
-
-  .insight-section h2 {
-    max-width: 820px;
-    margin-top: 22px;
-  }
-
-  @media (max-width: 980px) {
-    .tech-hero,
-    .quiet-section,
-    .benefits-section {
-      grid-template-columns: 1fr;
-    }
-
-    .tech-hero,
-    .quiet-section,
-    .benefits-section,
-    .insight-section {
-      padding-left: 28px;
-      padding-right: 28px;
-    }
-
-    .phase-rail {
-      grid-template-columns: 1fr;
-      border-bottom: 0;
-    }
-
-    .phase-rail article,
-    .phase-rail article + article {
-      min-height: auto;
-      border-left: 0;
-      border-bottom: 1px solid #dbe3ea;
-      padding: 28px 0;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .tech-hero,
-    .quiet-section,
-    .benefits-section,
-    .insight-section {
-      padding-left: 18px;
-      padding-right: 18px;
-    }
-
-    .tech-hero {
-      min-height: auto;
-      gap: 30px;
-      padding-top: 44px;
-      padding-bottom: 56px;
-    }
-
-    .tech-hero h1 {
-      max-width: 8.4ch;
-      margin-top: 22px;
-      font-size: clamp(2.72rem, 11.6vw, 4.2rem);
-      line-height: 0.98;
-    }
-
-    .tech-lede {
-      margin-top: 22px;
-      font-size: 0.98rem;
-      line-height: 1.62;
-    }
-
-    .benefit-list article {
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-  }
-</style>

@@ -1,6 +1,5 @@
 ---
 import ProductLayout from '../../../layouts/ProductLayout.astro';
-import PremiumProductNarrative from '../../../components/product/PremiumProductNarrative.astro';
 import { bcsFamilyPage, familyCards, getProductDownloads } from '../../../data/bcs';
 import { getBcsDownloads } from '../../../utils/downloads';
 import { withBasePath } from '../../../utils/paths';
@@ -10,42 +9,79 @@ const familyImages = [
   {
     src: withBasePath('/downloads/metallic-packshots/BCS-Sealer-metallic-silver.png'),
     alt: 'BCS BioCeramic Sealer',
-    href: '/products/bcs-bioceramic-sealer/',
-    tone: 'teal' as const,
+    href: withBasePath('/products/bcs-bioceramic-sealer/'),
   },
   {
     src: withBasePath('/downloads/metallic-packshots/BCS-Putty-metallic-gold.png'),
     alt: 'BCS BioCeramic Putty',
-    href: '/products/bcs-bioceramic-putty/',
-    tone: 'violet' as const,
+    href: withBasePath('/products/bcs-bioceramic-putty/'),
   },
 ];
 
-const sequenceItems = [
+const workflowHref = withBasePath('/technique/workflow/');
+const evidenceHref = withBasePath('/products/bcs/evidence/');
+const applicationsHref = withBasePath('/products/bcs/clinical-applications/');
+const contactHref = withBasePath('/about/contact/');
+
+const technicalCards = [
   {
-    step: 'Seal',
-    role: 'BCS BioCeramic Sealer',
-    detail:
-      'Supports canal sealing after shaping and irrigation with a premixed bioceramic format.',
+    title: 'Premixed material platform',
+    body:
+      'BCS keeps canal sealing and repair inside one consistent bioceramic logic, removing chairside mixing and simplifying the final treatment stages.',
+    tone: 'light',
   },
   {
-    step: 'Repair',
-    role: 'BCS BioCeramic Putty',
-    detail:
-      'Extends the same material platform into repair procedures where handling and placement control matter.',
-  },
-  {
-    step: 'Restore',
-    role: 'Workflow completion',
-    detail:
-      'Keeps the final material decision connected to the system-first EndoTech treatment sequence.',
+    title: 'Seal or repair',
+    body:
+      'The family page is deliberately simple: choose sealer for obturation or putty for repair, then move into the specific indication with supporting evidence.',
+    tone: 'dark',
+    metric: 'One platform, two roles',
   },
 ];
 
-const benefitItems = familyCards.map((card) => ({
-  title: card.name,
-  description: card.summary,
-}));
+const workflowSteps = [
+  {
+    number: '1',
+    title: 'Complete shaping and cleaning',
+    description:
+      'BCS sits after the preparation and irrigation stages, where the final material decision needs to support the biological and restorative goal of the case.',
+  },
+  {
+    number: '2',
+    title: 'Choose seal or repair',
+    description:
+      'BCS BioCeramic Sealer is positioned for canal sealing, while BCS BioCeramic Putty extends the same platform into repair-oriented procedures.',
+  },
+  {
+    number: '3',
+    title: 'Finish with material consistency',
+    description:
+      'The premixed bioceramic format keeps the final stage clinically readable and aligned with the wider workflow.',
+  },
+];
+
+const comparisonRows = [
+  {
+    feature: 'Clinical role',
+    bcs: 'Sealing and repair within one platform',
+    standard: 'Often split across unrelated materials',
+  },
+  {
+    feature: 'Delivery logic',
+    bcs: 'Premixed bioceramic presentation',
+    standard: 'Often includes chairside mixing',
+  },
+  {
+    feature: 'Workflow fit',
+    bcs: 'Connected to shaping, cleaning, and restore',
+    standard: 'Often selected only at the final step',
+  },
+  {
+    feature: 'Next decision',
+    bcs: 'Choose sealer or putty by indication',
+    standard: 'Compare product formats separately',
+  },
+];
 
 const downloadItems = downloads.slice(0, 4).map((download) => ({
   label: download.type,
@@ -59,26 +95,910 @@ const downloadItems = downloads.slice(0, 4).map((download) => ({
   description="BCS BioCeramic Materials brings together a premixed endodontic bioceramic sealer and bioceramic putty for canal sealing, root repair, and simplified clinical workflows."
   accent="teal"
 >
-  <PremiumProductNarrative
-    eyebrow="BCS BioCeramic Materials"
-    title="Bioceramic sealing and repair within one clinical platform."
-    lede="Two products. One clear material logic. Choose BCS BioCeramic Sealer for canal sealing or BCS BioCeramic Putty for repair procedures."
-    imageSrc={familyImages[0].src}
-    imageAlt={familyImages[0].alt}
-    visualTitle="BCS material platform"
-    visualText="Premixed bioceramic materials positioned at the seal and repair stage of the EndoTech workflow."
-    primaryCta={{ label: 'View sealer', href: withBasePath('/products/bcs-bioceramic-sealer/') }}
-    secondaryCta={{ label: 'View putty', href: withBasePath('/products/bcs-bioceramic-putty/') }}
-    clinicalProblem="Final sealing and repair decisions are often treated as separate material choices, even though they sit at the point where shaping, cleaning, biological response, and restorative planning converge."
-    solution={bcsFamilyPage.positioning}
-    engineeringTitle="The BCS platform is defined by premixed handling, moisture-compatible setting, and workflow fit."
-    features={bcsFamilyPage.whyBcs.slice(0, 3)}
-    sequenceTitle="Choose the material by indication, then move into product-specific detail."
-    sequenceItems={sequenceItems}
-    benefitsTitle="The family page keeps the clinical decision simple: sealing or repair."
-    benefits={benefitItems}
-    downloads={downloadItems}
-    downloadsTitle="BCS brochures, IFUs, SDS files, and supporting resources."
-    workflowActiveStep="seal"
-  />
+  <main class="bcs-stitch-page">
+    <section class="bcs-hero" aria-labelledby="bcs-hero-title">
+      <div class="bcs-hero-copy">
+        <p class="bcs-eyebrow">Bioceramic material platform</p>
+        <h1 id="bcs-hero-title">BCS BioCeramic Materials</h1>
+        <p class="bcs-hero-lede">
+          Premixed bioceramic materials for endodontic sealing and repair, designed to complete the EndoTech workflow with a cleaner final-stage material choice.
+        </p>
+      </div>
+
+      <figure class="bcs-hero-visual">
+        <div class="bcs-hero-visual-grid">
+          <article>
+            <img src={familyImages[0].src} alt={familyImages[0].alt} />
+            <span>Canal sealing</span>
+          </article>
+          <article>
+            <img src={familyImages[1].src} alt={familyImages[1].alt} />
+            <span>Root repair</span>
+          </article>
+        </div>
+      </figure>
+
+      <div class="bcs-hero-actions">
+        <a class="bcs-button primary" href={familyImages[0].href}>View sealer</a>
+        <a class="bcs-button secondary" href={familyImages[1].href}>View putty</a>
+      </div>
+
+      <div class="bcs-hero-meta" aria-label="BCS material roles">
+        <span>Premixed</span>
+        <span>Seal</span>
+        <span>Repair</span>
+      </div>
+    </section>
+
+    <section class="bcs-technical-band" aria-labelledby="bcs-technical-title">
+      <h2 class="sr-only" id="bcs-technical-title">Technical overview</h2>
+      <div class="bcs-technical-grid">
+        {technicalCards.map((card, index) => (
+          <article class:list={['bcs-technical-card', card.tone === 'dark' && 'is-dark']}>
+            <div>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </div>
+            {card.metric ? (
+              <div class="bcs-technical-meta">
+                <span>{card.metric}</span>
+              </div>
+            ) : (
+              <img src={familyImages[index].src} alt={familyImages[index].alt} />
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="bcs-journey-section" aria-labelledby="bcs-journey-title">
+      <div class="bcs-journey-media">
+        <img src={familyImages[1].src} alt={familyImages[1].alt} />
+      </div>
+
+      <div class="bcs-journey-copy">
+        <p class="bcs-eyebrow">The clinical journey</p>
+        <h2 id="bcs-journey-title">The final material choice should fit the whole workflow.</h2>
+        <div class="bcs-journey-steps">
+          {workflowSteps.map((step) => (
+            <article>
+              <span>{step.number}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bcs-product-section" aria-labelledby="bcs-products-title">
+      <div class="bcs-section-heading">
+        <p class="bcs-eyebrow">Material system</p>
+        <h2 id="bcs-products-title">Choose the material by indication.</h2>
+        <p>Use the family page to move quickly into the right product, then review its evidence and clinical applications in more detail.</p>
+      </div>
+
+      <div class="bcs-card-grid">
+        {familyCards.map((card, index) => (
+          <a class="bcs-product-card" href={withBasePath(card.slug)}>
+            <div class="bcs-product-card-image">
+              <img src={familyImages[index].src} alt={card.name} />
+            </div>
+            <div class="bcs-product-card-copy">
+              <p class="bcs-card-kicker">{index === 0 ? 'Canal sealing' : 'Root repair'}</p>
+              <h3>{card.name}</h3>
+              <p>{card.summary}</p>
+              <span>View product page</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="bcs-workflow-section" aria-labelledby="bcs-workflow-title">
+      <div class="bcs-workflow-copy">
+        <p class="bcs-eyebrow">Workflow connection</p>
+        <h2 id="bcs-workflow-title">Glide → Shape → Clean 3D → Seal / Repair</h2>
+        <p>
+          The BCS family is not meant to sit apart from the rest of the system. It completes the treatment sequence after access, shaping, and irrigation have already established the canal environment.
+        </p>
+      </div>
+
+      <div class="bcs-workflow-actions">
+        <a class="bcs-button dark" href={workflowHref}>Review clinical workflow</a>
+        <a class="bcs-inline-link" href={applicationsHref}>Review applications</a>
+      </div>
+    </section>
+
+    <section class="bcs-comparison-section" aria-labelledby="bcs-comparison-title">
+      <div class="bcs-comparison-heading">
+        <h2 id="bcs-comparison-title">Platform comparison</h2>
+        <p>Transparent information for clinicians evaluating how the BCS family fits within endodontic sealing and repair.</p>
+      </div>
+
+      <div class="bcs-table-shell">
+        <table class="bcs-comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>BCS Platform</th>
+              <th>Typical Alternative</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonRows.map((row) => (
+              <tr>
+                <th>{row.feature}</th>
+                <td>{row.bcs}</td>
+                <td>{row.standard}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="bcs-downloads-section" aria-labelledby="bcs-downloads-title">
+      <div class="bcs-downloads-heading">
+        <p class="bcs-eyebrow">Downloads</p>
+        <h2 id="bcs-downloads-title">Brochures, IFUs, SDS files, and supporting resources.</h2>
+      </div>
+
+      <div class="bcs-download-list">
+        {downloadItems.map((download) => (
+          <a href={download.href}>
+            <span>{download.label}</span>
+            <strong>{download.title}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="bcs-cta-section" aria-labelledby="bcs-cta-title">
+      <div class="bcs-cta-copy">
+        <h2 id="bcs-cta-title">Choose the right BCS path for the case.</h2>
+        <p>
+          Start with sealer for obturation or putty for repair, then review the supporting evidence or contact EndoTech NZ for local guidance.
+        </p>
+      </div>
+      <div class="bcs-cta-actions">
+        <a class="bcs-button primary" href={evidenceHref}>Open evidence</a>
+        <a class="bcs-button secondary on-dark" href={contactHref}>Contact EndoTech</a>
+      </div>
+    </section>
+  </main>
 </ProductLayout>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .bcs-stitch-page {
+    background: #ffffff;
+    color: #181c20;
+  }
+
+  .bcs-hero,
+  .bcs-technical-band,
+  .bcs-journey-section,
+  .bcs-product-section,
+  .bcs-workflow-section,
+  .bcs-comparison-section,
+  .bcs-downloads-section,
+  .bcs-cta-section {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .bcs-eyebrow {
+    margin: 0 0 14px;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .bcs-hero h1,
+  .bcs-technical-card h3,
+  .bcs-journey-copy h2,
+  .bcs-journey-copy h3,
+  .bcs-section-heading h2,
+  .bcs-product-card h3,
+  .bcs-workflow-copy h2,
+  .bcs-comparison-heading h2,
+  .bcs-downloads-heading h2,
+  .bcs-cta-copy h2 {
+    margin: 0;
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .bcs-hero {
+    display: grid;
+    justify-items: center;
+    padding-top: 104px;
+    padding-bottom: 88px;
+    text-align: center;
+    background: #ffffff;
+  }
+
+  .bcs-hero-copy {
+    max-width: 760px;
+  }
+
+  .bcs-hero h1 {
+    font-size: clamp(3.4rem, 6.8vw, 5.4rem);
+    line-height: 0.98;
+  }
+
+  .bcs-hero-lede,
+  .bcs-technical-card p,
+  .bcs-journey-copy p,
+  .bcs-section-heading p,
+  .bcs-product-card p,
+  .bcs-workflow-copy p,
+  .bcs-comparison-heading p,
+  .bcs-download-list span,
+  .bcs-cta-copy p {
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    line-height: 1.65;
+  }
+
+  .bcs-hero-lede {
+    max-width: 600px;
+    margin: 18px auto 0;
+    font-size: 1rem;
+  }
+
+  .bcs-hero-visual {
+    width: 100%;
+    max-width: 920px;
+    margin: 52px 0 0;
+  }
+
+  .bcs-hero-visual-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    align-items: end;
+  }
+
+  .bcs-hero-visual-grid article {
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    padding: 26px 18px 20px;
+    border: 1px solid #e3e8ee;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff, #f7f9ff);
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.05);
+  }
+
+  .bcs-hero-visual-grid img {
+    width: 100%;
+    max-height: 360px;
+    object-fit: contain;
+  }
+
+  .bcs-hero-visual-grid span {
+    color: #5c6a78;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .bcs-hero-actions,
+  .bcs-cta-actions,
+  .bcs-workflow-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .bcs-hero-actions {
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .bcs-hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .bcs-hero-meta span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    border: 1px solid #d7e0e8;
+    border-radius: 999px;
+    padding: 0 14px;
+    color: #4e5a68;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #fbfdff;
+  }
+
+  .bcs-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border-radius: 6px;
+    padding: 0 18px;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition:
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 180ms ease,
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bcs-button:hover,
+  .bcs-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow:
+      0 12px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
+  }
+
+  .bcs-button.primary {
+    background: #005c92;
+    border: 1px solid #005c92;
+    color: #ffffff;
+  }
+
+  .bcs-button.primary:hover,
+  .bcs-button.primary:focus-visible {
+    background: #0a6ca8;
+    border-color: #0a6ca8;
+  }
+
+  .bcs-button.secondary {
+    background: #ffffff;
+    border: 1px solid #c0c7d2;
+    color: #404750;
+  }
+
+  .bcs-button.secondary:hover,
+  .bcs-button.secondary:focus-visible {
+    background: #f8fbfd;
+    border-color: #aeb8c5;
+    color: #1f2937;
+  }
+
+  .bcs-button.dark {
+    background: #181c20;
+    border: 1px solid #181c20;
+    color: #ffffff;
+  }
+
+  .bcs-button.dark:hover,
+  .bcs-button.dark:focus-visible {
+    background: #111827;
+    border-color: #111827;
+  }
+
+  .bcs-button.on-dark,
+  .bcs-button.secondary.on-dark {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+  }
+
+  .bcs-button.on-dark:hover,
+  .bcs-button.on-dark:focus-visible,
+  .bcs-button.secondary.on-dark:hover,
+  .bcs-button.secondary.on-dark:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.42);
+    color: #ffffff;
+  }
+
+  .bcs-technical-band,
+  .bcs-journey-section,
+  .bcs-product-section,
+  .bcs-workflow-section,
+  .bcs-comparison-section,
+  .bcs-downloads-section {
+    border-top: 1px solid #e3e8ee;
+  }
+
+  .bcs-technical-band,
+  .bcs-journey-section,
+  .bcs-product-section,
+  .bcs-workflow-section,
+  .bcs-downloads-section {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .bcs-comparison-section {
+    padding-top: 88px;
+    padding-bottom: 88px;
+    background: #f7f9ff;
+  }
+
+  .bcs-technical-grid,
+  .bcs-journey-section,
+  .bcs-product-section,
+  .bcs-workflow-section,
+  .bcs-download-list {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .bcs-technical-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.74fr);
+    gap: 18px;
+  }
+
+  .bcs-technical-card {
+    display: grid;
+    gap: 28px;
+    align-content: space-between;
+    min-height: 280px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 28px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 55, 112, 0.06);
+  }
+
+  .bcs-technical-card h3 {
+    font-size: 1.28rem;
+    line-height: 1.16;
+  }
+
+  .bcs-technical-card p {
+    max-width: 35ch;
+    margin: 12px 0 0;
+    font-size: 0.94rem;
+  }
+
+  .bcs-technical-card img {
+    width: 100%;
+    max-width: 260px;
+    max-height: 180px;
+    justify-self: end;
+    object-fit: contain;
+  }
+
+  .bcs-technical-card.is-dark {
+    background: #005c92;
+    border-color: #005c92;
+  }
+
+  .bcs-technical-card.is-dark h3,
+  .bcs-technical-card.is-dark p,
+  .bcs-technical-card.is-dark span {
+    color: #ffffff;
+  }
+
+  .bcs-technical-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 18px;
+  }
+
+  .bcs-technical-meta span {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .bcs-journey-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    gap: 40px;
+    align-items: center;
+  }
+
+  .bcs-journey-media {
+    display: grid;
+    place-items: center;
+    min-height: 280px;
+    padding: 26px;
+    border-radius: 8px;
+    background: #f4f6fb;
+  }
+
+  .bcs-journey-media img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+  }
+
+  .bcs-journey-copy h2,
+  .bcs-section-heading h2,
+  .bcs-workflow-copy h2,
+  .bcs-comparison-heading h2,
+  .bcs-downloads-heading h2,
+  .bcs-cta-copy h2 {
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .bcs-journey-steps {
+    display: grid;
+    gap: 22px;
+    margin-top: 24px;
+  }
+
+  .bcs-journey-steps article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .bcs-journey-steps span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: #eef8fc;
+    color: #005c92;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .bcs-journey-steps h3 {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .bcs-journey-steps p {
+    margin: 6px 0 0;
+    font-size: 0.92rem;
+  }
+
+  .bcs-section-heading {
+    max-width: 760px;
+    margin-bottom: 36px;
+  }
+
+  .bcs-section-heading p:not(.bcs-eyebrow) {
+    margin: 16px 0 0;
+  }
+
+  .bcs-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .bcs-product-card {
+    display: grid;
+    gap: 0;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    background: #ffffff;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .bcs-product-card:hover,
+  .bcs-product-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: #c0c7d2;
+    box-shadow: 0 12px 28px rgba(0, 55, 112, 0.08);
+  }
+
+  .bcs-product-card-image {
+    display: grid;
+    place-items: center;
+    min-height: 300px;
+    padding: 28px;
+    background: #f7f9ff;
+  }
+
+  .bcs-product-card-image img {
+    width: 100%;
+    max-height: 260px;
+    object-fit: contain;
+  }
+
+  .bcs-product-card-copy {
+    display: grid;
+    gap: 10px;
+    padding: 24px;
+  }
+
+  .bcs-card-kicker {
+    margin: 0;
+    color: #00639c;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .bcs-product-card h3 {
+    font-size: 1.28rem;
+    line-height: 1.16;
+  }
+
+  .bcs-product-card p {
+    margin: 0;
+    font-size: 0.94rem;
+  }
+
+  .bcs-product-card span {
+    margin-top: 10px;
+    color: #005c92;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .bcs-workflow-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 32px;
+    align-items: end;
+  }
+
+  .bcs-workflow-copy {
+    max-width: 760px;
+  }
+
+  .bcs-workflow-copy p:not(.bcs-eyebrow) {
+    margin: 16px 0 0;
+  }
+
+  .bcs-inline-link {
+    color: #005c92;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .bcs-comparison-heading,
+  .bcs-downloads-heading {
+    max-width: 760px;
+    margin: 0 auto 36px;
+    text-align: center;
+  }
+
+  .bcs-comparison-heading p,
+  .bcs-downloads-heading p {
+    margin: 14px 0 0;
+  }
+
+  .bcs-table-shell {
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .bcs-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .bcs-comparison-table th,
+  .bcs-comparison-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid #e3e8ee;
+    text-align: left;
+  }
+
+  .bcs-comparison-table thead th {
+    background: #e8edf2;
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .bcs-comparison-table tbody th {
+    width: 26%;
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .bcs-comparison-table tbody td {
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .bcs-comparison-table tbody tr:last-child th,
+  .bcs-comparison-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .bcs-download-list {
+    display: grid;
+    gap: 16px;
+    max-width: 960px;
+  }
+
+  .bcs-download-list a {
+    display: grid;
+    gap: 8px;
+    padding: 20px 22px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+    background: #ffffff;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .bcs-download-list a:hover,
+  .bcs-download-list a:focus-visible {
+    transform: translateY(-1px);
+    border-color: #c0c7d2;
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08);
+  }
+
+  .bcs-download-list strong {
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .bcs-download-list span {
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .bcs-cta-section {
+    padding-top: 92px;
+    padding-bottom: 104px;
+    background: #102033;
+    text-align: center;
+  }
+
+  .bcs-cta-copy {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .bcs-cta-copy h2,
+  .bcs-cta-copy p {
+    color: #ffffff;
+  }
+
+  .bcs-cta-copy p {
+    max-width: 560px;
+    margin: 18px auto 0;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .bcs-cta-actions {
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  @media (max-width: 1120px) {
+    .bcs-hero,
+    .bcs-technical-band,
+    .bcs-journey-section,
+    .bcs-product-section,
+    .bcs-workflow-section,
+    .bcs-comparison-section,
+    .bcs-downloads-section,
+    .bcs-cta-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .bcs-technical-grid,
+    .bcs-journey-section,
+    .bcs-card-grid,
+    .bcs-workflow-section {
+      grid-template-columns: 1fr;
+    }
+
+    .bcs-hero-visual-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .bcs-hero,
+    .bcs-technical-band,
+    .bcs-journey-section,
+    .bcs-product-section,
+    .bcs-workflow-section,
+    .bcs-comparison-section,
+    .bcs-downloads-section,
+    .bcs-cta-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .bcs-hero {
+      padding-top: 52px;
+      padding-bottom: 56px;
+    }
+
+    .bcs-hero-actions,
+    .bcs-cta-actions,
+    .bcs-workflow-actions {
+      display: grid;
+      width: 100%;
+      max-width: 354px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .bcs-hero-meta {
+      display: grid;
+      width: 100%;
+      max-width: 220px;
+    }
+
+    .bcs-button {
+      width: 100%;
+    }
+
+    .bcs-table-shell {
+      overflow-x: auto;
+    }
+
+    .bcs-comparison-table {
+      min-width: 680px;
+    }
+  }
+</style>
