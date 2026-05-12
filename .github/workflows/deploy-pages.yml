@@ -20,6 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DEPLOY_TARGET: github-pages
+      PUBLIC_SITE_URL: https://endotechnz.com
+      SHOPIFY_STORE_DOMAIN: ${{ vars.SHOPIFY_STORE_DOMAIN }}
+      SHOPIFY_STOREFRONT_API_VERSION: ${{ vars.SHOPIFY_STOREFRONT_API_VERSION }}
+      SHOPIFY_STOREFRONT_PUBLIC_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PUBLIC_TOKEN }}
+      SHOPIFY_STOREFRONT_PRIVATE_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PRIVATE_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
