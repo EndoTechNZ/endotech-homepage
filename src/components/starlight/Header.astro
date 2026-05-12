@@ -6,15 +6,11 @@ import Search from 'virtual:starlight/components/Search';
 import SocialIcons from 'virtual:starlight/components/SocialIcons';
 import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
 import logoIcon from '../../assets/endotech-logo-2.png';
+import { getPrimaryNavItems, getProductMenu } from '../../data/navigation';
 
 const base = import.meta.env.BASE_URL;
-const productMenu = [
-  { label: 'ET TransformX Files', href: `${base}products/et-transformx/` },
-  { label: 'PT TransformX Files', href: `${base}products/pt-transformx/` },
-  { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
-  { label: 'VortiFlow Irrigation Needle', href: `${base}products/vortiflow-irrigation-needle/` },
-  { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
-];
+const navItems = getPrimaryNavItems(base);
+const productMenu = getProductMenu(base);
 
 const shouldRenderSearch =
 	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
@@ -23,7 +19,7 @@ const shouldRenderSearch =
 <div class="endotech-docs-header">
   <div class="endotech-topbar sl-hidden lg:sl-flex">
     <nav class="endotech-topnav">
-      <a href={base} class="nav-grow">Home</a>
+      <a href={navItems[0].href} class="nav-grow">{navItems[0].label}</a>
       <div class="group products-menu relative">
         <button id="docs-products-menu-button" type="button" class="nav-grow" aria-haspopup="true" aria-expanded="false" aria-controls="docs-products-menu-panel">
           Products
@@ -43,11 +39,10 @@ const shouldRenderSearch =
           </div>
         </div>
       </div>
-      <a href={`${base}technique/workflow/`} class="nav-grow">Clinical Workflow</a>
-      <a href={`${base}technology/transform-technology/`} class="nav-grow">Technology</a>
-      <a href={`${base}resources/clinical-tips/`} class="nav-grow">Education</a>
-      <a href={`${base}products/bcs/evidence/`} class="nav-grow">Evidence & Downloads</a>
-      <a href={`${base}about/company/`} class="nav-grow">About</a>
+      {navItems.slice(2).filter((item) => item.label !== 'Order').map((item) => (
+        <a href={item.href} class="nav-grow">{item.label}</a>
+      ))}
+      <a href={`${base}order/`} class="contact-pill">Order</a>
       <a href={`${base}about/contact/`} class="contact-pill">Contact</a>
     </nav>
   </div>

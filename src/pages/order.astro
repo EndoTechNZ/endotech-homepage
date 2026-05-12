@@ -17,6 +17,7 @@ const orderPanelDescription = `To order
 - Choose file Size (Step 1)
 - Choose file length (Step 2)
 - Click 'Add to order'`;
+const filePackFallbackPrice = '$65.00 NZD';
 
 const acrobatSelectionNote =
   'The MB2 option is limited to 17 mm. Standard Acrobat sequence files are available in 21 mm, 25 mm, and 29 mm.';
@@ -26,9 +27,9 @@ const ptSelectionNote =
   'SX is supplied in 19 mm. Shaping and finishing files run across 21 mm, 25 mm, and 31 mm lengths, with PT assortment packs also available across the current NZ range.';
 
 const [acrobatItems, etItems, ptItems] = await Promise.all([
-  buildOrderSelectorItems(acrobatOrderEntries, shopifyStoreDomain, '$65.00 NZD'),
-  buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain),
-  buildOrderSelectorItems(ptOrderEntries, shopifyStoreDomain),
+  buildOrderSelectorItems(acrobatOrderEntries, shopifyStoreDomain, filePackFallbackPrice),
+  buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain, filePackFallbackPrice),
+  buildOrderSelectorItems(ptOrderEntries, shopifyStoreDomain, filePackFallbackPrice),
 ]);
 
 const quickLinks = [
@@ -38,6 +39,8 @@ const quickLinks = [
   { label: 'BCS', href: '#contact-products' },
   { label: 'VortiFlow', href: '#contact-products' },
 ];
+
+const upcomingFileFamilies = ['RECI X', 'Hand files', 'Additional rotary systems'];
 
 const contactProducts = [
   {
@@ -65,6 +68,8 @@ const orderModules = [
     image: acrobatFiles.src,
     alt: 'Acrobat Glide Path Files',
     orderTitle: 'Order the Acrobat sequence online',
+    productFamily: 'Glide Path',
+    productLabel: 'Acrobat Glide Path',
     items: acrobatItems,
     selectionNote: acrobatSelectionNote,
   },
@@ -76,6 +81,8 @@ const orderModules = [
     image: etProduct.src,
     alt: 'ET TransformX rotary files',
     orderTitle: 'Order the ET sequence online',
+    productFamily: 'Rotary Files',
+    productLabel: 'ET TransformX',
     items: etItems,
     selectionNote: etSelectionNote,
   },
@@ -87,6 +94,8 @@ const orderModules = [
     image: ptProduct.src,
     alt: 'PT TransformX rotary files',
     orderTitle: 'Order the PT sequence online',
+    productFamily: 'Rotary Files',
+    productLabel: 'PT TransformX',
     items: ptItems,
     selectionNote: ptSelectionNote,
   },
@@ -101,16 +110,19 @@ const orderModules = [
 >
   <main class="order-page">
     <section class="order-hero" aria-labelledby="order-title">
-      <div>
+      <div class="order-hero-copy">
         <p class="order-eyebrow">NZ Ordering</p>
-        <h1 id="order-title">Build the order in one place.</h1>
+        <h1 id="order-title">Order here</h1>
         <p class="order-lede">
           Scroll from glide path to shaping without jumping between product pages. Acrobat, ET TransformX, and PT TransformX all use the same combined order logic.
         </p>
       </div>
 
       <div class="order-hero-side">
-        <p>Selections made in any section stay in the same combined Shopify cart.</p>
+        <div class="order-hero-side-intro">
+          <span>Combined cart</span>
+          <p>Selections made in any section stay in the same combined Shopify cart.</p>
+        </div>
         <nav class="order-quick-nav" aria-label="Order section shortcuts">
           {quickLinks.map((link) => (
             <a href={link.href}>{link.label}</a>
@@ -120,35 +132,66 @@ const orderModules = [
     </section>
 
     <section class="order-flow-note" aria-label="Ordering note">
-      <div>
+      <div class="order-flow-note-copy">
+        <span>Unified workflow ordering</span>
         <strong>One combined order</strong>
         <p>Add Glide Path, ET, and PT packs as you scroll. Each selector contributes to the same order state.</p>
       </div>
       <a href={`${base}resources/downloads/`}>Open technical files</a>
     </section>
 
-    {orderModules.map((module) => (
-      <section id={module.id} class="order-module" aria-labelledby={`${module.id}-title`}>
-        <div class="order-module-intro">
-          <div>
-            <p class="order-eyebrow">{module.eyebrow}</p>
-            <h2 id={`${module.id}-title`}>{module.title}</h2>
-            <p>{module.text}</p>
-          </div>
-          <figure>
-            <img src={module.image} alt={module.alt} />
-          </figure>
+    <section class="order-category-heading" aria-labelledby="file-systems-title">
+      <div class="order-category-copy">
+        <p class="order-eyebrow">File Systems</p>
+        <h2 id="file-systems-title">Active ordering for glide path and shaping files.</h2>
+        <p>
+          Acrobat, ET TransformX, and PT TransformX are grouped here as the current file ordering area. This section is structured to expand as RECI X, hand files, and additional rotary systems are added.
+        </p>
+      </div>
+      <div class="order-category-side">
+        <div class="order-category-side-intro">
+          <span>Next file families</span>
+          <p>Additional file families can extend the same ordering framework as they are introduced.</p>
         </div>
+        <div class="upcoming-family-list" aria-label="Upcoming file families">
+          {upcomingFileFamilies.map((family) => (
+            <span>{family}</span>
+          ))}
+        </div>
+      </div>
+    </section>
 
-        <ProductOrderSelector
-          title={module.orderTitle}
-          description={orderPanelDescription}
-          coverageLabel={getOrderCoverageLabel(module.items)}
-          packFormat="6 files per pack"
-          items={module.items}
-          shopifyStoreDomain={shopifyStoreDomain}
-          selectionNote={module.selectionNote}
-        />
+    {orderModules.map((module, index) => (
+      <section id={module.id} class="order-module" aria-labelledby={`${module.id}-title`}>
+        <div class="order-module-card">
+          <div class="order-module-index" aria-hidden="true">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <small>{module.eyebrow}</small>
+          </div>
+
+          <div class="order-module-intro">
+            <div>
+              <p class="order-eyebrow">{module.eyebrow}</p>
+              <h2 id={`${module.id}-title`}>{module.title}</h2>
+              <p>{module.text}</p>
+            </div>
+            <figure>
+              <img src={module.image} alt={module.alt} />
+            </figure>
+          </div>
+
+          <ProductOrderSelector
+            title={module.orderTitle}
+            description={orderPanelDescription}
+            coverageLabel={getOrderCoverageLabel(module.items)}
+            packFormat="6 files per pack"
+            items={module.items}
+            shopifyStoreDomain={shopifyStoreDomain}
+            selectionNote={module.selectionNote}
+            productFamily={module.productFamily}
+            productLabel={module.productLabel}
+          />
+        </div>
       </section>
     ))}
 
@@ -156,9 +199,9 @@ const orderModules = [
       <div class="contact-products-heading">
         <div>
           <p class="order-eyebrow">Contact Products</p>
-          <h2 id="contact-products-title">Keep the whole product family on one ordering page.</h2>
+          <h2 id="contact-products-title">Materials and irrigation stay connected to ordering.</h2>
           <p>
-            VortiFlow and BCS are included here as direct enquiry routes so you do not need to leave the ordering flow to continue the conversation.
+            VortiFlow and BCS are included here as direct enquiry - they will be available soon.
           </p>
         </div>
         <a href={`${base}about/contact/`}>Contact EndoTech NZ</a>
@@ -190,6 +233,7 @@ const orderModules = [
 
   .order-hero,
   .order-flow-note,
+  .order-category-heading,
   .order-module,
   .contact-products-section {
     max-width: 1260px;
@@ -202,14 +246,18 @@ const orderModules = [
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.78fr);
     gap: clamp(40px, 6vw, 84px);
-    align-items: end;
-    min-height: min(640px, calc(100vh - 82px));
-    padding-top: 64px;
-    padding-bottom: 56px;
+    align-items: center;
+    min-height: min(620px, calc(100vh - 82px));
+    padding-top: 72px;
+    padding-bottom: 52px;
     background:
       linear-gradient(rgba(15, 23, 42, 0.018) 1px, transparent 1px),
       linear-gradient(90deg, rgba(15, 23, 42, 0.018) 1px, transparent 1px);
     background-size: 34px 34px;
+  }
+
+  .order-hero-copy {
+    max-width: 54rem;
   }
 
   .order-eyebrow {
@@ -222,6 +270,7 @@ const orderModules = [
   }
 
   .order-hero h1,
+  .order-category-heading h2,
   .order-module h2,
   .contact-products-heading h2,
   .contact-products-grid h3 {
@@ -232,15 +281,16 @@ const orderModules = [
   }
 
   .order-hero h1 {
-    max-width: 9ch;
-    font-size: clamp(3.2rem, 4.8vw, 5.6rem);
+    max-width: 8ch;
+    font-size: clamp(3.45rem, 5.2vw, 6rem);
     font-weight: 700;
-    line-height: 1;
+    line-height: 0.98;
   }
 
   .order-lede,
   .order-hero-side p,
   .order-flow-note p,
+  .order-category-heading p,
   .order-module-intro p,
   .contact-products-heading p,
   .contact-products-grid p {
@@ -251,20 +301,40 @@ const orderModules = [
   }
 
   .order-lede {
-    max-width: 50rem;
-    margin-top: 28px;
+    max-width: 42rem;
+    margin-top: 30px;
   }
 
   .order-hero-side {
-    border-top: 1px solid #cfd9e2;
-    padding-top: 26px;
+    display: grid;
+    gap: 22px;
+    align-self: stretch;
+    border: 1px solid #dbe3ea;
+    border-radius: 32px;
+    padding: 32px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(247, 250, 252, 0.96) 100%);
+    box-shadow: 0 28px 80px -54px rgba(15, 23, 42, 0.16);
+  }
+
+  .order-hero-side-intro {
+    display: grid;
+    gap: 12px;
+  }
+
+  .order-hero-side-intro span,
+  .order-flow-note-copy > span {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
   }
 
   .order-quick-nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 24px;
+    gap: 12px;
+    align-content: start;
   }
 
   .order-quick-nav a,
@@ -278,10 +348,18 @@ const orderModules = [
     border: 1px solid #c8d2dc;
     border-radius: 999px;
     padding: 0 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      0 1px 2px rgba(15, 23, 42, 0.04);
     color: #0b1424;
     font-weight: 800;
     text-decoration: none;
-    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    transition:
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      background 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .order-quick-nav a:hover,
@@ -294,6 +372,11 @@ const orderModules = [
   .contact-products-grid a:focus-visible {
     transform: translateY(-1px);
     border-color: #9eb3c4;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f6fa 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      0 12px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
   }
 
   .order-flow-note {
@@ -301,28 +384,167 @@ const orderModules = [
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 24px;
     align-items: center;
-    border-top: 1px solid #dbe3ea;
-    border-bottom: 1px solid #dbe3ea;
-    background: #ffffff;
-    padding-top: 24px;
-    padding-bottom: 24px;
+    border: 1px solid #dbe3ea;
+    border-radius: 28px;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+    padding-top: 28px;
+    padding-bottom: 28px;
+    margin-top: 6px;
+    margin-bottom: 20px;
+    box-shadow: 0 22px 48px -42px rgba(15, 23, 42, 0.12);
+  }
+
+  .order-flow-note-copy {
+    display: grid;
+    gap: 6px;
   }
 
   .order-flow-note strong {
-    display: block;
-    margin-bottom: 6px;
     color: #0b1424;
     font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1rem;
+    font-size: 1.05rem;
+  }
+
+  .order-category-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+    gap: 34px;
+    align-items: stretch;
+    padding-top: 76px;
+    padding-bottom: 22px;
+  }
+
+  .order-category-copy {
+    max-width: 52rem;
+  }
+
+  .order-category-heading h2 {
+    max-width: 15ch;
+    font-size: clamp(2.45rem, 3.2vw, 4rem);
+    line-height: 1.02;
+  }
+
+  .order-category-heading p {
+    margin-top: 20px;
+  }
+
+  .order-category-side {
+    display: grid;
+    gap: 18px;
+    border: 1px solid #dbe3ea;
+    border-radius: 28px;
+    padding: 26px;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+    box-shadow: 0 22px 48px -42px rgba(15, 23, 42, 0.12);
+  }
+
+  .order-category-side-intro {
+    display: grid;
+    gap: 10px;
+  }
+
+  .order-category-side-intro span {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .order-category-side-intro p {
+    margin-top: 0;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .upcoming-family-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .upcoming-family-list span {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    border: 1px solid #dbe3ea;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    padding: 0 16px;
+    color: #334155;
+    font-size: 0.86rem;
+    font-weight: 800;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
   .order-module {
-    padding-top: 56px;
+    scroll-margin-top: 104px;
+    padding-top: 40px;
     padding-bottom: 0;
   }
 
   .order-module + .order-module {
-    padding-top: 72px;
+    padding-top: 84px;
+  }
+
+  .order-module-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ccd8e3;
+    border-left: 7px solid #0f5878;
+    border-radius: 10px;
+    background:
+      linear-gradient(90deg, rgba(15, 88, 120, 0.055), transparent 38%),
+      #ffffff;
+    padding: 34px 32px 32px;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.92) inset,
+      0 26px 62px -52px rgba(15, 23, 42, 0.34);
+  }
+
+  .order-module-card::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: #b7c6d4;
+    content: '';
+  }
+
+  .order-module-index {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 34px;
+    margin-bottom: 28px;
+    border: 1px solid #c8d5e0;
+    border-radius: 999px;
+    background: #f7fafc;
+    padding: 0 14px 0 5px;
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-weight: 800;
+  }
+
+  .order-module-index span {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: #0b1424;
+    color: #ffffff;
+    font-size: 0.7rem;
+  }
+
+  .order-module-index small {
+    color: #5076b8;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
   }
 
   .order-module-intro {
@@ -330,7 +552,7 @@ const orderModules = [
     grid-template-columns: minmax(0, 0.98fr) minmax(280px, 0.72fr);
     gap: 36px;
     align-items: end;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
 
   .order-module-intro h2 {
@@ -344,10 +566,18 @@ const orderModules = [
   }
 
   .order-module-intro figure {
+    display: grid;
+    place-items: center;
+    min-height: 190px;
     margin: 0;
-    border-top: 1px solid #cfd9e2;
-    border-bottom: 1px solid #cfd9e2;
-    padding: 22px 0;
+    border: 1px solid #d6e0e8;
+    border-radius: 8px;
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.022) 1px, transparent 1px),
+      #f8fafc;
+    background-size: 22px 22px;
+    padding: 26px;
   }
 
   .order-module-intro img {
@@ -356,6 +586,23 @@ const orderModules = [
     max-height: 240px;
     object-fit: contain;
     margin: 0 auto;
+  }
+
+  .order-module-card :global([data-order-selector]) {
+    border-bottom: 0;
+    background: transparent;
+  }
+
+  .order-module-card :global([data-order-selector] > div) {
+    max-width: none;
+    padding: 0;
+  }
+
+  .order-module-card :global(.order-selector-shell) {
+    border-color: #cbd8e2;
+    border-radius: 8px;
+    background: rgba(248, 250, 252, 0.84);
+    box-shadow: 0 28px 62px -52px rgba(15, 23, 42, 0.38);
   }
 
   .contact-products-section {
@@ -434,6 +681,7 @@ const orderModules = [
   @media (max-width: 1120px) {
     .order-hero,
     .order-flow-note,
+    .order-category-heading,
     .order-module,
     .contact-products-section {
       padding-left: 30px;
@@ -441,6 +689,7 @@ const orderModules = [
     }
 
     .order-hero,
+    .order-category-heading,
     .order-module-intro,
     .contact-products-heading,
     .contact-products-grid {
@@ -465,6 +714,7 @@ const orderModules = [
   @media (max-width: 720px) {
     .order-hero,
     .order-flow-note,
+    .order-category-heading,
     .order-module,
     .contact-products-section {
       padding-left: 18px;
@@ -482,6 +732,7 @@ const orderModules = [
     }
 
     .order-flow-note,
+    .order-category-heading,
     .contact-products-section {
       padding-top: 20px;
       padding-bottom: 20px;
@@ -491,7 +742,22 @@ const orderModules = [
       padding-top: 56px;
     }
 
+    .order-module-card {
+      border-left-width: 5px;
+      padding: 22px 16px 18px;
+    }
+
+    .order-module-index {
+      margin-bottom: 22px;
+    }
+
+    .order-module-intro {
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
     .order-module-intro figure {
+      min-height: 160px;
       padding: 18px 0;
     }
 

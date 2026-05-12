@@ -1,32 +1,27 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
-import PremiumProductNarrative from '../../components/product/PremiumProductNarrative.astro';
-import ProductOrderSelector from '../../components/product/ProductOrderSelector.astro';
 import etProduct from '../../assets/et-transformx.png';
+import avatarTipComparison from '../../assets/avatar-tip-comparison.png';
+import bcsSealer from '../../assets/bcs-sealer.png';
+import etFirewireMachine from '../../assets/et-firewire-machine.png';
 import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
-import { getShopifyStoreDomain } from '../../utils/shopify';
-import { buildOrderSelectorItems, getOrderCoverageLabel } from '../../utils/productOrdering';
-import { etOrderEntries } from '../../data/productOrderingCatalog';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const base = import.meta.env.BASE_URL;
 const etVideoSrc = withBasePath('/videos/et-transformx-promo_1.mp4');
 const workflowPdfSrc = withBasePath('/downloads/ET-Technique-Work-Flow.pdf');
 const partNumbersPdfSrc = withBasePath('/downloads/ET-Part-Numbers.pdf');
-const shopifyStoreDomain = getShopifyStoreDomain();
-const orderPanelDescription = `To order
-- Choose file Size (Step 1)
-- Choose file length (Step 2)
-- Click 'Add to order'`;
-const etSelectionNote =
-  'ET TransformX currently covers .04 and .06 sequences across 21 mm, 25 mm, and 29 mm lengths, with assortment options available in the current NZ part-number range.';
-const etOrderItems = await buildOrderSelectorItems(etOrderEntries, shopifyStoreDomain);
+const etOrderHref = `${base}order/#et-order`;
+const workflowHref = `${base}technique/workflow/`;
+const downloadsHref = `${base}resources/downloads/`;
+
 const etSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'ET TransformX Files',
   description:
-    'Rotary shaping files for clinicians who want to preserve established .04/.06-style sequence logic while improving apical control with Avatar Tip and Transform Technology.',
+    'Rotary shaping files for clinicians who want to preserve established .04/.06-style sequence logic while using Avatar Tip and Transform Technology.',
   brand: {
     '@type': 'Brand',
     name: siteConfig.name,
@@ -34,202 +29,945 @@ const etSchema = {
   category: 'Endodontic rotary files',
   image: [new URL(etProduct.src, siteUrl).toString()],
   url: new URL('/products/et-transformx/', siteUrl).toString(),
-  additionalProperty: [
-    { '@type': 'PropertyValue', name: 'Technique change', value: 'No technique change' },
-    { '@type': 'PropertyValue', name: 'Tip design', value: 'Avatar Tip' },
-    { '@type': 'PropertyValue', name: 'Metallurgy', value: 'Transform Technology' },
-  ],
 };
 
-const keyFeatureItems = [
+const technicalCards = [
   {
-    title: 'No technique change',
-    description:
-      'Built for clinicians already shaping with ET, EdgeX7, Race Evo, and other .04/.06-style sequences, so the transition stays clinically familiar.',
-    icon: 'workflow' as const,
+    title: 'Fire-Wire metallurgy',
+    body:
+      'Transform Technology is positioned to support flexibility through curvature while preserving the shaping response clinicians expect from ET-style sequence logic.',
+    tone: 'light',
+    image: etFirewireMachine,
+    imageAlt: 'Transform technology machine render representing Fire-Wire metallurgy.',
   },
   {
-    title: 'Avatar Tip follows challenging anatomy',
-    description:
-      'The apical geometry is designed to support more controlled progression where canal curvature and unpredictability increase procedural risk.',
-    icon: 'handling' as const,
-  },
-  {
-    title: 'Transform Technology varies the metallurgy along the file',
-    description:
-      'Different behaviour along the working length supports flexibility at the tip while preserving cutting efficiency through the mid-root and coronal canal.',
-    icon: 'stability' as const,
+    title: 'Geometry matters',
+    body:
+      'As the canal narrows, curves, or becomes less forgiving, tip design becomes critical. Avatar Tip is designed to guide the file along the prepared path, helping reduce aggressive apical engagement while supporting controlled progression through complex anatomy.',
+    tone: 'dark',
+    metric: 'ET-style .04 / .06',
   },
 ];
 
-const clinicalBenefitItems = [
+const workflowSteps = [
   {
-    title: 'Maintain established sequence logic',
+    number: '1',
+    title: 'Assess and open',
     description:
-      'Reduces the learning burden for clinicians who want a different file system without rebuilding motor habits or file-order thinking.',
-    icon: 'workflow' as const,
+      'Preserve conservative access objectives while creating a pathway that still respects the natural canal form.',
   },
   {
-    title: 'Improve apical control in difficult canals',
+    number: '2',
+    title: 'Shape and clean',
     description:
-      'Links the file design directly to the clinical challenge of staying centred and progressing with fewer procedural surprises.',
-    icon: 'handling' as const,
+      'Use ET-style sequence logic, then move into irrigation with a preparation geometry suited to the next clinical step.',
   },
   {
-    title: 'Balance flexibility and cutting behaviour',
+    number: '3',
+    title: 'Obturate',
     description:
-      'Supports canal shaping efficiency without making the apical end feel over-aggressive in more demanding anatomy.',
-    icon: 'stability' as const,
+      'Finish the case with a matched bioceramic sealing pathway so shaping and obturation work as one system.',
   },
 ];
 
-const sequenceItems = [
+const comparisonRows = [
   {
-    step: '.04',
-    role: 'Conservative shaping',
-    detail:
-      'Maintains familiar ET-style sequence logic while supporting controlled shaping in narrower or more conservative preparations.',
+    feature: 'Technique transition',
+    et: 'Familiar ET-style sequence logic',
+    standard: 'Often requires more adaptation',
   },
   {
-    step: '.06',
-    role: 'Standard shaping',
-    detail:
-      'Supports clinicians who want a familiar taper strategy with improved file behaviour where canal demand increases.',
+    feature: 'Apical control',
+    et: 'Guided apical progression',
+    standard: 'Varies widely by file design',
   },
   {
-    step: '21-29',
-    role: 'Length selection',
-    detail:
-      'The current NZ range keeps the ET workflow available across routine and longer canal lengths.',
+    feature: 'Workflow fit',
+    et: 'Glide, shape, clean, then seal',
+    standard: 'Often evaluated as a file-only choice',
+  },
+  {
+    feature: 'Next step',
+    et: 'ET technique workflow PDF',
+    standard: 'Compare to your current protocol',
   },
 ];
 
 const downloads = [
-  { label: 'Technique Guide', title: 'ET Technique Workflow', href: workflowPdfSrc },
-  { label: 'Product File', title: 'ET Part Numbers', href: partNumbersPdfSrc },
+  {
+    label: 'Technical specifications',
+    title: 'ET Technique Workflow PDF',
+    href: workflowPdfSrc,
+  },
+  {
+    label: 'Product file',
+    title: 'ET Part Numbers PDF',
+    href: partNumbersPdfSrc,
+  },
 ];
 ---
 
 <ProductLayout
   title="ET TransformX Files | Rotary Endodontic Files for ET-Style Technique"
-  description="ET TransformX rotary endodontic files preserve established .04/.06-style shaping technique while improving apical control with Avatar Tip and Transform Technology."
+  description="ET TransformX rotary endodontic files preserve established .04/.06-style shaping technique while using Avatar Tip and Transform Technology."
   image={etProduct.src}
   schema={etSchema}
   accent="teal"
 >
-  <PremiumProductNarrative
-    eyebrow="ET TransformX"
-    title="Established technique, engineered for greater control."
-    lede="ET TransformX is designed for clinicians already using ET, EdgeX7, Race Evo, and other .04/.06-style systems, preserving familiar sequence architecture while advancing apical control."
-    imageSrc={etProduct.src}
-    imageAlt="ET TransformX rotary files for established ET-style shaping sequences"
-    visualTitle="ET TransformX system"
-    visualText="Familiar .04/.06-style shaping logic positioned inside the EndoTech clinical workflow."
-    primaryCta={{ label: 'Configure ET sequence', href: '#order' }}
-    secondaryCta={{ label: 'Technical files', href: '#downloads' }}
-    clinicalProblem="Changing to a new rotary system often means relearning sequence logic, accepting less familiar apical behaviour, or sacrificing confidence in challenging anatomy."
-    solution="ET TransformX keeps the established ET-style technique intact while combining Avatar Tip guidance and variable metallurgy to improve control where anatomy is least forgiving."
-    engineeringTitle="The file behaviour is engineered around familiar technique rather than technique disruption."
-    features={keyFeatureItems}
-    sequenceTitle="The ET workflow remains readable across taper and length selection."
-    sequenceItems={sequenceItems}
-    benefitsTitle="Designed to improve apical control without rebuilding clinician habits."
-    benefits={clinicalBenefitItems}
-    downloads={downloads}
-    workflowActiveStep="shape"
-  >
-    <section slot="detail" class="et-media-section" aria-labelledby="et-media-title">
-      <div>
-        <p class="et-eyebrow">Technology Overview</p>
-        <h2 id="et-media-title">Avatar Tip rationale and Transform Technology in motion.</h2>
+  <main class="et-stitch-page">
+    <section class="et-hero" aria-labelledby="et-hero-title">
+      <div class="et-hero-copy">
+        <p class="et-eyebrow">Next generation endodontics</p>
+        <h1 id="et-hero-title">TransformX ET</h1>
+        <p class="et-hero-lede">
+          ET-style shaping for clinicians already using .04 / .06 constant-taper workflows such as EdgeFile X7, HyFlex CM, RaCe, and similar rotary systems.
+        </p>
+      </div>
+
+      <figure data-et-hero-visual class="et-hero-visual et-hero-visual--pre-reveal" style="transform: translateZ(0) scale(0.9);">
+        <img
+          class="et-hero-image"
+          src={etProduct.src}
+          loading="eager"
+          decoding="sync"
+          fetchpriority="high"
+          alt="ET TransformX rotary files displayed as a shaping system"
+        />
+      </figure>
+
+      <div class="et-hero-actions">
+        <a class="et-button primary" href="#technical-specifications">Technical Specifications</a>
+        <a class="et-button secondary" href="#clinical-video">Clinical Video</a>
+      </div>
+    </section>
+
+    <section id="technical-specifications" class="et-technical-band" aria-labelledby="et-technical-title">
+      <h2 class="sr-only" id="et-technical-title">Technical overview</h2>
+      <div class="et-technical-grid">
+        {technicalCards.map((card) => (
+          <article class:list={['et-technical-card', card.tone === 'dark' && 'is-dark']}>
+            <div>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </div>
+            {card.metric && (
+              <div class="et-technical-meta">
+                <span>{card.metric}</span>
+              </div>
+            )}
+            {card.tone === 'light' && (
+              <img src={(card.image ?? avatarTipComparison).src} alt={card.imageAlt ?? 'Avatar Tip geometry comparison'} />
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="et-journey-section" aria-labelledby="et-journey-title">
+      <div class="et-journey-media">
+        <img src={avatarTipComparison.src} alt="Clinical illustration supporting anatomical shaping control" />
+      </div>
+
+      <div class="et-journey-copy">
+        <p class="et-eyebrow">The clinical journey</p>
+        <h2 id="et-journey-title">Anatomical respect by design.</h2>
+        <div class="et-journey-steps">
+          {workflowSteps.map((step) => (
+            <article>
+              <span>{step.number}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="et-bcs-section" aria-labelledby="et-bcs-title">
+      <div class="et-bcs-copy">
+        <p class="et-eyebrow">Chemical engineering</p>
+        <h2 id="et-bcs-title">BCS BioCeramic Sealer</h2>
+        <p class="et-bcs-lede">
+          ET TransformX sits within a matched clinical system. Shape the canal, then move into a bioceramic sealing pathway aligned with the final restorative objective.
+        </p>
+
+        <div class="et-bcs-metrics">
+          <div>
+            <strong>.04 / .06</strong>
+            <span>familiar ET logic</span>
+          </div>
+          <div>
+            <strong>Shape to seal</strong>
+            <span>matched workflow path</span>
+          </div>
+        </div>
+
+        <div class="et-bcs-actions">
+          <a class="et-button dark" href={downloadsHref}>Evidence &amp; Downloads</a>
+          <a class="et-inline-link" href={workflowHref}>Review clinical workflow</a>
+        </div>
+      </div>
+
+      <figure class="et-bcs-visual">
+        <img src={bcsSealer.src} alt="BCS BioCeramic sealer packaging as the matched sealing stage after ET shaping" />
+      </figure>
+    </section>
+
+    <section class="et-comparison-section" aria-labelledby="et-comparison-title">
+      <div class="et-comparison-heading">
+        <h2 id="et-comparison-title">Product Comparison</h2>
+        <p>Transparent information for clinicians evaluating sequence fit and workflow role.</p>
+      </div>
+
+      <div class="et-table-shell">
+        <table class="et-comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>TransformX ET</th>
+              <th>Typical Alternative</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonRows.map((row) => (
+              <tr>
+                <th>{row.feature}</th>
+                <td>{row.et}</td>
+                <td>{row.standard}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="clinical-video" class="et-video-section" aria-labelledby="et-video-title">
+      <div class="et-video-heading">
+        <p class="et-eyebrow">Clinical video</p>
+        <h2 id="et-video-title">Avatar Tip rationale and file behaviour in motion.</h2>
       </div>
       <div class="et-video-shell">
-        <video
-          controls
-          playsinline
-          preload="metadata"
-          class="block aspect-video w-full bg-slate-950"
-        >
+        <video controls playsinline preload="metadata" class="block aspect-video w-full bg-slate-950">
           <source src={etVideoSrc} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
     </section>
 
-    <section id="order" slot="order" class="premium-order-anchor" aria-label="ET ordering selector">
-      <ProductOrderSelector
-        title="Order the ET sequence online"
-        description={orderPanelDescription}
-        coverageLabel={getOrderCoverageLabel(etOrderItems)}
-        packFormat="6 files per pack"
-        items={etOrderItems}
-        shopifyStoreDomain={shopifyStoreDomain}
-        selectionNote={etSelectionNote}
-      />
-    </section>
-  </PremiumProductNarrative>
+    <section class="et-downloads-section" aria-labelledby="et-downloads-title">
+      <div class="et-downloads-heading">
+        <p class="et-eyebrow">Downloads</p>
+        <h2 id="et-downloads-title">Technical files for ordering and product evaluation.</h2>
+      </div>
 
+      <div class="et-download-list">
+        {downloads.map((download) => (
+          <a href={download.href}>
+            <span>{download.label}</span>
+            <strong>{download.title}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="et-cta-section" aria-labelledby="et-cta-title">
+      <div class="et-cta-copy">
+        <h2 id="et-cta-title">Review ET TransformX in the wider workflow.</h2>
+        <p>
+          Review ET TransformX, then move into the ordering section or supporting product files when you are ready to evaluate the system in practice.
+        </p>
+      </div>
+      <div class="et-cta-actions">
+        <a class="et-button primary" href={etOrderHref}>Order ET TransformX</a>
+        <a class="et-button secondary on-dark" href={downloadsHref}>Open Downloads</a>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    (() => {
+      const visual = document.querySelector('[data-et-hero-visual]');
+      if (!(visual instanceof HTMLElement)) return;
+
+      const playReveal = () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+          setTimeout(() => {
+            visual.style.transform = '';
+            visual.classList.remove('et-hero-visual--pre-reveal');
+          }, 70);
+          });
+        });
+      };
+
+      playReveal();
+    })();
+  </script>
 </ProductLayout>
 
 <style>
-  .premium-order-anchor {
-    scroll-margin-top: 96px;
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
-  .et-media-section {
-    display: grid;
-    gap: 44px;
-    border-top: 1px solid #dbe3ea;
+  .et-stitch-page {
     background: #ffffff;
-    padding: 104px 56px 112px;
+    color: #181c20;
+  }
+
+  .et-hero,
+  .et-technical-band,
+  .et-journey-section,
+  .et-bcs-section,
+  .et-comparison-section,
+  .et-video-section,
+  .et-downloads-section,
+  .et-cta-section {
+    padding-left: 56px;
+    padding-right: 56px;
   }
 
   .et-eyebrow {
-    margin: 0 0 18px;
-    color: #876a2b;
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.2em;
+    margin: 0 0 14px;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
-  .et-media-section h2 {
-    max-width: 1040px;
+  .et-hero h1,
+  .et-technical-card h3,
+  .et-journey-copy h2,
+  .et-journey-copy h3,
+  .et-bcs-copy h2,
+  .et-comparison-heading h2,
+  .et-video-heading h2,
+  .et-downloads-heading h2,
+  .et-cta-copy h2 {
     margin: 0;
-    color: #0b1424;
-    font-size: 3.35rem;
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .et-hero {
+    display: grid;
+    justify-items: center;
+    padding-top: 96px;
+    padding-bottom: 80px;
+    text-align: center;
+    background: #ffffff;
+  }
+
+  .et-hero-copy {
+    max-width: 700px;
+  }
+
+  .et-hero h1 {
+    max-width: 10ch;
+    font-size: clamp(3.3rem, 6vw, 5.2rem);
+    line-height: 0.95;
+    text-wrap: balance;
+  }
+
+  .et-hero-lede,
+  .et-technical-card p,
+  .et-journey-copy p,
+  .et-bcs-copy p,
+  .et-comparison-heading p,
+  .et-download-list span,
+  .et-cta-copy p {
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    line-height: 1.65;
+  }
+
+  .et-hero-lede {
+    max-width: 48ch;
+    margin: 18px auto 0;
+    font-size: 1rem;
+  }
+
+  .et-hero-visual {
+    width: 100%;
+    max-width: 920px;
+    margin: 36px 0 0;
+    transform-origin: center center;
+    transform: translateZ(0) scale(1);
+    transition: transform 1320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .et-hero-visual--pre-reveal {
+    transform: translateZ(0) scale(0.9);
+  }
+
+  .et-hero-visual img,
+  .et-hero-image {
+    display: block;
+    width: 100%;
+    max-height: 660px;
+    object-fit: contain;
+    backface-visibility: hidden;
+  }
+
+  .et-hero-actions,
+  .et-cta-actions,
+  .et-bcs-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .et-hero-actions {
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .et-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border-radius: 6px;
+    padding: 0 18px;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition:
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 180ms ease,
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .et-button:hover,
+  .et-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow:
+      0 12px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
+  }
+
+  .et-button.primary {
+    background: #005c92;
+    border: 1px solid #005c92;
+    color: #ffffff;
+  }
+
+  .et-button.primary:hover,
+  .et-button.primary:focus-visible {
+    background: #0a6ca8;
+    border-color: #0a6ca8;
+    color: #ffffff;
+  }
+
+  .et-button.secondary {
+    background: #ffffff;
+    border: 1px solid #c0c7d2;
+    color: #404750;
+  }
+
+  .et-button.secondary:hover,
+  .et-button.secondary:focus-visible {
+    background: #f8fbfd;
+    border-color: #aeb8c5;
+    color: #1f2937;
+  }
+
+  .et-button.dark {
+    background: #181c20;
+    border: 1px solid #181c20;
+    color: #ffffff;
+  }
+
+  .et-button.dark:hover,
+  .et-button.dark:focus-visible {
+    background: #111827;
+    border-color: #111827;
+    color: #ffffff;
+  }
+
+  .et-button.on-dark,
+  .et-button.secondary.on-dark {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+  }
+
+  .et-button.on-dark:hover,
+  .et-button.on-dark:focus-visible,
+  .et-button.secondary.on-dark:hover,
+  .et-button.secondary.on-dark:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.42);
+    color: #ffffff;
+  }
+
+  .et-technical-band,
+  .et-journey-section,
+  .et-bcs-section,
+  .et-comparison-section,
+  .et-video-section,
+  .et-downloads-section {
+    border-top: 1px solid #e3e8ee;
+  }
+
+  .et-technical-band,
+  .et-journey-section,
+  .et-bcs-section,
+  .et-video-section,
+  .et-downloads-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .et-comparison-section {
+    padding-top: 84px;
+    padding-bottom: 84px;
+    background: #f7f9ff;
+  }
+
+  .et-technical-grid,
+  .et-journey-section,
+  .et-bcs-section,
+  .et-download-list {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .et-technical-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.74fr);
+    gap: 20px;
+  }
+
+  .et-technical-card {
+    display: grid;
+    gap: 28px;
+    align-content: space-between;
+    min-height: 300px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 28px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 55, 112, 0.06);
+  }
+
+  .et-technical-card h3 {
+    font-size: 1.28rem;
+    line-height: 1.16;
+  }
+
+  .et-technical-card p {
+    max-width: 34ch;
+    margin: 12px 0 0;
+    font-size: 0.94rem;
+  }
+
+  .et-technical-card img {
+    width: 100%;
+    max-width: 260px;
+    max-height: 162px;
+    justify-self: end;
+    object-fit: contain;
+    opacity: 0.42;
+  }
+
+  .et-technical-card.is-dark {
+    background: #005c92;
+    border-color: #005c92;
+  }
+
+  .et-technical-card.is-dark h3,
+  .et-technical-card.is-dark p,
+  .et-technical-card.is-dark span {
+    color: #ffffff;
+  }
+
+  .et-technical-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 18px;
+  }
+
+  .et-technical-meta span {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .et-journey-section,
+  .et-bcs-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    gap: 48px;
+    align-items: center;
+  }
+
+  .et-journey-media,
+  .et-bcs-visual {
+    display: grid;
+    place-items: center;
+    min-height: 320px;
+    padding: 30px;
+    border-radius: 8px;
+    background: #f4f6fb;
+  }
+
+  .et-journey-media img,
+  .et-bcs-visual img {
+    width: 100%;
+    max-height: 340px;
+    object-fit: contain;
+  }
+
+  .et-journey-copy h2,
+  .et-bcs-copy h2,
+  .et-comparison-heading h2,
+  .et-video-heading h2,
+  .et-downloads-heading h2,
+  .et-cta-copy h2 {
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .et-journey-steps {
+    display: grid;
+    gap: 22px;
+    margin-top: 24px;
+  }
+
+  .et-journey-steps article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .et-journey-steps span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: #eef8fc;
+    color: #005c92;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
     font-weight: 700;
-    line-height: 1.08;
+  }
+
+  .et-journey-steps h3 {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .et-journey-steps p {
+    margin: 6px 0 0;
+    font-size: 0.92rem;
+  }
+
+  .et-bcs-lede {
+    max-width: 44ch;
+    margin: 16px 0 0;
+    font-size: 1rem;
+  }
+
+  .et-bcs-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 460px;
+    margin: 28px 0 24px;
+  }
+
+  .et-bcs-metrics div {
+    border-left: 3px solid #006a6a;
+    padding-left: 14px;
+  }
+
+  .et-bcs-metrics strong {
+    display: block;
+    color: #006a6a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .et-bcs-metrics span {
+    display: block;
+    margin-top: 6px;
+    color: #707881;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .et-inline-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border: 1px solid #bfd3e0;
+    border-radius: 999px;
+    padding: 0 18px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f8fc 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      0 1px 2px rgba(15, 23, 42, 0.04);
+    color: #005c92;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 180ms ease,
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .et-inline-link:hover,
+  .et-inline-link:focus-visible {
+    transform: translateY(-1px);
+    border-color: #a9c2d3;
+    background: linear-gradient(180deg, #ffffff 0%, #eef6fb 100%);
+    color: #064b78;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.96),
+      0 12px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
+  }
+
+  .et-comparison-heading,
+  .et-video-heading,
+  .et-downloads-heading {
+    max-width: 760px;
+    margin: 0 auto 36px;
+    text-align: center;
+  }
+
+  .et-comparison-heading p,
+  .et-video-heading p,
+  .et-downloads-heading p {
+    margin: 14px 0 0;
+  }
+
+  .et-table-shell {
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .et-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .et-comparison-table th,
+  .et-comparison-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid #e3e8ee;
+    text-align: left;
+  }
+
+  .et-comparison-table thead th {
+    background: #e8edf2;
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .et-comparison-table tbody th {
+    width: 26%;
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .et-comparison-table tbody td {
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .et-comparison-table tbody tr:last-child th,
+  .et-comparison-table tbody tr:last-child td {
+    border-bottom: 0;
   }
 
   .et-video-shell {
-    border-top: 1px solid #c8d2dc;
-    border-bottom: 1px solid #c8d2dc;
-    padding: 28px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0d1a2a;
   }
 
-  .et-video-shell video {
-    display: block;
-    width: 100%;
-    max-height: 640px;
-    background: #0b1424;
+  .et-download-list {
+    display: grid;
+    gap: 16px;
+    max-width: 960px;
+  }
+
+  .et-download-list a {
+    display: grid;
+    gap: 8px;
+    padding: 20px 22px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+    background: #ffffff;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .et-download-list a:hover,
+  .et-download-list a:focus-visible {
+    transform: translateY(-1px);
+    border-color: #c0c7d2;
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08);
+  }
+
+  .et-download-list strong {
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .et-download-list span {
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .et-cta-section {
+    padding-top: 92px;
+    padding-bottom: 96px;
+    background: #102033;
+    text-align: center;
+  }
+
+  .et-cta-copy {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .et-cta-copy h2,
+  .et-cta-copy p {
+    color: #ffffff;
+  }
+
+  .et-cta-copy p {
+    max-width: 560px;
+    margin: 18px auto 0;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .et-cta-actions {
+    justify-content: center;
+    margin-top: 30px;
   }
 
   @media (max-width: 1120px) {
-    .et-media-section {
+    .et-hero,
+    .et-technical-band,
+    .et-journey-section,
+    .et-bcs-section,
+    .et-comparison-section,
+    .et-video-section,
+    .et-downloads-section,
+    .et-cta-section {
       padding-left: 30px;
       padding-right: 30px;
+    }
+
+    .et-technical-grid,
+    .et-journey-section,
+    .et-bcs-section {
+      grid-template-columns: 1fr;
     }
   }
 
   @media (max-width: 720px) {
-    .et-media-section {
+    .et-hero,
+    .et-technical-band,
+    .et-journey-section,
+    .et-bcs-section,
+    .et-comparison-section,
+    .et-video-section,
+    .et-downloads-section,
+    .et-cta-section {
       padding-left: 18px;
       padding-right: 18px;
     }
 
-    .et-media-section h2 {
-      font-size: 2.25rem;
+    .et-hero {
+      padding-top: 52px;
+      padding-bottom: 56px;
+    }
+
+    .et-hero-actions,
+    .et-cta-actions,
+    .et-bcs-actions {
+      display: grid;
+      width: 100%;
+      max-width: 354px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .et-button {
+      width: 100%;
+    }
+
+    .et-bcs-metrics {
+      grid-template-columns: 1fr;
+    }
+
+    .et-table-shell {
+      overflow-x: auto;
+    }
+
+    .et-comparison-table {
+      min-width: 680px;
     }
   }
 </style>

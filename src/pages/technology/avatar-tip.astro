@@ -16,442 +16,174 @@ const benefits = [
   'Better canal centering in the apical third',
   'Reduced tendency toward transportation and ledging',
   'Lower risk of abrupt lateral wall engagement',
-  'More controlled approach to working length',
-  'Improved preservation of the original canal path',
-  'Greater confidence in difficult apical anatomy',
+  'Smoother progression toward working length',
 ];
 ---
 
 <ProductLayout
   title="Avatar Tip Technology | EndoTech NZ"
-  description="Avatar Tip Technology is a guidance-focused apical tip design for safer progression, canal centering, and controlled shaping in the apical 2 mm."
+  description="Avatar Tip Technology is a guidance-focused apical tip design for centered advancement and controlled shaping."
   accent="slate"
 >
-  <main class="avatar-page">
-    <section class="avatar-hero" aria-labelledby="avatar-title">
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:py-20 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.82fr)] lg:items-center lg:py-24">
       <div>
-        <p class="avatar-eyebrow">Avatar Tip Technology</p>
-        <h1 id="avatar-title">Guidance where apical tolerance is lowest.</h1>
-        <p>
-          Avatar Tip is the TransformX apical geometry designed to support centered advancement, controlled engagement, and safer traversal through demanding anatomy.
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Avatar Tip Technology</p>
+        <h1 class="mt-5 max-w-[11ch] text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          Guidance where apical tolerance is lowest.
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
+          Avatar Tip is the TransformX apical geometry designed to support centered advancement, smoother engagement, and calmer control in demanding anatomy.
         </p>
-        <div class="avatar-actions">
-          <a href="#comparison">Compare geometry</a>
-          <a href="#apical-control">View apical behaviour</a>
-          <a href={`${base}technology/transform-technology/`}>Transform Technology</a>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a
+            href="#comparison"
+            class="inline-flex min-w-[15rem] items-center justify-center rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+          >
+            Compare geometry
+          </a>
+          <a
+            href={`${base}technology/transform-technology/`}
+            class="inline-flex min-w-[15rem] items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+          >
+            Transform Technology
+          </a>
         </div>
       </div>
 
-      <figure class="avatar-visual">
-        <img src={avatarComparison.src} alt="Avatar Tip compared with a sharper competitor tip profile" />
-        <figcaption>
-          <strong>Tip geometry matters</strong>
-          <span>Smoother transition geometry is presented as a control feature, not an aggressiveness claim.</span>
-        </figcaption>
-      </figure>
-    </section>
-
-    <WorkflowStrip activeStep="access" />
-
-    <section class="split-section" aria-labelledby="problem-title">
-      <div class="section-label">Clinical Problem</div>
-      <div>
-        <h2 id="problem-title">The greatest shaping risk is concentrated in the apical third.</h2>
-        <p>
-          In the final millimeters, canal curvature, reduced dentin thickness, and limited tolerance for error make tip behaviour clinically important. A more aggressive leading profile can engage the outer wall before the file is fully centered.
-        </p>
-      </div>
-    </section>
-
-    <section class="split-section response-section" aria-labelledby="response-title">
-      <div class="section-label">TransformX Solution</div>
-      <div>
-        <h2 id="response-title">A guidance-focused tip design for controlled advancement.</h2>
-        <p>
-          Avatar Tip is designed to enter curved anatomy progressively, reduce abrupt wall engagement, and help preserve the original canal path through the apical constriction.
-        </p>
-        <div class="control-list">
-          {controls.map((item) => (
-            <span>{item}</span>
-          ))}
+      <div class="rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff,#f5f8fb)] p-6 shadow-[0_28px_80px_-48px_rgba(15,23,42,0.16)] sm:p-8">
+        <div class="rounded-[1.5rem] border border-slate-200 bg-white p-4">
+          <img src={avatarComparison.src} alt="Avatar Tip compared with a sharper competitor tip profile" class="w-full object-contain" />
+        </div>
+        <div class="mt-6 rounded-[1.2rem] border border-slate-200 bg-[#123d78] p-4 text-white">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100/90">Clinical frame</p>
+          <p class="mt-2 text-sm leading-7 text-slate-100">Tip geometry is presented here as a control feature, not as an aggressiveness claim.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="comparison" class="media-section" aria-labelledby="comparison-title">
-      <div class="media-heading">
-        <p class="avatar-eyebrow">Video Comparison</p>
-        <h2 id="comparison-title">Rounded guidance profile versus a sharper transition profile.</h2>
+  <WorkflowStrip activeStep="access" />
+
+  <section class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto grid max-w-7xl gap-5 px-6 py-16 sm:py-18 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:py-20">
+      <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Clinical Problem</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          The apical third allows the least tolerance for abrupt file behaviour.
+        </h2>
+        <p class="mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+          Canal curvature, reduced dentin thickness, and limited room for error make tip behaviour clinically important. A more aggressive leading profile can engage the outer wall before the file is fully centered.
+        </p>
+      </article>
+
+      <article class="rounded-[1.75rem] border border-slate-200 bg-[#123d78] p-6 text-white shadow-[0_24px_60px_-42px_rgba(15,23,42,0.42)]">
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/90">TransformX Solution</p>
+        <p class="mt-4 text-sm leading-7 text-slate-100">
+          A guidance-focused apical geometry designed to reduce abrupt wall engagement and help preserve the original canal path.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Control Features</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Geometry intended to guide, not force.
+        </h2>
       </div>
 
-      <div class="video-grid">
-        <figure>
-          <video controls muted playsinline preload="metadata">
-            <source src={`${base}videos/avatar-tip/avatar-tip-rounded.mp4`} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          <figcaption>Avatar Tip: rounded leading geometry designed for smoother guidance.</figcaption>
+      <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {controls.map((item) => (
+          <article class="rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-6 shadow-[0_20px_48px_-42px_rgba(15,23,42,0.12)]">
+            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Feature</p>
+            <h3 class="mt-4 text-xl font-bold tracking-tight text-slate-900">{item}</h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="comparison" class="border-b border-slate-200/80 bg-slate-50/70">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Video Comparison</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Compare rounded guidance with a sharper transition profile.
+        </h2>
+      </div>
+
+      <div class="mt-10 grid gap-5 lg:grid-cols-2">
+        <figure class="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)]">
+          <div class="overflow-hidden rounded-[1.35rem] border border-slate-200 bg-slate-50/70">
+            <video class="aspect-video w-full object-contain" controls muted playsinline preload="metadata">
+              <source src={`${base}videos/avatar-tip/avatar-tip-rounded.mp4`} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <figcaption class="mt-4 text-sm leading-7 text-slate-600">
+            Avatar Tip: rounded leading geometry designed for smoother guidance.
+          </figcaption>
         </figure>
-        <figure>
-          <video controls muted playsinline preload="metadata">
-            <source src={`${base}videos/avatar-tip/competitor-tip-pointed.mp4`} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          <figcaption>Competitor tip: sharper transition profile with a more pointed leading edge.</figcaption>
+
+        <figure class="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)]">
+          <div class="overflow-hidden rounded-[1.35rem] border border-slate-200 bg-slate-50/70">
+            <video class="aspect-video w-full object-contain" controls muted playsinline preload="metadata">
+              <source src={`${base}videos/avatar-tip/competitor-tip-pointed.mp4`} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <figcaption class="mt-4 text-sm leading-7 text-slate-600">
+            Sharper transition profile shown for comparison of leading-edge behaviour.
+          </figcaption>
         </figure>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="apical-control" class="apical-section" aria-labelledby="apical-title">
-      <div class="apical-copy">
-        <p class="avatar-eyebrow">Apical Behaviour</p>
-        <h2 id="apical-title">Controlled traversal through the final 2 mm.</h2>
-        <p>
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto grid max-w-7xl gap-5 px-6 py-16 sm:py-18 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:py-20">
+      <article class="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Apical Behaviour</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Controlled traversal through the final 2 mm.
+        </h2>
+        <p class="mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
           The safety story is not only how the tip looks under magnification. It is how the file behaves as it advances through a complex apical pathway.
         </p>
-      </div>
+      </article>
 
-      <figure class="apical-video">
-        <video controls muted playsinline preload="metadata">
-          <source src={`${base}videos/avatar-tip/avatar-tip-apical-control.mp4`} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <figcaption>Bi-conical block demonstration showing centered advancement through the apical segment.</figcaption>
+      <figure class="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)]">
+        <div class="overflow-hidden rounded-[1.35rem] border border-slate-200 bg-slate-50/70">
+          <video class="aspect-video w-full object-contain" controls muted playsinline preload="metadata">
+            <source src={`${base}videos/avatar-tip/avatar-tip-apical-control.mp4`} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <figcaption class="mt-4 text-sm leading-7 text-slate-600">
+          Bi-conical block demonstration showing centered advancement through the apical segment.
+        </figcaption>
       </figure>
-    </section>
+    </div>
+  </section>
 
-    <section class="benefits-section" aria-labelledby="benefits-title">
-      <div>
-        <p class="avatar-eyebrow">Clinical Benefits</p>
-        <h2 id="benefits-title">Apical control expressed in clinical terms.</h2>
+  <section class="bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
+      <div class="rounded-[2rem] bg-gradient-to-br from-slate-900 to-slate-800 px-6 py-10 text-white shadow-[0_30px_70px_-45px_rgba(15,23,42,0.45)] sm:px-8 sm:py-12">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Clinical Benefits</p>
+        <h2 class="mt-4 max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl">
+          Apical control expressed in clinical terms.
+        </h2>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+          {benefits.map((item) => (
+            <li class="rounded-[1.2rem] border border-white/10 bg-white/6 px-4 py-4 text-sm leading-7 text-slate-100">
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul>
-        {benefits.map((item) => (
-          <li>{item}</li>
-        ))}
-      </ul>
-    </section>
-
-    <section class="evidence-section" aria-labelledby="evidence-title">
-      <p class="avatar-eyebrow">Evidence Direction</p>
-      <h2 id="evidence-title">Tip design research supports the principle of controlled guidance.</h2>
-      <p>
-        Crown-down tip design literature supports the idea that smoother, biconical guidance can help maintain original canal curvature and reduce ledging compared with sharper geometries. Avatar Tip applies that principle inside the TransformX shaping system.
-      </p>
-      <div class="avatar-actions">
-        <a href={`${base}technology/transform-technology/`}>Explore Transform Technology</a>
-        <a href={`${base}products/pt-transformx/`}>View PT TransformX</a>
-      </div>
-    </section>
-  </main>
+    </div>
+  </section>
 </ProductLayout>
-
-<style>
-  .avatar-page {
-    background: #f7f9fb;
-    color: #0b1424;
-  }
-
-  .avatar-hero,
-  .split-section,
-  .media-section,
-  .apical-section,
-  .benefits-section,
-  .evidence-section {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: clamp(56px, 6vw, 96px) 48px;
-  }
-
-  .avatar-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(380px, 0.78fr);
-    gap: clamp(44px, 6vw, 84px);
-    align-items: center;
-    min-height: min(780px, calc(100vh - 82px));
-  }
-
-  .avatar-eyebrow,
-  .section-label {
-    color: #64748b;
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.34em;
-    text-transform: uppercase;
-  }
-
-  .avatar-hero h1,
-  .split-section h2,
-  .media-heading h2,
-  .apical-copy h2,
-  .benefits-section h2,
-  .evidence-section h2 {
-    margin: 0;
-    color: #090f1d;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 1.12;
-  }
-
-  .avatar-hero h1 {
-    margin-top: 28px;
-    max-width: 11ch;
-    font-size: clamp(3.1rem, 4.4vw, 5.4rem);
-    line-height: 1.02;
-  }
-
-  .avatar-hero p,
-  .split-section p,
-  .apical-copy p,
-  .evidence-section > p {
-    max-width: 780px;
-    margin: 24px 0 0;
-    color: #536478;
-    font-size: clamp(1rem, 0.95vw, 1.14rem);
-    line-height: 1.78;
-  }
-
-  .avatar-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 38px;
-  }
-
-  .avatar-actions a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 48px;
-    border: 1px solid #c8d2dc;
-    border-radius: 4px;
-    padding: 0 20px;
-    color: #0b1424;
-    font-weight: 850;
-    text-decoration: none;
-    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
-  }
-
-  .avatar-actions a:first-child {
-    border-color: #0b1424;
-    background: #0b1424;
-    color: #ffffff;
-  }
-
-  .avatar-actions a:hover,
-  .avatar-actions a:focus-visible {
-    transform: translateY(-1px);
-    border-color: #8aa5b8;
-    background: #ffffff;
-    color: #0b1424;
-  }
-
-  .avatar-visual,
-  .video-grid figure,
-  .apical-video {
-    margin: 0;
-    border-top: 1px solid #cfd9e2;
-    border-bottom: 1px solid #cfd9e2;
-    padding: 30px 0;
-  }
-
-  .avatar-visual img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  .avatar-visual figcaption,
-  .video-grid figcaption,
-  .apical-video figcaption {
-    display: grid;
-    gap: 8px;
-    margin-top: 22px;
-    color: #536478;
-    line-height: 1.65;
-  }
-
-  .avatar-visual strong {
-    color: #0b1424;
-    font-family: 'Sora', system-ui, sans-serif;
-  }
-
-  .split-section {
-    display: grid;
-    grid-template-columns: 190px minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 72px);
-    border-top: 1px solid #dbe3ea;
-    background: #ffffff;
-  }
-
-  .response-section,
-  .apical-section {
-    background: #f7f9fb;
-  }
-
-  .split-section h2,
-  .media-heading h2,
-  .apical-copy h2,
-  .benefits-section h2,
-  .evidence-section h2 {
-    max-width: 780px;
-    font-size: clamp(1.9rem, 2.45vw, 3.05rem);
-  }
-
-  .control-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0;
-    margin-top: 42px;
-    border-top: 1px solid #dbe3ea;
-  }
-
-  .control-list span {
-    border-bottom: 1px solid #dbe3ea;
-    padding: 22px 24px 22px 0;
-    color: #0b1424;
-    font-weight: 850;
-  }
-
-  .control-list span:nth-child(even) {
-    border-left: 1px solid #dbe3ea;
-    padding-left: 24px;
-  }
-
-  .media-section {
-    border-top: 1px solid #dbe3ea;
-    background: #ffffff;
-  }
-
-  .media-heading h2 {
-    margin-top: 22px;
-    max-width: 950px;
-  }
-
-  .video-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 42px;
-    margin-top: 48px;
-  }
-
-  video {
-    display: block;
-    width: 100%;
-    background: #0b1424;
-  }
-
-  .video-grid video {
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-  }
-
-  .apical-section {
-    display: grid;
-    grid-template-columns: minmax(0, 0.72fr) minmax(420px, 1fr);
-    gap: clamp(44px, 6vw, 84px);
-    align-items: start;
-    border-top: 1px solid #dbe3ea;
-  }
-
-  .apical-copy h2 {
-    margin-top: 22px;
-  }
-
-  .benefits-section {
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(420px, 0.72fr);
-    gap: clamp(44px, 6vw, 84px);
-    border-top: 1px solid #dbe3ea;
-    background: #ffffff;
-  }
-
-  .benefits-section h2 {
-    margin-top: 22px;
-  }
-
-  .benefits-section ul {
-    display: grid;
-    gap: 0;
-    align-content: start;
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid #cfd9e2;
-    list-style: none;
-  }
-
-  .benefits-section li {
-    border-bottom: 1px solid #dbe3ea;
-    padding: 22px 0;
-    color: #536478;
-    font-size: 1.04rem;
-    line-height: 1.65;
-  }
-
-  .benefits-section li::before {
-    content: '';
-    display: inline-block;
-    width: 0.42rem;
-    height: 0.42rem;
-    margin-right: 0.8rem;
-    border-radius: 999px;
-    background: #876a2b;
-    vertical-align: 0.1em;
-  }
-
-  .evidence-section {
-    border-top: 1px solid #dbe3ea;
-    background: #f7f9fb;
-  }
-
-  .evidence-section h2 {
-    max-width: 900px;
-    margin-top: 22px;
-  }
-
-  @media (max-width: 980px) {
-    .avatar-hero,
-    .split-section,
-    .apical-section,
-    .benefits-section,
-    .video-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .avatar-hero,
-    .split-section,
-    .media-section,
-    .apical-section,
-    .benefits-section,
-    .evidence-section {
-      padding-left: 28px;
-      padding-right: 28px;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .avatar-hero,
-    .split-section,
-    .media-section,
-    .apical-section,
-    .benefits-section,
-    .evidence-section {
-      padding-left: 18px;
-      padding-right: 18px;
-    }
-
-    .avatar-hero h1 {
-      font-size: clamp(3.1rem, 13vw, 5rem);
-    }
-
-    .control-list {
-      grid-template-columns: 1fr;
-    }
-
-    .control-list span:nth-child(even) {
-      border-left: 0;
-      padding-left: 0;
-    }
-  }
-</style>

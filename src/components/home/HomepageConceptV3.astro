@@ -1,343 +1,285 @@
 ---
 import logoIcon from '../../assets/endotech-logo-2.png';
-import WorkflowStrip from '../navigation/WorkflowStrip.astro';
 import transformxSystem from '../../assets/transformx-rotary-file-system.png';
 import etProduct from '../../assets/et-transformx.png';
 import ptProduct from '../../assets/pt-transformx.png';
 import acrobatProduct from '../../assets/acrobat-glide-path-files.png';
 import bcsSealer from '../../assets/bcs-sealer.png';
 import vortiflowFlow from '../../assets/vortiflow/vortiflow-fluid-dynamics-clean.png';
+import ClinicalWorkflowWheel from './ClinicalWorkflowWheel.astro';
 import { siteConfig } from '../../config/site';
-import { getWorkflowStripItems } from '../../data/workflowStrip';
+import { getFooterSections, getFooterUtilityLinks, getHomepageMobileNavItems, getPrimaryNavItems, getProductMenu } from '../../data/navigation';
 
 const base = import.meta.env.BASE_URL;
-const avatarTipVideo = `${base}videos/avatar-tip/avatar-tip-rounded.mp4`;
 
-const navItems = [
-  { label: 'Clinical Workflow', href: '#workflow' },
-  { label: 'Technology', href: `${base}technology/transform-technology/` },
-  { label: 'Order', href: `${base}order/` },
-  { label: 'Products', href: '#products' },
-  { label: 'Education', href: `${base}resources/clinical-tips/` },
-  { label: 'Evidence', href: '#evidence' },
-  { label: 'Contact', href: `${base}about/contact/` },
-];
+const navItems = getPrimaryNavItems(base);
+const productMenu = getProductMenu(base);
+const mobileNavItems = getHomepageMobileNavItems(base);
+const footerSections = getFooterSections(base);
+const footerUtilityLinks = getFooterUtilityLinks(base);
 
-const productMenu = [
-  { label: 'Product Overview', href: `${base}products/overview/` },
-  { label: 'ET TransformX Files', href: `${base}products/et-transformx/` },
-  { label: 'PT TransformX Files', href: `${base}products/pt-transformx/` },
-  { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
-  { label: 'VortiFlow Irrigation Needle', href: `${base}products/vortiflow-irrigation-needle/` },
-  { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
-];
-
-const clinicalPairs = [
+const systems = [
   {
-    problem: 'Curved canals increase restoring forces and concentrate procedural risk near working length.',
-    response: 'Avatar Tip and TransformX file behaviour support apical guidance, canal centring, and controlled advancement where tolerance for error is lowest.',
-  },
-  {
-    problem: 'Preparation shape affects irrigation exchange, obturation control, and the quality of the final seal.',
-    response: 'EndoTech links glide path, shaping, cleaning support, and bioceramic sealing as one clinical sequence, not separate product decisions.',
-  },
-  {
-    problem: 'Clinicians need more control without disrupting familiar technique or sequence logic.',
-    response: 'TransformX is positioned for predictable shaping behaviour within familiar workflows, helping clinicians adapt to demanding anatomy without unnecessary complexity.',
-  },
-];
-
-const workflow = getWorkflowStripItems(base);
-
-const products = [
-  {
-    eyebrow: 'Contact for details',
-    title: 'ET TransformX Files',
-    description: 'For clinicians already shaping with ET, EdgeX7, or other .04/.06-style sequences.',
-    tags: ['EdgeTaper', 'EdgeX7', '.04/.06'],
-    image: etProduct.src,
+    title: 'TransformX ET',
+    label: 'Rotary shaping',
+    description: 'ET-style shaping with a familiar .04/.06 sequence path.',
     href: `${base}products/et-transformx/`,
+    image: etProduct.src,
+    alt: 'ET TransformX rotary files',
   },
   {
-    eyebrow: 'Contact for details',
-    title: 'PT TransformX Files',
-    description: 'For clinicians using ProTaper-style systems who want familiar progression with more control.',
-    tags: ['ProTaper Gold', 'ProTaper Next'],
-    image: ptProduct.src,
+    title: 'TransformX PT',
+    label: 'Rotary shaping',
+    description: 'PT-style shaping with a clearer coronal-to-apical progression.',
     href: `${base}products/pt-transformx/`,
+    image: ptProduct.src,
+    alt: 'PT TransformX rotary file system',
   },
   {
-    eyebrow: 'Educational overview',
-    title: 'VortiFlow Irrigation Needle',
-    description: 'Engineered lateral-flow irrigation positioned between shaping and final sealing.',
-    tags: ['Irrigation', 'Lateral Flow', 'Helical Channel'],
-    image: vortiflowFlow.src,
+    title: 'Acrobat',
+    label: 'Glide path',
+    description: 'A rotary glide path before shaping becomes more demanding.',
+    href: `${base}products/acrobat-glide-path/`,
+    image: acrobatProduct.src,
+    alt: 'Acrobat glide path files',
+  },
+  {
+    title: 'VortiFlow',
+    label: 'Irrigation',
+    description: 'Fluid delivery after shaping and before the final seal.',
     href: `${base}products/vortiflow-irrigation-needle/`,
-  },
-  {
-    eyebrow: 'Contact for details',
-    title: 'BCS BioCeramic Materials',
-    description: 'Premixed bioceramic materials for practices building a matched shaping-to-sealing workflow.',
-    tags: ['Sealing + Repair', 'Bioceramic'],
-    image: bcsSealer.src,
-    href: `${base}products/bcs/`,
+    image: vortiflowFlow.src,
+    alt: 'VortiFlow irrigation support image',
   },
 ];
 
-const productChooserNote =
-  'Request pricing, pack configuration, and New Zealand availability directly from EndoTech.';
-
-const evidence = [
-  'Transform Technology overview',
-  'Avatar Tip and apical control',
-  'Technique sheets and part numbers',
-  'Clinical education resources',
+const evidenceLinks = [
+  {
+    label: 'Workflow documents',
+    title: 'Clinical workflow and technique files',
+    href: `${base}resources/downloads/`,
+  },
+  {
+    label: 'Technology',
+    title: 'Transform Technology and Avatar Tip',
+    href: `${base}technology/transform-technology/`,
+  },
+  {
+    label: 'Education',
+    title: 'Clinical tips and product learning',
+    href: `${base}resources/clinical-tips/`,
+  },
 ];
 ---
 
-<header class="v3-header">
-  <a class="brand" href={base} aria-label={`${siteConfig.name} home`}>
-    <img src={logoIcon.src} alt="" />
-    <span>
-      <strong>{siteConfig.name}</strong>
-      <small>Engineered endodontics</small>
-    </span>
-  </a>
+<header class="homepage-shell-header">
+  <div class="homepage-shell-header-inner">
+    <a class="homepage-brand" href={base} aria-label={`${siteConfig.name} home`}>
+      <img src={logoIcon.src} alt="" />
+      <span>
+        <strong>{siteConfig.name}</strong>
+        <small>Engineered endodontics</small>
+      </span>
+    </a>
 
-  <nav aria-label="Primary navigation">
-    {navItems.map((item) => (
-      item.label === 'Products' ? (
-        <div class="products-menu">
-          <button
-            id="homepage-products-menu-button"
-            type="button"
-            aria-haspopup="true"
-            aria-expanded="false"
-            aria-controls="homepage-products-menu-panel"
-          >
-            Products
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6 9l6 6 6-6"></path>
-            </svg>
-          </button>
-          <div class="products-menu-bridge"></div>
-          <div id="homepage-products-menu-panel" class="products-menu-panel">
-            <div class="products-menu-shell">
-              <span>Product lineup</span>
-              {productMenu.map((product) => (
-                <a href={product.href}>{product.label}</a>
-              ))}
+    <nav aria-label="Primary navigation">
+      {navItems.filter((item) => item.label !== 'Order').map((item) => (
+        item.label === 'Products' ? (
+          <div class="products-menu">
+            <button
+              id="homepage-products-menu-button"
+              type="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-controls="homepage-products-menu-panel"
+            >
+              Products
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </button>
+            <div class="products-menu-bridge"></div>
+            <div id="homepage-products-menu-panel" class="products-menu-panel">
+              <div class="products-menu-shell">
+                <span>Product lineup</span>
+                {productMenu.map((product) => (
+                  <a href={product.href}>{product.label}</a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <a href={item.href}>{item.label}</a>
-      )
-    ))}
-  </nav>
+        ) : (
+          <a href={item.href}>{item.label}</a>
+        )
+      ))}
+    </nav>
 
-  <div class="header-actions">
-    <a class="header-action" href={`${base}resources/downloads/`}>Downloads</a>
-    <button class="header-menu-toggle" id="homepage-mobile-menu-button" type="button" aria-expanded="false" aria-controls="homepage-mobile-menu">
-      Menu
-    </button>
+    <div class="homepage-header-actions">
+      <a class="homepage-header-action" href={`${base}order/`}>Order</a>
+      <a class="homepage-header-action" href={`${base}about/contact/`}>Contact</a>
+      <button class="homepage-menu-toggle" id="homepage-mobile-menu-button" type="button" aria-expanded="false" aria-controls="homepage-mobile-menu">
+        Menu
+      </button>
+    </div>
+  </div>
+
+  <div id="homepage-mobile-menu" class="homepage-mobile-menu">
+    <div class="homepage-mobile-menu-shell">
+      {mobileNavItems.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+    </div>
   </div>
 </header>
 
-<div id="homepage-mobile-menu" class="homepage-mobile-menu">
-  <div class="homepage-mobile-menu-shell">
-    <a href="#workflow">Clinical Workflow</a>
-    <a href={`${base}technology/transform-technology/`}>Technology</a>
-    <a href={`${base}order/`}>Order</a>
-    <a href={`${base}products/overview/`}>Shape Overview</a>
-    <a href={`${base}products/acrobat-glide-path/`}>Acrobat Glide Path</a>
-    <a href={`${base}products/et-transformx/`}>ET TransformX</a>
-    <a href={`${base}products/pt-transformx/`}>PT TransformX</a>
-    <a href={`${base}products/vortiflow-irrigation-needle/`}>VortiFlow</a>
-    <a href={`${base}products/bcs/`}>BCS Family</a>
-    <a href={`${base}resources/clinical-tips/`}>Education</a>
-    <a href="#evidence">Evidence</a>
-    <a href={`${base}about/contact/`}>Contact</a>
-  </div>
-</div>
-
-<main class="homepage-v3">
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <p class="eyebrow">EndoTech NZ</p>
-      <h1 id="hero-title">
-        <span class="hero-title-line hero-title-line--primary">Reduce the unexpected</span>
-        <span class="hero-title-line hero-title-line--context">in Endodontics</span>
-        <span class="hero-title-line hero-title-line--support">Products Engineered for Success</span>
+<main class="homepage-stitch-page">
+  <section class="homepage-hero" aria-labelledby="homepage-hero-title">
+    <div class="homepage-hero-copy">
+      <p class="homepage-eyebrow homepage-hero-eyebrow">EndoTech NZ Clinical Workflow</p>
+      <h1 id="homepage-hero-title" class="homepage-hero-title homepage-hero-title--pre-reveal" data-homepage-hero-title>
+        <span class="homepage-hero-line" style="--hero-line-delay: 0ms;">
+          <span class="homepage-hero-dark">Shape</span>
+          <span class="homepage-hero-light">with confidence.</span>
+        </span>
+        <span class="homepage-hero-line" style="--hero-line-delay: 70ms;">
+          <span class="homepage-hero-dark">Clean</span>
+          <span class="homepage-hero-light">with purpose.</span>
+        </span>
+        <span class="homepage-hero-line" style="--hero-line-delay: 140ms;">
+          <span class="homepage-hero-dark">Seal</span>
+          <span class="homepage-hero-light">with control.</span>
+        </span>
       </h1>
-      <p>
-        Engineered endodontic systems for controlled shaping, predictable sealing, and clinical confidence from glide path to final restoration.
-      </p>
-      <div class="hero-actions">
-        <a class="button primary" href="#workflow">Review the workflow</a>
-        <a class="button secondary" href="#technology">Explore technology</a>
-        <a class="button secondary" href="#products">View products</a>
-      </div>
-    </div>
-
-    <figure class="hero-figure">
-      <img src={transformxSystem.src} alt="TransformX rotary file system" />
-      <figcaption>
-        <strong>TransformX system</strong>
-        <span>Shaping technology positioned inside a complete clinical workflow.</span>
-      </figcaption>
-    </figure>
-  </section>
-
-  <WorkflowStrip />
-
-  <section class="statement" aria-labelledby="statement-title">
-    <p class="eyebrow">Clinical Positioning</p>
-    <h2 id="statement-title">A system-first approach to safer shaping, cleaner preparation, and more predictable sealing.</h2>
-  </section>
-
-  <section class="problem-response" aria-label="Clinical problem and EndoTech response">
-    {clinicalPairs.map((pair, index) => (
-      <article data-response-row>
-        <span>{String(index + 1).padStart(2, '0')}</span>
-        <div class="problem-copy">
-          <h3>Clinical problem</h3>
-          <p>{pair.problem}</p>
-        </div>
-        <div class="response-arrow" aria-hidden="true"></div>
-        <div class="response-copy">
-          <h3>EndoTech response</h3>
-          <p>{pair.response}</p>
-        </div>
-      </article>
-    ))}
-  </section>
-
-  <section id="workflow" class="workflow-section" aria-labelledby="workflow-title">
-    <div class="section-heading">
-      <p class="eyebrow">Workflow Architecture</p>
-      <h2 id="workflow-title">A sequence designed for control, not a loose collection of instruments.</h2>
-      <p>
-        Each stage has a defined clinical role. The homepage introduces the sequence first, then guides clinicians into the products, technique documents, and evidence that support it.
+      <p class="homepage-hero-lede">
+        EndoTech brings together glide path, shaping, irrigation and obturation into one practical clinical workflow for New Zealand endodontics.
       </p>
     </div>
 
-    <ol class="workflow-map">
-      {workflow.map((item) => (
-        <li>
-          <strong>{item.step}</strong>
-          <p>{item.note}</p>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section id="technology" class="technology-section" aria-labelledby="technology-title">
-    <div class="section-heading">
-      <p class="eyebrow">Technology</p>
-      <h2 id="technology-title">Technology is presented through the clinical risks it helps control.</h2>
-      <p>
-        Transform Technology and Avatar Tip are not presented as isolated features. They are connected directly to shaping behaviour, apical control, and predictable preparation geometry.
-      </p>
-    </div>
-
-    <div class="technology-grid">
-      <figure>
-        <video
-          data-avatar-tip-video
-          autoplay
-          loop
-          muted
-          playsinline
-          preload="auto"
-          aria-label="Avatar Tip rounded leading geometry video"
-        >
-          <source src={avatarTipVideo} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <figcaption>Avatar Tip / apical guidance</figcaption>
-      </figure>
-      <figure class="fluid-dynamics-figure">
-        <img src={vortiflowFlow.src} alt="VortiFlow irrigation flow dynamics" />
-        <figcaption>VortiFlow / micro fluid dynamics</figcaption>
-      </figure>
+    <div class="homepage-hero-actions">
+      <a class="homepage-button primary" href={`${base}products/overview/`}>Product Systems</a>
+      <a class="homepage-button secondary" href={`${base}technique/workflow/`}>Clinical Workflow</a>
     </div>
   </section>
 
-  <section id="products" class="products-section" aria-labelledby="products-title">
-    <div class="section-heading">
-      <p class="eyebrow">Products</p>
-      <h2 id="products-title">Choose your system.</h2>
+  <section class="homepage-systems-section" aria-labelledby="homepage-systems-title">
+    <div class="homepage-section-heading">
+      <p class="homepage-eyebrow">Core systems</p>
+      <h2 id="homepage-systems-title">Choose the product path that fits the case.</h2>
     </div>
 
-    <div class="product-chooser" role="list">
-      {products.map((product) => (
-        <a href={product.href} role="listitem">
+    <div class="homepage-systems-grid" role="list">
+      {systems.map((system) => (
+        <a class="homepage-system-card" href={system.href} role="listitem">
           <figure>
-            <img src={product.image} alt="" />
+            <img src={system.image} alt={system.alt} />
           </figure>
-          <div class="product-chooser-copy">
-            <div class="product-chooser-heading">
-              <h3>{product.title}</h3>
-              <span>{product.eyebrow}</span>
-            </div>
-            <p>{product.description}</p>
-            <div class="product-chooser-tags" aria-hidden="true">
-              {product.tags.map((tag) => (
-                <small>{tag}</small>
-              ))}
-            </div>
-            <strong>View details</strong>
+          <div>
+            <span>{system.label}</span>
+            <h3>{system.title}</h3>
+            <p>{system.description}</p>
           </div>
         </a>
       ))}
     </div>
-
-    <p class="product-chooser-note">{productChooserNote}</p>
   </section>
 
-  <section id="evidence" class="evidence-section" aria-labelledby="evidence-title">
-    <div>
-      <p class="eyebrow">Evidence & Education</p>
-      <h2 id="evidence-title">Evidence, education, and downloads support clinical evaluation before product selection.</h2>
+  <ClinicalWorkflowWheel base={base} />
+
+  <section class="homepage-bcs-section" aria-labelledby="homepage-bcs-title">
+    <div class="homepage-bcs-copy">
+      <p class="homepage-eyebrow">Chemical engineering</p>
+      <h2 id="homepage-bcs-title">BCS BioCeramic Sealer</h2>
+      <p class="homepage-bcs-lede">
+        EndoTech NZ extends beyond shaping. The system moves from preparation into irrigation and then into a matched bioceramic sealing pathway.
+      </p>
+      <div class="homepage-bcs-metrics">
+        <div>
+          <strong>Glide to seal</strong>
+          <span>matched workflow path</span>
+        </div>
+        <div>
+          <strong>NZ support</strong>
+          <span>local ordering and enquiry</span>
+        </div>
+      </div>
+      <div class="homepage-bcs-actions">
+        <a class="homepage-button dark" href={`${base}products/bcs/`}>Explore BCS Family</a>
+        <a class="homepage-inline-link" href={`${base}resources/downloads/`}>Open clinical files</a>
+      </div>
     </div>
 
-    <ul>
-      {evidence.map((item) => (
-        <li>
-          <span>{item}</span>
-          <a href={`${base}resources/downloads/`}>
-            <span>Open</span>
-            <span aria-hidden="true" class="evidence-link-arrow">→</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    <figure class="homepage-bcs-visual">
+      <img src={bcsSealer.src} alt="BCS BioCeramic sealer packaging" />
+    </figure>
   </section>
 
-  <section class="closing" aria-labelledby="closing-title">
-    <div>
-      <p class="eyebrow">Next Step</p>
-      <h2 id="closing-title">Review the system, then choose the product path that matches the case.</h2>
+  <section class="homepage-evidence-section" aria-labelledby="homepage-evidence-title">
+    <div class="homepage-evidence-heading">
+      <h2 id="homepage-evidence-title">Evidence and downloads</h2>
+      <p>Technical files, workflow documents, and product learning for evaluation before ordering.</p>
+    </div>
+
+    <div class="homepage-evidence-list">
+      {evidenceLinks.map((item) => (
+        <a href={item.href}>
+          <span>{item.label}</span>
+          <strong>{item.title}</strong>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="homepage-cta-section" aria-labelledby="homepage-cta-title">
+    <div class="homepage-cta-copy">
+      <h2 id="homepage-cta-title">Review the EndoTech product system.</h2>
       <p>
-        Start with the clinical workflow, review the technology, then move into product detail or contact EndoTech NZ for clinical and distribution enquiries.
+        Review the product system, then move into the shaping path, downloads, or ordering page that fits the case and clinic workflow.
       </p>
     </div>
-    <div class="closing-actions">
-      <a class="button primary" href={`${base}products/overview/`}>View product system</a>
-      <a class="button secondary" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
+    <div class="homepage-cta-actions">
+      <a class="homepage-button primary" href={`${base}order/`}>Order Products</a>
+      <a class="homepage-button secondary on-dark" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
     </div>
   </section>
 </main>
 
-<footer class="v3-footer">
-  <strong>{siteConfig.name}</strong>
-  <span>{siteConfig.organizationDescription}</span>
-  <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+<footer class="homepage-shell-footer">
+  <div class="homepage-shell-footer-shell">
+    <div class="homepage-shell-footer-brand">
+      <span class="homepage-shell-footer-kicker">EndoTech NZ</span>
+      <strong>{siteConfig.name}</strong>
+      <p>Clinical endodontic systems for New Zealand dentists.</p>
+      <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+    </div>
+
+    <div class="homepage-shell-footer-links">
+      {footerSections.map((section) => (
+        <section>
+          <h2>{section.title}</h2>
+          <nav aria-label={`${section.title} footer navigation`}>
+            {section.links.map((item) => (
+              <a href={item.href}>{item.label}</a>
+            ))}
+          </nav>
+        </section>
+      ))}
+    </div>
+  </div>
+
+  <div class="homepage-shell-footer-bottom">
+    <p>
+      Review workflow documents, product files, and local support pathways before ordering.
+    </p>
+    <nav aria-label="Footer utility navigation">
+      {footerUtilityLinks.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+    </nav>
+  </div>
 </footer>
 
 <script>
-  const productsMenu = document.querySelector('.v3-header .products-menu');
+  const productsMenu = document.querySelector('.homepage-shell-header .products-menu');
   const productsMenuButton = document.getElementById('homepage-products-menu-button');
   const mobileMenu = document.getElementById('homepage-mobile-menu');
   const mobileMenuButton = document.getElementById('homepage-mobile-menu-button');
@@ -364,9 +306,15 @@ const evidence = [
     link.addEventListener('click', () => setProductsMenu(false));
   });
 
-  mobileMenuButton?.addEventListener('click', () => {
+  mobileMenuButton?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
     setMobileMenu(!isOpen);
+  });
+
+  mobileMenu?.addEventListener('click', (event) => {
+    event.stopPropagation();
   });
 
   mobileMenu?.querySelectorAll('a').forEach((link) => {
@@ -388,139 +336,95 @@ const evidence = [
     }
   });
 
-  document.querySelectorAll('[data-response-row]').forEach((row) => {
-    let leaveTimer;
+  const homepageHeroTitle = document.querySelector('[data-homepage-hero-title]');
 
-    row.addEventListener('pointerenter', () => {
-      window.clearTimeout(leaveTimer);
-      row.classList.remove('is-arrow-leaving');
-      row.classList.add('is-arrow-active');
+  if (homepageHeroTitle) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          homepageHeroTitle.classList.remove('homepage-hero-title--pre-reveal');
+        }, 70);
+      });
     });
+  }
 
-    row.addEventListener('pointerleave', () => {
-      row.classList.remove('is-arrow-active');
-      row.classList.add('is-arrow-leaving');
-
-      leaveTimer = window.setTimeout(() => {
-        row.classList.remove('is-arrow-leaving');
-      }, 360);
-    });
-  });
-
-  document.querySelectorAll('[data-avatar-tip-video]').forEach((element) => {
-    if (!(element instanceof HTMLVideoElement)) return;
-
-    const setSlowLoop = () => {
-      element.defaultPlaybackRate = 0.5;
-      element.playbackRate = 0.5;
-    };
-
-    setSlowLoop();
-    element.addEventListener('loadedmetadata', setSlowLoop);
-    element.addEventListener(
-      'canplay',
-      () => {
-        element.play().catch(() => {});
-      },
-      { once: true }
-    );
-  });
 </script>
 
 <style>
-  :global(html) {
-    scroll-padding-top: 96px;
-  }
-
   :global(body.landing-page) {
-    background: #f7f9fb;
-    color: #101827;
+    background: #ffffff;
+    color: #181c20;
   }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  .v3-header,
-  .hero,
-  .statement,
-  .problem-response,
-  .workflow-section,
-  .technology-section,
-  .products-section,
-  .evidence-section,
-  .closing,
-  .v3-footer {
-    padding-left: 56px;
-    padding-right: 56px;
-  }
-
-  .v3-header {
+  .homepage-shell-header {
     position: sticky;
     top: 0;
-    z-index: 50;
+    z-index: 70;
+    border-bottom: 1px solid #e3e8ee;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+  }
+
+  .homepage-shell-header-inner {
     display: grid;
     grid-template-columns: minmax(210px, auto) 1fr auto;
     gap: 28px;
     align-items: center;
-    min-height: 82px;
-    border-bottom: 1px solid #dbe3ea;
-    background: rgba(247, 249, 251, 0.94);
-    backdrop-filter: blur(14px);
+    min-height: 72px;
+    padding: 0 56px;
+    max-width: 1280px;
+    margin: 0 auto;
   }
 
-  .brand {
+  .homepage-brand {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    color: inherit;
+    text-decoration: none;
   }
 
-  .brand img {
-    width: 42px;
+  .homepage-brand img {
+    width: 34px;
   }
 
-  .brand span {
+  .homepage-brand span {
     display: grid;
-    gap: 3px;
+    gap: 2px;
     line-height: 1;
   }
 
-  .brand strong,
-  .v3-footer strong {
+  .homepage-brand strong,
+  .homepage-shell-footer strong {
     color: #0b1424;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
-  .brand small {
-    color: #64748b;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
+  .homepage-brand small {
+    color: #707881;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
-  .v3-header nav {
+  .homepage-shell-header nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
-    color: #334155;
-    font-size: 0.9rem;
-    font-weight: 700;
+    gap: 24px;
+    color: #404750;
+    font-size: 0.82rem;
+    font-weight: 500;
   }
 
-  .v3-header nav a,
-  .products-menu button {
+  .homepage-shell-header nav a,
+  .products-menu button,
+  .homepage-header-action,
+  .homepage-menu-toggle {
     color: inherit;
     text-decoration: none;
   }
@@ -582,29 +486,29 @@ const evidence = [
   .products-menu-shell {
     display: grid;
     gap: 2px;
-    border: 1px solid #d8e1e8;
-    border-radius: 6px;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
     padding: 12px;
     background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 24px 55px -34px rgba(15, 23, 42, 0.34);
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08);
     backdrop-filter: blur(16px);
   }
 
   .products-menu-shell span {
     padding: 6px 8px 8px;
-    color: #876a2b;
+    color: #707881;
     font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.18em;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
   .products-menu-shell a {
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 10px 8px;
     color: #344357;
-    font-size: 0.86rem;
-    font-weight: 700;
+    font-size: 0.84rem;
+    font-weight: 500;
     transition:
       background 160ms ease,
       color 160ms ease,
@@ -632,43 +536,55 @@ const evidence = [
     transform: translateY(1px);
   }
 
-  .header-action,
-  .header-menu-toggle,
-  .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    font-weight: 800;
-  }
-
-  .header-action {
-    padding: 0 18px;
-    border: 1px solid #c8d2dc;
-    color: #0b1424;
-  }
-
-  .header-actions {
+  .homepage-header-actions {
     display: inline-flex;
     align-items: center;
     gap: 10px;
   }
 
-  .header-menu-toggle {
-    display: none;
-    border: 1px solid #c8d2dc;
+  .homepage-header-action,
+  .homepage-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    border: 1px solid #c0c7d2;
+    border-radius: 8px;
     padding: 0 16px;
+    color: #102033;
+    font-size: 0.82rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition:
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .homepage-header-action:hover,
+  .homepage-header-action:focus-visible,
+  .homepage-menu-toggle:hover,
+  .homepage-menu-toggle:focus-visible {
+    background: #f8fbfd;
+    border-color: #aeb8c5;
+    box-shadow:
+      0 10px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
+    transform: translateY(-1px);
+  }
+
+  .homepage-menu-toggle {
+    display: none;
     background: #ffffff;
-    color: #0b1424;
     cursor: pointer;
   }
 
   .homepage-mobile-menu {
     display: none;
-    border-bottom: 1px solid #dbe3ea;
-    background: rgba(247, 249, 251, 0.98);
+    border-top: 1px solid #e3e8ee;
+    background: rgba(255, 255, 255, 0.98);
   }
 
   .homepage-mobile-menu-shell {
@@ -678,770 +594,640 @@ const evidence = [
   }
 
   .homepage-mobile-menu-shell a {
-    border: 1px solid #dbe3ea;
-    border-radius: 6px;
+    border: 1px solid #e3e8ee;
+    border-radius: 10px;
     padding: 12px 14px;
     color: #0b1424;
-    font-size: 0.92rem;
-    font-weight: 700;
+    font-size: 0.88rem;
+    font-weight: 600;
     text-decoration: none;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(248, 250, 252, 0.92);
   }
 
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.92fr) minmax(420px, 0.86fr);
-    gap: 76px;
-    align-items: center;
-    min-height: 720px;
-    padding-top: 72px;
-    padding-bottom: 84px;
-    background:
-      linear-gradient(90deg, #f7f9fb 0%, #f7f9fb 54%, #e3ebf1 54%, #e3ebf1 100%);
-  }
-
-  .eyebrow {
-    margin: 0 0 18px;
-    color: #876a2b;
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  h1,
-  h2,
-  h3,
-  p {
-    margin-top: 0;
-  }
-
-  h1 {
-    display: grid;
-    gap: 8px;
-    max-width: 760px;
-    margin-bottom: 26px;
-    color: #0b1424;
-    font-size: 4.8rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 0.94;
-    text-wrap: balance;
-  }
-
-  .hero-title-line {
-    display: block;
-  }
-
-  .hero-title-line--primary {
-    max-width: 12ch;
-  }
-
-  .hero-title-line--context {
-    color: #24384f;
-    font-size: 0.54em;
-    font-weight: 650;
-    line-height: 1.08;
-  }
-
-  .hero-title-line--support {
-    width: fit-content;
-    margin-top: 12px;
-    border-top: 1px solid #b8c4cf;
-    padding-top: 16px;
-    color: #41556c;
-    font-size: 0.32em;
-    font-weight: 700;
-    line-height: 1.16;
-  }
-
-  h2 {
-    color: #0b1424;
-    font-size: 3.35rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 1.08;
-  }
-
-  h3 {
-    color: #0b1424;
-    font-size: 1.22rem;
-    line-height: 1.26;
-  }
-
-  .hero-copy p,
-  .section-heading p,
-  .closing p {
-    max-width: 700px;
-    color: #4b5c70;
-    font-size: 1.14rem;
-    line-height: 1.76;
-  }
-
-  .hero-actions,
-  .closing-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 34px;
-  }
-
-  .button {
-    padding: 0 24px;
-  }
-
-  .button.primary {
-    background: #0b1424;
-    color: #ffffff;
-  }
-
-  .button.secondary {
-    border: 1px solid #b8c4cf;
-    color: #0b1424;
-  }
-
-  .hero-figure {
-    margin: 0;
-    border-top: 1px solid #b8c4cf;
-    border-bottom: 1px solid #b8c4cf;
-    padding: 42px 0 30px;
-  }
-
-  .hero-figure img {
-    width: 100%;
-    max-height: 430px;
-    object-fit: contain;
-    filter: drop-shadow(0 26px 28px rgba(15, 23, 42, 0.14));
-  }
-
-  figcaption {
-    display: grid;
-    gap: 5px;
-    margin-top: 22px;
-    color: #536478;
-    line-height: 1.55;
-  }
-
-  figcaption strong {
-    color: #0b1424;
-    font-family: 'Sora', system-ui, sans-serif;
-  }
-
-  .statement {
-    max-width: none;
-    padding-top: 94px;
-    padding-bottom: 98px;
+  .homepage-stitch-page {
     background: #ffffff;
+    color: #181c20;
   }
 
-  .workflow-strip {
-    padding: 52px 56px 0;
-    background:
-      linear-gradient(180deg, #ffffff 0%, #f3f6f9 100%);
+  .homepage-hero,
+  .homepage-systems-section,
+  .homepage-bcs-section,
+  .homepage-evidence-section,
+  .homepage-cta-section,
+  .homepage-shell-footer {
+    padding-left: 56px;
+    padding-right: 56px;
   }
 
-  .workflow-strip-shell {
-    max-width: 1260px;
-    margin: 0 auto;
-    border: 1px solid #dbe3ea;
-    background: rgba(247, 248, 250, 0.92);
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.85) inset,
-      0 18px 38px -34px rgba(15, 23, 42, 0.18);
-  }
-
-  .workflow-strip-grid {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    align-items: stretch;
-    gap: 8px;
-    padding: 8px;
-    background: transparent;
-  }
-
-  .workflow-strip-card {
-    display: grid;
-    justify-items: center;
-    align-content: start;
-    gap: 8px;
-    min-height: 164px;
-    padding: 18px 12px 16px;
-    border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.62);
-    color: inherit;
-    text-align: center;
-    text-decoration: none;
-    transition:
-      background-color 210ms ease,
-      transform 210ms ease,
-      box-shadow 210ms ease,
-      color 190ms ease,
-      border-color 210ms ease;
-  }
-
-  .workflow-strip-card:hover,
-  .workflow-strip-card:focus-visible {
-    border-color: #d4dce5;
-    background: #f4f7fa;
-    transform: translateY(-2px);
-    box-shadow:
-      inset 0 0 0 1px #d7dee7,
-      0 12px 22px -20px rgba(15, 23, 42, 0.22);
-  }
-
-  .workflow-strip-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    color: #334155;
-    transition: color 190ms ease, transform 210ms ease;
-  }
-
-  .workflow-strip-icon svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .workflow-strip-icon circle,
-  .workflow-strip-icon path {
-    stroke: currentColor;
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .workflow-strip-card strong {
-    color: #1f2937;
-    font-size: 1.1rem;
-    font-weight: 500;
-    line-height: 1.06;
-    transition: color 190ms ease;
-  }
-
-  .workflow-strip-card span:last-child {
-    max-width: 16ch;
-    color: #6b7280;
-    font-size: 0.84rem;
-    line-height: 1.34;
-    text-wrap: balance;
-    transition: color 190ms ease;
-  }
-
-  .workflow-strip-card:hover .workflow-strip-icon,
-  .workflow-strip-card:focus-visible .workflow-strip-icon {
-    color: #1f3b57;
-    transform: translateY(-1px);
-  }
-
-  .workflow-strip-card:hover strong,
-  .workflow-strip-card:focus-visible strong {
-    color: #0f172a;
-  }
-
-  .workflow-strip-card:hover span:last-child,
-  .workflow-strip-card:focus-visible span:last-child {
-    color: #596474;
-  }
-
-  .statement h2 {
-    max-width: 1100px;
-  }
-
-  .problem-response {
-    border-top: 1px solid #dbe3ea;
-    border-bottom: 1px solid #dbe3ea;
-    background: #ffffff;
-  }
-
-  .problem-response article {
-    display: grid;
-    grid-template-columns: 80px minmax(320px, 0.8fr) 220px minmax(0, 1.2fr);
-    grid-template-areas: 'number problem arrow response';
-    gap: 24px;
-    align-items: center;
-    padding: 34px 0;
-    border-bottom: 1px solid #dbe3ea;
-  }
-
-  .problem-response article:last-child {
-    border-bottom: 0;
-  }
-
-  .problem-response article > span {
-    grid-area: number;
-    align-self: start;
-  }
-
-  .problem-copy {
-    grid-area: problem;
-  }
-
-  .response-copy {
-    grid-area: response;
-  }
-
-  .problem-response span {
-    color: #876a2b;
-    font-size: 0.75rem;
-    font-weight: 800;
+  .homepage-eyebrow {
+    margin: 0 0 14px;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
-  .problem-response p,
-  .workflow-map p,
-  .v3-footer span {
-    color: #536478;
-    line-height: 1.68;
-  }
-
-  .response-arrow {
-    grid-area: arrow;
-    position: relative;
-    align-self: center;
-    height: 18px;
-    margin-top: -2px;
-    opacity: 0;
-    transition: opacity 180ms ease;
-  }
-
-  .response-arrow::before,
-  .response-arrow::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0;
-    background: #0f5878;
-  }
-
-  .response-arrow::before {
-    left: 0;
-    height: 1px;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .response-arrow::after {
-    width: 8px;
-    height: 8px;
-    border-top: 1px solid #0f5878;
-    border-right: 1px solid #0f5878;
-    background: transparent;
-    transform: translate(0, -50%) rotate(45deg) scale(1);
-    transform-origin: center;
-    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .problem-response article.is-arrow-active .response-arrow,
-  .problem-response article.is-arrow-leaving .response-arrow,
-  .problem-response article:focus-within .response-arrow {
-    opacity: 1;
-  }
-
-  .problem-response article.is-arrow-active .response-arrow::before,
-  .problem-response article.is-arrow-leaving .response-arrow::before,
-  .problem-response article:focus-within .response-arrow::before {
-    animation: response-line-draw 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  .problem-response article.is-arrow-active .response-arrow::after,
-  .problem-response article:focus-within .response-arrow::after {
-    animation: response-arrow-travel 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  .problem-response article.is-arrow-leaving .response-arrow {
-    animation: response-arrow-fade 360ms ease forwards;
-  }
-
-  .problem-response article.is-arrow-leaving .response-arrow::after {
-    transform: translate(0, -50%) rotate(45deg) scale(1);
-  }
-
-  @keyframes response-line-draw {
-    to {
-      transform: scaleX(1);
-    }
-  }
-
-  @keyframes response-arrow-travel {
-    0% {
-      transform: translate(-204px, -50%) rotate(45deg) scale(1);
-    }
-
-    90% {
-      transform: translate(0, -50%) rotate(45deg) scale(1);
-    }
-
-    to {
-      transform: translate(0, -50%) rotate(45deg) scale(1.5);
-    }
-  }
-
-  @keyframes response-arrow-fade {
-    0%,
-    58% {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-
-  .workflow-section,
-  .technology-section,
-  .products-section,
-  .evidence-section {
-    padding-top: 104px;
-    padding-bottom: 112px;
-  }
-
-  .workflow-section,
-  .products-section {
-    background: #f7f9fb;
-  }
-
-  .technology-section,
-  .evidence-section {
-    background: #ffffff;
-  }
-
-  .section-heading {
-    max-width: 930px;
-    margin-bottom: 56px;
-  }
-
-  .workflow-map {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(132px, 1fr));
-    border-top: 1px solid #c8d2dc;
-    border-bottom: 1px solid #c8d2dc;
-    overflow-x: auto;
-  }
-
-  .workflow-map li {
-    min-height: 220px;
-    padding: 28px 22px;
-    border-right: 1px solid #c8d2dc;
-    background: #ffffff;
-  }
-
-  .workflow-map li:last-child {
-    border-right: 0;
-  }
-
-  .workflow-map strong {
-    display: block;
-    margin-bottom: 42px;
-    color: #0f5878;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1.08rem;
-  }
-
-  .technology-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
-    gap: 44px;
-  }
-
-  .technology-grid figure {
+  .homepage-hero h1,
+  .homepage-section-heading h2,
+  .homepage-system-card h3,
+  .homepage-bcs-copy h2,
+  .homepage-evidence-heading h2,
+  .homepage-cta-copy h2 {
     margin: 0;
-    border-top: 1px solid #c8d2dc;
-    padding-top: 28px;
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
   }
 
-  .technology-grid img,
-  .technology-grid video {
-    width: 100%;
-    height: 360px;
-    object-fit: contain;
-    background: #f7f9fb;
+  .homepage-hero {
+    display: grid;
+    justify-items: center;
+    padding-top: 88px;
+    padding-bottom: 94px;
+    text-align: center;
+    background: #ffffff;
   }
 
-  .technology-grid video {
-    display: block;
+  .homepage-hero-copy {
+    max-width: 980px;
   }
 
-  .fluid-dynamics-figure img {
-    height: 360px;
-    object-fit: contain;
-    object-position: center;
+  .homepage-hero-eyebrow {
+    margin-bottom: 22px;
+    color: #a1a8b3;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
   }
 
-  .products-section .section-heading {
-    max-width: none;
-    margin-bottom: 52px;
+  .homepage-hero-title {
+    display: grid;
+    gap: 2px;
+    justify-items: center;
+    margin: 0;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: clamp(3.4rem, 7vw, 6.5rem);
+    font-weight: 750;
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transform-origin: center center;
+    transition:
+      opacity 1180ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .homepage-hero-line {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.14em;
+    white-space: nowrap;
+  }
+
+  .homepage-hero-title--pre-reveal {
+    opacity: 0.74;
+    transform: translateY(4px) scale(0.975);
+  }
+
+  .homepage-hero-dark {
+    color: #15171a;
+  }
+
+  .homepage-hero-light {
+    color: #d1d5db;
+  }
+
+  .homepage-hero-lede,
+  .homepage-section-heading p,
+  .homepage-system-card p,
+  .homepage-bcs-copy p,
+  .homepage-evidence-heading p,
+  .homepage-evidence-list span,
+  .homepage-cta-copy p,
+  .homepage-shell-footer span {
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    line-height: 1.65;
+  }
+
+  .homepage-hero-lede {
+    max-width: 38rem;
+    margin: 34px auto 0;
+    color: #7a8190;
+    font-size: 1rem;
+    line-height: 1.62;
+  }
+
+  .homepage-hero-actions,
+  .homepage-cta-actions,
+  .homepage-bcs-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .homepage-hero-actions,
+  .homepage-cta-actions {
+    justify-content: center;
+  }
+
+  .homepage-hero-actions {
+    margin-top: 34px;
+  }
+
+  .homepage-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border-radius: 6px;
+    padding: 0 18px;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition:
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 180ms ease,
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .homepage-button:hover,
+  .homepage-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow:
+      0 12px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
+  }
+
+  .homepage-button.primary {
+    background: #005c92;
+    border: 1px solid #005c92;
+    color: #ffffff;
+  }
+
+  .homepage-button.primary:hover,
+  .homepage-button.primary:focus-visible {
+    background: #0a6ca8;
+    border-color: #0a6ca8;
+    color: #ffffff;
+  }
+
+  .homepage-button.secondary {
+    background: #ffffff;
+    border: 1px solid #c0c7d2;
+    color: #404750;
+  }
+
+  .homepage-button.secondary:hover,
+  .homepage-button.secondary:focus-visible {
+    background: #f8fbfd;
+    border-color: #aeb8c5;
+    color: #1f2937;
+  }
+
+  .homepage-button.dark {
+    background: linear-gradient(180deg, #242b31 0%, #181c20 100%);
+    border: 1px solid #171b1f;
+    color: #ffffff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 1px 2px rgba(15, 23, 42, 0.06),
+      0 8px 18px rgba(15, 23, 42, 0.08);
+  }
+
+  .homepage-button.dark:hover,
+  .homepage-button.dark:focus-visible {
+    background: linear-gradient(180deg, #2a3239 0%, #1b2026 100%);
+    border-color: #171b1f;
+    color: #ffffff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 14px 28px rgba(15, 23, 42, 0.12),
+      0 3px 8px rgba(15, 23, 42, 0.08);
+  }
+
+  .homepage-button.on-dark,
+  .homepage-button.secondary.on-dark {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+  }
+
+  .homepage-button.on-dark:hover,
+  .homepage-button.on-dark:focus-visible,
+  .homepage-button.secondary.on-dark:hover,
+  .homepage-button.secondary.on-dark:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.42);
+    color: #ffffff;
+  }
+
+  .homepage-systems-section,
+  .homepage-bcs-section,
+  .homepage-evidence-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    border-top: 1px solid #e3e8ee;
+  }
+
+  .homepage-cta-section {
+    padding-top: 92px;
+    padding-bottom: 96px;
+    background: #102033;
     text-align: center;
   }
 
-  .products-section .section-heading .eyebrow {
-    margin-bottom: 18px;
-    color: #4d96c7;
+  .homepage-section-heading,
+  .homepage-evidence-heading {
+    max-width: 860px;
+    margin: 0 auto 40px;
+    text-align: center;
   }
 
-  .products-section .section-heading h2 {
-    max-width: none;
-    font-size: clamp(3rem, 4.4vw, 4.55rem);
-    line-height: 1.04;
+  .homepage-section-heading h2,
+  .homepage-bcs-copy h2,
+  .homepage-evidence-heading h2,
+  .homepage-cta-copy h2 {
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    line-height: 1.05;
   }
 
-  .product-chooser {
+  .homepage-systems-grid,
+  .homepage-bcs-section,
+  .homepage-evidence-list {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .homepage-systems-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 18px;
   }
 
-  .product-chooser > a {
+  .homepage-system-card {
     display: grid;
+    gap: 20px;
     align-content: start;
-    gap: 22px;
     min-height: 100%;
-    border: 1px solid #dde6ed;
-    border-radius: 26px;
-    background: #ffffff;
-    padding: 22px 22px 24px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 20px;
     color: inherit;
     text-decoration: none;
-    box-shadow: 0 22px 48px -46px rgba(15, 23, 42, 0.22);
-    transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 55, 112, 0.06);
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
   }
 
-  .product-chooser > a:hover,
-  .product-chooser > a:focus-visible {
-    transform: translateY(-2px);
-    border-color: #d0dbe4;
-    box-shadow: 0 28px 54px -46px rgba(15, 23, 42, 0.28);
+  .homepage-system-card:hover,
+  .homepage-system-card:focus-visible {
+    transform: translateY(-1px);
+    border-color: #c0c7d2;
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08);
   }
 
-  .product-chooser figure {
+  .homepage-system-card figure {
     display: grid;
     place-items: center;
-    min-height: 210px;
+    min-height: 196px;
     margin: 0;
-    border-radius: 22px;
-    background: linear-gradient(180deg, #f0fbfd 0%, #f7fcfe 100%);
-    padding: 24px;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f4f6fb;
   }
 
-  .product-chooser > a:nth-child(4) figure {
-    background: linear-gradient(180deg, #fff8df 0%, #fffdf2 100%);
-  }
-
-  .product-chooser img {
+  .homepage-system-card img {
     width: 100%;
-    max-height: 142px;
+    max-height: 152px;
     object-fit: contain;
   }
 
-  .product-chooser-copy {
+  .homepage-system-card span {
+    display: block;
+    margin-bottom: 12px;
+    color: #707881;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .homepage-system-card h3 {
+    font-size: 1.18rem;
+    line-height: 1.14;
+  }
+
+  .homepage-system-card p {
+    margin: 14px 0 0;
+    font-size: 0.92rem;
+  }
+
+  .homepage-bcs-section {
     display: grid;
-    align-content: start;
-    gap: 18px;
-  }
-
-  .product-chooser-heading {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 14px;
-    align-items: start;
-  }
-
-  .product-chooser-heading h3 {
-    margin: 0;
-    max-width: 8ch;
-    color: #0b1424;
-    font-size: 1.32rem;
-    line-height: 1.24;
-  }
-
-  .product-chooser-heading span {
-    max-width: 7ch;
-    color: #4d96c7;
-    font-size: 0.88rem;
-    line-height: 1.42;
-    text-align: right;
-  }
-
-  .product-chooser-copy p {
-    margin: 0;
-    color: #536478;
-    font-size: 0.98rem;
-    line-height: 1.82;
-  }
-
-  .product-chooser-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 2px;
-  }
-
-  .product-chooser-tags small {
-    display: inline-flex;
-    align-items: center;
-    min-height: 32px;
-    border-radius: 999px;
-    background: #eef2f7;
-    padding: 0 12px;
-    color: #617286;
-    font-size: 0.82rem;
-    font-weight: 700;
-  }
-
-  .product-chooser > a:nth-child(4) .product-chooser-tags small:first-child {
-    background: #ffe8a1;
-    color: #a36a00;
-  }
-
-  .product-chooser-copy strong {
-    margin-top: 4px;
-    color: #4d96c7;
-    font-size: 0.98rem;
-    font-weight: 700;
-  }
-
-  .product-chooser-note {
-    max-width: none;
-    margin: 42px 0 0;
-    color: #5c6f82;
-    text-align: center;
-  }
-
-  .evidence-section {
-    display: grid;
-    grid-template-columns: minmax(0, 0.88fr) minmax(360px, 0.9fr);
-    gap: 72px;
-  }
-
-  .evidence-section ul {
-    border-top: 1px solid #c8d2dc;
-  }
-
-  .evidence-section li {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 24px 0;
-    border-bottom: 1px solid #c8d2dc;
-  }
-
-  .evidence-section li span {
-    color: #0b1424;
-    font-weight: 800;
-  }
-
-  .evidence-section li a {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #0b6f98;
-    font-weight: 800;
-    text-decoration: none;
-    transition: color 180ms ease, gap 180ms ease;
-  }
-
-  .evidence-link-arrow {
-    transition: transform 180ms ease;
-  }
-
-  .evidence-section li a:hover,
-  .evidence-section li a:focus-visible {
-    gap: 10px;
-  }
-
-  .evidence-section li a:hover .evidence-link-arrow,
-  .evidence-section li a:focus-visible .evidence-link-arrow {
-    transform: translateX(2px);
-  }
-
-  .closing {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) auto;
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
     gap: 48px;
     align-items: center;
-    padding-top: 88px;
-    padding-bottom: 92px;
-    background: #0b1424;
   }
 
-  .closing h2 {
-    max-width: 900px;
-    color: #ffffff;
-  }
-
-  .closing p {
-    color: #cbd7e3;
-  }
-
-  .closing .button.primary {
-    background: #ffffff;
-    color: #0b1424;
-  }
-
-  .closing .button.secondary {
-    border-color: rgba(255, 255, 255, 0.28);
-    color: #ffffff;
-  }
-
-  .v3-footer {
+  .homepage-bcs-visual {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 28px;
-    align-items: start;
-    padding-top: 34px;
-    padding-bottom: 34px;
-    border-top: 1px solid #dbe3ea;
+    place-items: center;
+    min-height: 320px;
+    padding: 30px;
+    border-radius: 8px;
+    background: #f4f6fb;
+  }
+
+  .homepage-bcs-visual img {
+    width: 100%;
+    max-height: 340px;
+    object-fit: contain;
+  }
+
+  .homepage-bcs-lede {
+    max-width: 44ch;
+    margin: 16px 0 0;
+    font-size: 1rem;
+  }
+
+  .homepage-bcs-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 460px;
+    margin: 28px 0 24px;
+  }
+
+  .homepage-bcs-metrics div {
+    border-left: 3px solid #006a6a;
+    padding-left: 14px;
+  }
+
+  .homepage-bcs-metrics strong {
+    display: block;
+    color: #006a6a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .homepage-bcs-metrics span {
+    display: block;
+    margin-top: 6px;
+    color: #707881;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .homepage-inline-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border: 1px solid #bfd3e0;
+    border-radius: 999px;
+    padding: 0 18px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f8fc 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      0 1px 2px rgba(15, 23, 42, 0.04);
+    color: #005c92;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 180ms ease,
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .homepage-inline-link:hover,
+  .homepage-inline-link:focus-visible {
+    transform: translateY(-1px);
+    border-color: #a9c2d3;
+    background: linear-gradient(180deg, #ffffff 0%, #eef6fb 100%);
+    color: #064b78;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.96),
+      0 12px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
+  }
+
+  .homepage-evidence-list {
+    display: grid;
+    gap: 16px;
+    max-width: 980px;
+  }
+
+  .homepage-evidence-list a {
+    display: grid;
+    gap: 8px;
+    padding: 20px 22px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
     background: #ffffff;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
   }
 
-  .v3-footer a {
-    color: #475569;
+  .homepage-evidence-list a:hover,
+  .homepage-evidence-list a:focus-visible {
+    transform: translateY(-1px);
+    border-color: #c0c7d2;
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08);
+  }
+
+  .homepage-evidence-list strong {
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .homepage-evidence-list span {
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .homepage-cta-copy {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .homepage-cta-copy h2,
+  .homepage-cta-copy p {
+    color: #ffffff;
+  }
+
+  .homepage-cta-copy p {
+    max-width: 560px;
+    margin: 18px auto 0;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .homepage-cta-actions {
+    margin-top: 30px;
+  }
+
+  .homepage-shell-footer {
+    padding-top: 40px;
+    padding-bottom: 46px;
+    border-top: 1px solid #e3e8ee;
+    background: #fbfcfe;
+  }
+
+  .homepage-shell-footer-shell {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.95fr) minmax(0, 2.05fr);
+    gap: 44px;
+    padding-bottom: 28px;
+  }
+
+  .homepage-shell-footer-brand {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+
+  .homepage-shell-footer-kicker {
+    color: #7b8794;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.68rem;
     font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
 
-  @media (min-width: 1320px) {
-    h1 {
-      font-size: 5.6rem;
-    }
+  .homepage-shell-footer-brand p,
+  .homepage-shell-footer-bottom p {
+    margin: 0;
+    color: #5f6b78;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    line-height: 1.7;
+  }
 
-    .hero-title-line--support {
-      font-size: 0.3em;
-    }
+  .homepage-shell-footer-brand p {
+    max-width: 34ch;
+    font-size: 0.88rem;
+  }
 
-    h2 {
-      font-size: 3.8rem;
-    }
+  .homepage-shell-footer-brand a,
+  .homepage-shell-footer-bottom a,
+  .homepage-shell-footer-links nav a {
+    color: #25364a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    text-decoration: none;
+  }
+
+  .homepage-shell-footer-brand a,
+  .homepage-shell-footer-bottom a {
+    font-size: 0.83rem;
+    font-weight: 500;
+  }
+
+  .homepage-shell-footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .homepage-shell-footer-links section {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+
+  .homepage-shell-footer-links h2 {
+    margin: 0;
+    color: #7b8794;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .homepage-shell-footer-links nav {
+    display: grid;
+    gap: 8px;
+  }
+
+  .homepage-shell-footer-links nav a {
+    font-size: 0.84rem;
+    font-weight: 450;
+    line-height: 1.5;
+  }
+
+  .homepage-shell-footer-bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid #e3e8ee;
+  }
+
+  .homepage-shell-footer-bottom p {
+    max-width: 78ch;
+    font-size: 0.79rem;
+  }
+
+  .homepage-shell-footer-bottom nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    row-gap: 10px;
   }
 
   @media (max-width: 1120px) {
-    .v3-header,
-    .hero,
-    .workflow-strip,
-    .statement,
-    .problem-response,
-    .workflow-section,
-    .technology-section,
-    .products-section,
-    .evidence-section,
-    .closing,
-    .v3-footer {
+    .homepage-shell-header-inner,
+    .homepage-hero,
+    .homepage-systems-section,
+    .homepage-bcs-section,
+    .homepage-evidence-section,
+    .homepage-cta-section,
+    .homepage-shell-footer {
       padding-left: 30px;
       padding-right: 30px;
     }
 
-    .v3-header {
+    .homepage-shell-header-inner {
       grid-template-columns: auto auto;
     }
 
-    .v3-header nav {
+    .homepage-shell-header nav {
       display: none;
     }
 
-    .header-menu-toggle {
+    .homepage-menu-toggle {
       display: inline-flex;
     }
 
@@ -1449,221 +1235,113 @@ const evidence = [
       display: block;
     }
 
-    .hero,
-    .evidence-section,
-    .closing {
-      grid-template-columns: 1fr;
-    }
-
-    .hero {
-      background: #f7f9fb;
-    }
-
-    .workflow-strip {
-      padding-top: 40px;
-    }
-
-    .workflow-strip-shell {
-      max-width: 100%;
-    }
-
-    .workflow-strip-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    h1 {
-      max-width: 680px;
-      font-size: 4rem;
-    }
-
-    .hero-title-line--primary {
-      max-width: 12ch;
-    }
-
-    .problem-response article {
-      grid-template-areas:
-        'number'
-        'problem'
-        'response';
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .response-arrow {
-      display: none;
-    }
-
-    .technology-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .product-chooser {
+    .homepage-systems-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .homepage-bcs-section {
+      grid-template-columns: 1fr;
+    }
+
+    .homepage-shell-footer-shell,
+    .homepage-shell-footer-links,
+    .homepage-shell-footer-bottom {
+      grid-template-columns: 1fr;
     }
   }
 
   @media (max-width: 720px) {
-    .v3-header,
-    .hero,
-    .workflow-strip,
-    .statement,
-    .problem-response,
-    .workflow-section,
-    .technology-section,
-    .products-section,
-    .evidence-section,
-    .closing,
-    .v3-footer {
+    .homepage-hero h1 {
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    .homepage-shell-header-inner,
+    .homepage-hero,
+    .homepage-systems-section,
+    .homepage-bcs-section,
+    .homepage-evidence-section,
+    .homepage-cta-section,
+    .homepage-shell-footer {
       padding-left: 18px;
       padding-right: 18px;
     }
 
-    .v3-header {
+    .homepage-shell-header-inner {
       min-height: 70px;
     }
 
-    .brand small {
+    .homepage-brand small {
       display: none;
     }
 
-    .header-action,
-    .header-menu-toggle {
+    .homepage-header-action,
+    .homepage-menu-toggle {
       padding: 0 12px;
       font-size: 0.8rem;
     }
 
-    .workflow-strip {
-      padding-top: 28px;
+    .homepage-hero {
+      padding-top: 52px;
+      padding-bottom: 68px;
     }
 
-    .workflow-strip-shell {
-      box-shadow: none;
+    .homepage-hero-eyebrow {
+      margin-bottom: 18px;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
     }
 
-    .workflow-strip-grid {
-      grid-template-columns: 1fr;
-      gap: 6px;
-      padding: 6px;
+    .homepage-hero-title {
+      font-size: clamp(2.65rem, 12vw, 4.7rem);
+      line-height: 1;
     }
 
-    .workflow-strip-card {
-      min-height: 0;
-      justify-items: start;
-      gap: 6px;
-      padding: 16px 14px;
-      text-align: left;
-      transform: none;
+    .homepage-hero-line {
+      gap: 0.1em;
+      white-space: normal;
+      flex-wrap: wrap;
     }
 
-    .workflow-strip-card span:last-child {
-      max-width: 100%;
-      text-wrap: initial;
+    .homepage-hero-lede {
+      max-width: 32rem;
+      margin-top: 28px;
+      font-size: 0.98rem;
     }
 
-    h1 {
-      gap: 7px;
-      max-width: 11.1ch;
-      font-size: 2.92rem;
-      line-height: 0.98;
-    }
-
-    .hero {
-      min-height: auto;
-      gap: 32px;
-      padding-top: 40px;
-      padding-bottom: 56px;
-    }
-
-    .hero-title-line--primary {
-      max-width: 10.6ch;
-    }
-
-    .hero-title-line--context {
-      font-size: 0.5em;
-      line-height: 1.04;
-    }
-
-    .hero-title-line--support {
-      max-width: 16ch;
-      margin-top: 7px;
-      padding-top: 11px;
-      font-size: 0.37em;
-      line-height: 1.16;
-    }
-
-    h2 {
-      font-size: 2.25rem;
-    }
-
-    .hero-copy p,
-    .section-heading p,
-    .closing p {
-      font-size: 1rem;
-    }
-
-    .hero-actions,
-    .closing-actions {
+    .homepage-hero-actions,
+    .homepage-cta-actions,
+    .homepage-bcs-actions {
       display: grid;
+      width: 100%;
+      max-width: 354px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .workflow-map {
-      grid-template-columns: 1fr;
-      overflow: visible;
+    .homepage-button {
+      width: 100%;
     }
 
-    .workflow-map li {
-      min-height: 0;
-      border-right: 0;
-      border-bottom: 1px solid #c8d2dc;
-    }
-
-    .workflow-map li:last-child {
-      border-bottom: 0;
-    }
-
-    .workflow-map strong {
-      margin-bottom: 12px;
-    }
-
-    .technology-grid,
-    .v3-footer {
+    .homepage-systems-grid,
+    .homepage-bcs-metrics {
       grid-template-columns: 1fr;
     }
 
-    .technology-grid img,
-    .technology-grid video {
-      height: 260px;
-      min-height: 0;
+    .homepage-shell-footer-links {
+      gap: 22px;
     }
 
-    .product-chooser {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .product-chooser > a {
-      gap: 18px;
-      padding: 18px 18px 20px;
-      border-radius: 22px;
-    }
-
-    .product-chooser figure {
-      min-height: 176px;
-      border-radius: 18px;
+    .homepage-system-card {
       padding: 18px;
     }
 
-    .product-chooser-heading {
-      grid-template-columns: 1fr auto;
+    .homepage-system-card figure {
+      min-height: 160px;
+      padding: 18px;
     }
+  }
 
-    .product-chooser-heading h3 {
-      max-width: 9ch;
-      font-size: 1.2rem;
-    }
-
-    .product-chooser-heading span {
-      font-size: 0.84rem;
-    }
+  @media (prefers-reduced-motion: reduce) {
   }
 </style>
