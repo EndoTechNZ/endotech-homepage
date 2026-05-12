@@ -35,7 +35,11 @@ const systems = [
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:py-20 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:items-center lg:py-24">
       <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Clinical Workflow</p>
+        <div class="workflow-page-clinical-workflow-reveal-mask">
+          <p class="workflow-page-clinical-workflow-reveal-text js-workflow-page-clinical-workflow-reveal">
+            Clinical Workflow
+          </p>
+        </div>
         <h1 class="mt-5 max-w-[11ch] text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.8rem]">
           A calmer sequence from glide path to seal.
         </h1>
@@ -185,7 +189,87 @@ const systems = [
   </section>
 </ProductLayout>
 
+<script>
+  const workflowPageClinicalWorkflowMask = document.querySelector('.workflow-page-clinical-workflow-reveal-mask');
+  const workflowPageClinicalWorkflowText = document.querySelector('.js-workflow-page-clinical-workflow-reveal');
+
+  if (workflowPageClinicalWorkflowMask && workflowPageClinicalWorkflowText) {
+    const originalText = 'Clinical Workflow';
+
+    workflowPageClinicalWorkflowText.setAttribute('aria-label', originalText);
+    workflowPageClinicalWorkflowText.innerHTML = Array.from(originalText)
+      .map((char, index) => {
+        const safeChar = char === ' ' ? '&nbsp;' : char;
+        return `<span class="workflow-page-clinical-workflow-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+      })
+      .join('');
+
+    const workflowPageClinicalWorkflowObserver = new IntersectionObserver(
+      (entries, observerInstance) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            window.setTimeout(() => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  workflowPageClinicalWorkflowMask.classList.add('is-visible');
+                });
+              });
+            }, 180);
+
+            observerInstance.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.2,
+      }
+    );
+
+    workflowPageClinicalWorkflowObserver.observe(workflowPageClinicalWorkflowMask);
+  }
+</script>
+
 <style>
+  .workflow-page-clinical-workflow-reveal-mask {
+    display: block;
+    overflow: hidden;
+    text-align: left;
+    padding: 0 0 14px;
+    min-height: 24px;
+  }
+
+  .workflow-page-clinical-workflow-reveal-text {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  :global(.workflow-page-clinical-workflow-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.workflow-page-clinical-workflow-reveal-mask.is-visible .workflow-page-clinical-workflow-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
   .workflow-hero-image {
     transform: scaleY(-1);
     transform-origin: center;

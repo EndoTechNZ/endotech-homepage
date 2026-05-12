@@ -67,7 +67,11 @@ const technologyStories = [
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:py-20 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.82fr)] lg:items-center lg:py-24">
       <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Technology</p>
+        <div class="transform-technology-reveal-mask">
+          <p class="transform-technology-reveal-text js-transform-technology-reveal">
+            Technology
+          </p>
+        </div>
         <h1 class="mt-5 max-w-[9ch] text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.8rem]">
           Transform Technology
         </h1>
@@ -280,3 +284,85 @@ const technologyStories = [
     </div>
   </section>
 </ProductLayout>
+
+<script>
+  const transformTechnologyMask = document.querySelector('.transform-technology-reveal-mask');
+  const transformTechnologyText = document.querySelector('.js-transform-technology-reveal');
+
+  if (transformTechnologyMask && transformTechnologyText) {
+    const originalText = 'Technology';
+
+    transformTechnologyText.setAttribute('aria-label', originalText);
+    transformTechnologyText.innerHTML = Array.from(originalText)
+      .map((char, index) => {
+        const safeChar = char === ' ' ? '&nbsp;' : char;
+        return `<span class="transform-technology-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+      })
+      .join('');
+
+    const transformTechnologyObserver = new IntersectionObserver(
+      (entries, observerInstance) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            window.setTimeout(() => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  transformTechnologyMask.classList.add('is-visible');
+                });
+              });
+            }, 180);
+
+            observerInstance.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.2,
+      }
+    );
+
+    transformTechnologyObserver.observe(transformTechnologyMask);
+  }
+</script>
+
+<style>
+  .transform-technology-reveal-mask {
+    display: block;
+    overflow: hidden;
+    text-align: left;
+    padding: 0 0 14px;
+    min-height: 24px;
+  }
+
+  .transform-technology-reveal-text {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  :global(.transform-technology-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.transform-technology-reveal-mask.is-visible .transform-technology-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+</style>
