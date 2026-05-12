@@ -135,7 +135,11 @@ const evidenceLinks = [
 <main class="homepage-stitch-page">
   <section class="homepage-hero" aria-labelledby="homepage-hero-title">
     <div class="homepage-hero-copy">
-      <p class="homepage-eyebrow homepage-hero-eyebrow">EndoTech NZ Clinical Workflow</p>
+      <div class="clinical-workflow-reveal-mask">
+        <p class="clinical-workflow-reveal-text js-clinical-workflow-reveal">
+          EndoTech NZ Clinical Workflow
+        </p>
+      </div>
       <h1 id="homepage-hero-title" class="homepage-hero-title homepage-hero-title--pre-reveal" data-homepage-hero-title>
         <span class="homepage-hero-line" style="--hero-line-delay: 0ms;">
           <span class="homepage-hero-dark">Shape</span>
@@ -346,6 +350,45 @@ const evidenceLinks = [
         }, 70);
       });
     });
+  }
+
+  const clinicalWorkflowMask = document.querySelector('.clinical-workflow-reveal-mask');
+  const clinicalWorkflowText = document.querySelector('.js-clinical-workflow-reveal');
+
+  if (clinicalWorkflowMask && clinicalWorkflowText) {
+    const originalText = 'EndoTech NZ Clinical Workflow';
+
+    clinicalWorkflowText.setAttribute('aria-label', originalText);
+    clinicalWorkflowText.innerHTML = Array.from(originalText)
+      .map((char, index) => {
+        const safeChar = char === ' ' ? '&nbsp;' : char;
+        return `<span class="clinical-workflow-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+      })
+      .join('');
+
+    const clinicalWorkflowObserver = new IntersectionObserver(
+      (entries, observerInstance) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            window.setTimeout(() => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  clinicalWorkflowMask.classList.add('is-visible');
+                });
+              });
+            }, 180);
+
+            observerInstance.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.2,
+      }
+    );
+
+    clinicalWorkflowObserver.observe(clinicalWorkflowMask);
   }
 
 </script>
@@ -657,10 +700,52 @@ const evidenceLinks = [
 
   .homepage-hero-eyebrow {
     margin-bottom: 22px;
-    color: #a1a8b3;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
+    color: #005c92;
+    font-family: "Aptos Narrow", "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: clamp(0.95rem, 1.7vw, 1.45rem);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.15;
+  }
+
+  .clinical-workflow-reveal-mask {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    padding: 16px 0;
+    min-height: 48px;
+  }
+
+  .clinical-workflow-reveal-text {
+    margin: 0;
+    color: #005c92;
+    font-family: "Aptos Narrow", "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: clamp(0.95rem, 1.7vw, 1.45rem);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  :global(.clinical-workflow-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.clinical-workflow-reveal-mask.is-visible .clinical-workflow-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 
   .homepage-hero-title {
@@ -1288,8 +1373,8 @@ const evidenceLinks = [
 
     .homepage-hero-eyebrow {
       margin-bottom: 18px;
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
+      font-size: clamp(0.88rem, 3.9vw, 1.1rem);
+      letter-spacing: 0.12em;
     }
 
     .homepage-hero-title {
