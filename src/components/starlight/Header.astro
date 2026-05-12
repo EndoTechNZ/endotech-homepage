@@ -6,11 +6,12 @@ import Search from 'virtual:starlight/components/Search';
 import SocialIcons from 'virtual:starlight/components/SocialIcons';
 import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
 import logoIcon from '../../assets/endotech-logo-2.png';
-import { getPrimaryNavItems, getProductMenu } from '../../data/navigation';
+import { getPrimaryNavItems, getProductMenu, getTechnologyMenu } from '../../data/navigation';
 
 const base = import.meta.env.BASE_URL;
 const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
+const technologyMenu = getTechnologyMenu(base);
 
 const shouldRenderSearch =
 	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
@@ -36,10 +37,30 @@ const shouldRenderSearch =
                 <a href={item.href}>{item.label}</a>
               ))}
             </div>
+            </div>
+          </div>
+        </div>
+      <a href={navItems[2].href} class="nav-grow">{navItems[2].label}</a>
+      <div class="group products-menu technology-menu relative">
+        <button id="docs-technology-menu-button" type="button" class="nav-grow" aria-haspopup="true" aria-expanded="false" aria-controls="docs-technology-menu-panel">
+          Technology
+          <svg class="menu-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 9l6 6 6-6"></path>
+          </svg>
+        </button>
+        <div class="products-menu-bridge"></div>
+        <div id="docs-technology-menu-panel" class="products-menu-panel">
+          <div class="products-menu-shell">
+            <div class="products-menu-label">Technology Platform</div>
+            <div class="products-menu-list">
+              {technologyMenu.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      {navItems.slice(2).filter((item) => item.label !== 'Order').map((item) => (
+      {navItems.slice(5).filter((item) => item.label !== 'Order').map((item) => (
         <a href={item.href} class="nav-grow">{item.label}</a>
       ))}
       <a href={`${base}order/`} class="contact-pill">Order</a>
@@ -74,6 +95,8 @@ const shouldRenderSearch =
   document.addEventListener('DOMContentLoaded', () => {
     const productsMenu = document.querySelector('.endotech-docs-header .products-menu');
     const productsMenuButton = document.getElementById('docs-products-menu-button');
+    const technologyMenu = document.querySelector('.endotech-docs-header .technology-menu');
+    const technologyMenuButton = document.getElementById('docs-technology-menu-button');
 
     function setProductsMenu(open) {
       if (!productsMenu || !productsMenuButton) return;
@@ -81,15 +104,34 @@ const shouldRenderSearch =
       productsMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
 
+    function setTechnologyMenu(open) {
+      if (!technologyMenu || !technologyMenuButton) return;
+      technologyMenu.classList.toggle('is-open', open);
+      technologyMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
     productsMenuButton?.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
       const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
       setProductsMenu(!isOpen);
+      setTechnologyMenu(false);
+    });
+
+    technologyMenuButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const isOpen = technologyMenuButton.getAttribute('aria-expanded') === 'true';
+      setTechnologyMenu(!isOpen);
+      setProductsMenu(false);
     });
 
     productsMenu?.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => setProductsMenu(false));
+    });
+
+    technologyMenu?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setTechnologyMenu(false));
     });
 
     document.addEventListener('click', (event) => {
@@ -97,11 +139,15 @@ const shouldRenderSearch =
       if (!productsMenu.contains(event.target)) {
         setProductsMenu(false);
       }
+      if (technologyMenu && !technologyMenu.contains(event.target)) {
+        setTechnologyMenu(false);
+      }
     });
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
         setProductsMenu(false);
+        setTechnologyMenu(false);
       }
     });
   });

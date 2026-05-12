@@ -17,6 +17,11 @@ export const getProductMenu = (base: string): NavItem[] => [
   { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
 ];
 
+export const getTechnologyMenu = (base: string): NavItem[] => [
+  { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
+];
+
 export const getPrimaryNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
   { label: 'Products', href: `${base}products/overview/` },
@@ -37,7 +42,8 @@ export const getProductMobileNavItems = (base: string): NavItem[] => [
   { label: 'VortiFlow', href: `${base}products/vortiflow-irrigation-needle/` },
   { label: 'BCS Family', href: `${base}products/bcs/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
-  { label: 'Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
   { label: 'Order', href: `${base}order/` },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
   { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
@@ -48,7 +54,8 @@ export const getHomepageMobileNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
   { label: 'Product Overview', href: `${base}products/overview/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
-  { label: 'Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
   { label: 'Order', href: `${base}order/` },
   { label: 'Acrobat Glide Path', href: `${base}products/acrobat-glide-path/` },
   { label: 'ET TransformX', href: `${base}products/et-transformx/` },

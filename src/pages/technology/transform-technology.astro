@@ -38,6 +38,25 @@ const benefits = [
     text: 'The technology is intended to improve file behaviour without asking clinicians to abandon established sequence logic.',
   },
 ];
+
+const technologyStories = [
+  {
+    label: 'Transform Technology',
+    title: 'Variable-phase metallurgy for a calmer shaping response.',
+    text: 'Supports coronal efficiency and greater apical adaptability without asking clinicians to abandon familiar sequence logic.',
+    ctaLabel: 'Review shaping systems',
+    href: `${base}products/overview/`,
+    accent: 'light',
+  },
+  {
+    label: 'Avatar Tip',
+    title: 'Guidance-focused apical geometry where canal control becomes more sensitive.',
+    text: 'Frames the apical guidance story earlier: smoother advancement, reduced aggressive engagement, and more centered progression in demanding anatomy.',
+    ctaLabel: 'Explore Avatar Tip',
+    href: `${base}technology/avatar-tip/`,
+    accent: 'dark',
+  },
+];
 ---
 
 <ProductLayout
@@ -139,6 +158,59 @@ const benefits = [
   <section class="border-b border-slate-200/80 bg-white">
     <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
       <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Technology Platform</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Two connected technology stories, shown at the same level.
+        </h2>
+        <p class="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
+          Transform Technology explains the material response. Avatar Tip explains the apical guidance behaviour. Both belong near the centre of the platform story, not as a late footnote.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-5 lg:grid-cols-2">
+        {technologyStories.map((story) => (
+          <article
+            class:list={[
+              'rounded-[1.85rem] p-6 shadow-[0_24px_56px_-44px_rgba(15,23,42,0.18)] sm:p-8',
+              story.accent === 'dark'
+                ? 'border border-[#123d78]/20 bg-[#123d78] text-white'
+                : 'border border-slate-200 bg-slate-50/70 text-slate-900',
+            ]}
+          >
+            <p
+              class:list={[
+                'text-xs font-semibold uppercase tracking-[0.3em]',
+                story.accent === 'dark' ? 'text-cyan-100/90' : 'text-slate-500',
+              ]}
+            >
+              {story.label}
+            </p>
+            <h3 class="mt-4 text-2xl font-bold tracking-tight sm:text-[2rem]">{story.title}</h3>
+            <p class:list={['mt-4 max-w-xl text-base leading-8', story.accent === 'dark' ? 'text-slate-100' : 'text-slate-600']}>
+              {story.text}
+            </p>
+            <div class="mt-8">
+              <a
+                href={story.href}
+                class:list={[
+                  'inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold transition-[background-color,box-shadow,transform,border-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5',
+                  story.accent === 'dark'
+                    ? 'bg-white text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_2px_rgba(2,6,23,0.08)] hover:bg-slate-100 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_12px_24px_rgba(2,6,23,0.18),0_2px_6px_rgba(2,6,23,0.08)]'
+                    : 'border border-slate-200 bg-white text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_1px_2px_rgba(15,23,42,0.04)] hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]',
+                ]}
+              >
+                {story.ctaLabel}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
+      <div class="max-w-3xl">
         <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Phase Sequence</p>
         <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
           A progressive response through the working length.
@@ -185,17 +257,17 @@ const benefits = [
       <div class="rounded-[2rem] bg-gradient-to-br from-slate-900 to-slate-800 px-6 py-10 text-white shadow-[0_30px_70px_-45px_rgba(15,23,42,0.45)] sm:px-8 sm:py-12">
         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Next Step</p>
         <h2 class="mt-4 max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl">
-          Same technique. More controlled file behaviour.
+          Move from technology into workflow or shaping system selection.
         </h2>
         <p class="mt-4 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
-          Review the shaping systems or move into Avatar Tip to see how the apical guidance story connects to the same technology platform.
+          The core technology stories are now on the page. From here, the next useful step is either to review the workflow sequence or move straight into ET and PT product selection.
         </p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <a
-            href={`${base}technology/avatar-tip/`}
+            href={`${base}products/overview/`}
             class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_2px_rgba(2,6,23,0.08)] transition-[background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_12px_24px_rgba(2,6,23,0.18),0_2px_6px_rgba(2,6,23,0.08)]"
           >
-            Explore Avatar Tip
+            Review shaping systems
           </a>
           <a
             href={`${base}technique/workflow/`}
