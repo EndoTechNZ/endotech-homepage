@@ -1,4 +1,5 @@
 // @ts-check
+import { existsSync, readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
@@ -6,8 +7,22 @@ import tailwindcss from '@tailwindcss/vite';
 
 const isGitHubPages = process.env.DEPLOY_TARGET === 'github-pages';
 const netlifySite = process.env.URL || process.env.DEPLOY_PRIME_URL;
-const site = process.env.PUBLIC_SITE_URL || (isGitHubPages ? 'https://endotechnz.github.io' : netlifySite || 'https://endotechnz.github.io');
-const base = isGitHubPages ? '/endotech-homepage/' : '/';
+const cnamePath = new URL('./public/CNAME', import.meta.url);
+const customDomain = existsSync(cnamePath)
+  ? readFileSync(cnamePath, 'utf8').trim()
+  : '';
+const publicSiteUrl = process.env.PUBLIC_SITE_URL;
+const usesCustomDomain =
+  Boolean(customDomain) ||
+  (Boolean(publicSiteUrl) && !publicSiteUrl.includes('github.io'));
+const site =
+  publicSiteUrl ||
+  (customDomain
+    ? `https://${customDomain}`
+    : isGitHubPages
+      ? 'https://endotechnz.github.io'
+      : netlifySite || 'https://endotechnz.github.io');
+const base = isGitHubPages ? (usesCustomDomain ? '/' : '/endotech-homepage/') : '/';
 const shouldNoIndex = process.env.NETLIFY === 'true' && process.env.CONTEXT !== 'production';
 const docsTitle = process.env.PUBLIC_DOCS_TITLE || 'EndoTech Docs';
 const contactEmail = process.env.PUBLIC_CONTACT_EMAIL || 'Steveshepherdnz@gmail.com';
