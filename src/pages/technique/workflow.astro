@@ -1,32 +1,9 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
-import WorkflowStrip from '../../components/navigation/WorkflowStrip.astro';
+import ClinicalWorkflowWheel from '../../components/home/ClinicalWorkflowWheel.astro';
 import transformxSystem from '../../assets/transformx-rotary-file-system.png';
 
 const base = import.meta.env.BASE_URL;
-
-const workflowSteps = [
-  {
-    label: '01',
-    title: 'Glide',
-    text: 'Establish a reproducible path to working length before introducing shaping files.',
-  },
-  {
-    label: '02',
-    title: 'Shape',
-    text: 'Use ET or PT sequence logic according to the system you already work with clinically.',
-  },
-  {
-    label: '03',
-    title: 'Clean 3D',
-    text: 'Maintain irrigation discipline and patency throughout the sequence to reduce debris accumulation.',
-  },
-  {
-    label: '04',
-    title: 'Seal',
-    text: 'Complete the obturation stage once preparation goals, cleaning, and final sizing are confirmed.',
-  },
-];
 
 const principles = [
   'Irrigate thoroughly before advancing to the next file.',
@@ -37,13 +14,13 @@ const principles = [
 const systems = [
   {
     title: 'ET TransformX',
-    text: 'For familiar .04 / .06 taper workflows where ET-style sequence logic is already established.',
+    text: 'For familiar .04 / .06 constant-taper workflows, including clinicians currently using EdgeFile X7, HyFlex CM, RaCe, and similar rotary sequences.',
     href: `${base}products/et-transformx/`,
     guide: `${base}downloads/ET-Technique-Work-Flow.pdf`,
   },
   {
     title: 'PT TransformX',
-    text: 'For progressive taper workflows where PT-style shaping philosophy is already in use clinically.',
+    text: 'For clinicians already using ProTaper Gold-style sequence logic and a progressive coronal-to-apical shaping workflow.',
     href: `${base}products/pt-transformx/`,
     guide: `${base}downloads/PT-Technique-Work-Flow.pdf`,
   },
@@ -99,8 +76,6 @@ const systems = [
     </div>
   </section>
 
-  <WorkflowStrip />
-
   <section class="border-b border-slate-200/80 bg-slate-50/70">
     <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
       <div class="max-w-3xl">
@@ -112,15 +87,8 @@ const systems = [
           The workflow is intentionally simple. The value comes from how consistently each stage is handled.
         </p>
       </div>
-
-      <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {workflowSteps.map((item) => (
-          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-[0_20px_48px_-42px_rgba(15,23,42,0.12)]">
-            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{item.label}</p>
-            <h3 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">{item.title}</h3>
-            <p class="mt-4 text-sm leading-7 text-slate-600">{item.text}</p>
-          </article>
-        ))}
+      <div class="mt-10">
+        <ClinicalWorkflowWheel base={base} />
       </div>
     </div>
   </section>
@@ -193,8 +161,11 @@ const systems = [
       <div class="rounded-[2rem] bg-gradient-to-br from-slate-900 to-slate-800 px-6 py-10 text-white shadow-[0_30px_70px_-45px_rgba(15,23,42,0.45)] sm:px-8 sm:py-12">
         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Next Step</p>
         <h2 class="mt-4 max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl">
-          Review the workflow, then connect it back to ET or PT product selection.
+          Questions about workflow or file selection?
         </h2>
+        <p class="mt-4 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
+          If you&rsquo;re unsure whether TransformX ET or TransformX PT best fits your technique, send us a question. We&rsquo;re happy to discuss workflow, shaping strategy, irrigation, obturation or any other endodontic topic.
+        </p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <a
             href={`${base}products/overview/`}

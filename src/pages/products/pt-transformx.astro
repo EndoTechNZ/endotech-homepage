@@ -39,7 +39,7 @@ const technicalCards = [
   {
     title: 'Geometry matters',
     body:
-      'Avatar Tip is presented through the clinical problem it helps address: advancement as taper, curvature, and apical demand increase.',
+      'As the canal narrows, curves, or becomes less forgiving, tip design becomes critical. Avatar Tip is designed to guide the file along the prepared path, helping reduce aggressive apical engagement while supporting controlled progression through complex anatomy.',
     tone: 'dark',
     metric: 'SX / S1 / S2 / F1-F5',
   },
@@ -116,12 +116,19 @@ const downloads = [
         <p class="pt-eyebrow">Next generation endodontics</p>
         <h1 id="pt-hero-title">TransformX PT</h1>
         <p class="pt-hero-lede">
-          PT-style shaping for clinicians who want a clear path from coronal access to apical finishing.
+          PT-style shaping for clinicians already using ProTaper Gold-style sequence logic and a progressive coronal-to-apical workflow.
         </p>
       </div>
 
-      <figure class="pt-hero-visual">
-        <img src={ptProduct.src} alt="PT TransformX rotary files displayed as a shaping system" />
+      <figure data-pt-hero-visual class="pt-hero-visual pt-hero-visual--pre-reveal" style="transform: translateZ(0) scale(0.9);">
+        <img
+          class="pt-hero-image"
+          src={ptProduct.src}
+          loading="eager"
+          decoding="sync"
+          fetchpriority="high"
+          alt="PT TransformX rotary files displayed as a shaping system"
+        />
       </figure>
 
       <div class="pt-hero-actions">
@@ -261,6 +268,26 @@ const downloads = [
       </div>
     </section>
   </main>
+
+  <script is:inline>
+    (() => {
+      const visual = document.querySelector('[data-pt-hero-visual]');
+      if (!(visual instanceof HTMLElement)) return;
+
+      const playReveal = () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+          setTimeout(() => {
+            visual.style.transform = '';
+            visual.classList.remove('pt-hero-visual--pre-reveal');
+          }, 70);
+          });
+        });
+      };
+
+      playReveal();
+    })();
+  </script>
 </ProductLayout>
 
 <style>
@@ -357,12 +384,22 @@ const downloads = [
     width: 100%;
     max-width: 980px;
     margin: 44px 0 0;
+    transform-origin: center center;
+    transform: translateZ(0) scale(1);
+    transition: transform 1320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .pt-hero-visual img {
+  .pt-hero-visual--pre-reveal {
+    transform: translateZ(0) scale(0.9);
+  }
+
+  .pt-hero-visual img,
+  .pt-hero-image {
+    display: block;
     width: 100%;
     max-height: 720px;
     object-fit: contain;
+    backface-visibility: hidden;
   }
 
   .pt-hero-actions,

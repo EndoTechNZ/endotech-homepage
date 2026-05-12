@@ -3,6 +3,7 @@ import ProductLayout from '../../layouts/ProductLayout.astro';
 import etProduct from '../../assets/et-transformx.png';
 import avatarTipComparison from '../../assets/avatar-tip-comparison.png';
 import bcsSealer from '../../assets/bcs-sealer.png';
+import etFirewireMachine from '../../assets/et-firewire-machine.png';
 import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
 
@@ -36,11 +37,13 @@ const technicalCards = [
     body:
       'Transform Technology is positioned to support flexibility through curvature while preserving the shaping response clinicians expect from ET-style sequence logic.',
     tone: 'light',
+    image: etFirewireMachine,
+    imageAlt: 'Transform technology machine render representing Fire-Wire metallurgy.',
   },
   {
     title: 'Geometry matters',
     body:
-      'Avatar Tip is presented through the clinical problem it helps address: progression through anatomy that becomes less forgiving.',
+      'As the canal narrows, curves, or becomes less forgiving, tip design becomes critical. Avatar Tip is designed to guide the file along the prepared path, helping reduce aggressive apical engagement while supporting controlled progression through complex anatomy.',
     tone: 'dark',
     metric: 'ET-style .04 / .06',
   },
@@ -117,12 +120,19 @@ const downloads = [
         <p class="et-eyebrow">Next generation endodontics</p>
         <h1 id="et-hero-title">TransformX ET</h1>
         <p class="et-hero-lede">
-          ET-style shaping for clinicians who want a clear path from preparation to final seal.
+          ET-style shaping for clinicians already using .04 / .06 constant-taper workflows such as EdgeFile X7, HyFlex CM, RaCe, and similar rotary systems.
         </p>
       </div>
 
-      <figure class="et-hero-visual">
-        <img src={etProduct.src} alt="ET TransformX rotary files displayed as a shaping system" />
+      <figure data-et-hero-visual class="et-hero-visual et-hero-visual--pre-reveal" style="transform: translateZ(0) scale(0.9);">
+        <img
+          class="et-hero-image"
+          src={etProduct.src}
+          loading="eager"
+          decoding="sync"
+          fetchpriority="high"
+          alt="ET TransformX rotary files displayed as a shaping system"
+        />
       </figure>
 
       <div class="et-hero-actions">
@@ -146,7 +156,7 @@ const downloads = [
               </div>
             )}
             {card.tone === 'light' && (
-              <img src={avatarTipComparison.src} alt="Avatar Tip geometry comparison" />
+              <img src={(card.image ?? avatarTipComparison).src} alt={card.imageAlt ?? 'Avatar Tip geometry comparison'} />
             )}
           </article>
         ))}
@@ -275,6 +285,26 @@ const downloads = [
       </div>
     </section>
   </main>
+
+  <script is:inline>
+    (() => {
+      const visual = document.querySelector('[data-et-hero-visual]');
+      if (!(visual instanceof HTMLElement)) return;
+
+      const playReveal = () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+          setTimeout(() => {
+            visual.style.transform = '';
+            visual.classList.remove('et-hero-visual--pre-reveal');
+          }, 70);
+          });
+        });
+      };
+
+      playReveal();
+    })();
+  </script>
 </ProductLayout>
 
 <style>
@@ -375,12 +405,22 @@ const downloads = [
     width: 100%;
     max-width: 920px;
     margin: 36px 0 0;
+    transform-origin: center center;
+    transform: translateZ(0) scale(1);
+    transition: transform 1320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .et-hero-visual img {
+  .et-hero-visual--pre-reveal {
+    transform: translateZ(0) scale(0.9);
+  }
+
+  .et-hero-visual img,
+  .et-hero-image {
+    display: block;
     width: 100%;
     max-height: 660px;
     object-fit: contain;
+    backface-visibility: hidden;
   }
 
   .et-hero-actions,

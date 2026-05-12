@@ -153,8 +153,19 @@ const downloads = [
         </p>
       </div>
 
-      <figure class="acrobat-hero-visual">
-        <img src={acrobatFiles.src} alt="Acrobat glide path files displayed as a rotary glide path system" />
+      <figure
+        data-acrobat-hero-visual
+        class="acrobat-hero-visual acrobat-hero-visual--pre-reveal"
+        style="transform: translateZ(0) scale(0.9);"
+      >
+        <img
+          class="acrobat-hero-image"
+          src={acrobatFiles.src}
+          loading="eager"
+          decoding="sync"
+          fetchpriority="high"
+          alt="Acrobat glide path files displayed as a rotary glide path system"
+        />
       </figure>
 
       <div class="acrobat-hero-actions">
@@ -343,6 +354,26 @@ const downloads = [
       </div>
     </section>
   </main>
+
+  <script is:inline>
+    (() => {
+      const visual = document.querySelector('[data-acrobat-hero-visual]');
+      if (!(visual instanceof HTMLElement)) return;
+
+      const playReveal = () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              visual.style.transform = '';
+              visual.classList.remove('acrobat-hero-visual--pre-reveal');
+            }, 70);
+          });
+        });
+      };
+
+      playReveal();
+    })();
+  </script>
 </ProductLayout>
 
 <style>
@@ -444,12 +475,22 @@ const downloads = [
     width: 100%;
     max-width: 1080px;
     margin: 52px 0 0;
+    transform-origin: center center;
+    transform: translateZ(0) scale(1);
+    transition: transform 1320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .acrobat-hero-visual img {
+  .acrobat-hero-visual--pre-reveal {
+    transform: translateZ(0) scale(0.9);
+  }
+
+  .acrobat-hero-visual img,
+  .acrobat-hero-image {
+    display: block;
     width: 100%;
     max-height: 780px;
     object-fit: contain;
+    backface-visibility: hidden;
   }
 
   .acrobat-hero-actions,

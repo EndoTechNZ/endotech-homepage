@@ -4,6 +4,7 @@ import WorkflowStrip from '../../components/navigation/WorkflowStrip.astro';
 import transformxSystem from '../../assets/transformx-rotary-file-system.png';
 
 const base = import.meta.env.BASE_URL;
+const explainerVideoSrc = `${base}videos/explainer.mp4`;
 
 const phases = [
   {
@@ -89,6 +90,30 @@ const benefits = [
   </section>
 
   <WorkflowStrip activeStep="assess" />
+
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">Technology Overview</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Transform Technology explained in one focused clinical overview.
+        </h2>
+        <p class="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
+          This short explainer brings the metallurgy, shaping logic, and product-family story back into one place so the
+          technology page feels complete again.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-10 max-w-5xl overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-950 shadow-[0_30px_90px_-45px_rgba(15,23,42,0.42)]">
+        <video controls playsinline preload="metadata" class="block aspect-video w-full bg-slate-950">
+          <source src={explainerVideoSrc} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <p class="mt-6 text-center text-sm text-slate-500">37 seconds of TransformX technology and product overview.</p>
+    </div>
+  </section>
 
   <section class="border-b border-slate-200/80 bg-slate-50/70">
     <div class="mx-auto grid max-w-7xl gap-5 px-6 py-20 sm:py-20 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:py-24">
