@@ -103,7 +103,11 @@ const compareRows = [
   <main class="overview-stitch-page">
     <section class="overview-hero" aria-labelledby="overview-hero-title">
       <div class="overview-hero-copy">
-        <p class="overview-eyebrow">Product systems</p>
+        <div class="overview-product-systems-reveal-mask">
+          <p class="overview-product-systems-reveal-text js-overview-product-systems-reveal">
+            Product Systems
+          </p>
+        </div>
         <h1 id="overview-hero-title">A clinical system from glide path to final seal.</h1>
         <p class="overview-hero-lede">
           Review the EndoTech NZ product architecture first, then move into the shaping system, glide path, irrigation, or bioceramic pathway that fits the case.
@@ -261,6 +265,47 @@ const compareRows = [
   </main>
 </ProductLayout>
 
+<script>
+  const overviewProductSystemsMask = document.querySelector('.overview-product-systems-reveal-mask');
+  const overviewProductSystemsText = document.querySelector('.js-overview-product-systems-reveal');
+
+  if (overviewProductSystemsMask && overviewProductSystemsText) {
+    const originalText = 'Product Systems';
+
+    overviewProductSystemsText.setAttribute('aria-label', originalText);
+    overviewProductSystemsText.innerHTML = Array.from(originalText)
+      .map((char, index) => {
+        const safeChar = char === ' ' ? '&nbsp;' : char;
+        return `<span class="overview-product-systems-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+      })
+      .join('');
+
+    const overviewProductSystemsObserver = new IntersectionObserver(
+      (entries, observerInstance) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            window.setTimeout(() => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  overviewProductSystemsMask.classList.add('is-visible');
+                });
+              });
+            }, 180);
+
+            observerInstance.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.2,
+      }
+    );
+
+    overviewProductSystemsObserver.observe(overviewProductSystemsMask);
+  }
+</script>
+
 <style>
   .overview-stitch-page {
     background: #ffffff;
@@ -313,6 +358,46 @@ const compareRows = [
 
   .overview-hero-copy {
     max-width: 720px;
+  }
+
+  .overview-product-systems-reveal-mask {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    padding: 0 0 14px;
+    min-height: 24px;
+  }
+
+  .overview-product-systems-reveal-text {
+    margin: 0;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  :global(.overview-product-systems-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.overview-product-systems-reveal-mask.is-visible .overview-product-systems-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 
   .overview-hero h1 {
