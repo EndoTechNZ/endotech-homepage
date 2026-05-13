@@ -137,7 +137,9 @@ const downloads = hasEvidencePdf
   <main class="vorti-stitch-page">
     <section class="vorti-hero" aria-labelledby="vorti-hero-title">
       <div class="vorti-hero-copy">
-        <p class="vorti-eyebrow">Irrigation delivery system</p>
+        <div class="vorti-irrigation-delivery-reveal-mask">
+          <p class="vorti-irrigation-delivery-reveal-text js-vorti-irrigation-delivery-reveal">Irrigation delivery system</p>
+        </div>
         <h1 id="vorti-hero-title">
           <span class="vorti-hero-title-main">VortiFlow</span>
           <span class="vorti-hero-title-sub">Irrigation Needle</span>
@@ -392,6 +394,47 @@ const downloads = hasEvidencePdf
       });
     })();
   </script>
+
+  <script is:inline>
+    (() => {
+      const mask = document.querySelector('.vorti-irrigation-delivery-reveal-mask');
+      const text = document.querySelector('.js-vorti-irrigation-delivery-reveal');
+      if (!(mask instanceof HTMLElement) || !(text instanceof HTMLElement)) return;
+
+      const originalText = 'Irrigation delivery system';
+      text.setAttribute('aria-label', originalText);
+      text.innerHTML = Array.from(originalText)
+        .map((char, index) => {
+          const safeChar = char === ' ' ? '&nbsp;' : char;
+          return `<span class="vorti-irrigation-delivery-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+        })
+        .join('');
+
+      const observer = new IntersectionObserver(
+        (entries, observerInstance) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            window.setTimeout(() => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  mask.classList.add('is-visible');
+                });
+              });
+            }, 180);
+
+            observerInstance.unobserve(entry.target);
+          });
+        },
+        {
+          root: null,
+          threshold: 0.2,
+        }
+      );
+
+      observer.observe(mask);
+    })();
+  </script>
 </ProductLayout>
 
 <style>
@@ -463,6 +506,46 @@ const downloads = hasEvidencePdf
 
   .vorti-hero-copy {
     max-width: 740px;
+  }
+
+  .vorti-irrigation-delivery-reveal-mask {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    padding: 0 0 14px;
+    min-height: 24px;
+  }
+
+  .vorti-irrigation-delivery-reveal-text {
+    margin: 0;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  :global(.vorti-irrigation-delivery-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.vorti-irrigation-delivery-reveal-mask.is-visible .vorti-irrigation-delivery-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 
   .vorti-hero h1 {

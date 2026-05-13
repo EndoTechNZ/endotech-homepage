@@ -154,9 +154,11 @@ const segmentData = steps.map((step, index) => {
     <div class="workflow-wheel-heading">
       <p class="workflow-wheel-eyebrow">Clinical workflow</p>
       <h2 id="workflow-wheel-title">A focused clinical sequence from assessment to restoration.</h2>
-      <p>
-        EndoTech NZ supports a more structured pathway through access, glide path, shaping, irrigation, sealing, and final restorative planning.
-      </p>
+      <div class="workflow-wheel-support-reveal-mask">
+        <p class="workflow-wheel-support-reveal-text js-workflow-wheel-support-reveal">
+          EndoTech NZ supports a more structured pathway through access, glide path, shaping, irrigation, sealing, and final restorative planning.
+        </p>
+      </div>
     </div>
 
     <div class="workflow-wheel-desktop" aria-hidden="false">
@@ -338,6 +340,49 @@ const segmentData = steps.map((step, index) => {
   });
 </script>
 
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mask = document.querySelector('.workflow-wheel-support-reveal-mask');
+    const text = document.querySelector('.js-workflow-wheel-support-reveal');
+    if (!(mask instanceof HTMLElement) || !(text instanceof HTMLElement)) return;
+
+    const originalText =
+      'EndoTech NZ supports a more structured pathway through access, glide path, shaping, irrigation, sealing, and final restorative planning.';
+
+    text.setAttribute('aria-label', originalText);
+    text.innerHTML = Array.from(originalText)
+      .map((char, index) => {
+        const safeChar = char === ' ' ? '&nbsp;' : char;
+        return `<span class="workflow-wheel-support-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+      })
+      .join('');
+
+    const observer = new IntersectionObserver(
+      (entries, observerInstance) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          window.setTimeout(() => {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                mask.classList.add('is-visible');
+              });
+            });
+          }, 180);
+
+          observerInstance.unobserve(entry.target);
+        });
+      },
+      {
+        root: null,
+        threshold: 0.2,
+      }
+    );
+
+    observer.observe(mask);
+  });
+</script>
+
 <style>
   .workflow-wheel-section {
     padding: 88px 56px 92px;
@@ -353,6 +398,12 @@ const segmentData = steps.map((step, index) => {
   .workflow-wheel-heading {
     max-width: 760px;
     margin: 0 auto 34px;
+    text-align: center;
+  }
+
+  .workflow-wheel-support-reveal-mask {
+    display: block;
+    overflow: hidden;
     text-align: center;
   }
 
@@ -392,6 +443,34 @@ const segmentData = steps.map((step, index) => {
     font-family: Inter, 'Segoe UI', sans-serif;
     font-size: 1rem;
     line-height: 1.68;
+  }
+
+  .workflow-wheel-support-reveal-text {
+    margin: 18px 0 0;
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    line-height: 1.68;
+    text-align: center;
+  }
+
+  :global(.workflow-wheel-support-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.workflow-wheel-support-reveal-mask.is-visible .workflow-wheel-support-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 
   .workflow-wheel-desktop {

@@ -98,7 +98,9 @@ const downloadItems = downloads.slice(0, 4).map((download) => ({
   <main class="bcs-stitch-page">
     <section class="bcs-hero" aria-labelledby="bcs-hero-title">
       <div class="bcs-hero-copy">
-        <p class="bcs-eyebrow">Bioceramic material platform</p>
+        <div class="bcs-material-platform-reveal-mask">
+          <p class="bcs-material-platform-reveal-text js-bcs-material-platform-reveal">Bioceramic material platform</p>
+        </div>
         <h1 id="bcs-hero-title">BCS BioCeramic Materials</h1>
         <p class="bcs-hero-lede">
           Premixed bioceramic materials for endodontic sealing and repair, designed to complete the EndoTech workflow with a cleaner final-stage material choice.
@@ -269,6 +271,46 @@ const downloadItems = downloads.slice(0, 4).map((download) => ({
       </div>
     </section>
   </main>
+  <script is:inline>
+    (() => {
+      const mask = document.querySelector('.bcs-material-platform-reveal-mask');
+      const text = document.querySelector('.js-bcs-material-platform-reveal');
+      if (!(mask instanceof HTMLElement) || !(text instanceof HTMLElement)) return;
+
+      const originalText = 'Bioceramic material platform';
+      text.setAttribute('aria-label', originalText);
+      text.innerHTML = Array.from(originalText)
+        .map((char, index) => {
+          const safeChar = char === ' ' ? '&nbsp;' : char;
+          return `<span class="bcs-material-platform-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+        })
+        .join('');
+
+      const observer = new IntersectionObserver(
+        (entries, observerInstance) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            window.setTimeout(() => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  mask.classList.add('is-visible');
+                });
+              });
+            }, 180);
+
+            observerInstance.unobserve(entry.target);
+          });
+        },
+        {
+          root: null,
+          threshold: 0.2,
+        }
+      );
+
+      observer.observe(mask);
+    })();
+  </script>
 </ProductLayout>
 
 <style>
@@ -339,6 +381,46 @@ const downloadItems = downloads.slice(0, 4).map((download) => ({
 
   .bcs-hero-copy {
     max-width: 760px;
+  }
+
+  .bcs-material-platform-reveal-mask {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    padding: 0 0 14px;
+    min-height: 24px;
+  }
+
+  .bcs-material-platform-reveal-text {
+    margin: 0;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  :global(.bcs-material-platform-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.bcs-material-platform-reveal-mask.is-visible .bcs-material-platform-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 
   .bcs-hero h1 {

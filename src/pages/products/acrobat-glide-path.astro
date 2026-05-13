@@ -146,7 +146,9 @@ const downloads = [
   <main class="acrobat-stitch-page">
     <section class="acrobat-hero" aria-labelledby="acrobat-hero-title">
       <div class="acrobat-hero-copy">
-        <p class="acrobat-eyebrow">Rotary glide path system</p>
+        <div class="acrobat-rotary-glide-reveal-mask">
+          <p class="acrobat-rotary-glide-reveal-text js-acrobat-rotary-glide-reveal">Rotary glide path system</p>
+        </div>
         <h1 id="acrobat-hero-title">Acrobat</h1>
         <p class="acrobat-hero-lede">
           Controlled rotary glide path preparation before shaping begins, with a simple sequence designed to lead cleanly into TransformX.
@@ -374,6 +376,47 @@ const downloads = [
       playReveal();
     })();
   </script>
+
+  <script is:inline>
+    (() => {
+      const mask = document.querySelector('.acrobat-rotary-glide-reveal-mask');
+      const text = document.querySelector('.js-acrobat-rotary-glide-reveal');
+      if (!(mask instanceof HTMLElement) || !(text instanceof HTMLElement)) return;
+
+      const originalText = 'Rotary glide path system';
+      text.setAttribute('aria-label', originalText);
+      text.innerHTML = Array.from(originalText)
+        .map((char, index) => {
+          const safeChar = char === ' ' ? '&nbsp;' : char;
+          return `<span class="acrobat-rotary-glide-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+        })
+        .join('');
+
+      const observer = new IntersectionObserver(
+        (entries, observerInstance) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              window.setTimeout(() => {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(() => {
+                    mask.classList.add('is-visible');
+                  });
+                });
+              }, 180);
+
+              observerInstance.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.2,
+        }
+      );
+
+      observer.observe(mask);
+    })();
+  </script>
 </ProductLayout>
 
 <style>
@@ -444,6 +487,46 @@ const downloads = [
 
   .acrobat-hero-copy {
     max-width: 740px;
+  }
+
+  .acrobat-rotary-glide-reveal-mask {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    padding: 0 0 14px;
+    min-height: 24px;
+  }
+
+  .acrobat-rotary-glide-reveal-text {
+    margin: 0;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  :global(.acrobat-rotary-glide-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.acrobat-rotary-glide-reveal-mask.is-visible .acrobat-rotary-glide-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 
   .acrobat-hero h1 {

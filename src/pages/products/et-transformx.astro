@@ -117,7 +117,9 @@ const downloads = [
   <main class="et-stitch-page">
     <section class="et-hero" aria-labelledby="et-hero-title">
       <div class="et-hero-copy">
-        <p class="et-eyebrow">Next generation endodontics</p>
+        <div class="et-next-generation-reveal-mask">
+          <p class="et-next-generation-reveal-text js-et-next-generation-reveal">Next generation endodontics</p>
+        </div>
         <h1 id="et-hero-title">TransformX ET</h1>
         <p class="et-hero-lede">
           ET-style shaping for clinicians already using .04 / .06 constant-taper workflows such as EdgeFile X7, HyFlex CM, RaCe, and similar rotary systems.
@@ -305,6 +307,47 @@ const downloads = [
       playReveal();
     })();
   </script>
+
+  <script is:inline>
+    (() => {
+      const mask = document.querySelector('.et-next-generation-reveal-mask');
+      const text = document.querySelector('.js-et-next-generation-reveal');
+      if (!(mask instanceof HTMLElement) || !(text instanceof HTMLElement)) return;
+
+      const originalText = 'Next generation endodontics';
+      text.setAttribute('aria-label', originalText);
+      text.innerHTML = Array.from(originalText)
+        .map((char, index) => {
+          const safeChar = char === ' ' ? '&nbsp;' : char;
+          return `<span class="et-next-generation-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+        })
+        .join('');
+
+      const observer = new IntersectionObserver(
+        (entries, observerInstance) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              window.setTimeout(() => {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(() => {
+                    mask.classList.add('is-visible');
+                  });
+                });
+              }, 180);
+
+              observerInstance.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.2,
+        }
+      );
+
+      observer.observe(mask);
+    })();
+  </script>
 </ProductLayout>
 
 <style>
@@ -374,6 +417,46 @@ const downloads = [
 
   .et-hero-copy {
     max-width: 700px;
+  }
+
+  .et-next-generation-reveal-mask {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    padding: 0 0 14px;
+    min-height: 24px;
+  }
+
+  .et-next-generation-reveal-text {
+    margin: 0;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  :global(.et-next-generation-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.et-next-generation-reveal-mask.is-visible .et-next-generation-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 
   .et-hero h1 {
