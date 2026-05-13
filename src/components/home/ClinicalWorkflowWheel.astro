@@ -357,20 +357,25 @@ const segmentData = steps.map((step, index) => {
       })
       .join('');
 
+    let revealTimeout;
+
     const observer = new IntersectionObserver(
-      (entries, observerInstance) => {
+      (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          window.setTimeout(() => {
-            requestAnimationFrame(() => {
+          if (entry.isIntersecting) {
+            clearTimeout(revealTimeout);
+            revealTimeout = window.setTimeout(() => {
               requestAnimationFrame(() => {
-                mask.classList.add('is-visible');
+                requestAnimationFrame(() => {
+                  mask.classList.add('is-visible');
+                });
               });
-            });
-          }, 180);
+            }, 180);
+            return;
+          }
 
-          observerInstance.unobserve(entry.target);
+          clearTimeout(revealTimeout);
+          mask.classList.remove('is-visible');
         });
       },
       {
