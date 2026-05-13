@@ -867,6 +867,10 @@ const downloadItems = downloads.slice(0, 4).map((download) => ({
     max-width: 760px;
   }
 
+  .bcs-workflow-copy h2 {
+    white-space: nowrap;
+  }
+
   .bcs-workflow-copy p:not(.bcs-eyebrow) {
     margin: 16px 0 0;
   }
@@ -1081,6 +1085,12 @@ const downloadItems = downloads.slice(0, 4).map((download) => ({
 
     .bcs-comparison-table {
       min-width: 680px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .bcs-workflow-copy h2 {
+      white-space: normal;
     }
   }
 </style>
