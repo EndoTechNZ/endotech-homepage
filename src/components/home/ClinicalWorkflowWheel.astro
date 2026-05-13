@@ -351,7 +351,7 @@ const segmentData = steps.map((step, index) => {
 
     text.setAttribute('aria-label', originalText);
     let charIndex = 0;
-    text.innerHTML = originalText
+    const words = originalText
       .split(' ')
       .map((word) => {
         const wordMarkup = Array.from(word)
@@ -363,8 +363,14 @@ const segmentData = steps.map((step, index) => {
           .join('');
 
         return `<span class="workflow-wheel-support-reveal-word" aria-hidden="true">${wordMarkup}</span>`;
+      });
+
+    text.innerHTML = words
+      .map((wordMarkup, index) => {
+        const spacer = index < words.length - 1 ? '<span class="workflow-wheel-support-reveal-space" aria-hidden="true"></span>' : '';
+        return `${wordMarkup}${spacer}`;
       })
-      .join(' ');
+      .join('');
 
     let revealTimeout;
 
@@ -469,8 +475,13 @@ const segmentData = steps.map((step, index) => {
   }
 
   :global(.workflow-wheel-support-reveal-word) {
-    display: inline-block;
+    display: inline-flex;
     white-space: nowrap;
+  }
+
+  :global(.workflow-wheel-support-reveal-space) {
+    display: inline-block;
+    width: 0.32em;
   }
 
   :global(.workflow-wheel-support-reveal-char) {
