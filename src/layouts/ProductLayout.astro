@@ -123,6 +123,8 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         if (!mobileMenu || !mobileMenuButton) return;
         mobileMenu.classList.toggle('is-open', open);
         mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.documentElement.classList.toggle('product-mobile-menu-open', open);
+        document.body.classList.toggle('product-mobile-menu-open', open);
       }
 
       productsMenuButton?.addEventListener('click', (event) => {
@@ -178,6 +180,12 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
           setMobileMenu(false);
         }
       });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 1120) {
+          setMobileMenu(false);
+        }
+      });
     });
   </script>
 
@@ -218,6 +226,11 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 </Layout>
 
 <style is:global>
+  html.product-mobile-menu-open,
+  body.product-mobile-menu-open {
+    overflow: hidden;
+  }
+
   .product-site-header {
     position: sticky;
     top: 0;
@@ -445,14 +458,26 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 
   .product-mobile-menu {
     display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 80;
     border-top: 1px solid #e3e8ee;
     background: rgba(255, 255, 255, 0.98);
+    max-height: calc(100dvh - 72px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
   }
 
   .product-mobile-menu-shell {
     display: grid;
     gap: 8px;
-    padding: 14px 18px 18px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 18px calc(18px + env(safe-area-inset-bottom, 0px));
   }
 
   .product-mobile-menu-shell a {
@@ -624,6 +649,10 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 
     .product-site-header-inner {
       min-height: 70px;
+    }
+
+    .product-mobile-menu {
+      max-height: calc(100dvh - 70px);
     }
 
     .product-site-brand small {
