@@ -350,12 +350,21 @@ const segmentData = steps.map((step, index) => {
       'EndoTech NZ supports a more structured pathway through access, glide path, shaping, irrigation, sealing, and final restorative planning.';
 
     text.setAttribute('aria-label', originalText);
-    text.innerHTML = Array.from(originalText)
-      .map((char, index) => {
-        const safeChar = char === ' ' ? '&nbsp;' : char;
-        return `<span class="workflow-wheel-support-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+    let charIndex = 0;
+    text.innerHTML = originalText
+      .split(' ')
+      .map((word) => {
+        const wordMarkup = Array.from(word)
+          .map((char) => {
+            const markup = `<span class="workflow-wheel-support-reveal-char" aria-hidden="true" style="--char-index:${charIndex}">${char}</span>`;
+            charIndex += 1;
+            return markup;
+          })
+          .join('');
+
+        return `<span class="workflow-wheel-support-reveal-word" aria-hidden="true">${wordMarkup}</span>`;
       })
-      .join('');
+      .join(' ');
 
     let revealTimeout;
 
@@ -457,6 +466,11 @@ const segmentData = steps.map((step, index) => {
     font-size: 1rem;
     line-height: 1.68;
     text-align: center;
+  }
+
+  :global(.workflow-wheel-support-reveal-word) {
+    display: inline-block;
+    white-space: nowrap;
   }
 
   :global(.workflow-wheel-support-reveal-char) {
