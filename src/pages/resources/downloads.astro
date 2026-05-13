@@ -13,20 +13,35 @@ const documentGroups = [
   },
   {
     label: 'Part Numbers & Ordering',
-    description: 'Core ordering references for ET and PT systems.',
+    description: 'Core ordering references for ET, PT, and Acrobat systems.',
     files: [
       { name: 'ET Part Numbers (PDF)', href: '/downloads/ET-Part-Numbers.pdf' },
       { name: 'PT Part Numbers (PDF)', href: '/downloads/PT-Part-Numbers.pdf' },
+      { name: 'Acrobat Clinical Blueprint (PDF)', href: '/downloads/Acrobat_Clinical_Blueprint.pdf' },
     ],
   },
   {
     label: 'Company Information',
-    description: 'Supporting company and presentation material.',
+    description: 'Mission, purpose, and long-term support direction for New Zealand dentistry.',
     files: [
-      { name: 'Mission Statement (PDF)', href: '/downloads/Mission-Statement-Paula.pdf' },
+      { name: 'EndoTech NZ Mission Statement', href: '' },
     ],
   },
 ];
+
+const missionStatement = {
+  title: 'EndoTech NZ Mission Statement',
+  subtitle: 'Better Endodontics for New Zealand Dentistry',
+  paragraphs: [
+    'EndoTech NZ has been created by Steve Shepherd to support the future of endodontics in New Zealand through better products, fairer pricing, and practical clinical support for dentists.',
+    'This mission is the result of a lifelong learning curve in endodontics — over 30 years of market development, product education, clinician training, distributor partnerships, and direct involvement in building endodontic markets across New Zealand, Australia, Asia and Europe. Steve’s background includes growing endodontic portfolios, supporting key opinion leaders, training dental teams, developing education models, and helping bring specialist-level endodontic thinking into everyday dental practice.',
+    'EndoTech NZ is built around a simple belief: New Zealand dentists deserve access to high-quality endodontic systems that are clinically sensible, technically credible, and priced responsibly.',
+    'Our purpose is not just to supply products. It is to help create better endodontics — by supporting safer shaping, improved apical control, effective irrigation, predictable obturation, and a clearer treatment workflow from diagnosis through restoration.',
+    'We also believe that dentistry in New Zealand needs a more competitive and sustainable supply environment. High-quality endodontic treatment should not be limited by unnecessarily high product costs or dependence on a small number of expensive legacy brands.',
+    'EndoTech NZ aims to build the foundations for long-term support of the New Zealand dental industry: reliable supply, practical education, responsive local service, transparent product information, and products selected specifically for the needs of New Zealand dentists.',
+    'Our mission is to help dentists work with greater confidence, improve clinical outcomes, and make modern endodontic care more accessible across New Zealand.',
+  ],
+};
 ---
 
 <ProductLayout
@@ -84,22 +99,35 @@ const documentGroups = [
             <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">{group.label}</h2>
             <p class="mt-3 text-base leading-8 text-slate-600">{group.description}</p>
 
-            <div class="mt-6 grid gap-4">
-              {group.files.map((file) => (
-                <div class="flex flex-col gap-3 rounded-[1.35rem] border border-slate-200 bg-slate-50/80 p-5 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">PDF document</p>
-                    <h3 class="mt-2 text-lg font-bold tracking-tight text-slate-900">{file.name}</h3>
-                  </div>
-                  <a
-                    href={withBasePath(file.href)}
-                    class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
-                  >
-                    Open PDF
-                  </a>
+            {group.label === 'Company Information' ? (
+              <div class="mt-6 rounded-[1.35rem] border border-slate-200 bg-slate-50/80 p-5 sm:p-6">
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Mission statement</p>
+                <h3 class="mt-3 text-2xl font-bold tracking-tight text-slate-900">{missionStatement.title}</h3>
+                <p class="mt-2 text-lg font-semibold tracking-tight text-slate-700">{missionStatement.subtitle}</p>
+                <div class="mt-5 grid gap-4">
+                  {missionStatement.paragraphs.map((paragraph) => (
+                    <p class="text-base leading-8 text-slate-600">{paragraph}</p>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <div class="mt-6 grid gap-4">
+                {group.files.map((file) => (
+                  <div class="flex flex-col gap-3 rounded-[1.35rem] border border-slate-200 bg-slate-50/80 p-5 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">PDF document</p>
+                      <h3 class="mt-2 text-lg font-bold tracking-tight text-slate-900">{file.name}</h3>
+                    </div>
+                    <a
+                      href={withBasePath(file.href)}
+                      class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
+                    >
+                      Open PDF
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
           </article>
         ))}
       </div>
