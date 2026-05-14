@@ -8,6 +8,7 @@ import { siteConfig } from '../../config/site';
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const base = import.meta.env.BASE_URL;
 const acrobatClinicalBlueprintSrc = withBasePath('/downloads/Acrobat_Clinical_Blueprint.pdf');
+const acrobatIfuPdfSrc = withBasePath('/downloads/ETNZ-IFU-ACROBAT-001-Acrobat-Glide-Path.pdf');
 const acrobatOrderHref = `${base}order/#acrobat-order`;
 const workflowHref = `${base}technique/workflow/`;
 const motorSettingsHref = `${base}technique/motor-settings/`;
@@ -132,6 +133,11 @@ const downloads = [
     label: 'Technique workflow',
     title: 'Clinical workflow overview',
     href: workflowHref,
+  },
+  {
+    label: 'Instructions for use',
+    title: 'Acrobat Glide Path IFU PDF',
+    href: acrobatIfuPdfSrc,
   },
 ];
 ---
@@ -352,7 +358,7 @@ const downloads = [
       </div>
       <div class="acrobat-cta-actions">
         <a class="acrobat-button primary" href={acrobatOrderHref}>Order Acrobat Glide Path</a>
-        <a class="acrobat-button secondary on-dark" href={acrobatClinicalBlueprintSrc}>Open clinical blueprint</a>
+        <a class="acrobat-button secondary on-dark" href={acrobatIfuPdfSrc}>Download IFU</a>
       </div>
     </section>
   </main>

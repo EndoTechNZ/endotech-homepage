@@ -12,6 +12,7 @@ const base = import.meta.env.BASE_URL;
 const etVideoSrc = withBasePath('/videos/et-transformx-promo_1.mp4');
 const workflowPdfSrc = withBasePath('/downloads/ET-Technique-Work-Flow.pdf');
 const partNumbersPdfSrc = withBasePath('/downloads/ET-Part-Numbers.pdf');
+const etIfuPdfSrc = withBasePath('/downloads/ETNZ-IFU-TXET-001-TransformX-ET.pdf');
 const etOrderHref = `${base}order/#et-order`;
 const workflowHref = `${base}technique/workflow/`;
 const downloadsHref = `${base}resources/downloads/`;
@@ -103,6 +104,11 @@ const downloads = [
     label: 'Product file',
     title: 'ET Part Numbers PDF',
     href: partNumbersPdfSrc,
+  },
+  {
+    label: 'Instructions for use',
+    title: 'ET TransformX IFU PDF',
+    href: etIfuPdfSrc,
   },
 ];
 ---
@@ -283,7 +289,7 @@ const downloads = [
       </div>
       <div class="et-cta-actions">
         <a class="et-button primary" href={etOrderHref}>Order ET TransformX</a>
-        <a class="et-button secondary on-dark" href={downloadsHref}>Open Downloads</a>
+        <a class="et-button secondary on-dark" href={etIfuPdfSrc}>Download IFU</a>
       </div>
     </section>
   </main>
