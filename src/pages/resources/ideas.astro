@@ -1,116 +1,350 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
+import { blogIdeas } from '../../data/blogIdeas';
 import { withBasePath } from '../../utils/paths';
 
-const base = import.meta.env.BASE_URL;
-const ideasHeroSrc = withBasePath('/blog-ideas-reference.png');
+const categories = ['All', ...Array.from(new Set(blogIdeas.map((idea) => idea.category)))];
+const heroImage = withBasePath('/blog/reading-anatomy-not-guessing.png');
 ---
 
 <ProductLayout
-  title="Blog | EndoTech NZ"
-  description="Case notes, blog articles, clinical thinking, and evidence-led perspectives from EndoTech NZ."
+  title="Case Notes & Ideas | EndoTech NZ"
+  description="Clinical case notes, technique ideas, anatomy reflections, and evidence-led endodontic thinking from EndoTech NZ."
   accent="slate"
 >
-  <section class="border-b border-slate-200/80 bg-slate-950">
-    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-      <div class="ideas-title-wrap">
-        <p class="ideas-eyebrow">Blog</p>
-        <h1>Case notes, ideas, and clinical thinking.</h1>
-        <p>
-          This page is the initial blog landing page. It is live now as a visual reference and will be built out into a fuller article and category experience next.
-        </p>
-        <a href={`${base}resources/downloads/`}>Back to downloads</a>
-      </div>
+  <section class="blog-hero" style={`--hero-image: url('${heroImage}')`}>
+    <div class="blog-hero__inner">
+      <p class="blog-eyebrow">EndoTech Case Notes & Ideas</p>
+      <h1>Case notes / ideas</h1>
+      <p class="blog-hero__summary">
+        Practical insights, evidence-led thinking, and clinical perspectives for controlled endodontic workflows.
+      </p>
+      <a class="blog-hero__cta" href="#articles">Explore articles <span aria-hidden="true">-></span></a>
+    </div>
+  </section>
 
-      <figure class="ideas-reference-frame">
-        <img src={ideasHeroSrc} alt="EndoTech NZ blog page reference showing case notes and ideas concepts" />
-      </figure>
+  <section class="blog-index" id="articles" aria-labelledby="articles-title">
+    <div class="blog-index__chrome">
+      <div>
+        <p class="blog-eyebrow">Editorial index</p>
+        <h2 id="articles-title">Clinical articles</h2>
+      </div>
+      <nav class="blog-filters" aria-label="Article categories">
+        {categories.map((category, index) => (
+          <a class={index === 0 ? 'is-active' : ''} href="#articles">{category}</a>
+        ))}
+      </nav>
+    </div>
+
+    <div class="article-grid">
+      {blogIdeas.map((idea) => (
+        <a class="article-card" href={withBasePath(`/resources/ideas/${idea.slug}/`)} aria-label={`Read ${idea.title}`}>
+          <figure>
+            <img src={withBasePath(idea.image)} alt="" loading="lazy" />
+          </figure>
+          <div class="article-card__body">
+            <p class="article-card__category">{idea.category}</p>
+            <h3>{idea.title}</h3>
+            <p class="article-card__summary">{idea.summary}</p>
+            <div class="article-card__meta">
+              <span>{idea.readTime}</span>
+              <span class="article-card__arrow" aria-hidden="true">-></span>
+            </div>
+          </div>
+        </a>
+      ))}
     </div>
   </section>
 </ProductLayout>
 
 <style>
-  .ideas-title-wrap {
-    display: grid;
-    gap: 1rem;
-    max-width: 56rem;
-    margin-bottom: 2rem;
+  :global(body) {
+    font-family: Inter, 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   }
 
-  .ideas-eyebrow {
+  .blog-hero {
+    position: relative;
+    min-height: min(620px, calc(100dvh - 72px));
+    display: grid;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 1px solid #dbe4ee;
+    background:
+      linear-gradient(90deg, rgba(7, 15, 31, 0.92) 0%, rgba(7, 15, 31, 0.72) 42%, rgba(7, 15, 31, 0.25) 100%),
+      var(--hero-image) center / cover no-repeat,
+      #0c1730;
+  }
+
+  .blog-hero__inner {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 86px 0 104px;
+    color: #ffffff;
+  }
+
+  .blog-eyebrow,
+  .article-card__category {
     margin: 0;
-    color: rgba(191, 219, 254, 0.86);
-    font-size: 0.78rem;
+    color: #0b75b7;
+    font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.28em;
+    line-height: 1.3;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
-  .ideas-title-wrap h1 {
-    margin: 0;
+  .blog-hero .blog-eyebrow {
+    color: #71c8ff;
+  }
+
+  .blog-hero h1 {
+    max-width: 9.5ch;
+    margin: 18px 0 22px;
     color: #f8fafc;
-    font-size: clamp(2.9rem, 6vw, 5.4rem);
-    line-height: 0.96;
-    letter-spacing: -0.05em;
+    font-family: Inter, 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: clamp(3.3rem, 9vw, 7.9rem);
+    font-weight: 700;
+    line-height: 0.94;
+    letter-spacing: 0;
+    text-transform: uppercase;
   }
 
-  .ideas-title-wrap p {
+  .blog-hero__summary {
+    max-width: 34rem;
     margin: 0;
-    max-width: 46rem;
-    color: rgba(226, 232, 240, 0.84);
-    font-size: 1.08rem;
-    line-height: 1.85;
+    color: rgba(248, 250, 252, 0.9);
+    font-size: clamp(1rem, 1.7vw, 1.32rem);
+    line-height: 1.55;
   }
 
-  .ideas-title-wrap a {
+  .blog-hero__cta {
     display: inline-flex;
-    width: fit-content;
     align-items: center;
-    justify-content: center;
-    margin-top: 0.35rem;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    gap: 10px;
+    width: fit-content;
+    margin-top: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.34);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.06);
-    padding: 0.9rem 1.35rem;
-    color: #f8fafc;
-    font-size: 0.92rem;
+    padding: 0.86rem 1.12rem;
+    color: #ffffff;
+    font-size: 0.86rem;
     font-weight: 700;
     text-decoration: none;
+    text-transform: uppercase;
     transition:
-      transform 180ms ease,
-      background-color 180ms ease,
-      border-color 180ms ease;
+      background-color 200ms ease-in-out,
+      border-color 200ms ease-in-out,
+      transform 200ms ease-in-out;
   }
 
-  .ideas-title-wrap a:hover {
-    transform: translateY(-1px);
+  .blog-hero__cta:hover,
+  .blog-hero__cta:focus-visible {
+    border-color: rgba(255, 255, 255, 0.64);
     background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.24);
+    transform: translateY(-1px);
   }
 
-  .ideas-reference-frame {
+  .blog-index {
+    background: #ffffff;
+    padding: 36px 32px 74px;
+  }
+
+  .blog-index__chrome {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 28px;
+    align-items: end;
+    width: min(1280px, 100%);
+    margin: 0 auto 28px;
+  }
+
+  .blog-index__chrome h2 {
+    margin: 8px 0 0;
+    color: #111827;
+    font-family: Inter, 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: 0;
+  }
+
+  .blog-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .blog-filters a {
+    border-bottom: 2px solid transparent;
+    padding: 0 0 9px;
+    color: #607084;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      border-color 200ms ease-in-out,
+      color 200ms ease-in-out;
+  }
+
+  .blog-filters a:hover,
+  .blog-filters a:focus-visible,
+  .blog-filters a.is-active {
+    border-color: #0b75b7;
+    color: #111827;
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    width: min(1280px, 100%);
+    margin: 0 auto;
+  }
+
+  .article-card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100%;
+    overflow: hidden;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    background: #ffffff;
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(12, 23, 48, 0.04);
+    transition:
+      box-shadow 200ms ease-in-out,
+      transform 200ms ease-in-out,
+      border-color 200ms ease-in-out;
+  }
+
+  .article-card:hover,
+  .article-card:focus-visible {
+    border-color: #b8d8ea;
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08);
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  .article-card figure {
+    aspect-ratio: 16 / 10;
     margin: 0;
     overflow: hidden;
-    border: 1px solid rgba(226, 232, 240, 0.12);
-    border-radius: 1.9rem;
-    background: rgba(255, 255, 255, 0.04);
-    box-shadow: 0 28px 80px -52px rgba(15, 23, 42, 0.45);
+    background: #0c1730;
   }
 
-  .ideas-reference-frame img {
+  .article-card img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 240ms ease-in-out;
+  }
+
+  .article-card:hover img,
+  .article-card:focus-visible img {
+    transform: scale(1.025);
+  }
+
+  .article-card__body {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 12px;
+    padding: 22px 22px 20px;
+  }
+
+  .article-card h3 {
+    margin: 0;
+    color: #111827;
+    font-family: Inter, 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: 1.38rem;
+    font-weight: 600;
+    line-height: 1.18;
+    letter-spacing: 0;
+  }
+
+  .article-card__summary {
+    margin: 0;
+    color: #607084;
+    font-size: 0.98rem;
+    line-height: 1.48;
+  }
+
+  .article-card__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 8px;
+    color: #42526a;
+    font-family: 'Geist Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .article-card__arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #b9c6d5;
+    border-radius: 50%;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.9rem;
+    transition:
+      border-color 200ms ease-in-out,
+      color 200ms ease-in-out,
+      transform 200ms ease-in-out;
+  }
+
+  .article-card:hover .article-card__arrow,
+  .article-card:focus-visible .article-card__arrow {
+    border-color: #0b75b7;
+    color: #0b75b7;
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 980px) {
+    .blog-index__chrome,
+    .article-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .blog-filters {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: 4px;
+    }
+
+    .blog-filters a {
+      white-space: nowrap;
+    }
   }
 
   @media (max-width: 720px) {
-    .ideas-title-wrap {
-      margin-bottom: 1.5rem;
+    .blog-hero {
+      min-height: 560px;
+      background:
+        linear-gradient(180deg, rgba(7, 15, 31, 0.58) 0%, rgba(7, 15, 31, 0.94) 68%),
+        var(--hero-image) center top / cover no-repeat,
+        #0c1730;
     }
 
-    .ideas-title-wrap p {
-      font-size: 1rem;
-      line-height: 1.75;
+    .blog-hero__inner {
+      width: min(100% - 36px, 1180px);
+      align-self: end;
+      padding: 72px 0 54px;
+    }
+
+    .blog-index {
+      padding: 28px 18px 54px;
+    }
+
+    .article-card__body {
+      padding: 20px 18px 18px;
     }
   }
 </style>

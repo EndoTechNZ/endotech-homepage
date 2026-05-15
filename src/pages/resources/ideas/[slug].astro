@@ -1,0 +1,339 @@
+---
+import ProductLayout from '../../../layouts/ProductLayout.astro';
+import { blogIdeas, type BlogIdea } from '../../../data/blogIdeas';
+import { withBasePath } from '../../../utils/paths';
+
+export function getStaticPaths() {
+  return blogIdeas.map((idea) => ({
+    params: { slug: idea.slug },
+    props: { idea },
+  }));
+}
+
+interface Props {
+  idea: BlogIdea;
+}
+
+const { idea } = Astro.props;
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: idea.title,
+  description: idea.summary,
+  image: withBasePath(idea.image),
+  articleSection: idea.category,
+  isAccessibleForFree: true,
+};
+---
+
+<ProductLayout
+  title={`${idea.title} | EndoTech NZ`}
+  description={idea.summary}
+  image={withBasePath(idea.image)}
+  schema={articleSchema}
+  accent="slate"
+>
+  <article class="article-page">
+    <header class="article-hero">
+      <a class="article-back" href={withBasePath('/resources/ideas/')} aria-label="Back to Case Notes and Ideas">
+        <span class="article-back__icon" aria-hidden="true">←</span>
+        <span>Back to Case Notes & Ideas</span>
+      </a>
+      <p class="article-eyebrow">{idea.category}</p>
+      <h1>{idea.title}</h1>
+      <p class="article-summary">{idea.summary}</p>
+      <div class="article-meta" aria-label="Article details">
+        <span>{idea.readTime}</span>
+        <span>EndoTech NZ</span>
+        <span>Draft ready</span>
+      </div>
+    </header>
+
+    <figure class="article-media">
+      <img src={withBasePath(idea.image)} alt="" />
+      <figcaption>{idea.focus}</figcaption>
+    </figure>
+
+    <div class="article-shell">
+      <aside class="article-aside" aria-label="Article format">
+        <p>Suggested format</p>
+        <ol>
+          {idea.placeholders.map((placeholder) => (
+            <li>{placeholder}</li>
+          ))}
+        </ol>
+      </aside>
+
+      <div class="article-body">
+        <section>
+          <h2>Clinical problem</h2>
+          <p>
+            Add the opening clinical context here. Frame the problem clearly, then connect each point to control,
+            safety, and adaptability in the procedure.
+          </p>
+        </section>
+
+        <section>
+          <h2>Case notes</h2>
+          <p>
+            Add observations, decision points, technique notes, images, or evidence references here. Keep the language
+            precise and evidence-informed.
+          </p>
+        </section>
+
+        <section>
+          <h2>Clinical implications</h2>
+          <p>
+            Add the practical conclusion here. Link the idea back to patient outcomes, workflow confidence, and the
+            clinical problem described above.
+          </p>
+        </section>
+      </div>
+    </div>
+  </article>
+</ProductLayout>
+
+<style>
+  :global(body) {
+    font-family: Inter, 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  }
+
+  .article-page {
+    background: #ffffff;
+  }
+
+  .article-hero {
+    width: min(920px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 72px 0 38px;
+  }
+
+  .article-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    margin-bottom: 34px;
+    border: 1px solid #d8e2ec;
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+    padding: 0.7rem 0.96rem 0.7rem 0.72rem;
+    color: #24364a;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow:
+      0 1px 2px rgba(12, 23, 48, 0.04),
+      0 10px 28px rgba(0, 55, 112, 0);
+    transition:
+      border-color 200ms ease-in-out,
+      box-shadow 200ms ease-in-out,
+      color 200ms ease-in-out,
+      transform 200ms ease-in-out;
+  }
+
+  .article-back:hover,
+  .article-back:focus-visible {
+    border-color: #b8d8ea;
+    color: #0b75b7;
+    box-shadow:
+      0 1px 2px rgba(12, 23, 48, 0.04),
+      0 8px 24px rgba(0, 55, 112, 0.08);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .article-back__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #c7d5e4;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #0b75b7;
+    font-size: 1rem;
+    line-height: 1;
+    transition:
+      border-color 200ms ease-in-out,
+      background-color 200ms ease-in-out,
+      transform 200ms ease-in-out;
+  }
+
+  .article-back:hover .article-back__icon,
+  .article-back:focus-visible .article-back__icon {
+    border-color: #0b75b7;
+    background: #eef8fc;
+    transform: translateX(-2px);
+  }
+
+  .article-eyebrow {
+    margin: 0 0 14px;
+    color: #0b75b7;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .article-hero h1 {
+    margin: 0;
+    color: #111827;
+    font-family: Inter, 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: 0;
+  }
+
+  .article-summary {
+    max-width: 46rem;
+    margin: 22px 0 0;
+    color: #42526a;
+    font-size: clamp(1.08rem, 2vw, 1.34rem);
+    line-height: 1.58;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+    color: #607084;
+    font-family: 'Geist Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .article-meta span {
+    border: 1px solid #e3e8ee;
+    border-radius: 999px;
+    padding: 0.5rem 0.72rem;
+    background: #f7f9fc;
+  }
+
+  .article-media {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .article-media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #0c1730;
+  }
+
+  .article-media figcaption {
+    margin-top: 12px;
+    color: #607084;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .article-shell {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 760px);
+    gap: 54px;
+    align-items: start;
+    width: min(1040px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 58px 0 88px;
+  }
+
+  .article-aside {
+    position: sticky;
+    top: 104px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 18px;
+    background: #f7f9fc;
+  }
+
+  .article-aside p {
+    margin: 0 0 12px;
+    color: #111827;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .article-aside ol {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding-left: 18px;
+    color: #42526a;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .article-body {
+    display: grid;
+    gap: 42px;
+  }
+
+  .article-body section {
+    border-bottom: 1px solid #e3e8ee;
+    padding-bottom: 36px;
+  }
+
+  .article-body section:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .article-body h2 {
+    margin: 0 0 14px;
+    color: #111827;
+    font-family: Inter, 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  .article-body p {
+    margin: 0;
+    color: #24364a;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 860px) {
+    .article-shell {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .article-aside {
+      position: static;
+    }
+
+    .article-media img {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .article-hero,
+    .article-media,
+    .article-shell {
+      width: min(100% - 36px, 1040px);
+    }
+
+    .article-hero {
+      padding-top: 48px;
+    }
+
+    .article-back {
+      margin-bottom: 26px;
+    }
+  }
+</style>
