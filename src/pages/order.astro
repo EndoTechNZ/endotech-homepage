@@ -132,11 +132,13 @@ const orderModules = [
     <section class="order-category-heading" aria-label="Available now">
       <div class="order-category-copy">
         <div class="order-availability-box" aria-label="Available now">
+          <div class="order-availability-mark" aria-hidden="true"></div>
           <span>Available now</span>
-          <div class="order-availability-list" aria-label="Currently available products">
-            <a href="#acrobat-order">Acrobat</a>
-            <a href="#et-order">ET TransformX</a>
-            <a href="#pt-order">PT TransformX</a>
+          <div class="order-availability-list" aria-label="Currently available products" data-availability-tabs>
+            <div class="order-availability-indicator" aria-hidden="true" data-availability-indicator></div>
+            <a href="#acrobat-order" data-availability-tab data-glow="Acrobat">Acrobat</a>
+            <a href="#et-order" data-availability-tab data-default-active="true" data-glow="ET TransformX">ET TransformX</a>
+            <a href="#pt-order" data-availability-tab data-glow="PT TransformX">PT TransformX</a>
           </div>
         </div>
         <p class="order-coming-soon-note">RECI X and hand files coming soon.</p>
@@ -206,6 +208,68 @@ const orderModules = [
     </section>
   </main>
 </ProductLayout>
+
+<script is:inline>
+  (() => {
+    const list = document.querySelector('[data-availability-tabs]');
+    const indicator = document.querySelector('[data-availability-indicator]');
+    if (!(list instanceof HTMLElement) || !(indicator instanceof HTMLElement)) return;
+
+    const tabs = Array.from(list.querySelectorAll('[data-availability-tab]')).filter(
+      (tab) => tab instanceof HTMLAnchorElement
+    );
+    if (!tabs.length) return;
+
+    const findCurrentTab = () =>
+      tabs.find((tab) => tab.hash === window.location.hash) ??
+      tabs.find((tab) => tab.dataset.defaultActive === 'true') ??
+      tabs[0];
+
+    let currentTab = findCurrentTab();
+
+    const moveIndicator = (tab) => {
+      if (!(tab instanceof HTMLAnchorElement)) return;
+
+      tabs.forEach((item) => item.classList.toggle('is-highlighted', item === tab));
+
+      const left = tab.offsetLeft;
+      const top = tab.offsetTop;
+      const width = tab.offsetWidth;
+      const height = tab.offsetHeight;
+
+      indicator.style.opacity = '1';
+      indicator.style.width = `${width}px`;
+      indicator.style.height = `${height}px`;
+      indicator.style.transform = `translate(${left}px, ${top}px)`;
+    };
+
+    const syncCurrentTab = () => {
+      currentTab = findCurrentTab();
+      moveIndicator(currentTab);
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('mouseenter', () => moveIndicator(tab));
+      tab.addEventListener('focus', () => moveIndicator(tab));
+      tab.addEventListener('click', () => {
+        currentTab = tab;
+        moveIndicator(tab);
+      });
+    });
+
+    list.addEventListener('mouseleave', () => moveIndicator(currentTab));
+    list.addEventListener('focusout', (event) => {
+      if (!(event.relatedTarget instanceof Node) || !list.contains(event.relatedTarget)) {
+        moveIndicator(currentTab);
+      }
+    });
+
+    window.addEventListener('hashchange', syncCurrentTab);
+    window.addEventListener('resize', () => moveIndicator(currentTab));
+
+    syncCurrentTab();
+  })();
+</script>
 
 <style>
   .order-page {
@@ -388,104 +452,112 @@ const orderModules = [
   }
 
   .order-category-heading {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
-    gap: 34px;
-    align-items: stretch;
-    padding-top: 76px;
-    padding-bottom: 22px;
+    display: block;
+    padding-top: 86px;
+    padding-bottom: 28px;
+    text-align: center;
   }
 
   .order-category-copy {
-    max-width: 52rem;
-  }
-
-  .order-category-heading h2 {
-    max-width: 15ch;
-    font-size: clamp(2.45rem, 3.2vw, 4rem);
-    line-height: 1.02;
-  }
-
-  .order-category-heading p {
-    margin-top: 20px;
+    display: grid;
+    justify-items: center;
+    max-width: none;
   }
 
   .order-availability-box {
-    margin-top: 16px;
     display: grid;
-    gap: 12px;
-    max-width: 42rem;
-    border: 1px solid #b8d8ea;
-    border-radius: 18px;
-    background: linear-gradient(180deg, #eef6fb 0%, #f8fbfd 100%);
-    padding: 18px 20px;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.88),
-      0 18px 38px -34px rgba(11, 117, 183, 0.28);
+    justify-items: center;
+    gap: 28px;
+    width: min(100%, 72rem);
+    margin: 0 auto;
+  }
+
+  .order-availability-mark {
+    width: 120px;
+    height: 2px;
+    border-radius: 999px;
+    background: #d8dee7;
   }
 
   .order-availability-box span {
-    color: #0b75b7;
-    font-size: clamp(1.5rem, 2.8vw, 2.35rem);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 0.98;
+    color: #1b2330;
+    font-size: clamp(2rem, 4vw, 4.4rem);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    line-height: 1;
     text-transform: uppercase;
+    text-align: center;
   }
 
   .order-availability-list {
-    display: flex;
+    position: relative;
+    display: inline-flex;
     flex-wrap: wrap;
-    gap: 10px;
+    justify-content: center;
+    gap: 18px;
+    padding: 10px 8px;
+    isolation: isolate;
+  }
+
+  .order-availability-indicator {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    border-radius: 8px;
+    background: #0c0c10;
+    box-shadow: 0 20px 30px -24px rgba(15, 23, 42, 0.5);
+    opacity: 0;
+    transition:
+      transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      height 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 160ms ease;
+    z-index: 0;
+    margin-top: 1px;
   }
 
   .order-availability-list a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 38px;
-    border: 1px solid #b8d8ea;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #ffffff 0%, #f3f8fc 100%);
-    padding: 0 14px;
-    color: #0f5878;
-    font-size: 0.84rem;
+    min-height: 64px;
+    padding: 0 34px;
+    color: #9ca7b7;
+    font-size: clamp(0.96rem, 1.2vw, 1.25rem);
     font-weight: 800;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.22em;
+    line-height: 1;
     text-decoration: none;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.92),
-      0 8px 18px -14px rgba(11, 117, 183, 0.28),
-      0 1px 2px rgba(15, 23, 42, 0.05);
-    transition:
-      transform 180ms ease,
-      box-shadow 180ms ease,
-      border-color 180ms ease,
-      background 180ms ease;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+    position: relative;
+    z-index: 1;
+    transform: translateY(0);
+    padding-top: 0;
   }
 
-  .order-availability-list a:hover,
-  .order-availability-list a:focus-visible {
-    transform: translateY(-1px);
-    border-color: #8fc7e2;
-    background: linear-gradient(180deg, #ffffff 0%, #eef6fb 100%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.94),
-      0 14px 26px -18px rgba(11, 117, 183, 0.34),
-      0 2px 4px rgba(15, 23, 42, 0.06);
+  .order-availability-list a.is-highlighted {
+    color: #b9f3ef;
+    font-weight: 900;
+    transform: translateY(10px);
+    text-shadow:
+      0 0 10px rgba(139, 232, 227, 0.42),
+      0 0 20px rgba(27, 166, 166, 0.28),
+      0 0 36px rgba(27, 166, 166, 0.14);
   }
 
   .order-availability-list a:focus-visible {
-    outline: 2px solid #0b75b7;
-    outline-offset: 2px;
+    outline: none;
   }
 
   .order-coming-soon-note {
-    margin-top: 14px;
+    margin-top: 0;
     color: #526377;
-    font-size: 0.92rem;
+    font-size: 0.94rem;
     font-weight: 600;
     line-height: 1.55;
+    text-align: center;
+    transform: translateY(34px);
   }
 
   .order-module {
@@ -698,7 +770,6 @@ const orderModules = [
     }
 
     .order-hero,
-    .order-category-heading,
     .order-module-intro,
     .contact-products-heading,
     .contact-products-grid {
@@ -745,6 +816,28 @@ const orderModules = [
     .contact-products-section {
       padding-top: 20px;
       padding-bottom: 20px;
+    }
+
+    .order-availability-box {
+      gap: 22px;
+    }
+
+    .order-availability-box span {
+      letter-spacing: 0.2em;
+      font-size: clamp(1.45rem, 8.4vw, 2.35rem);
+    }
+
+    .order-availability-list {
+      width: 100%;
+      gap: 12px;
+    }
+
+    .order-availability-list a {
+      flex: 1 1 100%;
+      min-height: 58px;
+      padding: 0 18px;
+      letter-spacing: 0.16em;
+      font-size: 0.94rem;
     }
 
     .order-module + .order-module {
