@@ -27,6 +27,7 @@ export const getPrimaryNavItems = (base: string): NavItem[] => [
   { label: 'Products', href: `${base}products/overview/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
   { label: 'Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Blog', href: `${base}resources/ideas/` },
   { label: 'Order', href: `${base}order/` },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
   { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
@@ -45,6 +46,7 @@ export const getProductMobileNavItems = (base: string): NavItem[] => [
   { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
   { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
   { label: 'Order', href: `${base}order/` },
+  { label: 'Blog', href: `${base}resources/ideas/` },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
   { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
   { label: 'About', href: `${base}about/company/` },
@@ -57,6 +59,7 @@ export const getHomepageMobileNavItems = (base: string): NavItem[] => [
   { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
   { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
   { label: 'Order', href: `${base}order/` },
+  { label: 'Blog', href: `${base}resources/ideas/` },
   { label: 'Acrobat Glide Path', href: `${base}products/acrobat-glide-path/` },
   { label: 'ET TransformX', href: `${base}products/et-transformx/` },
   { label: 'PT TransformX', href: `${base}products/pt-transformx/` },
@@ -85,6 +88,7 @@ export const getFooterSections = (base: string): FooterSection[] => [
     links: [
       { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
       { label: 'Technology', href: `${base}technology/transform-technology/` },
+      { label: 'Blog', href: `${base}resources/ideas/` },
       { label: 'Education', href: `${base}resources/clinical-tips/` },
       { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
     ],
@@ -101,5 +105,6 @@ export const getFooterSections = (base: string): FooterSection[] => [
 
 export const getFooterUtilityLinks = (base: string): NavItem[] => [
   { label: 'Contact', href: `${base}about/contact/` },
+  { label: 'Blog', href: `${base}resources/ideas/` },
   { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
 ];

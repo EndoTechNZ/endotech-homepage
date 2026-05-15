@@ -1,0 +1,116 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import { withBasePath } from '../../utils/paths';
+
+const base = import.meta.env.BASE_URL;
+const ideasHeroSrc = withBasePath('/blog-ideas-reference.png');
+---
+
+<ProductLayout
+  title="Blog | EndoTech NZ"
+  description="Case notes, blog articles, clinical thinking, and evidence-led perspectives from EndoTech NZ."
+  accent="slate"
+>
+  <section class="border-b border-slate-200/80 bg-slate-950">
+    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
+      <div class="ideas-title-wrap">
+        <p class="ideas-eyebrow">Blog</p>
+        <h1>Case notes, ideas, and clinical thinking.</h1>
+        <p>
+          This page is the initial blog landing page. It is live now as a visual reference and will be built out into a fuller article and category experience next.
+        </p>
+        <a href={`${base}resources/downloads/`}>Back to downloads</a>
+      </div>
+
+      <figure class="ideas-reference-frame">
+        <img src={ideasHeroSrc} alt="EndoTech NZ blog page reference showing case notes and ideas concepts" />
+      </figure>
+    </div>
+  </section>
+</ProductLayout>
+
+<style>
+  .ideas-title-wrap {
+    display: grid;
+    gap: 1rem;
+    max-width: 56rem;
+    margin-bottom: 2rem;
+  }
+
+  .ideas-eyebrow {
+    margin: 0;
+    color: rgba(191, 219, 254, 0.86);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .ideas-title-wrap h1 {
+    margin: 0;
+    color: #f8fafc;
+    font-size: clamp(2.9rem, 6vw, 5.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.05em;
+  }
+
+  .ideas-title-wrap p {
+    margin: 0;
+    max-width: 46rem;
+    color: rgba(226, 232, 240, 0.84);
+    font-size: 1.08rem;
+    line-height: 1.85;
+  }
+
+  .ideas-title-wrap a {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.35rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.9rem 1.35rem;
+    color: #f8fafc;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      transform 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .ideas-title-wrap a:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.24);
+  }
+
+  .ideas-reference-frame {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid rgba(226, 232, 240, 0.12);
+    border-radius: 1.9rem;
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 28px 80px -52px rgba(15, 23, 42, 0.45);
+  }
+
+  .ideas-reference-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 720px) {
+    .ideas-title-wrap {
+      margin-bottom: 1.5rem;
+    }
+
+    .ideas-title-wrap p {
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+  }
+</style>
