@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Singapore Website Handover</title>
+    <style>
+      :root {
+        --canvas: #ffffff;
+        --canvas-soft: #f7f9fc;
+        --surface: #ffffff;
+        --surface-soft: #f8fafc;
+        --surface-blue: #eef6fb;
+        --ink: #111827;
+        --ink-secondary: #24364a;
+        --ink-muted: #607084;
+        --primary: #0b75b7;
+        --primary-deep: #064b78;
+        --primary-soft: #dceff8;
+        --hairline: #e3e8ee;
+        --hairline-blue: #b8d8ea;
+      }
+
+      @page {
+        size: A4;
+        margin: 14mm;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        color: var(--ink);
+        background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+      }
+
+      .page {
+        width: 100%;
+        min-height: 100vh;
+        padding: 8px;
+      }
+
+      .sheet {
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08), 0 2px 6px rgba(0, 55, 112, 0.04);
+        overflow: hidden;
+      }
+
+      .hero {
+        padding: 28px 32px 20px;
+        background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--primary);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 31px;
+        line-height: 1.08;
+        letter-spacing: -0.8px;
+        font-weight: 600;
+        color: var(--ink);
+        max-width: 760px;
+      }
+
+      .lead {
+        margin: 12px 0 0;
+        max-width: 760px;
+        font-size: 15px;
+        line-height: 1.55;
+        color: var(--ink-secondary);
+      }
+
+      .flow {
+        margin: 20px 0 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        align-items: center;
+      }
+
+      .flow-card {
+        min-height: 108px;
+        padding: 16px 14px;
+        border: 1px solid var(--hairline);
+        border-radius: 12px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      }
+
+      .flow-card.blue {
+        background: linear-gradient(180deg, #eef6fb 0%, #f8fbfd 100%);
+        border-color: var(--hairline-blue);
+      }
+
+      .flow-step {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 4px 9px;
+        border-radius: 9999px;
+        background: var(--primary-soft);
+        color: var(--primary-deep);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .flow-title {
+        margin: 0 0 6px;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.2;
+        color: var(--ink);
+      }
+
+      .flow-copy {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.45;
+        color: var(--ink-muted);
+      }
+
+      .arrow {
+        display: none;
+      }
+
+      .content {
+        padding: 22px 32px 28px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 20px;
+      }
+
+      .section-title {
+        margin: 0 0 10px;
+        font-size: 18px;
+        line-height: 1.3;
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .section-copy {
+        margin: 0 0 14px;
+        font-size: 14px;
+        line-height: 1.58;
+        color: var(--ink-secondary);
+      }
+
+      .card {
+        padding: 18px;
+        border: 1px solid var(--hairline);
+        border-radius: 12px;
+        background: #fff;
+      }
+
+      .card + .card {
+        margin-top: 12px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      li {
+        margin: 0 0 7px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--ink-secondary);
+      }
+
+      .remember {
+        padding: 18px;
+        border: 1px solid var(--hairline-blue);
+        border-radius: 16px;
+        background: linear-gradient(180deg, #eef6fb 0%, #f8fbfd 100%);
+      }
+
+      .remember-copy {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.4;
+        font-weight: 600;
+        color: var(--primary-deep);
+      }
+
+      .months {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .month {
+        padding: 14px;
+        border: 1px solid var(--hairline);
+        border-radius: 12px;
+        background: var(--surface-soft);
+      }
+
+      .month-title {
+        margin: 0 0 6px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .month-copy {
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.45;
+        color: var(--ink-muted);
+      }
+
+      .resources {
+        margin-top: 12px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .resource {
+        font-size: 12px;
+        line-height: 1.4;
+        color: var(--ink-muted);
+      }
+
+      .resource a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .footer {
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid var(--hairline);
+        font-size: 12px;
+        line-height: 1.45;
+        color: var(--ink-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="sheet">
+        <section class="hero">
+          <p class="eyebrow">Singapore Website Handover</p>
+          <h1>How a website change moves from Codex to GitHub to Netlify to the live URL</h1>
+          <p class="lead">
+            This is the simple version. The main goal is to understand the journey of one website change from the first edit all the way through to the public site that people can visit.
+          </p>
+
+          <div class="flow" aria-label="Workflow overview">
+            <div class="flow-card blue">
+              <div class="flow-step">Step 1</div>
+              <h2 class="flow-title">Codex</h2>
+              <p class="flow-copy">This is where you make or edit the website content, layout, or code.</p>
+            </div>
+            <div class="flow-card">
+              <div class="flow-step">Step 2</div>
+              <h2 class="flow-title">GitHub</h2>
+              <p class="flow-copy">This is where the website files are saved and tracked safely.</p>
+            </div>
+            <div class="flow-card">
+              <div class="flow-step">Step 3</div>
+              <h2 class="flow-title">Netlify</h2>
+              <p class="flow-copy">This tool takes the saved files and publishes the new version online.</p>
+            </div>
+            <div class="flow-card blue">
+              <div class="flow-step">Step 4</div>
+              <h2 class="flow-title">Live URL</h2>
+              <p class="flow-copy">This is the website address people open in a browser to see the final result.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="grid">
+            <div>
+              <div class="card">
+                <h2 class="section-title">What each part does</h2>
+                <p class="section-copy">
+                  Think of this like a relay race. Each tool has one job, and the website only goes live when each step passes the work to the next one.
+                </p>
+                <ul>
+                  <li><strong>Codex</strong> helps make the change.</li>
+                  <li><strong>GitHub</strong> saves the change and keeps a record of it.</li>
+                  <li><strong>Netlify</strong> notices the new files and rebuilds the site.</li>
+                  <li><strong>The live URL</strong> is where people see the updated website.</li>
+                </ul>
+              </div>
+
+              <div class="card">
+                <h2 class="section-title">What happens in plain English</h2>
+                <ul>
+                  <li>You change some text, an image, or a page in Codex.</li>
+                  <li>You save those website files into GitHub.</li>
+                  <li>Netlify sees the update and builds the new version.</li>
+                  <li>The public website address shows the updated site.</li>
+                </ul>
+              </div>
+
+              <div class="remember">
+                <p class="remember-copy">Codex helps make it. GitHub saves it. Netlify publishes it. The URL shows it.</p>
+              </div>
+            </div>
+
+            <div>
+              <div class="card">
+                <h2 class="section-title">How to spot where a problem is</h2>
+                <ul>
+                  <li>If the wording or layout is wrong, the issue may be in the edit itself.</li>
+                  <li>If the change is not saved properly, the issue may be in GitHub.</li>
+                  <li>If the code is saved but the website is not updating, the issue may be in Netlify.</li>
+                  <li>If the site is live but the address is wrong, the issue may be with the URL or domain setup.</li>
+                </ul>
+              </div>
+
+              <div class="card">
+                <h2 class="section-title">What he should learn over the next few months</h2>
+                <div class="months">
+                  <div class="month">
+                    <p class="month-title">Month 1</p>
+                    <p class="month-copy">Learn what each tool does and follow a small website change through the full workflow.</p>
+                  </div>
+                  <div class="month">
+                    <p class="month-title">Month 2</p>
+                    <p class="month-copy">Get comfortable saving work properly in GitHub and checking whether Netlify has updated.</p>
+                  </div>
+                  <div class="month">
+                    <p class="month-title">Month 3</p>
+                    <p class="month-copy">Handle a website change from start to finish and know how to tell where a problem sits.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <h2 class="section-title">Useful resources</h2>
+                <div class="resources">
+                  <div class="resource">OpenAI Codex overview: <a href="https://platform.openai.com/docs/codex/overview">platform.openai.com/docs/codex/overview</a></div>
+                  <div class="resource">GitHub basics: <a href="https://docs.github.com/en/get-started/start-your-journey/about-github-and-git">docs.github.com/.../about-github-and-git</a></div>
+                  <div class="resource">Getting started with Git: <a href="https://docs.github.com/get-started/learning-to-code/getting-started-with-git">docs.github.com/.../getting-started-with-git</a></div>
+                  <div class="resource">Netlify deploy overview: <a href="https://docs.netlify.com/deploy/deploy-overview">docs.netlify.com/deploy/deploy-overview</a></div>
+                  <div class="resource">Netlify domains overview: <a href="https://docs.netlify.com/manage/domains/domains-fundamentals/understand-domains/">docs.netlify.com/.../understand-domains</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            Final goal: understand the simple chain from making the change, to saving the change, to publishing the change, to seeing the change live on the website.
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
