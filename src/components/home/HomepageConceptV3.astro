@@ -1663,43 +1663,76 @@ const workflowSteps = [
     }
 
     .homepage-hero {
-      min-height: 560px;
-      padding-top: 56px;
-      padding-bottom: 54px;
+      align-content: start;
+      min-height: auto;
+      padding-top: 34px;
+      padding-bottom: 38px;
+    }
+
+    .homepage-hero::after {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.72) 30%, rgba(255, 255, 255, 0.92) 62%, #ffffff 100%),
+        radial-gradient(ellipse 96% 74% at 50% 40%, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.7) 45%, rgba(255, 255, 255, 0.2) 100%);
     }
 
     .homepage-hero-product-bg {
       inset: 0;
-      opacity: 0.42;
-      filter: contrast(1.04) saturate(1.01);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      opacity: 0.52;
+      filter: contrast(1.03) saturate(1.01);
     }
 
     .homepage-hero-product-bg img {
-      object-position: 58% 0%;
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      max-height: 42vh;
+      object-fit: contain;
+      object-position: center top;
     }
 
-    .homepage-hero-eyebrow {
-      margin-bottom: 16px;
-      font-size: clamp(0.62rem, 2.5vw, 0.72rem);
-      letter-spacing: 0.16em;
+    .homepage-hero-panel {
+      width: min(100%, calc(100% - 24px));
+      margin-top: 118px;
+      padding: 28px 16px 26px;
+      border-radius: 18px;
+    }
+
+    .homepage-hero-copy {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .clinical-workflow-reveal-mask {
+      overflow: visible;
+      min-height: 12px;
+      margin-bottom: 14px;
+    }
+
+    .clinical-workflow-reveal-text {
+      font-size: clamp(0.56rem, 2.35vw, 0.66rem);
+      letter-spacing: 0.18em;
+      white-space: normal;
     }
 
     .homepage-hero h1.homepage-hero-title {
-      font-size: clamp(2rem, 8.6vw, 2.35rem);
+      font-size: clamp(1.42rem, 6.2vw, 1.86rem);
       line-height: 1.12;
       letter-spacing: -0.035em;
     }
 
     .homepage-hero-line {
-      gap: 0.1em;
+      gap: 0.14em;
       white-space: nowrap;
       flex-wrap: nowrap;
     }
 
     .homepage-hero-lede {
       max-width: 32rem;
-      margin-top: 24px;
-      font-size: 0.92rem;
+      margin-top: 18px;
+      font-size: 0.86rem;
     }
 
     .homepage-hero-actions,
