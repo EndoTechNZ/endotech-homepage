@@ -159,34 +159,36 @@ const workflowSteps = [
     <figure class="homepage-hero-product-bg" aria-hidden="true">
       <img src={homepageSplash.src} alt="" />
     </figure>
-    <div class="homepage-hero-copy">
-      <div class="clinical-workflow-reveal-mask">
-        <p class="clinical-workflow-reveal-text js-clinical-workflow-reveal">
-          EndoTech NZ Clinical Workflow
+    <div class="homepage-hero-panel">
+      <div class="homepage-hero-copy">
+        <div class="clinical-workflow-reveal-mask">
+          <p class="clinical-workflow-reveal-text js-clinical-workflow-reveal">
+            EndoTech NZ Clinical Workflow
+          </p>
+        </div>
+        <h1 id="homepage-hero-title" class="homepage-hero-title homepage-hero-title--pre-reveal" data-homepage-hero-title>
+          <span class="homepage-hero-line" style="--hero-line-delay: 0ms;">
+            <span class="homepage-hero-dark">Shape</span>
+            <span class="homepage-hero-light">with confidence.</span>
+          </span>
+          <span class="homepage-hero-line" style="--hero-line-delay: 70ms;">
+            <span class="homepage-hero-dark">Clean</span>
+            <span class="homepage-hero-light">with purpose.</span>
+          </span>
+          <span class="homepage-hero-line" style="--hero-line-delay: 140ms;">
+            <span class="homepage-hero-dark">Seal</span>
+            <span class="homepage-hero-light">with control.</span>
+          </span>
+        </h1>
+        <p class="homepage-hero-lede">
+          EndoTech brings together glide path, shaping, irrigation and obturation into one practical clinical workflow for New Zealand endodontics.
         </p>
       </div>
-      <h1 id="homepage-hero-title" class="homepage-hero-title homepage-hero-title--pre-reveal" data-homepage-hero-title>
-        <span class="homepage-hero-line" style="--hero-line-delay: 0ms;">
-          <span class="homepage-hero-dark">Shape</span>
-          <span class="homepage-hero-light">with confidence.</span>
-        </span>
-        <span class="homepage-hero-line" style="--hero-line-delay: 70ms;">
-          <span class="homepage-hero-dark">Clean</span>
-          <span class="homepage-hero-light">with purpose.</span>
-        </span>
-        <span class="homepage-hero-line" style="--hero-line-delay: 140ms;">
-          <span class="homepage-hero-dark">Seal</span>
-          <span class="homepage-hero-light">with control.</span>
-        </span>
-      </h1>
-      <p class="homepage-hero-lede">
-        EndoTech brings together glide path, shaping, irrigation and obturation into one practical clinical workflow for New Zealand endodontics.
-      </p>
-    </div>
 
-    <div class="homepage-hero-actions">
-      <a class="homepage-button primary" href={`${base}products/overview/`}>Product Systems</a>
-      <a class="homepage-button secondary" href={`${base}technique/workflow/`}>Clinical Workflow</a>
+      <div class="homepage-hero-actions">
+        <a class="homepage-button primary" href={`${base}products/overview/`}>Product Systems</a>
+        <a class="homepage-button secondary" href={`${base}technique/workflow/`}>Clinical Workflow</a>
+      </div>
     </div>
   </section>
 
@@ -747,9 +749,10 @@ const workflowSteps = [
     position: relative;
     overflow: hidden;
     display: grid;
+    align-content: center;
     justify-items: center;
-    padding-top: 88px;
-    padding-bottom: 64px;
+    min-height: clamp(840px, 60vw, 1000px);
+    padding: 104px 0 98px;
     text-align: center;
     background: #ffffff;
   }
@@ -758,35 +761,52 @@ const workflowSteps = [
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: 1;
     pointer-events: none;
     background:
-      linear-gradient(90deg, rgba(255, 255, 255, 0.99) 0%, rgba(255, 255, 255, 0.95) 44%, rgba(255, 255, 255, 0.48) 100%),
-      linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 58%, rgba(247, 249, 252, 0.68) 100%);
+      radial-gradient(ellipse 40% 70% at 34% 31%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.99) 27%, rgba(255, 255, 255, 0.94) 44%, rgba(255, 255, 255, 0.62) 58%, rgba(255, 255, 255, 0.24) 72%, rgba(255, 255, 255, 0) 100%),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.54) 0%, rgba(255, 255, 255, 0.34) 31%, rgba(255, 255, 255, 0.14) 56%, rgba(255, 255, 255, 0.04) 74%, rgba(255, 255, 255, 0) 100%);
   }
 
   .homepage-hero-product-bg {
     position: absolute;
-    inset: auto -6% -26% 41%;
+    inset: 0;
     z-index: 0;
     margin: 0;
     opacity: 1;
-    filter: blur(12px);
+    filter: contrast(1.08) saturate(1.03);
     transform: translate3d(0, 0, 0);
     pointer-events: none;
   }
 
   .homepage-hero-product-bg img {
     width: 100%;
-    min-height: 520px;
+    height: 100%;
+    min-height: 100%;
     object-fit: cover;
-    object-position: 78% 50%;
+    object-position: 50% 0%;
+  }
+
+  .homepage-hero-panel {
+    position: relative;
+    z-index: 2;
+    width: min(920px, calc(100% - 48px));
+    padding: 44px 52px 46px;
+    border: 1px solid rgba(226, 232, 240, 0.72);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+      0 28px 70px rgba(31, 41, 55, 0.08),
+      0 8px 22px rgba(31, 41, 55, 0.05);
+    transform: translate(clamp(-162px, -10vw, -90px), clamp(-100px, -6vw, -72px));
   }
 
   .homepage-hero-copy {
     position: relative;
-    z-index: 1;
-    max-width: 980px;
+    max-width: 940px;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 
   .homepage-hero-eyebrow {
@@ -803,18 +823,19 @@ const workflowSteps = [
     display: block;
     overflow: hidden;
     text-align: center;
-    padding: 16px 0;
-    min-height: 48px;
+    padding: 0;
+    min-height: 16px;
+    margin-bottom: 18px;
   }
 
   .clinical-workflow-reveal-text {
     margin: 0;
-    color: #005c92;
+    color: #1647d9;
     font-family: "Aptos Narrow", "Arial Narrow", "Helvetica Neue", sans-serif;
-    font-size: clamp(0.95rem, 1.7vw, 1.45rem);
+    font-size: 0.94rem;
     line-height: 1.15;
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.26em;
     text-transform: uppercase;
     text-align: center;
     white-space: nowrap;
@@ -841,14 +862,17 @@ const workflowSteps = [
 
   .homepage-hero-title {
     display: grid;
-    gap: 2px;
+    gap: 4px;
     justify-items: center;
     margin: 0;
     font-family: Inter, 'Segoe UI', sans-serif;
-    font-size: clamp(3.4rem, 7vw, 6.5rem);
-    font-weight: 750;
-    letter-spacing: -0.055em;
-    line-height: 0.98;
+    font-size: clamp(3.3rem, 4.26vw, 3.9rem);
+    font-weight: 760;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    text-shadow:
+      0 1px 2px rgba(255, 255, 255, 0.96),
+      0 0 18px rgba(255, 255, 255, 0.9);
     opacity: 1;
     transform: translateY(0) scale(1);
     transform-origin: center center;
@@ -867,16 +891,16 @@ const workflowSteps = [
   }
 
   .homepage-hero-title--pre-reveal {
-    opacity: 0.74;
-    transform: translateY(4px) scale(0.975);
+    opacity: 0.9;
+    transform: translateY(2px) scale(0.992);
   }
 
   .homepage-hero-dark {
-    color: #15171a;
+    color: #050816;
   }
 
   .homepage-hero-light {
-    color: #d1d5db;
+    color: #c4c8d6;
   }
 
   .homepage-hero-lede,
@@ -893,11 +917,11 @@ const workflowSteps = [
   }
 
   .homepage-hero-lede {
-    max-width: 38rem;
-    margin: 34px auto 0;
-    color: #7a8190;
-    font-size: 1rem;
-    line-height: 1.62;
+    max-width: 38.5rem;
+    margin: 24px auto 0;
+    color: #5f6b85;
+    font-size: 1.08rem;
+    line-height: 1.5;
   }
 
   .homepage-hero-actions,
@@ -916,20 +940,19 @@ const workflowSteps = [
 
   .homepage-hero-actions {
     position: relative;
-    z-index: 1;
-    margin-top: 34px;
+    margin-top: 26px;
   }
 
   .homepage-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 42px;
-    border-radius: 6px;
-    padding: 0 18px;
+    min-height: 44px;
+    border-radius: 999px;
+    padding: 0 32px;
     font-family: Inter, 'Segoe UI', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 700;
     text-decoration: none;
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     transition:
@@ -949,29 +972,29 @@ const workflowSteps = [
   }
 
   .homepage-button.primary {
-    background: #005c92;
-    border: 1px solid #005c92;
+    background: #1647d9;
+    border: 1px solid #1647d9;
     color: #ffffff;
   }
 
   .homepage-button.primary:hover,
   .homepage-button.primary:focus-visible {
-    background: #0a6ca8;
-    border-color: #0a6ca8;
+    background: #0f3ec4;
+    border-color: #0f3ec4;
     color: #ffffff;
   }
 
   .homepage-button.secondary {
-    background: #ffffff;
-    border: 1px solid #c0c7d2;
-    color: #404750;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(22, 71, 217, 0.42);
+    color: #1647d9;
   }
 
   .homepage-button.secondary:hover,
   .homepage-button.secondary:focus-visible {
-    background: #f8fbfd;
-    border-color: #aeb8c5;
-    color: #1f2937;
+    background: #ffffff;
+    border-color: rgba(22, 71, 217, 0.68);
+    color: #0f3ec4;
   }
 
   .homepage-workflow-strip {
@@ -1543,6 +1566,19 @@ const workflowSteps = [
       display: inline-flex;
     }
 
+    .homepage-hero {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .homepage-hero-panel {
+      transform: none;
+    }
+
+    .homepage-hero-title {
+      font-size: clamp(2.4rem, 5vw, 2.75rem);
+    }
+
     .homepage-mobile-menu.is-open {
       display: block;
     }
@@ -1627,37 +1663,43 @@ const workflowSteps = [
     }
 
     .homepage-hero {
-      padding-top: 52px;
-      padding-bottom: 48px;
+      min-height: 560px;
+      padding-top: 56px;
+      padding-bottom: 54px;
     }
 
     .homepage-hero-product-bg {
-      inset: auto -58% -10% 18%;
-      opacity: 0.26;
-      filter: blur(24px);
+      inset: 0;
+      opacity: 0.42;
+      filter: contrast(1.04) saturate(1.01);
+    }
+
+    .homepage-hero-product-bg img {
+      object-position: 58% 0%;
     }
 
     .homepage-hero-eyebrow {
-      margin-bottom: 18px;
-      font-size: clamp(0.88rem, 3.9vw, 1.1rem);
-      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+      font-size: clamp(0.62rem, 2.5vw, 0.72rem);
+      letter-spacing: 0.16em;
     }
 
-    .homepage-hero-title {
-      font-size: clamp(2.65rem, 12vw, 4.7rem);
-      line-height: 1;
+    .homepage-hero h1.homepage-hero-title {
+      font-size: clamp(2rem, 8.6vw, 2.35rem);
+      line-height: 1.12;
+      letter-spacing: -0.035em;
     }
 
     .homepage-hero-line {
       gap: 0.1em;
-      white-space: normal;
-      flex-wrap: wrap;
+      white-space: nowrap;
+      flex-wrap: nowrap;
     }
 
     .homepage-hero-lede {
       max-width: 32rem;
-      margin-top: 28px;
-      font-size: 0.98rem;
+      margin-top: 24px;
+      font-size: 0.92rem;
     }
 
     .homepage-hero-actions,
