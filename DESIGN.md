@@ -327,6 +327,105 @@ This is now the clearest EndoTech page grammar.
 
 ---
 
+## Homepage Hero Pattern
+
+The EndoTech NZ homepage uses a typography-led clinical workflow hero. Treat this as the default landing-page pattern unless a future redesign explicitly replaces it.
+
+### Structure
+
+Use this order:
+
+1. Light sticky navigation
+2. Centered hero eyebrow, headline, restrained subhead, and two CTAs
+3. Low-opacity product-system background image, secondary to the text
+4. Glide / Shape / Finish workflow navigation strip
+5. Generous breathing space
+6. Thin clinical separator
+7. Core Systems section
+
+The hero should remain calm and mostly white. The product image should support trust and product recognition without becoming a conventional photo hero.
+
+### Hero Copy Pattern
+
+Use short, direct clinical workflow language.
+
+Current homepage headline:
+
+```text
+Shape with confidence.
+Clean with purpose.
+Seal with control.
+```
+
+The first verb in each line may be dark ink, with the supporting phrase in pale grey. Maintain strong readability and avoid placing product detail directly behind this text.
+
+### Product Background Treatment
+
+Use a complete, recognizable product-system image as a soft background layer. Current example: TransformX ET box, black-handled files, tray, clinical tabletop, and soft operatory setting.
+
+Treatment:
+
+- Position the product image to the right side and lower hero transition.
+- Keep the headline zone nearly clean white.
+- Use approximately 8-10% image visibility behind central text.
+- Use approximately 16-22% image visibility on the right-side product zone.
+- Use blur around 18-28px and a white overlay or gradient mask to protect text contrast.
+- Keep the image complete enough to recognize the product system; do not wash it out until it becomes meaningless.
+- Let the image fade toward the Core Systems transition rather than sitting as a hard background panel.
+
+Future products such as BCS Sealer, BCS Putty, or other systems may replace the TransformX image, but the same rules apply: product visible, text dominant, clinical calm preserved.
+
+### Workflow Strip
+
+Place a restrained horizontal workflow strip below the hero CTAs and before Core Systems. It should bridge the headline promise into the product systems without feeling like a heavy card.
+
+Use:
+
+- Three items: Glide, Shape, Finish
+- Small step numbers: 01, 02, 03
+- Circular tooth/canal line icons
+- Thin vertical dividers
+- Small circular arrow controls between steps
+- Compact clinical descriptions
+- Hairline borders and white/soft-grey surfaces only
+
+Copy:
+
+```text
+01 Glide
+Establish and maintain a consistent glide path.
+
+02 Shape
+Adaptive shaping for efficient dentin removal and anatomy conformance.
+
+03 Finish
+Refine the canal to final taper for optimal cleaning and disinfection.
+```
+
+### Separator and Section Transition
+
+Do not let Core Systems crowd the workflow strip. Provide roughly 64-96px of breathing space after the strip, then use a very thin clinical hairline separator before Core Systems begins.
+
+The separator should be subtle:
+
+```css
+border-top: 1px solid #E3E8EE;
+```
+
+Core Systems should begin below the separator with a clear centered eyebrow and heading.
+
+### Mobile Behavior
+
+On mobile:
+
+- Keep the hero text first and readable.
+- Reduce or hide the product background if it competes with text.
+- Stack the workflow strip into three vertical steps.
+- Preserve the separator and spacing before Core Systems.
+- Do not require the image for understanding the page.
+
+---
+
 ## Elevation and Borders
 
 EndoTech should use restrained depth.

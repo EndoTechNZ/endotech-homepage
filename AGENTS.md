@@ -4,6 +4,7 @@
 - Use Astro
 - Follow src/pages structure
 - Use ProductLayout.astro for product pages
+- For homepage hero layout, image treatment, workflow strip, and section rhythm, follow the Homepage Hero Pattern in DESIGN.md
 
 ## Brand Tone
 - Clinical
