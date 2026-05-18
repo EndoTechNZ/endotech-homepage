@@ -1030,41 +1030,31 @@ const workflowSteps = [
     background: rgba(255, 255, 255, 0.84);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.86),
-      0 1px 0 rgba(227, 232, 238, 0.72);
+      0 1px 0 rgba(227, 232, 238, 0.72),
+      0 12px 36px rgba(0, 99, 156, 0.04);
     backdrop-filter: blur(14px);
   }
 
   .homepage-workflow-strip-shell::before {
     content: "";
     position: absolute;
-    inset: -64%;
+    inset: -70%;
     z-index: 0;
     background:
       conic-gradient(
         from 215deg,
         rgba(22, 71, 217, 0) 0deg,
-        rgba(22, 71, 217, 0) 228deg,
-        rgba(22, 71, 217, 0.07) 244deg,
-        rgba(22, 71, 217, 0.2) 264deg,
-        rgba(95, 180, 226, 0.16) 286deg,
-        rgba(22, 71, 217, 0.04) 310deg,
+        rgba(22, 71, 217, 0) 226deg,
+        rgba(22, 71, 217, 0.08) 244deg,
+        rgba(22, 71, 217, 0.2) 266deg,
+        rgba(95, 180, 226, 0.15) 290deg,
+        rgba(22, 71, 217, 0.04) 314deg,
         rgba(22, 71, 217, 0) 360deg
       );
-    filter: blur(18px);
-    opacity: 0.68;
+    filter: blur(22px);
+    opacity: 0.52;
     pointer-events: none;
     animation: workflow-border-travel 18s linear infinite;
-  }
-
-  .homepage-workflow-strip-shell::after {
-    content: "";
-    position: absolute;
-    inset: 1px;
-    z-index: 1;
-    border-radius: 7px;
-    background: rgba(255, 255, 255, 0.72);
-    box-shadow: inset 0 0 0 1px rgba(227, 232, 238, 0.5);
-    pointer-events: none;
   }
 
   @keyframes workflow-border-travel {
@@ -1079,7 +1069,7 @@ const workflowSteps = [
     gap: 18px;
     align-items: center;
     position: relative;
-    z-index: 2;
+    z-index: 1;
     min-height: 142px;
     padding: 26px 30px;
     color: inherit;
@@ -1160,7 +1150,7 @@ const workflowSteps = [
 
   .homepage-workflow-divider {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     display: grid;
     place-items: center;
     width: 1px;
