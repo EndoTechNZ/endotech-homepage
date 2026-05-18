@@ -1026,7 +1026,8 @@ const workflowSteps = [
     margin: 0 auto;
     border: 1px solid transparent;
     border-radius: 8px;
-    background: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)) padding-box;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.82);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.86),
       0 1px 0 rgba(227, 232, 238, 0.72);
@@ -1043,7 +1044,7 @@ const workflowSteps = [
 
   .homepage-workflow-strip-shell::before {
     inset: -10px;
-    z-index: -2;
+    z-index: 0;
     background:
       conic-gradient(
         from 215deg,
@@ -1062,7 +1063,7 @@ const workflowSteps = [
 
   .homepage-workflow-strip-shell::after {
     inset: 0;
-    z-index: -1;
+    z-index: 1;
     padding: 1px;
     background:
       conic-gradient(
@@ -1098,6 +1099,8 @@ const workflowSteps = [
     grid-template-columns: 96px minmax(0, 1fr);
     gap: 18px;
     align-items: center;
+    position: relative;
+    z-index: 2;
     min-height: 142px;
     padding: 26px 30px;
     color: inherit;
@@ -1178,6 +1181,7 @@ const workflowSteps = [
 
   .homepage-workflow-divider {
     position: relative;
+    z-index: 2;
     display: grid;
     place-items: center;
     width: 1px;
