@@ -461,6 +461,12 @@ const workflowSteps = [
 </script>
 
 <style>
+  @property --workflow-border-angle {
+    syntax: '<angle>';
+    initial-value: 215deg;
+    inherits: false;
+  }
+
   :global(body.landing-page) {
     background: #ffffff;
     color: #181c20;
@@ -1016,6 +1022,7 @@ const workflowSteps = [
   }
 
   .homepage-workflow-strip-shell {
+    --workflow-border-angle: 215deg;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
     gap: 0;
@@ -1026,28 +1033,35 @@ const workflowSteps = [
     margin: 0 auto;
     border: 1px solid transparent;
     border-radius: 8px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.82);
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)) padding-box,
+      conic-gradient(
+        from var(--workflow-border-angle),
+        rgba(22, 71, 217, 0) 0deg,
+        rgba(22, 71, 217, 0) 242deg,
+        rgba(22, 71, 217, 0.16) 258deg,
+        rgba(22, 71, 217, 0.7) 274deg,
+        rgba(95, 180, 226, 0.45) 288deg,
+        rgba(22, 71, 217, 0.1) 304deg,
+        rgba(22, 71, 217, 0) 328deg,
+        rgba(22, 71, 217, 0) 360deg
+      ) border-box;
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.86),
       0 1px 0 rgba(227, 232, 238, 0.72);
     backdrop-filter: blur(14px);
-  }
-
-  .homepage-workflow-strip-shell::before,
-  .homepage-workflow-strip-shell::after {
-    content: "";
-    position: absolute;
-    border-radius: inherit;
-    pointer-events: none;
+    animation: workflow-border-travel 18s linear infinite;
   }
 
   .homepage-workflow-strip-shell::before {
-    inset: -10px;
-    z-index: 0;
+    content: "";
+    position: absolute;
+    inset: -8px;
+    z-index: -1;
+    border-radius: inherit;
     background:
       conic-gradient(
-        from 215deg,
+        from var(--workflow-border-angle),
         rgba(22, 71, 217, 0) 0deg,
         rgba(22, 71, 217, 0) 246deg,
         rgba(22, 71, 217, 0.16) 262deg,
@@ -1058,39 +1072,12 @@ const workflowSteps = [
       );
     filter: blur(12px);
     opacity: 0.46;
-    animation: workflow-border-travel 18s linear infinite;
-  }
-
-  .homepage-workflow-strip-shell::after {
-    inset: 0;
-    z-index: 1;
-    padding: 1px;
-    background:
-      conic-gradient(
-        from 215deg,
-        rgba(22, 71, 217, 0) 0deg,
-        rgba(22, 71, 217, 0) 242deg,
-        rgba(22, 71, 217, 0.16) 258deg,
-        rgba(22, 71, 217, 0.7) 274deg,
-        rgba(95, 180, 226, 0.45) 288deg,
-        rgba(22, 71, 217, 0.1) 304deg,
-        rgba(22, 71, 217, 0) 328deg,
-        rgba(22, 71, 217, 0) 360deg
-      );
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    animation: workflow-border-travel 18s linear infinite;
+    pointer-events: none;
   }
 
   @keyframes workflow-border-travel {
     to {
-      transform: rotate(1turn);
+      --workflow-border-angle: 575deg;
     }
   }
 
@@ -1099,8 +1086,6 @@ const workflowSteps = [
     grid-template-columns: 96px minmax(0, 1fr);
     gap: 18px;
     align-items: center;
-    position: relative;
-    z-index: 2;
     min-height: 142px;
     padding: 26px 30px;
     color: inherit;
@@ -1181,7 +1166,6 @@ const workflowSteps = [
 
   .homepage-workflow-divider {
     position: relative;
-    z-index: 2;
     display: grid;
     place-items: center;
     width: 1px;
@@ -1927,8 +1911,7 @@ const workflowSteps = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :global(html:not(.is-motion-preview)) .homepage-workflow-strip-shell::before,
-    :global(html:not(.is-motion-preview)) .homepage-workflow-strip-shell::after {
+    :global(html:not(.is-motion-preview)) .homepage-workflow-strip-shell {
       animation: none;
     }
 
