@@ -78,6 +78,7 @@ const workflowSteps = [
     title: 'Glide',
     description: 'Establish and maintain a consistent glide path.',
     href: `${base}products/acrobat-glide-path/`,
+    ariaLabel: 'View Acrobat glide path products',
     path: 'M19 3c-2.7 0-4.3 2.2-5 4.2C13.3 5.2 11.7 3 9 3 5.8 3 4 5.5 4 8.7c0 3.1 2 5.1 3 8.6.6 2.2 1.2 3.7 2.4 3.7 1.5 0 1.1-5.2 4.6-5.2s3.1 5.2 4.6 5.2c1.2 0 1.8-1.5 2.4-3.7 1-3.5 3-5.5 3-8.6C24 5.5 22.2 3 19 3Z M14 7.2c-.4 2.5-.4 5.5 0 9.2 M10.5 7.8c.7 1.6 1 3.2.8 4.9 M17.5 7.8c-.7 1.6-1 3.2-.8 4.9',
   },
   {
@@ -85,13 +86,15 @@ const workflowSteps = [
     title: 'Shape',
     description: 'Adaptive shaping for efficient dentin removal and anatomy conformance.',
     href: `${base}products/overview/`,
+    ariaLabel: 'View TransformX shaping products',
     path: 'M19 3c-2.7 0-4.3 2.2-5 4.2C13.3 5.2 11.7 3 9 3 5.8 3 4 5.5 4 8.7c0 3.1 2 5.1 3 8.6.6 2.2 1.2 3.7 2.4 3.7 1.5 0 1.1-5.2 4.6-5.2s3.1 5.2 4.6 5.2c1.2 0 1.8-1.5 2.4-3.7 1-3.5 3-5.5 3-8.6C24 5.5 22.2 3 19 3Z M14 6.5v9.8 M10.8 9.4h6.4 M11.8 12.2h4.4',
   },
   {
     number: '03',
     title: 'Finish',
     description: 'Refine the canal to final taper for optimal cleaning and disinfection.',
-    href: `${base}technique/workflow/`,
+    href: `${base}products/overview/`,
+    ariaLabel: 'View TransformX finishing products',
     path: 'M19 3c-2.7 0-4.3 2.2-5 4.2C13.3 5.2 11.7 3 9 3 5.8 3 4 5.5 4 8.7c0 3.1 2 5.1 3 8.6.6 2.2 1.2 3.7 2.4 3.7 1.5 0 1.1-5.2 4.6-5.2s3.1 5.2 4.6 5.2c1.2 0 1.8-1.5 2.4-3.7 1-3.5 3-5.5 3-8.6C24 5.5 22.2 3 19 3Z M14 7.2c.8 2.7.8 5.9 0 9.6 M11.2 8.8c1.9 1.7 3.8 1.7 5.6 0',
   },
 ];
@@ -199,7 +202,10 @@ const workflowSteps = [
     <div class="homepage-workflow-strip-shell">
       {workflowSteps.map((step, index) => (
         <>
-          <a class="homepage-workflow-step" href={step.href} aria-label={`${step.title}: ${step.description}`}>
+          <a class="homepage-workflow-step" href={step.href} aria-label={step.ariaLabel}>
+            <svg class="homepage-workflow-trace" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <rect class="homepage-workflow-trace-path" x="1.2" y="1.2" width="97.6" height="97.6" rx="2.6" ry="2.6" pathLength="1000"></rect>
+            </svg>
             <div class="homepage-workflow-icon" aria-hidden="true">
               <svg viewBox="0 0 28 28">
                 <path d={step.path}></path>
@@ -407,6 +413,25 @@ const workflowSteps = [
 
   if (motionPreviewEnabled) {
     document.documentElement.classList.add('is-motion-preview');
+  }
+
+  const workflowCards = Array.from(document.querySelectorAll('.homepage-workflow-step'));
+
+  if (workflowCards.length > 0) {
+    let activeWorkflowIndex = 0;
+
+    const setActiveWorkflowCard = (index) => {
+      workflowCards.forEach((card, cardIndex) => {
+        card.classList.toggle('is-active', cardIndex === index);
+      });
+    };
+
+    setActiveWorkflowCard(activeWorkflowIndex);
+
+    window.setInterval(() => {
+      activeWorkflowIndex = (activeWorkflowIndex + 1) % workflowCards.length;
+      setActiveWorkflowCard(activeWorkflowIndex);
+    }, 3000);
   }
 
   if (homepageHeroTitle) {
@@ -1024,42 +1049,15 @@ const workflowSteps = [
     isolation: isolate;
     max-width: 1280px;
     margin: 0 auto;
-    overflow: hidden;
-    border: 1px solid rgba(210, 224, 235, 0.78);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.84);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.86),
-      0 1px 0 rgba(227, 232, 238, 0.72),
-      0 12px 36px rgba(0, 99, 156, 0.04);
+    border-top: 1px solid rgba(227, 232, 238, 0.8);
+    border-bottom: 1px solid rgba(227, 232, 238, 0.8);
+    background: rgba(255, 255, 255, 0.78);
     backdrop-filter: blur(14px);
-  }
-
-  .homepage-workflow-strip-shell::before {
-    content: "";
-    position: absolute;
-    inset: -70%;
-    z-index: 0;
-    background:
-      conic-gradient(
-        from 215deg,
-        rgba(22, 71, 217, 0) 0deg,
-        rgba(22, 71, 217, 0) 226deg,
-        rgba(22, 71, 217, 0.08) 244deg,
-        rgba(22, 71, 217, 0.2) 266deg,
-        rgba(95, 180, 226, 0.15) 290deg,
-        rgba(22, 71, 217, 0.04) 314deg,
-        rgba(22, 71, 217, 0) 360deg
-      );
-    filter: blur(22px);
-    opacity: 0.52;
-    pointer-events: none;
-    animation: workflow-border-travel 18s linear infinite;
   }
 
   @keyframes workflow-border-travel {
     to {
-      transform: rotate(1turn);
+      stroke-dashoffset: -1000;
     }
   }
 
@@ -1069,14 +1067,64 @@ const workflowSteps = [
     gap: 18px;
     align-items: center;
     position: relative;
-    z-index: 1;
+    overflow: hidden;
     min-height: 142px;
+    border: 1px solid transparent;
+    border-radius: 8px;
     padding: 26px 30px;
     color: inherit;
     text-decoration: none;
     transition:
       background-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .homepage-workflow-trace {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+  }
+
+  .homepage-workflow-trace-path {
+    fill: none;
+    stroke: rgba(22, 71, 217, 0.78);
+    stroke-width: 1.1;
+    stroke-linecap: round;
+    stroke-dasharray: 70 930;
+    stroke-dashoffset: 0;
+    vector-effect: non-scaling-stroke;
+    animation: workflow-border-travel 3s linear infinite;
+  }
+
+  .homepage-workflow-step.is-active {
+    border-color: rgba(43, 95, 158, 0.28);
+    box-shadow:
+      inset 0 0 0 1px rgba(43, 95, 158, 0.06),
+      0 10px 28px rgba(20, 45, 90, 0.05);
+  }
+
+  .homepage-workflow-step.is-active .homepage-workflow-trace,
+  .homepage-workflow-step:hover .homepage-workflow-trace,
+  .homepage-workflow-step:focus-visible .homepage-workflow-trace {
+    opacity: 1;
+  }
+
+  .homepage-workflow-step:hover .homepage-workflow-trace-path,
+  .homepage-workflow-step:focus-visible .homepage-workflow-trace-path {
+    stroke: rgba(22, 71, 217, 0.9);
+    stroke-width: 1.35;
+  }
+
+  .homepage-workflow-icon,
+  .homepage-workflow-copy {
+    position: relative;
+    z-index: 1;
   }
 
   .homepage-workflow-step:hover,
@@ -1150,7 +1198,6 @@ const workflowSteps = [
 
   .homepage-workflow-divider {
     position: relative;
-    z-index: 1;
     display: grid;
     place-items: center;
     width: 1px;
@@ -1896,12 +1943,23 @@ const workflowSteps = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :global(html:not(.is-motion-preview)) .homepage-workflow-strip-shell::before {
+    :global(html:not(.is-motion-preview)) .homepage-workflow-trace-path {
       animation: none;
     }
 
-    :global(html:not(.is-motion-preview)) .homepage-workflow-strip-shell::before {
-      opacity: 0.18;
+    :global(html:not(.is-motion-preview)) .homepage-workflow-trace {
+      opacity: 0;
+    }
+
+    :global(html:not(.is-motion-preview)) .homepage-workflow-step.is-active .homepage-workflow-trace,
+    :global(html:not(.is-motion-preview)) .homepage-workflow-step:hover .homepage-workflow-trace,
+    :global(html:not(.is-motion-preview)) .homepage-workflow-step:focus-visible .homepage-workflow-trace {
+      opacity: 0;
+    }
+
+    :global(html:not(.is-motion-preview)) .homepage-workflow-step.is-active {
+      border-color: rgba(43, 95, 158, 0.28);
+      box-shadow: inset 0 0 0 1px rgba(43, 95, 158, 0.06);
     }
   }
 </style>
