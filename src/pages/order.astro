@@ -104,6 +104,10 @@ const enquiryModules = [
           <span>Non-commerce ordering</span>
           <p>Use this route for pricing, availability, product-fit questions, and regional supply discussion through direct email follow-up.</p>
         </div>
+        <div class="order-legal-note">
+          <span>Legal entity</span>
+          <p>{siteConfig.legalName}</p>
+        </div>
         <nav class="order-quick-nav" aria-label="Order enquiry shortcuts">
           {quickLinks.map((link) => (
             <a href={link.href}>{link.label}</a>
@@ -301,11 +305,26 @@ const enquiryModules = [
     gap: 12px;
   }
 
+  .order-legal-note {
+    display: grid;
+    gap: 6px;
+    border-top: 1px solid #dbe3ea;
+    padding-top: 18px;
+  }
+
   .order-hero-side-intro span {
     color: #64748b;
     font-size: 0.78rem;
     font-weight: 900;
     letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .order-legal-note span {
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
   }
 

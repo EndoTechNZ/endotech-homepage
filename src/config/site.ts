@@ -3,6 +3,7 @@ const defaultDescription =
 
 export const siteConfig = {
   name: import.meta.env.PUBLIC_SITE_NAME ?? 'EndoTech Singapore',
+  legalName: import.meta.env.PUBLIC_LEGAL_NAME ?? 'Endotech Innovation PTE.LTD.',
   shortName: import.meta.env.PUBLIC_SITE_SHORT_NAME ?? 'EndoTechSG',
   docsTitle: import.meta.env.PUBLIC_DOCS_TITLE ?? 'EndoTech Singapore Docs',
   email: import.meta.env.PUBLIC_CONTACT_EMAIL ?? 'Steveshepherdnz@gmail.com',

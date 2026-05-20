@@ -196,6 +196,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         <strong>{siteConfig.name}</strong>
         <p>Clinical endodontic systems for Singapore clinicians.</p>
         <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+        <small>Legal entity: {siteConfig.legalName}</small>
       </div>
 
       <div class="product-site-footer-links">
@@ -526,6 +527,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
   }
 
   .product-site-footer-brand p,
+  .product-site-footer-brand small,
   .product-site-footer-bottom p {
     color: #5f6b78;
     font-size: 0.88rem;
@@ -535,6 +537,12 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
   .product-site-footer-brand p {
     max-width: 34ch;
     margin: 0;
+  }
+
+  .product-site-footer-brand small {
+    display: block;
+    max-width: 34ch;
+    font-size: 0.76rem;
   }
 
   .product-site-footer-brand a,

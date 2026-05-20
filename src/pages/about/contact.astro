@@ -1,8 +1,9 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
+import { siteConfig } from '../../config/site';
 
 const base = import.meta.env.BASE_URL;
-const email = 'Steveshepherdnz@gmail.com';
+const email = siteConfig.email;
 
 const enquiryPanels = [
   {
@@ -86,6 +87,10 @@ const enquiryPanels = [
           <div class="rounded-[1.2rem] border border-slate-200 bg-[#123d78] p-4 text-white">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100/90">Response time</p>
             <p class="mt-2 text-sm leading-7 text-slate-100">Most enquiries should receive a reply within one to two business days.</p>
+          </div>
+          <div class="rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-4 sm:col-span-2">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Legal entity</p>
+            <p class="mt-2 text-sm leading-7 text-slate-700">{siteConfig.legalName}</p>
           </div>
         </div>
       </div>

@@ -27,6 +27,7 @@ const organizationSchema = Astro.site
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: siteConfig.name,
+      legalName: siteConfig.legalName,
       url: Astro.site.toString(),
       email: `mailto:${siteConfig.email}`,
     }
