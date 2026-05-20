@@ -13,7 +13,7 @@ import vortiflowCadTip2 from '../../assets/vortiflow/vortiflow-cad-tip-render-2.
 import { siteConfig } from '../../config/site';
 import { withBasePath } from '../../utils/paths';
 
-const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const siteUrl = Astro.site?.toString() ?? 'https://EndoTechSG.github.io';
 const evidencePdfHref = '/downloads/VortiFlow-Evidence-Overview.pdf';
 const hasEvidencePdf = existsSync(path.join(process.cwd(), 'public', 'downloads', 'VortiFlow-Evidence-Overview.pdf'));
 const evidenceOverviewHref = hasEvidencePdf ? withBasePath(evidencePdfHref) : '#flow-evidence';
@@ -365,7 +365,7 @@ const downloads = hasEvidencePdf
       <div class="vorti-cta-copy">
         <h2 id="vorti-cta-title">Connect shaping, cleaning, and sealing more clearly.</h2>
         <p>
-          Review the VortiFlow concept, then contact EndoTech NZ if you want to discuss how the irrigation step fits within the wider TransformX workflow.
+          Review the VortiFlow concept, then contact EndoTech Singapore if you want to discuss how the irrigation step fits within the wider TransformX workflow.
         </p>
       </div>
       <div class="vorti-cta-actions">

@@ -5,7 +5,7 @@ import { getBcsDownloads } from '../../utils/downloads';
 import { withBasePath } from '../../utils/paths';
 import { siteConfig } from '../../config/site';
 
-const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const siteUrl = Astro.site?.toString() ?? 'https://EndoTechSG.github.io';
 const downloads = getProductDownloads(getBcsDownloads());
 const sealerImage = withBasePath('/downloads/metallic-packshots/BCS-Sealer-metallic-silver.png');
 const evidenceHref = withBasePath('/products/bcs/evidence/');

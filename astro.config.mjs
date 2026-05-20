@@ -20,8 +20,8 @@ const site =
   (customDomain
     ? `https://${customDomain}`
     : isGitHubPages
-      ? 'https://endotechnz.github.io'
-      : netlifySite || 'https://endotechnz.github.io');
+      ? 'https://endotechsg.com'
+      : netlifySite || 'https://endotechsg.com');
 const base = isGitHubPages ? (usesCustomDomain ? '/' : '/endotech-homepage/') : '/';
 const shouldNoIndex = process.env.NETLIFY === 'true' && process.env.CONTEXT !== 'production';
 const docsTitle = process.env.PUBLIC_DOCS_TITLE || 'EndoTech Docs';

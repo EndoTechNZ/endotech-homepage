@@ -773,7 +773,7 @@ Use:
 - strong trust signals
 - minimal visual distraction
 
-Do not risk breaking Shopify or ordering logic for visual flourish.
+Do not risk breaking ordering or enquiry logic for visual flourish.
 
 ---
 

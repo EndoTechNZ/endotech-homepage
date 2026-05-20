@@ -33,7 +33,7 @@ Without `:global(...)`, the JavaScript-injected spans can exist in the DOM but n
 ```html
 <div class="clinical-workflow-reveal-mask">
   <p class="clinical-workflow-reveal-text js-clinical-workflow-reveal">
-    EndoTech NZ Clinical Workflow
+    EndoTech Singapore Clinical Workflow
   </p>
 </div>
 ```
@@ -76,7 +76,7 @@ Without `:global(...)`, the JavaScript-injected spans can exist in the DOM but n
   const text = document.querySelector('.js-clinical-workflow-reveal');
 
   if (mask && text) {
-    const originalText = 'EndoTech NZ Clinical Workflow';
+    const originalText = 'EndoTech Singapore Clinical Workflow';
 
     text.setAttribute('aria-label', originalText);
     text.innerHTML = Array.from(originalText)
