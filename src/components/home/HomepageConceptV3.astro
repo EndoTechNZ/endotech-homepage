@@ -143,7 +143,29 @@ const workflowSteps = [
     </nav>
 
     <div class="homepage-header-actions">
-      <a class="homepage-header-action" href={`${base}order/`}>Order</a>
+      <div class="products-menu homepage-order-menu">
+        <button
+          id="homepage-order-menu-button"
+          class="homepage-header-action"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="homepage-order-menu-panel"
+        >
+          Order
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 9l6 6 6-6"></path>
+          </svg>
+        </button>
+        <div class="products-menu-bridge"></div>
+        <div id="homepage-order-menu-panel" class="products-menu-panel homepage-order-menu-panel">
+          <div class="products-menu-shell">
+            <span>Order options</span>
+            <a href={`${base}request-information/`}>Request information</a>
+            <a href={`${base}order/`}>Request proforma</a>
+          </div>
+        </div>
+      </div>
       <a class="homepage-header-action" href={`${base}about/contact/`}>Contact</a>
       <button class="homepage-menu-toggle" id="homepage-mobile-menu-button" type="button" aria-expanded="false" aria-controls="homepage-mobile-menu">
         Menu
@@ -350,6 +372,8 @@ const workflowSteps = [
 <script>
   const productsMenu = document.querySelector('.homepage-shell-header .products-menu');
   const productsMenuButton = document.getElementById('homepage-products-menu-button');
+  const orderMenu = document.querySelector('.homepage-order-menu');
+  const orderMenuButton = document.getElementById('homepage-order-menu-button');
   const mobileMenu = document.getElementById('homepage-mobile-menu');
   const mobileMenuButton = document.getElementById('homepage-mobile-menu-button');
 
@@ -365,14 +389,33 @@ const workflowSteps = [
     mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
   };
 
+  const setOrderMenu = (open) => {
+    if (!orderMenu || !orderMenuButton) return;
+    orderMenu.classList.toggle('is-open', open);
+    orderMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
   productsMenuButton?.addEventListener('click', (event) => {
     event.preventDefault();
     const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
     setProductsMenu(!isOpen);
+    setOrderMenu(false);
+  });
+
+  orderMenuButton?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const isOpen = orderMenuButton.getAttribute('aria-expanded') === 'true';
+    setOrderMenu(!isOpen);
+    setProductsMenu(false);
   });
 
   productsMenu?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => setProductsMenu(false));
+  });
+
+  orderMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setOrderMenu(false));
   });
 
   mobileMenuButton?.addEventListener('click', (event) => {
@@ -393,6 +436,7 @@ const workflowSteps = [
   document.addEventListener('click', (event) => {
     if (!(event.target instanceof Node) || !productsMenu) return;
     if (!productsMenu.contains(event.target)) setProductsMenu(false);
+    if (orderMenu && !orderMenu.contains(event.target)) setOrderMenu(false);
     if (mobileMenu && mobileMenuButton && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
       setMobileMenu(false);
     }
@@ -401,6 +445,7 @@ const workflowSteps = [
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       setProductsMenu(false);
+      setOrderMenu(false);
       setMobileMenu(false);
     }
   });
@@ -674,6 +719,17 @@ const workflowSteps = [
       border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
       transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .homepage-order-menu button.homepage-header-action {
+    gap: 6px;
+    border: 1px solid #c0c7d2;
+    padding: 0 14px 0 16px;
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .homepage-order-menu-panel {
+    width: 240px;
   }
 
   .homepage-header-action:hover,

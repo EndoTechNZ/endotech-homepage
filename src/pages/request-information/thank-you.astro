@@ -1,0 +1,96 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import etProduct from '../../assets/et-transformx.png';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<ProductLayout
+  title="Request Sent | EndoTech Singapore"
+  description="EndoTech Singapore has received your product information request."
+  image={etProduct.src}
+  accent="slate"
+>
+  <main class="thanks-page">
+    <section class="thanks-panel" aria-labelledby="thanks-title">
+      <p>EndoTech Singapore</p>
+      <h1 id="thanks-title">Request sent.</h1>
+      <span>Your product information request has been submitted. EndoTech Singapore will follow up directly.</span>
+      <div>
+        <a href={`${base}request-information/`}>Back to request information</a>
+        <a href={`${base}`}>Home</a>
+      </div>
+    </section>
+  </main>
+</ProductLayout>
+
+<style>
+  .thanks-page {
+    min-height: 62vh;
+    display: grid;
+    place-items: center;
+    background: #f7f9fb;
+    padding: 56px 18px;
+  }
+
+  .thanks-panel {
+    width: min(760px, 100%);
+    border: 1px solid #dbe3ea;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: clamp(28px, 5vw, 54px);
+    box-shadow: 0 26px 62px -52px rgba(15, 23, 42, 0.34);
+  }
+
+  .thanks-panel p {
+    margin: 0 0 16px;
+    color: #64748b;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .thanks-panel h1 {
+    margin: 0;
+    color: #090f1d;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 0.98;
+  }
+
+  .thanks-panel span {
+    display: block;
+    margin-top: 22px;
+    color: #536478;
+    font-size: 1.04rem;
+    line-height: 1.76;
+  }
+
+  .thanks-panel div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .thanks-panel a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border: 1px solid #0b1424;
+    border-radius: 8px;
+    padding: 0 16px;
+    color: #ffffff;
+    font-weight: 900;
+    text-decoration: none;
+    background: #0b1424;
+  }
+
+  .thanks-panel a + a {
+    border-color: #c8d2dc;
+    color: #0b1424;
+    background: #ffffff;
+  }
+</style>

@@ -1,0 +1,919 @@
+---
+type ProformaItem = {
+  size: string;
+  length: string;
+  sku: string;
+  description: string;
+  isMb2?: boolean;
+};
+
+type Props = {
+  title: string;
+  description: string;
+  items: ProformaItem[];
+  coverageLabel: string;
+  packFormat: string;
+  selectionNote?: string;
+  productFamily: string;
+  productLabel: string;
+  email: string;
+};
+
+const {
+  title,
+  description,
+  items,
+  coverageLabel,
+  packFormat,
+  selectionNote = '',
+  productFamily,
+  productLabel,
+  email,
+} = Astro.props;
+
+const configurations = Array.from(
+  new Map(
+    items.map((item) => [
+      item.size,
+      {
+        value: item.size,
+        label: item.isMb2 ? `${item.size} MB2` : item.size,
+      },
+    ]),
+  ).values(),
+);
+
+const defaultItem = items[0];
+const defaultConfiguration = defaultItem.size;
+const defaultLengths = items.filter((item) => item.size === defaultConfiguration);
+const selectorId = `sg-proforma-${defaultItem.sku.toLowerCase()}`;
+---
+
+<section class="sg-proforma-selector" data-sg-proforma-selector={selectorId}>
+  <div class="sg-selector-shell">
+    <div class="sg-selector-intro">
+      <div>
+        <p class="sg-selector-marker">Proforma request</p>
+        <h3>{title}</h3>
+        <p>{description}</p>
+      </div>
+      <div class="sg-selector-meta">
+        <article>
+          <span>Sequence Coverage</span>
+          <strong>{coverageLabel}</strong>
+        </article>
+        <article>
+          <span>Pack Format</span>
+          <strong>{packFormat}</strong>
+        </article>
+      </div>
+    </div>
+
+    <div class="sg-selector-layout">
+      <div class="sg-selector-steps">
+        <div class="sg-step-panel">
+          <p class="sg-selector-marker">Step 1</p>
+          <h4>Choose file configuration</h4>
+          <div class="sg-choice-group" data-sg-configurations>
+            {configurations.map((configuration) => (
+              <button
+                type="button"
+                class:list={['sg-choice-button', { 'is-active': configuration.value === defaultConfiguration }]}
+                data-configuration-button
+                data-configuration={configuration.value}
+              >
+                {configuration.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div class="sg-step-panel">
+          <p class="sg-selector-marker">Step 2</p>
+          <h4>Choose file length</h4>
+          <div class="sg-choice-group sg-choice-group--lengths" data-sg-lengths>
+            {defaultLengths.map((item) => (
+              <button
+                type="button"
+                class:list={['sg-choice-button', 'sg-choice-button--length', { 'is-active': item.length === defaultItem.length }]}
+                data-length-button
+                data-length={item.length}
+              >
+                {item.length}
+              </button>
+            ))}
+          </div>
+          {selectionNote && <p class="sg-selection-note">{selectionNote}</p>}
+        </div>
+      </div>
+
+      <aside class="sg-summary-panel" data-sg-summary>
+        <div class="sg-selected-file">
+          <div>
+            <p class="sg-selector-marker">Selected file</p>
+            <h4 data-summary-heading>{defaultItem.size}</h4>
+            <p data-summary-length>{defaultItem.length}</p>
+          </div>
+          <span>Direct SG request</span>
+        </div>
+
+        <dl class="sg-selected-details">
+          <div>
+            <dt>SKU</dt>
+            <dd data-summary-sku>{defaultItem.sku}</dd>
+          </div>
+          <div>
+            <dt>Description</dt>
+            <dd data-summary-description>{defaultItem.description}</dd>
+          </div>
+        </dl>
+
+        <button type="button" class="sg-add-button" data-summary-add>Add to order</button>
+
+        <div class="sg-order-builder" data-order-builder>
+          <div class="sg-order-builder-header">
+            <div>
+              <p class="sg-selector-marker">Current proforma request</p>
+              <h4>Selected packs</h4>
+            </div>
+            <div>
+              <p data-order-total-packs>0 packs</p>
+              <button type="button" class="sg-clear-button is-hidden" data-order-clear>Clear order</button>
+            </div>
+          </div>
+
+          <div class="sg-clear-warning is-hidden" data-clear-warning>
+            <strong>Clear the whole request?</strong>
+            <span>This will remove every selected line.</span>
+          </div>
+
+          <div class="sg-order-cards" data-order-cards>
+            <article class="sg-empty-card" data-order-empty-card>
+              Add file packs from the selector to build one combined proforma request.
+            </article>
+          </div>
+
+          <div class="sg-order-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>File</th>
+                  <th>Length</th>
+                  <th>Qty</th>
+                </tr>
+              </thead>
+              <tbody data-order-lines>
+                <tr data-order-empty-state>
+                  <td colspan="3">Add file packs from the selector to build one combined proforma request.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="sg-request-footer">
+            <p data-order-request-note>Product list only. EndoTech Singapore will confirm pricing, availability, and delivery details directly.</p>
+            <a href={`mailto:${email}`} class="sg-request-link is-disabled" data-order-request aria-disabled="true">
+              Request proforma
+            </a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ items, configurations, defaultConfiguration, selectorId, productFamily, productLabel, email }}>
+  const selectorItems = items;
+  const configurationMeta = configurations;
+  const STORAGE_KEY = 'endotech-sg-proforma-v1';
+  const GLOBAL_KEY = '__endotechSGProformaV1';
+
+  const escapeHtml = (value) =>
+    String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+
+  const getSharedRequest = () => {
+    if (window[GLOBAL_KEY]) return window[GLOBAL_KEY];
+
+    const selections = new Map();
+    const subscribers = new Set();
+
+    const save = () => {
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(selections.values())));
+      } catch {}
+    };
+
+    const load = () => {
+      try {
+        const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '[]');
+        if (!Array.isArray(saved)) return;
+        saved.forEach((entry) => {
+          if (!entry?.key || !entry?.item?.sku) return;
+          selections.set(entry.key, entry);
+        });
+      } catch {}
+    };
+
+    const notify = () => subscribers.forEach((callback) => callback());
+
+    const update = (key, updater) => {
+      const existing = selections.get(key);
+      const next = updater(existing);
+      if (!next || next.quantity <= 0) selections.delete(key);
+      else selections.set(key, next);
+      save();
+      notify();
+    };
+
+    const clear = () => {
+      selections.clear();
+      save();
+      notify();
+    };
+
+    const subscribe = (callback) => {
+      subscribers.add(callback);
+      return () => subscribers.delete(callback);
+    };
+
+    load();
+    window[GLOBAL_KEY] = { selections, update, clear, subscribe, save };
+    return window[GLOBAL_KEY];
+  };
+
+  const selectorRoot = document.querySelector(`[data-sg-proforma-selector="${selectorId}"]`);
+  const configurationContainer = selectorRoot?.querySelector('[data-sg-configurations]');
+  const lengthContainer = selectorRoot?.querySelector('[data-sg-lengths]');
+  const summaryRoot = selectorRoot?.querySelector('[data-sg-summary]');
+
+  if (selectorRoot && configurationContainer && lengthContainer && summaryRoot) {
+    let activeConfiguration = defaultConfiguration;
+    let activeLength = selectorItems.find((item) => item.size === activeConfiguration)?.length ?? '';
+    let clearArmed = false;
+
+    const heading = summaryRoot.querySelector('[data-summary-heading]');
+    const length = summaryRoot.querySelector('[data-summary-length]');
+    const sku = summaryRoot.querySelector('[data-summary-sku]');
+    const description = summaryRoot.querySelector('[data-summary-description]');
+    const addButton = summaryRoot.querySelector('[data-summary-add]');
+    const orderLines = summaryRoot.querySelector('[data-order-lines]');
+    const orderCards = summaryRoot.querySelector('[data-order-cards]');
+    const emptyState = summaryRoot.querySelector('[data-order-empty-state]');
+    const emptyCard = summaryRoot.querySelector('[data-order-empty-card]');
+    const totalPacks = summaryRoot.querySelector('[data-order-total-packs]');
+    const requestLink = summaryRoot.querySelector('[data-order-request]');
+    const clearButton = summaryRoot.querySelector('[data-order-clear]');
+    const clearWarning = summaryRoot.querySelector('[data-clear-warning]');
+    const sharedRequest = getSharedRequest();
+    const selections = sharedRequest.selections;
+
+    const currentSelection = () =>
+      selectorItems.find((entry) => entry.size === activeConfiguration && entry.length === activeLength) ??
+      selectorItems.find((entry) => entry.size === activeConfiguration) ??
+      null;
+
+    const disarmClear = () => {
+      clearArmed = false;
+      if (clearButton instanceof HTMLButtonElement) {
+        clearButton.textContent = 'Clear order';
+        clearButton.classList.remove('is-armed');
+      }
+      if (clearWarning instanceof HTMLElement) clearWarning.classList.add('is-hidden');
+    };
+
+    const armClear = () => {
+      clearArmed = true;
+      if (clearButton instanceof HTMLButtonElement) {
+        clearButton.textContent = 'Confirm clear order';
+        clearButton.classList.add('is-armed');
+      }
+      if (clearWarning instanceof HTMLElement) clearWarning.classList.remove('is-hidden');
+    };
+
+    const groupedEntries = () => {
+      const groups = [];
+      Array.from(selections.values()).forEach((entry) => {
+        const name = entry.productFamily || 'File Systems';
+        const group = groups.find((item) => item.name === name);
+        if (group) group.entries.push(entry);
+        else groups.push({ name, entries: [entry] });
+      });
+      return groups;
+    };
+
+    const updateRequestLink = () => {
+      if (!(requestLink instanceof HTMLAnchorElement)) return;
+      const lines = Array.from(selections.values()).filter((entry) => entry.quantity > 0);
+      const totalQuantity = lines.reduce((sum, entry) => sum + entry.quantity, 0);
+
+      if (totalPacks) totalPacks.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'pack' : 'packs'}`;
+      if (clearButton instanceof HTMLElement) {
+        clearButton.classList.toggle('is-hidden', totalQuantity === 0);
+        if (totalQuantity === 0) disarmClear();
+      }
+
+      const lineText = lines
+        .map((entry) => `- ${entry.productLabel} | ${entry.label} | ${entry.item.length} | SKU ${entry.item.sku} | Qty ${entry.quantity}`)
+        .join('\n');
+      const subject = encodeURIComponent('EndoTech Singapore proforma request');
+      const body = encodeURIComponent(`Hello EndoTech Singapore,
+
+I would like to request a proforma for:
+
+${lineText || '- '}
+
+Clinic / company:
+Contact name:
+Email:
+Delivery region: Singapore
+Notes:
+`);
+
+      requestLink.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      requestLink.classList.toggle('is-disabled', totalQuantity === 0);
+      requestLink.setAttribute('aria-disabled', totalQuantity === 0 ? 'true' : 'false');
+    };
+
+    const renderOrderLines = () => {
+      const entries = Array.from(selections.values());
+      const groups = groupedEntries();
+
+      if (orderLines instanceof HTMLElement) {
+        orderLines.querySelectorAll('[data-order-line], [data-order-group]').forEach((line) => line.remove());
+        if (emptyState instanceof HTMLElement) emptyState.classList.toggle('is-hidden', entries.length > 0);
+
+        groups.forEach((group) => {
+          const groupRow = document.createElement('tr');
+          groupRow.setAttribute('data-order-group', 'true');
+          groupRow.innerHTML = `<td colspan="3" class="sg-group-cell">${escapeHtml(group.name)}</td>`;
+          orderLines.appendChild(groupRow);
+
+          group.entries.forEach((entry) => {
+            const row = document.createElement('tr');
+            row.setAttribute('data-order-line', 'true');
+            row.innerHTML = `
+              <td>
+                <strong>${escapeHtml(entry.productLabel)}</strong>
+                <span>${escapeHtml(entry.label)} - SKU ${escapeHtml(entry.item.sku)}</span>
+              </td>
+              <td>${escapeHtml(entry.item.length)}</td>
+              <td>
+                <div class="sg-qty-controls">
+                  <button type="button" data-order-decrement="${escapeHtml(entry.key)}" aria-label="Reduce quantity">-</button>
+                  <span>${escapeHtml(entry.quantity)}</span>
+                  <button type="button" data-order-increment="${escapeHtml(entry.key)}" aria-label="Increase quantity">+</button>
+                </div>
+              </td>
+            `;
+            orderLines.appendChild(row);
+          });
+        });
+      }
+
+      if (orderCards instanceof HTMLElement) {
+        orderCards.querySelectorAll('[data-order-card], [data-order-group-card]').forEach((card) => card.remove());
+        if (emptyCard instanceof HTMLElement) emptyCard.classList.toggle('is-hidden', entries.length > 0);
+
+        groups.forEach((group) => {
+          const groupCard = document.createElement('div');
+          groupCard.setAttribute('data-order-group-card', 'true');
+          groupCard.className = 'sg-card-group';
+          groupCard.textContent = group.name;
+          orderCards.appendChild(groupCard);
+
+          group.entries.forEach((entry) => {
+            const card = document.createElement('article');
+            card.setAttribute('data-order-card', 'true');
+            card.className = 'sg-order-card';
+            card.innerHTML = `
+              <div>
+                <span>Product</span>
+                <strong>${escapeHtml(entry.productLabel)}</strong>
+                <small>${escapeHtml(entry.label)} - SKU ${escapeHtml(entry.item.sku)}</small>
+              </div>
+              <div>
+                <span>Length</span>
+                <strong>${escapeHtml(entry.item.length)}</strong>
+              </div>
+              <div class="sg-qty-controls">
+                <button type="button" data-order-decrement="${escapeHtml(entry.key)}" aria-label="Reduce quantity">-</button>
+                <span>${escapeHtml(entry.quantity)}</span>
+                <button type="button" data-order-increment="${escapeHtml(entry.key)}" aria-label="Increase quantity">+</button>
+              </div>
+            `;
+            orderCards.appendChild(card);
+          });
+        });
+      }
+
+      sharedRequest.save();
+      updateRequestLink();
+    };
+
+    const renderLengths = () => {
+      const filtered = selectorItems.filter((item) => item.size === activeConfiguration);
+      activeLength = filtered.find((item) => item.length === activeLength)?.length ?? filtered[0]?.length ?? '';
+      lengthContainer.innerHTML = filtered
+        .map((item) => `<button type="button" class="sg-choice-button sg-choice-button--length ${item.length === activeLength ? 'is-active' : ''}" data-length-button data-length="${escapeHtml(item.length)}">${escapeHtml(item.length)}</button>`)
+        .join('');
+    };
+
+    const renderSummary = () => {
+      const item = currentSelection();
+      if (!item) return;
+      const configLabel = configurationMeta.find((entry) => entry.value === item.size)?.label ?? item.size;
+      if (heading) heading.textContent = configLabel;
+      if (length) length.textContent = item.length;
+      if (sku) sku.textContent = item.sku;
+      if (description) description.textContent = item.description;
+    };
+
+    const addCurrentSelection = () => {
+      const item = currentSelection();
+      if (!item) return;
+      const label = configurationMeta.find((entry) => entry.value === item.size)?.label ?? item.size;
+      const key = item.sku;
+      sharedRequest.update(key, (entry) => ({
+        key,
+        label,
+        productFamily,
+        productLabel,
+        item,
+        quantity: entry ? entry.quantity + 1 : 1,
+      }));
+    };
+
+    const handleQuantityClick = (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+      const incrementKey = target.closest('[data-order-increment]')?.getAttribute('data-order-increment');
+      const decrementKey = target.closest('[data-order-decrement]')?.getAttribute('data-order-decrement');
+      const key = incrementKey ?? decrementKey;
+      if (!key) return;
+
+      sharedRequest.update(key, (entry) => {
+        if (!entry) return null;
+        return { ...entry, quantity: entry.quantity + (incrementKey ? 1 : -1) };
+      });
+    };
+
+    addButton?.addEventListener('click', addCurrentSelection);
+    orderLines?.addEventListener('click', handleQuantityClick);
+    orderCards?.addEventListener('click', handleQuantityClick);
+
+    clearButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!clearArmed) {
+        armClear();
+        return;
+      }
+      sharedRequest.clear();
+      disarmClear();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!clearArmed || !(event.target instanceof Node)) return;
+      if (clearButton instanceof HTMLButtonElement && clearButton.contains(event.target)) return;
+      disarmClear();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && clearArmed) disarmClear();
+    });
+
+    configurationContainer.addEventListener('click', (event) => {
+      const button = event.target instanceof HTMLElement ? event.target.closest('[data-configuration-button]') : null;
+      if (!(button instanceof HTMLElement)) return;
+      const next = button.dataset.configuration;
+      if (!next || next === activeConfiguration) return;
+      activeConfiguration = next;
+      configurationContainer.querySelectorAll('[data-configuration-button]').forEach((entry) => {
+        if (entry instanceof HTMLElement) entry.classList.toggle('is-active', entry.dataset.configuration === activeConfiguration);
+      });
+      renderLengths();
+      renderSummary();
+    });
+
+    lengthContainer.addEventListener('click', (event) => {
+      const button = event.target instanceof HTMLElement ? event.target.closest('[data-length-button]') : null;
+      if (!(button instanceof HTMLElement)) return;
+      const next = button.dataset.length;
+      if (!next) return;
+      activeLength = next;
+      lengthContainer.querySelectorAll('[data-length-button]').forEach((entry) => {
+        if (entry instanceof HTMLElement) entry.classList.toggle('is-active', entry.dataset.length === activeLength);
+      });
+      renderSummary();
+    });
+
+    sharedRequest.subscribe(renderOrderLines);
+    renderOrderLines();
+    renderSummary();
+  }
+</script>
+
+<style is:global>
+  .sg-proforma-selector {
+    border-bottom: 0;
+    background: transparent;
+  }
+
+  .sg-selector-shell {
+    overflow: hidden;
+    border: 1px solid #cbd8e2;
+    border-radius: 8px;
+    background: rgba(248, 250, 252, 0.84);
+    box-shadow: 0 28px 62px -52px rgba(15, 23, 42, 0.38);
+  }
+
+  .sg-selector-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    gap: 24px;
+    border-bottom: 1px solid #dbe3ea;
+    padding: 28px 30px;
+  }
+
+  .sg-selector-marker {
+    margin: 0;
+    color: #5076b8;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .sg-selector-intro h3,
+  .sg-step-panel h4,
+  .sg-summary-panel h4,
+  .sg-order-builder h4 {
+    margin: 8px 0 0;
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    letter-spacing: 0;
+  }
+
+  .sg-selector-intro h3 {
+    font-size: clamp(1.8rem, 2.5vw, 2.45rem);
+    line-height: 1.08;
+  }
+
+  .sg-selector-intro p:not(.sg-selector-marker),
+  .sg-selection-note,
+  .sg-request-footer p,
+  .sg-empty-card {
+    color: #536478;
+    line-height: 1.7;
+  }
+
+  .sg-selector-meta {
+    display: grid;
+    gap: 12px;
+  }
+
+  .sg-selector-meta article,
+  .sg-step-panel,
+  .sg-summary-panel,
+  .sg-order-builder {
+    border: 1px solid #dbe3ea;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  .sg-selector-meta article {
+    padding: 16px;
+  }
+
+  .sg-selector-meta span,
+  .sg-selected-details dt,
+  .sg-card-group,
+  .sg-order-table-wrap th,
+  .sg-order-card span {
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .sg-selector-meta strong {
+    display: block;
+    margin-top: 8px;
+    color: #0b1424;
+  }
+
+  .sg-selector-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
+    gap: 24px;
+    padding: 28px 30px;
+  }
+
+  .sg-selector-steps {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+  }
+
+  .sg-step-panel,
+  .sg-summary-panel {
+    padding: 22px;
+  }
+
+  .sg-choice-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .sg-choice-button,
+  .sg-add-button,
+  .sg-request-link,
+  .sg-clear-button,
+  .sg-qty-controls button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c8d2dc;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #334155;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .sg-choice-button {
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 0.86rem;
+  }
+
+  .sg-choice-button.is-active {
+    border-color: #0b1424;
+    background: #0b1424;
+    color: #ffffff;
+  }
+
+  .sg-choice-button--length.is-active {
+    border-color: #0f766e;
+    background: #ecfdf5;
+    color: #0f766e;
+  }
+
+  .sg-selection-note {
+    margin: 16px 0 0;
+    font-size: 0.92rem;
+  }
+
+  .sg-selected-file {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .sg-selected-file span {
+    align-self: start;
+    border-radius: 999px;
+    background: #eef6fb;
+    padding: 7px 10px;
+    color: #0f5878;
+    font-size: 0.72rem;
+    font-weight: 900;
+  }
+
+  .sg-selected-details {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .sg-selected-details div {
+    border: 1px solid #dbe3ea;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 12px;
+  }
+
+  .sg-selected-details dd {
+    margin: 8px 0 0;
+    color: #0b1424;
+    font-weight: 800;
+  }
+
+  .sg-add-button,
+  .sg-request-link {
+    min-height: 44px;
+    width: 100%;
+    border-color: #0b1424;
+    background: #0b1424;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .sg-order-builder {
+    margin-top: 22px;
+    padding: 18px;
+    background: #f8fafc;
+  }
+
+  .sg-order-builder-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .sg-order-builder-header > div:last-child {
+    text-align: right;
+  }
+
+  .sg-order-builder-header p {
+    margin: 0;
+    color: #536478;
+    font-weight: 800;
+  }
+
+  .sg-clear-button {
+    margin-top: 8px;
+    min-height: 34px;
+    border-color: #fecaca;
+    background: #fef2f2;
+    padding: 0 12px;
+    color: #b91c1c;
+    font-size: 0.82rem;
+  }
+
+  .sg-clear-button.is-armed {
+    border-color: #b91c1c;
+    background: #b91c1c;
+    color: #ffffff;
+  }
+
+  .sg-clear-warning {
+    display: grid;
+    gap: 4px;
+    margin-top: 14px;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    background: #fef2f2;
+    padding: 12px;
+    color: #991b1b;
+  }
+
+  .is-hidden {
+    display: none !important;
+  }
+
+  .sg-order-cards {
+    display: none;
+  }
+
+  .sg-order-table-wrap {
+    overflow: hidden;
+    margin-top: 16px;
+    border: 1px solid #dbe3ea;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  .sg-order-table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+
+  .sg-order-table-wrap th,
+  .sg-order-table-wrap td {
+    border-top: 1px solid #e5eaf0;
+    padding: 12px;
+    vertical-align: top;
+  }
+
+  .sg-order-table-wrap thead th {
+    border-top: 0;
+    background: #f8fafc;
+  }
+
+  .sg-order-table-wrap td strong,
+  .sg-order-table-wrap td span {
+    display: block;
+  }
+
+  .sg-order-table-wrap td span {
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .sg-group-cell {
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .sg-qty-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sg-qty-controls button {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  .sg-qty-controls span {
+    min-width: 24px;
+    text-align: center;
+    font-weight: 900;
+  }
+
+  .sg-request-footer {
+    display: grid;
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .sg-request-link.is-disabled {
+    border-color: #c8d2dc;
+    background: #eef2f6;
+    color: #6d7783;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1120px) {
+    .sg-selector-intro,
+    .sg-selector-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .sg-selector-intro,
+    .sg-selector-layout,
+    .sg-step-panel,
+    .sg-summary-panel {
+      padding: 16px;
+    }
+
+    .sg-choice-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sg-choice-group--lengths {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .sg-choice-button {
+      width: 100%;
+    }
+
+    .sg-order-table-wrap {
+      display: none;
+    }
+
+    .sg-order-cards {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .sg-empty-card,
+    .sg-order-card {
+      border: 1px solid #dbe3ea;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 12px;
+    }
+
+    .sg-order-card {
+      display: grid;
+      gap: 12px;
+    }
+
+    .sg-order-card strong,
+    .sg-order-card small {
+      display: block;
+      margin-top: 5px;
+    }
+
+    .sg-order-card small {
+      color: #64748b;
+    }
+  }
+</style>

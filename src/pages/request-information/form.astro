@@ -1,0 +1,421 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import etProduct from '../../assets/et-transformx.png';
+import { siteConfig } from '../../config/site';
+
+const base = import.meta.env.BASE_URL;
+
+const products = [
+  'ET TransformX',
+  'PT TransformX',
+  'Acrobat Glide Path',
+  'BCS BioCeramic Materials',
+  'VortiFlow Irrigation Needle',
+  'General product information',
+];
+---
+
+<ProductLayout
+  title="Product Information Request | EndoTech Singapore"
+  description="Send a direct product information request to EndoTech Singapore."
+  image={etProduct.src}
+  accent="slate"
+>
+  <main class="request-form-page">
+    <section class="request-form-hero" aria-labelledby="request-form-title">
+      <div>
+        <p class="request-form-eyebrow">EndoTech Singapore</p>
+        <h1 id="request-form-title">Product information request.</h1>
+        <p>
+          Send product-fit, documentation, availability, or regional support questions directly to EndoTech Singapore.
+        </p>
+      </div>
+      <aside>
+        <span>Legal entity</span>
+        <strong>{siteConfig.legalName}</strong>
+        <p>Visible brand remains EndoTech Singapore. The request is handled as a direct SG enquiry.</p>
+      </aside>
+    </section>
+
+    <section class="request-form-section" aria-labelledby="request-details-title">
+      <form
+        name="sg-product-information-request"
+        method="POST"
+        action={`${base}request-information/thank-you/`}
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="request-form"
+      >
+        <input type="hidden" name="form-name" value="sg-product-information-request" />
+        <p class="hidden-field">
+          <label>Do not fill this out: <input name="bot-field" /></label>
+        </p>
+
+        <div class="request-form-heading">
+          <p class="request-form-eyebrow">Request details</p>
+          <h2 id="request-details-title">Tell us what you need.</h2>
+        </div>
+
+        <fieldset>
+          <legend>Contact</legend>
+          <div class="request-grid">
+            <label>
+              Contact name
+              <input name="contact_name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              Clinic / company
+              <input name="clinic_company" type="text" autocomplete="organization" required />
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              Phone
+              <input name="phone" type="tel" autocomplete="tel" />
+            </label>
+            <label>
+              Country / region
+              <input name="region" type="text" value="Singapore" />
+            </label>
+            <label>
+              Request type
+              <select name="request_type">
+                <option>Product information</option>
+                <option>Clinical documentation</option>
+                <option>Availability</option>
+                <option>Distributor / regional support</option>
+                <option>Other</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Product interest</legend>
+          <div class="product-checkbox-group" role="group" aria-label="Products of interest">
+            {products.map((product) => (
+              <label class="product-checkbox">
+                <input type="checkbox" name="product_interest" value={product} data-product-option />
+                <span class="product-checkbox-mark" aria-hidden="true"></span>
+                <span>{product}</span>
+              </label>
+            ))}
+          </div>
+          <label>
+            Message or requests
+            <textarea
+              name="message"
+              rows="7"
+              required
+            ></textarea>
+          </label>
+        </fieldset>
+
+        <div class="request-form-actions">
+          <button type="submit">Send request</button>
+          <a href={`${base}request-information/`}>Back to information page</a>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script is:inline>
+    const productOptions = document.querySelectorAll('[data-product-option]');
+    const hashProduct = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : '';
+    const requestedProduct = new URLSearchParams(window.location.search).get('product') || hashProduct;
+    if (requestedProduct) {
+      productOptions.forEach((option) => {
+        if (option instanceof HTMLInputElement && option.value === requestedProduct) {
+          option.checked = true;
+        }
+      });
+    }
+  </script>
+</ProductLayout>
+
+<style>
+  .request-form-page {
+    background: #f7f9fb;
+    color: #0b1424;
+  }
+
+  .request-form-hero,
+  .request-form-section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .request-form-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+    gap: 46px;
+    align-items: end;
+    padding-top: 72px;
+    padding-bottom: 48px;
+  }
+
+  .request-form-eyebrow {
+    margin: 0 0 16px;
+    color: #64748b;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .request-form-hero h1,
+  .request-form-heading h2 {
+    margin: 0;
+    color: #090f1d;
+    font-family: 'Sora', system-ui, sans-serif;
+    letter-spacing: 0;
+  }
+
+  .request-form-hero h1 {
+    max-width: 12ch;
+    font-size: clamp(3rem, 5vw, 5.4rem);
+    line-height: 0.98;
+  }
+
+  .request-form-hero p,
+  .request-form-hero aside p {
+    max-width: 48rem;
+    margin: 24px 0 0;
+    color: #536478;
+    font-size: 1.04rem;
+    line-height: 1.76;
+  }
+
+  .request-form-hero aside {
+    display: grid;
+    gap: 8px;
+    border-top: 1px solid #cfd9e2;
+    padding-top: 18px;
+  }
+
+  .request-form-hero aside span {
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .request-form-section {
+    padding-bottom: 96px;
+  }
+
+  .request-form {
+    display: grid;
+    gap: 24px;
+    border: 1px solid #dbe3ea;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 32px;
+    box-shadow: 0 26px 62px -52px rgba(15, 23, 42, 0.34);
+  }
+
+  .request-form-heading h2 {
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 1.08;
+  }
+
+  .request-form fieldset {
+    display: grid;
+    gap: 18px;
+    margin: 0;
+    border: 1px solid #dbe3ea;
+    border-radius: 8px;
+    padding: 22px;
+  }
+
+  .request-form legend {
+    padding: 0 8px;
+    color: #0b1424;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-weight: 800;
+  }
+
+  .request-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .request-grid--wide {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1fr);
+  }
+
+  .request-grid--single {
+    grid-template-columns: 1fr;
+  }
+
+  .product-checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .request-form label {
+    display: grid;
+    gap: 8px;
+    color: #344357;
+    font-size: 0.88rem;
+    font-weight: 800;
+  }
+
+  .request-form .product-checkbox {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    min-height: 54px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .product-checkbox input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .product-checkbox-mark {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #cad5e0;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .product-checkbox-mark::after {
+    width: 9px;
+    height: 5px;
+    border-left: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    opacity: 0;
+    transform: rotate(-45deg) translateY(-1px);
+    content: '';
+  }
+
+  .product-checkbox:has(input:checked) {
+    border-color: #b8d8ea;
+    background: #eef8fc;
+    box-shadow: inset 0 0 0 1px rgba(11, 117, 183, 0.08);
+  }
+
+  .product-checkbox:has(input:checked) .product-checkbox-mark {
+    border-color: #0b75b7;
+    background: #0b75b7;
+  }
+
+  .product-checkbox:has(input:checked) .product-checkbox-mark::after {
+    opacity: 1;
+  }
+
+  .product-checkbox:has(input:focus-visible) {
+    outline: 3px solid rgba(11, 117, 183, 0.16);
+    outline-offset: 2px;
+  }
+
+  .product-checkbox > span:last-child {
+    color: #24364a;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .request-form input,
+  .request-form select,
+  .request-form textarea {
+    width: 100%;
+    border: 1px solid #cbd6e2;
+    border-radius: 8px;
+    padding: 12px;
+    color: #0b1424;
+    font: inherit;
+    background: #ffffff;
+  }
+
+  .request-form textarea {
+    resize: vertical;
+  }
+
+  .request-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .request-form-actions button,
+  .request-form-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border: 1px solid #0b1424;
+    border-radius: 8px;
+    padding: 0 18px;
+    color: #ffffff;
+    font: inherit;
+    font-weight: 900;
+    text-decoration: none;
+    background: #0b1424;
+    cursor: pointer;
+  }
+
+  .request-form-actions a {
+    border-color: #c8d2dc;
+    color: #0b1424;
+    background: #ffffff;
+  }
+
+  .hidden-field {
+    display: none;
+  }
+
+  @media (max-width: 860px) {
+    .request-form-hero,
+    .request-grid,
+    .request-grid--wide,
+    .product-checkbox-group {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .request-form-hero,
+    .request-form-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .request-form {
+      padding: 18px;
+    }
+
+    .request-form fieldset {
+      padding: 16px;
+    }
+
+    .request-form-actions {
+      display: grid;
+    }
+  }
+</style>
