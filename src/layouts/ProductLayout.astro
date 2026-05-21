@@ -2,7 +2,7 @@
 import Layout from './Layout.astro';
 import logoIcon from '../assets/endotech-logo-2.png';
 import { siteConfig } from '../config/site';
-import { getFooterSections, getFooterUtilityLinks, getPrimaryNavItems, getProductMenu, getProductMobileNavItems } from '../data/navigation';
+import { getFooterSections, getFooterUtilityLinks, getOrderMenu, getPrimaryNavItems, getProductMenu, getProductMobileNavItems } from '../data/navigation';
 
 interface Props {
   title: string;
@@ -16,6 +16,7 @@ const { title, description, image, schema, accent = 'teal' } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
+const orderMenu = getOrderMenu(base);
 const mobileNavItems = getProductMobileNavItems(base);
 const footerSections = getFooterSections(base);
 const footerUtilityLinks = getFooterUtilityLinks(base);
@@ -35,7 +36,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 
       <nav aria-label="Primary navigation">
         <a href={navItems[0].href}>{navItems[0].label}</a>
-        <div class="products-menu">
+        <div class="products-menu" data-header-menu>
           <button id="products-menu-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="products-menu-panel">
             Products
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -58,7 +59,23 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
       </nav>
 
       <div class="product-header-actions">
-        <a class="product-header-action" href={`${base}order/`}>Order</a>
+        <div class="products-menu order-menu">
+          <button id="order-menu-button" class="product-header-action" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="order-menu-panel">
+            Order
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </button>
+          <div class="products-menu-bridge"></div>
+          <div id="order-menu-panel" class="products-menu-panel">
+            <div class="products-menu-shell">
+              <span>Order paths</span>
+              {orderMenu.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))}
+            </div>
+          </div>
+        </div>
         <a class="product-header-action" href={`${base}about/contact/`}>Contact</a>
         <button class="product-menu-toggle" id="product-mobile-menu-button" type="button" aria-expanded="false" aria-controls="product-mobile-menu">
           Menu
@@ -81,15 +98,21 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
-      const productsMenu = document.querySelector('.products-menu');
-      const productsMenuButton = document.getElementById('products-menu-button');
+      const headerMenus = Array.from(document.querySelectorAll('.product-site-header .products-menu'));
       const mobileMenu = document.getElementById('product-mobile-menu');
       const mobileMenuButton = document.getElementById('product-mobile-menu-button');
 
-      function setProductsMenu(open) {
-        if (!productsMenu || !productsMenuButton) return;
-        productsMenu.classList.toggle('is-open', open);
-        productsMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+      function setHeaderMenu(menu, open) {
+        const button = menu?.querySelector('button[aria-haspopup="true"]');
+        if (!menu || !button) return;
+        menu.classList.toggle('is-open', open);
+        button.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      function closeHeaderMenus(exceptMenu) {
+        headerMenus.forEach((menu) => {
+          if (menu !== exceptMenu) setHeaderMenu(menu, false);
+        });
       }
 
       function setMobileMenu(open) {
@@ -98,11 +121,19 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
       }
 
-      productsMenuButton?.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
-        setProductsMenu(!isOpen);
+      headerMenus.forEach((menu) => {
+        const button = menu.querySelector('button[aria-haspopup="true"]');
+        button?.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const isOpen = button.getAttribute('aria-expanded') === 'true';
+          closeHeaderMenus(menu);
+          setHeaderMenu(menu, !isOpen);
+        });
+
+        menu.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => setHeaderMenu(menu, false));
+        });
       });
 
       mobileMenuButton?.addEventListener('click', () => {
@@ -110,19 +141,14 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         setMobileMenu(!isOpen);
       });
 
-      productsMenu?.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => setProductsMenu(false));
-      });
-
       mobileMenu?.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', () => setMobileMenu(false));
       });
 
       document.addEventListener('click', (event) => {
-        if (!productsMenu) return;
-        if (!productsMenu.contains(event.target)) {
-          setProductsMenu(false);
-        }
+        headerMenus.forEach((menu) => {
+          if (!menu.contains(event.target)) setHeaderMenu(menu, false);
+        });
         if (mobileMenu && mobileMenuButton && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
           setMobileMenu(false);
         }
@@ -130,7 +156,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-          setProductsMenu(false);
+          closeHeaderMenus();
           setMobileMenu(false);
         }
       });
@@ -352,6 +378,29 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
   .products-menu:focus-within svg,
   .products-menu.is-open svg {
     transform: translateY(1px);
+  }
+
+  .order-menu .product-header-action {
+    gap: 6px;
+    min-height: 38px;
+    border: 1px solid #c0c7d2;
+    border-radius: 8px;
+    padding: 0 16px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    cursor: pointer;
+  }
+
+  .order-menu .products-menu-panel {
+    left: auto;
+    right: 0;
+    transform: translate(0, 8px);
+  }
+
+  .order-menu:hover .products-menu-panel,
+  .order-menu:focus-within .products-menu-panel,
+  .order-menu.is-open .products-menu-panel {
+    transform: translate(0, 0);
   }
 
   .product-header-actions {

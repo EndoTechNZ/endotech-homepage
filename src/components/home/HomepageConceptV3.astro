@@ -8,12 +8,13 @@ import bcsSealer from '../../assets/bcs-sealer.png';
 import vortiflowFlow from '../../assets/vortiflow/vortiflow-fluid-dynamics-clean.png';
 import ClinicalWorkflowWheel from './ClinicalWorkflowWheel.astro';
 import { siteConfig } from '../../config/site';
-import { getFooterSections, getFooterUtilityLinks, getHomepageMobileNavItems, getPrimaryNavItems, getProductMenu } from '../../data/navigation';
+import { getFooterSections, getFooterUtilityLinks, getHomepageMobileNavItems, getOrderMenu, getPrimaryNavItems, getProductMenu } from '../../data/navigation';
 
 const base = import.meta.env.BASE_URL;
 
 const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
+const orderMenu = getOrderMenu(base);
 const mobileNavItems = getHomepageMobileNavItems(base);
 const footerSections = getFooterSections(base);
 const footerUtilityLinks = getFooterUtilityLinks(base);
@@ -115,7 +116,30 @@ const evidenceLinks = [
     </nav>
 
     <div class="homepage-header-actions">
-      <a class="homepage-header-action" href={`${base}order/`}>Order</a>
+      <div class="products-menu order-menu">
+        <button
+          id="homepage-order-menu-button"
+          class="homepage-header-action"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="homepage-order-menu-panel"
+        >
+          Order
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 9l6 6 6-6"></path>
+          </svg>
+        </button>
+        <div class="products-menu-bridge"></div>
+        <div id="homepage-order-menu-panel" class="products-menu-panel">
+          <div class="products-menu-shell">
+            <span>Order paths</span>
+            {orderMenu.map((item) => (
+              <a href={item.href}>{item.label}</a>
+            ))}
+          </div>
+        </div>
+      </div>
       <a class="homepage-header-action" href={`${base}about/contact/`}>Contact</a>
       <button class="homepage-menu-toggle" id="homepage-mobile-menu-button" type="button" aria-expanded="false" aria-controls="homepage-mobile-menu">
         Menu
@@ -279,15 +303,21 @@ const evidenceLinks = [
 </footer>
 
 <script>
-  const productsMenu = document.querySelector('.homepage-shell-header .products-menu');
-  const productsMenuButton = document.getElementById('homepage-products-menu-button');
+  const headerMenus = Array.from(document.querySelectorAll('.homepage-shell-header .products-menu'));
   const mobileMenu = document.getElementById('homepage-mobile-menu');
   const mobileMenuButton = document.getElementById('homepage-mobile-menu-button');
 
-  const setProductsMenu = (open) => {
-    if (!productsMenu || !productsMenuButton) return;
-    productsMenu.classList.toggle('is-open', open);
-    productsMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+  const setHeaderMenu = (menu, open) => {
+    const button = menu?.querySelector('button[aria-haspopup="true"]');
+    if (!menu || !button) return;
+    menu.classList.toggle('is-open', open);
+    button.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
+  const closeHeaderMenus = (exceptMenu) => {
+    headerMenus.forEach((menu) => {
+      if (menu !== exceptMenu) setHeaderMenu(menu, false);
+    });
   };
 
   const setMobileMenu = (open) => {
@@ -296,14 +326,19 @@ const evidenceLinks = [
     mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
   };
 
-  productsMenuButton?.addEventListener('click', (event) => {
-    event.preventDefault();
-    const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
-    setProductsMenu(!isOpen);
-  });
+  headerMenus.forEach((menu) => {
+    const button = menu.querySelector('button[aria-haspopup="true"]');
+    button?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const isOpen = button.getAttribute('aria-expanded') === 'true';
+      closeHeaderMenus(menu);
+      setHeaderMenu(menu, !isOpen);
+    });
 
-  productsMenu?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => setProductsMenu(false));
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setHeaderMenu(menu, false));
+    });
   });
 
   mobileMenuButton?.addEventListener('click', (event) => {
@@ -322,8 +357,10 @@ const evidenceLinks = [
   });
 
   document.addEventListener('click', (event) => {
-    if (!(event.target instanceof Node) || !productsMenu) return;
-    if (!productsMenu.contains(event.target)) setProductsMenu(false);
+    if (!(event.target instanceof Node)) return;
+    headerMenus.forEach((menu) => {
+      if (!menu.contains(event.target)) setHeaderMenu(menu, false);
+    });
     if (mobileMenu && mobileMenuButton && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
       setMobileMenu(false);
     }
@@ -331,7 +368,7 @@ const evidenceLinks = [
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      setProductsMenu(false);
+      closeHeaderMenus();
       setMobileMenu(false);
     }
   });
@@ -534,6 +571,29 @@ const evidenceLinks = [
   .products-menu:focus-within svg,
   .products-menu.is-open svg {
     transform: translateY(1px);
+  }
+
+  .order-menu .homepage-header-action {
+    gap: 6px;
+    min-height: 38px;
+    border: 1px solid #c0c7d2;
+    border-radius: 8px;
+    padding: 0 16px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    cursor: pointer;
+  }
+
+  .order-menu .products-menu-panel {
+    left: auto;
+    right: 0;
+    transform: translate(0, 8px);
+  }
+
+  .order-menu:hover .products-menu-panel,
+  .order-menu:focus-within .products-menu-panel,
+  .order-menu.is-open .products-menu-panel {
+    transform: translate(0, 0);
   }
 
   .homepage-header-actions {

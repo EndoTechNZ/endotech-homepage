@@ -1,0 +1,617 @@
+---
+import ProductLayout from '../layouts/ProductLayout.astro';
+import etProduct from '../assets/et-transformx.png';
+import bcsSealer from '../assets/bcs-sealer.png';
+
+const base = import.meta.env.BASE_URL;
+
+const applicationTypes = [
+  'Clinic / practice account',
+  'Dental group account',
+  'Distributor account',
+  'Education / training organisation',
+  'Other professional dental organisation',
+];
+
+const productFamilies = [
+  'ET TransformX',
+  'PT TransformX',
+  'Acrobat Glide Path',
+  'BCS BioCeramic Materials',
+  'VortiFlow Irrigation Needle',
+  'Full EndoTech NZ portfolio',
+];
+---
+
+<ProductLayout
+  title="Apply for an Account | EndoTech NZ"
+  description="Apply for an EndoTech NZ professional account review without creating a login, password, or automatic ordering account."
+  image={etProduct.src}
+  accent="slate"
+>
+  <main class="account-page">
+    <section class="account-hero" aria-labelledby="account-title">
+      <div class="account-hero-copy">
+        <p class="account-eyebrow">Professional account review</p>
+        <h1 id="account-title">Apply for an EndoTech NZ account.</h1>
+        <p>
+          Submit clinic, company, or distributor details for manual review. This is an application workflow only; no login, password, pricing account, or automatic ordering access is created.
+        </p>
+      </div>
+
+      <figure class="account-hero-visual" aria-label="EndoTech NZ product systems">
+        <img src={etProduct.src} alt="ET TransformX rotary files" />
+        <img src={bcsSealer.src} alt="BCS BioCeramic Materials" />
+      </figure>
+    </section>
+
+    <section class="account-prep" aria-labelledby="before-apply-title">
+      <div>
+        <p class="account-eyebrow">Before applying</p>
+        <h2 id="before-apply-title">What this application is for.</h2>
+      </div>
+      <div class="account-prep-grid">
+        <article>
+          <span>01</span>
+          <h3>Manual review</h3>
+          <p>EndoTech NZ reviews the application and follows up directly. The website does not create account access automatically.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Professional details</h3>
+          <p>Provide enough clinic, company, region, and product-interest detail to understand the account request clearly.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Clinical fit</h3>
+          <p>Use the form to explain ordering needs, support requirements, and where EndoTech systems fit in your clinical workflow.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="account-form-section" aria-labelledby="account-form-title">
+      <form class="account-form" data-account-application-form>
+        <div class="account-form-heading">
+          <p class="account-eyebrow">Application details</p>
+          <h2 id="account-form-title">Tell us about your account request.</h2>
+        </div>
+
+        <fieldset>
+          <legend>Applicant</legend>
+          <div class="account-grid">
+            <label>
+              Contact name
+              <input name="contact_name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              Role / position
+              <input name="role" type="text" autocomplete="organization-title" required />
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              Phone
+              <input name="phone" type="tel" autocomplete="tel" required />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Organisation</legend>
+          <div class="account-grid">
+            <label>
+              Clinic / company name
+              <input name="organisation" type="text" autocomplete="organization" required />
+            </label>
+            <label>
+              Application type
+              <select name="application_type" required>
+                {applicationTypes.map((type) => <option>{type}</option>)}
+              </select>
+            </label>
+            <label>
+              Country / region
+              <input name="region" type="text" value="New Zealand" required />
+            </label>
+            <label>
+              Website or professional profile
+              <input name="website" type="url" autocomplete="url" />
+            </label>
+            <label class="account-grid-full">
+              Registered business / clinic address
+              <textarea name="address" rows="3" required></textarea>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Product and account intent</legend>
+          <div class="product-checkbox-group" role="group" aria-label="Product families of interest">
+            {productFamilies.map((product) => (
+              <label class="product-checkbox">
+                <input type="checkbox" name="product_interest" value={product} />
+                <span class="product-checkbox-mark" aria-hidden="true"></span>
+                <span>{product}</span>
+              </label>
+            ))}
+          </div>
+          <label>
+            Reason for account request
+            <textarea name="account_reason" rows="5" required></textarea>
+          </label>
+          <label>
+            Expected ordering or support needs
+            <textarea name="expected_needs" rows="4"></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Applicant confirmation</legend>
+          <div class="account-confirmations">
+            <label>
+              <input type="checkbox" name="professional_confirmation" value="Confirmed" required />
+              <span>I confirm this application is for a professional clinic, company, distributor, or related dental organisation.</span>
+            </label>
+            <label>
+              <input type="checkbox" name="documentation_review" value="Confirmed" required />
+              <span>I understand EndoTech NZ may ask for further documentation before account approval.</span>
+            </label>
+            <label>
+              <input type="checkbox" name="no_login_confirmation" value="Confirmed" required />
+              <span>I understand this form does not create a login, password, pricing account, or automatic ordering access.</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="account-actions">
+          <button type="submit">Submit application</button>
+          <a href={`${base}about/contact/`}>Contact EndoTech NZ instead</a>
+        </div>
+        <p class="account-status" data-account-status aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <script define:vars={{ thankYouUrl: `${base}apply-for-account/thank-you/` }}>
+    const accountForm = document.querySelector('[data-account-application-form]');
+    const status = document.querySelector('[data-account-status]');
+
+    const setStatus = (message, tone = 'neutral') => {
+      if (!(status instanceof HTMLElement)) return;
+      status.textContent = message;
+      status.dataset.tone = tone;
+    };
+
+    if (accountForm instanceof HTMLFormElement) {
+      accountForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const submitButton = accountForm.querySelector('button[type="submit"]');
+        if (submitButton instanceof HTMLButtonElement) {
+          submitButton.disabled = true;
+          submitButton.textContent = 'Submitting application';
+        }
+        setStatus('Submitting the account application for review.');
+
+        const formData = new FormData(accountForm);
+        const payload = Object.fromEntries(formData.entries());
+        payload.product_interest = formData.getAll('product_interest');
+
+        fetch('/.netlify/functions/nz-account-application', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        })
+          .then(async (response) => {
+            const responsePayload = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(responsePayload?.error || 'The account application could not be submitted.');
+            window.location.href = thankYouUrl;
+          })
+          .catch((error) => {
+            if (submitButton instanceof HTMLButtonElement) {
+              submitButton.disabled = false;
+              submitButton.textContent = 'Submit application';
+            }
+            setStatus(error instanceof Error ? error.message : 'The account application could not be submitted.', 'error');
+          });
+      });
+    }
+  </script>
+</ProductLayout>
+
+<style>
+  .account-page {
+    background: #f7f9fb;
+    color: #0b1424;
+  }
+
+  .account-hero,
+  .account-prep,
+  .account-form-section {
+    max-width: 1260px;
+    margin: 0 auto;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .account-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.78fr);
+    gap: clamp(38px, 6vw, 84px);
+    align-items: center;
+    min-height: min(640px, calc(100vh - 82px));
+    padding-top: 64px;
+    padding-bottom: 58px;
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.018) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  .account-eyebrow {
+    margin: 0 0 18px;
+    color: #607084;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .account-hero h1,
+  .account-prep h2,
+  .account-form-heading h2,
+  .account-prep h3 {
+    margin: 0;
+    color: #111827;
+    font-family: Inter, 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    letter-spacing: 0;
+  }
+
+  .account-hero h1 {
+    max-width: 11ch;
+    font-size: clamp(3.1rem, 4.8vw, 5.6rem);
+    font-weight: 600;
+    line-height: 1.02;
+  }
+
+  .account-hero p,
+  .account-prep p,
+  .account-form-heading p,
+  .account-status {
+    margin: 0;
+    color: #536478;
+    font-size: 1.04rem;
+    line-height: 1.72;
+  }
+
+  .account-hero-copy > p:last-child {
+    max-width: 48rem;
+    margin-top: 28px;
+  }
+
+  .account-hero-visual {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 0;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff, #f8fafc);
+    padding: 22px;
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08), 0 2px 6px rgba(0, 55, 112, 0.04);
+  }
+
+  .account-hero-visual img {
+    display: block;
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  .account-prep {
+    display: grid;
+    grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
+    gap: 36px;
+    border-top: 1px solid #dbe3ea;
+    border-bottom: 1px solid #dbe3ea;
+    background: #ffffff;
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
+
+  .account-prep h2,
+  .account-form-heading h2 {
+    max-width: 16ch;
+    font-size: clamp(2rem, 2.8vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.08;
+  }
+
+  .account-prep-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .account-prep article {
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 18px;
+  }
+
+  .account-prep span {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: #0b75b7;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .account-prep h3 {
+    margin-top: 16px;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .account-prep p {
+    margin-top: 10px;
+    font-size: 0.96rem;
+  }
+
+  .account-form-section {
+    padding-top: 80px;
+    padding-bottom: 112px;
+  }
+
+  .account-form {
+    display: grid;
+    gap: 24px;
+    border: 1px solid #e3e8ee;
+    border-left: 7px solid #0b75b7;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 32px;
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08), 0 2px 6px rgba(0, 55, 112, 0.04);
+  }
+
+  .account-form-heading p {
+    max-width: 48rem;
+    margin-top: 18px;
+  }
+
+  .account-form fieldset {
+    display: grid;
+    gap: 18px;
+    margin: 0;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 24px;
+  }
+
+  .account-form legend {
+    padding: 0 10px;
+    color: #0b1424;
+    font-weight: 700;
+  }
+
+  .account-grid,
+  .product-checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .account-grid-full {
+    grid-column: 1 / -1;
+  }
+
+  .account-form label {
+    display: grid;
+    gap: 8px;
+    color: #27364a;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .account-form input,
+  .account-form select,
+  .account-form textarea {
+    width: 100%;
+    border: 1px solid #cfd9e2;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 12px 14px;
+    color: #0b1424;
+    font: inherit;
+  }
+
+  .account-form input:focus,
+  .account-form select:focus,
+  .account-form textarea:focus {
+    outline: 2px solid transparent;
+    border-color: #0b75b7;
+    box-shadow: 0 0 0 3px rgba(11, 117, 183, 0.12);
+  }
+
+  .product-checkbox {
+    position: relative;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    min-height: 52px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 12px;
+  }
+
+  .product-checkbox input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .product-checkbox-mark {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+  }
+
+  .product-checkbox-mark::after {
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    transform: rotate(-45deg) translate(1px, -1px);
+    opacity: 0;
+    content: '';
+  }
+
+  .product-checkbox:has(input:checked) {
+    border-color: #b8d8ea;
+    background: #eef6fb;
+  }
+
+  .product-checkbox:has(input:checked) .product-checkbox-mark {
+    border-color: #0b75b7;
+    background: #0b75b7;
+  }
+
+  .product-checkbox:has(input:checked) .product-checkbox-mark::after {
+    opacity: 1;
+  }
+
+  .account-confirmations {
+    display: grid;
+    gap: 12px;
+  }
+
+  .account-confirmations label {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 14px;
+    color: #334155;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .account-confirmations input {
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+  }
+
+  .account-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .account-actions button,
+  .account-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border: 1px solid #0b75b7;
+    border-radius: 999px;
+    padding: 0 20px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .account-actions button {
+    background: #0b75b7;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .account-actions button:hover,
+  .account-actions button:focus-visible {
+    background: #09639b;
+  }
+
+  .account-actions button:disabled {
+    cursor: wait;
+    opacity: 0.72;
+  }
+
+  .account-actions a {
+    border-color: #b8d8ea;
+    color: #0b75b7;
+    background: #ffffff;
+  }
+
+  .account-status[data-tone='error'] {
+    color: #c2413a;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1120px) {
+    .account-hero,
+    .account-prep,
+    .account-form-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .account-hero,
+    .account-prep,
+    .account-prep-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .account-hero {
+      min-height: auto;
+      padding-top: 48px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .account-hero,
+    .account-prep,
+    .account-form-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .account-hero h1 {
+      font-size: clamp(2.75rem, 11vw, 4rem);
+      line-height: 1;
+    }
+
+    .account-grid,
+    .product-checkbox-group {
+      grid-template-columns: 1fr;
+    }
+
+    .account-form {
+      border-left-width: 5px;
+      padding: 22px 16px 18px;
+    }
+
+    .account-form fieldset {
+      padding: 18px 14px;
+    }
+
+    .account-actions {
+      display: grid;
+    }
+  }
+</style>

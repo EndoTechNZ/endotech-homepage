@@ -17,6 +17,12 @@ export const getProductMenu = (base: string): NavItem[] => [
   { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
 ];
 
+export const getOrderMenu = (base: string): NavItem[] => [
+  { label: 'Order products', href: `${base}order/` },
+  { label: 'Apply for an account', href: `${base}apply-for-account/` },
+  { label: 'Contact EndoTech NZ', href: `${base}about/contact/` },
+];
+
 export const getPrimaryNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
   { label: 'Products', href: `${base}products/overview/` },
@@ -39,6 +45,7 @@ export const getProductMobileNavItems = (base: string): NavItem[] => [
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
   { label: 'Technology', href: `${base}technology/transform-technology/` },
   { label: 'Order', href: `${base}order/` },
+  { label: 'Apply for an account', href: `${base}apply-for-account/` },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
   { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
   { label: 'About', href: `${base}about/company/` },
@@ -50,6 +57,7 @@ export const getHomepageMobileNavItems = (base: string): NavItem[] => [
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
   { label: 'Technology', href: `${base}technology/transform-technology/` },
   { label: 'Order', href: `${base}order/` },
+  { label: 'Apply for an account', href: `${base}apply-for-account/` },
   { label: 'Acrobat Glide Path', href: `${base}products/acrobat-glide-path/` },
   { label: 'ET TransformX', href: `${base}products/et-transformx/` },
   { label: 'PT TransformX', href: `${base}products/pt-transformx/` },
@@ -88,6 +96,7 @@ export const getFooterSections = (base: string): FooterSection[] => [
       { label: 'About', href: `${base}about/company/` },
       { label: 'Contact', href: `${base}about/contact/` },
       { label: 'Order', href: `${base}order/` },
+      { label: 'Apply for an account', href: `${base}apply-for-account/` },
     ],
   },
 ];
