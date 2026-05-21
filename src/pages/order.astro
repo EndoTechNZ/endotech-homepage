@@ -22,7 +22,7 @@ const filePackFallbackPrice = '$65.00 NZD';
 const acrobatSelectionNote =
   'The MB2 option is limited to 17 mm. Standard Acrobat sequence files are available in 21 mm, 25 mm, and 29 mm.';
 const etSelectionNote =
-  'ET TransformX currently covers .04 and .06 sequences across 21 mm, 25 mm, and 29 mm lengths, with assortment options available in the current NZ part-number range.';
+  'TransformX™ ET currently covers .04 and .06 sequences across 21 mm, 25 mm, and 29 mm lengths, with assortment options available in the current NZ part-number range.';
 const ptSelectionNote =
   'SX is supplied in 19 mm. Shaping and finishing files run across 21 mm, 25 mm, and 31 mm lengths, with PT assortment packs also available across the current NZ range.';
 
@@ -34,8 +34,8 @@ const [acrobatItems, etItems, ptItems] = await Promise.all([
 
 const quickLinks = [
   { label: 'Acrobat', href: '#acrobat-order' },
-  { label: 'ET TransformX', href: '#et-order' },
-  { label: 'PT TransformX', href: '#pt-order' },
+  { label: 'TransformX™ ET', href: '#et-order' },
+  { label: 'TransformX™ PT', href: '#pt-order' },
   { label: 'BCS', href: '#contact-products' },
   { label: 'VortiFlow', href: '#contact-products' },
 ];
@@ -74,26 +74,26 @@ const orderModules = [
   {
     id: 'et-order',
     eyebrow: 'Shape',
-    title: 'ET TransformX',
+    title: 'TransformX™ ET',
     text: 'For clinicians already working in ET, EdgeX7, and .04/.06-style sequence logic.',
     image: etProduct.src,
-    alt: 'ET TransformX rotary files',
+    alt: 'TransformX™ ET rotary files',
     orderTitle: 'Order the ET sequence online',
     productFamily: 'Rotary Files',
-    productLabel: 'ET TransformX',
+    productLabel: 'TransformX™ ET',
     items: etItems,
     selectionNote: etSelectionNote,
   },
   {
     id: 'pt-order',
     eyebrow: 'Shape',
-    title: 'PT TransformX',
+    title: 'TransformX™ PT',
     text: 'For ProTaper-style shaping workflows that need a more controlled apical response.',
     image: ptProduct.src,
-    alt: 'PT TransformX rotary files',
+    alt: 'TransformX™ PT rotary files',
     orderTitle: 'Order the PT sequence online',
     productFamily: 'Rotary Files',
-    productLabel: 'PT TransformX',
+    productLabel: 'TransformX™ PT',
     items: ptItems,
     selectionNote: ptSelectionNote,
   },
@@ -102,7 +102,7 @@ const orderModules = [
 
 <ProductLayout
   title="NZ Ordering | EndoTech NZ"
-  description="A single ordering page for Acrobat Glide Path, ET TransformX, and PT TransformX, with contact pathways for the wider EndoTech product family."
+  description="A single ordering page for Acrobat Glide Path, TransformX™ ET, and TransformX™ PT, with contact pathways for the wider EndoTech product family."
   image={ptProduct.src}
   accent="slate"
 >
@@ -112,7 +112,7 @@ const orderModules = [
         <p class="order-eyebrow">NZ Ordering</p>
         <h1 id="order-title">Order here</h1>
         <p class="order-lede">
-          Scroll from glide path to shaping without jumping between product pages. Acrobat, ET TransformX, and PT TransformX all use the same combined order logic.
+          Scroll from glide path to shaping without jumping between product pages. Acrobat, TransformX™ ET, and TransformX™ PT all use the same combined order logic.
         </p>
       </div>
 
@@ -137,8 +137,8 @@ const orderModules = [
           <div class="order-availability-list" aria-label="Currently available products" data-availability-tabs>
             <div class="order-availability-indicator" aria-hidden="true" data-availability-indicator></div>
             <a href="#acrobat-order" data-availability-tab data-glow="Acrobat">Acrobat</a>
-            <a href="#et-order" data-availability-tab data-default-active="true" data-glow="ET TransformX">ET TransformX</a>
-            <a href="#pt-order" data-availability-tab data-glow="PT TransformX">PT TransformX</a>
+            <a href="#et-order" data-availability-tab data-default-active="true" data-glow="TransformX™ ET">TransformX™ ET</a>
+            <a href="#pt-order" data-availability-tab data-glow="TransformX™ PT">TransformX™ PT</a>
           </div>
         </div>
         <p class="order-coming-soon-note">RECI X and hand files coming soon.</p>

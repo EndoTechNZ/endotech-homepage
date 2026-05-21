@@ -10,8 +10,8 @@ export interface FooterSection {
 
 export const getProductMenu = (base: string): NavItem[] => [
   { label: 'Product Overview', href: `${base}products/overview/` },
-  { label: 'ET TransformX Files', href: `${base}products/et-transformx/` },
-  { label: 'PT TransformX Files', href: `${base}products/pt-transformx/` },
+  { label: 'TransformX™ ET Files', href: `${base}products/et-transformx/` },
+  { label: 'TransformX™ PT Files', href: `${base}products/pt-transformx/` },
   { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
   { label: 'VortiFlow Irrigation Needle', href: `${base}products/vortiflow-irrigation-needle/` },
   { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
@@ -37,8 +37,8 @@ export const getPrimaryNavItems = (base: string): NavItem[] => [
 export const getProductMobileNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
   { label: 'Product Overview', href: `${base}products/overview/` },
-  { label: 'ET TransformX', href: `${base}products/et-transformx/` },
-  { label: 'PT TransformX', href: `${base}products/pt-transformx/` },
+  { label: 'TransformX™ ET', href: `${base}products/et-transformx/` },
+  { label: 'TransformX™ PT', href: `${base}products/pt-transformx/` },
   { label: 'Acrobat Glide Path', href: `${base}products/acrobat-glide-path/` },
   { label: 'VortiFlow', href: `${base}products/vortiflow-irrigation-needle/` },
   { label: 'BCS Family', href: `${base}products/bcs/` },
@@ -61,8 +61,8 @@ export const getHomepageMobileNavItems = (base: string): NavItem[] => [
   { label: 'Order', href: `${base}order/` },
   { label: 'Blog', href: `${base}resources/ideas/` },
   { label: 'Acrobat Glide Path', href: `${base}products/acrobat-glide-path/` },
-  { label: 'ET TransformX', href: `${base}products/et-transformx/` },
-  { label: 'PT TransformX', href: `${base}products/pt-transformx/` },
+  { label: 'TransformX™ ET', href: `${base}products/et-transformx/` },
+  { label: 'TransformX™ PT', href: `${base}products/pt-transformx/` },
   { label: 'VortiFlow', href: `${base}products/vortiflow-irrigation-needle/` },
   { label: 'BCS Family', href: `${base}products/bcs/` },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
@@ -76,8 +76,8 @@ export const getFooterSections = (base: string): FooterSection[] => [
     title: 'Products',
     links: [
       { label: 'Product Overview', href: `${base}products/overview/` },
-      { label: 'TransformX ET', href: `${base}products/et-transformx/` },
-      { label: 'TransformX PT', href: `${base}products/pt-transformx/` },
+      { label: 'TransformX™ ET', href: `${base}products/et-transformx/` },
+      { label: 'TransformX™ PT', href: `${base}products/pt-transformx/` },
       { label: 'Acrobat Glide Path', href: `${base}products/acrobat-glide-path/` },
       { label: 'VortiFlow', href: `${base}products/vortiflow-irrigation-needle/` },
       { label: 'BCS Family', href: `${base}products/bcs/` },
