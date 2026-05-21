@@ -109,7 +109,7 @@ export const bcsSealer: ProductRecord & {
   clinicalProblem:
     'Conventional mixed sealers introduce avoidable variability at the point of obturation. Mixing inconsistency, handling changes over time, and workflow interruptions can make it harder to achieve a controlled final seal after shaping and irrigation have already been done well.',
   transformxSolution:
-    'Within the EndoTech workflow, TransformX shaping creates the controlled canal geometry; BCS BioCeramic Sealer completes that workflow with a premixed bioceramic sealer designed for moisture-assisted setting, consistent delivery, and stable canal sealing.',
+    'Within the EndoTech workflow, TransformX™ shaping creates the controlled canal geometry; BCS BioCeramic Sealer completes that workflow with a premixed bioceramic sealer designed for moisture-assisted setting, consistent delivery, and stable canal sealing.',
   clinicalBenefits: [
     'Removes chairside mixing from the obturation step',
     'Supports flow into canal irregularities during placement',
