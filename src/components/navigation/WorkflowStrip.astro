@@ -1,19 +1,43 @@
 ---
 import { getWorkflowStripItems, type WorkflowStepId } from '../../data/workflowStrip';
 
-interface Props {
-  activeStep?: WorkflowStepId;
+type WorkflowStripIcon =
+  | 'assess'
+  | 'access'
+  | 'glide'
+  | 'shape'
+  | 'clean'
+  | 'seal'
+  | 'restore'
+  | 'settings'
+  | 'curve'
+  | 'pt'
+  | 'et'
+  | 'evidence';
+
+export interface WorkflowStripItem {
+  id: string;
+  step: string;
+  note: string;
+  href: string;
+  icon: WorkflowStripIcon;
 }
 
-const { activeStep } = Astro.props;
+interface Props {
+  activeStep?: WorkflowStepId;
+  items?: WorkflowStripItem[];
+  title?: string;
+}
+
+const { activeStep, items, title = 'Clinical workflow strip' } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const workflow = getWorkflowStripItems(base);
+const workflow = items ?? getWorkflowStripItems(base);
 ---
 
 <section class="workflow-strip" aria-labelledby="workflow-strip-title">
-  <h2 id="workflow-strip-title" class="sr-only">Clinical workflow strip</h2>
+  <h2 id="workflow-strip-title" class="sr-only">{title}</h2>
   <div class="workflow-strip-shell">
-    <div class="workflow-strip-grid" role="list">
+    <div class="workflow-strip-grid" role="list" style={`--workflow-strip-count: ${workflow.length};`}>
       {workflow.map((item) => (
         <a
           class:list={['workflow-strip-card', activeStep === item.id && 'is-active']}
@@ -69,6 +93,50 @@ const workflow = getWorkflowStripItems(base);
                 <path d="M7.5 6.5c.3-1.5 1.6-2.5 3.1-2.5 1.1 0 1.8.4 2.4 1 .6-.6 1.3-1 2.4-1 1.6 0 2.9 1.1 3.1 2.7.2 1.3-.3 2.6-1.3 3.4-.7.6-1.4 1.6-1.8 2.7L15 19H9l-.5-6.2c-.3-1.2-1-2.1-1.8-2.7-1-.8-1.5-2.2-1.2-3.6z"></path>
               </svg>
             )}
+            {item.icon === 'settings' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 3.8v2.1"></path>
+                <path d="M12 18.1v2.1"></path>
+                <path d="M4.9 7.1l1.8 1.1"></path>
+                <path d="M17.3 15.8l1.8 1.1"></path>
+                <path d="M4.9 16.9l1.8-1.1"></path>
+                <path d="M17.3 8.2l1.8-1.1"></path>
+              </svg>
+            )}
+            {item.icon === 'curve' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 19c7.8-2.5 1.8-11 10.9-14"></path>
+                <path d="M12.2 19c5.6-2.1 1.4-8.1 5.8-10.8"></path>
+                <path d="M7.8 13.4l-2.1 1.2"></path>
+                <path d="M16.9 5l2.1-1.2"></path>
+              </svg>
+            )}
+            {item.icon === 'pt' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7 5h7.2"></path>
+                <path d="M7 9h9"></path>
+                <path d="M7 13h6.6"></path>
+                <path d="M7 17h4.4"></path>
+                <path d="M17 5l-4 14"></path>
+              </svg>
+            )}
+            {item.icon === 'et' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M9 4l6 16"></path>
+                <path d="M10.4 7.7l4.8-2"></path>
+                <path d="M11.8 11.4l4.8-2"></path>
+                <path d="M13.2 15.1l4.8-2"></path>
+              </svg>
+            )}
+            {item.icon === 'evidence' && (
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7 4h8l3 3v13H7z"></path>
+                <path d="M15 4v4h3"></path>
+                <path d="M9.5 13.5l1.8 1.8 3.5-4"></path>
+                <path d="M9.5 18h5"></path>
+              </svg>
+            )}
           </span>
           <strong>{item.step}</strong>
           <span>{item.note}</span>
@@ -108,7 +176,7 @@ const workflow = getWorkflowStripItems(base);
 
   .workflow-strip-grid {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--workflow-strip-count, 7), minmax(0, 1fr));
     align-items: stretch;
     gap: 8px;
     padding: 8px;

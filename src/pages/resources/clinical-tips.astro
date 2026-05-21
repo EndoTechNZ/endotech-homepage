@@ -7,6 +7,51 @@ const base = import.meta.env.BASE_URL;
 const ideasHref = withBasePath('/resources/ideas/');
 const ideasTeaserSrc = withBasePath('/blog-ideas-teaser.png');
 
+const educationCards = [
+  {
+    id: 'mb2-access',
+    step: 'MB2 Access',
+    note: 'Short-file control for restricted molar access.',
+    href: `${base}technique/mb2-file/`,
+    icon: 'access',
+  },
+  {
+    id: 'motor-settings',
+    step: 'Motor Settings',
+    note: 'RPM and torque reference for ET, PT, and Acrobat.',
+    href: `${base}technique/motor-settings/`,
+    icon: 'settings',
+  },
+  {
+    id: 'curved-canals',
+    step: 'Curved Canals',
+    note: 'Glide path, centering, and apical control in curvature.',
+    href: `${base}technique/rotary-files-for-curved-canals/`,
+    icon: 'curve',
+  },
+  {
+    id: 'pt-technique',
+    step: 'PT Technique',
+    note: 'Progressive taper sequence from coronal shaping to finish.',
+    href: `${base}technique/pt-technique/`,
+    icon: 'pt',
+  },
+  {
+    id: 'et-technique',
+    step: 'ET Technique',
+    note: 'Glide path, shape, and finish for ET-style workflows.',
+    href: `${base}technique/et-technique/`,
+    icon: 'et',
+  },
+  {
+    id: 'clinical-evidence',
+    step: 'Evidence',
+    note: 'Outcome evidence and apical-control rationale.',
+    href: `${base}research/evidence/`,
+    icon: 'evidence',
+  },
+];
+
 const principles = [
   {
     number: '01',
@@ -121,7 +166,7 @@ const avatarPoints = [
     </div>
   </section>
 
-  <WorkflowStrip activeStep="restore" />
+  <WorkflowStrip items={educationCards} title="Education page navigation" />
 
   <section class="border-b border-slate-200/80 bg-slate-50/70">
     <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
