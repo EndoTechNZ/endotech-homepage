@@ -6,6 +6,7 @@ export const siteConfig = {
   shortName: import.meta.env.PUBLIC_SITE_SHORT_NAME ?? 'EndoTechNZ',
   docsTitle: import.meta.env.PUBLIC_DOCS_TITLE ?? 'EndoTech NZ Docs',
   email: import.meta.env.PUBLIC_CONTACT_EMAIL ?? 'Steveshepherdnz@gmail.com',
+  shopifyAccountUrl: import.meta.env.PUBLIC_SHOPIFY_ACCOUNT_URL ?? 'https://shopify.com/67488153666/account',
   regionLabel: import.meta.env.PUBLIC_REGION_LABEL ?? 'New Zealand',
   homepageTitle: import.meta.env.PUBLIC_HOMEPAGE_TITLE ?? 'EndoTech NZ | TransformX™ Rotary Endodontic Files',
   defaultDescription: import.meta.env.PUBLIC_SITE_DESCRIPTION ?? defaultDescription,

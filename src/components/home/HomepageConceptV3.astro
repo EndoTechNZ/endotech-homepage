@@ -15,7 +15,7 @@ const base = import.meta.env.BASE_URL;
 
 const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
-const mobileNavItems = getHomepageMobileNavItems(base);
+const mobileNavItems = getHomepageMobileNavItems(base, siteConfig.shopifyAccountUrl);
 const footerSections = getFooterSections(base);
 const footerUtilityLinks = getFooterUtilityLinks(base);
 
@@ -144,6 +144,7 @@ const workflowSteps = [
 
     <div class="homepage-header-actions">
       <a class="homepage-header-action" href={`${base}order/`}>Order</a>
+      <a class="homepage-header-action account-header-action" href={siteConfig.shopifyAccountUrl}>Account / Orders</a>
       <a class="homepage-header-action" href={`${base}about/contact/`}>Contact</a>
       <button class="homepage-menu-toggle" id="homepage-mobile-menu-button" type="button" aria-expanded="false" aria-controls="homepage-mobile-menu">
         Menu
@@ -1848,6 +1849,10 @@ const workflowSteps = [
     .homepage-menu-toggle {
       padding: 0 12px;
       font-size: 0.8rem;
+    }
+
+    .homepage-header-action.account-header-action {
+      display: none;
     }
 
     .homepage-hero {

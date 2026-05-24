@@ -6,6 +6,7 @@ import etProduct from '../assets/et-transformx.png';
 import ptProduct from '../assets/pt-transformx.png';
 import bcsSealer from '../assets/bcs-sealer.png';
 import vortiflowFlow from '../assets/vortiflow/vortiflow-fluid-dynamics-clean.png';
+import { siteConfig } from '../config/site';
 import { getShopifyStoreDomain } from '../utils/shopify';
 import { buildOrderSelectorItems, getOrderCoverageLabel } from '../utils/productOrdering';
 import { acrobatOrderEntries, etOrderEntries, ptOrderEntries } from '../data/productOrderingCatalog';
@@ -126,6 +127,7 @@ const orderModules = [
             <a href={link.href}>{link.label}</a>
           ))}
         </nav>
+        <a class="order-account-link" href={siteConfig.shopifyAccountUrl}>Account / Orders</a>
       </div>
     </section>
 
@@ -384,6 +386,7 @@ const orderModules = [
   }
 
   .order-quick-nav a,
+  .order-account-link,
   .order-flow-note a,
   .contact-products-heading > a,
   .contact-products-grid a {
@@ -408,8 +411,15 @@ const orderModules = [
       transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
+  .order-account-link {
+    align-self: start;
+    width: fit-content;
+  }
+
   .order-quick-nav a:hover,
   .order-quick-nav a:focus-visible,
+  .order-account-link:hover,
+  .order-account-link:focus-visible,
   .order-flow-note a:hover,
   .order-flow-note a:focus-visible,
   .contact-products-heading > a:hover,

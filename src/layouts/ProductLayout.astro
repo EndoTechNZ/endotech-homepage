@@ -17,7 +17,7 @@ const base = import.meta.env.BASE_URL;
 const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
 const technologyMenu = getTechnologyMenu(base);
-const mobileNavItems = getProductMobileNavItems(base);
+const mobileNavItems = getProductMobileNavItems(base, siteConfig.shopifyAccountUrl);
 const footerSections = getFooterSections(base);
 const footerUtilityLinks = getFooterUtilityLinks(base);
 ---
@@ -78,6 +78,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 
       <div class="product-header-actions">
         <a class="product-header-action" href={`${base}order/`}>Order</a>
+        <a class="product-header-action account-header-action" href={siteConfig.shopifyAccountUrl}>Account / Orders</a>
         <a class="product-header-action" href={`${base}about/contact/`}>Contact</a>
         <button class="product-menu-toggle" id="product-mobile-menu-button" type="button" aria-expanded="false" aria-controls="product-mobile-menu">
           Menu
@@ -663,6 +664,10 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
     .product-menu-toggle {
       padding: 0 12px;
       font-size: 0.8rem;
+    }
+
+    .product-header-action.account-header-action {
+      display: none;
     }
   }
 </style>
