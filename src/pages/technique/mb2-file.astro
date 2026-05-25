@@ -1,0 +1,1696 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const protocolNav = [
+  { label: 'Technique', href: '#technique' },
+  { label: 'Specifications', href: '#specifications' },
+  { label: 'Checklist', href: '#checklist' },
+  { label: 'Evidence', href: '#evidence' },
+];
+
+const anatomyViews = [
+  {
+    name: 'Classic groove',
+    description: 'MB2 lies between MB1 and palatal along the developmental groove.',
+    mb2: { x: 142, y: 132 },
+  },
+  {
+    name: 'Close coronal',
+    description: 'MB2 is tucked close to MB1 and may be hidden by a dentin shelf.',
+    mb2: { x: 134, y: 112 },
+  },
+  {
+    name: 'Palatal shift',
+    description: 'MB2 sits farther palatal along the MB1-palatal line.',
+    mb2: { x: 154, y: 154 },
+  },
+  {
+    name: 'Distal angle',
+    description: 'MB2 presents slightly distal, requiring controlled troughing direction.',
+    mb2: { x: 165, y: 136 },
+  },
+  {
+    name: 'MB1 overlap',
+    description: 'MB2 partially overlaps MB1, making the second canal difficult to separate visually.',
+    mb2: { x: 132, y: 82 },
+  },
+];
+
+const sequenceSteps = [
+  {
+    number: '01',
+    title: 'Dentin shelf removal',
+    text: 'Use a long-shank round bur or ultrasonic tip to remove the mesial overhanging shelf between MB1 and the isthmus.',
+  },
+  {
+    number: '02',
+    title: 'Orifice localization',
+    text: 'Locate the MB2 orifice, commonly 1.5 mm to 2 mm palatal to the MB1 orifice along the developmental groove.',
+  },
+  {
+    number: '03',
+    title: 'MB2 file negotiation',
+    text: "Introduce the Acrobat MB2 file using feedback to confirm forward direction - never force. Use 'Available' length and then re inspect with a pre-curved hand file.",
+  },
+  {
+    number: '04',
+    title: 'Controlled advancement',
+    text: 'Advance 1-2 mm at a time, withdraw to clean flutes, irrigate, and do not force past resistance.',
+  },
+];
+
+const problemRows = [
+  {
+    constraint: 'Reduced coronal headroom',
+    why: 'The handpiece has less freedom to align with the MB2 entrance.',
+    response: 'The 17 mm option can improve clearance during the access stage.',
+  },
+  {
+    constraint: 'Tight entry angle',
+    why: 'The file can engage the canal wall before the path is confirmed.',
+    response: 'A controlled glide path step separates entry from shaping.',
+  },
+  {
+    constraint: 'Limited visibility',
+    why: 'Small changes in tactile feedback become clinically significant.',
+    response: 'Progression is based on repeatable entry, not pressure.',
+  },
+  {
+    constraint: 'Narrow secondary canal',
+    why: 'MB2 anatomy may hide under shelf dentin and isthmus detail.',
+    response: 'The file is used to confirm a reproducible path before TransformX shaping.',
+  },
+];
+
+const featureCards = [
+  {
+    label: 'Access',
+    title: '17 mm working length option',
+    text: 'Supports improved handpiece clearance when chamber anatomy limits positioning.',
+  },
+  {
+    label: 'Glide path',
+    title: '15/.05 controlled entry',
+    text: 'Provides a deliberate access step before larger shaping files are introduced.',
+  },
+  {
+    label: 'Workflow',
+    title: 'Acrobat sequence compatibility',
+    text: 'Keeps MB2 access inside the wider EndoTech glide path and TransformX workflow.',
+  },
+];
+
+const benefits = [
+  'Better coronal clearance',
+  'More controlled canal entry',
+  'Cleaner separation between access and shaping',
+  'Improved tactile confidence',
+  'More predictable handoff into TransformX shaping',
+  'Useful in restricted maxillary molar anatomy',
+];
+
+const checklistGroups = [
+  {
+    stage: 'Diagnose and orient',
+    items: [
+      {
+        number: '01',
+        title: 'Expect MB2 in maxillary molars',
+        text: 'Assume the canal is present until the anatomy proves otherwise.',
+      },
+      {
+        number: '02',
+        title: 'Review angled radiographs; consider CBCT',
+        text: 'Use angled PA views and CBCT when calcification, retreatment, unclear anatomy, or mesial pathology raises risk.',
+      },
+      {
+        number: '03',
+        title: 'Create controlled access',
+        text: 'Expose the chamber floor while preserving landmarks and avoiding both under-access and overcutting.',
+      },
+      {
+        number: '04',
+        title: 'Identify MB1, DB, and palatal first',
+        text: 'Use the primary canals to orient the search before actively hunting for MB2.',
+      },
+    ],
+  },
+  {
+    stage: 'Read and expose',
+    items: [
+      {
+        number: '05',
+        title: 'Read the dentinal map',
+        text: 'Preserve color changes and developmental grooves, especially palatal or mesial-palatal to MB1.',
+      },
+      {
+        number: '06',
+        title: 'Look for white-line, red-line, bubble, and color clues',
+        text: 'Treat subtle lines, hypochlorite bubbles, and chamber-floor color change as locating information.',
+      },
+      {
+        number: '07',
+        title: 'Remove the mesial dentine shelf deliberately',
+        text: 'Improve visibility and line of entry without blind or aggressive excavation.',
+      },
+      {
+        number: '08',
+        title: 'Use ultrasonics for controlled troughing',
+        text: 'Brush, refine, irrigate, and inspect repeatedly rather than cutting past the anatomy.',
+      },
+    ],
+  },
+  {
+    stage: 'Negotiate and shape',
+    items: [
+      {
+        number: '09',
+        title: 'Scout passively with small precurved K-files',
+        text: 'Make sure you learn exactly how to pre-curve #08 or #10 K-files. It is only the last three flutes of the hand file, maximum 2 mm, that you pre-curve.',
+      },
+      {
+        number: '10',
+        title: 'If the file binds, stop and reassess',
+        text: 'Binding suggests coronal interference or curvature that needs access refinement before progression.',
+      },
+      {
+        number: '11',
+        title: 'Build a smooth glide path',
+        text: 'Rotary shaping should follow a reproducible path with minimal torsional stress.',
+      },
+      {
+        number: '12',
+        title: 'Irrigate and recapitulate throughout',
+        text: 'Maintain patency and reduce debris compaction with frequent irrigation and small-file recapitulation.',
+      },
+    ],
+  },
+  {
+    stage: 'Confirm and decide',
+    items: [
+      {
+        number: '13',
+        title: 'Confirm the MB2 pathway',
+        text: 'Determine whether MB2 merges with MB1, exits independently, or connects through an isthmus.',
+      },
+      {
+        number: '14',
+        title: 'In retreatment, suspect missed MB2',
+        text: 'Persistent or recurrent mesial root pathology should raise suspicion of untreated anatomy.',
+      },
+      {
+        number: '15',
+        title: 'Final decision: proceed or refer',
+        text: 'Proceed only when visualization, anatomy, and instrument control make treatment predictable.',
+      },
+    ],
+  },
+];
+
+const evidenceStats = [
+  { value: '80.1%', label: 'MB2 prevalence' },
+  {
+    value: '59%',
+    label: 'Vertucci Type II',
+    configuration: '2-1',
+    diagramTitle: 'Vertucci Type II two canals merging to one canal',
+    paths: [
+      'M39 23 C38 44 42 59 48 71 C50 85 49 107 48 125',
+      'M57 23 C58 44 55 59 49 71',
+    ],
+    apices: [48],
+  },
+  {
+    value: '19.9%',
+    label: 'Vertucci Type I',
+    configuration: '1-1',
+    diagramTitle: 'Vertucci Type I one canal from chamber to apex',
+    paths: ['M48 23 C47 50 49 92 48 125'],
+    apices: [48],
+  },
+  {
+    value: '15.3%',
+    label: 'Vertucci Type IV',
+    configuration: '2-2',
+    diagramTitle: 'Vertucci Type IV two separate canals from chamber to apex',
+    paths: [
+      'M39 23 C38 50 38 89 39 125',
+      'M57 23 C58 50 58 89 57 125',
+    ],
+    apices: [39, 57],
+  },
+  {
+    value: '5.7%',
+    label: 'Vertucci Type III',
+    configuration: '1-2-1',
+    diagramTitle: 'Vertucci Type III one canal splitting then rejoining to one canal',
+    paths: [
+      'M48 23 C48 42 48 50 48 59 C40 72 40 88 48 101 C49 111 49 119 48 125',
+      'M48 59 C57 72 56 88 48 101',
+    ],
+    apices: [48],
+  },
+];
+
+const relatedLinks = [
+  { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
+  { label: 'Rotary Glide Path Files', href: `${base}products/rotary-glide-path-files/` },
+  { label: 'Motor Settings', href: `${base}technique/motor-settings/` },
+  { label: 'TransformX ET Files', href: `${base}products/et-transformx/` },
+];
+---
+
+<ProductLayout
+  title="MB2 File Protocol | EndoTech NZ"
+  description="Clinical MB2 file protocol for restricted molar access, including when a shorter Acrobat glide path file improves control before TransformX shaping."
+  accent="teal"
+>
+  <div class="mb2-protocol-page">
+    <section class="mb2-protocol-hero" aria-labelledby="mb2-protocol-title">
+      <p class="mb2-protocol-eyebrow">Clinical protocol / Acrobat MB2</p>
+      <h1 id="mb2-protocol-title">MB2 Mastery: Control-First Negotiation</h1>
+      <nav class="mb2-protocol-local-nav" aria-label="MB2 page sections">
+        <span>On this protocol</span>
+        {protocolNav.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </nav>
+    </section>
+
+    <section id="technique" class="mb2-protocol-grid" aria-label="MB2 technique overview">
+      <aside class="mb2-protocol-left-stack">
+        <section class="mb2-protocol-panel mb2-protocol-panel--mint mb2-anatomy-card" aria-labelledby="mb2-anatomy-title">
+          <div class="mb2-protocol-panel-head">
+            <h2 id="mb2-anatomy-title">Anatomy Map</h2>
+            <div class="mb2-protocol-variation-control">
+              <button
+                class="mb2-protocol-status"
+                type="button"
+                data-anatomy-next
+                aria-label="Show next MB2 anatomy variation"
+              >
+                <span data-anatomy-button-label>Variation 1</span>
+              </button>
+              <p>Click to show five variations</p>
+            </div>
+          </div>
+
+          <figure class="mb2-anatomy-stage">
+            <svg viewBox="0 0 320 260" role="img" aria-labelledby="mb2-anatomy-map-title mb2-anatomy-map-description">
+              <title id="mb2-anatomy-map-title">MB1, MB2, palatal, and distobuccal orientation map</title>
+              <desc id="mb2-anatomy-map-description">{anatomyViews[0].description}</desc>
+              <circle cx="160" cy="130" r="97" fill="none" stroke="#77908e" stroke-dasharray="2 4" opacity="0.5" />
+              <polyline data-anatomy-path points="126,78 142,132 172,186" fill="none" stroke="#77908e" opacity="0.48" />
+
+              <g class="mb2-anatomy-node mb2-anatomy-node--mb1" transform="translate(126 78)">
+                <circle r="34" fill="#dff1ec" opacity="0.08" />
+                <circle r="8" fill="#e9f4f0" />
+                <g aria-hidden="true" class="mb2-anatomy-labels">
+                  <path d="M-13 -16 L-3 -4" />
+                  <rect x="-50" y="-35" width="42" height="23" rx="8" />
+                  <text x="-29" y="-20">MB1</text>
+                </g>
+              </g>
+
+              <g class="mb2-anatomy-node mb2-anatomy-node--db" transform="translate(220 118)">
+                <circle r="8" fill="#90a5a2" />
+                <g aria-hidden="true" class="mb2-anatomy-labels">
+                  <path d="M9 -4 L18 -8" />
+                  <rect x="19" y="-20" width="34" height="23" rx="8" />
+                  <text x="36" y="-5">DB</text>
+                </g>
+              </g>
+
+              <g class="mb2-anatomy-node mb2-anatomy-node--p" transform="translate(172 186)">
+                <circle r="8" fill="#90a5a2" />
+                <g aria-hidden="true" class="mb2-anatomy-labels">
+                  <path d="M12 -1 L21 -1" />
+                  <rect x="22" y="-12" width="27" height="23" rx="8" />
+                  <text x="35.5" y="3">P</text>
+                </g>
+              </g>
+
+              <g class="mb2-anatomy-node mb2-anatomy-node--mb2" data-anatomy-mb2 style="transform: translate(142px, 132px);">
+                <circle r="40" fill="#c84d48" opacity="0.08" />
+                <circle r="8" fill="#c84d48" />
+                <g aria-hidden="true" class="mb2-anatomy-labels">
+                  <path d="M10 7 L17 12" />
+                  <rect x="18" y="7" width="44" height="23" rx="8" />
+                  <text x="40" y="22">MB2</text>
+                </g>
+              </g>
+            </svg>
+            <figcaption>
+              <span>Mesial-buccal aspect / 8x mag</span>
+              <strong data-anatomy-view-name>{anatomyViews[0].name}</strong>
+            </figcaption>
+          </figure>
+
+          <div class="mb2-protocol-metrics" aria-label="MB2 anatomy metrics">
+            <div>
+              <strong>1.5<span>-2.0 mm</span></strong>
+              <p>Typical MB1-MB2 orientation</p>
+            </div>
+            <div>
+              <strong>17<span> mm</span></strong>
+              <p>Short access file option</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb2-protocol-panel mb2-warning-panel" aria-labelledby="mb2-warning-title">
+          <h2 id="mb2-warning-title">Clinical Warning</h2>
+          <p>
+            The MB2 canal can hide under a shelf of dentin. Direct access without
+            control can increase <strong>instrument fatigue</strong> and
+            <strong>ledge formation</strong>.
+          </p>
+        </section>
+      </aside>
+
+      <section class="mb2-protocol-panel mb2-sequence-panel" aria-labelledby="mb2-sequence-title">
+        <div class="mb2-protocol-sequence-head">
+          <h2 id="mb2-sequence-title">MB2 Sequence</h2>
+          <span>Sequence: Controlled Adaptation</span>
+        </div>
+
+        <div class="mb2-protocol-steps">
+          {sequenceSteps.map((step) => (
+            <article class="mb2-protocol-step">
+              <span>{step.number}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div id="specifications" class="mb2-protocol-specs" aria-label="MB2 file specifications">
+          <div>
+            <span>File tip size</span>
+            <strong>0.15 <small>mm</small></strong>
+          </div>
+          <div>
+            <span>Taper option</span>
+            <strong>.05</strong>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="mb2-protocol-detail" aria-labelledby="mb2-clinical-problem-title">
+      <div class="mb2-protocol-section-heading">
+        <p class="mb2-protocol-eyebrow">Clinical Problem</p>
+        <h2 id="mb2-clinical-problem-title">Restricted access changes the practical demands of rotary instrumentation.</h2>
+        <p>
+          MB2 cases often become difficult before the file reaches the canal. The access angle,
+          headroom, visibility, and tactile feedback determine whether the clinician can enter
+          the secondary canal without forcing the instrument off-axis.
+        </p>
+      </div>
+
+      <div class="mb2-protocol-problem-table">
+        <div class="mb2-protocol-problem-head" aria-hidden="true">
+          <span>Clinical constraint</span>
+          <span>Why it matters</span>
+          <span>Controlled response</span>
+        </div>
+        {problemRows.map((row) => (
+          <article class="mb2-protocol-problem-row">
+            <div>
+              <span>Constraint</span>
+              <strong>{row.constraint}</strong>
+            </div>
+            <div>
+              <span>Why it matters</span>
+              <p>{row.why}</p>
+            </div>
+            <div>
+              <span>Controlled response</span>
+              <p>{row.response}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb2-protocol-solution" aria-labelledby="mb2-solution-title">
+      <article class="mb2-protocol-panel mb2-protocol-solution-copy">
+        <p class="mb2-protocol-eyebrow">TransformX Solution</p>
+        <h2 id="mb2-solution-title">Control the entry before shaping begins.</h2>
+        <p>
+          The Acrobat MB2 option supports a deliberate glide path step before the clinician
+          transitions into TransformX ET or PT shaping. The objective is not simply to use
+          a smaller file. The objective is to establish a controlled, reproducible path.
+        </p>
+      </article>
+
+      <div class="mb2-protocol-feature-grid" aria-label="MB2 key features">
+        {featureCards.map((feature) => (
+          <article class="mb2-protocol-feature-card">
+            <span>{feature.label}</span>
+            <h3>{feature.title}</h3>
+            <p>{feature.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb2-protocol-benefits" aria-labelledby="mb2-benefits-title">
+      <div>
+        <p class="mb2-protocol-eyebrow">Clinical Benefits</p>
+        <h2 id="mb2-benefits-title">Benefits stay linked to the access problem.</h2>
+      </div>
+
+      <div class="mb2-protocol-benefit-grid">
+        {benefits.map((benefit) => (
+          <div>{benefit}</div>
+        ))}
+      </div>
+    </section>
+
+    <section id="checklist" class="mb2-protocol-checklist" aria-labelledby="mb2-checklist-title">
+      <div class="mb2-protocol-section-heading">
+        <p class="mb2-protocol-eyebrow">15-point protocol checklist</p>
+        <h2 id="mb2-checklist-title">A controlled search sequence for MB2 cases.</h2>
+        <p>
+          Work from diagnosis to orientation, then controlled dentine removal,
+          passive negotiation, pathway confirmation, and referral judgment.
+        </p>
+      </div>
+
+      <div class="mb2-checklist-grid">
+        {checklistGroups.map((group) => (
+          <section class="mb2-checklist-column" aria-label={group.stage}>
+            <span>{group.stage}</span>
+            {group.items.map((item) => (
+              <article>
+                <strong>{item.number}</strong>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </article>
+            ))}
+          </section>
+        ))}
+      </div>
+
+      <div class="mb2-checklist-mantra" aria-label="MB2 workflow principles">
+        <span>See more</span>
+        <span>Guess less</span>
+        <span>Force nothing</span>
+      </div>
+    </section>
+
+    <section id="evidence" class="mb2-protocol-related" aria-labelledby="mb2-related-title">
+      <div class="mb2-protocol-section-heading">
+        <p class="mb2-protocol-eyebrow">Evidence and workflow</p>
+        <h2 id="mb2-related-title">Review the supporting pages before adopting the sequence.</h2>
+      </div>
+
+      <aside class="mb2-evidence-snapshot" aria-label="CBCT evidence snapshot">
+        <div>
+          <p class="mb2-protocol-eyebrow">CBCT evidence snapshot</p>
+          <h3>MB2 anatomy is common enough to search deliberately.</h3>
+          <p>
+            One CBCT study of maxillary permanent first molars in an Emirati population
+            reported 80.1% MB2 prevalence. Vertucci Type II was the most common
+            mesiobuccal root configuration.
+          </p>
+          <cite>
+            Source:
+            <a href="https://link.springer.com/article/10.1186/s12903-020-01269-2">
+              Al Mheiri et al., "Evaluation of root and canal morphology of maxillary
+              permanent first molars in an Emirati population; a cone-beam computed
+              tomography study," BMC Oral Health, 2020.
+            </a>
+          </cite>
+        </div>
+
+        <dl class="mb2-evidence-stat-grid">
+          {evidenceStats.map((stat) => (
+            <div class={stat.paths ? 'mb2-evidence-stat mb2-evidence-stat--diagram' : 'mb2-evidence-stat'}>
+              <dt>{stat.label}</dt>
+              <dd>{stat.value}</dd>
+              {stat.configuration && <span class="mb2-evidence-stat-code">{stat.configuration} system</span>}
+              {stat.paths && (
+                <svg
+                  class="mb2-vertucci-diagram"
+                  viewBox="0 0 96 144"
+                  role="img"
+                  aria-label={stat.diagramTitle}
+                >
+                  <path
+                    class="mb2-vertucci-root"
+                    d="M31 10 C22 30 20 58 27 84 C32 105 41 121 48 134 C55 121 64 105 69 84 C76 58 74 30 65 10 C55 15 41 15 31 10 Z"
+                  />
+                  <path class="mb2-vertucci-chamber" d="M31 15 C40 8 56 8 65 15" />
+                  {stat.paths.map((path) => (
+                    <path class="mb2-vertucci-canal" d={path} />
+                  ))}
+                  {stat.apices?.map((x) => (
+                    <circle class="mb2-vertucci-apex" cx={x} cy="125" r="3.2" />
+                  ))}
+                </svg>
+              )}
+            </div>
+          ))}
+        </dl>
+      </aside>
+
+      <div class="mb2-protocol-link-grid">
+        {relatedLinks.map((link) => (
+          <a href={link.href}>{link.label}</a>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <footer class="mb2-protocol-footer">
+    <div>
+      <p class="mb2-protocol-eyebrow">Next step</p>
+      <h2>Questions about MB2 access or file selection?</h2>
+      <p>
+        Send a clinical question or review the Acrobat range if you want to connect the MB2
+        access step into the wider EndoTech glide path and TransformX shaping workflow.
+      </p>
+    </div>
+    <nav aria-label="MB2 footer actions">
+      <a href={`${base}about/contact/`}>Ask a clinical question</a>
+      <a href={`${base}products/acrobat-glide-path/`}>View Acrobat files</a>
+    </nav>
+  </footer>
+
+  <script is:inline define:vars={{ anatomyViews }}>
+    (() => {
+      const button = document.querySelector('[data-anatomy-next]');
+      const buttonLabel = document.querySelector('[data-anatomy-button-label]');
+      const mb2Node = document.querySelector('[data-anatomy-mb2]');
+      const connector = document.querySelector('[data-anatomy-path]');
+      const viewName = document.querySelector('[data-anatomy-view-name]');
+      const viewDescription = document.getElementById('mb2-anatomy-map-description');
+
+      if (!button || !buttonLabel || !mb2Node || !connector || !viewName || !Array.isArray(anatomyViews)) {
+        return;
+      }
+
+      let activeIndex = 0;
+
+      const setAnatomyView = (nextIndex) => {
+        activeIndex = (nextIndex + anatomyViews.length) % anatomyViews.length;
+        const view = anatomyViews[activeIndex];
+
+        mb2Node.style.transform = `translate(${view.mb2.x}px, ${view.mb2.y}px)`;
+        connector.setAttribute('points', `126,78 ${view.mb2.x},${view.mb2.y} 172,186`);
+        buttonLabel.textContent = `Variation ${activeIndex + 1}`;
+        viewName.textContent = view.name;
+        button.setAttribute(
+          'aria-label',
+          `Show next MB2 anatomy variation. Current view: ${view.name}`
+        );
+
+        if (viewDescription) {
+          viewDescription.textContent = view.description;
+        }
+      };
+
+      button.addEventListener('click', () => setAnatomyView(activeIndex + 1));
+      setAnatomyView(0);
+    })();
+  </script>
+</ProductLayout>
+
+<style>
+  :global(body) {
+    background: #f3f6f4;
+  }
+
+  .mb2-protocol-page,
+  .mb2-protocol-footer {
+    --mb2-ink: #102b2d;
+    --mb2-ink-2: #254b50;
+    --mb2-muted: #577077;
+    --mb2-soft: #f3f6f4;
+    --mb2-panel: #ffffff;
+    --mb2-mint: #e4f1ec;
+    --mb2-line: #dce6e4;
+    --mb2-line-strong: #c6d5d2;
+    --mb2-dark: #102f31;
+    --mb2-red: #c2413a;
+    --mb2-shadow: 0 24px 54px rgba(16, 43, 45, 0.09);
+    --mb2-shadow-soft: 0 12px 32px rgba(16, 43, 45, 0.06);
+    color: var(--mb2-ink);
+    font-family:
+      Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, Arial, sans-serif;
+    letter-spacing: 0;
+  }
+
+  .mb2-protocol-page {
+    background: var(--mb2-soft);
+  }
+
+  #technique,
+  #specifications,
+  #checklist,
+  #evidence {
+    scroll-margin-top: 96px;
+  }
+
+  .mb2-protocol-hero,
+  .mb2-protocol-grid,
+  .mb2-protocol-detail,
+  .mb2-protocol-solution,
+  .mb2-protocol-benefits,
+  .mb2-protocol-checklist,
+  .mb2-protocol-related {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .mb2-protocol-hero {
+    padding-top: clamp(56px, 7vw, 94px);
+    padding-bottom: clamp(34px, 5vw, 58px);
+  }
+
+  .mb2-protocol-eyebrow {
+    margin: 0;
+    color: var(--mb2-ink-2);
+    font-size: 13px;
+    font-weight: 760;
+    letter-spacing: 0.14em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .mb2-protocol-hero h1 {
+    max-width: 900px;
+    margin: 26px 0 0;
+    color: var(--mb2-ink);
+    font-size: clamp(3.35rem, 6.3vw, 4.8rem);
+    font-weight: 680;
+    letter-spacing: 0;
+    line-height: 1.08;
+  }
+
+  .mb2-protocol-local-nav {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 34px;
+    border: 1px solid var(--mb2-line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 7px;
+    box-shadow: var(--mb2-shadow-soft);
+  }
+
+  .mb2-protocol-local-nav span,
+  .mb2-protocol-local-nav a {
+    display: inline-flex;
+    min-height: 34px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    color: var(--mb2-ink-2);
+    font-size: 12px;
+    font-weight: 720;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mb2-protocol-local-nav span {
+    padding: 0 10px 0 12px;
+    color: var(--mb2-muted);
+  }
+
+  .mb2-protocol-local-nav a {
+    background: #ffffff;
+    padding: 0 14px;
+    text-decoration: none;
+  }
+
+  .mb2-protocol-grid {
+    display: grid;
+    grid-template-columns: minmax(340px, 0.9fr) minmax(0, 1.35fr);
+    gap: 36px;
+    align-items: start;
+    padding-bottom: 74px;
+  }
+
+  .mb2-protocol-left-stack {
+    display: grid;
+    gap: 28px;
+  }
+
+  .mb2-protocol-panel {
+    border-radius: 26px;
+    background: var(--mb2-panel);
+    box-shadow: var(--mb2-shadow);
+  }
+
+  .mb2-protocol-panel--mint {
+    background: var(--mb2-mint);
+  }
+
+  .mb2-protocol-panel-head,
+  .mb2-protocol-sequence-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .mb2-protocol-panel-head {
+    padding: 30px 36px 18px;
+  }
+
+  .mb2-protocol-panel h2,
+  .mb2-protocol-section-heading h2,
+  .mb2-protocol-solution-copy h2,
+  .mb2-protocol-benefits h2,
+  .mb2-protocol-footer h2 {
+    margin: 0;
+    color: var(--mb2-ink);
+    font-weight: 680;
+    letter-spacing: 0;
+    line-height: 1.16;
+  }
+
+  .mb2-protocol-panel h2 {
+    font-size: 28px;
+  }
+
+  .mb2-protocol-variation-control {
+    display: grid;
+    justify-items: end;
+    gap: 6px;
+  }
+
+  .mb2-protocol-variation-control p {
+    margin: 0;
+    color: var(--mb2-muted);
+    font-size: 11px;
+    font-weight: 720;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .mb2-protocol-status,
+  .mb2-protocol-sequence-head span {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid rgba(220, 230, 228, 0.9);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 0 14px;
+    color: var(--mb2-ink);
+    font-size: 13px;
+    font-weight: 720;
+    white-space: nowrap;
+  }
+
+  .mb2-protocol-status {
+    appearance: none;
+    cursor: pointer;
+    font: inherit;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .mb2-protocol-status:hover,
+  .mb2-protocol-status:focus-visible {
+    border-color: rgba(120, 150, 145, 0.65);
+    box-shadow: 0 10px 20px rgba(16, 43, 45, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .mb2-protocol-status:focus-visible {
+    outline: 3px solid rgba(87, 133, 129, 0.28);
+    outline-offset: 3px;
+  }
+
+  .mb2-protocol-status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #66b66d;
+  }
+
+  .mb2-anatomy-card {
+    padding-bottom: 32px;
+  }
+
+  .mb2-anatomy-stage {
+    position: relative;
+    height: clamp(260px, 29vw, 380px);
+    margin: 18px 36px 30px;
+    overflow: hidden;
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 40% 35%, rgba(226, 255, 244, 0.16), transparent 9%),
+      radial-gradient(circle at 62% 52%, rgba(22, 112, 116, 0.28), transparent 11%),
+      radial-gradient(circle at 50% 70%, rgba(22, 112, 116, 0.22), transparent 10%),
+      #102f31;
+  }
+
+  .mb2-anatomy-stage svg {
+    position: absolute;
+    inset: 54px 58px 78px;
+    width: calc(100% - 116px);
+    height: calc(100% - 132px);
+  }
+
+  .mb2-anatomy-labels {
+    pointer-events: none;
+  }
+
+  .mb2-anatomy-node--mb2 {
+    transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mb2-anatomy-labels path {
+    fill: none;
+    stroke: #b7cbc6;
+    stroke-linecap: round;
+    stroke-width: 1.2;
+    opacity: 0.58;
+  }
+
+  .mb2-anatomy-labels rect {
+    fill: rgba(18, 47, 49, 0.88);
+    stroke: rgba(205, 226, 221, 0.38);
+    stroke-width: 1;
+  }
+
+  .mb2-anatomy-labels text {
+    fill: #edf8f5;
+    font-family:
+      Inter, "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 760;
+    letter-spacing: 0.04em;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .mb2-anatomy-stage figcaption {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    align-items: baseline;
+    left: 28px;
+    right: 28px;
+    bottom: 24px;
+    color: rgba(232, 241, 239, 0.72);
+    font-size: 14px;
+    font-weight: 740;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mb2-anatomy-stage figcaption strong {
+    color: #edf8f5;
+    font-size: 12px;
+    font-weight: 780;
+    letter-spacing: 0.1em;
+  }
+
+  .mb2-protocol-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 8px 36px 0;
+  }
+
+  .mb2-protocol-metrics div {
+    border-left: 1px solid var(--mb2-line-strong);
+    padding: 0 18px 0 24px;
+  }
+
+  .mb2-protocol-metrics strong,
+  .mb2-protocol-specs strong {
+    color: var(--mb2-ink);
+    font-size: clamp(2.55rem, 4vw, 3.35rem);
+    font-weight: 420;
+    letter-spacing: 0;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .mb2-protocol-metrics strong span,
+  .mb2-protocol-specs strong small {
+    font-size: 18px;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .mb2-protocol-metrics p,
+  .mb2-protocol-specs span,
+  .mb2-protocol-feature-card span,
+  .mb2-protocol-problem-head span,
+  .mb2-protocol-problem-row span {
+    margin: 10px 0 0;
+    color: var(--mb2-ink-2);
+    font-size: 13px;
+    font-weight: 760;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .mb2-warning-panel {
+    padding: 44px;
+  }
+
+  .mb2-warning-panel p {
+    margin: 40px 0 0;
+    color: var(--mb2-muted);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .mb2-warning-panel strong {
+    color: var(--mb2-red);
+    font-weight: 760;
+  }
+
+  .mb2-sequence-panel {
+    padding: 44px;
+  }
+
+  .mb2-protocol-sequence-head {
+    margin-bottom: 30px;
+  }
+
+  .mb2-protocol-steps {
+    display: grid;
+    gap: 14px;
+  }
+
+  .mb2-protocol-step {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 22px;
+    min-height: 116px;
+    align-items: start;
+    border-radius: 16px;
+    background: var(--mb2-soft);
+    padding: 22px 28px;
+  }
+
+  .mb2-protocol-step > span {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--mb2-line-strong);
+    border-radius: 999px;
+    color: var(--mb2-ink);
+    font-size: 15px;
+    font-weight: 760;
+  }
+
+  .mb2-protocol-step h3,
+  .mb2-protocol-feature-card h3 {
+    margin: 0;
+    color: var(--mb2-ink);
+    font-weight: 760;
+    line-height: 1.24;
+  }
+
+  .mb2-protocol-step h3 {
+    font-size: 20px;
+  }
+
+  .mb2-protocol-step p,
+  .mb2-protocol-section-heading p,
+  .mb2-protocol-problem-row p,
+  .mb2-protocol-solution-copy p,
+  .mb2-protocol-feature-card p,
+  .mb2-protocol-footer p {
+    color: var(--mb2-muted);
+    line-height: 1.58;
+  }
+
+  .mb2-protocol-step p {
+    margin: 9px 0 0;
+    font-size: 16px;
+  }
+
+  .mb2-protocol-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 32px;
+  }
+
+  .mb2-protocol-specs div {
+    min-height: 110px;
+    border-left: 1px solid var(--mb2-line);
+    padding: 0 28px;
+  }
+
+  .mb2-protocol-specs span {
+    display: block;
+    margin: 0 0 18px;
+  }
+
+  .mb2-protocol-detail,
+  .mb2-protocol-solution,
+  .mb2-protocol-benefits,
+  .mb2-protocol-checklist,
+  .mb2-protocol-related {
+    padding-top: 78px;
+    padding-bottom: 78px;
+    border-top: 1px solid var(--mb2-line);
+  }
+
+  .mb2-protocol-section-heading {
+    max-width: 780px;
+    margin-bottom: 34px;
+  }
+
+  .mb2-protocol-section-heading h2,
+  .mb2-protocol-solution-copy h2,
+  .mb2-protocol-benefits h2,
+  .mb2-protocol-footer h2 {
+    margin-top: 14px;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .mb2-protocol-section-heading p,
+  .mb2-protocol-solution-copy p {
+    max-width: 720px;
+    margin: 16px 0 0;
+    font-size: 17px;
+  }
+
+  .mb2-protocol-problem-table {
+    overflow: hidden;
+    border: 1px solid var(--mb2-line);
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: var(--mb2-shadow-soft);
+  }
+
+  .mb2-protocol-problem-head,
+  .mb2-protocol-problem-row {
+    display: grid;
+    grid-template-columns: 0.9fr 1fr 1fr;
+  }
+
+  .mb2-protocol-problem-head {
+    background: #edf3f1;
+  }
+
+  .mb2-protocol-problem-head span,
+  .mb2-protocol-problem-row > div {
+    padding: 22px 26px;
+    border-right: 1px solid var(--mb2-line);
+  }
+
+  .mb2-protocol-problem-head span:last-child,
+  .mb2-protocol-problem-row > div:last-child {
+    border-right: 0;
+  }
+
+  .mb2-protocol-problem-row {
+    min-height: 126px;
+    border-top: 1px solid var(--mb2-line);
+  }
+
+  .mb2-protocol-problem-row strong {
+    display: block;
+    margin-top: 8px;
+    color: var(--mb2-ink);
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .mb2-protocol-problem-row p {
+    margin: 8px 0 0;
+    font-size: 14px;
+  }
+
+  .mb2-protocol-solution {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 26px;
+    align-items: stretch;
+  }
+
+  .mb2-protocol-solution-copy {
+    padding: 34px;
+  }
+
+  .mb2-protocol-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .mb2-protocol-feature-card {
+    border: 1px solid var(--mb2-line);
+    border-radius: 20px;
+    background: #ffffff;
+    padding: 24px;
+    box-shadow: var(--mb2-shadow-soft);
+  }
+
+  .mb2-protocol-feature-card span {
+    display: block;
+    margin: 0 0 16px;
+  }
+
+  .mb2-protocol-feature-card h3 {
+    font-size: 21px;
+  }
+
+  .mb2-protocol-feature-card p {
+    margin: 12px 0 0;
+    font-size: 14px;
+  }
+
+  .mb2-protocol-benefits {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);
+    gap: 28px;
+    align-items: start;
+  }
+
+  .mb2-protocol-benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .mb2-protocol-benefit-grid div {
+    min-height: 96px;
+    border: 1px solid var(--mb2-line);
+    border-radius: 18px;
+    background: #ffffff;
+    padding: 20px;
+    color: var(--mb2-ink);
+    font-size: 16px;
+    font-weight: 720;
+    line-height: 1.35;
+    box-shadow: var(--mb2-shadow-soft);
+  }
+
+  .mb2-checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .mb2-checklist-column {
+    border: 1px solid var(--mb2-line);
+    border-radius: 22px;
+    background: #ffffff;
+    padding: 24px;
+    box-shadow: var(--mb2-shadow-soft);
+  }
+
+  .mb2-checklist-column > span {
+    display: block;
+    color: var(--mb2-ink-2);
+    font-size: 12px;
+    font-weight: 780;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .mb2-checklist-column article {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 14px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--mb2-line);
+  }
+
+  .mb2-checklist-column article > strong {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--mb2-line-strong);
+    border-radius: 999px;
+    color: var(--mb2-ink);
+    font-size: 13px;
+    font-weight: 760;
+  }
+
+  .mb2-checklist-column h3 {
+    margin: 0;
+    color: var(--mb2-ink);
+    font-size: 16px;
+    font-weight: 760;
+    letter-spacing: 0;
+    line-height: 1.25;
+  }
+
+  .mb2-checklist-column p {
+    margin: 8px 0 0;
+    color: var(--mb2-muted);
+    font-size: 13px;
+    line-height: 1.48;
+  }
+
+  .mb2-checklist-mantra {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .mb2-checklist-mantra span {
+    min-height: 62px;
+    border-left: 1px solid var(--mb2-line-strong);
+    background: #edf3f1;
+    padding: 18px 20px;
+    color: var(--mb2-ink);
+    font-size: 18px;
+    font-weight: 760;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  .mb2-evidence-snapshot {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+    gap: 28px;
+    align-items: stretch;
+    margin-bottom: 26px;
+    border: 1px solid var(--mb2-line);
+    border-radius: 24px;
+    background: #ffffff;
+    padding: 28px;
+    box-shadow: var(--mb2-shadow-soft);
+  }
+
+  .mb2-evidence-snapshot h3 {
+    margin: 14px 0 0;
+    color: var(--mb2-ink);
+    font-size: clamp(1.7rem, 3vw, 2.35rem);
+    font-weight: 680;
+    letter-spacing: 0;
+    line-height: 1.14;
+  }
+
+  .mb2-evidence-snapshot p {
+    margin: 16px 0 0;
+    color: var(--mb2-muted);
+    font-size: 16px;
+    line-height: 1.58;
+  }
+
+  .mb2-evidence-snapshot cite {
+    display: block;
+    margin-top: 20px;
+    color: var(--mb2-ink-2);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 650;
+    line-height: 1.45;
+  }
+
+  .mb2-evidence-snapshot cite a {
+    color: inherit;
+    text-decoration-color: rgba(37, 75, 80, 0.34);
+    text-underline-offset: 4px;
+  }
+
+  .mb2-evidence-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+  }
+
+  .mb2-evidence-stat {
+    display: grid;
+    min-height: 116px;
+    align-content: space-between;
+    border-left: 1px solid var(--mb2-line);
+    background: var(--mb2-soft);
+    padding: 18px;
+  }
+
+  .mb2-evidence-stat:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .mb2-evidence-stat--diagram {
+    grid-template-columns: minmax(0, 1fr) 88px;
+    gap: 8px 16px;
+    min-height: 166px;
+    align-content: center;
+    align-items: center;
+  }
+
+  .mb2-evidence-stat dt {
+    color: var(--mb2-ink-2);
+    font-size: 12px;
+    font-weight: 760;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .mb2-evidence-stat dd {
+    margin: 18px 0 0;
+    color: var(--mb2-ink);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 420;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .mb2-evidence-stat--diagram dt,
+  .mb2-evidence-stat--diagram dd,
+  .mb2-evidence-stat-code {
+    grid-column: 1;
+  }
+
+  .mb2-evidence-stat-code {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    border-radius: 999px;
+    background: #ffffff;
+    padding: 6px 9px;
+    color: var(--mb2-muted);
+    font-size: 11px;
+    font-weight: 760;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .mb2-vertucci-diagram {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    width: 88px;
+    height: 132px;
+    justify-self: end;
+    overflow: visible;
+  }
+
+  .mb2-vertucci-root {
+    fill: rgba(255, 255, 255, 0.64);
+    stroke: rgba(144, 165, 162, 0.55);
+    stroke-width: 1.4;
+  }
+
+  .mb2-vertucci-chamber {
+    fill: none;
+    stroke: rgba(87, 112, 119, 0.42);
+    stroke-linecap: round;
+    stroke-width: 2.2;
+  }
+
+  .mb2-vertucci-canal {
+    fill: none;
+    stroke: var(--mb2-ink);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 4.2;
+  }
+
+  .mb2-vertucci-apex {
+    fill: var(--mb2-red);
+  }
+
+  .mb2-protocol-link-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .mb2-protocol-link-grid a {
+    display: flex;
+    min-height: 86px;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--mb2-line);
+    border-radius: 18px;
+    background: #ffffff;
+    padding: 18px 20px;
+    color: var(--mb2-ink);
+    font-size: 15px;
+    font-weight: 720;
+    text-decoration: none;
+    box-shadow: var(--mb2-shadow-soft);
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .mb2-protocol-link-grid a::after {
+    content: ">";
+    color: var(--mb2-muted);
+    font-weight: 760;
+  }
+
+  .mb2-protocol-link-grid a:hover,
+  .mb2-protocol-link-grid a:focus-visible {
+    border-color: var(--mb2-line-strong);
+    box-shadow: var(--mb2-shadow);
+    transform: translateY(-1px);
+  }
+
+  .mb2-protocol-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 32px;
+    align-items: end;
+    padding: 72px 56px;
+    background: var(--mb2-dark);
+    color: #ffffff;
+  }
+
+  .mb2-protocol-footer > div,
+  .mb2-protocol-footer nav {
+    max-width: 1280px;
+  }
+
+  .mb2-protocol-footer .mb2-protocol-eyebrow,
+  .mb2-protocol-footer h2,
+  .mb2-protocol-footer p {
+    color: #ffffff;
+  }
+
+  .mb2-protocol-footer p {
+    max-width: 680px;
+    margin: 16px 0 0;
+    color: rgba(232, 241, 239, 0.78);
+  }
+
+  .mb2-protocol-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .mb2-protocol-footer a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 999px;
+    padding: 0 18px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 720;
+    text-decoration: none;
+  }
+
+  .mb2-protocol-footer a:first-child {
+    background: #ffffff;
+    color: var(--mb2-dark);
+  }
+
+  @media (max-width: 1080px) {
+    .mb2-protocol-hero,
+    .mb2-protocol-grid,
+    .mb2-protocol-detail,
+    .mb2-protocol-solution,
+    .mb2-protocol-benefits,
+    .mb2-protocol-checklist,
+    .mb2-protocol-related,
+    .mb2-protocol-footer {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .mb2-protocol-grid,
+    .mb2-protocol-solution,
+    .mb2-protocol-benefits,
+    .mb2-protocol-footer {
+      grid-template-columns: 1fr;
+    }
+
+    .mb2-protocol-feature-grid,
+    .mb2-checklist-grid,
+    .mb2-protocol-link-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mb2-evidence-snapshot {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .mb2-protocol-hero,
+    .mb2-protocol-grid,
+    .mb2-protocol-detail,
+    .mb2-protocol-solution,
+    .mb2-protocol-benefits,
+    .mb2-protocol-checklist,
+    .mb2-protocol-related,
+    .mb2-protocol-footer {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .mb2-protocol-hero {
+      padding-top: 42px;
+      padding-bottom: 30px;
+    }
+
+    .mb2-protocol-hero h1 {
+      font-size: clamp(2.7rem, 12vw, 4rem);
+    }
+
+    .mb2-protocol-local-nav {
+      align-items: stretch;
+      border-radius: 20px;
+      width: 100%;
+    }
+
+    .mb2-protocol-local-nav span,
+    .mb2-protocol-local-nav a {
+      min-height: 32px;
+      font-size: 11px;
+    }
+
+    .mb2-protocol-grid {
+      gap: 22px;
+      padding-bottom: 52px;
+    }
+
+    .mb2-protocol-panel-head,
+    .mb2-sequence-panel,
+    .mb2-warning-panel,
+    .mb2-protocol-solution-copy {
+      padding: 24px;
+    }
+
+    .mb2-protocol-panel-head {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .mb2-protocol-variation-control {
+      justify-items: start;
+    }
+
+    .mb2-anatomy-stage {
+      height: 300px;
+      margin: 0 24px 24px;
+    }
+
+    .mb2-anatomy-stage svg {
+      inset: 44px 40px 76px;
+      width: calc(100% - 80px);
+      height: calc(100% - 120px);
+    }
+
+    .mb2-protocol-metrics,
+    .mb2-protocol-specs,
+    .mb2-protocol-problem-head,
+    .mb2-protocol-problem-row,
+    .mb2-protocol-feature-grid,
+    .mb2-protocol-benefit-grid,
+    .mb2-checklist-grid,
+    .mb2-checklist-mantra,
+    .mb2-evidence-stat-grid,
+    .mb2-protocol-link-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .mb2-evidence-snapshot {
+      padding: 22px;
+    }
+
+    .mb2-evidence-stat {
+      min-height: 106px;
+    }
+
+    .mb2-evidence-stat--diagram {
+      grid-template-columns: minmax(0, 1fr) 78px;
+      min-height: 150px;
+    }
+
+    .mb2-vertucci-diagram {
+      width: 78px;
+      height: 118px;
+    }
+
+    .mb2-protocol-metrics {
+      gap: 18px;
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+
+    .mb2-protocol-sequence-head {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .mb2-protocol-step {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 22px;
+    }
+
+    .mb2-protocol-specs {
+      gap: 20px;
+    }
+
+    .mb2-protocol-problem-head {
+      display: none;
+    }
+
+    .mb2-protocol-problem-row > div {
+      border-right: 0;
+      border-bottom: 1px solid var(--mb2-line);
+    }
+
+    .mb2-protocol-problem-row > div:last-child {
+      border-bottom: 0;
+    }
+
+    .mb2-protocol-footer nav {
+      display: grid;
+    }
+  }
+</style>

@@ -1,0 +1,1416 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const protocolNav = [
+  { label: 'Technique', href: '#technique' },
+  { label: 'Specifications', href: '#specifications' },
+  { label: 'Checklist', href: '#checklist' },
+  { label: 'Evidence', href: '#evidence' },
+];
+
+const curvePatterns = [
+  {
+    name: 'Gentle distal curve',
+    description: 'A smooth curve still needs a reproducible glide path before rotary shaping.',
+    canal: 'M132 38 C131 76 126 111 115 145 C104 179 109 207 137 236',
+    reference: 'M132 38 C133 83 131 130 127 176 C125 200 130 219 141 236',
+    danger: 'M117 145 C104 179 109 207 137 236',
+  },
+  {
+    name: 'Mid-root sweep',
+    description: 'Curvature beginning earlier increases wall contact if the file is pushed.',
+    canal: 'M132 38 C125 76 110 109 101 142 C91 181 107 212 142 236',
+    reference: 'M132 38 C130 79 126 124 122 168 C120 197 130 220 146 236',
+    danger: 'M101 142 C91 181 107 212 142 236',
+  },
+  {
+    name: 'S-curve',
+    description: 'A second curve rewards short engagement, cleaning flutes, and recapitulation.',
+    canal: 'M132 38 C113 75 148 106 129 144 C103 193 120 216 148 236',
+    reference: 'M132 38 C126 78 132 121 124 166 C120 199 131 221 150 236',
+    danger: 'M129 144 C103 193 120 216 148 236',
+  },
+  {
+    name: 'Apical hook',
+    description: 'A terminal hook is a stop-and-reassess pattern, not an invitation to force.',
+    canal: 'M132 38 C135 79 133 119 125 153 C116 194 135 217 166 230',
+    reference: 'M132 38 C132 82 130 127 127 172 C126 198 139 218 162 230',
+    danger: 'M125 153 C116 194 135 217 166 230',
+  },
+];
+
+const sequenceSteps = [
+  {
+    number: '01',
+    title: 'Read the curve',
+    text: 'Study angled radiographs and use CBCT when anatomy, calcification, retreatment, or symptoms make the curve uncertain.',
+  },
+  {
+    number: '02',
+    title: 'Scout passively',
+    text: 'Use a small pre-curved #08 or #10 K-file to follow the canal path with tactile feedback before rotary shaping.',
+  },
+  {
+    number: '03',
+    title: 'Confirm glide path',
+    text: 'Pull back around 1 mm and confirm that the file slips back to length without forcing or handle manipulation.',
+  },
+  {
+    number: '04',
+    title: 'Shape with control',
+    text: 'Use short, light engagement with irrigation, recapitulation, and clean flutes so the file follows the prepared path.',
+  },
+];
+
+const problemRows = [
+  {
+    constraint: 'Straightening tendency',
+    why: 'A file under load wants to recover toward a straighter shape.',
+    response: 'Confirm the path before shaping and use light, repeatable progression.',
+  },
+  {
+    constraint: 'Lateral wall stress',
+    why: 'Curvature concentrates cyclic fatigue and contact on the outer wall.',
+    response: 'Use short engagements, withdraw often, and clean flutes before re-entry.',
+  },
+  {
+    constraint: 'Incomplete glide path',
+    why: 'The shaping file is forced to negotiate and cut at the same time.',
+    response: 'Scout, pre-curve, irrigate, and prove a reproducible pathway first.',
+  },
+  {
+    constraint: 'Apical pressure',
+    why: 'The last millimetres are narrow, curved, and less forgiving.',
+    response: 'Protect working length with recapitulation and stop when feedback changes.',
+  },
+];
+
+const featureCards = [
+  {
+    label: 'Glide path',
+    title: 'Acrobat before shaping',
+    text: 'A controlled glide path reduces the negotiation burden placed on larger shaping files in curved anatomy.',
+  },
+  {
+    label: 'Metallurgy',
+    title: 'Transform Technology',
+    text: 'Transform Technology supports a more adaptable file response where curvature makes stiffness more consequential.',
+  },
+  {
+    label: 'Tip control',
+    title: 'Avatar Tip guidance',
+    text: 'Avatar Tip is positioned to support smoother centred advancement when the apical third becomes narrow or curved.',
+  },
+];
+
+const benefits = [
+  'Better canal centering',
+  'Less abrupt outer-wall engagement',
+  'Clearer handoff from scouting to shaping',
+  'Improved working-length confidence',
+  'Reduced ledging and transportation risk',
+  'More deliberate stop-and-reassess decisions',
+];
+
+const checklistGroups = [
+  {
+    stage: 'Diagnose and orient',
+    items: [
+      {
+        number: '01',
+        title: 'Assume the canal is more curved than the root looks',
+        text: 'Root form underestimates canal complexity, especially in mesial roots and apical hooks.',
+      },
+      {
+        number: '02',
+        title: 'Read the pre-operative image with the end in mind',
+        text: 'Visualize the final prepared pathway before choosing files, taper, and working strategy.',
+      },
+      {
+        number: '03',
+        title: 'Use angled radiographs or CBCT when needed',
+        text: 'Add information before shaping if the curve disappears, splits, or projects in more than one plane.',
+      },
+      {
+        number: '04',
+        title: 'Refine access before negotiation',
+        text: 'Remove coronal interferences so the file can follow the canal rather than bend around preventable obstruction.',
+      },
+    ],
+  },
+  {
+    stage: 'Prove the glide path',
+    items: [
+      {
+        number: '05',
+        title: 'Flood the chamber and scout with a small file',
+        text: 'Use irrigant and a small pre-curved #08 or #10 K-file to find the path with tactile feedback.',
+      },
+      {
+        number: '06',
+        title: 'Pre-curve only the last few flutes',
+        text: 'Place the curve in the terminal 1-2 mm so the tip can read anatomy without over-bending the shaft.',
+      },
+      {
+        number: '07',
+        title: 'Confirm slip-slide movement',
+        text: 'A confirmed glide path lets the file return to length passively after being withdrawn slightly.',
+      },
+      {
+        number: '08',
+        title: 'Do not use handle motion to fake progress',
+        text: 'If the file only returns by twisting or forcing, the glide path is not yet reproducible.',
+      },
+    ],
+  },
+  {
+    stage: 'Shape lightly',
+    items: [
+      {
+        number: '09',
+        title: 'Let rotary files follow, not discover',
+        text: 'A shaping file should work in an already known pathway instead of negotiating the curve under load.',
+      },
+      {
+        number: '10',
+        title: 'Use short controlled engagement',
+        text: 'Advance in small movements, withdraw, clean flutes, irrigate, and check that the file still re-enters cleanly.',
+      },
+      {
+        number: '11',
+        title: 'Recapitulate before debris becomes a block',
+        text: 'Small-file recapitulation protects working length and reduces apical compaction in the curve.',
+      },
+      {
+        number: '12',
+        title: 'Reduce apical pressure as the radius tightens',
+        text: 'A decreasing radius curve increases cyclic fatigue and transportation risk even after a glide path is present.',
+      },
+    ],
+  },
+  {
+    stage: 'Stop and decide',
+    items: [
+      {
+        number: '13',
+        title: 'Stop when feedback changes',
+        text: 'Resistance, loss of slip-slide, repeated debris blocking, or sudden file pull should trigger reassessment.',
+      },
+      {
+        number: '14',
+        title: 'Finish manually when anatomy demands it',
+        text: 'In severe or multiplanar curves, manual finishing can be the safer controlled choice.',
+      },
+      {
+        number: '15',
+        title: 'Refer before control is lost',
+        text: 'Referral is a clinical control decision when visibility, access, curvature, or tactile feedback becomes unreliable.',
+      },
+    ],
+  },
+];
+
+const evidenceCards = [
+  {
+    label: 'Passivity test',
+    title: 'A glide path must be reproducible',
+    text: 'The transcript set repeatedly supports withdrawing slightly and confirming that the file returns to length passively, without forcing.',
+    source: 'Advanced Endodontics: Glide Path Management - Irregular Glide Path',
+    href: 'https://www.youtube.com/watch?v=O9yclUIPCqA',
+    icon: 'slip',
+  },
+  {
+    label: 'Curvature reading',
+    title: 'Canals often curve more than roots suggest',
+    text: 'The planning principle is to read the pre-operative film and visualize the final prepared path before the first shaping file.',
+    source: 'Glide Path & Shaping Strategies with Dr. Ruddle',
+    href: 'https://www.youtube.com/watch?v=ClLd0AhHb7w',
+    icon: 'film',
+  },
+  {
+    label: 'Cyclic fatigue',
+    title: 'Severe curves may need manual finishing',
+    text: 'A decreasing radius curve can remain high risk even after glide path preparation, so finishing strategy must follow feedback.',
+    source: 'Advanced Endodontics: Working Length & Patency',
+    href: 'https://www.youtube.com/watch?v=qLzjL-MOtoU',
+    icon: 'fatigue',
+  },
+  {
+    label: 'Small-file control',
+    title: '#08 or #10 negotiation comes first',
+    text: 'The resource set repeatedly places small-file scouting before mechanical glide path or rotary shaping in curved anatomy.',
+    source: 'Curved Canals transcript set: 15 reviewed sources',
+    href: 'https://www.youtube.com/watch?v=RqX0R_tyM3M',
+    icon: 'file',
+  },
+];
+
+const relatedLinks = [
+  { label: 'TransformX ET Files', href: `${base}products/et-transformx/` },
+  { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
+  { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
+  { label: 'Motor Settings', href: `${base}technique/motor-settings/` },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: 'Curved Canals: Glide-First Control',
+  description:
+    'A clinical education guide for maintaining canal path, glide path control, and apical discipline when shaping curved root canals.',
+  about: {
+    '@type': 'MedicalCondition',
+    name: 'Curved root canals',
+  },
+};
+---
+
+<ProductLayout
+  title="Curved Canals: Glide-First Control | EndoTech NZ"
+  description="A clinical protocol guide for rotary files in curved canals, with glide path discipline, apical control, Transform Technology, and Avatar Tip guidance."
+  schema={schema}
+  accent="teal"
+>
+  <section class="curve-protocol" id="technique">
+    <div class="protocol-shell">
+      <div class="protocol-hero">
+        <div>
+          <p class="eyebrow">Clinical protocol v1.0</p>
+          <h1>Curved Canals: Glide-First Control</h1>
+          <p class="hero-copy">
+            Curvature is not just a shape. It amplifies every decision: access, pre-curve, glide path,
+            rotary pressure, irrigation, and the moment you decide to stop.
+          </p>
+        </div>
+        <nav class="protocol-nav" aria-label="Curved canal protocol sections">
+          {protocolNav.map((item) => (
+            <a href={item.href}>{item.label}</a>
+          ))}
+        </nav>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="left-stack">
+          <article class="map-card">
+            <div class="card-heading">
+              <div>
+                <span class="section-kicker">Anatomy map</span>
+                <h2>Curve Load Map</h2>
+              </div>
+              <button class="pattern-toggle" type="button" aria-describedby="pattern-help">
+                <span class="status-dot" aria-hidden="true"></span>
+                Active pattern
+              </button>
+            </div>
+
+            <div class="curve-stage">
+              <svg viewBox="0 0 280 300" role="img" aria-labelledby="curve-stage-title curve-stage-desc">
+                <title id="curve-stage-title">Curved canal path diagram</title>
+                <desc id="curve-stage-desc">A root canal schematic showing the prepared glide path, natural curve, and outer wall danger zone.</desc>
+                <defs>
+                  <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+                    <feGaussianBlur stdDeviation="9" result="blur" />
+                    <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.11 0 0 0 0 0.60 0 0 0 0 0.60 0 0 0 .35 0" />
+                    <feBlend in="SourceGraphic" mode="screen" />
+                  </filter>
+                </defs>
+                <path
+                  class="root-outline"
+                  d="M111 20 C94 57 76 100 79 143 C82 190 92 241 132 278 C171 245 196 196 197 150 C198 103 176 60 153 20 C140 30 126 30 111 20 Z"
+                />
+                <path class="access-line" d="M96 52 C118 44 145 44 167 52" />
+                <path id="curve-reference-path" class="reference-path" d={curvePatterns[0].reference} />
+                <path id="curve-main-path" class="canal-path" d={curvePatterns[0].canal} />
+                <path id="curve-danger-zone" class="danger-zone" d={curvePatterns[0].danger} />
+                <circle class="orifice-dot" cx="132" cy="38" r="5.5" />
+                <circle class="apex-dot" cx="137" cy="236" r="5.5" />
+                <text x="92" y="41" class="svg-label">orifice</text>
+                <text x="154" y="246" class="svg-label">WL</text>
+                <text x="172" y="180" class="svg-note">outer wall risk</text>
+                <path class="note-line" d="M168 176 L145 190" />
+              </svg>
+              <div class="stage-caption">
+                <strong id="curve-pattern-name">{curvePatterns[0].name}</strong>
+                <p id="curve-pattern-description">{curvePatterns[0].description}</p>
+              </div>
+            </div>
+
+            <div class="helper-line" id="pattern-help">Click to show curve patterns.</div>
+
+            <div class="map-metrics">
+              <div>
+                <strong>1 mm</strong>
+                <span>passive slip-back test</span>
+              </div>
+              <div>
+                <strong>#08-#10</strong>
+                <span>pre-curved scout files</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="warning-card">
+            <span>Clinical warning</span>
+            <h2>Do not ask a rotary file to discover the curve.</h2>
+            <p>
+              Curved canals punish load. If the path is incomplete, the file can straighten, engage the
+              outer wall, block with debris, ledge, transport, or fatigue before the clinician has reliable control.
+            </p>
+          </article>
+        </div>
+
+        <article class="sequence-card">
+          <div class="sequence-header">
+            <div>
+              <span class="section-kicker">MB2 sibling protocol</span>
+              <h2>Curve Sequence</h2>
+            </div>
+            <span class="sequence-pill">Glide path first</span>
+          </div>
+
+          <div class="sequence-list">
+            {sequenceSteps.map((step) => (
+              <article>
+                <span>{step.number}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div class="sequence-specs" id="specifications">
+            <div>
+              <span>Primary rule</span>
+              <strong>Follow</strong>
+              <small>do not force</small>
+            </div>
+            <div>
+              <span>Shaping mode</span>
+              <strong>short</strong>
+              <small>clean, irrigate, recapitulate</small>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <section class="problem-section">
+        <div class="section-heading">
+          <span class="section-kicker">Clinical problem</span>
+          <h2>Curvature changes file behaviour before shaping begins.</h2>
+          <p>
+            A curved canal is a control problem. The file must be allowed to follow anatomy, not convert
+            the canal into a straighter path under apical pressure.
+          </p>
+        </div>
+
+        <div class="problem-table" role="table" aria-label="Curved canal clinical risk factors">
+          <div class="table-row table-head" role="row">
+            <span role="columnheader">Constraint</span>
+            <span role="columnheader">Why it matters</span>
+            <span role="columnheader">Controlled response</span>
+          </div>
+          {problemRows.map((row) => (
+            <div class="table-row" role="row">
+              <strong role="cell">{row.constraint}</strong>
+              <span role="cell">{row.why}</span>
+              <span role="cell">{row.response}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="feature-section">
+        <div class="section-heading">
+          <span class="section-kicker">EndoTech solution</span>
+          <h2>Build the path first, then shape with a file designed for control.</h2>
+          <p>
+            Acrobat, TransformX ET, Transform Technology, and Avatar Tip sit in the same clinical logic:
+            establish a repeatable path, reduce unnecessary load, and protect the apical third.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          {featureCards.map((feature) => (
+            <article>
+              <span>{feature.label}</span>
+              <h3>{feature.title}</h3>
+              <p>{feature.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="benefits-band">
+        <div>
+          <span class="section-kicker">Clinical benefits</span>
+          <h2>Better control in the part of the canal where mistakes are hardest to recover.</h2>
+        </div>
+        <div class="benefits-grid">
+          {benefits.map((benefit) => (
+            <span>{benefit}</span>
+          ))}
+        </div>
+      </section>
+
+      <section class="checklist-section" id="checklist">
+        <div class="section-heading">
+          <span class="section-kicker">15-point curved canal checklist</span>
+          <h2>Use the checklist when the canal stops behaving like a straight line.</h2>
+          <p>
+            Keep the first viewport clean. Put the detailed working discipline here, where it can be used
+            chairside or during case planning.
+          </p>
+        </div>
+
+        <div class="checklist-grid">
+          {checklistGroups.map((group) => (
+            <article class="checklist-group">
+              <h3>{group.stage}</h3>
+              <div>
+                {group.items.map((item) => (
+                  <section>
+                    <span>{item.number}</span>
+                    <div>
+                      <h4>{item.title}</h4>
+                      <p>{item.text}</p>
+                    </div>
+                  </section>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="principle-row">
+          <span>Read more</span>
+          <span>Pre-curve deliberately</span>
+          <span>Confirm passivity</span>
+          <span>Force nothing</span>
+        </div>
+      </section>
+
+      <section class="evidence-section" id="evidence">
+        <div class="section-heading">
+          <span class="section-kicker">Evidence and source anchors</span>
+          <h2>Four ideas from the curved-canal source set that belong on the page.</h2>
+          <p>
+            The local research pack reviewed 15 curved-canal videos and transcripts. The page uses them
+            as workflow anchors and redraws the clinical ideas as original diagrams.
+          </p>
+        </div>
+
+        <div class="evidence-grid">
+          {evidenceCards.map((card) => (
+            <article>
+              <div class="evidence-icon" aria-hidden="true">
+                {card.icon === 'slip' && (
+                  <svg viewBox="0 0 96 96">
+                    <path d="M24 20 C50 32 49 61 72 76" />
+                    <path class="accent-path" d="M32 39 C50 46 53 62 66 70" />
+                    <circle cx="32" cy="39" r="4" />
+                    <circle cx="66" cy="70" r="4" />
+                  </svg>
+                )}
+                {card.icon === 'film' && (
+                  <svg viewBox="0 0 96 96">
+                    <rect x="23" y="18" width="50" height="60" rx="7" />
+                    <path d="M38 27 C58 41 36 53 58 69" />
+                    <path class="accent-path" d="M32 72 L64 24" />
+                  </svg>
+                )}
+                {card.icon === 'fatigue' && (
+                  <svg viewBox="0 0 96 96">
+                    <path d="M28 20 C60 36 25 61 68 78" />
+                    <path class="accent-path" d="M57 58 L73 50 M58 64 L77 66 M54 70 L67 82" />
+                  </svg>
+                )}
+                {card.icon === 'file' && (
+                  <svg viewBox="0 0 96 96">
+                    <path d="M49 16 L49 72" />
+                    <path class="accent-path" d="M49 72 C57 76 62 82 64 88" />
+                    <path d="M41 23 L57 23 M42 32 L56 32 M43 41 L55 41 M44 50 L54 50" />
+                  </svg>
+                )}
+              </div>
+              <span>{card.label}</span>
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+              <a href={card.href} target="_blank" rel="noreferrer">{card.source}</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="related-section">
+        <div>
+          <span class="section-kicker">Related pages</span>
+          <h2>Keep the curve-control pathway connected to the wider EndoTech system.</h2>
+        </div>
+        <div class="related-links">
+          {relatedLinks.map((link) => (
+            <a href={link.href}>{link.label}</a>
+          ))}
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ curvePatterns }}>
+    document.addEventListener('DOMContentLoaded', () => {
+      const button = document.querySelector('.pattern-toggle');
+      const mainPath = document.getElementById('curve-main-path');
+      const referencePath = document.getElementById('curve-reference-path');
+      const dangerPath = document.getElementById('curve-danger-zone');
+      const patternName = document.getElementById('curve-pattern-name');
+      const patternDescription = document.getElementById('curve-pattern-description');
+      let index = 0;
+
+      function setPattern(nextIndex) {
+        const pattern = curvePatterns[nextIndex];
+        if (!pattern || !mainPath || !referencePath || !dangerPath || !patternName || !patternDescription) return;
+        mainPath.setAttribute('d', pattern.canal);
+        referencePath.setAttribute('d', pattern.reference);
+        dangerPath.setAttribute('d', pattern.danger);
+        patternName.textContent = pattern.name;
+        patternDescription.textContent = pattern.description;
+      }
+
+      button?.addEventListener('click', () => {
+        index = (index + 1) % curvePatterns.length;
+        setPattern(index);
+      });
+    });
+  </script>
+</ProductLayout>
+
+<style>
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(.product-site-main) {
+    background: #f4f7f6;
+  }
+
+  .curve-protocol {
+    --ink: #10272a;
+    --muted: #4b6267;
+    --subtle: #6e8085;
+    --canvas: #f4f7f6;
+    --surface: #ffffff;
+    --soft: #eef3f1;
+    --mint: #dfeee8;
+    --line: rgba(16, 39, 42, 0.11);
+    --line-strong: rgba(16, 39, 42, 0.2);
+    --accent: #4cae73;
+    --danger: #c4554d;
+    --dark: #132c2f;
+    color: var(--ink);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(244, 247, 246, 0.96) 38%, #f4f7f6 100%);
+    font-family: Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .protocol-shell {
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 74px 0 84px;
+  }
+
+  .protocol-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 760px) auto;
+    gap: 32px;
+    align-items: start;
+    padding-bottom: 58px;
+  }
+
+  .eyebrow,
+  .section-kicker {
+    display: block;
+    margin: 0 0 20px;
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .protocol-hero h1 {
+    max-width: 820px;
+    margin: 0;
+    font-size: clamp(3.05rem, 7vw, 5.9rem);
+    line-height: 0.98;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  .hero-copy {
+    max-width: 700px;
+    margin: 28px 0 0;
+    color: var(--muted);
+    font-size: 1.14rem;
+    line-height: 1.7;
+  }
+
+  .protocol-nav {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 3px;
+  }
+
+  .protocol-nav a {
+    color: #30484d;
+    text-decoration: none;
+    font-size: 0.76rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+  }
+
+  .protocol-nav a:hover {
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.68);
+    border-radius: 999px;
+  }
+
+  .protocol-grid {
+    display: grid;
+    grid-template-columns: minmax(340px, 0.92fr) minmax(520px, 1.38fr);
+    gap: 40px;
+    align-items: start;
+  }
+
+  .left-stack {
+    display: grid;
+    gap: 26px;
+  }
+
+  .map-card,
+  .sequence-card,
+  .warning-card {
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    box-shadow: 0 22px 55px rgba(18, 39, 41, 0.08);
+  }
+
+  .map-card {
+    border-radius: 30px;
+    padding: 38px;
+    background: var(--mint);
+  }
+
+  .card-heading,
+  .sequence-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+
+  .card-heading h2,
+  .sequence-header h2,
+  .warning-card h2,
+  .section-heading h2,
+  .benefits-band h2,
+  .related-section h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.55rem, 2.2vw, 2.15rem);
+    line-height: 1.16;
+    letter-spacing: 0;
+  }
+
+  .card-heading .section-kicker,
+  .sequence-header .section-kicker {
+    margin-bottom: 10px;
+  }
+
+  .pattern-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0 15px;
+    background: rgba(255, 255, 255, 0.74);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 850;
+    cursor: pointer;
+  }
+
+  .status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 5px rgba(76, 174, 115, 0.12);
+  }
+
+  .curve-stage {
+    overflow: hidden;
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 53% 42%, rgba(91, 164, 158, 0.22), rgba(19, 44, 47, 0) 35%),
+      var(--dark);
+  }
+
+  .curve-stage svg {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .root-outline {
+    fill: rgba(223, 238, 232, 0.035);
+    stroke: rgba(223, 238, 232, 0.28);
+    stroke-width: 1.4;
+  }
+
+  .access-line,
+  .note-line {
+    fill: none;
+    stroke: rgba(223, 238, 232, 0.36);
+    stroke-width: 1.3;
+    stroke-linecap: round;
+  }
+
+  .reference-path {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.18);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-dasharray: 5 7;
+    transition: d 260ms ease;
+  }
+
+  .canal-path {
+    fill: none;
+    stroke: #edf9f2;
+    stroke-width: 4.6;
+    stroke-linecap: round;
+    filter: url("#softGlow");
+    transition: d 260ms ease;
+  }
+
+  .danger-zone {
+    fill: none;
+    stroke: var(--danger);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-dasharray: 1 9;
+    transition: d 260ms ease;
+  }
+
+  .orifice-dot {
+    fill: #f1fbf6;
+  }
+
+  .apex-dot {
+    fill: var(--danger);
+  }
+
+  .svg-label,
+  .svg-note {
+    fill: rgba(240, 248, 245, 0.82);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .svg-note {
+    fill: rgba(239, 206, 201, 0.86);
+    font-size: 8.5px;
+  }
+
+  .stage-caption {
+    padding: 0 28px 26px;
+    color: #edf9f2;
+  }
+
+  .stage-caption strong {
+    display: block;
+    font-size: 1.05rem;
+  }
+
+  .stage-caption p {
+    margin: 7px 0 0;
+    color: rgba(237, 249, 242, 0.72);
+    line-height: 1.5;
+    font-size: 0.92rem;
+  }
+
+  .helper-line {
+    margin: 16px 0 0;
+    color: #36575e;
+    font-size: 0.82rem;
+    font-weight: 760;
+  }
+
+  .map-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 28px;
+    border-left: 1px solid var(--line);
+  }
+
+  .map-metrics div {
+    padding-left: 28px;
+    border-right: 1px solid var(--line);
+  }
+
+  .map-metrics strong {
+    display: block;
+    color: var(--ink);
+    font-size: clamp(2.35rem, 4vw, 3.85rem);
+    line-height: 1;
+    font-weight: 380;
+    letter-spacing: 0;
+  }
+
+  .map-metrics span {
+    display: block;
+    max-width: 170px;
+    margin-top: 11px;
+    color: #31575e;
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    line-height: 1.42;
+    text-transform: uppercase;
+  }
+
+  .warning-card {
+    border-radius: 24px;
+    padding: 36px 38px;
+    background: var(--surface);
+  }
+
+  .warning-card span {
+    color: var(--danger);
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .warning-card h2 {
+    margin-top: 16px;
+    max-width: 440px;
+  }
+
+  .warning-card p {
+    margin: 28px 0 0;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .sequence-card {
+    border-radius: 30px;
+    padding: 46px;
+    background: var(--surface);
+  }
+
+  .sequence-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: var(--soft);
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 850;
+  }
+
+  .sequence-list {
+    display: grid;
+    gap: 18px;
+  }
+
+  .sequence-list article {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 18px;
+    min-height: 118px;
+    align-items: start;
+    padding: 28px;
+    border-radius: 18px;
+    background: #f2f5f4;
+  }
+
+  .sequence-list article > span {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.45);
+    font-size: 0.85rem;
+    font-weight: 850;
+  }
+
+  .sequence-list h3 {
+    margin: 2px 0 10px;
+    color: var(--ink);
+    font-size: 1.16rem;
+    letter-spacing: 0;
+  }
+
+  .sequence-list p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.58;
+  }
+
+  .sequence-specs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 44px;
+    border-left: 1px solid var(--line);
+  }
+
+  .sequence-specs div {
+    padding-left: 28px;
+    border-right: 1px solid var(--line);
+  }
+
+  .sequence-specs span,
+  .sequence-specs small {
+    display: block;
+    color: #31575e;
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sequence-specs strong {
+    display: block;
+    margin: 16px 0 8px;
+    color: var(--ink);
+    font-size: clamp(2.3rem, 4vw, 3.75rem);
+    line-height: 0.94;
+    font-weight: 380;
+    letter-spacing: 0;
+  }
+
+  .problem-section,
+  .feature-section,
+  .checklist-section,
+  .evidence-section,
+  .related-section,
+  .benefits-band {
+    margin-top: 78px;
+    scroll-margin-top: 108px;
+  }
+
+  .section-heading {
+    max-width: 820px;
+    margin-bottom: 30px;
+  }
+
+  .section-heading p,
+  .benefits-band p {
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 1.02rem;
+    line-height: 1.72;
+  }
+
+  .problem-table {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: 0 22px 55px rgba(18, 39, 41, 0.06);
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 0.84fr 1.08fr 1.08fr;
+    gap: 24px;
+    padding: 22px 28px;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+
+  .table-row:first-child {
+    border-top: 0;
+  }
+
+  .table-head {
+    background: #edf3f1;
+    color: #31575e;
+    font-size: 0.75rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .table-row strong {
+    color: var(--ink);
+  }
+
+  .table-row span {
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .feature-grid article {
+    min-height: 245px;
+    padding: 32px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: 0 18px 44px rgba(18, 39, 41, 0.05);
+  }
+
+  .feature-grid span,
+  .evidence-grid article > span {
+    color: #31575e;
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .feature-grid h3,
+  .evidence-grid h3,
+  .checklist-group h3 {
+    margin: 18px 0 12px;
+    color: var(--ink);
+    font-size: 1.22rem;
+    letter-spacing: 0;
+  }
+
+  .feature-grid p,
+  .evidence-grid p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.68;
+  }
+
+  .benefits-band {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.88fr) minmax(420px, 1.12fr);
+    gap: 34px;
+    align-items: start;
+    padding: 46px;
+    border-radius: 30px;
+    background: var(--dark);
+    color: #edf9f2;
+  }
+
+  .benefits-band .section-kicker,
+  .benefits-band h2 {
+    color: #edf9f2;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .benefits-grid span {
+    min-height: 74px;
+    display: flex;
+    align-items: center;
+    padding: 18px 20px;
+    border: 1px solid rgba(237, 249, 242, 0.14);
+    border-radius: 16px;
+    color: rgba(237, 249, 242, 0.9);
+    background: rgba(255, 255, 255, 0.045);
+    font-weight: 720;
+  }
+
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .checklist-group {
+    padding: 30px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: 0 18px 44px rgba(18, 39, 41, 0.05);
+  }
+
+  .checklist-group h3 {
+    margin-top: 0;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .checklist-group section {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .checklist-group section:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .checklist-group section > span {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 850;
+  }
+
+  .checklist-group h4 {
+    margin: 2px 0 8px;
+    color: var(--ink);
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .checklist-group p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.58;
+  }
+
+  .principle-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 18px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--line);
+  }
+
+  .principle-row span {
+    padding: 20px;
+    background: #edf3f1;
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .evidence-grid article {
+    min-height: 360px;
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: 0 18px 44px rgba(18, 39, 41, 0.05);
+  }
+
+  .evidence-icon {
+    display: grid;
+    place-items: center;
+    width: 96px;
+    height: 96px;
+    margin-bottom: 22px;
+    border-radius: 22px;
+    background: #edf3f1;
+  }
+
+  .evidence-icon svg {
+    width: 78px;
+    height: 78px;
+  }
+
+  .evidence-icon path,
+  .evidence-icon rect {
+    fill: none;
+    stroke: #31575e;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .evidence-icon circle {
+    fill: #31575e;
+  }
+
+  .evidence-icon .accent-path {
+    stroke: var(--danger);
+  }
+
+  .evidence-grid a {
+    display: inline-flex;
+    margin-top: 18px;
+    color: #31575e;
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1.45;
+    text-decoration: none;
+  }
+
+  .evidence-grid a:hover {
+    color: var(--ink);
+  }
+
+  .related-section {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.85fr) minmax(420px, 1.15fr);
+    gap: 34px;
+    align-items: center;
+    padding: 42px;
+    border: 1px solid var(--line);
+    border-radius: 30px;
+    background: var(--surface);
+  }
+
+  .related-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-end;
+  }
+
+  .related-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 780;
+  }
+
+  .related-links a:hover {
+    background: #edf3f1;
+  }
+
+  @media (max-width: 1120px) {
+    .protocol-hero,
+    .protocol-grid,
+    .benefits-band,
+    .related-section {
+      grid-template-columns: 1fr;
+    }
+
+    .protocol-nav,
+    .related-links {
+      justify-content: flex-start;
+    }
+
+    .evidence-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .protocol-shell {
+      width: min(100% - 28px, 680px);
+      padding: 48px 0 64px;
+    }
+
+    .protocol-hero {
+      padding-bottom: 34px;
+    }
+
+    .protocol-hero h1 {
+      font-size: clamp(2.62rem, 12vw, 4.2rem);
+    }
+
+    .map-card,
+    .sequence-card,
+    .warning-card,
+    .benefits-band,
+    .related-section {
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .card-heading,
+    .sequence-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .sequence-list article {
+      grid-template-columns: 1fr;
+      padding: 22px;
+    }
+
+    .table-row,
+    .table-head {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .feature-grid,
+    .checklist-grid,
+    .evidence-grid,
+    .benefits-grid,
+    .principle-row,
+    .map-metrics,
+    .sequence-specs {
+      grid-template-columns: 1fr;
+    }
+
+    .map-metrics,
+    .sequence-specs {
+      border-left: 0;
+    }
+
+    .map-metrics div,
+    .sequence-specs div {
+      padding: 18px 0 0;
+      border-right: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .map-metrics div:first-child,
+    .sequence-specs div:first-child {
+      border-top: 0;
+    }
+
+    .principle-row span {
+      text-align: left;
+    }
+  }
+</style>
