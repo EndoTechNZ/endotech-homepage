@@ -106,10 +106,16 @@ export const curvedCanalChecklistItems = [
 ];
 
 export const curvedCanalChecklistSources = [
-  'Versiani MA, Basrani B, Sousa-Neto MD, editors. The Root Canal Anatomy in Permanent Dentition. Springer; 2019.',
-  'Carrotte P. Endodontics: Part 4, Morphology of the root canal system. British Dental Journal. 2004.',
-  'ElAyouti A et al. Increased apical enlargement contributes to excessive dentin removal in curved root canals. Journal of Endodontics. 2011.',
-  'Endal U et al. A high-resolution computed tomographic study of changes in root canal isthmus area by instrumentation and root filling. Journal of Endodontics. 2011.',
-  'Adcock JM et al. Histologic evaluation of canal and isthmus debridement efficacies of two different irrigant delivery techniques in a closed system. Journal of Endodontics. 2011.',
+  'Versiani MA, Basrani B, Sousa-Neto MD, editors. The Root Canal Anatomy in Permanent Dentition. Springer; 2019. doi:10.1007/978-3-319-73444-6.',
+  'Carrotte P. Endodontics: Part 4, Morphology of the root canal system. British Dental Journal. 2004;197(7):379-383. doi:10.1038/sj.bdj.4811711.',
+  'Schneider SW. A comparison of canal preparations in straight and curved root canals. Oral Surgery, Oral Medicine, Oral Pathology. 1971;32(2):271-275. doi:10.1016/0030-4220(71)90230-1.',
+  'Pruett JP, Clement DJ, Carnes DL Jr. Cyclic fatigue testing of nickel-titanium endodontic instruments. Journal of Endodontics. 1997;23(2):77-85. doi:10.1016/S0099-2399(97)80250-6.',
+  'Peters OA. Current challenges and concepts in the preparation of root canal systems: a review. Journal of Endodontics. 2004;30(8):559-567. doi:10.1097/01.don.0000129039.59003.9d.',
+  'ElAyouti A et al. Increased apical enlargement contributes to excessive dentin removal in curved root canals: a stepwise microcomputed tomography study. Journal of Endodontics. 2011;37(11):1580-1584. doi:10.1016/j.joen.2011.08.019.',
+  'Endal U et al. A high-resolution computed tomographic study of changes in root canal isthmus area by instrumentation and root filling. Journal of Endodontics. 2011;37(2):223-227. doi:10.1016/j.joen.2010.10.012.',
+  'Adcock JM et al. Histologic evaluation of canal and isthmus debridement efficacies of two different irrigant delivery techniques in a closed system. Journal of Endodontics. 2011;37(4):544-548. doi:10.1016/j.joen.2011.01.006.',
   'Curved Canals transcript and clinical summary set, EndoTech NZ source folder.',
 ];
+
+export const curvedCanalChecklistReferenceNote =
+  'The curved-canal checklist combines the local EndoTech source folder with anatomy, curvature, cyclic-fatigue, shaping, apical-enlargement, isthmus, and irrigation literature. The page uses these sources to support small-file scouting, reproducible glide path control, short rotary engagement, recapitulation, and early stop-or-refer decisions.';

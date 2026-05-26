@@ -150,6 +150,13 @@ export const mb2ChecklistItems = mb2ChecklistGroups.flatMap((group) =>
 
 export const mb2ChecklistSources = [
   'EndoTech NZ 15-point MB2 protocol checklist source document.',
-  'Al Mheiri et al. Evaluation of root and canal morphology of maxillary permanent first molars in an Emirati population; a CBCT study. BMC Oral Health. 2020.',
-  'Vertucci FJ. Root canal anatomy of the human permanent teeth. Oral Surgery, Oral Medicine, Oral Pathology. 1984.',
+  'Al Mheiri E, Chaudhry J, Abdo S, El Abed R, Khamis AH, Jamal M. Evaluation of root and canal morphology of maxillary permanent first molars in an Emirati population; a cone-beam computed tomography study. BMC Oral Health. 2020;20:274. doi:10.1186/s12903-020-01269-2.',
+  'Vertucci FJ. Root canal anatomy of the human permanent teeth. Oral Surgery, Oral Medicine, Oral Pathology. 1984;58(5):589-599. doi:10.1016/0030-4220(84)90085-9.',
+  'Kulild JC, Peters DD. Incidence and configuration of canal systems in the mesiobuccal root of maxillary first and second molars. Journal of Endodontics. 1990;16(7):311-317. doi:10.1016/S0099-2399(06)81940-0.',
+  'Stropko JJ. Canal morphology of maxillary molars: clinical observations of canal configurations. Journal of Endodontics. 1999;25(6):446-450. doi:10.1016/S0099-2399(99)80276-3.',
+  'Cleghorn BM, Christie WH, Dong CCS. Root and root canal morphology of the human permanent maxillary first molar: a literature review. Journal of Endodontics. 2006;32(9):813-821. doi:10.1016/j.joen.2006.04.014.',
+  'Local EndoTech MB2 access, reference-image, and anatomy-book folders were used for workflow structure and redrawn teaching diagrams; unpublished reference-only images are not reused directly.',
 ];
+
+export const mb2ChecklistReferenceNote =
+  'The MB2 checklist combines the local EndoTech protocol document with anatomy, CBCT prevalence, canal-configuration, and clinical-observation literature. The page uses these sources to support controlled access, deliberate troughing, passive scouting, glide path confirmation, and referral decisions.';

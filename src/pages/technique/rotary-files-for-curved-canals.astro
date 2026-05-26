@@ -6,6 +6,7 @@ import stressPointImage from '../../assets/education/curved-canals-stress-point.
 
 const base = import.meta.env.BASE_URL;
 const curvedGatewayNumbers = Array.from({ length: 13 }, (_, index) => String(index + 1).padStart(2, '0'));
+const curvedCanalChecklistPdfHref = `${base}downloads/EndoTech-NZ-Curved-Canal-13-Point-Checklist.pdf`;
 
 const protocolNav = [
   { label: 'Technique', href: '#technique' },
@@ -316,25 +317,33 @@ const schema = {
       </section>
 
       <section class="checklist-section" id="checklist">
-        <a class="checklist-button" href={`${base}technique/rotary-files-for-curved-canals/checklist/`}>
-          <span class="gateway-rail" aria-hidden="true">
-            {curvedGatewayNumbers.map((number) => (
-              <i>{number}</i>
-            ))}
-          </span>
-          <span class="gateway-copy">
-            <span>Interactive protocol guide</span>
-            <strong>Open the full 13-point curved-canal guide.</strong>
-            <small>
-              Hover each point to reveal chairside guidance for glide path control,
-              shaping, stop decisions, and referral judgment.
-            </small>
-          </span>
-          <span class="gateway-action" aria-hidden="true">
-            <span>Open full guide</span>
-            <b>→</b>
-          </span>
-        </a>
+        <div class="checklist-actions">
+          <a class="checklist-button" href={`${base}technique/rotary-files-for-curved-canals/checklist/`}>
+            <span class="gateway-rail" aria-hidden="true">
+              {curvedGatewayNumbers.map((number) => (
+                <i>{number}</i>
+              ))}
+            </span>
+            <span class="gateway-copy">
+              <span>Interactive protocol guide</span>
+              <strong>Open the full 13-point curved-canal guide.</strong>
+              <small>
+                Hover each point to reveal chairside guidance for glide path control,
+                shaping, stop decisions, and referral judgment.
+              </small>
+            </span>
+            <span class="gateway-action" aria-hidden="true">
+              <span>Open full guide</span>
+              <b>-&gt;</b>
+            </span>
+          </a>
+
+          <a class="checklist-download" href={curvedCanalChecklistPdfHref} download>
+            <span>Download PDF</span>
+            <strong>13-point chairside checklist</strong>
+            <small>Printable curved-canal protocol with sources.</small>
+          </a>
+        </div>
       </section>
 
       <section class="evidence-section" id="evidence">
@@ -980,6 +989,13 @@ const schema = {
     text-align: right;
   }
 
+  .checklist-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+    gap: 18px;
+    align-items: stretch;
+  }
+
   .checklist-button {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
@@ -1000,6 +1016,54 @@ const schema = {
     text-decoration: none;
     box-shadow: 0 22px 55px rgba(18, 39, 41, 0.07);
     transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .checklist-download {
+    display: grid;
+    align-content: center;
+    gap: 12px;
+    min-height: 220px;
+    padding: clamp(24px, 3.4vw, 36px);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    color: var(--ink);
+    background: var(--surface);
+    text-decoration: none;
+    box-shadow: 0 22px 55px rgba(18, 39, 41, 0.07);
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .checklist-download:hover,
+  .checklist-download:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(16, 39, 42, 0.22);
+    box-shadow: 0 28px 64px rgba(18, 39, 41, 0.1);
+    outline: none;
+  }
+
+  .checklist-download span,
+  .checklist-download small {
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .checklist-download strong {
+    color: var(--ink);
+    font-size: clamp(1.25rem, 2.3vw, 1.72rem);
+    line-height: 1.14;
+    letter-spacing: 0;
+  }
+
+  .checklist-download small {
+    max-width: 220px;
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
   }
 
   .checklist-button::before,
@@ -1258,6 +1322,7 @@ const schema = {
     .protocol-hero,
     .protocol-grid,
     .solution-summary,
+    .checklist-actions,
     .related-section {
       grid-template-columns: 1fr;
     }

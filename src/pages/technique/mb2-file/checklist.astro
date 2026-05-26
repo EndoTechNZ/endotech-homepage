@@ -1,9 +1,14 @@
 ---
 import ProductLayout from '../../../layouts/ProductLayout.astro';
-import { mb2ChecklistItems, mb2ChecklistSources } from '../../../data/mb2Checklist';
+import {
+  mb2ChecklistItems,
+  mb2ChecklistReferenceNote,
+  mb2ChecklistSources,
+} from '../../../data/mb2Checklist';
 
 const base = import.meta.env.BASE_URL;
 const firstItem = mb2ChecklistItems[0];
+const checklistPdfHref = `${base}downloads/EndoTech-NZ-MB2-15-Point-Protocol-Checklist.pdf`;
 
 const schema = {
   '@context': 'https://schema.org',
@@ -70,7 +75,16 @@ const schema = {
       </div>
 
       <section class="source-section" aria-labelledby="source-title">
-        <h2 id="source-title">Source base</h2>
+        <div class="source-header">
+          <div>
+            <h2 id="source-title">Source base</h2>
+            <p>{mb2ChecklistReferenceNote}</p>
+          </div>
+          <a class="source-download" href={checklistPdfHref} download>
+            Download PDF
+            <span>15-point MB2 checklist</span>
+          </a>
+        </div>
         <ul>
           {mb2ChecklistSources.map((source) => (
             <li>{source}</li>
@@ -325,6 +339,16 @@ const schema = {
     background: rgba(255, 255, 255, 0.66);
   }
 
+  .source-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+
   .source-section h2 {
     margin: 0 0 18px;
     color: #31575e;
@@ -332,6 +356,47 @@ const schema = {
     font-weight: 850;
     letter-spacing: 0.13em;
     text-transform: uppercase;
+  }
+
+  .source-header p {
+    max-width: 860px;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .source-download {
+    display: grid;
+    gap: 4px;
+    min-width: 230px;
+    padding: 14px 18px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    background: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .source-download:hover,
+  .source-download:focus-visible {
+    border-color: rgba(49, 87, 94, 0.42);
+    box-shadow: 0 12px 30px rgba(18, 39, 41, 0.08);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .source-download span {
+    color: var(--muted);
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
   }
 
   .source-section ul {
@@ -383,6 +448,15 @@ const schema = {
     .source-section {
       border-radius: 22px;
       padding: 24px;
+    }
+
+    .source-header {
+      grid-template-columns: 1fr;
+    }
+
+    .source-download {
+      width: 100%;
+      min-width: 0;
     }
   }
 </style>
