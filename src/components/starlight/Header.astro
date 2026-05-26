@@ -129,6 +129,25 @@ const shouldRenderSearch =
     const orderMenuButton = document.getElementById('docs-order-menu-button');
     const mobileMenu = document.getElementById('docs-mobile-menu');
     const mobileMenuButton = document.getElementById('docs-mobile-menu-button');
+    const docsHeader = document.querySelector('.endotech-docs-header');
+
+    function syncMobileMenuBounds() {
+      if (!mobileMenu || !docsHeader) return;
+      const headerBottom = Math.max(0, Math.ceil(docsHeader.getBoundingClientRect().bottom));
+      const viewportHeight = Math.floor(window.visualViewport?.height || window.innerHeight);
+      const openMenuRect = mobileMenu.classList.contains('is-open') ? mobileMenu.getBoundingClientRect() : null;
+      const panelTop = Math.max(0, Math.ceil(openMenuRect?.top || headerBottom));
+      const panelHeight = Math.max(160, viewportHeight - panelTop - 1);
+      document.documentElement.style.setProperty('--docs-mobile-menu-top', `${headerBottom}px`);
+      document.documentElement.style.setProperty('--docs-mobile-viewport-height', `${viewportHeight}px`);
+      document.documentElement.style.setProperty('--docs-mobile-menu-height', `${panelHeight}px`);
+    }
+
+    function syncOpenMobileMenuBounds() {
+      if (mobileMenuButton?.getAttribute('aria-expanded') === 'true') {
+        syncMobileMenuBounds();
+      }
+    }
 
     function setProductsMenu(open) {
       if (!productsMenu || !productsMenuButton) return;
@@ -150,10 +169,17 @@ const shouldRenderSearch =
 
     function setMobileMenu(open) {
       if (!mobileMenu || !mobileMenuButton) return;
+      if (open) {
+        syncMobileMenuBounds();
+        mobileMenu.scrollTop = 0;
+      }
       mobileMenu.classList.toggle('is-open', open);
       mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
       document.documentElement.classList.toggle('docs-mobile-menu-open', open);
       document.body.classList.toggle('docs-mobile-menu-open', open);
+      if (open) {
+        window.requestAnimationFrame(syncMobileMenuBounds);
+      }
     }
 
     productsMenuButton?.addEventListener('click', (event) => {
@@ -230,17 +256,20 @@ const shouldRenderSearch =
     });
 
     window.addEventListener('resize', () => {
+      syncOpenMobileMenuBounds();
       if (window.innerWidth > 1120) {
         setMobileMenu(false);
       }
     });
+    window.visualViewport?.addEventListener('resize', syncOpenMobileMenuBounds);
+    window.visualViewport?.addEventListener('scroll', syncOpenMobileMenuBounds);
   });
 </script>
 
 <style>
   :global(html.docs-mobile-menu-open),
   :global(body.docs-mobile-menu-open) {
-    overflow: hidden;
+    overscroll-behavior: contain;
   }
 
   @layer starlight.core {
@@ -491,16 +520,20 @@ const shouldRenderSearch =
 
     .docs-mobile-menu {
       display: none;
-      position: absolute;
-      top: 100%;
+      position: fixed;
+      top: var(--docs-mobile-menu-top, 72px);
       left: 0;
       right: 0;
       z-index: 80;
       border-top: 1px solid #e3e8ee;
       background: rgba(255, 255, 255, 0.98);
-      max-height: calc(100dvh - 72px);
+      height: calc(100svh - 72px);
+      height: calc(var(--docs-mobile-viewport-height, 100svh) - var(--docs-mobile-menu-top, 72px));
+      height: var(--docs-mobile-menu-height, calc(var(--docs-mobile-viewport-height, 100svh) - var(--docs-mobile-menu-top, 72px)));
+      max-height: none;
       overflow-y: auto;
       overscroll-behavior: contain;
+      touch-action: pan-y;
       -webkit-overflow-scrolling: touch;
       box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
     }
@@ -569,7 +602,10 @@ const shouldRenderSearch =
       }
 
       .docs-mobile-menu {
-        max-height: calc(100dvh - 70px);
+        top: var(--docs-mobile-menu-top, 70px);
+        height: calc(100svh - 70px);
+        height: calc(var(--docs-mobile-viewport-height, 100svh) - var(--docs-mobile-menu-top, 70px));
+        height: var(--docs-mobile-menu-height, calc(var(--docs-mobile-viewport-height, 100svh) - var(--docs-mobile-menu-top, 70px)));
       }
 
       .docs-brand-region,

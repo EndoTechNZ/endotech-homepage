@@ -199,7 +199,7 @@ const relatedLinks = [
               >
                 <span data-anatomy-button-label>Variation 1</span>
               </button>
-              <p>Click to show five variations</p>
+              <p>Tap to show five variations</p>
             </div>
           </div>
 
@@ -759,7 +759,7 @@ const relatedLinks = [
   .mb2-protocol-status,
   .mb2-protocol-sequence-head span {
     display: inline-flex;
-    min-height: 40px;
+    min-height: 44px;
     align-items: center;
     justify-content: center;
     gap: 10px;
@@ -1870,19 +1870,36 @@ const relatedLinks = [
     }
 
     .mb2-protocol-hero h1 {
-      font-size: clamp(2.7rem, 12vw, 4rem);
+      font-size: clamp(2.45rem, 10.8vw, 3.7rem);
+      line-height: 1.12;
     }
 
     .mb2-protocol-local-nav {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: stretch;
+      gap: 8px;
       border-radius: 20px;
       width: 100%;
+      padding: 8px;
     }
 
     .mb2-protocol-local-nav span,
     .mb2-protocol-local-nav a {
-      min-height: 32px;
       font-size: 11px;
+    }
+
+    .mb2-protocol-local-nav span {
+      grid-column: 1 / -1;
+      min-height: auto;
+      justify-content: flex-start;
+      padding: 6px 10px 2px;
+    }
+
+    .mb2-protocol-local-nav a {
+      min-height: 44px;
+      padding: 0 10px;
+      text-align: center;
     }
 
     .mb2-protocol-grid {

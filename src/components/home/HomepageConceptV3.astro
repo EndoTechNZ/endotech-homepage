@@ -379,6 +379,25 @@ const workflowSteps = [
   const orderMenuButton = document.getElementById('homepage-order-menu-button');
   const mobileMenu = document.getElementById('homepage-mobile-menu');
   const mobileMenuButton = document.getElementById('homepage-mobile-menu-button');
+  const homepageHeader = document.querySelector('.homepage-shell-header');
+
+  const syncMobileMenuBounds = () => {
+    if (!mobileMenu || !homepageHeader) return;
+    const headerBottom = Math.max(0, Math.ceil(homepageHeader.getBoundingClientRect().bottom));
+    const viewportHeight = Math.floor(window.visualViewport?.height || window.innerHeight);
+    const openMenuRect = mobileMenu.classList.contains('is-open') ? mobileMenu.getBoundingClientRect() : null;
+    const panelTop = Math.max(0, Math.ceil(openMenuRect?.top || headerBottom));
+    const panelHeight = Math.max(160, viewportHeight - panelTop - 1);
+    document.documentElement.style.setProperty('--homepage-mobile-menu-top', `${headerBottom}px`);
+    document.documentElement.style.setProperty('--homepage-mobile-viewport-height', `${viewportHeight}px`);
+    document.documentElement.style.setProperty('--homepage-mobile-menu-height', `${panelHeight}px`);
+  };
+
+  const syncOpenMobileMenuBounds = () => {
+    if (mobileMenuButton?.getAttribute('aria-expanded') === 'true') {
+      syncMobileMenuBounds();
+    }
+  };
 
   const setProductsMenu = (open) => {
     if (!productsMenu || !productsMenuButton) return;
@@ -388,8 +407,17 @@ const workflowSteps = [
 
   const setMobileMenu = (open) => {
     if (!mobileMenu || !mobileMenuButton) return;
+    if (open) {
+      syncMobileMenuBounds();
+      mobileMenu.scrollTop = 0;
+    }
     mobileMenu.classList.toggle('is-open', open);
     mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.documentElement.classList.toggle('homepage-mobile-menu-open', open);
+    document.body.classList.toggle('homepage-mobile-menu-open', open);
+    if (open) {
+      window.requestAnimationFrame(syncMobileMenuBounds);
+    }
   };
 
   const setOrderMenu = (open) => {
@@ -453,6 +481,15 @@ const workflowSteps = [
     }
   });
 
+  window.addEventListener('resize', () => {
+    syncOpenMobileMenuBounds();
+    if (window.innerWidth > 1120) {
+      setMobileMenu(false);
+    }
+  });
+  window.visualViewport?.addEventListener('resize', syncOpenMobileMenuBounds);
+  window.visualViewport?.addEventListener('scroll', syncOpenMobileMenuBounds);
+
   const homepageHeroTitle = document.querySelector('[data-homepage-hero-title]');
   const motionPreviewEnabled = new URLSearchParams(window.location.search).get('motion') === 'preview';
 
@@ -515,6 +552,11 @@ const workflowSteps = [
   :global(body.landing-page) {
     background: #ffffff;
     color: #181c20;
+  }
+
+  :global(html.homepage-mobile-menu-open),
+  :global(body.homepage-mobile-menu-open) {
+    overscroll-behavior: contain;
   }
 
   .homepage-shell-header {
@@ -756,14 +798,29 @@ const workflowSteps = [
 
   .homepage-mobile-menu {
     display: none;
+    position: fixed;
+    top: var(--homepage-mobile-menu-top, 72px);
+    left: 0;
+    right: 0;
+    z-index: 80;
     border-top: 1px solid #e3e8ee;
     background: rgba(255, 255, 255, 0.98);
+    height: calc(100svh - 72px);
+    height: calc(var(--homepage-mobile-viewport-height, 100svh) - var(--homepage-mobile-menu-top, 72px));
+    height: var(--homepage-mobile-menu-height, calc(var(--homepage-mobile-viewport-height, 100svh) - var(--homepage-mobile-menu-top, 72px)));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
   }
 
   .homepage-mobile-menu-shell {
     display: grid;
     gap: 8px;
-    padding: 14px 18px 18px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 18px calc(18px + env(safe-area-inset-bottom, 0px));
   }
 
   .homepage-mobile-menu-shell a {
@@ -1898,6 +1955,13 @@ const workflowSteps = [
 
     .homepage-shell-header-inner {
       min-height: 70px;
+    }
+
+    .homepage-mobile-menu {
+      top: var(--homepage-mobile-menu-top, 70px);
+      height: calc(100svh - 70px);
+      height: calc(var(--homepage-mobile-viewport-height, 100svh) - var(--homepage-mobile-menu-top, 70px));
+      height: var(--homepage-mobile-menu-height, calc(var(--homepage-mobile-viewport-height, 100svh) - var(--homepage-mobile-menu-top, 70px)));
     }
 
     .homepage-brand small {
