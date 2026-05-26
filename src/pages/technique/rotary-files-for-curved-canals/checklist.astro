@@ -1,0 +1,387 @@
+---
+import ProductLayout from '../../../layouts/ProductLayout.astro';
+import { curvedCanalChecklistItems, curvedCanalChecklistSources } from '../../../data/curvedCanalChecklist';
+
+const base = import.meta.env.BASE_URL;
+const firstItem = curvedCanalChecklistItems[0];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: 'Curved Canal Checklist',
+  description:
+    'An interactive 13-point checklist for diagnosing, negotiating, shaping, and reassessing curved root canals.',
+  about: {
+    '@type': 'MedicalCondition',
+    name: 'Curved root canals',
+  },
+};
+---
+
+<ProductLayout
+  title="Curved Canal Checklist | EndoTech NZ"
+  description="An interactive 13-point curved canal checklist with hover guidance for diagnosis, glide path control, shaping, and referral decisions."
+  schema={schema}
+  accent="teal"
+>
+  <section class="checklist-page">
+    <div class="checklist-shell">
+      <a class="back-link" href={`${base}technique/rotary-files-for-curved-canals/#checklist`}>Back to curved canals</a>
+
+      <div class="checklist-hero">
+        <p class="eyebrow">13-point curved canal checklist</p>
+        <h1>Use the checklist when the canal stops behaving like a straight line.</h1>
+        <p>
+          Hover over a point on the left to bring the clinical guidance into the right-hand panel.
+          The copy is written for controlled diagnosis, glide path confirmation, shaping, and stop decisions.
+        </p>
+      </div>
+
+      <div class="interactive-checklist">
+        <aside class="point-rail" aria-label="Curved canal checklist points">
+          {curvedCanalChecklistItems.map((item, index) => (
+            <button
+              class:list={['point-trigger', { 'is-active': index === 0 }]}
+              type="button"
+              data-number={item.number}
+              data-stage={item.stage}
+              data-title={item.title}
+              data-summary={item.summary}
+              data-detail={item.detail}
+            >
+              <span>{item.number}</span>
+              <strong>{item.title}</strong>
+            </button>
+          ))}
+        </aside>
+
+        <div class="detail-column">
+          <article class="detail-panel" aria-live="polite">
+            <span id="detail-stage">{firstItem.stage}</span>
+            <div class="detail-title-row">
+              <strong id="detail-number">{firstItem.number}</strong>
+              <h2 id="detail-title">{firstItem.title}</h2>
+            </div>
+            <p class="detail-summary" id="detail-summary">{firstItem.summary}</p>
+            <p id="detail-copy">{firstItem.detail}</p>
+          </article>
+        </div>
+      </div>
+
+      <section class="source-section" aria-labelledby="source-title">
+        <h2 id="source-title">Source base</h2>
+        <ul>
+          {curvedCanalChecklistSources.map((source) => (
+            <li>{source}</li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const triggers = Array.from(document.querySelectorAll('.point-trigger'));
+      const stage = document.getElementById('detail-stage');
+      const number = document.getElementById('detail-number');
+      const title = document.getElementById('detail-title');
+      const summary = document.getElementById('detail-summary');
+      const copy = document.getElementById('detail-copy');
+
+      function setActive(trigger) {
+        if (!trigger || !stage || !number || !title || !summary || !copy) return;
+        triggers.forEach((item) => item.classList.toggle('is-active', item === trigger));
+        stage.textContent = trigger.dataset.stage || '';
+        number.textContent = trigger.dataset.number || '';
+        title.textContent = trigger.dataset.title || '';
+        summary.textContent = trigger.dataset.summary || '';
+        copy.textContent = trigger.dataset.detail || '';
+      }
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener('mouseenter', () => setActive(trigger));
+        trigger.addEventListener('focus', () => setActive(trigger));
+        trigger.addEventListener('click', () => setActive(trigger));
+      });
+    });
+  </script>
+</ProductLayout>
+
+<style>
+  :global(.product-site-main) {
+    background: #f4f7f6;
+  }
+
+  .checklist-page {
+    --ink: #10272a;
+    --muted: #4b6267;
+    --soft: #eef3f1;
+    --line: rgba(16, 39, 42, 0.12);
+    --line-strong: rgba(16, 39, 42, 0.22);
+    --mint: #dfeee8;
+    --dark: #132c2f;
+    min-height: 100vh;
+    color: var(--ink);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(244, 247, 246, 0.95) 45%, #f4f7f6 100%);
+    font-family: Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .checklist-shell {
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 58px 0 84px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: #31575e;
+    background: rgba(255, 255, 255, 0.66);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .checklist-hero {
+    max-width: 900px;
+    padding: 54px 0 46px;
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .checklist-hero h1 {
+    max-width: 860px;
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(3rem, 6.2vw, 5.45rem);
+    line-height: 1;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  .checklist-hero p {
+    max-width: 720px;
+    margin: 26px 0 0;
+    color: var(--muted);
+    font-size: 1.08rem;
+    line-height: 1.72;
+  }
+
+  .interactive-checklist {
+    display: grid;
+    grid-template-columns: minmax(280px, 370px) minmax(0, 1fr);
+    gap: 34px;
+    align-items: start;
+  }
+
+  .point-rail {
+    display: grid;
+    gap: 9px;
+    position: sticky;
+    top: 96px;
+  }
+
+  .point-trigger {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    align-items: center;
+    width: 100%;
+    min-height: 64px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.76);
+    color: var(--ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+  }
+
+  .point-trigger:hover,
+  .point-trigger:focus-visible,
+  .point-trigger.is-active {
+    border-color: var(--line-strong);
+    background: var(--mint);
+    transform: translateX(3px);
+    outline: none;
+  }
+
+  .point-trigger span {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 850;
+  }
+
+  .point-trigger strong {
+    color: var(--ink);
+    font-size: 0.94rem;
+    font-weight: 780;
+    line-height: 1.28;
+    letter-spacing: 0;
+  }
+
+  .detail-column {
+    min-height: 680px;
+  }
+
+  .detail-panel {
+    position: sticky;
+    top: 96px;
+    min-height: 430px;
+    padding: clamp(32px, 4.5vw, 58px);
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-radius: 30px;
+    background:
+      radial-gradient(circle at 88% 18%, rgba(76, 174, 115, 0.12), rgba(255, 255, 255, 0) 34%),
+      #ffffff;
+    box-shadow: 0 24px 70px rgba(18, 39, 41, 0.1);
+  }
+
+  .detail-panel > span {
+    display: block;
+    margin-bottom: 22px;
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .detail-title-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .detail-title-row strong {
+    display: inline-grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    font-size: 1rem;
+  }
+
+  .detail-title-row h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(2rem, 4vw, 3.65rem);
+    line-height: 1.04;
+    font-weight: 740;
+    letter-spacing: 0;
+  }
+
+  .detail-summary {
+    margin: 30px 0 0;
+    padding: 18px 20px;
+    border-left: 3px solid #4cae73;
+    border-radius: 0 16px 16px 0;
+    background: #eef6f2;
+    color: #31575e;
+    font-weight: 720;
+    line-height: 1.58;
+  }
+
+  #detail-copy {
+    margin: 28px 0 0;
+    max-width: 760px;
+    color: var(--muted);
+    font-size: 1.06rem;
+    line-height: 1.78;
+  }
+
+  .source-section {
+    margin-top: 64px;
+    padding: 30px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.66);
+  }
+
+  .source-section h2 {
+    margin: 0 0 18px;
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .source-section ul {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .source-section li + li {
+    margin-top: 6px;
+  }
+
+  @media (max-width: 980px) {
+    .interactive-checklist {
+      grid-template-columns: 1fr;
+    }
+
+    .point-rail,
+    .detail-panel {
+      position: static;
+    }
+
+    .detail-column {
+      min-height: auto;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .checklist-shell {
+      width: min(100% - 28px, 680px);
+      padding: 42px 0 62px;
+    }
+
+    .checklist-hero {
+      padding: 38px 0 34px;
+    }
+
+    .checklist-hero h1 {
+      font-size: clamp(2.5rem, 12vw, 4rem);
+    }
+
+    .detail-title-row {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .detail-panel,
+    .source-section {
+      border-radius: 22px;
+      padding: 24px;
+    }
+  }
+</style>
