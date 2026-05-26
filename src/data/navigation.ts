@@ -22,6 +22,11 @@ export const getTechnologyMenu = (base: string): NavItem[] => [
   { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
 ];
 
+export const getOrderMenu = (base: string): NavItem[] => [
+  { label: 'Request information', href: `${base}about/contact/` },
+  { label: 'Order products', href: `${base}order/` },
+];
+
 export const getPrimaryNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
   { label: 'Products', href: `${base}products/overview/` },

@@ -2,7 +2,7 @@
 import Layout from './Layout.astro';
 import logoIcon from '../assets/endotech-logo-2.png';
 import { siteConfig } from '../config/site';
-import { getFooterSections, getFooterUtilityLinks, getPrimaryNavItems, getProductMenu, getProductMobileNavItems, getTechnologyMenu } from '../data/navigation';
+import { getFooterSections, getFooterUtilityLinks, getOrderMenu, getPrimaryNavItems, getProductMenu, getProductMobileNavItems, getTechnologyMenu } from '../data/navigation';
 
 interface Props {
   title: string;
@@ -17,6 +17,7 @@ const base = import.meta.env.BASE_URL;
 const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
 const technologyMenu = getTechnologyMenu(base);
+const orderMenu = getOrderMenu(base);
 const mobileNavItems = getProductMobileNavItems(base, siteConfig.shopifyAccountUrl);
 const footerSections = getFooterSections(base);
 const footerUtilityLinks = getFooterUtilityLinks(base);
@@ -77,7 +78,23 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
       </nav>
 
       <div class="product-header-actions">
-        <a class="product-header-action" href={`${base}order/`}>Order</a>
+        <div class="products-menu order-menu">
+          <button id="order-menu-button" class="product-header-action" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="order-menu-panel">
+            Order
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </button>
+          <div class="products-menu-bridge"></div>
+          <div id="order-menu-panel" class="products-menu-panel order-menu-panel">
+            <div class="products-menu-shell">
+              <span>Order options</span>
+              {orderMenu.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))}
+            </div>
+          </div>
+        </div>
         <a class="product-header-action account-header-action" href={siteConfig.shopifyAccountUrl}>Account / Orders</a>
         <a class="product-header-action" href={`${base}about/contact/`}>Contact</a>
         <button class="product-menu-toggle" id="product-mobile-menu-button" type="button" aria-expanded="false" aria-controls="product-mobile-menu">
@@ -105,6 +122,8 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
       const productsMenuButton = document.getElementById('products-menu-button');
       const technologyMenu = document.querySelector('.technology-menu');
       const technologyMenuButton = document.getElementById('technology-menu-button');
+      const orderMenu = document.querySelector('.order-menu');
+      const orderMenuButton = document.getElementById('order-menu-button');
       const mobileMenu = document.getElementById('product-mobile-menu');
       const mobileMenuButton = document.getElementById('product-mobile-menu-button');
 
@@ -118,6 +137,12 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         if (!technologyMenu || !technologyMenuButton) return;
         technologyMenu.classList.toggle('is-open', open);
         technologyMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      function setOrderMenu(open) {
+        if (!orderMenu || !orderMenuButton) return;
+        orderMenu.classList.toggle('is-open', open);
+        orderMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
       }
 
       function setMobileMenu(open) {
@@ -134,6 +159,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
         setProductsMenu(!isOpen);
         setTechnologyMenu(false);
+        setOrderMenu(false);
       });
 
       technologyMenuButton?.addEventListener('click', (event) => {
@@ -142,6 +168,16 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         const isOpen = technologyMenuButton.getAttribute('aria-expanded') === 'true';
         setTechnologyMenu(!isOpen);
         setProductsMenu(false);
+        setOrderMenu(false);
+      });
+
+      orderMenuButton?.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const isOpen = orderMenuButton.getAttribute('aria-expanded') === 'true';
+        setOrderMenu(!isOpen);
+        setProductsMenu(false);
+        setTechnologyMenu(false);
       });
 
       mobileMenuButton?.addEventListener('click', () => {
@@ -157,6 +193,10 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         link.addEventListener('click', () => setTechnologyMenu(false));
       });
 
+      orderMenu?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setOrderMenu(false));
+      });
+
       mobileMenu?.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', () => setMobileMenu(false));
       });
@@ -169,6 +209,9 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         if (technologyMenu && !technologyMenu.contains(event.target)) {
           setTechnologyMenu(false);
         }
+        if (orderMenu && !orderMenu.contains(event.target)) {
+          setOrderMenu(false);
+        }
         if (mobileMenu && mobileMenuButton && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
           setMobileMenu(false);
         }
@@ -178,6 +221,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
         if (event.key === 'Escape') {
           setProductsMenu(false);
           setTechnologyMenu(false);
+          setOrderMenu(false);
           setMobileMenu(false);
         }
       });
@@ -341,19 +385,20 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
     top: 100%;
     left: 50%;
     width: 280px;
-    height: 16px;
+    height: 22px;
     transform: translateX(-50%);
   }
 
   .products-menu-panel {
     position: absolute;
-    top: calc(100% + 14px);
+    top: 100%;
     left: 50%;
     z-index: 90;
     width: 300px;
+    padding-top: 10px;
     opacity: 0;
     pointer-events: none;
-    transform: translate(-50%, 8px);
+    transform: translate(-50%, 4px);
     transition:
       opacity 180ms ease,
       transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -437,6 +482,17 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
       border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
       transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .order-menu button.product-header-action {
+    gap: 6px;
+    border: 1px solid #c0c7d2;
+    padding: 0 14px 0 16px;
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .order-menu-panel {
+    width: 230px;
   }
 
   .product-header-action:hover,
