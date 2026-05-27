@@ -1,0 +1,1278 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import etProduct from '../../assets/et-transformx.png';
+import etRedFile from '../../assets/et-transformx-red-file.png';
+import avatarTipComparison from '../../assets/avatar-tip-comparison.png';
+
+const base = import.meta.env.BASE_URL;
+
+const protocolNav = [
+  { label: 'Technique', href: '#technique' },
+  { label: 'MB2 and Curves', href: '#applications' },
+  { label: 'Technology', href: '#technology' },
+  { label: 'Sources', href: '#sources' },
+];
+
+const sequenceSteps = [
+  {
+    number: '01',
+    label: 'Scout',
+    title: 'Find the line first',
+    text: 'A small pre-curved hand file reads the canal and confirms forward direction before rotary pressure is introduced.',
+  },
+  {
+    number: '02',
+    label: 'Glide',
+    title: 'Make it repeatable',
+    text: 'Acrobat or a confirmed glide path turns the first discovery into a route that can be re-entered without forcing.',
+  },
+  {
+    number: '03',
+    label: 'Shape',
+    title: 'Use ET on a known path',
+    text: 'TransformX ET should shape a pathway that already exists, not negotiate hidden anatomy under load.',
+  },
+  {
+    number: '04',
+    label: 'Reassess',
+    title: 'Stop if feedback changes',
+    text: 'Withdraw, clean flutes, irrigate, and rebuild the path if the file stops following smoothly.',
+  },
+];
+
+const featureCards = [
+  {
+    label: 'Transform Technology',
+    title: 'Adaptability through curvature',
+    text: 'Designed to support a more flexible, controlled response where canal curvature increases file load.',
+  },
+  {
+    label: 'Avatar Tip',
+    title: 'Guidance at the apical third',
+    text: 'A rounded guidance-focused tip helps the file follow the pathway that has already been built.',
+  },
+  {
+    label: 'ET sequence logic',
+    title: 'Familiar .04 / .06 habits',
+    text: 'Keeps an ET-style workflow recognizable while connecting it to a stricter glide-path discipline.',
+  },
+  {
+    label: 'Clinical handoff',
+    title: 'From scouting to shaping',
+    text: 'Separates discovery from enlargement so the shaping file is not used as a search instrument.',
+  },
+];
+
+const benefits = [
+  'Cleaner handoff from glide path to shaping',
+  'More deliberate control in MB2 access',
+  'Less abrupt outer-wall engagement in curves',
+  'Better apical guidance when anatomy narrows',
+  'A repeatable stop-and-reassess rule',
+  'A familiar sequence with a clearer safety logic',
+];
+
+const applicationCards = [
+  {
+    label: 'MB2 canals',
+    title: 'A hidden path needs a file that can stay calm.',
+    text:
+      'MB2 canals are narrow, curved, and easy to overload. Once the path is confirmed, Transform Technology helps the file respond with greater adaptability instead of locking into the wall, reducing unnecessary torsional stress and helping protect against fatigue and separation.',
+    href: `${base}technique/mb2-file/`,
+    cta: 'Review MB2 protocol',
+    kind: 'mb2',
+  },
+  {
+    label: 'Curved canals',
+    title: 'A curved path needs repeatability before load.',
+    text:
+      'In curved canals, the advantage is load management. The file follows a glide path that already returns to length, then shapes with short, clean, reassessed engagement.',
+    href: `${base}technique/rotary-files-for-curved-canals/`,
+    cta: 'Review curved-canal protocol',
+    kind: 'curve',
+  },
+];
+
+const sourceLinks = [
+  { label: 'MB2 protocol education block', href: `${base}technique/mb2-file/` },
+  { label: 'Curved-canal education block', href: `${base}technique/rotary-files-for-curved-canals/` },
+  { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Avatar Tip Technology', href: `${base}technology/avatar-tip/` },
+  { label: 'TransformX ET product page', href: `${base}products/et-transformx/` },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: 'TransformX ET Technique Guide',
+  description:
+    'Clinical education guide explaining how TransformX ET, Transform Technology, and Avatar Tip support MB2 and curved canal shaping after a reproducible glide path.',
+  about: {
+    '@type': 'MedicalProcedure',
+    name: 'Root canal shaping with TransformX ET',
+  },
+};
+---
+
+<ProductLayout
+  title="TransformX ET Technique | EndoTech"
+  description="Protocol-style guide showing how TransformX ET uses Transform Technology and Avatar Tip guidance after a reproducible glide path in MB2 and curved canals."
+  image={etProduct.src}
+  schema={schema}
+  accent="teal"
+>
+  <div class="et-education-page">
+    <section class="et-hero" aria-labelledby="et-hero-title">
+      <div>
+        <p class="et-kicker">Clinical protocol / TransformX ET</p>
+        <h1 id="et-hero-title">Shape the path you have already proven.</h1>
+        <p class="et-hero-copy">
+          TransformX ET is not a shortcut around canal negotiation. Its advantage is what happens
+          after the path is known: Transform Technology supports a calmer file response through
+          curvature, while Avatar Tip helps the file follow the prepared route.
+        </p>
+      </div>
+
+      <nav class="et-local-nav" aria-label="TransformX ET page sections">
+        <span>On this guide</span>
+        {protocolNav.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </nav>
+    </section>
+
+    <section id="technique" class="et-product-strip" aria-label="TransformX ET product context">
+      <div class="et-product-copy">
+        <p class="et-kicker">TransformX ET</p>
+        <h2>Familiar ET-style shaping, clearer control logic.</h2>
+        <p>
+          The file is introduced after the clinician has evidence that the canal path is real,
+          reproducible, and safe to shape. That is where Avatar Tip and Transform Technology become
+          clinically useful rather than merely technical features.
+        </p>
+      </div>
+
+      <figure class="et-product-visual">
+        <img src={etProduct.src} alt="TransformX ET rotary file sequence" loading="lazy" />
+      </figure>
+    </section>
+
+    <section id="applications" class="et-applications-section" aria-labelledby="et-applications-title">
+      <div class="et-section-heading">
+        <p class="et-kicker">MB2 and curved-canal use cases</p>
+        <h2 id="et-applications-title">Two hard anatomies. One shaping principle.</h2>
+      </div>
+
+      <div class="et-application-grid">
+        {applicationCards.map((card) => (
+          <article>
+            <div class={`et-mini-diagram et-mini-diagram--${card.kind}`} aria-hidden="true">
+              {card.kind === 'mb2' && (
+                <svg viewBox="0 0 220 160">
+                  <circle cx="104" cy="82" r="56" />
+                  <path d="M76 45 C84 70 94 91 105 119" />
+                  <circle cx="76" cy="45" r="7" />
+                  <circle class="danger" cx="92" cy="78" r="7" />
+                  <circle cx="105" cy="119" r="7" />
+                  <circle cx="145" cy="70" r="7" />
+                  <path class="accent" d="M38 127 C60 139 96 141 129 130" />
+                </svg>
+              )}
+              {card.kind === 'curve' && (
+                <svg viewBox="0 0 220 160">
+                  <path d="M91 14 C67 51 58 96 77 126 C87 141 103 151 117 154 C143 135 160 103 159 70 C158 45 147 26 132 14 C121 21 103 21 91 14 Z" />
+                  <path class="accent" d="M112 31 C110 59 89 80 91 107 C93 126 104 136 121 143" />
+                  <path class="danger" d="M91 97 C96 121 107 136 121 143" />
+                </svg>
+              )}
+            </div>
+            <span>{card.label}</span>
+            <h3>{card.title}</h3>
+            <p>{card.text}</p>
+            <a href={card.href}>{card.cta}</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="technology" class="et-technology-section" aria-labelledby="et-technology-title">
+      <div class="et-section-heading">
+        <p class="et-kicker">TransformX solution</p>
+        <h2 id="et-technology-title">Technology only helps when the clinical sequence is disciplined.</h2>
+        <p>
+          The point is not to make the file more aggressive. The point is to make the shaping phase
+          more controlled once the path has already been established.
+        </p>
+      </div>
+
+      <div class="et-feature-grid" aria-label="TransformX ET key features">
+        {featureCards.map((feature) => (
+          <article>
+            <span>{feature.label}</span>
+            <h3>{feature.title}</h3>
+            <p>{feature.text}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="et-technology-visuals">
+        <figure class="et-file-feature">
+          <img src={etRedFile.src} alt="TransformX ET red sequence file showing the apical working portion" loading="lazy" />
+          <figcaption>
+            <span>Transform Technology</span>
+            <strong>Support a calmer response where curvature makes stiffness more consequential.</strong>
+          </figcaption>
+        </figure>
+
+        <figure class="et-avatar-feature">
+          <img src={avatarTipComparison.src} alt="Avatar Tip geometry comparison" loading="lazy" />
+          <figcaption>
+            <span>Avatar Tip</span>
+            <strong>Guidance-focused apical geometry for the part of the canal least tolerant of error.</strong>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="et-benefits-section" aria-labelledby="et-benefits-title">
+      <div>
+        <p class="et-kicker">Clinical benefits</p>
+        <h2 id="et-benefits-title">Transform Technology helps the file stay controlled under load.</h2>
+      </div>
+
+      <div class="et-benefit-grid">
+        {benefits.map((benefit) => (
+          <div>{benefit}</div>
+        ))}
+      </div>
+    </section>
+
+    <section id="sources" class="et-source-section" aria-labelledby="et-source-title">
+      <div>
+        <p class="et-kicker">Source base</p>
+        <h2 id="et-source-title">Built from the MB2 and curved-canal education blocks.</h2>
+      </div>
+      <div class="et-source-links">
+        {sourceLinks.map((link) => (
+          <a href={link.href}>{link.label}</a>
+        ))}
+      </div>
+    </section>
+  </div>
+</ProductLayout>
+
+<style>
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(.product-site-main) {
+    background: #f4f7f6;
+  }
+
+  .et-education-page {
+    --ink: #10272a;
+    --muted: #4b6267;
+    --subtle: #6f8387;
+    --canvas: #f4f7f6;
+    --surface: #ffffff;
+    --soft: #eef3f1;
+    --mint: #dfeee8;
+    --line: rgba(16, 39, 42, 0.11);
+    --line-strong: rgba(16, 39, 42, 0.2);
+    --accent: #4cae73;
+    --danger: #c4554d;
+    --dark: #132c2f;
+    color: var(--ink);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(244, 247, 246, 0.98) 44%, #f4f7f6 100%);
+    font-family: Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .et-hero,
+  .et-protocol-grid,
+  .et-product-strip,
+  .et-problem-section,
+  .et-applications-section,
+  .et-technology-section,
+  .et-benefits-section,
+  .et-workflow-section,
+  .et-source-section {
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .et-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 800px) auto;
+    gap: 32px;
+    align-items: start;
+    padding: 74px 0 58px;
+  }
+
+  .et-kicker,
+  .et-section-kicker {
+    display: block;
+    margin: 0 0 18px;
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .et-hero h1,
+  .et-map-card h2,
+  .et-sequence-card h2,
+  .et-product-copy h2,
+  .et-section-heading h2,
+  .et-workflow-panel h2,
+  .et-source-section h2 {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  .et-hero h1 {
+    max-width: 900px;
+    font-size: clamp(3.15rem, 7vw, 6rem);
+    line-height: 0.98;
+  }
+
+  .et-hero-copy {
+    max-width: 790px;
+    margin: 26px 0 0;
+    color: var(--muted);
+    font-size: clamp(1.08rem, 1.6vw, 1.26rem);
+    line-height: 1.7;
+  }
+
+  .et-local-nav {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 3px;
+  }
+
+  .et-local-nav span,
+  .et-local-nav a {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    color: #30484d;
+    font-size: 0.76rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .et-local-nav span {
+    color: var(--subtle);
+  }
+
+  .et-local-nav a {
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 0 13px;
+    text-decoration: none;
+  }
+
+  .et-local-nav a:hover,
+  .et-local-nav a:focus-visible {
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.74);
+    outline: none;
+  }
+
+  .et-protocol-grid {
+    display: grid;
+    grid-template-columns: minmax(440px, 1fr) minmax(520px, 0.9fr);
+    gap: 36px;
+    align-items: start;
+  }
+
+  .et-map-card,
+  .et-sequence-card,
+  .et-product-strip,
+  .et-problem-table,
+  .et-application-grid article,
+  .et-feature-grid article,
+  .et-file-feature,
+  .et-avatar-feature,
+  .et-workflow-panel,
+  .et-source-section {
+    border: 1px solid var(--line);
+    box-shadow: 0 22px 55px rgba(18, 39, 41, 0.07);
+  }
+
+  .et-map-card {
+    border-radius: 30px;
+    padding: 38px;
+    background: var(--mint);
+  }
+
+  .et-sequence-card {
+    border-radius: 30px;
+    padding: 42px;
+    background: var(--surface);
+  }
+
+  .et-card-heading,
+  .et-sequence-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 22px;
+    margin-bottom: 28px;
+  }
+
+  .et-map-card h2,
+  .et-sequence-card h2 {
+    font-size: clamp(1.65rem, 2.4vw, 2.3rem);
+    line-height: 1.12;
+  }
+
+  .et-status-pill,
+  .et-sequence-head > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 42px;
+    white-space: nowrap;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.74);
+    padding: 0 15px;
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 850;
+  }
+
+  .et-status-pill i {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 5px rgba(76, 174, 115, 0.12);
+  }
+
+  .et-dual-map {
+    overflow: hidden;
+    margin: 0;
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 45% 48%, rgba(91, 164, 158, 0.18), rgba(19, 44, 47, 0) 34%),
+      var(--dark);
+  }
+
+  .et-dual-map svg {
+    display: block;
+    width: 100%;
+    min-height: 390px;
+  }
+
+  .et-dual-map figcaption {
+    padding: 0 30px 28px;
+    color: rgba(237, 249, 242, 0.78);
+    font-size: 0.96rem;
+    line-height: 1.55;
+  }
+
+  .et-mobile-map-panels {
+    display: none;
+  }
+
+  .et-svg-eyebrow,
+  .et-svg-title,
+  .et-svg-note,
+  .et-svg-risk,
+  .et-node text {
+    fill: rgba(239, 248, 245, 0.84);
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .et-svg-eyebrow {
+    font-size: 10px;
+  }
+
+  .et-svg-title {
+    font-size: 17px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .et-svg-note {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .et-svg-risk {
+    fill: rgba(239, 206, 201, 0.9);
+    font-size: 10px;
+  }
+
+  .et-node text {
+    font-size: 10px;
+  }
+
+  .et-mb2-orientation,
+  .et-root-outline {
+    fill: rgba(223, 238, 232, 0.035);
+    stroke: rgba(223, 238, 232, 0.3);
+    stroke-width: 1.4;
+  }
+
+  .et-mb2-orientation {
+    stroke-dasharray: 2 6;
+  }
+
+  .et-mb2-line,
+  .et-annotation,
+  .et-access-outline,
+  .et-callout {
+    fill: none;
+    stroke: rgba(223, 238, 232, 0.36);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.6;
+  }
+
+  .et-node circle,
+  .et-orifice-dot {
+    fill: #edf9f2;
+  }
+
+  .et-node-muted circle {
+    fill: #90a5a2;
+  }
+
+  .et-node-danger circle,
+  .et-apex-dot {
+    fill: var(--danger);
+  }
+
+  .et-path-built {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-dasharray: 6 8;
+    stroke-linecap: round;
+    stroke-width: 2.4;
+  }
+
+  .et-path-shaping {
+    fill: none;
+    stroke: #edf9f2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 5.4;
+    filter: url("#etSoftGlow");
+  }
+
+  .et-danger-dots {
+    fill: none;
+    stroke: var(--danger);
+    stroke-dasharray: 1 9;
+    stroke-linecap: round;
+    stroke-width: 3.6;
+  }
+
+  .et-sequence-list {
+    display: grid;
+    gap: 16px;
+  }
+
+  .et-sequence-list article {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 18px;
+    min-height: 112px;
+    align-items: start;
+    border-radius: 18px;
+    background: #f2f5f4;
+    padding: 25px;
+  }
+
+  .et-sequence-list article > span {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.48);
+    font-size: 0.85rem;
+    font-weight: 850;
+  }
+
+  .et-sequence-list small,
+  .et-spec-row span,
+  .et-application-grid article > span,
+  .et-feature-grid span,
+  .et-file-feature span,
+  .et-avatar-feature span {
+    color: #31575e;
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .et-sequence-list h3,
+  .et-application-grid h3,
+  .et-feature-grid h3 {
+    margin: 7px 0 9px;
+    color: var(--ink);
+    font-size: 1.2rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  .et-sequence-list p,
+  .et-product-copy p,
+  .et-section-heading p,
+  .et-application-grid p,
+  .et-feature-grid p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .et-spec-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 38px;
+    border-left: 1px solid var(--line);
+  }
+
+  .et-spec-row div {
+    padding-left: 26px;
+    border-right: 1px solid var(--line);
+  }
+
+  .et-spec-row strong {
+    display: block;
+    margin-top: 14px;
+    color: var(--ink);
+    font-size: clamp(2.3rem, 4vw, 3.6rem);
+    font-weight: 380;
+    line-height: 1;
+  }
+
+  .et-product-strip {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1fr);
+    gap: 32px;
+    align-items: center;
+    margin-top: 36px;
+    border-radius: 30px;
+    background: #ffffff;
+    padding: 40px;
+  }
+
+  .et-product-copy h2 {
+    max-width: 620px;
+    font-size: clamp(2.1rem, 4vw, 3.5rem);
+    line-height: 1.05;
+  }
+
+  .et-product-copy p {
+    max-width: 650px;
+    margin-top: 18px;
+    font-size: 1.04rem;
+  }
+
+  .et-product-visual {
+    margin: 0;
+    border-radius: 22px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(238, 243, 241, 0.82)),
+      #ffffff;
+    padding: 24px;
+  }
+
+  .et-product-visual img {
+    display: block;
+    width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    filter: drop-shadow(0 28px 40px rgba(18, 39, 41, 0.12));
+  }
+
+  .et-problem-section,
+  .et-applications-section,
+  .et-technology-section,
+  .et-benefits-section,
+  .et-workflow-section,
+  .et-source-section {
+    margin-top: 78px;
+    scroll-margin-top: 112px;
+  }
+
+  .et-section-heading {
+    max-width: 840px;
+    margin-bottom: 32px;
+  }
+
+  .et-section-heading h2,
+  .et-benefits-section h2,
+  .et-workflow-panel h2,
+  .et-source-section h2 {
+    font-size: clamp(2.1rem, 4vw, 3.55rem);
+    line-height: 1.05;
+  }
+
+  .et-section-heading p {
+    max-width: 760px;
+    margin-top: 18px;
+    font-size: 1.04rem;
+  }
+
+  .et-problem-table {
+    overflow: hidden;
+    border-radius: 24px;
+    background: #ffffff;
+  }
+
+  .et-table-row {
+    display: grid;
+    grid-template-columns: 0.82fr 1.09fr 1.09fr;
+    gap: 24px;
+    align-items: start;
+    padding: 24px 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .et-table-row:first-child {
+    border-top: 0;
+  }
+
+  .et-table-head {
+    background: #edf3f1;
+    color: #31575e;
+    font-size: 0.75rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .et-table-row strong {
+    color: var(--ink);
+    font-size: 1.02rem;
+  }
+
+  .et-table-row span {
+    color: var(--muted);
+    line-height: 1.58;
+  }
+
+  .et-application-grid,
+  .et-feature-grid {
+    display: grid;
+    gap: 18px;
+  }
+
+  .et-application-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .et-feature-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .et-application-grid article,
+  .et-feature-grid article {
+    border-radius: 24px;
+    background: #ffffff;
+    padding: 28px;
+  }
+
+  .et-mini-diagram {
+    display: grid;
+    place-items: center;
+    min-height: 180px;
+    margin-bottom: 24px;
+    border-radius: 20px;
+    background: #132c2f;
+  }
+
+  .et-mini-diagram svg {
+    width: min(260px, 88%);
+    height: 176px;
+  }
+
+  .et-mini-diagram circle,
+  .et-mini-diagram path {
+    fill: none;
+    stroke: rgba(237, 249, 242, 0.38);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 4;
+  }
+
+  .et-mini-diagram circle:not(:first-child) {
+    fill: #edf9f2;
+    stroke: none;
+  }
+
+  .et-mini-diagram .accent {
+    stroke: #edf9f2;
+    stroke-width: 5;
+  }
+
+  .et-mini-diagram .danger {
+    fill: none;
+    stroke: var(--danger);
+    stroke-dasharray: 1 8;
+    stroke-width: 5;
+  }
+
+  .et-mini-diagram--mb2 .danger {
+    fill: var(--danger);
+    stroke: none;
+  }
+
+  .et-application-grid h3 {
+    max-width: 560px;
+    font-size: clamp(1.55rem, 2.4vw, 2.15rem);
+  }
+
+  .et-application-grid a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    margin-top: 24px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0 18px;
+    color: var(--ink);
+    font-size: 0.86rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .et-application-grid a::after {
+    content: ">";
+    margin-left: 10px;
+    color: var(--subtle);
+  }
+
+  .et-feature-grid article {
+    min-height: 232px;
+  }
+
+  .et-technology-visuals {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.74fr) minmax(0, 1fr);
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  .et-file-feature,
+  .et-avatar-feature {
+    display: grid;
+    gap: 22px;
+    align-content: end;
+    min-height: 420px;
+    margin: 0;
+    border-radius: 24px;
+    background: #ffffff;
+    padding: 28px;
+  }
+
+  .et-file-feature {
+    grid-template-columns: minmax(130px, 0.55fr) minmax(0, 1fr);
+    align-items: center;
+    background:
+      linear-gradient(145deg, rgba(223, 238, 232, 0.86), rgba(255, 255, 255, 0.96)),
+      #ffffff;
+  }
+
+  .et-file-feature img {
+    width: 100%;
+    max-height: 370px;
+    object-fit: contain;
+    filter: drop-shadow(0 24px 28px rgba(18, 39, 41, 0.18));
+  }
+
+  .et-avatar-feature img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    opacity: 0.72;
+  }
+
+  .et-file-feature strong,
+  .et-avatar-feature strong {
+    display: block;
+    margin-top: 12px;
+    color: var(--ink);
+    font-size: clamp(1.25rem, 2vw, 1.8rem);
+    line-height: 1.2;
+  }
+
+  .et-benefits-section {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+    gap: 34px;
+    align-items: start;
+  }
+
+  .et-benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .et-benefit-grid div {
+    display: flex;
+    min-height: 104px;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: #ffffff;
+    padding: 20px;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 760;
+    line-height: 1.35;
+    box-shadow: 0 16px 36px rgba(18, 39, 41, 0.05);
+  }
+
+  .et-workflow-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(360px, 1fr);
+    gap: 34px;
+    align-items: center;
+    border-radius: 30px;
+    background: var(--dark);
+    padding: 42px;
+    color: #ffffff;
+  }
+
+  .et-workflow-panel .et-kicker,
+  .et-workflow-panel h2 {
+    color: #ffffff;
+  }
+
+  .et-workflow-panel ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .et-workflow-panel li {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 18px;
+    color: rgba(237, 249, 242, 0.9);
+    font-weight: 760;
+    line-height: 1.45;
+  }
+
+  .et-source-section {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+    gap: 34px;
+    align-items: center;
+    margin-bottom: 86px;
+    border-radius: 30px;
+    background: #ffffff;
+    padding: 42px;
+  }
+
+  .et-source-section h2 {
+    font-size: clamp(1.7rem, 3vw, 2.45rem);
+  }
+
+  .et-source-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-end;
+  }
+
+  .et-source-links a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0 18px;
+    color: var(--ink);
+    font-size: 0.86rem;
+    font-weight: 780;
+    text-decoration: none;
+  }
+
+  .et-source-links a:hover,
+  .et-source-links a:focus-visible,
+  .et-application-grid a:hover,
+  .et-application-grid a:focus-visible {
+    background: #edf3f1;
+    outline: none;
+  }
+
+  @media (max-width: 1120px) {
+    .et-hero,
+    .et-protocol-grid,
+    .et-product-strip,
+    .et-benefits-section,
+    .et-workflow-panel,
+    .et-source-section,
+    .et-technology-visuals {
+      grid-template-columns: 1fr;
+    }
+
+    .et-local-nav,
+    .et-source-links {
+      justify-content: flex-start;
+    }
+
+    .et-feature-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 780px) {
+    .et-hero,
+    .et-protocol-grid,
+    .et-product-strip,
+    .et-problem-section,
+    .et-applications-section,
+    .et-technology-section,
+    .et-benefits-section,
+    .et-workflow-section,
+    .et-source-section {
+      width: min(100% - 28px, 680px);
+    }
+
+    .et-hero {
+      padding-top: 48px;
+      padding-bottom: 34px;
+    }
+
+    .et-hero h1 {
+      font-size: clamp(2.55rem, 10.8vw, 3.85rem);
+      line-height: 1.1;
+    }
+
+    .et-local-nav {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.68);
+      padding: 8px;
+    }
+
+    .et-local-nav span {
+      grid-column: 1 / -1;
+      min-height: auto;
+      padding: 6px 10px 2px;
+    }
+
+    .et-local-nav a {
+      justify-content: center;
+      min-height: 44px;
+      border-color: rgba(16, 39, 42, 0.08);
+      background: rgba(255, 255, 255, 0.72);
+      padding: 0 10px;
+      text-align: center;
+    }
+
+    .et-map-card,
+    .et-sequence-card,
+    .et-product-strip,
+    .et-application-grid article,
+    .et-feature-grid article,
+    .et-file-feature,
+    .et-avatar-feature,
+    .et-workflow-panel,
+    .et-source-section {
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .et-card-heading,
+    .et-sequence-head {
+      flex-direction: column;
+    }
+
+    .et-status-pill,
+    .et-sequence-head > span {
+      white-space: normal;
+    }
+
+    .et-dual-map svg {
+      display: none;
+    }
+
+    .et-mobile-map-panels {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+    }
+
+    .et-mobile-map-panels > div {
+      display: grid;
+      gap: 8px;
+      border: 1px solid rgba(237, 249, 242, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.035);
+      padding: 16px;
+    }
+
+    .et-mobile-map-panels span,
+    .et-mobile-map-panels strong,
+    .et-mobile-map-panels p {
+      color: rgba(237, 249, 242, 0.86);
+    }
+
+    .et-mobile-map-panels span {
+      font-size: 0.68rem;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .et-mobile-map-panels strong {
+      font-size: 1.1rem;
+      line-height: 1.18;
+    }
+
+    .et-mobile-map-panels p {
+      margin: 0;
+      color: rgba(237, 249, 242, 0.68);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .et-mobile-map-panels svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: 0;
+    }
+
+    .et-mobile-map-panels circle,
+    .et-mobile-map-panels path {
+      fill: none;
+      stroke: rgba(237, 249, 242, 0.38);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 4;
+    }
+
+    .et-mobile-map-panels circle:not(:first-child) {
+      fill: #edf9f2;
+      stroke: none;
+    }
+
+    .et-mobile-map-panels .accent {
+      stroke: #edf9f2;
+      stroke-width: 5;
+    }
+
+    .et-mobile-map-panels .ghost {
+      stroke: rgba(237, 249, 242, 0.18);
+      stroke-dasharray: 5 8;
+      stroke-width: 4;
+    }
+
+    .et-mobile-map-panels .danger {
+      fill: none;
+      stroke: var(--danger);
+      stroke-dasharray: 1 8;
+      stroke-width: 5;
+    }
+
+    .et-mobile-map-panels div:first-child .danger {
+      fill: var(--danger);
+      stroke: none;
+    }
+
+    .et-dual-map figcaption {
+      position: relative;
+      z-index: 2;
+      padding: 0 22px 24px;
+      background: var(--dark);
+    }
+
+    .et-sequence-list article,
+    .et-table-row,
+    .et-application-grid,
+    .et-feature-grid,
+    .et-file-feature,
+    .et-benefit-grid,
+    .et-workflow-panel ul,
+    .et-spec-row {
+      grid-template-columns: 1fr;
+    }
+
+    .et-product-strip {
+      margin-top: 24px;
+    }
+
+    .et-product-visual {
+      padding: 18px;
+    }
+
+    .et-table-head {
+      display: none;
+    }
+
+    .et-table-row {
+      gap: 10px;
+    }
+
+    .et-table-row strong::before {
+      content: "Problem";
+      display: block;
+      margin-bottom: 8px;
+      color: #31575e;
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .et-spec-row {
+      border-left: 0;
+    }
+
+    .et-spec-row div {
+      border-right: 0;
+      border-top: 1px solid var(--line);
+      padding: 18px 0 0;
+    }
+
+    .et-spec-row div:first-child {
+      border-top: 0;
+    }
+
+    .et-technology-visuals {
+      gap: 14px;
+    }
+
+    .et-file-feature img {
+      width: min(150px, 54%);
+      justify-self: center;
+    }
+
+    .et-source-links {
+      justify-content: flex-start;
+    }
+  }
+</style>

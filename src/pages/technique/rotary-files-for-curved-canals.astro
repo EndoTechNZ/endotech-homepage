@@ -198,6 +198,10 @@ const schema = {
                 Stress Points
               </button>
             </div>
+            <p class="stress-toggle-note">
+              Click Stress Points to cycle through the danger zones: cleared-root examples of the sharp curves,
+              hooks, and wall-contact points where files bind, fatigue, and break if the anatomy is not controlled.
+            </p>
 
             <div class="curve-stage">
               <div class="stress-image-wrap">
@@ -605,6 +609,15 @@ const schema = {
     border-radius: 999px;
     background: var(--accent);
     box-shadow: 0 0 0 5px rgba(76, 174, 115, 0.12);
+  }
+
+  .stress-toggle-note {
+    max-width: 560px;
+    margin: -8px 0 24px;
+    color: #31575e;
+    font-size: 0.94rem;
+    font-weight: 680;
+    line-height: 1.55;
   }
 
   .curve-stage {
