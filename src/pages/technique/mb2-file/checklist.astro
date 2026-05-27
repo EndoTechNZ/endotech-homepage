@@ -55,6 +55,8 @@ const schema = {
               data-title={item.title}
               data-summary={item.summary}
               data-detail={item.detail}
+              data-video-title={item.videoTitle}
+              data-video-url={item.videoUrl}
             >
               <span>{item.number}</span>
               <strong>{item.title}</strong>
@@ -71,6 +73,16 @@ const schema = {
             </div>
             <p class="detail-summary" id="detail-summary">{firstItem.summary}</p>
             <p id="detail-copy">{firstItem.detail}</p>
+            <a
+              class="detail-video-link"
+              id="detail-video-link"
+              href={firstItem.videoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Related YouTube</span>
+              <strong id="detail-video-title">{firstItem.videoTitle}</strong>
+            </a>
           </article>
         </div>
       </div>
@@ -103,9 +115,11 @@ const schema = {
       const title = document.getElementById('detail-title');
       const summary = document.getElementById('detail-summary');
       const copy = document.getElementById('detail-copy');
+      const videoLink = document.getElementById('detail-video-link');
+      const videoTitle = document.getElementById('detail-video-title');
 
       function setActive(trigger) {
-        if (!trigger || !stage || !number || !title || !summary || !copy) return;
+        if (!trigger || !stage || !number || !title || !summary || !copy || !videoLink || !videoTitle) return;
         triggers.forEach((item) => {
           const active = item === trigger;
           item.classList.toggle('is-active', active);
@@ -116,6 +130,11 @@ const schema = {
         title.textContent = trigger.dataset.title || '';
         summary.textContent = trigger.dataset.summary || '';
         copy.textContent = trigger.dataset.detail || '';
+        const nextVideoUrl = trigger.dataset.videoUrl || '';
+        const nextVideoTitle = trigger.dataset.videoTitle || '';
+        videoLink.setAttribute('href', nextVideoUrl);
+        videoLink.hidden = !nextVideoUrl;
+        videoTitle.textContent = nextVideoTitle;
       }
 
       triggers.forEach((trigger) => {
@@ -337,6 +356,45 @@ const schema = {
     color: var(--muted);
     font-size: 1.06rem;
     line-height: 1.78;
+  }
+
+  .detail-video-link {
+    display: inline-grid;
+    gap: 4px;
+    max-width: min(100%, 620px);
+    margin-top: 30px;
+    padding: 14px 18px;
+    border: 1px solid rgba(16, 39, 42, 0.16);
+    border-radius: 16px;
+    color: #1d5fd1;
+    background: #f8fbfa;
+    text-decoration: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  }
+
+  .detail-video-link:hover,
+  .detail-video-link:focus-visible {
+    border-color: rgba(49, 87, 94, 0.36);
+    box-shadow: 0 14px 32px rgba(18, 39, 41, 0.08);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .detail-video-link span {
+    color: #31575e;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .detail-video-link strong {
+    color: #1d5fd1;
+    font-size: 0.98rem;
+    font-weight: 780;
+    line-height: 1.35;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .source-section {

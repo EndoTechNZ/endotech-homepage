@@ -193,15 +193,21 @@ const schema = {
                 <span class="section-kicker">Anatomy map</span>
                 <h2>Danger Map</h2>
               </div>
-              <button class="pattern-toggle" type="button">
-                <span class="status-dot" aria-hidden="true"></span>
-                Stress Points
-              </button>
+              <div class="stress-toggle-control">
+                <button class="pattern-toggle" type="button">
+                  <span class="status-dot" aria-hidden="true"></span>
+                  Stress Points
+                </button>
+                <span class="stress-click-cue">Click me</span>
+              </div>
             </div>
-            <p class="stress-toggle-note">
-              Click Stress Points to cycle through the danger zones: cleared-root examples of the sharp curves,
-              hooks, and wall-contact points where files bind, fatigue, and break if the anatomy is not controlled.
-            </p>
+            <div class="stress-toggle-note" role="note" aria-label="Stress point image guide">
+              <span>Beware the 3 danger points</span>
+              <p>
+                Click <strong>Stress Points</strong> to cycle through cleared-root examples where sharp curves,
+                hooks, and wall contact bind, fatigue, and break files if the anatomy is not controlled.
+              </p>
+            </div>
 
             <div class="curve-stage">
               <div class="stress-image-wrap">
@@ -221,11 +227,12 @@ const schema = {
           </article>
 
           <article class="warning-card">
-            <span>Clinical warning</span>
+            <span>Clinical Warning in Complicated Anatomy</span>
             <h2>Do not ask a rotary file to discover the curve.</h2>
             <p>
               Curved canals punish load. If the path is incomplete, the file can straighten, engage the
               outer wall, block with debris, ledge, transport, or fatigue before the clinician has reliable control.
+              Skilled use of handfiles can still be the endodontist's best friend.
             </p>
           </article>
         </div>
@@ -258,9 +265,9 @@ const schema = {
               <small>do not force</small>
             </div>
             <div>
-              <span>Shaping mode</span>
-              <strong>short</strong>
-              <small>clean, irrigate, recapitulate</small>
+              <span>Learn the magic</span>
+              <strong>Acrobat</strong>
+              <small>Glidepath tricks</small>
             </div>
           </div>
         </article>
@@ -345,7 +352,7 @@ const schema = {
           <a class="checklist-download" href={curvedCanalChecklistPdfHref} download>
             <span>Download PDF</span>
             <strong>13-point chairside checklist</strong>
-            <small>Printable curved-canal protocol with sources.</small>
+            <small>Includes sources plus curated YouTube learning links for each point.</small>
           </a>
         </div>
       </section>
@@ -587,6 +594,14 @@ const schema = {
     margin-bottom: 10px;
   }
 
+  .stress-toggle-control {
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
   .pattern-toggle {
     display: inline-flex;
     align-items: center;
@@ -603,6 +618,14 @@ const schema = {
     cursor: pointer;
   }
 
+  .stress-click-cue {
+    color: #8f302b;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
   .status-dot {
     width: 9px;
     height: 9px;
@@ -613,11 +636,37 @@ const schema = {
 
   .stress-toggle-note {
     max-width: 560px;
-    margin: -8px 0 24px;
+    margin: -10px 0 24px;
+    padding: 14px 16px 15px 18px;
+    border: 1px solid rgba(194, 65, 58, 0.18);
+    border-left: 4px solid rgba(194, 65, 58, 0.78);
+    border-radius: 18px;
+    background: rgba(194, 65, 58, 0.055);
     color: #31575e;
-    font-size: 0.94rem;
-    font-weight: 680;
-    line-height: 1.55;
+    box-shadow: 0 12px 30px rgba(17, 31, 35, 0.05);
+  }
+
+  .stress-toggle-note span {
+    display: block;
+    margin-bottom: 5px;
+    color: #8f302b;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .stress-toggle-note p {
+    margin: 0;
+    font-size: 0.96rem;
+    font-weight: 690;
+    line-height: 1.52;
+  }
+
+  .stress-toggle-note strong {
+    color: var(--ink);
+    font-weight: 900;
   }
 
   .curve-stage {

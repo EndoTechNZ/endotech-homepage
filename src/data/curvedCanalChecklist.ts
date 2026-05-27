@@ -1,4 +1,59 @@
-export const curvedCanalChecklistItems = [
+const curvedCanalChecklistVideos: Record<string, { videoTitle: string; videoUrl: string }> = {
+  '01': {
+    videoTitle: 'How to Get Down Super Curved Root Canals',
+    videoUrl: 'https://www.youtube.com/watch?v=RuBSBbQy-8A',
+  },
+  '02': {
+    videoTitle: 'How to Master a 90 Degree Curved Root Canal',
+    videoUrl: 'https://www.youtube.com/watch?v=R47fPIfqi-I',
+  },
+  '03': {
+    videoTitle: 'How to Get Down Super Curved Root Canals',
+    videoUrl: 'https://www.youtube.com/watch?v=RuBSBbQy-8A',
+  },
+  '04': {
+    videoTitle: 'How to Get Down Super Curved Root Canals',
+    videoUrl: 'https://www.youtube.com/watch?v=RuBSBbQy-8A',
+  },
+  '05': {
+    videoTitle: 'How to Achieve Patency with One Manual File',
+    videoUrl: 'https://www.youtube.com/watch?v=h2nAoBXb53g',
+  },
+  '06': {
+    videoTitle: 'Glide Path Management Secrets of Hand Filing',
+    videoUrl: 'https://www.youtube.com/watch?v=jc18a1msVCE',
+  },
+  '07': {
+    videoTitle: 'Glide Path Management - Working Length and Patency',
+    videoUrl: 'https://www.youtube.com/watch?v=qLzjL-MOtoU',
+  },
+  '08': {
+    videoTitle: 'Cleaning and Shaping, Using Rotary Files',
+    videoUrl: 'https://www.youtube.com/watch?v=85_GP2e-p3A',
+  },
+  '09': {
+    videoTitle: 'How to Master a 90 Degree Curved Root Canal',
+    videoUrl: 'https://www.youtube.com/watch?v=R47fPIfqi-I',
+  },
+  '10': {
+    videoTitle: 'Glide Path Management - Working Length and Patency',
+    videoUrl: 'https://www.youtube.com/watch?v=qLzjL-MOtoU',
+  },
+  '11': {
+    videoTitle: 'Glide Path Management - Irregular Glide Path',
+    videoUrl: 'https://www.youtube.com/watch?v=O9yclUIPCqA',
+  },
+  '12': {
+    videoTitle: 'How to Fix a Ledge in Root Canal',
+    videoUrl: 'https://www.youtube.com/watch?v=fNTY_ZFBM_4',
+  },
+  '13': {
+    videoTitle: 'The number one root canal technique to prevent file separation',
+    videoUrl: 'https://www.youtube.com/watch?v=Z1roelZuN6s',
+  },
+};
+
+const curvedCanalChecklistBaseItems = [
   {
     stage: 'Diagnose and orient',
     number: '01',
@@ -104,6 +159,11 @@ export const curvedCanalChecklistItems = [
       'Referral is not failure; it is preservation of options. Consider referral when curvature is severe, multiplanar, S-shaped, calcified, ledged, previously treated, or associated with symptoms and pathology that suggest missed anatomy. Refer when visibility is poor, access cannot be refined safely, working length is unstable, or a reproducible glide path cannot be created. The best time to refer is before transportation, perforation, separation, or unnecessary dentin removal makes the case harder for everyone.',
   },
 ];
+
+export const curvedCanalChecklistItems = curvedCanalChecklistBaseItems.map((item) => ({
+  ...item,
+  ...(curvedCanalChecklistVideos[item.number] ?? {}),
+}));
 
 export const curvedCanalChecklistSources = [
   'Versiani MA, Basrani B, Sousa-Neto MD, editors. The Root Canal Anatomy in Permanent Dentition. Springer; 2019. doi:10.1007/978-3-319-73444-6.',

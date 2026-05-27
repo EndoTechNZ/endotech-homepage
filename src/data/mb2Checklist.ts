@@ -1,3 +1,66 @@
+const mb2ChecklistVideos: Record<string, { videoTitle: string; videoUrl: string }> = {
+  '01': {
+    videoTitle: 'MB2 Canal: How to Find and Treat It? Step-by-Step Guide',
+    videoUrl: 'https://www.youtube.com/watch?v=j7w-ZyW9w_s',
+  },
+  '02': {
+    videoTitle: 'Role of CBCT in MB2 canal location',
+    videoUrl: 'https://www.youtube.com/watch?v=fM5PNoogb10',
+  },
+  '03': {
+    videoTitle: 'Finding MB2',
+    videoUrl: 'https://www.youtube.com/watch?v=1-eZNmjxC4c',
+  },
+  '04': {
+    videoTitle: 'In search of the elusive MB2 canal',
+    videoUrl: 'https://www.youtube.com/watch?v=9RNWDlzbDPU',
+  },
+  '05': {
+    videoTitle: 'MB2 Canal Discovery Tip',
+    videoUrl: 'https://www.youtube.com/watch?v=x3RIsY8N-L4',
+  },
+  '06': {
+    videoTitle: 'The Champagne Bubble Test for finding hidden canals',
+    videoUrl: 'https://www.youtube.com/watch?v=2ZLqLjz_xv8',
+  },
+  '07': {
+    videoTitle: 'Finding MB2',
+    videoUrl: 'https://www.youtube.com/watch?v=1-eZNmjxC4c',
+  },
+  '08': {
+    videoTitle: 'Ultrasonic troughing to find MB2',
+    videoUrl: 'https://www.youtube.com/watch?v=4BGo3E-d2SI',
+  },
+  '09': {
+    videoTitle: 'Step by step shaping of calcified MB2',
+    videoUrl: 'https://www.youtube.com/watch?v=CAa-l6ZZoWw',
+  },
+  '10': {
+    videoTitle: 'Glide Path Management: When a Ledge is a Block',
+    videoUrl: 'https://www.youtube.com/watch?v=KcBYdWioT-Y',
+  },
+  '11': {
+    videoTitle: 'Glide Path Management - Irregular Glide Path',
+    videoUrl: 'https://www.youtube.com/watch?v=O9yclUIPCqA',
+  },
+  '12': {
+    videoTitle: 'Glide Path Management - Working Length and Patency',
+    videoUrl: 'https://www.youtube.com/watch?v=qLzjL-MOtoU',
+  },
+  '13': {
+    videoTitle: 'Maxillary molar MB2 canal negotiation with CBCT and magnification',
+    videoUrl: 'https://www.youtube.com/watch?v=WnoEvvvgo68',
+  },
+  '14': {
+    videoTitle: 'Does locating the MB2 matter?',
+    videoUrl: 'https://www.youtube.com/watch?v=JMv4VuVFwbk',
+  },
+  '15': {
+    videoTitle: 'Missed MB2 canal CBCT endodontics case report',
+    videoUrl: 'https://www.youtube.com/watch?v=JdaZQJIVha4',
+  },
+};
+
 export const mb2ChecklistGroups = [
   {
     stage: 'Diagnose and orient',
@@ -144,6 +207,7 @@ export const mb2ChecklistGroups = [
 export const mb2ChecklistItems = mb2ChecklistGroups.flatMap((group) =>
   group.items.map((item) => ({
     ...item,
+    ...(mb2ChecklistVideos[item.number] ?? {}),
     stage: group.stage,
   })),
 );
