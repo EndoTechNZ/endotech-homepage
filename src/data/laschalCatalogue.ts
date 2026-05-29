@@ -6,8 +6,9 @@ export const laschalAssets = {
   logo: '/images/laschal/feature/laschal-logo.png',
   fxp: '/images/laschal/feature/fxp-protocol.webp',
   gutta: '/images/laschal/feature/gutta-percha-set.webp',
-  bender: '/images/laschal/feature/file-bender.webp',
+  bender: '/images/laschal/category/13-4cm-universal-endodontic-file-bending-forceps-flat-handle.jpg',
   forceps: '/images/laschal/feature/endo-file-forceps.webp',
+  laF: '/images/laschal/category/11-5cm-uniband-forceps-straight-standard-tips.jpg',
   raptor: '/images/laschal/feature/raptor-forceps.webp',
   group: '/images/laschal/feature/sonic-steel-group.webp',
 };
@@ -16,13 +17,13 @@ export const laschalFeaturedInstruments = [
   {
     title: 'Tactile endo file forceps',
     anchorId: 'laschal-feature-file-control',
-    model: '90AHF/L, 75CHF/L, EF-1-7',
-    image: laschalAssets.forceps,
+    model: 'LA-F, 90AHF/L, 75CHF/L, EF-1-7',
+    image: laschalAssets.laF,
     clinicalProblem:
       'Deep posterior access and microscope positioning can make small files difficult to control with fingers alone.',
     solution:
-      'Diamond-coated file forceps place file handling into a slim instrument profile for angled, tactile access.',
-    features: ['75 or 90 degree access options', 'Diamond-coated working surfaces', 'ThumLok® handle variants'],
+      'Straight and angled file forceps place file handling into a slim instrument profile for tactile access.',
+    features: ['LA-F straight Uniband option', '75 or 90 degree access options', 'Diamond-coated working surfaces'],
     benefits: [
       'Improves file control under magnification',
       'Reduces finger crowding around the access',
@@ -156,10 +157,10 @@ export const laschalBestSellerCampaigns = [
   {
     title: 'Tactile file control under the microscope',
     anchorId: 'laschal-best-sellers-file-control',
-    skus: ['EF-1-7', '90AHF/L', '75CHF/L'],
+    skus: ['LA-F', 'EF-1-7', '90AHF/L', '75CHF/L'],
     image: '/images/laschal/category/17-75cm-universal-endo-file-forceps-thumlok-diamond-round-handle-straight-straight-blunt-tips.jpg',
     clinicalUse:
-      'Use this set where fingers block the microscope view or posterior access makes direct file handling awkward.',
+      'Use this set where fingers block the microscope view or posterior access makes direct file handling awkward, starting with LA-F for straight-line file holding and moving to angled forceps as access narrows.',
     clinicalBenefits: [
       'Moves file handling out of the fingers and into a slim tactile instrument',
       'Improves visibility around the access cavity during placement and manipulation',
