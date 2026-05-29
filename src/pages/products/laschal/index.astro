@@ -1,0 +1,1368 @@
+---
+import ProductLayout from '../../../layouts/ProductLayout.astro';
+import { laschalCatalogItems } from '../../../data/laschal';
+import {
+  laschalAssets,
+  laschalCataloguePdfHref,
+  laschalCategoryOrder,
+  laschalClinicalTasks,
+  laschalFeaturedInstruments,
+  laschalSourceCategoryHref,
+} from '../../../data/laschalCatalogue';
+import { withBasePath } from '../../../utils/paths';
+
+const contactHref = withBasePath('/about/contact/');
+const sourceCategoryHref = laschalSourceCategoryHref;
+const cataloguePdfHref = withBasePath(laschalCataloguePdfHref);
+const images = Object.fromEntries(
+  Object.entries(laschalAssets).map(([key, value]) => [key, withBasePath(value)]),
+) as Record<keyof typeof laschalAssets, string>;
+const featuredInstruments = laschalFeaturedInstruments.map((instrument) => ({
+  ...instrument,
+  image: withBasePath(instrument.image),
+}));
+const clinicalTasks = laschalClinicalTasks;
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+const categoryOrder = laschalCategoryOrder;
+
+const categoryCounts = categoryOrder
+  .map((label) => ({
+    label,
+    count: laschalCatalogItems.filter((item) => item.category === label).length,
+  }))
+  .filter((category) => category.count > 0);
+
+const catalogGroups = categoryOrder
+  .map((label) => ({
+    label,
+    items: laschalCatalogItems.filter((item) => item.category === label),
+  }))
+  .filter((group) => group.items.length > 0);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Laschal Endodontic Instruments',
+  description:
+    'EndoTech NZ range page for Laschal endodontic instruments, including tactile file control, file retrieval, gutta percha removal, and microsurgical support.',
+  mainEntity: {
+    '@type': 'ItemList',
+      itemListElement: laschalCatalogItems.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: item.sourceUrl,
+      name: item.title,
+      sku: item.sku,
+    })),
+  },
+};
+---
+
+<ProductLayout
+  title="Laschal Endodontic Instruments | EndoTech NZ"
+  description="Laschal endodontic instruments available through EndoTech NZ, including file control, separated instrument retrieval, gutta percha removal, and microsurgical access."
+  image={images.hero}
+  schema={schema}
+  accent="slate"
+>
+  <main class="laschal-page">
+    <section class="laschal-hero" aria-labelledby="laschal-hero-title">
+      <div class="laschal-hero-copy">
+        <img class="laschal-brand-mark" src={images.logo} alt="Laschal Surgical" />
+        <p class="laschal-eyebrow">Endodontic instrument range</p>
+        <h1 id="laschal-hero-title">Laschal endodontic instruments for control, access, and retrieval.</h1>
+        <p class="laschal-hero-lede">
+          Precision instruments for tactile file control, separated instrument retrieval, gutta percha removal, and microsurgical endodontic support.
+        </p>
+        <div class="laschal-actions">
+          <a class="laschal-button primary" href="#laschal-featured">View featured instruments</a>
+          <a class="laschal-button secondary" href="#laschal-catalog">Browse full range</a>
+          <a class="laschal-button secondary" href={cataloguePdfHref} download="EndoTech-NZ-Laschal-Endodontic-Instruments-Catalogue.pdf">Download catalogue</a>
+        </div>
+      </div>
+
+      <figure class="laschal-hero-visual">
+        <img src={images.hero} alt="Laschal endodontic instrumentation set" />
+      </figure>
+
+      <nav class="laschal-proof-strip" aria-label="Laschal range roles">
+        <a href="#laschal-feature-file-control" data-laschal-task-link>File control</a>
+        <a href="#laschal-feature-fxp-retrieval" data-laschal-task-link>Retrieval</a>
+        <a href="#laschal-feature-gutta-percha" data-laschal-task-link>Retreatment</a>
+        <a href="#laschal-catalog-needle-holders" data-laschal-task-link>Microsurgery</a>
+      </nav>
+    </section>
+
+    <section class="laschal-task-section" aria-labelledby="laschal-task-title">
+      <div class="laschal-section-heading centered">
+        <img class="laschal-section-mark" src={images.logo} alt="Laschal Surgical" loading="lazy" decoding="async" />
+        <p class="laschal-eyebrow">Clinical workflow fit</p>
+        <h2 id="laschal-task-title">Precision instruments for demanding endodontic access.</h2>
+        <p>
+          Use Laschal instruments where direct finger access, visibility, or force control limits the procedure. The range supports fine file handling, conservative retrieval, retreatment, and microsurgical closure.
+        </p>
+      </div>
+
+      <div class="laschal-task-grid">
+        {clinicalTasks.map((task, index) => (
+          <a class="laschal-task-card" href={task.href} aria-label={task.ariaLabel} data-laschal-task-link>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{task.title}</h3>
+            <p>{task.body}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="laschal-featured-section" id="laschal-featured" aria-labelledby="laschal-featured-title">
+      <div class="laschal-section-heading centered">
+        <img class="laschal-section-mark" src={images.logo} alt="Laschal Surgical" loading="lazy" decoding="async" />
+        <p class="laschal-eyebrow">Featured instruments</p>
+        <h2 id="laschal-featured-title">Choose by the clinical problem in front of you.</h2>
+        <p>
+          Start with file control, separated instrument retrieval, retreatment removal, or narrow surgical access.
+        </p>
+      </div>
+
+      <div class="laschal-featured-grid">
+        {featuredInstruments.map((instrument) => (
+          <article class="laschal-feature-card" id={instrument.anchorId}>
+            <figure>
+              <img src={instrument.image} alt={instrument.title} loading="lazy" decoding="async" />
+            </figure>
+            <div class="laschal-feature-copy">
+              <p class="laschal-card-kicker">Part number: {instrument.model}</p>
+              <h3>{instrument.title}</h3>
+              <dl>
+                <div>
+                  <dt>Clinical Problem</dt>
+                  <dd>{instrument.clinicalProblem}</dd>
+                </div>
+                <div>
+                  <dt>Laschal Solution</dt>
+                  <dd>{instrument.solution}</dd>
+                </div>
+              </dl>
+              <div class="laschal-feature-lists">
+                <div>
+                  <h4>Key Features</h4>
+                  <ul>
+                    {instrument.features.map((feature) => (
+                      <li>{feature}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4>Clinical Benefits</h4>
+                  <ul>
+                    {instrument.benefits.map((benefit) => (
+                      <li>{benefit}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div class="laschal-card-actions">
+                <a href={instrument.href} target="_blank" rel="noreferrer">View product details</a>
+                {instrument.videos.map((video) => (
+                  <a class="video" href={video.href} target="_blank" rel="noreferrer">{video.label}</a>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="laschal-focus-section" aria-labelledby="laschal-focus-title">
+      <div class="laschal-focus-media">
+        <img src={images.group} alt="Laschal Sonic Steel instrument group" loading="lazy" decoding="async" />
+      </div>
+      <div class="laschal-focus-copy">
+        <img class="laschal-section-mark" src={images.logo} alt="Laschal Surgical" loading="lazy" decoding="async" />
+        <p class="laschal-eyebrow">Clinical selection</p>
+        <h2 id="laschal-focus-title">Select the instrument family around the procedure you are managing.</h2>
+        <div class="laschal-focus-steps">
+          <article>
+            <span>1</span>
+            <div>
+              <h3>Control files in tight access.</h3>
+              <p>File benders and tactile file forceps support controlled placement when microscope angle, posterior access, or finger crowding reduces direct handling.</p>
+            </div>
+          </article>
+          <article>
+            <span>2</span>
+            <div>
+              <h3>Retrieve separated instruments conservatively.</h3>
+              <p>FXP probes and Steiglitz forceps support a staged trough-and-retrieve sequence with angled access and controlled grip.</p>
+            </div>
+          </article>
+          <article>
+            <span>3</span>
+            <div>
+              <h3>Extend the set for retreatment and microsurgery.</h3>
+              <p>Gutta percha instruments, Raptor forceps, needle holders, micro scissors, and tissue forceps support the wider endodontic surgical workflow.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="laschal-catalog-section" id="laschal-catalog" aria-labelledby="laschal-catalog-title">
+      <div class="laschal-catalog-heading">
+        <div>
+          <img class="laschal-section-mark" src={images.logo} alt="Laschal Surgical" loading="lazy" decoding="async" />
+          <p class="laschal-eyebrow">Full endodontic range</p>
+          <h2 id="laschal-catalog-title">Laschal endodontic instruments available through EndoTech NZ.</h2>
+          <p>
+            Browse by clinical category, then contact EndoTech NZ for suitability, availability, and ordering.
+          </p>
+        </div>
+        <a class="laschal-inline-link" href={sourceCategoryHref} target="_blank" rel="noreferrer">View full Laschal category</a>
+      </div>
+
+      <div class="laschal-filter-bar" aria-label="Filter Laschal products by category">
+        <button class="is-active" type="button" data-category-filter="all" aria-pressed="true">
+          All <span>{laschalCatalogItems.length}</span>
+        </button>
+        {categoryCounts.map((category) => (
+          <button type="button" data-category-filter={category.label} aria-pressed="false">
+            {category.label} <span>{category.count}</span>
+          </button>
+        ))}
+      </div>
+
+      <div class="laschal-page-groups">
+        {catalogGroups.map((group) => (
+          <section class="laschal-page-group" id={`laschal-catalog-${slugify(group.label)}`} data-category-group>
+            <div class="laschal-page-group-heading">
+              <h3>{group.label}</h3>
+              <span>{group.items.length} products</span>
+            </div>
+            <div class="laschal-catalog-grid">
+              {group.items.map((item) => (
+                <a
+                  class="laschal-product-card"
+                  href={item.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-category-card
+                  data-category={item.category}
+                >
+                  <figure>
+                    <img src={withBasePath(item.image)} alt={item.title} loading="lazy" decoding="async" />
+                  </figure>
+                  <div>
+                    <p class="laschal-card-kicker">{item.category}</p>
+                    <h4>{item.title}</h4>
+                    <p class="laschal-product-sku">SKU: {item.sku}</p>
+                    <span>Enquire through EndoTech NZ</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </section>
+
+    <section class="laschal-cta-section" aria-labelledby="laschal-cta-title">
+      <div class="laschal-cta-copy">
+        <img class="laschal-section-mark on-dark" src={images.logo} alt="Laschal Surgical" loading="lazy" decoding="async" />
+        <h2 id="laschal-cta-title">Talk to EndoTech NZ about Laschal instruments.</h2>
+        <p>
+          Tell us the procedure you are preparing for and the access challenge you want to solve. We can help identify suitable Laschal instruments and confirm availability.
+        </p>
+      </div>
+      <div class="laschal-actions">
+        <a class="laschal-button primary" href={contactHref}>Contact EndoTech NZ</a>
+        <a class="laschal-button secondary on-dark" href={cataloguePdfHref} download="EndoTech-NZ-Laschal-Endodontic-Instruments-Catalogue.pdf">Download catalogue</a>
+        <a class="laschal-button secondary on-dark" href={sourceCategoryHref} target="_blank" rel="noreferrer">View Laschal catalogue</a>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    (() => {
+      const filterButtons = Array.from(document.querySelectorAll('[data-category-filter]'));
+      const cards = Array.from(document.querySelectorAll('[data-category-card]'));
+      const groups = Array.from(document.querySelectorAll('[data-category-group]'));
+
+      function applyFilter(category) {
+        cards.forEach((card) => {
+          const matches = category === 'all' || card.getAttribute('data-category') === category;
+          card.toggleAttribute('hidden', !matches);
+        });
+
+        groups.forEach((group) => {
+          const visibleCards = group.querySelectorAll('[data-category-card]:not([hidden])');
+          group.toggleAttribute('hidden', visibleCards.length === 0);
+        });
+
+        filterButtons.forEach((button) => {
+          const active = button.getAttribute('data-category-filter') === category;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          applyFilter(button.getAttribute('data-category-filter') || 'all');
+        });
+      });
+
+      document.querySelectorAll('[data-laschal-task-link]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          const href = link.getAttribute('href');
+          if (!href || !href.startsWith('#')) return;
+
+          const target = document.querySelector(href);
+          if (!target) return;
+
+          event.preventDefault();
+          applyFilter('all');
+
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({
+            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+            block: 'start',
+          });
+          history.pushState(null, '', href);
+        });
+      });
+    })();
+  </script>
+</ProductLayout>
+
+<style>
+  .laschal-page {
+    background: #ffffff;
+    color: #111827;
+  }
+
+  .laschal-hero,
+  .laschal-task-section,
+  .laschal-featured-section,
+  .laschal-focus-section,
+  .laschal-catalog-section,
+  .laschal-cta-section {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .laschal-eyebrow,
+  .laschal-card-kicker {
+    margin: 0;
+    color: #0b75b7;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .laschal-hero h1,
+  .laschal-section-heading h2,
+  .laschal-task-card h3,
+  .laschal-feature-card h3,
+  .laschal-feature-card h4,
+  .laschal-focus-copy h2,
+  .laschal-focus-copy h3,
+  .laschal-catalog-heading h2,
+  .laschal-page-group-heading h3,
+  .laschal-product-card h4,
+  .laschal-cta-copy h2 {
+    margin: 0;
+    color: #111827;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .laschal-hero {
+    display: grid;
+    justify-items: center;
+    padding-top: 96px;
+    padding-bottom: 84px;
+    text-align: center;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(247, 249, 252, 0.88) 100%),
+      #ffffff;
+  }
+
+  .laschal-hero-copy {
+    display: grid;
+    justify-items: center;
+    max-width: 820px;
+  }
+
+  .laschal-brand-mark {
+    width: min(240px, 58vw);
+    max-height: 58px;
+    object-fit: contain;
+    margin-bottom: 18px;
+  }
+
+  .laschal-section-mark {
+    display: block;
+    width: min(148px, 42vw);
+    height: auto;
+    margin: 0 0 18px;
+    border: 1px solid rgba(227, 232, 238, 0.9);
+    border-radius: 8px;
+    padding: 8px 10px;
+    background: #ffffff;
+    box-shadow: 0 10px 24px rgba(0, 55, 112, 0.06);
+  }
+
+  .laschal-section-heading.centered .laschal-section-mark,
+  .laschal-cta-copy .laschal-section-mark {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .laschal-section-mark.on-dark {
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
+  }
+
+  .laschal-hero h1 {
+    max-width: 12.8ch;
+    margin-top: 16px;
+    font-size: clamp(3.1rem, 6.6vw, 5.5rem);
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  .laschal-hero-lede,
+  .laschal-section-heading p,
+  .laschal-task-card p,
+  .laschal-feature-card dd,
+  .laschal-feature-card li,
+  .laschal-focus-copy p,
+  .laschal-catalog-heading p,
+  .laschal-product-card span,
+  .laschal-cta-copy p {
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    line-height: 1.65;
+  }
+
+  .laschal-hero-lede {
+    max-width: 62ch;
+    margin: 20px auto 0;
+    font-size: 1.02rem;
+  }
+
+  .laschal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+  }
+
+  .laschal-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border-radius: 999px;
+    padding: 0 20px;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 650;
+    text-decoration: none;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      box-shadow 220ms ease,
+      transform 220ms ease;
+  }
+
+  .laschal-button:hover,
+  .laschal-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .laschal-button.primary {
+    border: 1px solid #0b75b7;
+    background: #0b75b7;
+    color: #ffffff;
+  }
+
+  .laschal-button.secondary {
+    border: 1px solid #b8d8ea;
+    background: #ffffff;
+    color: #064b78;
+  }
+
+  .laschal-button.on-dark {
+    border-color: rgba(255, 255, 255, 0.34);
+    background: transparent;
+    color: #ffffff;
+  }
+
+  .laschal-hero-visual {
+    width: min(100%, 980px);
+    margin: 48px 0 0;
+    padding: 26px;
+    border: 1px solid #e3e8ee;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+    box-shadow: 0 18px 44px rgba(16, 32, 51, 0.08);
+  }
+
+  .laschal-hero-visual img {
+    width: 100%;
+    max-height: 430px;
+    object-fit: contain;
+  }
+
+  .laschal-proof-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: min(100%, 920px);
+    margin-top: 28px;
+    border: 1px solid #e3e8ee;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    overflow: hidden;
+  }
+
+  .laschal-proof-strip a {
+    display: grid;
+    place-items: center;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 42px;
+    padding: 0 12px;
+    color: #24364a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 650;
+    text-decoration: none;
+    border-right: 1px solid #e3e8ee;
+    background: #ffffff;
+    transition:
+      color 180ms ease,
+      background-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .laschal-proof-strip a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 18% 20%, rgba(0, 119, 200, 0.14), rgba(0, 119, 200, 0) 32%),
+      radial-gradient(circle at 82% 18%, rgba(0, 156, 220, 0.1), rgba(0, 156, 220, 0) 34%),
+      linear-gradient(115deg, #ffffff 0%, #f6fbff 30%, #eaf5ff 48%, #ffffff 68%, #f4f9ff 100%);
+    background-size:
+      180% 180%,
+      180% 180%,
+      340% 340%;
+    background-position:
+      0% 45%,
+      100% 50%,
+      0% 50%;
+    opacity: 0;
+    animation: laschal-soft-gradient-drift 16s ease-in-out infinite;
+    transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .laschal-proof-strip a:last-child {
+    border-right: 0;
+  }
+
+  .laschal-proof-strip a:hover,
+  .laschal-proof-strip a:focus-visible {
+    color: #0b4f7a;
+    box-shadow:
+      inset 0 0 0 1px rgba(22, 71, 217, 0.08),
+      0 8px 18px rgba(0, 99, 156, 0.08);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .laschal-proof-strip a:hover::before,
+  .laschal-proof-strip a:focus-visible::before {
+    opacity: 0.92;
+  }
+
+  .laschal-proof-strip a:focus-visible {
+    box-shadow:
+      inset 0 0 0 1px rgba(22, 71, 217, 0.22),
+      0 0 0 3px rgba(22, 71, 217, 0.12),
+      0 8px 18px rgba(0, 99, 156, 0.08);
+  }
+
+  .laschal-proof-strip a:active {
+    transform: translateY(1px) scale(0.997);
+    box-shadow:
+      inset 0 0 0 1px rgba(22, 71, 217, 0.1),
+      0 4px 10px rgba(0, 99, 156, 0.08);
+  }
+
+  .laschal-task-section,
+  .laschal-featured-section,
+  .laschal-focus-section,
+  .laschal-catalog-section {
+    border-top: 1px solid #e3e8ee;
+    padding-top: 82px;
+    padding-bottom: 82px;
+  }
+
+  .laschal-section-heading {
+    max-width: 780px;
+    margin: 0 0 38px;
+  }
+
+  .laschal-section-heading.centered {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .laschal-section-heading h2,
+  .laschal-focus-copy h2,
+  .laschal-catalog-heading h2,
+  .laschal-cta-copy h2 {
+    font-size: clamp(2.05rem, 4.4vw, 3.35rem);
+    line-height: 1.05;
+  }
+
+  .laschal-section-heading h2 {
+    margin-top: 14px;
+  }
+
+  .laschal-section-heading p,
+  .laschal-catalog-heading p {
+    margin: 16px 0 0;
+    font-size: 0.98rem;
+  }
+
+  .laschal-task-grid,
+  .laschal-featured-grid,
+  .laschal-focus-section,
+  .laschal-catalog-section {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .laschal-task-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  @keyframes laschal-soft-gradient-drift {
+    0% {
+      background-position:
+        0% 45%,
+        100% 50%,
+        0% 50%;
+    }
+
+    50% {
+      background-position:
+        100% 55%,
+        0% 45%,
+        100% 50%;
+    }
+
+    100% {
+      background-position:
+        0% 45%,
+        100% 50%,
+        0% 50%;
+    }
+  }
+
+  .laschal-task-card {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 22px;
+    color: inherit;
+    text-decoration: none;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 55, 112, 0.06);
+    cursor: pointer;
+    touch-action: manipulation;
+    transition:
+      background-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .laschal-task-card::before,
+  .laschal-task-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .laschal-task-card::before {
+    z-index: 0;
+    background:
+      radial-gradient(
+        circle at 18% 18%,
+        rgba(0, 119, 200, 0.11),
+        rgba(0, 119, 200, 0) 31%
+      ),
+      radial-gradient(
+        circle at 82% 20%,
+        rgba(0, 156, 220, 0.085),
+        rgba(0, 156, 220, 0) 32%
+      ),
+      linear-gradient(
+        115deg,
+        #ffffff 0%,
+        #f6fbff 28%,
+        #eaf5ff 44%,
+        #ffffff 62%,
+        #f4f9ff 100%
+      );
+    background-size:
+      180% 180%,
+      180% 180%,
+      340% 340%;
+    background-position:
+      0% 45%,
+      100% 50%,
+      0% 50%;
+    opacity: 0.84;
+    animation: laschal-soft-gradient-drift 16s ease-in-out infinite;
+  }
+
+  .laschal-task-card::after {
+    z-index: 1;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.68) 0%,
+        rgba(255, 255, 255, 0.34) 42%,
+        rgba(246, 251, 255, 0.48) 100%
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.88),
+      inset 0 0 0 1px rgba(210, 224, 235, 0.2);
+  }
+
+  .laschal-task-card:nth-child(2)::before,
+  .laschal-task-card:nth-child(2)::after {
+    animation-delay: -5.2s;
+  }
+
+  .laschal-task-card:nth-child(3)::before,
+  .laschal-task-card:nth-child(3)::after {
+    animation-delay: -10.5s;
+  }
+
+  .laschal-task-card:nth-child(4)::before,
+  .laschal-task-card:nth-child(4)::after {
+    animation-delay: -13.8s;
+  }
+
+  .laschal-task-card > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .laschal-task-card:hover,
+  .laschal-task-card:focus-visible {
+    border-color: rgba(184, 216, 234, 0.9);
+    background: rgba(247, 251, 254, 0.72);
+    box-shadow:
+      inset 0 0 0 1px rgba(22, 71, 217, 0.08),
+      0 12px 24px rgba(0, 99, 156, 0.08);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .laschal-task-card:hover::before,
+  .laschal-task-card:focus-visible::before {
+    opacity: 0.94;
+    animation-duration: 12s;
+  }
+
+  .laschal-task-card:hover::after,
+  .laschal-task-card:focus-visible::after {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 0 0 1px rgba(184, 216, 234, 0.3);
+  }
+
+  .laschal-task-card:focus-visible {
+    box-shadow:
+      inset 0 0 0 1px rgba(22, 71, 217, 0.22),
+      0 0 0 3px rgba(22, 71, 217, 0.12),
+      0 12px 24px rgba(0, 99, 156, 0.08);
+  }
+
+  .laschal-task-card:active {
+    transform: translateY(1px) scale(0.997);
+    box-shadow:
+      inset 0 0 0 1px rgba(22, 71, 217, 0.1),
+      0 4px 10px rgba(0, 99, 156, 0.08);
+  }
+
+  .laschal-task-card span {
+    color: #8a94a3;
+    font-family: 'Geist Mono', 'SF Mono', Consolas, monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .laschal-task-card h3 {
+    font-size: 1.04rem;
+    line-height: 1.22;
+  }
+
+  .laschal-task-card p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .laschal-feature-card,
+  .laschal-page-group {
+    scroll-margin-top: 96px;
+  }
+
+  .laschal-featured-section {
+    background: #f7f9fc;
+  }
+
+  .laschal-featured-grid {
+    display: grid;
+    gap: 18px;
+  }
+
+  .laschal-feature-card {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+    gap: 28px;
+    align-items: center;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 24px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 55, 112, 0.06);
+  }
+
+  .laschal-feature-card figure {
+    display: grid;
+    place-items: center;
+    min-height: 300px;
+    margin: 0;
+    border-radius: 8px;
+    padding: 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #eef6fb 100%);
+  }
+
+  .laschal-feature-card img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+  }
+
+  .laschal-feature-copy {
+    min-width: 0;
+  }
+
+  .laschal-feature-card h3 {
+    margin-top: 10px;
+    font-size: clamp(1.35rem, 2.4vw, 2rem);
+    line-height: 1.1;
+  }
+
+  .laschal-feature-card dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 18px 0 0;
+  }
+
+  .laschal-feature-card dl div {
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 14px;
+    background: #fbfcfe;
+  }
+
+  .laschal-feature-card dt,
+  .laschal-feature-card h4 {
+    color: #24364a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .laschal-feature-card dd {
+    margin: 8px 0 0;
+    font-size: 0.9rem;
+  }
+
+  .laschal-feature-lists {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+  }
+
+  .laschal-feature-card h4 {
+    margin: 0 0 10px;
+    letter-spacing: 0.08em;
+  }
+
+  .laschal-feature-card ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .laschal-feature-card li {
+    font-size: 0.9rem;
+  }
+
+  .laschal-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .laschal-feature-card a,
+  .laschal-inline-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    border: 1px solid #b8d8ea;
+    border-radius: 999px;
+    padding: 0 16px;
+    color: #064b78;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 650;
+    text-decoration: none;
+    background: #ffffff;
+  }
+
+  .laschal-feature-card a.video {
+    border-color: #0b75b7;
+    background: #eef8fc;
+    color: #064b78;
+  }
+
+  .laschal-focus-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 48px;
+    align-items: center;
+  }
+
+  .laschal-focus-media {
+    display: grid;
+    place-items: center;
+    min-height: 360px;
+    border-radius: 8px;
+    padding: 28px;
+    background: #f3f6f8;
+  }
+
+  .laschal-focus-media img {
+    width: 100%;
+    max-height: 360px;
+    object-fit: contain;
+  }
+
+  .laschal-focus-copy h2 {
+    margin-top: 14px;
+  }
+
+  .laschal-focus-steps {
+    display: grid;
+    gap: 20px;
+    margin-top: 26px;
+  }
+
+  .laschal-focus-steps article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .laschal-focus-steps span {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: #dceff8;
+    color: #064b78;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .laschal-focus-steps h3 {
+    font-size: 1.02rem;
+    line-height: 1.2;
+  }
+
+  .laschal-focus-steps p {
+    margin: 6px 0 0;
+    font-size: 0.92rem;
+  }
+
+  .laschal-catalog-section {
+    background: #ffffff;
+  }
+
+  .laschal-catalog-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 28px;
+    align-items: end;
+  }
+
+  .laschal-inline-link {
+    margin-top: 0;
+    white-space: nowrap;
+  }
+
+  .laschal-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .laschal-filter-bar button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    border: 1px solid #d7e0e8;
+    border-radius: 999px;
+    padding: 0 14px;
+    color: #24364a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 650;
+    background: #ffffff;
+    cursor: pointer;
+  }
+
+  .laschal-filter-bar button.is-active {
+    border-color: #0b75b7;
+    background: #eef8fc;
+    color: #064b78;
+  }
+
+  .laschal-filter-bar span {
+    color: #607084;
+    font-family: 'Geist Mono', 'SF Mono', Consolas, monospace;
+    font-size: 0.72rem;
+  }
+
+  .laschal-page-groups {
+    display: grid;
+    gap: 34px;
+  }
+
+  .laschal-page-group {
+    display: grid;
+    gap: 16px;
+  }
+
+  .laschal-page-group-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border-bottom: 1px solid #e3e8ee;
+    padding-bottom: 12px;
+  }
+
+  .laschal-page-group-heading h3 {
+    font-size: 1rem;
+  }
+
+  .laschal-page-group-heading span {
+    color: #607084;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 650;
+  }
+
+  .laschal-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .laschal-product-card {
+    display: grid;
+    grid-template-rows: 190px 1fr;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    background: #ffffff;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .laschal-product-card:hover,
+  .laschal-product-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: #c0c7d2;
+    box-shadow: 0 12px 28px rgba(0, 55, 112, 0.08);
+  }
+
+  .laschal-product-card figure {
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: 18px;
+    background: #f7f9fc;
+  }
+
+  .laschal-product-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .laschal-product-card div {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding: 16px;
+  }
+
+  .laschal-product-card h4 {
+    font-size: 0.96rem;
+    line-height: 1.26;
+    letter-spacing: 0;
+  }
+
+  .laschal-product-sku {
+    margin: 0;
+    color: #24364a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 750;
+    letter-spacing: 0.03em;
+  }
+
+  .laschal-product-card span {
+    font-size: 0.78rem;
+  }
+
+  .laschal-cta-section {
+    padding-top: 92px;
+    padding-bottom: 104px;
+    text-align: center;
+    background: linear-gradient(180deg, #0c1730 0%, #101b36 100%);
+  }
+
+  .laschal-cta-copy {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .laschal-cta-copy h2,
+  .laschal-cta-copy p {
+    color: #ffffff;
+  }
+
+  .laschal-cta-copy p {
+    max-width: 590px;
+    margin: 18px auto 0;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  @media (max-width: 1120px) {
+    .laschal-hero,
+    .laschal-task-section,
+    .laschal-featured-section,
+    .laschal-focus-section,
+    .laschal-catalog-section,
+    .laschal-cta-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .laschal-task-grid,
+    .laschal-catalog-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .laschal-feature-card,
+    .laschal-focus-section,
+    .laschal-catalog-heading {
+      grid-template-columns: 1fr;
+    }
+
+    .laschal-inline-link {
+      justify-self: start;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .laschal-hero,
+    .laschal-task-section,
+    .laschal-featured-section,
+    .laschal-focus-section,
+    .laschal-catalog-section,
+    .laschal-cta-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .laschal-hero {
+      padding-top: 54px;
+      padding-bottom: 58px;
+    }
+
+    .laschal-hero h1 {
+      max-width: 10.5ch;
+      font-size: clamp(2.72rem, 13vw, 3.55rem);
+    }
+
+    .laschal-actions,
+    .laschal-cta-section .laschal-actions {
+      display: grid;
+      width: 100%;
+      max-width: 354px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .laschal-button {
+      width: 100%;
+    }
+
+    .laschal-hero-visual {
+      margin-top: 34px;
+      padding: 16px;
+    }
+
+    .laschal-proof-strip,
+    .laschal-task-grid,
+    .laschal-feature-card dl,
+    .laschal-feature-lists,
+    .laschal-catalog-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .laschal-proof-strip {
+      border-radius: 10px;
+    }
+
+    .laschal-proof-strip a {
+      border-right: 0;
+      border-bottom: 1px solid #e3e8ee;
+    }
+
+    .laschal-proof-strip a:last-child {
+      border-bottom: 0;
+    }
+
+    .laschal-task-section,
+    .laschal-featured-section,
+    .laschal-focus-section,
+    .laschal-catalog-section {
+      padding-top: 58px;
+      padding-bottom: 58px;
+    }
+
+    .laschal-feature-card {
+      gap: 20px;
+      padding: 18px;
+    }
+
+    .laschal-feature-card figure {
+      min-height: 210px;
+      padding: 18px;
+    }
+
+    .laschal-focus-media {
+      min-height: 240px;
+      padding: 18px;
+    }
+
+    .laschal-filter-bar {
+      display: grid;
+    }
+
+    .laschal-filter-bar button {
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .laschal-product-card {
+      grid-template-rows: 170px 1fr;
+    }
+
+    .laschal-page-group-heading {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .laschal-task-card::before {
+      animation: none;
+      background-position:
+        45% 50%,
+        55% 50%,
+        50% 50%;
+      opacity: 0.78;
+    }
+
+    .laschal-task-card {
+      border-color: rgba(43, 95, 158, 0.28);
+      box-shadow: inset 0 0 0 1px rgba(43, 95, 158, 0.06);
+    }
+
+    .laschal-task-card:hover,
+    .laschal-task-card:focus-visible,
+    .laschal-task-card:active {
+      transform: none;
+    }
+  }
+</style>

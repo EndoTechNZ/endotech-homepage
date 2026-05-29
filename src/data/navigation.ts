@@ -15,6 +15,7 @@ export const getProductMenu = (base: string): NavItem[] => [
   { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
   { label: 'VortiFlow Irrigation Needle', href: `${base}products/vortiflow-irrigation-needle/` },
   { label: 'BCS BioCeramics Family', href: `${base}products/bcs/` },
+  { label: 'Laschal Instruments', href: `${base}products/laschal/` },
 ];
 
 export const getTechnologyMenu = (base: string): NavItem[] => [
@@ -50,6 +51,7 @@ export const getProductMobileNavItems = (
   { label: 'Acrobat Glide Path', href: `${base}products/acrobat-glide-path/` },
   { label: 'VortiFlow', href: `${base}products/vortiflow-irrigation-needle/` },
   { label: 'BCS Family', href: `${base}products/bcs/` },
+  { label: 'Laschal Instruments', href: `${base}products/laschal/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
   { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
   { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
@@ -78,6 +80,7 @@ export const getHomepageMobileNavItems = (
   { label: 'TransformX™ PT', href: `${base}products/pt-transformx/` },
   { label: 'VortiFlow', href: `${base}products/vortiflow-irrigation-needle/` },
   { label: 'BCS Family', href: `${base}products/bcs/` },
+  { label: 'Laschal Instruments', href: `${base}products/laschal/` },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
   { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
   { label: 'About', href: `${base}about/company/` },
@@ -94,6 +97,7 @@ export const getFooterSections = (base: string): FooterSection[] => [
       { label: 'Acrobat Glide Path', href: `${base}products/acrobat-glide-path/` },
       { label: 'VortiFlow', href: `${base}products/vortiflow-irrigation-needle/` },
       { label: 'BCS Family', href: `${base}products/bcs/` },
+      { label: 'Laschal Instruments', href: `${base}products/laschal/` },
     ],
   },
   {

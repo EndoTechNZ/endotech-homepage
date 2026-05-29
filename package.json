@@ -11,6 +11,7 @@
     "build:github": "npm run check:docs-links && astro build && node scripts/validate-all-links.js",
     "preview": "astro preview",
     "astro": "astro",
+    "export:laschal-catalogue": "node scripts/export-laschal-catalogue-pdf.mjs",
     "video:start": "npm --prefix endotech-video start",
     "video:render": "npm --prefix endotech-video render"
   },
