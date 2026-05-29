@@ -22,7 +22,7 @@ export const laschalFeaturedInstruments = [
       'Deep posterior access and microscope positioning can make small files difficult to control with fingers alone.',
     solution:
       'Diamond-coated file forceps place file handling into a slim instrument profile for angled, tactile access.',
-    features: ['75 or 90 degree access options', 'Diamond-coated working surfaces', 'Thumlok handle variants'],
+    features: ['75 or 90 degree access options', 'Diamond-coated working surfaces', 'ThumLok® handle variants'],
     benefits: [
       'Improves file control under magnification',
       'Reduces finger crowding around the access',
@@ -30,7 +30,7 @@ export const laschalFeaturedInstruments = [
     ],
     videos: [
       {
-        label: 'Watch Marc Habib use EF-1-7 tactile file forceps',
+        label: 'Watch Dr. Marc Habib use EF-1-7 tactile file forceps',
         href: 'https://www.youtube.com/watch?v=O14DwrteW9M',
       },
       {
@@ -166,7 +166,7 @@ export const laschalCategoryOrder = [
 export const laschalCatalogueVideos = [
   {
     category: 'Endodontic file control',
-    title: 'Marc Habib - Laschal EF-1-7 tactile file forceps',
+    title: 'Dr. Marc Habib - Laschal EF-1-7 tactile file forceps',
     channel: 'Laschal Surgical, LLC.',
     href: 'https://www.youtube.com/watch?v=O14DwrteW9M',
   },
@@ -214,7 +214,7 @@ export const laschalCatalogueVideos = [
   },
   {
     category: 'Microsurgical closure / suturing',
-    title: 'ThumLok needle holder',
+    title: 'ThumLok® needle holder',
     channel: 'Laschal Surgical, LLC.',
     href: 'https://www.youtube.com/watch?v=7VOFwNafd3Y',
   },
