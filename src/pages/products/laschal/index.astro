@@ -7,12 +7,10 @@ import {
   laschalCategoryOrder,
   laschalClinicalTasks,
   laschalFeaturedInstruments,
-  laschalSourceCategoryHref,
 } from '../../../data/laschalCatalogue';
 import { withBasePath } from '../../../utils/paths';
 
 const contactHref = withBasePath('/about/contact/');
-const sourceCategoryHref = laschalSourceCategoryHref;
 const cataloguePdfHref = withBasePath(laschalCataloguePdfHref);
 const images = Object.fromEntries(
   Object.entries(laschalAssets).map(([key, value]) => [key, withBasePath(value)]),
@@ -56,7 +54,6 @@ const schema = {
       itemListElement: laschalCatalogItems.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      url: item.sourceUrl,
       name: item.title,
       sku: item.sku,
     })),
@@ -168,7 +165,7 @@ const schema = {
                 </div>
               </div>
               <div class="laschal-card-actions">
-                <a href={instrument.href} target="_blank" rel="noreferrer">View product details</a>
+                <a href={contactHref}>Enquire through EndoTech NZ</a>
                 {instrument.videos.map((video) => (
                   <a class="video" href={video.href} target="_blank" rel="noreferrer">{video.label}</a>
                 ))}
@@ -223,7 +220,6 @@ const schema = {
             Browse by clinical category, then contact EndoTech NZ for suitability, availability, and ordering.
           </p>
         </div>
-        <a class="laschal-inline-link" href={sourceCategoryHref} target="_blank" rel="noreferrer">View full Laschal category</a>
       </div>
 
       <div class="laschal-filter-bar" aria-label="Filter Laschal products by category">
@@ -246,11 +242,8 @@ const schema = {
             </div>
             <div class="laschal-catalog-grid">
               {group.items.map((item) => (
-                <a
+                <article
                   class="laschal-product-card"
-                  href={item.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
                   data-category-card
                   data-category={item.category}
                 >
@@ -263,7 +256,7 @@ const schema = {
                     <p class="laschal-product-sku">SKU: {item.sku}</p>
                     <span>Enquire through EndoTech NZ</span>
                   </div>
-                </a>
+                </article>
               ))}
             </div>
           </section>
@@ -282,7 +275,6 @@ const schema = {
       <div class="laschal-actions">
         <a class="laschal-button primary" href={contactHref}>Contact EndoTech NZ</a>
         <a class="laschal-button secondary on-dark" href={cataloguePdfHref} download="EndoTech-NZ-Laschal-Endodontic-Instruments-Catalogue.pdf">Download catalogue</a>
-        <a class="laschal-button secondary on-dark" href={sourceCategoryHref} target="_blank" rel="noreferrer">View Laschal catalogue</a>
       </div>
     </section>
   </main>
@@ -1135,20 +1127,7 @@ const schema = {
     border: 1px solid #e3e8ee;
     border-radius: 8px;
     overflow: hidden;
-    color: inherit;
-    text-decoration: none;
     background: #ffffff;
-    transition:
-      transform 180ms ease,
-      border-color 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  .laschal-product-card:hover,
-  .laschal-product-card:focus-visible {
-    transform: translateY(-2px);
-    border-color: #c0c7d2;
-    box-shadow: 0 12px 28px rgba(0, 55, 112, 0.08);
   }
 
   .laschal-product-card figure {

@@ -185,7 +185,7 @@ function renderFeature(instrument) {
 
 function renderProductCard(item) {
   return `
-    <a class="product-card" href="${escapeHtml(item.sourceUrl)}">
+    <article class="product-card">
       <figure>
         <img src="${publicAssetDataUri(item.image)}" alt="${escapeHtml(item.title)}" />
       </figure>
@@ -195,7 +195,7 @@ function renderProductCard(item) {
         <strong>SKU: ${escapeHtml(item.sku)}</strong>
         <span>Enquire through EndoTech NZ</span>
       </div>
-    </a>
+    </article>
   `;
 }
 
@@ -224,13 +224,13 @@ function renderFeatureSections(featuredInstruments) {
 }
 
 function renderCategorySections(group) {
-  return chunkArray(group.items, 9)
+  return chunkArray(group.items, 6)
     .map((items, pageIndex) => {
-      const rangeStart = pageIndex * 9 + 1;
+      const rangeStart = pageIndex * 6 + 1;
       const rangeEnd = rangeStart + items.length - 1;
       const heading = pageIndex === 0 ? group.category : `${group.category} continued`;
       const countLabel =
-        group.items.length > 9
+        group.items.length > 6
           ? `${rangeStart}-${rangeEnd} of ${group.items.length} products`
           : `${group.items.length} products`;
 
@@ -320,7 +320,7 @@ function renderVideoSection(groups) {
     .join('');
 }
 
-function renderCatalogueFooter(logoUrl, sourceCategoryHref) {
+function renderCatalogueFooter(logoUrl) {
   return `
     <section class="page-break catalogue-footer-page">
       <div class="footer-inner">
@@ -334,7 +334,6 @@ function renderCatalogueFooter(logoUrl, sourceCategoryHref) {
         <div class="footer-actions">
           <a class="primary" href="https://endotechnz.com/about/contact/">Contact EndoTech NZ</a>
           <a href="https://endotechnz.com/downloads/EndoTech-NZ-Laschal-Endodontic-Instruments-Catalogue-clinical-steel-20260529.pdf">Download catalogue</a>
-          <a href="${escapeHtml(sourceCategoryHref)}">View Laschal catalogue</a>
         </div>
       </div>
     </section>
@@ -348,7 +347,6 @@ function catalogueHtml({
   clinicalTasks,
   videoGroups,
   productCount,
-  sourceCategoryHref,
 }) {
   const logoUrl = publicAssetDataUri(assets.logo);
   return `<!doctype html>
@@ -683,16 +681,21 @@ function catalogueHtml({
     .feature-image {
       display: grid;
       place-items: center;
+      align-self: start;
       min-height: 44mm;
       border: 1px solid rgba(210, 224, 235, 0.88);
       border-radius: 5mm;
       padding: 4mm;
       background: #f7f9fc;
+      overflow: hidden;
     }
 
     .feature-image img {
-      width: 100%;
-      max-height: 40mm;
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 36mm;
       object-fit: contain;
     }
 
@@ -763,40 +766,50 @@ function catalogueHtml({
     .product-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 3.2mm;
+      gap: 5mm;
     }
 
     .product-card {
       display: grid;
-      grid-template-rows: 32mm minmax(0, 1fr);
-      min-height: 60mm;
+      grid-template-rows: 38mm minmax(0, 1fr);
+      min-height: 82mm;
       border: 1px solid rgba(210, 224, 235, 0.88);
       border-radius: 4mm;
       overflow: hidden;
       background: #ffffff;
       break-inside: avoid;
+      isolation: isolate;
       page-break-inside: avoid;
     }
 
     .product-card figure {
       display: grid;
       place-items: center;
+      min-height: 0;
       margin: 0;
-      padding: 3mm;
+      padding: 3.5mm;
       background: #f7f9fc;
+      overflow: hidden;
     }
 
     .product-card img {
-      width: 100%;
-      height: 100%;
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 30mm;
       object-fit: contain;
     }
 
     .product-card div {
+      position: relative;
+      z-index: 1;
       display: grid;
-      gap: 1.7mm;
+      gap: 2mm;
       align-content: start;
-      padding: 3mm;
+      border-top: 1px solid rgba(210, 224, 235, 0.72);
+      padding: 4mm;
+      background: #ffffff;
     }
 
     .product-card p {
@@ -1039,7 +1052,7 @@ function catalogueHtml({
     ${categoryGroups.map(renderCategorySections).join('')}
 
     ${renderVideoSection(videoGroups)}
-    ${renderCatalogueFooter(logoUrl, sourceCategoryHref)}
+    ${renderCatalogueFooter(logoUrl)}
   </main>
 </body>
 </html>`;
@@ -1067,7 +1080,6 @@ const html = catalogueHtml({
   clinicalTasks: catalogueData.laschalClinicalTasks,
   videoGroups,
   productCount: laschalData.laschalCatalogItems.length,
-  sourceCategoryHref: catalogueData.laschalSourceCategoryHref,
 });
 
 mkdirSync(path.dirname(outputPath), { recursive: true });

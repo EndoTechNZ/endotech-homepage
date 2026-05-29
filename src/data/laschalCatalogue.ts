@@ -1,8 +1,3 @@
-import { laschalCatalogItems } from './laschal';
-
-export const laschalSourceCategoryHref =
-  'https://laschalsurgical.com/product-category/dental-surgeon-specialties/endodontics/';
-
 export const laschalCataloguePdfHref =
   '/downloads/EndoTech-NZ-Laschal-Endodontic-Instruments-Catalogue-clinical-steel-20260529.pdf';
 
@@ -17,17 +12,12 @@ export const laschalAssets = {
   group: '/images/laschal/feature/sonic-steel-group.webp',
 };
 
-const byTitle = (needle: string) =>
-  laschalCatalogItems.find((item) => item.title.toLowerCase().includes(needle.toLowerCase()))?.sourceUrl ??
-  laschalSourceCategoryHref;
-
 export const laschalFeaturedInstruments = [
   {
     title: 'Tactile endo file forceps',
     anchorId: 'laschal-feature-file-control',
     model: '90AHF/L, 75CHF/L, EF-1-7',
     image: laschalAssets.forceps,
-    href: byTitle('15.75cm Universal Endo File Forceps'),
     clinicalProblem:
       'Deep posterior access and microscope positioning can make small files difficult to control with fingers alone.',
     solution:
@@ -54,7 +44,6 @@ export const laschalFeaturedInstruments = [
     anchorId: 'laschal-feature-file-bender',
     model: 'FBF',
     image: laschalAssets.bender,
-    href: byTitle('Endodontic File Bending Forceps'),
     clinicalProblem:
       'Negotiating complex canal anatomy often requires a repeatable pre-curve rather than a rough hand bend.',
     solution:
@@ -72,7 +61,6 @@ export const laschalFeaturedInstruments = [
     anchorId: 'laschal-feature-fxp-retrieval',
     model: 'FXP/S, FXP/45, FXP/75, FXP/90, FXP/110',
     image: laschalAssets.fxp,
-    href: byTitle('Laschal File Extraction Protocol'),
     clinicalProblem:
       'Separated instruments can require a narrow, controlled retrieval pathway without over-enlarging dentine.',
     solution:
@@ -103,7 +91,6 @@ export const laschalFeaturedInstruments = [
     anchorId: 'laschal-feature-gutta-percha',
     model: 'SET-GP',
     image: laschalAssets.gutta,
-    href: laschalSourceCategoryHref,
     clinicalProblem:
       'Retreatment requires removal of gutta percha while preserving visibility and avoiding unnecessary canal disruption.',
     solution:
@@ -121,7 +108,6 @@ export const laschalFeaturedInstruments = [
     anchorId: 'laschal-feature-raptor-forceps',
     model: '45-S/L, 75-SP/L',
     image: laschalAssets.raptor,
-    href: byTitle('RAPTOR Forceps'),
     clinicalProblem:
       'Posts, points, and small fragments often need narrow access with force delivered only where it is useful.',
     solution:
