@@ -1,0 +1,1132 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import WorkflowStrip, { type WorkflowStripItem } from '../../components/navigation/WorkflowStrip.astro';
+import homepageSplash from '../../assets/homepage-transformx-clinical-splash.png';
+import transformxSystem from '../../assets/transformx-rotary-file-system.png';
+import etFirewireMachine from '../../assets/et-firewire-machine.png';
+import avatarComparison from '../../assets/avatar-tip-comparison.png';
+import etProduct from '../../assets/et-transformx.png';
+import ptProduct from '../../assets/pt-transformx.png';
+
+const base = import.meta.env.BASE_URL;
+
+const technologyStripItems: WorkflowStripItem[] = [
+  {
+    id: 'transform',
+    step: 'Transform',
+    note: 'Adaptive NiTi response through curvature.',
+    href: `${base}technology/transform-technology/`,
+    icon: 'settings',
+  },
+  {
+    id: 'avatar',
+    step: 'Avatar Tip',
+    note: 'Guidance-focused apical geometry.',
+    href: `${base}technology/avatar-tip/`,
+    icon: 'apical',
+  },
+  {
+    id: 'systems',
+    step: 'Systems',
+    note: 'ET and PT shaping paths.',
+    href: `${base}products/overview/`,
+    icon: 'shape',
+  },
+  {
+    id: 'workflow',
+    step: 'Workflow',
+    note: 'Apply control in sequence.',
+    href: `${base}technique/workflow/`,
+    icon: 'curve',
+  },
+];
+
+const technologyPaths = [
+  {
+    label: '01 Material response',
+    title: 'Transform Technology',
+    text: 'Variable-phase NiTi engineering designed to support shaping stability coronally and greater adaptability as the file works through curvature.',
+    clinicalFrame: 'Addresses the tendency for rigid file behaviour to place lateral stress into curved canal anatomy.',
+    href: `${base}technology/transform-technology/`,
+    cta: 'Explore Transform Technology',
+    image: etFirewireMachine,
+    alt: 'Transform Technology heat treatment equipment render',
+    tone: 'light',
+  },
+  {
+    label: '02 Apical guidance',
+    title: 'Avatar Tip',
+    text: 'A smoother guidance-focused apical geometry designed to support centered advancement where canal tolerance is lowest.',
+    clinicalFrame: 'Addresses abrupt apical engagement, transportation risk, and loss of path control in demanding anatomy.',
+    href: `${base}technology/avatar-tip/`,
+    cta: 'Explore Avatar Tip',
+    image: avatarComparison,
+    alt: 'Avatar Tip geometry comparison',
+    tone: 'blue',
+  },
+];
+
+const productRoutes = [
+  {
+    title: 'TransformX ET',
+    text: 'ET-style sequence logic for clinicians who want familiar .04 and .06 shaping behaviour with the TransformX control platform.',
+    href: `${base}products/et-transformx/`,
+    image: etProduct,
+    alt: 'TransformX ET rotary file system',
+  },
+  {
+    title: 'TransformX PT',
+    text: 'PT-style progressive shaping sequence using the same material response and apical guidance platform.',
+    href: `${base}products/pt-transformx/`,
+    image: ptProduct,
+    alt: 'TransformX PT rotary file system',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Technology | EndoTech NZ',
+  description:
+    'EndoTech NZ technology platform overview for Transform Technology, Avatar Tip, and the TransformX shaping systems.',
+};
+---
+
+<ProductLayout
+  title="Technology | EndoTech NZ"
+  description="Explore the EndoTech NZ technology platform behind TransformX shaping: Transform Technology for adaptive file response and Avatar Tip for apical guidance."
+  image={homepageSplash.src}
+  schema={schema}
+  accent="slate"
+>
+  <div class="technology-page">
+    <section class="technology-hero" aria-labelledby="technology-hero-title">
+      <figure class="technology-hero-product" aria-hidden="true">
+        <img src={homepageSplash.src} alt="" />
+      </figure>
+      <div class="technology-hero-field" aria-hidden="true"></div>
+
+      <div class="technology-hero-inner">
+        <p class="technology-eyebrow">EndoTech Technology Platform</p>
+        <h1 id="technology-hero-title">
+          <span>Technology for</span>
+          <span>controlled shaping.</span>
+        </h1>
+        <p class="technology-hero-lede">
+          TransformX connects material behaviour and apical guidance into one clinical platform: adaptive NiTi response through curvature, and smoother advancement where tolerance is lowest.
+        </p>
+        <div class="technology-hero-actions">
+          <a class="technology-button technology-button-primary" href={`${base}technology/transform-technology/`}>
+            Explore Transform Technology
+          </a>
+          <a class="technology-button technology-button-secondary" href={`${base}technology/avatar-tip/`}>
+            Explore Avatar Tip
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <WorkflowStrip items={technologyStripItems} title="Technology platform pathways" />
+
+    <div class="technology-section-separator" aria-hidden="true"></div>
+
+    <section class="technology-section technology-control-section" aria-labelledby="technology-control-title">
+      <div class="technology-section-heading technology-centered">
+        <p class="technology-eyebrow">Control Points</p>
+        <h2 id="technology-control-title">Two technology stories, one clinical aim.</h2>
+        <p>
+          The platform is intentionally simple: Transform Technology manages file response through curvature, while Avatar Tip supports controlled apical guidance.
+        </p>
+      </div>
+
+      <div class="technology-path-grid">
+        {technologyPaths.map((path) => (
+          <article class:list={['technology-path-card', path.tone === 'blue' && 'technology-path-card-blue']}>
+            <figure>
+              <img src={path.image.src} alt={path.alt} loading="lazy" />
+            </figure>
+            <div class="technology-path-copy">
+              <p>{path.label}</p>
+              <h3>{path.title}</h3>
+              <p>{path.text}</p>
+              <div class="technology-clinical-frame">
+                <span>Clinical problem</span>
+                <strong>{path.clinicalFrame}</strong>
+              </div>
+              <a href={path.href}>{path.cta}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="technology-section technology-mechanism-section" aria-labelledby="technology-mechanism-title">
+      <div class="technology-mechanism-copy">
+        <p class="technology-eyebrow">Mechanism View</p>
+        <h2 id="technology-mechanism-title">Adaptability and guidance belong together.</h2>
+        <p>
+          Curved canals ask the file to cut, flex, and follow the prepared path at the same time. The technology platform separates those demands into two design controls so the clinical sequence stays familiar.
+        </p>
+        <ul>
+          <li>Coronal stability supports efficient shaping and torsional control.</li>
+          <li>Apical adaptability helps reduce unnecessary restoring-force pressure.</li>
+          <li>Rounded guidance geometry supports smoother progression near working length.</li>
+        </ul>
+      </div>
+
+      <figure class="technology-mechanism-visual" aria-labelledby="technology-diagram-title">
+        <svg viewBox="0 0 760 520" role="img" aria-labelledby="technology-diagram-title technology-diagram-desc">
+          <title id="technology-diagram-title">TransformX technology mechanism diagram</title>
+          <desc id="technology-diagram-desc">
+            Diagram showing variable file response through a curved canal and a rounded apical guidance tip.
+          </desc>
+          <defs>
+            <linearGradient id="phaseLine" x1="0%" x2="100%" y1="0%" y2="0%">
+              <stop offset="0%" stop-color="#0b75b7" />
+              <stop offset="48%" stop-color="#1ba6a6" />
+              <stop offset="100%" stop-color="#4bae73" />
+            </linearGradient>
+            <linearGradient id="canalFill" x1="0%" x2="100%" y1="0%" y2="0%">
+              <stop offset="0%" stop-color="#eef6fb" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </linearGradient>
+            <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#102033" flood-opacity="0.12" />
+            </filter>
+          </defs>
+
+          <rect x="24" y="24" width="712" height="472" rx="8" fill="#ffffff" stroke="#e3e8ee" />
+          <path
+            d="M96 270 C210 180 326 168 408 226 C472 272 492 350 580 376 C616 386 644 386 680 378"
+            fill="none"
+            stroke="#dbe8f0"
+            stroke-width="86"
+            stroke-linecap="round"
+            filter="url(#softShadow)"
+          />
+          <path
+            d="M96 270 C210 180 326 168 408 226 C472 272 492 350 580 376 C616 386 644 386 680 378"
+            fill="none"
+            stroke="url(#canalFill)"
+            stroke-width="68"
+            stroke-linecap="round"
+          />
+          <path
+            d="M112 270 C222 190 326 188 398 238 C462 282 486 356 584 386"
+            fill="none"
+            stroke="url(#phaseLine)"
+            stroke-width="11"
+            stroke-linecap="round"
+          />
+          <path
+            d="M112 270 C222 190 326 188 398 238 C462 282 486 356 584 386"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-dasharray="10 16"
+          />
+          <circle cx="108" cy="270" r="18" fill="#0b75b7" />
+          <circle cx="402" cy="238" r="18" fill="#1ba6a6" />
+          <circle cx="584" cy="386" r="18" fill="#4bae73" />
+          <path d="M610 385 C638 388 660 382 682 374" fill="none" stroke="#123d78" stroke-width="9" stroke-linecap="round" />
+          <circle cx="684" cy="373" r="11" fill="#123d78" />
+
+          <g class="technology-diagram-label">
+            <rect x="74" y="92" width="176" height="74" rx="8" fill="#f8fafc" stroke="#e3e8ee" />
+            <text x="96" y="126">Coronal stability</text>
+            <text x="96" y="149">Efficient shaping response</text>
+            <path d="M164 166 L116 248" fill="none" stroke="#b8d8ea" stroke-width="2" />
+          </g>
+          <g class="technology-diagram-label">
+            <rect x="306" y="74" width="178" height="74" rx="8" fill="#f8fafc" stroke="#e3e8ee" />
+            <text x="328" y="108">Transition zone</text>
+            <text x="328" y="131">Controlled response change</text>
+            <path d="M396 148 L402 216" fill="none" stroke="#b8d8ea" stroke-width="2" />
+          </g>
+          <g class="technology-diagram-label">
+            <rect x="504" y="128" width="178" height="74" rx="8" fill="#f8fafc" stroke="#e3e8ee" />
+            <text x="526" y="162">Apical adaptability</text>
+            <text x="526" y="185">Less lateral pressure</text>
+            <path d="M596 202 L586 356" fill="none" stroke="#b8d8ea" stroke-width="2" />
+          </g>
+          <g class="technology-diagram-label">
+            <rect x="474" y="408" width="204" height="58" rx="8" fill="#eef6fb" stroke="#b8d8ea" />
+            <text x="496" y="443">Rounded Avatar Tip guidance</text>
+          </g>
+        </svg>
+        <figcaption>
+          Illustrative technology artwork showing material response along the file and the apical guidance zone. It is an explanatory diagram, not a clinical claim by itself.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="technology-section technology-product-section" aria-labelledby="technology-product-title">
+      <div class="technology-product-visual">
+        <img src={transformxSystem.src} alt="TransformX rotary file system" loading="lazy" />
+      </div>
+
+      <div class="technology-product-copy">
+        <p class="technology-eyebrow">Product Connection</p>
+        <h2 id="technology-product-title">The technology leads back to clinical sequence selection.</h2>
+        <p>
+          Once the clinician understands the control platform, the practical question becomes sequence preference. TransformX ET and TransformX PT preserve familiar shaping pathways while using the same technology logic.
+        </p>
+
+        <div class="technology-product-routes">
+          {productRoutes.map((route) => (
+            <a class="technology-product-route" href={route.href}>
+              <img src={route.image.src} alt={route.alt} loading="lazy" />
+              <span>
+                <strong>{route.title}</strong>
+                <small>{route.text}</small>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="technology-section technology-benefit-section" aria-labelledby="technology-benefit-title">
+      <div class="technology-section-heading">
+        <p class="technology-eyebrow">Clinical Benefits</p>
+        <h2 id="technology-benefit-title">Technology framed by what it helps control.</h2>
+      </div>
+      <div class="technology-benefit-grid">
+        <article>
+          <span>01</span>
+          <h3>Canal path control</h3>
+          <p>Avatar Tip supports smoother guidance where transportation and ledging can become more consequential.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Stress management</h3>
+          <p>Transform Technology supports a calmer file response through curvature and changing canal demands.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Workflow adaptability</h3>
+          <p>The technology sits inside familiar ET and PT sequence logic, so the system can adapt without forcing a new clinical habit.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="technology-cta" aria-labelledby="technology-cta-title">
+      <p class="technology-eyebrow">Next Step</p>
+      <h2 id="technology-cta-title">Move from platform overview into the detailed technology sections.</h2>
+      <p>
+        Review the material response first, then inspect the apical guidance story and product systems that carry the technology into clinical use.
+      </p>
+      <div class="technology-cta-actions">
+        <a class="technology-button technology-button-on-dark" href={`${base}technology/transform-technology/`}>
+          Transform Technology
+        </a>
+        <a class="technology-button technology-button-ghost" href={`${base}technology/avatar-tip/`}>
+          Avatar Tip
+        </a>
+      </div>
+    </section>
+  </div>
+</ProductLayout>
+
+<style>
+  .technology-page {
+    --technology-canvas: #ffffff;
+    --technology-soft: #f7f9fc;
+    --technology-clinical: #f3f6f8;
+    --technology-ink: #111827;
+    --technology-secondary: #24364a;
+    --technology-muted: #607084;
+    --technology-subtle: #8a94a3;
+    --technology-primary: #0b75b7;
+    --technology-primary-deep: #064b78;
+    --technology-primary-soft: #dceff8;
+    --technology-hairline: #e3e8ee;
+    --technology-hairline-blue: #b8d8ea;
+    --technology-dark: #0c1730;
+    color: var(--technology-ink);
+    background: var(--technology-canvas);
+    font-family: Inter, "Segoe UI", sans-serif;
+  }
+
+  .technology-page h1,
+  .technology-page h2,
+  .technology-page h3,
+  .technology-page p {
+    margin: 0;
+    letter-spacing: 0;
+  }
+
+  .technology-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 92px 56px 72px;
+    border-bottom: 1px solid var(--technology-hairline);
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+  }
+
+  .technology-hero-product {
+    position: absolute;
+    inset: auto 0 -58px auto;
+    z-index: -2;
+    width: min(760px, 54vw);
+    margin: 0;
+    opacity: 0.32;
+    filter: saturate(0.96) contrast(1.02);
+  }
+
+  .technology-hero-product img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .technology-hero-field {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.98) 34%, rgba(255, 255, 255, 0.68) 70%, rgba(255, 255, 255, 0.2) 100%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.74) 76%, #ffffff 100%);
+  }
+
+  .technology-hero-inner {
+    display: grid;
+    justify-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .technology-eyebrow {
+    color: var(--technology-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .technology-hero h1 {
+    display: grid;
+    gap: 4px;
+    margin-top: 18px;
+    color: #0b1424;
+    font-size: 4rem;
+    font-weight: 600;
+    line-height: 1.04;
+  }
+
+  .technology-hero h1 span:last-child {
+    color: #9aa9b7;
+  }
+
+  .technology-hero-lede {
+    max-width: 720px;
+    margin-top: 24px;
+    color: var(--technology-secondary);
+    font-size: 1.13rem;
+    line-height: 1.65;
+  }
+
+  .technology-hero-actions,
+  .technology-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .technology-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border-radius: 999px;
+    padding: 0 22px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      box-shadow 220ms ease,
+      color 180ms ease,
+      transform 220ms ease;
+  }
+
+  .technology-button:hover,
+  .technology-button:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  .technology-button-primary {
+    border: 1px solid var(--technology-primary);
+    background: var(--technology-primary);
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+
+  .technology-button-primary:hover,
+  .technology-button-primary:focus-visible {
+    background: #09639b;
+    border-color: #09639b;
+    box-shadow: 0 12px 24px rgba(0, 55, 112, 0.12);
+  }
+
+  .technology-button-secondary {
+    border: 1px solid var(--technology-hairline-blue);
+    background: #ffffff;
+    color: var(--technology-primary-deep);
+  }
+
+  .technology-button-secondary:hover,
+  .technology-button-secondary:focus-visible {
+    border-color: #a9cfe3;
+    background: #eef8fc;
+  }
+
+  .technology-section-separator {
+    width: min(1180px, calc(100% - 112px));
+    height: 1px;
+    margin: 64px auto 0;
+    background: var(--technology-hairline);
+  }
+
+  .technology-section {
+    padding: 88px 56px;
+    border-bottom: 1px solid var(--technology-hairline);
+    background: #ffffff;
+  }
+
+  .technology-section-heading {
+    max-width: 760px;
+  }
+
+  .technology-centered {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .technology-section-heading h2,
+  .technology-mechanism-copy h2,
+  .technology-product-copy h2,
+  .technology-cta h2 {
+    margin-top: 16px;
+    color: #0b1424;
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.14;
+  }
+
+  .technology-section-heading p:not(.technology-eyebrow),
+  .technology-mechanism-copy > p:not(.technology-eyebrow),
+  .technology-product-copy > p,
+  .technology-cta > p {
+    margin-top: 18px;
+    color: var(--technology-muted);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .technology-path-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 1180px;
+    margin: 52px auto 0;
+  }
+
+  .technology-path-card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    border: 1px solid var(--technology-hairline);
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 55, 112, 0.06);
+  }
+
+  .technology-path-card-blue {
+    border-color: rgba(11, 117, 183, 0.24);
+    background: #0f3d64;
+  }
+
+  .technology-path-card figure {
+    display: grid;
+    place-items: center;
+    min-height: 286px;
+    margin: 0;
+    padding: 28px;
+    border-bottom: 1px solid var(--technology-hairline);
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  }
+
+  .technology-path-card-blue figure {
+    border-bottom-color: rgba(255, 255, 255, 0.14);
+    background: linear-gradient(180deg, #f8fbfd 0%, #eef6fb 100%);
+  }
+
+  .technology-path-card img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+  }
+
+  .technology-path-copy {
+    display: grid;
+    align-content: start;
+    padding: 28px;
+  }
+
+  .technology-path-copy > p:first-child {
+    color: var(--technology-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .technology-path-card-blue .technology-path-copy > p:first-child {
+    color: #cfeaf8;
+  }
+
+  .technology-path-copy h3 {
+    margin-top: 14px;
+    color: #0b1424;
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.22;
+  }
+
+  .technology-path-card-blue .technology-path-copy h3 {
+    color: #ffffff;
+  }
+
+  .technology-path-copy > p:nth-of-type(2) {
+    margin-top: 14px;
+    color: var(--technology-muted);
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .technology-path-card-blue .technology-path-copy > p:nth-of-type(2) {
+    color: #d8e7f0;
+  }
+
+  .technology-clinical-frame {
+    display: grid;
+    gap: 8px;
+    margin-top: 22px;
+    border-left: 2px solid var(--technology-primary);
+    padding-left: 16px;
+  }
+
+  .technology-clinical-frame span {
+    color: var(--technology-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .technology-clinical-frame strong {
+    color: var(--technology-secondary);
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.62;
+  }
+
+  .technology-path-card-blue .technology-clinical-frame {
+    border-left-color: #92d5e8;
+  }
+
+  .technology-path-card-blue .technology-clinical-frame span {
+    color: #cfeaf8;
+  }
+
+  .technology-path-card-blue .technology-clinical-frame strong {
+    color: #ffffff;
+  }
+
+  .technology-path-copy a,
+  .technology-product-route {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .technology-path-copy a {
+    display: inline-flex;
+    justify-self: start;
+    margin-top: 26px;
+    border: 1px solid var(--technology-hairline-blue);
+    border-radius: 999px;
+    padding: 11px 18px;
+    background: #ffffff;
+    color: var(--technology-primary-deep);
+    font-size: 0.86rem;
+    font-weight: 700;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .technology-path-copy a:hover,
+  .technology-path-copy a:focus-visible {
+    border-color: #a9cfe3;
+    background: #eef8fc;
+    transform: translateY(-1px);
+  }
+
+  .technology-path-card-blue .technology-path-copy a {
+    border-color: #ffffff;
+    background: #ffffff;
+    color: #0f3d64;
+  }
+
+  .technology-mechanism-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.76fr) minmax(0, 1.24fr);
+    gap: 54px;
+    align-items: center;
+    background: var(--technology-soft);
+  }
+
+  .technology-mechanism-copy {
+    max-width: 520px;
+  }
+
+  .technology-mechanism-copy ul {
+    display: grid;
+    gap: 12px;
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .technology-mechanism-copy li {
+    position: relative;
+    padding-left: 22px;
+    color: var(--technology-secondary);
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .technology-mechanism-copy li::before {
+    content: "";
+    position: absolute;
+    top: 0.7em;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--technology-primary);
+  }
+
+  .technology-mechanism-visual {
+    margin: 0;
+  }
+
+  .technology-mechanism-visual svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .technology-diagram-label text:first-of-type {
+    fill: #24364a;
+    font-family: Inter, "Segoe UI", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .technology-diagram-label text:nth-of-type(2) {
+    fill: #607084;
+    font-family: Inter, "Segoe UI", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .technology-mechanism-visual figcaption {
+    max-width: 720px;
+    margin: 14px auto 0;
+    color: var(--technology-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .technology-product-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 52px;
+    align-items: center;
+  }
+
+  .technology-product-visual {
+    display: grid;
+    place-items: center;
+    min-height: 460px;
+    border: 1px solid var(--technology-hairline);
+    border-radius: 8px;
+    padding: 42px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: 0 1px 3px rgba(0, 55, 112, 0.06);
+  }
+
+  .technology-product-visual img {
+    width: 100%;
+    max-height: 390px;
+    object-fit: contain;
+  }
+
+  .technology-product-copy {
+    max-width: 620px;
+  }
+
+  .technology-product-routes {
+    display: grid;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .technology-product-route {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+    min-height: 118px;
+    border: 1px solid var(--technology-hairline);
+    border-radius: 8px;
+    padding: 14px;
+    background: #ffffff;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .technology-product-route:hover,
+  .technology-product-route:focus-visible {
+    border-color: #c0d7e8;
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .technology-product-route img {
+    width: 96px;
+    max-height: 86px;
+    object-fit: contain;
+  }
+
+  .technology-product-route span {
+    display: grid;
+    gap: 8px;
+  }
+
+  .technology-product-route strong {
+    color: #0b1424;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .technology-product-route small {
+    color: var(--technology-muted);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .technology-benefit-section {
+    background: var(--technology-soft);
+  }
+
+  .technology-benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 1180px;
+    margin-top: 34px;
+  }
+
+  .technology-benefit-grid article {
+    border: 1px solid var(--technology-hairline);
+    border-radius: 8px;
+    padding: 26px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 55, 112, 0.06);
+  }
+
+  .technology-benefit-grid span {
+    display: inline-flex;
+    color: var(--technology-primary);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+  }
+
+  .technology-benefit-grid h3 {
+    margin-top: 14px;
+    color: #0b1424;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .technology-benefit-grid p {
+    margin-top: 12px;
+    color: var(--technology-muted);
+    font-size: 0.94rem;
+    line-height: 1.66;
+  }
+
+  .technology-cta {
+    display: grid;
+    justify-items: center;
+    padding: 78px 56px 86px;
+    background: linear-gradient(180deg, #0c1730 0%, #101b36 100%);
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .technology-cta .technology-eyebrow {
+    color: #c4cfdb;
+  }
+
+  .technology-cta h2 {
+    max-width: 760px;
+    color: #ffffff;
+  }
+
+  .technology-cta > p {
+    max-width: 680px;
+    color: #c4cfdb;
+  }
+
+  .technology-button-on-dark {
+    border: 1px solid #ffffff;
+    background: #ffffff;
+    color: #0c1730;
+  }
+
+  .technology-button-on-dark:hover,
+  .technology-button-on-dark:focus-visible {
+    background: #eef6fb;
+  }
+
+  .technology-button-ghost {
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+  }
+
+  .technology-button-ghost:hover,
+  .technology-button-ghost:focus-visible {
+    border-color: rgba(255, 255, 255, 0.44);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  @media (max-width: 1120px) {
+    .technology-hero,
+    .technology-section,
+    .technology-cta {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .technology-hero h1 {
+      font-size: 3.2rem;
+    }
+
+    .technology-hero-product {
+      width: 82vw;
+      opacity: 0.24;
+    }
+
+    .technology-section-separator {
+      width: calc(100% - 60px);
+      margin-top: 48px;
+    }
+
+    .technology-mechanism-section,
+    .technology-product-section {
+      grid-template-columns: 1fr;
+    }
+
+    .technology-mechanism-copy,
+    .technology-product-copy {
+      max-width: 760px;
+    }
+
+    .technology-benefit-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .technology-hero,
+    .technology-section,
+    .technology-cta {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .technology-hero {
+      padding-top: 54px;
+      padding-bottom: 50px;
+    }
+
+    .technology-hero-product {
+      inset: auto -96vw -34px auto;
+      width: 186vw;
+      opacity: 0.2;
+      filter: saturate(1);
+    }
+
+    .technology-hero-field {
+      background:
+        linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.96) 35%, rgba(255, 255, 255, 0.74) 70%, #ffffff 100%),
+        radial-gradient(ellipse 80% 60% at 50% 34%, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.08));
+    }
+
+    .technology-eyebrow {
+      font-size: 0.64rem;
+      letter-spacing: 0.14em;
+    }
+
+    .technology-hero h1 {
+      font-size: 2.25rem;
+      line-height: 1.08;
+    }
+
+    .technology-hero-lede {
+      font-size: 0.98rem;
+      line-height: 1.62;
+    }
+
+    .technology-hero-actions,
+    .technology-cta-actions {
+      display: grid;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .technology-button {
+      width: 100%;
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .technology-section {
+      padding-top: 64px;
+      padding-bottom: 64px;
+    }
+
+    .technology-section-separator {
+      width: calc(100% - 36px);
+      margin-top: 36px;
+    }
+
+    .technology-section-heading h2,
+    .technology-mechanism-copy h2,
+    .technology-product-copy h2,
+    .technology-cta h2 {
+      font-size: 2rem;
+      line-height: 1.16;
+    }
+
+    .technology-section-heading p:not(.technology-eyebrow),
+    .technology-mechanism-copy > p:not(.technology-eyebrow),
+    .technology-product-copy > p,
+    .technology-cta > p {
+      font-size: 0.95rem;
+      line-height: 1.66;
+    }
+
+    .technology-path-grid {
+      grid-template-columns: 1fr;
+      margin-top: 44px;
+    }
+
+    .technology-path-card figure {
+      min-height: 210px;
+      padding: 20px;
+    }
+
+    .technology-path-card img {
+      max-height: 190px;
+    }
+
+    .technology-path-copy,
+    .technology-benefit-grid article {
+      padding: 22px;
+    }
+
+    .technology-path-copy h3 {
+      font-size: 1.45rem;
+    }
+
+    .technology-mechanism-section,
+    .technology-product-section {
+      gap: 34px;
+    }
+
+    .technology-mechanism-visual figcaption {
+      text-align: left;
+    }
+
+    .technology-diagram-label text:first-of-type {
+      font-size: 19px;
+    }
+
+    .technology-diagram-label text:nth-of-type(2) {
+      font-size: 15px;
+    }
+
+    .technology-product-visual {
+      min-height: 300px;
+      padding: 24px;
+    }
+
+    .technology-product-visual img {
+      max-height: 260px;
+    }
+
+    .technology-product-route {
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 14px;
+      min-height: 112px;
+    }
+
+    .technology-product-route img {
+      width: 76px;
+      max-height: 70px;
+    }
+
+    .technology-cta {
+      padding-top: 64px;
+      padding-bottom: 68px;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .technology-hero h1 {
+      font-size: 2rem;
+    }
+
+    .technology-product-route {
+      grid-template-columns: 1fr;
+    }
+
+    .technology-product-route img {
+      width: 120px;
+      max-height: 90px;
+    }
+  }
+</style>

@@ -19,6 +19,7 @@ export const getProductMenu = (base: string): NavItem[] => [
 ];
 
 export const getTechnologyMenu = (base: string): NavItem[] => [
+  { label: 'Technology Overview', href: `${base}technology/` },
   { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
   { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
 ];
@@ -32,7 +33,7 @@ export const getPrimaryNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
   { label: 'Products', href: `${base}products/overview/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
-  { label: 'Technology', href: `${base}technology/transform-technology/` },
+  { label: 'Technology', href: `${base}technology/` },
   { label: 'Blog', href: `${base}resources/ideas/` },
   { label: 'Order', href: `${base}order/` },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
@@ -53,6 +54,7 @@ export const getProductMobileNavItems = (
   { label: 'BCS Family', href: `${base}products/bcs/` },
   { label: 'Laschal Instruments', href: `${base}products/laschal/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
+  { label: 'Technology Overview', href: `${base}technology/` },
   { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
   { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
   { label: 'Order', href: `${base}order/` },
@@ -70,6 +72,7 @@ export const getHomepageMobileNavItems = (
   { label: 'Home', href: base },
   { label: 'Product Overview', href: `${base}products/overview/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
+  { label: 'Technology Overview', href: `${base}technology/` },
   { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
   { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
   { label: 'Order', href: `${base}order/` },
@@ -104,7 +107,7 @@ export const getFooterSections = (base: string): FooterSection[] => [
     title: 'Clinical',
     links: [
       { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
-      { label: 'Technology', href: `${base}technology/transform-technology/` },
+      { label: 'Technology', href: `${base}technology/` },
       { label: 'Blog', href: `${base}resources/ideas/` },
       { label: 'Education', href: `${base}resources/clinical-tips/` },
       { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
