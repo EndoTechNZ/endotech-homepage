@@ -6,7 +6,7 @@ export const laschalAssets = {
   logo: '/images/laschal/feature/laschal-logo.png',
   fxp: '/images/laschal/feature/fxp-protocol.webp',
   gutta: '/images/laschal/feature/gutta-percha-set.webp',
-  bender: '/images/laschal/category/13-4cm-universal-endodontic-file-bending-forceps-flat-handle.jpg',
+  bender: '/images/laschal/category/11-5cm-uniband-forceps-straight-standard-tips.jpg',
   forceps: '/images/laschal/feature/endo-file-forceps.webp',
   laF: '/images/laschal/category/11-5cm-uniband-forceps-straight-standard-tips.jpg',
   raptor: '/images/laschal/feature/raptor-forceps.webp',
@@ -17,13 +17,13 @@ export const laschalFeaturedInstruments = [
   {
     title: 'Tactile endo file forceps',
     anchorId: 'laschal-feature-file-control',
-    model: 'LA-F, 90AHF/L, 75CHF/L, EF-1-7',
-    image: laschalAssets.laF,
+    model: '90AHF/L, 75CHF/L, EF-1-7',
+    image: laschalAssets.forceps,
     clinicalProblem:
       'Deep posterior access and microscope positioning can make small files difficult to control with fingers alone.',
     solution:
-      'Straight and angled file forceps place file handling into a slim instrument profile for tactile access.',
-    features: ['LA-F straight Uniband option', '75 or 90 degree access options', 'Diamond-coated working surfaces'],
+      'Angled file forceps place file handling into a slim instrument profile for tactile access.',
+    features: ['75 or 90 degree access options', 'Diamond-coated working surfaces', 'Tactile file placement support'],
     benefits: [
       'Improves file control under magnification',
       'Reduces finger crowding around the access',
@@ -43,13 +43,13 @@ export const laschalFeaturedInstruments = [
   {
     title: 'Endodontic file bender',
     anchorId: 'laschal-feature-file-bender',
-    model: 'FBF',
+    model: 'LA-F',
     image: laschalAssets.bender,
     clinicalProblem:
       'Negotiating complex canal anatomy often requires a repeatable pre-curve rather than a rough hand bend.',
     solution:
-      'The file bender supports short, gradual, acute, elongated, and deeper bends in endodontic files.',
-    features: ['Flat-handle bending control', 'Multiple curvature styles', 'Compact chairside format'],
+      'LA-F is the current Laschal file-bending tool for controlled endodontic file pre-curving.',
+    features: ['Straight Uniband control', 'File bending and pre-curving support', 'Compact chairside format'],
     benefits: [
       'Helps preserve intended file path',
       'Supports controlled negotiation',
@@ -155,12 +155,12 @@ export const laschalBestSellerCampaigns = [
     ],
   },
   {
-    title: 'Tactile file control under the microscope',
+    title: 'File bending and tactile file control',
     anchorId: 'laschal-best-sellers-file-control',
     skus: ['LA-F', 'EF-1-7', '90AHF/L', '75CHF/L'],
     image: '/images/laschal/category/17-75cm-universal-endo-file-forceps-thumlok-diamond-round-handle-straight-straight-blunt-tips.jpg',
     clinicalUse:
-      'Use this set where fingers block the microscope view or posterior access makes direct file handling awkward, starting with LA-F for straight-line file holding and moving to angled forceps as access narrows.',
+      'Use LA-F for controlled file bending and pre-curving, then move to tactile file forceps when fingers block the microscope view or posterior access makes direct handling awkward.',
     clinicalBenefits: [
       'Moves file handling out of the fingers and into a slim tactile instrument',
       'Improves visibility around the access cavity during placement and manipulation',
