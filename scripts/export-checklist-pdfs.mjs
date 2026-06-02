@@ -327,6 +327,7 @@ async function exportPdf(browser, config) {
 
 const curved = await importData('src/data/curvedCanalChecklist.ts');
 const mb2 = await importData('src/data/mb2Checklist.ts');
+const evidence = await importData('src/data/evidenceChecklist.ts');
 
 const browser = await chromium.launch({ headless: true });
 
@@ -352,6 +353,18 @@ try {
     sources: mb2.mb2ChecklistSources,
     referenceNote: mb2.mb2ChecklistReferenceNote,
     outputPath: path.join(outputDir, 'EndoTech-NZ-MB2-15-Point-Protocol-Checklist.pdf'),
+  });
+
+  await exportPdf(browser, {
+    title: '10-point endodontic outcomes checklist',
+    kicker: 'Evidence outcomes checklist',
+    intro:
+      'Use this chairside checklist when outcome risk needs to be made visible. The aim is controlled diagnosis, infection control, apical management, shaping, obturation, restoration, review, and retreatment judgment.',
+    items: evidence.evidenceChecklistItems,
+    sources: evidence.evidenceChecklistSources,
+    referenceNote: evidence.evidenceChecklistReferenceNote,
+    firstPageCount: 6,
+    outputPath: path.join(outputDir, 'EndoTech-NZ-Endodontic-Outcomes-10-Point-Checklist.pdf'),
   });
 } finally {
   await browser.close();

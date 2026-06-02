@@ -1,0 +1,537 @@
+---
+import ProductLayout from '../../../layouts/ProductLayout.astro';
+import {
+  evidenceChecklistItems,
+  evidenceChecklistReferenceNote,
+  evidenceChecklistSources,
+} from '../../../data/evidenceChecklist';
+
+const base = import.meta.env.BASE_URL;
+const firstItem = evidenceChecklistItems[0];
+const checklistPdfHref = `${base}downloads/EndoTech-NZ-Endodontic-Outcomes-10-Point-Checklist.pdf`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: 'Endodontic Outcomes Checklist',
+  description:
+    'An interactive 10-point chairside checklist for diagnosis, infection control, apical extent, shaping, obturation, restoration, review, and retreatment decisions.',
+  about: {
+    '@type': 'MedicalProcedure',
+    name: 'Non-surgical root canal treatment',
+  },
+};
+---
+
+<ProductLayout
+  title="Endodontic Outcomes Checklist | EndoTech NZ"
+  description="An interactive 10-point endodontic outcomes checklist with clinical guidance, source references, and curated YouTube learning links."
+  schema={schema}
+  accent="teal"
+>
+  <section class="outcome-checklist-page">
+    <div class="outcome-checklist-shell">
+      <a class="back-link" href={`${base}research/evidence/#checklist`}>Back to Evidence page</a>
+
+      <div class="checklist-hero">
+        <p class="eyebrow">10-point endodontic outcomes checklist</p>
+        <h1>Use the checklist when outcome risk needs to be made visible.</h1>
+        <p>
+          Tap a point to bring the chairside guidance into focus. The sequence works from
+          baseline diagnosis through apical control, shaping, obturation, restoration,
+          review, and retreatment judgment.
+        </p>
+      </div>
+
+      <div class="interactive-checklist">
+        <aside class="point-rail" aria-label="Endodontic outcomes checklist points">
+          {evidenceChecklistItems.map((item, index) => (
+            <button
+              class:list={['point-trigger', { 'is-active': index === 0 }]}
+              type="button"
+              aria-pressed={index === 0 ? 'true' : 'false'}
+              data-number={item.number}
+              data-stage={item.stage}
+              data-title={item.title}
+              data-summary={item.summary}
+              data-detail={item.detail}
+              data-video-title={item.videoTitle}
+              data-video-url={item.videoUrl}
+            >
+              <span>{item.number}</span>
+              <strong>{item.title}</strong>
+            </button>
+          ))}
+        </aside>
+
+        <div class="detail-column">
+          <article class="detail-panel" aria-live="polite">
+            <span id="detail-stage">{firstItem.stage}</span>
+            <div class="detail-title-row">
+              <strong id="detail-number">{firstItem.number}</strong>
+              <h2 id="detail-title">{firstItem.title}</h2>
+            </div>
+            <p class="detail-summary" id="detail-summary">{firstItem.summary}</p>
+            <p id="detail-copy">{firstItem.detail}</p>
+            <a
+              class="detail-video-link"
+              id="detail-video-link"
+              href={firstItem.videoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Related YouTube</span>
+              <strong id="detail-video-title">{firstItem.videoTitle}</strong>
+            </a>
+          </article>
+        </div>
+      </div>
+
+      <section class="source-section" aria-labelledby="source-title">
+        <div class="source-header">
+          <div>
+            <h2 id="source-title">Source base</h2>
+            <p>{evidenceChecklistReferenceNote}</p>
+          </div>
+          <a class="source-download" href={checklistPdfHref} download>
+            Download PDF
+            <span>10-point outcomes checklist</span>
+          </a>
+        </div>
+        <ul>
+          {evidenceChecklistSources.map((source) => (
+            <li>{source}</li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const triggers = Array.from(document.querySelectorAll('.point-trigger'));
+      const stage = document.getElementById('detail-stage');
+      const number = document.getElementById('detail-number');
+      const title = document.getElementById('detail-title');
+      const summary = document.getElementById('detail-summary');
+      const copy = document.getElementById('detail-copy');
+      const videoLink = document.getElementById('detail-video-link');
+      const videoTitle = document.getElementById('detail-video-title');
+
+      function setActive(trigger) {
+        if (!trigger || !stage || !number || !title || !summary || !copy || !videoLink || !videoTitle) return;
+        triggers.forEach((item) => {
+          const active = item === trigger;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        stage.textContent = trigger.dataset.stage || '';
+        number.textContent = trigger.dataset.number || '';
+        title.textContent = trigger.dataset.title || '';
+        summary.textContent = trigger.dataset.summary || '';
+        copy.textContent = trigger.dataset.detail || '';
+        const nextVideoUrl = trigger.dataset.videoUrl || '';
+        const nextVideoTitle = trigger.dataset.videoTitle || '';
+        videoLink.setAttribute('href', nextVideoUrl);
+        videoLink.hidden = !nextVideoUrl;
+        videoTitle.textContent = nextVideoTitle;
+      }
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener('mouseenter', () => setActive(trigger));
+        trigger.addEventListener('focus', () => setActive(trigger));
+        trigger.addEventListener('click', () => setActive(trigger));
+      });
+    });
+  </script>
+</ProductLayout>
+
+<style>
+  :global(.product-site-main) {
+    background: #f7f9fc;
+  }
+
+  .outcome-checklist-page {
+    --ink: #111827;
+    --ink-2: #24364a;
+    --muted: #607084;
+    --line: #e3e8ee;
+    --line-strong: #cad5e0;
+    --blue: #0b75b7;
+    --teal: #1ba6a6;
+    min-height: 100vh;
+    color: var(--ink);
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 58%, #eef6fb 100%);
+    font-family: Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .outcome-checklist-shell {
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 58px 0 84px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0 16px;
+    color: #31575e;
+    background: rgba(255, 255, 255, 0.76);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .checklist-hero {
+    max-width: 940px;
+    padding: 54px 0 46px;
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    color: #31575e;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .checklist-hero h1 {
+    max-width: 940px;
+    margin: 0;
+    color: var(--ink);
+    font-size: 74px;
+    line-height: 1.02;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  .checklist-hero p {
+    max-width: 790px;
+    margin: 26px 0 0;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  .interactive-checklist {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .point-rail {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 24px 70px -56px rgba(17, 24, 39, 0.24);
+  }
+
+  .point-trigger {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+    scroll-margin-top: 108px;
+    min-height: 72px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--ink);
+    background: #ffffff;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background 160ms ease,
+      transform 160ms ease;
+  }
+
+  .point-trigger:hover,
+  .point-trigger:focus-visible,
+  .point-trigger.is-active {
+    border-color: #b8d8ea;
+    background: #eef8fc;
+    transform: translateX(2px);
+  }
+
+  .point-trigger span {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: #31575e;
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 850;
+  }
+
+  .point-trigger strong {
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.25;
+    letter-spacing: 0;
+  }
+
+  .detail-column {
+    display: grid;
+    min-height: 100%;
+  }
+
+  .detail-panel {
+    display: grid;
+    align-content: start;
+    position: sticky;
+    top: 92px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 46px;
+    background: #ffffff;
+    box-shadow: 0 30px 78px -58px rgba(17, 24, 39, 0.25);
+  }
+
+  #detail-stage {
+    color: #31575e;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .detail-title-row {
+    display: grid;
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 22px;
+    align-items: start;
+    margin-top: 22px;
+  }
+
+  #detail-number {
+    display: grid;
+    place-items: center;
+    width: 62px;
+    height: 62px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    background: #eef8fc;
+    font-size: 18px;
+    font-weight: 850;
+  }
+
+  #detail-title {
+    margin: 0;
+    color: var(--ink);
+    font-size: 54px;
+    line-height: 1.05;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  .detail-summary {
+    max-width: 780px;
+    margin: 28px 0 0;
+    color: #31575e;
+    font-size: 21px;
+    line-height: 1.45;
+    font-weight: 760;
+  }
+
+  #detail-copy {
+    max-width: 860px;
+    margin: 24px 0 0;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.82;
+  }
+
+  .detail-video-link {
+    display: grid;
+    gap: 8px;
+    width: min(100%, 620px);
+    margin-top: 30px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px 20px;
+    color: var(--ink);
+    background: #f8fafc;
+    text-decoration: none;
+    transition:
+      border-color 160ms ease,
+      background 160ms ease;
+  }
+
+  .detail-video-link:hover,
+  .detail-video-link:focus-visible {
+    border-color: #b8d8ea;
+    background: #eef8fc;
+  }
+
+  .detail-video-link span {
+    color: #31575e;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .detail-video-link strong {
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.35;
+  }
+
+  .source-section {
+    margin-top: 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 32px;
+    background: #ffffff;
+    box-shadow: 0 24px 70px -56px rgba(17, 24, 39, 0.22);
+  }
+
+  .source-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .source-header h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 34px;
+    line-height: 1.16;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  .source-header p {
+    max-width: 850px;
+    margin: 12px 0 0;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .source-download {
+    display: grid;
+    gap: 6px;
+    min-width: 250px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 18px;
+    color: #ffffff;
+    background: #0b75b7;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 850;
+  }
+
+  .source-download span {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .source-section ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .source-section li {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    color: var(--muted);
+    background: #f8fafc;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 1020px) {
+    .checklist-hero h1 {
+      font-size: 56px;
+    }
+
+    .interactive-checklist {
+      grid-template-columns: 1fr;
+    }
+
+    .detail-panel {
+      position: static;
+    }
+
+    .point-rail {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .source-header,
+    .source-section ul {
+      grid-template-columns: 1fr;
+    }
+
+    .source-download {
+      width: max-content;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .outcome-checklist-shell {
+      width: min(100% - 32px, 1320px);
+      padding-top: 36px;
+    }
+
+    .checklist-hero {
+      padding: 40px 0 32px;
+    }
+
+    .checklist-hero h1 {
+      font-size: 40px;
+    }
+
+    .point-rail {
+      grid-template-columns: 1fr;
+    }
+
+    .detail-panel,
+    .source-section {
+      padding: 24px;
+    }
+
+    .detail-title-row {
+      grid-template-columns: 1fr;
+    }
+
+    #detail-title {
+      font-size: 36px;
+    }
+
+    .detail-summary {
+      font-size: 18px;
+    }
+
+    #detail-copy {
+      font-size: 16px;
+    }
+  }
+</style>

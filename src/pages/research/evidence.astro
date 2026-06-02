@@ -1,0 +1,1197 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import avatarTipImage from '../../assets/avatar-tip-comparison.png';
+import transformxSystemImage from '../../assets/transformx-rotary-file-system.png';
+import {
+  evidenceChecklistItems,
+  evidenceChecklistSources,
+  evidenceOutcomeVideoLibrary,
+} from '../../data/evidenceChecklist';
+
+const base = import.meta.env.BASE_URL;
+const checklistHref = `${base}research/evidence/checklist/`;
+const checklistPdfHref = `${base}downloads/EndoTech-NZ-Endodontic-Outcomes-10-Point-Checklist.pdf`;
+const gatewayNumbers = evidenceChecklistItems.map((item) => item.number);
+
+const metrics = [
+  {
+    value: '75-83%',
+    label: 'Primary RCT healing',
+    note: 'Approximate healing range cited from the current Evidence page source set.',
+  },
+  {
+    value: '77-80%',
+    label: 'Secondary RCT healing',
+    note: 'Retreatment outcomes remain sensitive to disinfection and apical control.',
+  },
+  {
+    value: '95%',
+    label: 'Four-year tooth survival',
+    note: 'Tooth retention depends on endodontic control and the restorative pathway.',
+  },
+];
+
+const domains = [
+  {
+    number: '01',
+    title: 'Pre-operative status',
+    problem: 'Lesions, symptoms, retreatment history, cracks, and restorability change the baseline prognosis.',
+    response: 'Name the risk before choosing the sequence.',
+  },
+  {
+    number: '02',
+    title: 'Apical extent',
+    problem: 'Under-extension and over-extension both reduce biological control in the apical third.',
+    response: 'Use working length evidence, tactile feedback, and a controlled terminus.',
+  },
+  {
+    number: '03',
+    title: 'Obturation quality',
+    problem: 'Voids, short fills, and extrusion usually reflect preparation and apical-control problems upstream.',
+    response: 'Shape to support irrigant exchange, cone fit, and a dense seal.',
+  },
+  {
+    number: '04',
+    title: 'Coronal restoration',
+    problem: 'A delayed or leaking restoration can compromise an otherwise controlled endodontic result.',
+    response: 'Plan the restorative seal and structural protection before treatment is complete.',
+  },
+  {
+    number: '05',
+    title: 'Procedural control',
+    problem: 'Transportation, ledging, perforation, blocked canals, and file separation can turn anatomy into outcome risk.',
+    response: 'Preserve the original path and stop when feedback becomes unreliable.',
+  },
+];
+
+const workflowSteps = [
+  {
+    title: 'Diagnose the case',
+    copy: 'Record pulpal status, apical status, symptoms, lesion size, restorability, and retreatment history.',
+  },
+  {
+    title: 'Control the pathway',
+    copy: 'Protect length, curvature, patency, and the apical stop before shaping becomes mechanical.',
+  },
+  {
+    title: 'Create conditions for seal',
+    copy: 'Prepare for irrigant exchange, obturation density, controlled termination, and restorative protection.',
+  },
+  {
+    title: 'Review before retreating',
+    copy: 'Compare healing against baseline, symptoms, restoration, missed anatomy, and time.',
+  },
+];
+
+const transformLinks = [
+  {
+    label: 'Avatar Tip',
+    href: `${base}technology/avatar-tip/`,
+    title: 'Apical guidance',
+    copy: 'Supports controlled advancement in the apical third, where length and terminus decisions carry biological consequence.',
+  },
+  {
+    label: 'Transform Technology',
+    href: `${base}technology/transform-technology/`,
+    title: 'Curvature response',
+    copy: 'Supports adaptability and centred shaping behaviour when canal anatomy resists a straight-line preparation.',
+  },
+  {
+    label: 'Curved canal guide',
+    href: `${base}technique/rotary-files-for-curved-canals/`,
+    title: 'Procedural discipline',
+    copy: 'Connects diagnosis, small-file scouting, glide path confirmation, short engagement, and stop-or-refer decisions.',
+  },
+];
+
+const sourceHighlights = evidenceChecklistSources.slice(0, 4);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: 'Clinical Evidence for Endodontic Outcomes',
+  description:
+    'An evidence-led guide to controllable endodontic outcome variables, apical management, obturation quality, restoration, retreatment judgment, and TransformX workflow fit.',
+  about: {
+    '@type': 'MedicalProcedure',
+    name: 'Non-surgical root canal treatment',
+  },
+};
+---
+
+<ProductLayout
+  title="Clinical Evidence | EndoTech NZ"
+  description="Evidence-led guide to controllable endodontic outcome variables, apical control, obturation quality, restoration, retreatment decisions, and TransformX workflow fit."
+  schema={schema}
+  accent="teal"
+>
+  <section class="evidence-page">
+    <section class="evidence-hero" aria-labelledby="evidence-title">
+      <div class="evidence-hero-copy">
+        <p class="evidence-eyebrow">Clinical evidence / outcome variables</p>
+        <h1 id="evidence-title">Endodontic outcomes are built from controllable steps.</h1>
+        <p>
+          Biology sets the baseline. Clinical control changes the conditions for healing:
+          diagnosis, apical extent, canal path, disinfection, obturation, restoration, and review.
+        </p>
+        <div class="evidence-hero-actions" aria-label="Evidence page quick links">
+          <a href="#checklist">Open the 10-point guide</a>
+          <a href="#video-library">Review video sources</a>
+        </div>
+      </div>
+
+      <div class="outcome-visual" aria-label="Outcome variable map">
+        <div class="outcome-visual-top">
+          <span>Outcome map</span>
+          <strong>Diagnose -> Control -> Seal -> Restore -> Review</strong>
+        </div>
+        <svg class="outcome-svg" viewBox="0 0 520 420" role="img" aria-labelledby="outcome-svg-title">
+          <title id="outcome-svg-title">Schematic outcome map connecting diagnosis, apical control, shaping, seal, and review</title>
+          <defs>
+            <linearGradient id="outcomeTooth" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#ffffff" />
+              <stop offset="0.58" stop-color="#eef6fb" />
+              <stop offset="1" stop-color="#d7eef1" />
+            </linearGradient>
+            <linearGradient id="outcomeCanal" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#0b75b7" />
+              <stop offset="1" stop-color="#1ba6a6" />
+            </linearGradient>
+          </defs>
+          <rect x="20" y="20" width="480" height="360" rx="38" fill="#f8fbfd" stroke="#d7e2ea" />
+          <path
+            d="M254 86c-34-35-93-18-104 32-7 31 7 54 20 79 13 24 18 52 22 90 4 41 16 63 36 65 22 2 31-23 36-61 2-19 6-38 14-38 9 0 13 19 15 39 5 38 14 63 36 60 21-2 32-25 36-66 4-37 10-64 22-88 13-25 27-49 20-80-11-50-70-67-104-32-13 13-30 13-45 0z"
+            fill="url(#outcomeTooth)"
+            stroke="#b8d8ea"
+            stroke-width="4"
+          />
+          <path d="M264 134c-5 49-3 93 0 134 2 27-3 55-16 84" fill="none" stroke="url(#outcomeCanal)" stroke-width="8" stroke-linecap="round" />
+          <path d="M292 141c13 39 18 74 9 105-8 29-2 56 19 88" fill="none" stroke="#4bae73" stroke-width="6" stroke-linecap="round" opacity="0.8" />
+          <circle cx="265" cy="334" r="16" fill="#ffffff" stroke="#0b75b7" stroke-width="5" />
+          <circle cx="136" cy="108" r="18" fill="#ffffff" stroke="#0b75b7" stroke-width="3" />
+          <circle cx="424" cy="130" r="18" fill="#ffffff" stroke="#1ba6a6" stroke-width="3" />
+          <circle cx="142" cy="306" r="18" fill="#ffffff" stroke="#4bae73" stroke-width="3" />
+          <circle cx="421" cy="302" r="18" fill="#ffffff" stroke="#b7791f" stroke-width="3" />
+          <path d="M153 116h60" stroke="#cad5e0" stroke-width="3" stroke-linecap="round" />
+          <path d="M407 138h-64" stroke="#cad5e0" stroke-width="3" stroke-linecap="round" />
+          <path d="M160 300h60" stroke="#cad5e0" stroke-width="3" stroke-linecap="round" />
+          <path d="M404 296h-63" stroke="#cad5e0" stroke-width="3" stroke-linecap="round" />
+          <text x="75" y="74" fill="#24364a" font-size="18" font-weight="700">Diagnose</text>
+          <text x="386" y="94" fill="#24364a" font-size="18" font-weight="700">Control</text>
+          <text x="71" y="356" fill="#24364a" font-size="18" font-weight="700">Seal</text>
+          <text x="380" y="356" fill="#24364a" font-size="18" font-weight="700">Review</text>
+        </svg>
+        <div class="outcome-visual-strip" aria-hidden="true">
+          {workflowSteps.map((step, index) => (
+            <span>{String(index + 1).padStart(2, '0')}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-metrics" aria-label="Evidence outcome snapshot">
+      {metrics.map((metric) => (
+        <article>
+          <span>{metric.label}</span>
+          <strong>{metric.value}</strong>
+          <p>{metric.note}</p>
+        </article>
+      ))}
+    </section>
+
+    <section class="evidence-band evidence-problem" aria-labelledby="problem-title">
+      <div class="section-heading">
+        <p class="evidence-eyebrow">Clinical problem</p>
+        <h2 id="problem-title">Outcome risk appears when the controllable variables drift.</h2>
+        <p>
+          The evidence base is not a promise attached to a file system. It is a pattern:
+          prognosis improves when diagnosis, length, disinfection, obturation, restoration,
+          and review are controlled as one pathway.
+        </p>
+      </div>
+
+      <div class="domain-grid">
+        {domains.map((domain) => (
+          <article>
+            <span>{domain.number}</span>
+            <h3>{domain.title}</h3>
+            <p>{domain.problem}</p>
+            <strong>{domain.response}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="evidence-band evidence-solution" aria-labelledby="solution-title">
+      <div class="solution-copy">
+        <p class="evidence-eyebrow">TransformX solution</p>
+        <h2 id="solution-title">TransformX fits where clinical control is measurable.</h2>
+        <p>
+          Avatar Tip and Transform Technology support the technical domains clinicians can
+          influence directly: apical precision, centred shaping, controlled engagement,
+          and preparation form for irrigation and seal.
+        </p>
+
+        <div class="workflow-stack">
+          {workflowSteps.map((step, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.copy}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div class="product-proof" aria-label="TransformX technology evidence fit">
+        <img src={transformxSystemImage.src} alt="TransformX rotary file system arranged on a clinical white background" loading="lazy" />
+        <div class="product-proof-detail">
+          <img src={avatarTipImage.src} alt="Avatar Tip comparison showing apical tip design" loading="lazy" />
+          <p>
+            Product design is presented here as workflow support. The outcome remains the
+            whole clinical pathway: diagnose, disinfect, shape, seal, restore, and review.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-band evidence-features" aria-labelledby="features-title">
+      <div class="section-heading">
+        <p class="evidence-eyebrow">Key features linked to clinical problems</p>
+        <h2 id="features-title">Three places where design supports outcome discipline.</h2>
+      </div>
+
+      <div class="feature-grid">
+        {transformLinks.map((item) => (
+          <a href={item.href}>
+            <span>{item.label}</span>
+            <h3>{item.title}</h3>
+            <p>{item.copy}</p>
+            <b aria-hidden="true">-&gt;</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section id="checklist" class="evidence-band evidence-checklist" aria-labelledby="checklist-title">
+      <div class="section-heading">
+        <p class="evidence-eyebrow">10-point outcomes guide</p>
+        <h2 id="checklist-title">A chairside checklist for clinical outcome control.</h2>
+        <p>
+          Built from the current Evidence page, the Ng outcome summary, the Ricucci/Siqueira
+          apical-limit reference, and the curated 20-video YouTube outcomes review.
+        </p>
+      </div>
+
+      <div class="evidence-checklist-actions">
+        <a class="evidence-checklist-button" href={checklistHref}>
+          <span class="evidence-gateway-rail" aria-hidden="true">
+            {gatewayNumbers.map((number) => (
+              <i>{number}</i>
+            ))}
+          </span>
+          <span class="evidence-gateway-copy">
+            <span>Interactive outcomes guide</span>
+            <strong>Open the full 10-point outcome guide.</strong>
+            <small>
+              Hover each point to reveal chairside guidance for diagnosis, apical control,
+              shaping, obturation, restoration, review, and retreatment decisions.
+            </small>
+          </span>
+          <span class="evidence-gateway-action" aria-hidden="true">
+            <span>Open full guide</span>
+            <b>-&gt;</b>
+          </span>
+        </a>
+
+        <a class="evidence-checklist-download" href={checklistPdfHref} download>
+          <span>Download PDF</span>
+          <strong>10-point chairside checklist</strong>
+          <small>Includes sources plus curated YouTube learning links for each point.</small>
+        </a>
+      </div>
+    </section>
+
+    <section class="evidence-band evidence-reference" aria-labelledby="reference-title">
+      <div class="section-heading">
+        <p class="evidence-eyebrow">Evidence base</p>
+        <h2 id="reference-title">Keep the claims tied to the source question.</h2>
+        <p>
+          The page uses outcome evidence to frame clinical control. It does not suggest
+          that one instrument alone determines healing.
+        </p>
+      </div>
+
+      <div class="source-grid">
+        {sourceHighlights.map((source) => (
+          <article>
+            <p>{source}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="video-library" class="evidence-band evidence-videos" aria-labelledby="videos-title">
+      <div class="section-heading">
+        <p class="evidence-eyebrow">YouTube research set</p>
+        <h2 id="videos-title">20 outcome-focused videos used to shape the checklist.</h2>
+        <p>
+          The videos were reviewed as education anchors for diagnosis, apical periodontitis,
+          obturation, restoration, retreatment, and survival. They are presented as learning
+          links, not as substitute primary evidence.
+        </p>
+      </div>
+
+      <div class="video-grid">
+        {evidenceOutcomeVideoLibrary.map((video, index) => (
+          <a href={video.url} target="_blank" rel="noopener noreferrer">
+            <span>{String(index + 1).padStart(2, '0')} / {video.channel}</span>
+            <h3>{video.title}</h3>
+            <p>{video.focus}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="evidence-footer" aria-labelledby="next-title">
+      <div>
+        <p class="evidence-eyebrow">Next clinical pages</p>
+        <h2 id="next-title">Move from evidence to workflow control.</h2>
+      </div>
+      <div class="next-links">
+        <a href={`${base}technology/avatar-tip/`}>Avatar Tip</a>
+        <a href={`${base}technology/transform-technology/`}>Transform Technology</a>
+        <a href={`${base}resources/downloads/`}>Evidence & Downloads</a>
+      </div>
+    </section>
+  </section>
+</ProductLayout>
+
+<style>
+  :global(.product-site-main) {
+    background: #ffffff;
+  }
+
+  .evidence-page {
+    --ink: #111827;
+    --ink-2: #24364a;
+    --muted: #607084;
+    --subtle: #8a94a3;
+    --line: #e3e8ee;
+    --line-strong: #cad5e0;
+    --blue: #0b75b7;
+    --blue-soft: #eef8fc;
+    --teal: #1ba6a6;
+    --green: #4bae73;
+    --warning: #b7791f;
+    --canvas: #f7f9fc;
+    color: var(--ink);
+    background: #ffffff;
+    font-family: Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .evidence-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(420px, 0.8fr);
+    gap: 56px;
+    align-items: start;
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 76px 0 62px;
+  }
+
+  .evidence-hero-copy {
+    max-width: 760px;
+  }
+
+  .evidence-eyebrow {
+    margin: 0;
+    color: #31575e;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .evidence-hero h1,
+  .section-heading h2,
+  .solution-copy h2,
+  .evidence-footer h2 {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  .evidence-hero h1 {
+    max-width: 760px;
+    margin-top: 20px;
+    font-size: 68px;
+    line-height: 1.02;
+  }
+
+  .evidence-hero-copy > p:not(.evidence-eyebrow) {
+    max-width: 690px;
+    margin: 26px 0 0;
+    color: var(--muted);
+    font-size: 20px;
+    line-height: 1.7;
+  }
+
+  .evidence-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .evidence-hero-actions a,
+  .next-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0 18px;
+    color: var(--ink);
+    background: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 780;
+    transition:
+      border-color 180ms ease,
+      background 180ms ease,
+      transform 180ms ease;
+  }
+
+  .evidence-hero-actions a:first-child {
+    border-color: #0b75b7;
+    color: #ffffff;
+    background: #0b75b7;
+  }
+
+  .evidence-hero-actions a:hover,
+  .evidence-hero-actions a:focus-visible,
+  .next-links a:hover,
+  .next-links a:focus-visible {
+    border-color: var(--blue);
+    transform: translateY(-1px);
+  }
+
+  .outcome-visual {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+    background:
+      linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%),
+      #ffffff;
+    box-shadow: 0 26px 70px -56px rgba(17, 24, 39, 0.3);
+  }
+
+  .outcome-visual-top {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .outcome-visual-top span,
+  .outcome-visual-strip span {
+    color: #31575e;
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .outcome-visual-top strong {
+    color: var(--ink-2);
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  .outcome-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 320px;
+  }
+
+  .outcome-visual-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .outcome-visual-strip span {
+    display: grid;
+    place-items: center;
+    min-height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #ffffff;
+  }
+
+  .evidence-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto 32px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 22px 60px -52px rgba(17, 24, 39, 0.24);
+  }
+
+  .evidence-metrics article {
+    min-height: 178px;
+    padding: 28px;
+  }
+
+  .evidence-metrics article + article {
+    border-left: 1px solid var(--line);
+  }
+
+  .evidence-metrics span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .evidence-metrics strong {
+    display: block;
+    margin-top: 18px;
+    color: var(--ink);
+    font-size: 46px;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .evidence-metrics p {
+    max-width: 310px;
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .evidence-band {
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 88px 0;
+  }
+
+  .evidence-problem,
+  .evidence-reference {
+    border-top: 1px solid var(--line);
+  }
+
+  .section-heading,
+  .solution-copy {
+    max-width: 820px;
+  }
+
+  .section-heading h2,
+  .solution-copy h2,
+  .evidence-footer h2 {
+    margin-top: 16px;
+    font-size: 44px;
+    line-height: 1.12;
+  }
+
+  .section-heading > p:not(.evidence-eyebrow),
+  .solution-copy > p:not(.evidence-eyebrow) {
+    margin: 20px 0 0;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  .domain-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 42px;
+  }
+
+  .domain-grid article,
+  .source-grid article {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 22px;
+    box-shadow: 0 18px 42px -38px rgba(17, 24, 39, 0.2);
+  }
+
+  .domain-grid article:nth-child(2) {
+    background: #eef8fc;
+  }
+
+  .domain-grid article:nth-child(4) {
+    background: #f8fafc;
+  }
+
+  .domain-grid span {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 30px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: #31575e;
+    font-size: 12px;
+    font-weight: 850;
+  }
+
+  .domain-grid h3,
+  .feature-grid h3,
+  .video-grid h3,
+  .workflow-stack h3 {
+    margin: 18px 0 0;
+    color: var(--ink);
+    font-size: 20px;
+    line-height: 1.25;
+    letter-spacing: 0;
+  }
+
+  .domain-grid p,
+  .feature-grid p,
+  .video-grid p,
+  .workflow-stack p,
+  .source-grid p {
+    margin: 12px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  .domain-grid strong {
+    display: block;
+    margin-top: 18px;
+    color: #31575e;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .evidence-solution {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(430px, 0.75fr);
+    gap: 54px;
+    align-items: center;
+    border-top: 1px solid var(--line);
+  }
+
+  .workflow-stack {
+    display: grid;
+    gap: 10px;
+    margin-top: 34px;
+  }
+
+  .workflow-stack article {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+    background: #ffffff;
+  }
+
+  .workflow-stack span {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    color: #ffffff;
+    background: #0b75b7;
+    font-size: 13px;
+    font-weight: 850;
+  }
+
+  .workflow-stack h3 {
+    margin-top: 0;
+  }
+
+  .product-proof {
+    display: grid;
+    gap: 16px;
+  }
+
+  .product-proof > img,
+  .product-proof-detail {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 24px 60px -52px rgba(17, 24, 39, 0.24);
+  }
+
+  .product-proof > img {
+    width: 100%;
+    min-height: 320px;
+    object-fit: contain;
+    padding: 26px;
+  }
+
+  .product-proof-detail {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+    padding: 18px;
+  }
+
+  .product-proof-detail img {
+    width: 100%;
+    height: 118px;
+    object-fit: contain;
+  }
+
+  .product-proof-detail p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 36px;
+  }
+
+  .feature-grid a,
+  .video-grid a {
+    position: relative;
+    display: grid;
+    align-content: start;
+    min-height: 230px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+    color: var(--ink);
+    background: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 18px 42px -38px rgba(17, 24, 39, 0.2);
+    transition:
+      border-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .feature-grid a:hover,
+  .feature-grid a:focus-visible,
+  .video-grid a:hover,
+  .video-grid a:focus-visible {
+    border-color: #b8d8ea;
+    transform: translateY(-2px);
+    box-shadow: 0 30px 60px -48px rgba(11, 117, 183, 0.28);
+  }
+
+  .feature-grid span,
+  .video-grid span {
+    color: #31575e;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .feature-grid b {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1;
+    background: #ffffff;
+  }
+
+  .evidence-checklist {
+    border-top: 1px solid var(--line);
+  }
+
+  .evidence-checklist-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    gap: 18px;
+    align-items: stretch;
+    margin-top: 36px;
+  }
+
+  .evidence-checklist-button {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 34px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 252px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 36px;
+    color: var(--ink);
+    text-decoration: none;
+    background:
+      linear-gradient(135deg, rgba(238, 248, 252, 0.9), rgba(255, 255, 255, 0.98) 58%),
+      #ffffff;
+    box-shadow: 0 24px 70px -54px rgba(17, 24, 39, 0.28);
+    transition:
+      border-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .evidence-checklist-button:hover,
+  .evidence-checklist-button:focus-visible {
+    border-color: #b8d8ea;
+    transform: translateY(-2px);
+    box-shadow: 0 34px 84px -58px rgba(11, 117, 183, 0.28);
+  }
+
+  .evidence-gateway-rail {
+    display: grid;
+    grid-template-columns: repeat(3, 38px);
+    gap: 8px;
+    padding: 16px;
+    border: 1px solid rgba(17, 24, 39, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  .evidence-gateway-rail i {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 30px;
+    border: 1px solid rgba(17, 24, 39, 0.12);
+    border-radius: 999px;
+    color: #31575e;
+    background: #ffffff;
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 850;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .evidence-checklist-button:hover .evidence-gateway-rail i,
+  .evidence-checklist-button:focus-visible .evidence-gateway-rail i {
+    border-color: #b8d8ea;
+    background: #eef8fc;
+  }
+
+  .evidence-checklist-button:hover .evidence-gateway-rail i:nth-child(3n + 2),
+  .evidence-checklist-button:focus-visible .evidence-gateway-rail i:nth-child(3n + 2) {
+    transform: translateX(4px);
+  }
+
+  .evidence-gateway-copy {
+    display: grid;
+    gap: 12px;
+  }
+
+  .evidence-gateway-copy > span,
+  .evidence-gateway-copy small,
+  .evidence-gateway-action span,
+  .evidence-checklist-download span,
+  .evidence-checklist-download small {
+    color: #31575e;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    line-height: 1.38;
+    text-transform: uppercase;
+  }
+
+  .evidence-gateway-copy strong {
+    max-width: 690px;
+    color: var(--ink);
+    font-size: 46px;
+    font-weight: 740;
+    letter-spacing: 0;
+    line-height: 1.08;
+  }
+
+  .evidence-gateway-copy small {
+    max-width: 660px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    line-height: 1.55;
+  }
+
+  .evidence-gateway-action {
+    display: grid;
+    justify-items: end;
+    gap: 12px;
+    align-self: stretch;
+    min-width: 150px;
+    padding-left: 24px;
+    border-left: 1px solid var(--line-strong);
+  }
+
+  .evidence-gateway-action b {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.76);
+    font-size: 25px;
+    font-weight: 520;
+    line-height: 1;
+    transition:
+      border-color 180ms ease,
+      background 180ms ease,
+      transform 180ms ease;
+  }
+
+  .evidence-checklist-button:hover .evidence-gateway-action b,
+  .evidence-checklist-button:focus-visible .evidence-gateway-action b {
+    border-color: #b8d8ea;
+    background: #ffffff;
+    transform: translateX(4px);
+  }
+
+  .evidence-checklist-download {
+    display: grid;
+    align-content: center;
+    gap: 18px;
+    min-height: 252px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 36px;
+    color: var(--ink);
+    background: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 24px 70px -54px rgba(17, 24, 39, 0.28);
+    transition:
+      border-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .evidence-checklist-download:hover,
+  .evidence-checklist-download:focus-visible {
+    border-color: #b8d8ea;
+    transform: translateY(-2px);
+    box-shadow: 0 34px 84px -58px rgba(11, 117, 183, 0.28);
+  }
+
+  .evidence-checklist-download strong {
+    color: var(--ink);
+    font-size: 33px;
+    font-weight: 760;
+    letter-spacing: 0;
+    line-height: 1.16;
+  }
+
+  .evidence-checklist-download small {
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+  }
+
+  .source-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .source-grid article {
+    background: #f8fafc;
+  }
+
+  .source-grid p {
+    margin-top: 0;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .video-grid a {
+    min-height: 250px;
+  }
+
+  .video-grid h3 {
+    font-size: 18px;
+  }
+
+  .evidence-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 32px;
+    align-items: center;
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 64px 0 92px;
+    border-top: 1px solid var(--line);
+  }
+
+  .evidence-footer h2 {
+    max-width: 760px;
+    font-size: 40px;
+  }
+
+  .next-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  @media (max-width: 1180px) {
+    .evidence-hero,
+    .evidence-solution,
+    .evidence-footer {
+      grid-template-columns: 1fr;
+    }
+
+    .domain-grid,
+    .video-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .evidence-checklist-actions {
+      grid-template-columns: 1fr;
+    }
+
+    .evidence-footer {
+      align-items: start;
+    }
+
+    .next-links {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .evidence-hero,
+    .evidence-band,
+    .evidence-footer,
+    .evidence-metrics {
+      width: min(100% - 32px, 1320px);
+    }
+
+    .evidence-hero {
+      min-height: auto;
+      padding-top: 46px;
+    }
+
+    .evidence-hero h1 {
+      font-size: 44px;
+    }
+
+    .evidence-hero-copy > p:not(.evidence-eyebrow) {
+      font-size: 18px;
+    }
+
+    .section-heading h2,
+    .solution-copy h2,
+    .evidence-footer h2 {
+      font-size: 34px;
+    }
+
+    .evidence-metrics,
+    .feature-grid,
+    .source-grid,
+    .video-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .evidence-metrics article + article {
+      border-top: 1px solid var(--line);
+      border-left: 0;
+    }
+
+    .domain-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .evidence-checklist-button {
+      grid-template-columns: 1fr;
+      padding: 24px;
+    }
+
+    .evidence-gateway-copy strong {
+      font-size: 34px;
+    }
+
+    .evidence-gateway-action {
+      justify-items: start;
+      min-width: 0;
+      padding-top: 18px;
+      padding-left: 0;
+      border-top: 1px solid var(--line-strong);
+      border-left: 0;
+    }
+
+    .product-proof-detail {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .evidence-hero h1 {
+      font-size: 36px;
+    }
+
+    .evidence-hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .evidence-gateway-rail {
+      grid-template-columns: repeat(3, 34px);
+      width: max-content;
+      max-width: 100%;
+    }
+
+    .evidence-gateway-rail i {
+      width: 34px;
+    }
+
+    .outcome-visual {
+      padding: 18px;
+    }
+
+    .evidence-checklist-download {
+      padding: 24px;
+    }
+
+    .evidence-checklist-download strong {
+      font-size: 28px;
+    }
+  }
+</style>
