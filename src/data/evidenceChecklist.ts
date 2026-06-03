@@ -172,7 +172,7 @@ export const evidenceChecklistGroups = [
         number: '01',
         title: 'Name the baseline risk',
         text: 'Record pulpal status, apical status, lesion size, restorability, and symptoms before judging prognosis.',
-        summary: 'Outcome confidence starts with the pre-operative diagnosis, not the file sequence.',
+        summary: 'Outcome confidence starts with the pre-operative diagnosis.',
         detail:
           'Healing rates are influenced by the starting condition of the tooth. A tooth with a pre-operative lesion, symptoms, retreatment history, cracks, or poor restorability carries a different risk profile from a vital primary case. Record pulpal and periapical diagnosis, lesion size, restorative status, periodontal context, and patient factors before the technical plan is chosen. This keeps the outcome conversation honest and gives the clinician a baseline for later review.',
       },
