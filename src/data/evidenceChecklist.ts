@@ -12,10 +12,10 @@ export const evidenceOutcomeVideoLibrary = [
     focus: 'Radiographic healing interpretation and retreatment threshold',
   },
   {
-    title: 'Obturation Made Easy! ENDODONTICS DEMO',
-    channel: 'Dr Teeth',
-    url: 'https://www.youtube.com/watch?v=GqF1FffudyY',
-    focus: 'Obturation technique, cone fit, and seal conditions',
+    title: 'How to obturate lateral canals: a case study',
+    channel: 'I Love The Pulp',
+    url: 'https://www.youtube.com/watch?v=-wTUI5jxX48',
+    focus: 'Case-style obturation, lateral canal seal, and cone-fit judgment',
   },
   {
     title: 'How to perform successful endodontic treatment',
@@ -139,8 +139,8 @@ const evidenceChecklistVideos: Record<string, { videoTitle: string; videoUrl: st
     videoUrl: 'https://www.youtube.com/watch?v=gdgzLQzbE-s',
   },
   '05': {
-    videoTitle: 'Obturation Made Easy! ENDODONTICS DEMO',
-    videoUrl: 'https://www.youtube.com/watch?v=GqF1FffudyY',
+    videoTitle: 'How to obturate lateral canals: a case study',
+    videoUrl: 'https://www.youtube.com/watch?v=-wTUI5jxX48',
   },
   '06': {
     videoTitle: 'Obturation & Restoration',
