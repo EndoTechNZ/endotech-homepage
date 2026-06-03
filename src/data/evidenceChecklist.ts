@@ -1,9 +1,9 @@
 export const evidenceOutcomeVideoLibrary = [
   {
-    title: 'Key success of periapical lesion management',
-    channel: 'Mohammed Aldawla',
-    url: 'https://www.youtube.com/watch?v=hC_7f8PILe8',
-    focus: 'Periapical lesion management and review decisions',
+    title: 'Periapical lesions - causes, symptoms, diagnosis, treatment, pathology',
+    channel: 'Osmosis from Elsevier',
+    url: 'https://www.youtube.com/watch?v=cSSSUwUh0Qo',
+    focus: 'Periapical lesion diagnosis and treatment context',
   },
   {
     title: 'Not every tooth with a periapical radiolucency needs endodontic retreatment',
@@ -12,10 +12,10 @@ export const evidenceOutcomeVideoLibrary = [
     focus: 'Radiographic healing interpretation and retreatment threshold',
   },
   {
-    title: 'Elements of perfect obturation',
-    channel: 'Gentle Endodontics',
-    url: 'https://www.youtube.com/watch?v=j15uIwdacgE',
-    focus: 'Obturation quality and seal conditions',
+    title: 'Obturation Made Easy! ENDODONTICS DEMO',
+    channel: 'Dr Teeth',
+    url: 'https://www.youtube.com/watch?v=GqF1FffudyY',
+    focus: 'Obturation technique, cone fit, and seal conditions',
   },
   {
     title: 'How to perform successful endodontic treatment',
@@ -24,16 +24,16 @@ export const evidenceOutcomeVideoLibrary = [
     focus: 'Whole-treatment success factors',
   },
   {
-    title: 'Dentistry 101 | Secondary symptomatic apical periodontitis',
-    channel: 'Medi study go',
-    url: 'https://www.youtube.com/watch?v=xD-1-0UBW1o',
-    focus: 'Secondary apical periodontitis diagnosis',
+    title: 'MUST KNOW Pulpal and Periapical Diagnoses!',
+    channel: 'Two Dentists',
+    url: 'https://www.youtube.com/watch?v=FZBu3YVdo-8',
+    focus: 'Clinical diagnosis before outcome judgment',
   },
   {
-    title: 'Dentistry 101 | Primary symptomatic apical periodontitis',
-    channel: 'Medi study go',
-    url: 'https://www.youtube.com/watch?v=zRUs7lcc4uU',
-    focus: 'Primary apical periodontitis diagnosis',
+    title: 'Periapical Diseases Simplified!',
+    channel: 'Aspire32',
+    url: 'https://www.youtube.com/watch?v=6mrDH-vpihI',
+    focus: 'Periapical disease categories and clinical interpretation',
   },
   {
     title: 'Endodontics | Pulpal and Periapical Diagnoses',
@@ -48,10 +48,10 @@ export const evidenceOutcomeVideoLibrary = [
     focus: 'Outcome criteria and prognostic variables',
   },
   {
-    title: 'Dentistry 101 | Persistent apical periodontitis',
-    channel: 'Medi study go',
-    url: 'https://www.youtube.com/watch?v=NLKa-jHBXQo',
-    focus: 'Persistent disease after treatment',
+    title: 'Can You Predict Which Root Canals Will Fail?',
+    channel: 'Patency Pro',
+    url: 'https://www.youtube.com/watch?v=sUKPy_xY_pk',
+    focus: 'Failure risk and prognosis discussion',
   },
   {
     title: 'Endodontic Retreatment Explained',
@@ -84,9 +84,9 @@ export const evidenceOutcomeVideoLibrary = [
     focus: 'Intraradicular infection and persistent disease',
   },
   {
-    title: 'Endodontic Treatment Outcomes. Dr. Wael Zaatari',
-    channel: 'Dentistry Online',
-    url: 'https://www.youtube.com/watch?v=3UTpOXSGiko',
+    title: 'Endodontic Outcomes',
+    channel: 'New Zealand Society of Endodontics',
+    url: 'https://www.youtube.com/watch?v=W4iuYeHd35Q',
     focus: 'Outcome lecture and prognostic framing',
   },
   {
@@ -102,9 +102,9 @@ export const evidenceOutcomeVideoLibrary = [
     focus: 'Apical limit, working length, and control',
   },
   {
-    title: 'How to Decide Master Apical Size in Root Canal Treatment',
-    channel: 'The Root Canal Academy by Dr Aparna Gupta',
-    url: 'https://www.youtube.com/watch?v=akiyExhLfnA',
+    title: 'Apical Sizes in Modern Endodontics',
+    channel: 'EndosKool',
+    url: 'https://www.youtube.com/watch?v=gdgzLQzbE-s',
     focus: 'Master apical size and apical preparation judgment',
   },
   {
@@ -135,12 +135,12 @@ const evidenceChecklistVideos: Record<string, { videoTitle: string; videoUrl: st
     videoUrl: 'https://www.youtube.com/watch?v=LCbJ2zwq2F8',
   },
   '04': {
-    videoTitle: 'How to Decide Master Apical Size in Root Canal Treatment',
-    videoUrl: 'https://www.youtube.com/watch?v=akiyExhLfnA',
+    videoTitle: 'Apical Sizes in Modern Endodontics',
+    videoUrl: 'https://www.youtube.com/watch?v=gdgzLQzbE-s',
   },
   '05': {
-    videoTitle: 'Elements of perfect obturation',
-    videoUrl: 'https://www.youtube.com/watch?v=j15uIwdacgE',
+    videoTitle: 'Obturation Made Easy! ENDODONTICS DEMO',
+    videoUrl: 'https://www.youtube.com/watch?v=GqF1FffudyY',
   },
   '06': {
     videoTitle: 'Obturation & Restoration',
@@ -159,8 +159,8 @@ const evidenceChecklistVideos: Record<string, { videoTitle: string; videoUrl: st
     videoUrl: 'https://www.youtube.com/watch?v=xlYYc7_BFTI',
   },
   '10': {
-    videoTitle: 'Endodontic Treatment Outcomes',
-    videoUrl: 'https://www.youtube.com/watch?v=gYMHHCUZEbU',
+    videoTitle: 'Endodontic Outcomes',
+    videoUrl: 'https://www.youtube.com/watch?v=W4iuYeHd35Q',
   },
 };
 
@@ -195,7 +195,7 @@ export const evidenceChecklistGroups = [
         text: 'Work to a controlled terminus and avoid both under-preparation and over-extension.',
         summary: 'Apical extent is one of the clearest technical variables linked to healing.',
         detail:
-          'The existing Evidence page cites outcome literature supporting controlled root filling close to the radiographic apex, with the apical constriction respected. Ricucci and Siqueira reported higher healing when treatment remained approximately 0.5-1.5 mm short of the apical foramen, while overfilling and excessive shortness were associated with poorer histologic outcomes. Use working length evidence, tactile feedback, and apical-control discipline together rather than treating length as a single number.',
+          'Outcome literature supports controlled root filling close to the canal terminus while avoiding extrusion. Ng, Ricucci, and related prognosis data keep length control inside a broader outcome frame: apical status, patency, absence of overfill, restoration quality, and review. Use working length evidence, tactile feedback, and apical-control discipline together rather than treating length as a single number.',
       },
       {
         number: '04',
@@ -276,14 +276,15 @@ export const evidenceChecklistItems = evidenceChecklistGroups.flatMap((group) =>
 );
 
 export const evidenceChecklistSources = [
-  'EndoTech NZ existing Clinical Evidence page, including the Ng UCL Eastman outcome summary and the Ricucci/Siqueira apical-limit reference.',
-  'Ng YL. UCL Eastman outcome research in primary and secondary non-surgical root canal treatment; meta-analysis and prospective cohort summary as cited in the existing EndoTech Evidence page.',
-  'Ricucci D, Siqueira JF Jr. Apical limit of root canal instrumentation and obturation in teeth with necrotic pulps and apical periodontitis: histologic analysis. Oral Surgery, Oral Medicine, Oral Pathology, Oral Radiology, and Endodontology. 2011;112(6):825-842.',
-  'EndoTech NZ curated YouTube outcomes review: 20-video set gathered with the youtube-researcher workflow on 2026-06-02. Local research file: tmp/youtube-endodontic-outcomes-curated.json.',
+  'Ng Y-L, Mann V, Gulabivala K. A prospective study of factors affecting outcomes of nonsurgical root canal treatment: Part 1: periapical health. International Endodontic Journal. 2011;44(7):583-609. doi:10.1111/j.1365-2591.2011.01872.x.',
+  'Ng Y-L, Mann V, Gulabivala K. A prospective study of factors affecting outcomes of non-surgical root canal treatment: Part 2: tooth survival. International Endodontic Journal. 2011;44(7):610-625. doi:10.1111/j.1365-2591.2011.01873.x.',
+  'Friedman S, Abitbol S, Lawrence HP. Treatment outcome in endodontics: the Toronto Study. Phase 1: initial treatment. Journal of Endodontics. 2003;29(12):787-793. doi:10.1097/00004770-200312000-00001.',
+  'Ricucci D, Siqueira JF Jr, Bate AL, Pitt Ford TR. Histologic investigation of root canal-treated teeth with apical periodontitis: a retrospective study from twenty-four patients. Journal of Endodontics. 2009;35(4):493-502. doi:10.1016/j.joen.2008.12.014.',
+  'EndoTech NZ English-only curated YouTube outcomes review: 20-video set revised on 2026-06-03 for English-language clinical education links.',
   'American Association of Endodontists. Endodontic Retreatment Explained. YouTube.',
   'NIOM. How to perform successful endodontic treatment. YouTube.',
   'South African Dental Association. Apical control in Endodontics - Dr Heinrich Dippenaar (WEB70). YouTube.',
 ];
 
 export const evidenceChecklistReferenceNote =
-  'The Evidence checklist combines the existing EndoTech outcomes page with outcome literature and a 20-video YouTube review focused on endodontic diagnosis, apical periodontitis, apical control, obturation, restoration, retreatment, and long-term tooth survival. The checklist uses those sources to support clinical decision-making around controllable outcome variables, not to claim that any file system alone determines healing.';
+  'The Evidence checklist combines outcome literature with a 20-video YouTube review focused on endodontic diagnosis, apical periodontitis, apical control, obturation, restoration, retreatment, and long-term tooth survival. The checklist uses those sources to support clinical decision-making around controllable outcome variables, not to claim that any file system alone determines healing.';
