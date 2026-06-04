@@ -182,7 +182,7 @@ export const evidenceChecklistGroups = [
         text: 'Prioritise microbial reduction, irrigant exchange, and pathway discipline over rapid mechanical completion.',
         summary: 'Endodontic success is biological healing supported by technical control.',
         detail:
-          'A fast preparation is not the same as an effective preparation. Instrumentation creates access for irrigation, removes infected dentine where possible, and supports obturation, but the clinical aim is infection control. Maintain patency where appropriate, clean flutes, refresh irrigant, and avoid debris compaction. When the canal becomes blocked, ledged, or over-enlarged, the biological objective becomes harder to achieve.',
+          'A fast preparation is not the same as an effective preparation. Instrumentation creates access for irrigation, removes infected dentine where possible, and supports obturation, but the clinical aim is infection control. Maintain patency where appropriate, clean flutes, refresh irrigant, and avoid debris compaction. When the canal becomes blocked, ledged, or over-enlarged, the biological objective becomes harder to achieve. The two most critical parts of any irrigation protocol are time and irrigant volume.',
       },
     ],
   },
