@@ -6,6 +6,7 @@ import { chromium } from 'playwright';
 
 const root = process.cwd();
 const outputDir = path.join(root, 'public', 'downloads');
+const requestedChecklist = process.argv[2];
 
 function escapeHtml(value) {
   return String(value)
@@ -325,14 +326,23 @@ async function exportPdf(browser, config) {
   await page.close();
 }
 
+async function maybeExportPdf(browser, key, config) {
+  if (requestedChecklist && requestedChecklist !== key) {
+    return;
+  }
+
+  await exportPdf(browser, config);
+}
+
 const curved = await importData('src/data/curvedCanalChecklist.ts');
 const mb2 = await importData('src/data/mb2Checklist.ts');
 const evidence = await importData('src/data/evidenceChecklist.ts');
+const irrigation = await importData('src/data/irrigationChecklist.ts');
 
 const browser = await chromium.launch({ headless: true });
 
 try {
-  await exportPdf(browser, {
+  await maybeExportPdf(browser, 'curved', {
     title: '13-point curved canal checklist',
     kicker: 'Curved-canal protocol checklist',
     intro:
@@ -344,7 +354,7 @@ try {
     outputPath: path.join(outputDir, 'EndoTech-NZ-Curved-Canal-13-Point-Checklist.pdf'),
   });
 
-  await exportPdf(browser, {
+  await maybeExportPdf(browser, 'mb2', {
     title: '15-point MB2 protocol checklist',
     kicker: 'MB2 protocol checklist',
     intro:
@@ -355,7 +365,7 @@ try {
     outputPath: path.join(outputDir, 'EndoTech-NZ-MB2-15-Point-Protocol-Checklist.pdf'),
   });
 
-  await exportPdf(browser, {
+  await maybeExportPdf(browser, 'evidence', {
     title: '10-point endodontic outcomes checklist',
     kicker: 'Evidence outcomes checklist',
     intro:
@@ -365,6 +375,18 @@ try {
     referenceNote: evidence.evidenceChecklistReferenceNote,
     firstPageCount: 6,
     outputPath: path.join(outputDir, 'EndoTech-NZ-Endodontic-Outcomes-10-Point-Checklist.pdf'),
+  });
+
+  await maybeExportPdf(browser, 'irrigation', {
+    title: '12-point irrigation checklist',
+    kicker: 'Irrigation clinical checklist',
+    intro:
+      'Use this chairside checklist before the canal is dried. The aim is controlled canal shape, fresh chemistry, loose delivery, activation timing, final rinse sequence, and apical safety.',
+    items: irrigation.irrigationChecklistItems,
+    sources: irrigation.irrigationChecklistSources,
+    referenceNote: irrigation.irrigationChecklistReferenceNote,
+    firstPageCount: 6,
+    outputPath: path.join(outputDir, 'EndoTech-NZ-Irrigation-12-Point-Clinical-Checklist.pdf'),
   });
 } finally {
   await browser.close();

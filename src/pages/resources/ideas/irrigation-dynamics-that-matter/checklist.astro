@@ -1,0 +1,572 @@
+---
+import ProductLayout from '../../../../layouts/ProductLayout.astro';
+import {
+  irrigationChecklistItems,
+  irrigationChecklistReferenceNote,
+  irrigationChecklistSources,
+} from '../../../../data/irrigationChecklist';
+
+const base = import.meta.env.BASE_URL;
+const firstItem = irrigationChecklistItems[0];
+const checklistPdfHref = `${base}downloads/EndoTech-NZ-Irrigation-12-Point-Clinical-Checklist.pdf`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: 'Irrigation Clinical Checklist',
+  description:
+    'An interactive 12-point endodontic irrigation checklist for canal shape, irrigant renewal, delivery, activation, final rinse sequence, and apical safety.',
+  about: {
+    '@type': 'MedicalTherapy',
+    name: 'Endodontic irrigation',
+  },
+};
+---
+
+<ProductLayout
+  title="Irrigation Clinical Checklist | EndoTech NZ"
+  description="An interactive 12-point endodontic irrigation checklist with tap and hover guidance for exchange, chemistry, delivery, activation, and final rinse decisions."
+  schema={schema}
+  accent="teal"
+>
+  <section class="checklist-page">
+    <div class="checklist-shell">
+      <a class="back-link" href={`${base}resources/ideas/irrigation-dynamics-that-matter/#irrigation-download`}>
+        Back to irrigation article
+      </a>
+
+      <div class="checklist-hero">
+        <p class="eyebrow">12-point irrigation checklist</p>
+        <h1>Use the checklist before the canal is dried.</h1>
+        <p>
+          Tap a point to bring the clinical guidance into focus. On larger screens, hover works too.
+          The copy is written for canal shape, fresh chemistry, loose delivery, activation timing,
+          final rinse sequence, and apical safety.
+        </p>
+      </div>
+
+      <div class="interactive-checklist">
+        <aside class="point-rail" aria-label="Irrigation checklist points">
+          {irrigationChecklistItems.map((item, index) => (
+            <button
+              class:list={['point-trigger', { 'is-active': index === 0 }]}
+              type="button"
+              aria-pressed={index === 0 ? 'true' : 'false'}
+              data-number={item.number}
+              data-stage={item.stage}
+              data-title={item.title}
+              data-summary={item.summary}
+              data-detail={item.detail}
+              data-video-title={item.videoTitle}
+              data-video-url={item.videoUrl}
+            >
+              <span>{item.number}</span>
+              <strong>{item.title}</strong>
+            </button>
+          ))}
+        </aside>
+
+        <div class="detail-column">
+          <article class="detail-panel" aria-live="polite">
+            <span id="detail-stage">{firstItem.stage}</span>
+            <div class="detail-title-row">
+              <strong id="detail-number">{firstItem.number}</strong>
+              <h2 id="detail-title">{firstItem.title}</h2>
+            </div>
+            <p class="detail-summary" id="detail-summary">{firstItem.summary}</p>
+            <p id="detail-copy">{firstItem.detail}</p>
+            <a
+              class="detail-video-link"
+              id="detail-video-link"
+              href={firstItem.videoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Related YouTube</span>
+              <strong id="detail-video-title">{firstItem.videoTitle}</strong>
+            </a>
+          </article>
+        </div>
+      </div>
+
+      <section class="source-section" aria-labelledby="source-title">
+        <div class="source-header">
+          <div>
+            <h2 id="source-title">Source base</h2>
+            <p>{irrigationChecklistReferenceNote}</p>
+          </div>
+          <a class="source-download" href={checklistPdfHref} download>
+            Download PDF
+            <span>12-point irrigation checklist</span>
+          </a>
+        </div>
+        <ul>
+          {irrigationChecklistSources.map((source) => (
+            <li>{source}</li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const triggers = Array.from(document.querySelectorAll('.point-trigger'));
+      const stage = document.getElementById('detail-stage');
+      const number = document.getElementById('detail-number');
+      const title = document.getElementById('detail-title');
+      const summary = document.getElementById('detail-summary');
+      const copy = document.getElementById('detail-copy');
+      const videoLink = document.getElementById('detail-video-link');
+      const videoTitle = document.getElementById('detail-video-title');
+
+      function setActive(trigger) {
+        if (!trigger || !stage || !number || !title || !summary || !copy || !videoLink || !videoTitle) return;
+        triggers.forEach((item) => {
+          const active = item === trigger;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        stage.textContent = trigger.dataset.stage || '';
+        number.textContent = trigger.dataset.number || '';
+        title.textContent = trigger.dataset.title || '';
+        summary.textContent = trigger.dataset.summary || '';
+        copy.textContent = trigger.dataset.detail || '';
+        const nextVideoUrl = trigger.dataset.videoUrl || '';
+        const nextVideoTitle = trigger.dataset.videoTitle || '';
+        videoLink.setAttribute('href', nextVideoUrl);
+        videoLink.hidden = !nextVideoUrl;
+        videoTitle.textContent = nextVideoTitle;
+      }
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener('mouseenter', () => setActive(trigger));
+        trigger.addEventListener('focus', () => setActive(trigger));
+        trigger.addEventListener('click', () => setActive(trigger));
+      });
+    });
+  </script>
+</ProductLayout>
+
+<style>
+  :global(.product-site-main) {
+    background: #f4f8f8;
+  }
+
+  .checklist-page {
+    --ink: #10272a;
+    --muted: #4b6267;
+    --line: rgba(16, 39, 42, 0.13);
+    --line-strong: rgba(16, 39, 42, 0.24);
+    --aqua: #dff2f3;
+    --aqua-strong: #a8dbe2;
+    min-height: 100vh;
+    color: var(--ink);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(244, 248, 248, 0.98) 48%, #f4f8f8 100%);
+    font-family: Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .checklist-shell {
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 58px 0 84px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: #31575e;
+    background: rgba(255, 255, 255, 0.74);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .checklist-hero {
+    max-width: 920px;
+    padding: 54px 0 46px;
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .checklist-hero h1 {
+    max-width: 900px;
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(3rem, 6vw, 5.2rem);
+    line-height: 1;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  .checklist-hero p {
+    max-width: 760px;
+    margin: 26px 0 0;
+    color: var(--muted);
+    font-size: 1.08rem;
+    line-height: 1.72;
+  }
+
+  .interactive-checklist {
+    display: grid;
+    grid-template-columns: minmax(280px, 370px) minmax(0, 1fr);
+    gap: 34px;
+    align-items: start;
+    min-width: 0;
+  }
+
+  .point-rail {
+    display: grid;
+    gap: 9px;
+    min-width: 0;
+    max-width: 100%;
+    position: sticky;
+    top: 96px;
+  }
+
+  .point-trigger {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    align-items: center;
+    width: 100%;
+    min-height: 64px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.78);
+    color: var(--ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+  }
+
+  .point-trigger:hover,
+  .point-trigger:focus-visible,
+  .point-trigger.is-active {
+    border-color: var(--line-strong);
+    background: var(--aqua);
+    transform: translateX(3px);
+    outline: none;
+  }
+
+  .point-trigger span {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.66);
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 850;
+  }
+
+  .point-trigger strong {
+    color: var(--ink);
+    font-size: 0.94rem;
+    font-weight: 780;
+    line-height: 1.28;
+    letter-spacing: 0;
+  }
+
+  .detail-column {
+    min-height: 620px;
+  }
+
+  .detail-panel {
+    position: sticky;
+    top: 96px;
+    min-height: 430px;
+    padding: clamp(32px, 4.5vw, 58px);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 30px;
+    background:
+      linear-gradient(135deg, rgba(223, 242, 243, 0.6), rgba(255, 255, 255, 0.8) 36%, #ffffff 100%);
+    box-shadow: 0 24px 70px rgba(18, 39, 41, 0.1);
+  }
+
+  .detail-panel > span {
+    display: block;
+    margin-bottom: 22px;
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .detail-title-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .detail-title-row strong {
+    display: inline-grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    font-size: 1rem;
+  }
+
+  .detail-title-row h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(2rem, 4vw, 3.65rem);
+    line-height: 1.04;
+    font-weight: 740;
+    letter-spacing: 0;
+  }
+
+  .detail-summary {
+    margin: 30px 0 0;
+    padding: 18px 20px;
+    border-left: 3px solid #2c96a8;
+    border-radius: 0 16px 16px 0;
+    background: #edf9fa;
+    color: #31575e;
+    font-weight: 720;
+    line-height: 1.58;
+  }
+
+  #detail-copy {
+    margin: 28px 0 0;
+    max-width: 800px;
+    color: var(--muted);
+    font-size: 1.06rem;
+    line-height: 1.78;
+  }
+
+  .detail-video-link {
+    display: inline-grid;
+    gap: 4px;
+    max-width: min(100%, 620px);
+    margin-top: 30px;
+    padding: 14px 18px;
+    border: 1px solid rgba(16, 39, 42, 0.16);
+    border-radius: 16px;
+    color: #1d5fd1;
+    background: #f8fbfa;
+    text-decoration: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  }
+
+  .detail-video-link:hover,
+  .detail-video-link:focus-visible {
+    border-color: rgba(49, 87, 94, 0.36);
+    box-shadow: 0 14px 32px rgba(18, 39, 41, 0.08);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .detail-video-link span {
+    color: #31575e;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .detail-video-link strong {
+    color: #1d5fd1;
+    font-size: 0.98rem;
+    font-weight: 780;
+    line-height: 1.35;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .source-section {
+    margin-top: 64px;
+    padding: 30px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.68);
+  }
+
+  .source-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .source-section h2 {
+    margin: 0 0 18px;
+    color: #31575e;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .source-header p {
+    max-width: 860px;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .source-download {
+    display: grid;
+    gap: 4px;
+    min-width: 250px;
+    padding: 14px 18px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    background: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .source-download:hover,
+  .source-download:focus-visible {
+    border-color: rgba(49, 87, 94, 0.42);
+    box-shadow: 0 12px 30px rgba(18, 39, 41, 0.08);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .source-download span {
+    color: var(--muted);
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .source-section ul {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .source-section li + li {
+    margin-top: 6px;
+  }
+
+  @media (max-width: 980px) {
+    .interactive-checklist {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .point-rail,
+    .detail-panel {
+      position: static;
+    }
+
+    .point-rail {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      padding: 0 0 12px;
+      scroll-padding-left: 0;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .point-trigger {
+      flex: 0 0 min(292px, 82vw);
+      min-height: 76px;
+      scroll-snap-align: start;
+    }
+
+    .point-trigger:hover,
+    .point-trigger:focus-visible,
+    .point-trigger.is-active {
+      transform: none;
+    }
+
+    .detail-column {
+      min-height: auto;
+    }
+
+    .detail-panel {
+      min-height: 0;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .checklist-shell {
+      width: min(100% - 28px, 680px);
+      padding: 34px 0 62px;
+    }
+
+    .checklist-hero {
+      padding: 30px 0 30px;
+    }
+
+    .checklist-hero h1 {
+      font-size: clamp(1.95rem, 8.7vw, 2.85rem);
+      line-height: 1.08;
+    }
+
+    .checklist-hero p {
+      margin-top: 20px;
+      font-size: 1rem;
+      line-height: 1.62;
+    }
+
+    .detail-title-row {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .detail-title-row h2 {
+      font-size: clamp(1.55rem, 7vw, 2.2rem);
+      line-height: 1.14;
+    }
+
+    .detail-panel,
+    .source-section {
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .source-header {
+      grid-template-columns: 1fr;
+    }
+
+    .source-download {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+</style>

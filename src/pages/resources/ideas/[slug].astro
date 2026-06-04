@@ -24,6 +24,136 @@ const articleSchema = {
   articleSection: idea.category,
   isAccessibleForFree: true,
 };
+
+const isIrrigationArticle = idea.slug === 'irrigation-dynamics-that-matter';
+const irrigationChecklistHref = withBasePath('/resources/ideas/irrigation-dynamics-that-matter/checklist/');
+const irrigationChecklistPdfHref = withBasePath('/downloads/EndoTech-NZ-Irrigation-12-Point-Clinical-Checklist.pdf');
+
+const irrigationLevers = [
+  {
+    kicker: 'Access',
+    title: 'A shaped canal is not automatically a cleaned canal.',
+    text:
+      'Files prepare the main path, but fins, isthmuses, cul-de-sacs and apical irregularities can still shelter tissue, debris and biofilm. Irrigation is how chemistry reaches anatomy that instruments do not touch.',
+  },
+  {
+    kicker: 'Chemistry',
+    title: 'Sodium hypochlorite works, but the protocol matters.',
+    text:
+      'NaOCl remains the primary irrigant because it dissolves organic tissue and disrupts microbial load. Its effect is shaped by concentration, temperature, contact time, replenishment and agitation, and it is usually paired with a chelator for inorganic smear layer control.',
+  },
+  {
+    kicker: 'Delivery',
+    title: 'Needle position changes the clinical problem.',
+    text:
+      'The important question is not just how much irrigant is delivered, but whether it is exchanged in the apical third without binding the needle or forcing solution beyond the foramen. Space for reverse flow is a safety feature.',
+  },
+  {
+    kicker: 'Activation',
+    title: 'Activation is a supplement, not a shortcut.',
+    text:
+      'Sonic, ultrasonic and negative-pressure approaches can improve debris removal and irrigant movement in complex spaces. Use them to improve exchange after access has been created, not to rescue an under-shaped pathway.',
+  },
+];
+
+const irrigationSequence = [
+  {
+    title: 'Shape for irrigant access',
+    text:
+      'Choose apical size and taper with irrigation in mind. The canal needs enough space for a non-binding needle and coronal backflow, especially when treating curved or complex anatomy.',
+  },
+  {
+    title: 'Keep the chemistry fresh',
+    text:
+      'Replenish NaOCl throughout shaping rather than saving it for the end. Fresh solution, contact time and exchange are more meaningful than a single large flush.',
+  },
+  {
+    title: 'Deliver close, loose and controlled',
+    text:
+      'Place the needle short of working length, keep it moving, and never bind it. Side-vented and smaller-gauge needles can improve access, but every design changes pressure and flow.',
+  },
+  {
+    title: 'Activate after the pathway exists',
+    text:
+      'Use ultrasonic, sonic or negative-pressure activation when the canal has been shaped enough to let the irrigant move. Activation cannot compensate for blocked access.',
+  },
+  {
+    title: 'Finish with a deliberate final rinse',
+    text:
+      'Use a sequence that respects organic dissolution, smear layer removal and final disinfection. Avoid mixing irrigants casually; each step should have a reason.',
+  },
+];
+
+const irrigationTeachingSignals = [
+  {
+    title: 'Fresh solution beats heroic concentration.',
+    text:
+      'NaOCl is consumed as it dissolves tissue and contacts organic load. Clinicians repeatedly emphasize renewal: irrigate throughout shaping, refresh the reservoir, and avoid relying on one final flush.',
+  },
+  {
+    title: 'Delivery is the first activation step.',
+    text:
+      'Before choosing a device, make sure the irrigant can physically reach the working area. A loose needle path, controlled flow and coronal backflow make the protocol safer and more effective.',
+  },
+  {
+    title: 'Needle design changes the feel of the case.',
+    text:
+      'Side-vented, flexible and smaller-gauge tips can help irrigant reach deeper anatomy, especially in curved canals. The clinical aim is controlled placement, not force.',
+  },
+  {
+    title: 'Irrigants have different jobs.',
+    text:
+      'NaOCl is the organic-tissue and antimicrobial workhorse. EDTA or another chelator addresses smear layer. Chlorhexidine is not a drop-in replacement and should not be mixed casually with NaOCl.',
+  },
+  {
+    title: 'Activation needs a prepared pathway.',
+    text:
+      'Sonic and ultrasonic activation are most useful once the canal is shaped enough for irrigant movement. Activation is about fluid motion and exchange, not simply vibrating a file in a tight canal.',
+  },
+  {
+    title: 'Safety is part of cleanliness.',
+    text:
+      'Extrusion risk, open apices, resorption and perforation change the protocol. Negative-pressure irrigation or more conservative delivery may be useful when apical control matters most.',
+  },
+];
+
+const irrigationClinicalChecks = [
+  'Can the needle or delivery tip move freely without binding?',
+  'Is NaOCl being renewed between files, not only at the end?',
+  'Has the canal been shaped enough for irrigant exchange and activation?',
+  'Is EDTA being used as a separate smear-layer step with an intentional rinse sequence?',
+  'Does the apical anatomy require slower delivery, shallower placement or negative pressure?',
+  'Is the final rinse sequence simple enough to repeat every time?',
+];
+
+const irrigationVariables = [
+  ['Variable', 'Clinical meaning'],
+  ['Apical size and taper', 'Creates space for irrigant exchange and a non-binding needle.'],
+  ['Needle depth', 'Closer placement improves exchange, but pressure control becomes more important.'],
+  ['Needle design', 'Open-ended and side-vented needles create different flow, velocity and apical pressure patterns.'],
+  ['Flow rate', 'Higher flow can improve replacement, but safety depends on backflow and needle control.'],
+  ['Activation', 'Improves movement and debris removal when access has already been created.'],
+  ['Chelation', 'Complements NaOCl by addressing the inorganic smear layer.'],
+];
+
+const irrigationControlQuestions = [
+  {
+    question: 'Is there enough shape for exchange?',
+    answer: 'The needle should sit short of length without binding, with room for coronal return flow.',
+  },
+  {
+    question: 'Is the active chemistry being renewed?',
+    answer: 'Fresh NaOCl throughout shaping matters more than a single large final flush.',
+  },
+  {
+    question: 'Is activation being used at the right time?',
+    answer: 'Activate after the pathway exists, when irrigant can move rather than simply vibrate in a blocked space.',
+  },
+  {
+    question: 'Is the final sequence chemically deliberate?',
+    answer: 'Organic tissue, smear layer and final disinfection need separate decisions, not a casual mix of solutions.',
+  },
+];
 ---
 
 <ProductLayout
@@ -54,42 +184,182 @@ const articleSchema = {
       <figcaption>{idea.focus}</figcaption>
     </figure>
 
-    <div class="article-shell">
-      <aside class="article-aside" aria-label="Article format">
-        <p>Suggested format</p>
-        <ol>
-          {idea.placeholders.map((placeholder) => (
-            <li>{placeholder}</li>
-          ))}
-        </ol>
-      </aside>
+    {
+      isIrrigationArticle ? (
+        <div class="irrigation-article">
+          <section class="irrigation-intro" aria-labelledby="irrigation-frame">
+            <div>
+              <p class="article-eyebrow">Clinical frame</p>
+              <h2 id="irrigation-frame">Irrigation is how chemistry reaches what files leave behind.</h2>
+              <p>
+                Instrumentation creates the path. Irrigation cleans through that path. The clinical
+                challenge is to exchange active solution inside the apical third, move it into fins
+                and isthmuses, and do it without forcing irrigant through the apex.
+              </p>
+              <p>
+                The interesting idea is that irrigation is not one variable. It is anatomy, chemistry,
+                delivery and activation working together. A safer protocol makes each variable visible.
+              </p>
+            </div>
+            <aside class="control-panel" aria-label="Irrigation control questions">
+              <p class="control-panel__label">Control questions</p>
+              <ul>
+                {irrigationControlQuestions.map((item) => (
+                  <li>
+                    <strong>{item.question}</strong>
+                    <span>{item.answer}</span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          </section>
 
-      <div class="article-body">
-        <section>
-          <h2>Clinical problem</h2>
-          <p>
-            Add the opening clinical context here. Frame the problem clearly, then connect each point to control,
-            safety, and adaptability in the procedure.
-          </p>
-        </section>
+          <section class="irrigation-section" aria-labelledby="irrigation-levers">
+            <p class="article-eyebrow">Four levers</p>
+            <h2 id="irrigation-levers">The protocol is a set of controlled variables.</h2>
+            <div class="lever-grid">
+              {irrigationLevers.map((lever) => (
+                <section class="lever-card">
+                  <span>{lever.kicker}</span>
+                  <h3>{lever.title}</h3>
+                  <p>{lever.text}</p>
+                </section>
+              ))}
+            </div>
+          </section>
 
-        <section>
-          <h2>Case notes</h2>
-          <p>
-            Add observations, decision points, technique notes, images, or evidence references here. Keep the language
-            precise and evidence-informed.
-          </p>
-        </section>
+          <section class="irrigation-section sequence-section" aria-labelledby="irrigation-sequence">
+            <div>
+              <p class="article-eyebrow">Chairside sequence</p>
+              <h2 id="irrigation-sequence">A practical irrigation mindset.</h2>
+              <p>
+                This is not a prescription for every tooth. It is a way to make irrigation decisions
+                traceable: create access, exchange active chemistry, activate when useful, and finish
+                with a sequence that respects the chemistry.
+              </p>
+            </div>
+            <ol class="sequence-list">
+              {irrigationSequence.map((step) => (
+                <li>
+                  <div>
+                    <h3>{step.title}</h3>
+                    <p>{step.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
 
-        <section>
-          <h2>Clinical implications</h2>
-          <p>
-            Add the practical conclusion here. Link the idea back to patient outcomes, workflow confidence, and the
-            clinical problem described above.
-          </p>
-        </section>
-      </div>
-    </div>
+          <section class="irrigation-section variables-section" aria-labelledby="irrigation-variables">
+            <p class="article-eyebrow">Flow variables</p>
+            <h2 id="irrigation-variables">Small technical choices change cleaning and safety.</h2>
+            <div class="variables-table" role="table" aria-label="Irrigation variables and clinical meaning">
+              {irrigationVariables.map((row, index) => (
+                <div class={index === 0 ? 'variables-row variables-head' : 'variables-row'} role="row">
+                  <span role="cell">{row[0]}</span>
+                  <span role="cell">{row[1]}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section class="irrigation-section teaching-section" aria-labelledby="irrigation-teaching">
+            <p class="article-eyebrow">Clinical teaching signal</p>
+            <h2 id="irrigation-teaching">What experienced clinicians keep coming back to.</h2>
+            <p>
+              A review of ten irrigation teaching videos showed the same practical pattern: clinicians
+              talk less about a single miracle solution and more about repeatable exchange, safe
+              delivery and making the chemistry active at the right moment.
+            </p>
+            <div class="teaching-grid">
+              {irrigationTeachingSignals.map((item) => (
+                <section class="teaching-card">
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </section>
+              ))}
+            </div>
+          </section>
+
+          <section class="irrigation-section checks-section" aria-labelledby="irrigation-checks">
+            <div>
+              <p class="article-eyebrow">Before obturation</p>
+              <h2 id="irrigation-checks">Six checks for a cleaner, calmer finish.</h2>
+              <p>
+                These are chairside questions, not academic footnotes. If the answer is unclear, the
+                irrigation step probably needs one more deliberate pass before the canal is dried.
+              </p>
+            </div>
+            <ul class="check-list">
+              {irrigationClinicalChecks.map((check) => (
+                <li>{check}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section class="irrigation-section download-section" id="irrigation-download" aria-labelledby="irrigation-download-title">
+            <div>
+              <p class="article-eyebrow">Downloadable guide</p>
+              <h2 id="irrigation-download-title">Take the 12-point irrigation checklist chairside.</h2>
+              <p>
+                The interactive guide expands each point with the clinical reasoning behind it. The
+                PDF keeps the same points in a compact protocol sheet for team discussion, training,
+                or case review.
+              </p>
+            </div>
+            <div class="download-actions">
+              <a class="guide-link" href={irrigationChecklistHref}>
+                <span>Interactive guide</span>
+                <strong>Open the full 12-point irrigation guide.</strong>
+                <small>Flow, chemistry, delivery, activation, safety, and finish.</small>
+              </a>
+              <a class="guide-download" href={irrigationChecklistPdfHref} download>
+                <span>Download PDF</span>
+                <strong>12-point chairside checklist</strong>
+                <small>Includes source notes plus curated YouTube learning links.</small>
+              </a>
+            </div>
+          </section>
+        </div>
+      ) : (
+        <div class="article-shell">
+          <aside class="article-aside" aria-label="Article format">
+            <p>Suggested format</p>
+            <ol>
+              {idea.placeholders.map((placeholder) => (
+                <li>{placeholder}</li>
+              ))}
+            </ol>
+          </aside>
+
+          <div class="article-body">
+            <section>
+              <h2>Clinical problem</h2>
+              <p>
+                Add the opening clinical context here. Frame the problem clearly, then connect each
+                point to control, safety, and adaptability in the procedure.
+              </p>
+            </section>
+
+            <section>
+              <h2>Case notes</h2>
+              <p>
+                Add observations, decision points, technique notes, images, or evidence references
+                here. Keep the language precise and evidence-informed.
+              </p>
+            </section>
+
+            <section>
+              <h2>Clinical implications</h2>
+              <p>
+                Add the practical conclusion here. Link the idea back to patient outcomes, workflow
+                confidence, and the clinical problem described above.
+              </p>
+            </section>
+          </div>
+        </div>
+      )
+    }
   </article>
 </ProductLayout>
 
@@ -306,6 +576,309 @@ const articleSchema = {
     line-height: 1.75;
   }
 
+  .irrigation-article {
+    background: #ffffff;
+  }
+
+  .irrigation-intro,
+  .irrigation-section {
+    width: min(1160px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 64px 0;
+    border-bottom: 1px solid #dde6ef;
+  }
+
+  .irrigation-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.72fr);
+    align-items: center;
+    gap: 48px;
+  }
+
+  .irrigation-intro h2,
+  .irrigation-section h2 {
+    margin: 8px 0 18px;
+    color: #15354c;
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 1.06;
+    letter-spacing: 0;
+  }
+
+  .irrigation-intro p,
+  .irrigation-section > p,
+  .sequence-section > div > p,
+  .checks-section > div > p {
+    margin: 0 0 16px;
+    color: #4f5f6d;
+    font-size: 1.03rem;
+    line-height: 1.75;
+    max-width: 760px;
+  }
+
+  .control-panel {
+    margin: 0;
+    border: 1px solid #d8e4ef;
+    border-radius: 12px;
+    background: #f8fbfd;
+    padding: 28px;
+    box-shadow: 0 18px 48px rgba(22, 60, 86, 0.08);
+  }
+
+  .control-panel__label {
+    margin: 0 0 18px;
+    color: #0a83a8;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .control-panel ul {
+    display: grid;
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .control-panel li {
+    display: grid;
+    gap: 6px;
+    padding-top: 18px;
+    border-top: 1px solid #dce7f0;
+  }
+
+  .control-panel li:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .control-panel strong {
+    color: #15354c;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .control-panel span {
+    color: #526372;
+    font-size: 0.96rem;
+    line-height: 1.62;
+  }
+
+  .lever-grid,
+  .teaching-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 30px;
+  }
+
+  .teaching-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lever-card,
+  .teaching-card {
+    border: 1px solid #dce7f0;
+    border-radius: 8px;
+    background: #f8fbfd;
+    padding: 24px;
+    min-height: 100%;
+  }
+
+  .lever-card span {
+    display: block;
+    color: #0a83a8;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .lever-card h3,
+  .teaching-card h3,
+  .sequence-list h3 {
+    margin: 0 0 10px;
+    color: #15354c;
+    font-size: 1.02rem;
+    line-height: 1.35;
+    letter-spacing: 0;
+  }
+
+  .lever-card p,
+  .teaching-card p,
+  .sequence-list p {
+    margin: 0;
+    color: #526372;
+    line-height: 1.68;
+    font-size: 0.96rem;
+  }
+
+  .sequence-section,
+  .checks-section,
+  .download-section {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1fr);
+    gap: 44px;
+    align-items: start;
+  }
+
+  .sequence-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: irrigation-step;
+    display: grid;
+    gap: 16px;
+  }
+
+  .sequence-list li {
+    counter-increment: irrigation-step;
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 18px;
+    padding: 20px 0;
+    border-top: 1px solid #dce7f0;
+  }
+
+  .sequence-list li::before {
+    content: counter(irrigation-step, decimal-leading-zero);
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #e7f4f8;
+    color: #0a83a8;
+    font-size: 0.82rem;
+    font-weight: 900;
+  }
+
+  .variables-table {
+    margin-top: 28px;
+    border: 1px solid #dce7f0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .variables-row {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.38fr) minmax(0, 1fr);
+    border-top: 1px solid #dce7f0;
+  }
+
+  .variables-row:first-child {
+    border-top: 0;
+  }
+
+  .variables-row span {
+    padding: 16px 20px;
+    color: #506171;
+    line-height: 1.55;
+  }
+
+  .variables-row span:first-child {
+    color: #15354c;
+    font-weight: 800;
+    border-right: 1px solid #dce7f0;
+  }
+
+  .variables-head {
+    background: #15354c;
+  }
+
+  .variables-head span,
+  .variables-head span:first-child {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .check-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 14px;
+  }
+
+  .check-list li {
+    position: relative;
+    padding: 18px 20px 18px 48px;
+    border: 1px solid #dce7f0;
+    border-radius: 8px;
+    color: #526372;
+    line-height: 1.62;
+    background: #f8fbfd;
+  }
+
+  .check-list li::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 24px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f2a546;
+    box-shadow: 0 0 0 6px rgba(242, 165, 70, 0.18);
+  }
+
+  .download-actions {
+    display: grid;
+    gap: 16px;
+  }
+
+  .guide-link,
+  .guide-download {
+    display: grid;
+    gap: 8px;
+    border: 1px solid #dce7f0;
+    border-radius: 10px;
+    padding: 24px;
+    background: #f8fbfd;
+    color: #15354c;
+    text-decoration: none;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .guide-link:hover,
+  .guide-link:focus-visible,
+  .guide-download:hover,
+  .guide-download:focus-visible {
+    border-color: #a8d5e6;
+    box-shadow: 0 18px 42px rgba(22, 60, 86, 0.1);
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  .guide-link span,
+  .guide-download span {
+    color: #0a83a8;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .guide-link strong,
+  .guide-download strong {
+    color: #15354c;
+    font-size: 1.18rem;
+    line-height: 1.28;
+  }
+
+  .guide-link small,
+  .guide-download small {
+    color: #526372;
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
   @media (max-width: 860px) {
     .article-shell {
       grid-template-columns: 1fr;
@@ -319,12 +892,42 @@ const articleSchema = {
     .article-media img {
       aspect-ratio: 4 / 3;
     }
+
+    .irrigation-intro,
+    .sequence-section,
+    .checks-section,
+    .download-section {
+      grid-template-columns: 1fr;
+    }
+
+    .lever-grid,
+    .teaching-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .irrigation-intro,
+    .irrigation-section {
+      width: min(100% - 36px, 1160px);
+      padding: 46px 0;
+    }
+
+    .variables-row {
+      grid-template-columns: 1fr;
+    }
+
+    .variables-row span:first-child {
+      border-right: 0;
+      border-bottom: 1px solid #dce7f0;
+      padding-bottom: 6px;
+    }
   }
 
   @media (max-width: 720px) {
     .article-hero,
     .article-media,
-    .article-shell {
+    .article-shell,
+    .irrigation-intro,
+    .irrigation-section {
       width: min(100% - 36px, 1040px);
     }
 

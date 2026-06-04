@@ -42,12 +42,12 @@ export const blogIdeas: BlogIdea[] = [
   },
   {
     slug: 'irrigation-dynamics-that-matter',
-    title: 'Irrigation Dynamics That Matter',
+    title: 'Interesting Ideas on Irrigation',
     category: 'Evidence',
-    summary: 'Beyond volume, understanding flow, chemistry and activation.',
+    summary: 'How flow, chemistry and activation reach the anatomy files leave behind.',
     readTime: '11 min read',
     image: '/blog/irrigation-dynamics-that-matter.png',
-    focus: 'Evidence-informed irrigation choices for canal cleanliness.',
+    focus: 'Evidence-informed irrigation choices for canal cleanliness and safety.',
     placeholders: ['Clinical problem', 'Evidence notes', 'Irrigation variables', 'Clinical implications'],
   },
   {
