@@ -11,6 +11,16 @@ export interface BlogIdea {
 
 export const blogIdeas: BlogIdea[] = [
   {
+    slug: 'vertucci-canal-pathways',
+    title: 'Vertucci canal pathways: read the route before you shape',
+    category: 'Anatomy',
+    summary: 'A visual guide to the eight classic canal configurations—and the clinical questions each pathway should prompt.',
+    readTime: '5 min read',
+    image: '/blog/vertucci-canal-pathways.svg',
+    focus: 'Eight original schematics for reading canal division, convergence, and apical exit patterns.',
+    placeholders: ['Read the notation', 'Compare the eight types', 'Apply three clinical checks', 'Evidence and limitations'],
+  },
+  {
     slug: 'reading-anatomy-not-guessing',
     title: 'Reading Anatomy, Not Guessing',
     category: 'Anatomy',
