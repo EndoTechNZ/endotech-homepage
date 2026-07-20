@@ -27,6 +27,7 @@ const articleSchema = {
 
 const isIrrigationArticle = idea.slug === 'irrigation-dynamics-that-matter';
 const isVptArticle = idea.slug === 'stepwise-chairside-vital-pulp-therapy-technique';
+const isVertucciArticle = idea.slug === 'vertucci-canal-pathways';
 const irrigationChecklistHref = withBasePath('/resources/ideas/irrigation-dynamics-that-matter/checklist/');
 const irrigationChecklistPdfHref = withBasePath('/downloads/EndoTech-NZ-Irrigation-12-Point-Clinical-Checklist.pdf');
 const vptGuideHref = withBasePath('/downloads/Vital_Pulp_Therapy_Chairside_Quick_Guide.pdf');
@@ -234,6 +235,122 @@ const irrigationControlQuestions = [
     answer: 'Organic tissue, smear layer and final disinfection need separate decisions, not a casual mix of solutions.',
   },
 ];
+
+const vertucciTypes = [
+  {
+    type: 'I',
+    notation: '1-1',
+    label: 'One canal, one exit',
+    entries: [80],
+    exits: [80],
+    paths: ['M80 62 C80 108 80 190 80 247'],
+  },
+  {
+    type: 'II',
+    notation: '2-1',
+    label: 'Two canals converge',
+    entries: [67, 93],
+    exits: [80],
+    paths: [
+      'M67 62 C68 101 71 126 80 147 C80 184 80 218 80 247',
+      'M93 62 C92 101 89 126 80 147',
+    ],
+  },
+  {
+    type: 'III',
+    notation: '1-2-1',
+    label: 'Divide, then rejoin',
+    entries: [80],
+    exits: [80],
+    paths: [
+      'M80 62 C80 82 80 97 80 108',
+      'M80 108 C67 125 67 154 80 176 C80 201 80 224 80 247',
+      'M80 108 C93 125 93 154 80 176',
+    ],
+  },
+  {
+    type: 'IV',
+    notation: '2-2',
+    label: 'Two canals, two exits',
+    entries: [68, 92],
+    exits: [68, 92],
+    paths: [
+      'M68 62 C69 108 69 190 68 247',
+      'M92 62 C91 108 91 190 92 247',
+    ],
+  },
+  {
+    type: 'V',
+    notation: '1-2',
+    label: 'One canal divides',
+    entries: [80],
+    exits: [68, 92],
+    paths: [
+      'M80 62 C80 108 80 157 80 178',
+      'M80 178 C72 199 69 224 68 247',
+      'M80 178 C88 199 91 224 92 247',
+    ],
+  },
+  {
+    type: 'VI',
+    notation: '2-1-2',
+    label: 'Merge, then redivide',
+    entries: [67, 93],
+    exits: [68, 92],
+    paths: [
+      'M67 62 C68 96 72 119 80 137',
+      'M93 62 C92 96 88 119 80 137',
+      'M80 137 C80 151 80 165 80 179',
+      'M80 179 C72 201 69 225 68 247',
+      'M80 179 C88 201 91 225 92 247',
+    ],
+  },
+  {
+    type: 'VII',
+    notation: '1-2-1-2',
+    label: 'Divide, join, divide',
+    entries: [80],
+    exits: [68, 92],
+    paths: [
+      'M80 62 C80 82 80 94 80 106',
+      'M80 106 C69 119 69 140 80 154',
+      'M80 106 C91 119 91 140 80 154',
+      'M80 154 C80 163 80 171 80 180',
+      'M80 180 C72 202 69 226 68 247',
+      'M80 180 C88 202 91 226 92 247',
+    ],
+  },
+  {
+    type: 'VIII',
+    notation: '3-3',
+    label: 'Three canals, three exits',
+    entries: [64, 80, 96],
+    exits: [64, 80, 96],
+    paths: [
+      'M64 62 C65 111 65 191 64 247',
+      'M80 62 C80 111 80 191 80 247',
+      'M96 62 C95 111 95 191 96 247',
+    ],
+  },
+];
+
+const vertucciClinicalChecks = [
+  {
+    number: '01',
+    title: 'Find the entry pattern',
+    text: 'Count distinct coronal canal entries and look for developmental grooves that may connect or conceal them.',
+  },
+  {
+    number: '02',
+    title: 'Verify every transition',
+    text: 'Use angled radiographs, magnification, tactile feedback, an apex locator, and CBCT when clinically indicated to test the pathway you think is present.',
+  },
+  {
+    number: '03',
+    title: 'Preserve the pathway',
+    text: 'Establish a reproducible glide path and shape with enough control to respect divisions, curves, convergence, and separate exits.',
+  },
+];
 ---
 
 <ProductLayout
@@ -255,12 +372,15 @@ const irrigationControlQuestions = [
       <div class="article-meta" aria-label="Article details">
         <span>{idea.readTime}</span>
         <span>EndoTech NZ</span>
-        <span>{isVptArticle ? 'Chairside guide' : 'Draft ready'}</span>
+        <span>{isVptArticle ? 'Chairside guide' : isVertucciArticle ? 'Clinical anatomy guide' : 'Draft ready'}</span>
       </div>
     </header>
 
-    <figure class={`article-media ${isVptArticle ? 'article-media--contain' : ''}`}>
-      <img src={withBasePath(idea.image)} alt="" />
+    <figure class={`article-media ${isVptArticle || isVertucciArticle ? 'article-media--contain' : ''}`}>
+      <img
+        src={withBasePath(idea.image)}
+        alt={isVertucciArticle ? 'Original schematic overview of the eight Vertucci root canal configurations' : ''}
+      />
       <figcaption>{idea.focus}</figcaption>
     </figure>
 
@@ -514,6 +634,136 @@ const irrigationControlQuestions = [
                 <a href="https://www.aapd.org/globalassets/media/policies_guidelines/g_vpt-permanentteeth.pdf" target="_blank" rel="noopener noreferrer">AAPD permanent-tooth VPT guideline</a>
                 <a href="https://www.aae.org/wp-content/uploads/2021/05/VitalPulpTherapy_PositionStatement_v2.pdf" target="_blank" rel="noopener noreferrer">AAE vital pulp therapy position statement</a>
               </div>
+            </div>
+          </section>
+        </div>
+      ) : isVertucciArticle ? (
+        <div class="vertucci-article">
+          <section class="vertucci-intro" aria-labelledby="vertucci-frame">
+            <div>
+              <p class="article-eyebrow">Clinical frame</p>
+              <h2 id="vertucci-frame">The number is a pathway—not just a canal count.</h2>
+              <p>
+                Vertucci classification describes how canals begin coronally, divide or merge through the
+                root, and finish apically. Read the sequence from chamber to apex: <strong>2-1</strong>,
+                for example, means two distinct canals converge into one exit.
+              </p>
+              <p>
+                Critical to have case-specific diagnosis, imaging, magnification, or clinical judgement.
+              </p>
+            </div>
+            <aside class="vertucci-key" aria-label="How to read Vertucci notation">
+              <span>Read from chamber to apex</span>
+              <div class="vertucci-key__sequence" aria-label="Two canals merge into one">
+                <strong>2</strong>
+                <i aria-hidden="true">→</i>
+                <strong>1</strong>
+              </div>
+              <p>Coronal entries <b>→</b> divisions or joins <b>→</b> apical exits</p>
+            </aside>
+          </section>
+
+          <section class="vertucci-atlas" aria-labelledby="vertucci-atlas-title">
+            <div class="vertucci-section-heading">
+              <div>
+                <p class="article-eyebrow">Anatomy map</p>
+                <h2 id="vertucci-atlas-title">The eight classic configurations.</h2>
+              </div>
+              <div class="vertucci-legend" aria-label="Diagram legend">
+                <span><i class="vertucci-legend__orifice"></i>Coronal entry</span>
+                <span><i class="vertucci-legend__canal"></i>Canal pathway</span>
+                <span><i class="vertucci-legend__exit"></i>Apical exit</span>
+              </div>
+            </div>
+
+            <div class="vertucci-grid">
+              {vertucciTypes.map((item) => (
+                <article class="vertucci-card">
+                  <header>
+                    <div>
+                      <span>Type {item.type}</span>
+                      <strong>{item.notation}</strong>
+                    </div>
+                    <p>{item.label}</p>
+                  </header>
+                  <svg
+                    viewBox="0 0 160 270"
+                    role="img"
+                    aria-labelledby={`vertucci-type-${item.type}`}
+                    preserveAspectRatio="xMidYMid meet"
+                  >
+                    <title id={`vertucci-type-${item.type}`}>Vertucci Type {item.type}: {item.label}</title>
+                    <path
+                      class="vertucci-root"
+                      d="M47 13 C35 31 34 55 40 84 L57 234 C59 251 69 260 80 260 C91 260 101 251 103 234 L120 84 C126 55 125 31 113 13 C95 22 65 22 47 13 Z"
+                    />
+                    <path
+                      class="vertucci-chamber"
+                      d="M63 38 Q80 27 97 38 L93 63 Q80 76 67 63 Z"
+                    />
+                    {item.paths.map((path) => <path class="vertucci-canal" d={path} />)}
+                    {item.entries.map((x) => <circle class="vertucci-orifice" cx={x} cy="62" r="4.8" />)}
+                    {item.exits.map((x) => <circle class="vertucci-exit" cx={x} cy="247" r="5" />)}
+                  </svg>
+                  <footer>
+                    <span>{item.entries.length} {item.entries.length === 1 ? 'entry' : 'entries'}</span>
+                    <span>{item.exits.length} {item.exits.length === 1 ? 'exit' : 'exits'}</span>
+                  </footer>
+                </article>
+              ))}
+            </div>
+            <p class="vertucci-atlas__note">
+              Original EndoTech NZ schematics. Simplified, not to scale, and intended for education—not anatomical prediction.
+            </p>
+          </section>
+
+          <section class="vertucci-application" aria-labelledby="vertucci-application-title">
+            <div class="vertucci-application__heading">
+              <p class="article-eyebrow">Chairside application</p>
+              <h2 id="vertucci-application-title">Classification should guide you to – 1, 2, 3.</h2>
+              <p>
+                Naming the likely pathway is useful only when it changes what you look for and how
+                deliberately you confirm it.
+              </p>
+            </div>
+            <div class="vertucci-checks">
+              {vertucciClinicalChecks.map((check) => (
+                <article>
+                  <span>{check.number}</span>
+                  <h3>{check.title}</h3>
+                  <p>{check.text}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <aside class="vertucci-caution" aria-labelledby="vertucci-caution-title">
+            <div aria-hidden="true">!</div>
+            <section>
+              <p class="article-eyebrow">Clinical caution</p>
+              <h2 id="vertucci-caution-title">A clean diagram can hide complex anatomy.</h2>
+              <p>
+                Lateral canals, isthmuses, apical deltas, curvature, calcification, resorption, and
+                configurations beyond these eight types may change treatment. Use the classification
+                to organize observation—not to force a tooth into a diagram.
+              </p>
+            </section>
+          </aside>
+
+          <section class="vertucci-evidence" aria-labelledby="vertucci-evidence-title">
+            <div>
+              <span class="vertucci-evidence__number">2,400</span>
+              <p>human permanent teeth in Vertucci's landmark cleared-tooth investigation.</p>
+            </div>
+            <div>
+              <p class="article-eyebrow">Primary source</p>
+              <h2 id="vertucci-evidence-title">Root canal anatomy of the human permanent teeth.</h2>
+              <p>
+                Vertucci FJ. <em>Oral Surgery, Oral Medicine, and Oral Pathology.</em> 1984;58(5):589-599.
+              </p>
+              <a href="https://pubmed.ncbi.nlm.nih.gov/6595621/" target="_blank" rel="noopener noreferrer">
+                View the PubMed record <span aria-hidden="true">↗</span>
+              </a>
             </div>
           </section>
         </div>
@@ -1408,6 +1658,407 @@ const irrigationControlQuestions = [
     line-height: 1.55;
   }
 
+  .vertucci-article {
+    --vertucci-ink: #102b3b;
+    --vertucci-teal: #087f83;
+    --vertucci-mint: #eaf7f4;
+    --vertucci-coral: #c7554b;
+    color: var(--vertucci-ink);
+  }
+
+  .vertucci-intro,
+  .vertucci-atlas,
+  .vertucci-application,
+  .vertucci-caution,
+  .vertucci-evidence {
+    width: min(1160px, calc(100% - 48px));
+    margin-inline: auto;
+  }
+
+  .vertucci-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    gap: clamp(34px, 6vw, 88px);
+    align-items: center;
+    padding: 80px 0;
+  }
+
+  .vertucci-intro h2,
+  .vertucci-section-heading h2,
+  .vertucci-application h2,
+  .vertucci-caution h2,
+  .vertucci-evidence h2 {
+    margin: 0;
+    color: var(--vertucci-ink);
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+  }
+
+  .vertucci-intro > div > p:not(.article-eyebrow),
+  .vertucci-application__heading > p:not(.article-eyebrow),
+  .vertucci-caution section > p:not(.article-eyebrow),
+  .vertucci-evidence > div > p:not(.article-eyebrow) {
+    max-width: 720px;
+    margin: 24px 0 0;
+    color: #526778;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .vertucci-intro strong {
+    color: var(--vertucci-teal);
+  }
+
+  .vertucci-key {
+    border: 1px solid #cee3e0;
+    border-radius: 16px;
+    padding: 28px;
+    background: var(--vertucci-mint);
+  }
+
+  .vertucci-key > span {
+    display: block;
+    color: #47666a;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .vertucci-key__sequence {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 14px;
+    margin: 26px 0 20px;
+  }
+
+  .vertucci-key__sequence strong {
+    display: grid;
+    place-items: center;
+    min-height: 84px;
+    border: 1px solid #a8d5cf;
+    border-radius: 12px;
+    background: #ffffff;
+    color: var(--vertucci-ink);
+    font-size: 2rem;
+  }
+
+  .vertucci-key__sequence i {
+    color: var(--vertucci-teal);
+    font-size: 1.5rem;
+    font-style: normal;
+  }
+
+  .vertucci-key p {
+    margin: 0;
+    color: #47666a;
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .vertucci-atlas {
+    padding: 76px 0 32px;
+    border-top: 1px solid #e3e8ee;
+  }
+
+  .vertucci-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 34px;
+  }
+
+  .vertucci-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    justify-content: flex-end;
+    color: #526778;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .vertucci-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .vertucci-legend i {
+    display: inline-block;
+    flex: 0 0 auto;
+  }
+
+  .vertucci-legend__orifice {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--vertucci-ink);
+  }
+
+  .vertucci-legend__canal {
+    width: 24px;
+    height: 3px;
+    border-radius: 99px;
+    background: var(--vertucci-teal);
+  }
+
+  .vertucci-legend__exit {
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--vertucci-coral);
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .vertucci-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .vertucci-card {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 458px;
+    overflow: hidden;
+    border: 1px solid #d9e5e7;
+    border-radius: 14px;
+    background: #fbfdfd;
+    transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .vertucci-card:hover {
+    border-color: #a8d5cf;
+    box-shadow: 0 14px 30px rgba(16, 67, 71, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .vertucci-card header {
+    display: grid;
+    gap: 12px;
+    padding: 20px 20px 4px;
+  }
+
+  .vertucci-card header > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .vertucci-card header span {
+    color: var(--vertucci-teal);
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .vertucci-card header strong {
+    border-radius: 999px;
+    padding: 5px 10px;
+    background: #e8f5f3;
+    color: #176b6e;
+    font-size: 0.84rem;
+  }
+
+  .vertucci-card header p {
+    margin: 0;
+    color: var(--vertucci-ink);
+    font-size: 1rem;
+    font-weight: 750;
+  }
+
+  .vertucci-card svg {
+    display: block;
+    width: min(100%, 195px);
+    height: 292px;
+    margin: 4px auto 0;
+  }
+
+  .vertucci-root {
+    fill: #edf3f3;
+    stroke: #91aeb1;
+    stroke-width: 2;
+  }
+
+  .vertucci-chamber {
+    fill: #d5e7e5;
+    stroke: #7c9ea0;
+    stroke-width: 1.8;
+  }
+
+  .vertucci-canal {
+    fill: none;
+    stroke: var(--vertucci-teal);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 6;
+  }
+
+  .vertucci-orifice {
+    fill: var(--vertucci-ink);
+    stroke: #ffffff;
+    stroke-width: 2;
+  }
+
+  .vertucci-exit {
+    fill: #ffffff;
+    stroke: var(--vertucci-coral);
+    stroke-width: 3;
+  }
+
+  .vertucci-card footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid #e1e9e9;
+    padding: 13px 20px 15px;
+    color: #627578;
+    font-size: 0.76rem;
+    font-weight: 750;
+  }
+
+  .vertucci-atlas__note {
+    margin: 20px 0 0;
+    color: #6f7f86;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .vertucci-application {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(42px, 7vw, 96px);
+    align-items: start;
+    padding: 96px 0;
+  }
+
+  .vertucci-checks {
+    display: grid;
+    gap: 14px;
+  }
+
+  .vertucci-checks article {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 3px 18px;
+    border: 1px solid #e0e7ec;
+    border-radius: 12px;
+    padding: 22px;
+    background: #ffffff;
+  }
+
+  .vertucci-checks article > span {
+    grid-row: 1 / span 2;
+    color: #93a4af;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+  }
+
+  .vertucci-checks h3 {
+    margin: 0;
+    color: var(--vertucci-ink);
+    font-size: 1.12rem;
+  }
+
+  .vertucci-checks p {
+    margin: 8px 0 0;
+    color: #596c7a;
+    font-size: 0.94rem;
+    line-height: 1.62;
+  }
+
+  .vertucci-caution {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 30px;
+    align-items: start;
+    border: 1px solid #ecd7d3;
+    border-radius: 16px;
+    padding: clamp(30px, 5vw, 58px);
+    background: #fff9f7;
+  }
+
+  .vertucci-caution > div {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #e7b8b1;
+    border-radius: 50%;
+    background: #ffffff;
+    color: var(--vertucci-coral);
+    font-size: 1.25rem;
+    font-weight: 900;
+  }
+
+  .vertucci-caution h2 {
+    max-width: 780px;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+  }
+
+  .vertucci-evidence {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    gap: 0;
+    overflow: hidden;
+    margin-top: 28px;
+    margin-bottom: 96px;
+    border: 1px solid #d8e5e8;
+    border-radius: 16px;
+  }
+
+  .vertucci-evidence > div {
+    padding: clamp(30px, 5vw, 56px);
+  }
+
+  .vertucci-evidence > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #0b5d67;
+    color: #ffffff;
+  }
+
+  .vertucci-evidence > div:first-child p {
+    margin: 14px 0 0;
+    color: #d3eaeb;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .vertucci-evidence__number {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 780;
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+  }
+
+  .vertucci-evidence h2 {
+    font-size: clamp(1.65rem, 3vw, 2.55rem);
+  }
+
+  .vertucci-evidence a {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 24px;
+    color: #096f88;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .vertucci-evidence a:hover,
+  .vertucci-evidence a:focus-visible {
+    text-decoration: underline;
+  }
+
   @media (max-width: 860px) {
     .article-shell {
       grid-template-columns: 1fr;
@@ -1470,6 +2121,25 @@ const irrigationControlQuestions = [
       border-bottom: 1px solid #dce7f0;
       padding-bottom: 6px;
     }
+
+    .vertucci-intro,
+    .vertucci-application,
+    .vertucci-evidence {
+      grid-template-columns: 1fr;
+    }
+
+    .vertucci-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .vertucci-section-heading {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .vertucci-legend {
+      justify-content: flex-start;
+    }
   }
 
   @media (max-width: 720px) {
@@ -1497,6 +2167,44 @@ const irrigationControlQuestions = [
 
     .article-back {
       margin-bottom: 26px;
+    }
+
+    .vertucci-intro,
+    .vertucci-atlas,
+    .vertucci-application,
+    .vertucci-caution,
+    .vertucci-evidence {
+      width: min(100% - 36px, 1160px);
+    }
+
+    .vertucci-intro,
+    .vertucci-application {
+      padding: 62px 0;
+    }
+
+    .vertucci-atlas {
+      padding-top: 58px;
+    }
+
+    .vertucci-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .vertucci-card {
+      min-height: 420px;
+    }
+
+    .vertucci-card svg {
+      height: 260px;
+    }
+
+    .vertucci-caution {
+      grid-template-columns: 1fr;
+    }
+
+    .vertucci-evidence {
+      margin-bottom: 68px;
     }
   }
 </style>
