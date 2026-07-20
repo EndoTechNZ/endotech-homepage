@@ -1,7 +1,7 @@
 export interface BlogIdea {
   slug: string;
   title: string;
-  category: 'Anatomy' | 'Technique' | 'Clinical Thinking' | 'Evidence' | 'Clinical';
+  category: 'Anatomy' | 'Technique' | 'Clinical Thinking' | 'Evidence' | 'Clinical' | 'VPT';
   summary: string;
   readTime: string;
   image: string;
@@ -59,6 +59,16 @@ export const blogIdeas: BlogIdea[] = [
     image: '/blog/evidence-in-everyday-endo.png',
     focus: 'Practical translation of research into routine endodontic decisions.',
     placeholders: ['Clinical problem', 'Evidence summary', 'Practice application', 'Outcome considerations'],
+  },
+  {
+    slug: 'stepwise-chairside-vital-pulp-therapy-technique',
+    title: 'Stepwise Chairside vital pulp therapy technique',
+    category: 'VPT',
+    summary: 'A controlled sequence for case selection, asepsis, haemostasis, pulp protection, and definitive sealing.',
+    readTime: '7 min read',
+    image: '/blog/stepwise-chairside-vital-pulp-therapy-technique.png',
+    focus: 'A practical permanent-tooth VPT sequence for selection, treatment, sealing, and review.',
+    placeholders: ['Case selection', 'Operative sequence', 'Haemostasis pathway', 'Seal and review'],
   },
 ];
 

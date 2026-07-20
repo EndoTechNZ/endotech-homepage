@@ -39,7 +39,7 @@ const heroImage = withBasePath('/blog/reading-anatomy-not-guessing.png');
     <div class="article-grid">
       {blogIdeas.map((idea) => (
         <a class="article-card" href={withBasePath(`/resources/ideas/${idea.slug}/`)} aria-label={`Read ${idea.title}`}>
-          <figure>
+          <figure class={idea.slug === 'stepwise-chairside-vital-pulp-therapy-technique' ? 'article-card__media--contain' : ''}>
             <img src={withBasePath(idea.image)} alt="" loading="lazy" />
           </figure>
           <div class="article-card__body">
@@ -241,6 +241,15 @@ const heroImage = withBasePath('/blog/reading-anatomy-not-guessing.png');
     height: 100%;
     object-fit: cover;
     transition: transform 240ms ease-in-out;
+  }
+
+  .article-card figure.article-card__media--contain {
+    background: #ffffff;
+  }
+
+  .article-card__media--contain img {
+    object-fit: contain;
+    padding: 0;
   }
 
   .article-card:hover img,
