@@ -26,8 +26,88 @@ const articleSchema = {
 };
 
 const isIrrigationArticle = idea.slug === 'irrigation-dynamics-that-matter';
+const isVptArticle = idea.slug === 'stepwise-chairside-vital-pulp-therapy-technique';
 const irrigationChecklistHref = withBasePath('/resources/ideas/irrigation-dynamics-that-matter/checklist/');
 const irrigationChecklistPdfHref = withBasePath('/downloads/EndoTech-NZ-Irrigation-12-Point-Clinical-Checklist.pdf');
+const vptGuideHref = withBasePath('/downloads/Vital_Pulp_Therapy_Chairside_Quick_Guide.pdf');
+
+const vptReadiness = [
+  'Rubber dam isolation before caries removal',
+  'Magnification and strong light',
+  'New sterile burs and sterile coolant for the pulp phase',
+  '1-2% NaOCl with sterile cotton pellets',
+  'A well-sealed definitive restoration, preferably at the same visit',
+];
+
+const vptCariesRoutes = [
+  {
+    label: 'Deep caries + normal/reversible response',
+    text:
+      'With a radiographically distinct dentine barrier, selective caries removal may avoid pulp exposure while preserving a sound peripheral seal.',
+  },
+  {
+    label: 'Extremely deep / symptomatic caries',
+    text:
+      'Where the pulp is vital and bleeding can be controlled, complete excavation permits direct tissue assessment and may lead to full pulpotomy.',
+  },
+];
+
+const vptOperativePhases = [
+  {
+    title: 'Isolate + disinfect',
+    text:
+      'Achieve profound anaesthesia, secure rubber dam before caries removal, and disinfect the isolated crown, clamp, and adjacent dam.',
+  },
+  {
+    title: 'Remove caries',
+    text:
+      'Work through the infected phase and establish sound peripheral margins using the caries route selected for the case.',
+  },
+  {
+    title: 'Enter the clean pulp phase',
+    text:
+      'Change to new sterile burs and sterile coolant before entering the pulp wound. Inspect the tissue under magnification.',
+  },
+];
+
+const vptHaemostasis = [
+  {
+    time: '0-2 minutes',
+    text:
+      'Place a sterile cotton pellet lightly moistened with 1-2% NaOCl directly over the wound. Use gentle pressure.',
+  },
+  {
+    time: '2-4 minutes',
+    text:
+      'Remove and inspect. If bleeding remains brisk, resect a further 1-2 mm with a new sterile bur and coolant, then place a fresh pellet.',
+  },
+  {
+    time: '4-6 minutes',
+    text:
+      'If needed, repeat once more after reassessment and further tissue removal. Treat this as the final two-minute checkpoint.',
+  },
+];
+
+const vptFinishingSteps = [
+  {
+    number: '05',
+    title: 'Pulp material',
+    text:
+      'Place a validated hydraulic calcium-silicate cement directly over the clean pulp wound, typically 1-3 mm thick, following the product IFU.',
+  },
+  {
+    number: '06',
+    title: 'Definitive restoration',
+    text:
+      'Protect the cement with compatible materials and create a well-sealed definitive restoration, preferably at the same visit.',
+  },
+  {
+    number: '07',
+    title: 'Follow-up',
+    text:
+      'Review clinically at six months, clinically and radiographically at 12 months, then yearly when indicated for up to four years.',
+  },
+];
 
 const irrigationLevers = [
   {
@@ -175,11 +255,11 @@ const irrigationControlQuestions = [
       <div class="article-meta" aria-label="Article details">
         <span>{idea.readTime}</span>
         <span>EndoTech NZ</span>
-        <span>Draft ready</span>
+        <span>{isVptArticle ? 'Chairside guide' : 'Draft ready'}</span>
       </div>
     </header>
 
-    <figure class="article-media">
+    <figure class={`article-media ${isVptArticle ? 'article-media--contain' : ''}`}>
       <img src={withBasePath(idea.image)} alt="" />
       <figcaption>{idea.focus}</figcaption>
     </figure>
@@ -318,6 +398,122 @@ const irrigationControlQuestions = [
                 <strong>12-point chairside checklist</strong>
                 <small>Includes source notes plus curated YouTube learning links.</small>
               </a>
+            </div>
+          </section>
+        </div>
+      ) : isVptArticle ? (
+        <div class="vpt-article">
+          <section class="vpt-intro" aria-labelledby="vpt-clinical-frame">
+            <div>
+              <p class="article-eyebrow">Clinical frame</p>
+              <h2 id="vpt-clinical-frame">Preserve vitality by controlling every decision around the pulp.</h2>
+              <p>
+                Vital pulp therapy is not one material or one moment. It is a sequence: select the
+                case, establish asepsis, assess the exposed tissue, control bleeding, place a
+                calcium-silicate cement, and protect the result with a durable coronal seal.
+              </p>
+              <p>
+                This stepwise guide is designed as a clinician discussion aid for permanent teeth.
+                Diagnosis, case selection, and treatment remain the treating clinician's responsibility.
+              </p>
+            </div>
+            <aside class="vpt-readiness" aria-label="VPT readiness checks">
+              <p>Do not start without these five</p>
+              <ol>
+                {vptReadiness.map((item, index) => (
+                  <li>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{item}</strong>
+                  </li>
+                ))}
+              </ol>
+            </aside>
+          </section>
+
+          <section class="vpt-section" aria-labelledby="vpt-select">
+            <p class="article-eyebrow">Select</p>
+            <h2 id="vpt-select">Choose the caries route before you pick up the bur.</h2>
+            <div class="vpt-choice-grid">
+              {vptCariesRoutes.map((route) => (
+                <section class="vpt-card">
+                  <h3>{route.label}</h3>
+                  <p>{route.text}</p>
+                </section>
+              ))}
+            </div>
+            <p class="vpt-warning">
+              Stop or refer if the tooth is non-restorable, vitality is doubtful, necrosis or
+              purulence is present, significant apical pathosis is seen, or reliable rubber-dam
+              isolation cannot be achieved.
+            </p>
+          </section>
+
+          <section class="vpt-section" aria-labelledby="vpt-perform">
+            <p class="article-eyebrow">Perform</p>
+            <h2 id="vpt-perform">Keep the clean phase clean.</h2>
+            <div class="vpt-step-grid">
+              {vptOperativePhases.map((phase, index) => (
+                <section class="vpt-step">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <h3>{phase.title}</h3>
+                  <p>{phase.text}</p>
+                </section>
+              ))}
+            </div>
+          </section>
+
+          <section class="vpt-section vpt-timing" aria-labelledby="vpt-haemostasis">
+            <p class="article-eyebrow">Haemostasis pathway</p>
+            <h2 id="vpt-haemostasis">Use two-minute checkpoints to inspect, not simply wait.</h2>
+            <div class="vpt-timing-grid">
+              {vptHaemostasis.map((step) => (
+                <section>
+                  <strong>{step.time}</strong>
+                  <p>{step.text}</p>
+                </section>
+              ))}
+            </div>
+            <p class="vpt-checkpoint">
+              At every checkpoint: remove the pellet, inspect under magnification, and reassess the
+              tissue and bleeding. If control is not achieved after full pulpotomy, or necrosis or
+              purulence is seen, stop VPT and reassess the treatment plan.
+            </p>
+          </section>
+
+          <section class="vpt-section" aria-labelledby="vpt-protect">
+            <p class="article-eyebrow">Protect</p>
+            <h2 id="vpt-protect">Finish the biological job.</h2>
+            <div class="vpt-finish-list">
+              {vptFinishingSteps.map((step) => (
+                <section>
+                  <span>{step.number}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                </section>
+              ))}
+            </div>
+          </section>
+
+          <section class="vpt-section vpt-download" aria-labelledby="vpt-download-title">
+            <div>
+              <p class="article-eyebrow">Chairside download</p>
+              <h2 id="vpt-download-title">Take the full three-page protocol into the surgery.</h2>
+              <p>
+                The downloadable guide includes the case-selection framework, operative phases,
+                two-minute haemostasis pathway, finishing steps, chairside checklist, and source notes.
+              </p>
+            </div>
+            <div class="vpt-download__actions">
+              <a class="vpt-download__primary" href={vptGuideHref} target="_blank" rel="noopener noreferrer">
+                <span>Open PDF guide</span>
+                <strong>Vital Pulp Therapy - Chairside Quick Guide</strong>
+                <small>Three A4 pages for clinical discussion, training, or case review.</small>
+              </a>
+              <div class="vpt-sources">
+                <span>Clinical sources</span>
+                <a href="https://www.aapd.org/globalassets/media/policies_guidelines/g_vpt-permanentteeth.pdf" target="_blank" rel="noopener noreferrer">AAPD permanent-tooth VPT guideline</a>
+                <a href="https://www.aae.org/wp-content/uploads/2021/05/VitalPulpTherapy_PositionStatement_v2.pdf" target="_blank" rel="noopener noreferrer">AAE vital pulp therapy position statement</a>
+              </div>
             </div>
           </section>
         </div>
@@ -504,6 +700,339 @@ const irrigationControlQuestions = [
     color: #607084;
     font-size: 0.9rem;
     line-height: 1.5;
+  }
+
+  .article-media--contain {
+    overflow: hidden;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    background: #ffffff;
+  }
+
+  .article-media--contain img {
+    object-fit: contain;
+    padding: 28px;
+    background: #ffffff;
+  }
+
+  .article-media--contain figcaption {
+    margin: 0;
+    border-top: 1px solid #e3e8ee;
+    padding: 12px 18px;
+    background: #f7f9fc;
+  }
+
+  .vpt-article {
+    background: #ffffff;
+  }
+
+  .vpt-intro,
+  .vpt-section {
+    width: min(1160px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 64px 0;
+    border-bottom: 1px solid #dde6ef;
+  }
+
+  .vpt-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(340px, 0.72fr);
+    gap: 52px;
+    align-items: center;
+  }
+
+  .vpt-intro h2,
+  .vpt-section h2 {
+    max-width: 820px;
+    margin: 8px 0 18px;
+    color: #15354c;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .vpt-intro > div > p:not(.article-eyebrow),
+  .vpt-section > p:not(.article-eyebrow, .vpt-warning, .vpt-checkpoint),
+  .vpt-download > div > p:not(.article-eyebrow) {
+    max-width: 760px;
+    margin: 0 0 16px;
+    color: #4f5f6d;
+    font-size: 1.03rem;
+    line-height: 1.75;
+  }
+
+  .vpt-readiness {
+    border: 1px solid #d8e4ef;
+    border-radius: 12px;
+    padding: 26px;
+    background: #f8fbfd;
+    box-shadow: 0 18px 48px rgba(22, 60, 86, 0.08);
+  }
+
+  .vpt-readiness > p {
+    margin: 0 0 18px;
+    color: #0b75b7;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .vpt-readiness ol {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .vpt-readiness li {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+    border-top: 1px solid #dce7f0;
+    padding: 14px 0;
+  }
+
+  .vpt-readiness li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .vpt-readiness li:last-child {
+    padding-bottom: 0;
+  }
+
+  .vpt-readiness li span,
+  .vpt-step > span {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #0b75b7;
+    color: #ffffff;
+    font-family: 'Geist Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  .vpt-readiness li strong {
+    color: #15354c;
+    font-size: 0.98rem;
+    line-height: 1.42;
+  }
+
+  .vpt-choice-grid,
+  .vpt-step-grid,
+  .vpt-timing-grid {
+    display: grid;
+    gap: 18px;
+    margin-top: 30px;
+  }
+
+  .vpt-choice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vpt-step-grid,
+  .vpt-timing-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .vpt-card,
+  .vpt-step,
+  .vpt-timing-grid section {
+    border: 1px solid #dce7f0;
+    border-radius: 10px;
+    padding: 24px;
+    background: #f8fbfd;
+  }
+
+  .vpt-card:first-child {
+    border-top: 4px solid #2b8a62;
+    background: #f3faf6;
+  }
+
+  .vpt-card:last-child {
+    border-top: 4px solid #b7791f;
+    background: #fffaf0;
+  }
+
+  .vpt-card h3,
+  .vpt-step h3,
+  .vpt-finish-list h3 {
+    margin: 0 0 10px;
+    color: #15354c;
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.34;
+  }
+
+  .vpt-card p,
+  .vpt-step p,
+  .vpt-timing-grid p,
+  .vpt-finish-list p {
+    margin: 0;
+    color: #526372;
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .vpt-warning,
+  .vpt-checkpoint {
+    margin: 20px 0 0;
+    border-left: 4px solid #c2413a;
+    padding: 16px 18px;
+    background: #fff5f4;
+    color: #4c3333;
+    font-size: 0.96rem;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .vpt-step {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    background: #ffffff;
+  }
+
+  .vpt-step h3 {
+    margin: 0;
+  }
+
+  .vpt-timing {
+    width: 100%;
+    padding-inline: max(24px, calc((100% - 1160px) / 2));
+    background: #eef6fb;
+  }
+
+  .vpt-timing-grid section {
+    border-color: #c9dce9;
+    background: #ffffff;
+  }
+
+  .vpt-timing-grid strong {
+    display: block;
+    margin-bottom: 12px;
+    color: #0b75b7;
+    font-size: 1.1rem;
+  }
+
+  .vpt-checkpoint {
+    border-left-color: #0b75b7;
+    background: #ffffff;
+    color: #15354c;
+  }
+
+  .vpt-finish-list {
+    margin-top: 30px;
+    border: 1px solid #dce7f0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .vpt-finish-list section {
+    display: grid;
+    grid-template-columns: 72px minmax(180px, 0.34fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+    border-top: 1px solid #dce7f0;
+    padding: 24px;
+    background: #ffffff;
+  }
+
+  .vpt-finish-list section:first-child {
+    border-top: 0;
+  }
+
+  .vpt-finish-list section:nth-child(odd) {
+    background: #f8fbfd;
+  }
+
+  .vpt-finish-list span {
+    color: #0b75b7;
+    font-family: 'Geist Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.84rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .vpt-finish-list h3 {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .vpt-download {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1fr);
+    gap: 44px;
+    align-items: start;
+    border-bottom: 0;
+    padding-bottom: 88px;
+  }
+
+  .vpt-download__actions {
+    display: grid;
+    gap: 16px;
+  }
+
+  .vpt-download__primary,
+  .vpt-sources {
+    display: grid;
+    gap: 8px;
+    border: 1px solid #dce7f0;
+    border-radius: 10px;
+    padding: 24px;
+    background: #f8fbfd;
+    color: #15354c;
+    text-decoration: none;
+  }
+
+  .vpt-download__primary {
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .vpt-download__primary:hover,
+  .vpt-download__primary:focus-visible {
+    border-color: #a8d5e6;
+    box-shadow: 0 18px 42px rgba(22, 60, 86, 0.1);
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  .vpt-download__primary span,
+  .vpt-sources > span {
+    color: #0b75b7;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .vpt-download__primary strong {
+    font-size: 1.16rem;
+    line-height: 1.3;
+  }
+
+  .vpt-download__primary small {
+    color: #526372;
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  .vpt-sources a {
+    width: fit-content;
+    color: #0b75b7;
+    font-size: 0.94rem;
+    line-height: 1.5;
+    text-underline-offset: 3px;
   }
 
   .article-shell {
@@ -896,19 +1425,40 @@ const irrigationControlQuestions = [
     .irrigation-intro,
     .sequence-section,
     .checks-section,
-    .download-section {
+    .download-section,
+    .vpt-intro,
+    .vpt-download {
       grid-template-columns: 1fr;
     }
 
     .lever-grid,
-    .teaching-grid {
+    .teaching-grid,
+    .vpt-choice-grid,
+    .vpt-step-grid,
+    .vpt-timing-grid {
       grid-template-columns: 1fr;
     }
 
     .irrigation-intro,
-    .irrigation-section {
+    .irrigation-section,
+    .vpt-intro,
+    .vpt-section {
       width: min(100% - 36px, 1160px);
       padding: 46px 0;
+    }
+
+    .vpt-timing {
+      width: 100%;
+      padding-inline: 18px;
+    }
+
+    .vpt-finish-list section {
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 14px 18px;
+    }
+
+    .vpt-finish-list p {
+      grid-column: 2;
     }
 
     .variables-row {
@@ -927,8 +1477,18 @@ const irrigationControlQuestions = [
     .article-media,
     .article-shell,
     .irrigation-intro,
-    .irrigation-section {
+    .irrigation-section,
+    .vpt-intro,
+    .vpt-section {
       width: min(100% - 36px, 1040px);
+    }
+
+    .article-media--contain img {
+      padding: 18px;
+    }
+
+    .vpt-timing {
+      width: 100%;
     }
 
     .article-hero {
