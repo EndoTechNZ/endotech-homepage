@@ -36,7 +36,7 @@ export const weeklyClinicalArticles: Record<string, WeeklyClinicalArticle> = {
         eyebrow: 'First distinction',
         title: 'Canal negotiation and length determination are connected—but not identical.',
         paragraphs: [
-          'Jaz Gulati and Samuel Johnson frame working length as a triangulation exercise: electronic information, the pre-operative radiograph, tactile behaviour and the expected anatomy should make sense together. All Things Dentistry makes the same practical point from another angle: improve electrical contact, remove coronal interference and repeat a reproducible measurement before blaming the device.',
+          'Samuel Johnson frames working length as a triangulation exercise: electronic information, the pre-operative radiograph, tactile behaviour and the expected anatomy should make sense together. All Things Dentistry makes the same practical point from another angle: improve electrical contact, remove coronal interference and repeat a reproducible measurement before blaming the device.',
           'If the file cannot progress, ask whether the problem is coronal binding, packed debris, a sudden curve, calcification or a false pathway. Small stainless-steel files, controlled pre-curving and short watch-winding or quarter-turn-and-withdraw movements may help. Coronal enlargement can create room, but rotary instruments should not be used to “drill” through an unknown obstruction.',
         ],
         points: [
@@ -99,7 +99,7 @@ export const weeklyClinicalArticles: Record<string, WeeklyClinicalArticle> = {
         title: '“I isolate well without a dam” answers the wrong problem.',
         paragraphs: [
           'A June 2026 professional discussion about rubber dam attracted strong and divided responses. Some clinicians described alternative isolation methods; others returned to contamination, hypochlorite containment and medicolegal defensibility. The most useful contribution separated convenience from system control: suction and cheek retraction may improve access, but they do not create the same sealed operating field.',
-          'Jaz Gulati’s pre-endodontic build-up walkthrough frames this with characteristic practicality: no predictable isolation means no predictable use of sodium hypochlorite. The dam is not the end of the isolation decision. It is the platform on which the remaining decisions depend.',
+          'The pre-endodontic build-up walkthrough frames this with characteristic practicality: no predictable isolation means no predictable use of sodium hypochlorite. The dam is not the end of the isolation decision. It is the platform on which the remaining decisions depend.',
         ],
       },
       {
@@ -161,7 +161,7 @@ export const weeklyClinicalArticles: Record<string, WeeklyClinicalArticle> = {
         title: '“Are activators worth it?” is too early a question.',
         paragraphs: [
           'A recent professional thread asked whether a vibrating polymer tip was useful or merely another product demonstration. The replies ranged from “a washing machine versus a bucket” to recommendations for ultrasonic, multisonic and laser systems. That variety reveals the problem: activation is often discussed as a hierarchy of devices before the basic irrigation pathway has been examined.',
-          'Jaz Gulati’s irrigation discussion is stronger because it begins with the biological limitation of instrumentation. Files create access to the canal system; they do not contact every fin, isthmus or recess. Activation is therefore not the main event. It is one method of improving exchange after a safe pathway for irrigant already exists.',
+          'The irrigation discussion is stronger because it begins with the biological limitation of instrumentation. Files create access to the canal system; they do not contact every fin, isthmus or recess. Activation is therefore not the main event. It is one method of improving exchange after a safe pathway for irrigant already exists.',
         ],
       },
       {
@@ -223,7 +223,7 @@ export const weeklyClinicalArticles: Record<string, WeeklyClinicalArticle> = {
         title: 'The concentration debate can distract from the quality of disinfection.',
         paragraphs: [
           'A July 2026 case discussion about whether an obturation would fail quickly became a debate about moving from 1% to 5% sodium hypochlorite. One side emphasised cleaning power; another emphasised the consequence of an extrusion accident. Both concerns are valid, but neither can be resolved by choosing a percentage in isolation.',
-          'Jaz Gulati’s discussion places concentration inside a larger set of variables. Sodium hypochlorite remains central because it combines antimicrobial activity with organic tissue dissolution. Yet its clinical action depends on whether fresh solution reaches the relevant anatomy for long enough—and whether the operator can keep it inside the canal system.',
+          'The discussion places concentration inside a larger set of variables. Sodium hypochlorite remains central because it combines antimicrobial activity with organic tissue dissolution. Yet its clinical action depends on whether fresh solution reaches the relevant anatomy for long enough—and whether the operator can keep it inside the canal system.',
         ],
       },
       {
