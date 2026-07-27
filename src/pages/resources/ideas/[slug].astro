@@ -1,6 +1,7 @@
 ---
 import ProductLayout from '../../../layouts/ProductLayout.astro';
 import { blogIdeas, type BlogIdea } from '../../../data/blogIdeas';
+import { weeklyClinicalArticles } from '../../../data/weeklyClinicalArticles';
 import { withBasePath } from '../../../utils/paths';
 
 export function getStaticPaths() {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const { idea } = Astro.props;
+const weeklyArticle = weeklyClinicalArticles[idea.slug];
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -372,7 +374,7 @@ const vertucciClinicalChecks = [
       <div class="article-meta" aria-label="Article details">
         <span>{idea.readTime}</span>
         <span>EndoTech NZ</span>
-        <span>{isVptArticle ? 'Chairside guide' : isVertucciArticle ? 'Clinical anatomy guide' : 'Draft ready'}</span>
+        <span>{weeklyArticle ? idea.published : isVptArticle ? 'Chairside guide' : isVertucciArticle ? 'Clinical anatomy guide' : 'Draft ready'}</span>
       </div>
     </header>
 
@@ -385,7 +387,65 @@ const vertucciClinicalChecks = [
     </figure>
 
     {
-      isIrrigationArticle ? (
+      weeklyArticle ? (
+        <div class="weekly-article">
+          <section class="weekly-frame" aria-labelledby="weekly-question">
+            <p class="article-eyebrow">The clinical question</p>
+            <h2 id="weekly-question">{weeklyArticle.question}</h2>
+            <p>{weeklyArticle.standfirst}</p>
+          </section>
+
+          <div class="weekly-content">
+            <main>
+              {weeklyArticle.sections.map((section) => (
+                <section class="weekly-section">
+                  <p class="article-eyebrow">{section.eyebrow}</p>
+                  <h2>{section.title}</h2>
+                  {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                  {section.points && (
+                    <ul>
+                      {section.points.map((point) => <li>{point}</li>)}
+                    </ul>
+                  )}
+                </section>
+              ))}
+            </main>
+
+            <aside class="weekly-aside" aria-label="Chairside checks">
+              <p class="article-eyebrow">Chairside checks</p>
+              <h2>Before you continue</h2>
+              <ol>
+                {weeklyArticle.chairsideChecks.map((check) => <li>{check}</li>)}
+              </ol>
+            </aside>
+          </div>
+
+          <section class="weekly-sources" aria-labelledby="weekly-sources-title">
+            <div>
+              <p class="article-eyebrow">Discussion and evidence</p>
+              <h2 id="weekly-sources-title">Sources reviewed</h2>
+              <p>
+                Practitioner discussions identify the live clinical questions. Videos and published
+                evidence are used to test and structure the chairside conclusions.
+              </p>
+            </div>
+            <ul>
+              {weeklyArticle.sources.map((source) => (
+                <li>
+                  <a href={source.url} target="_blank" rel="noopener noreferrer">
+                    {source.label} <span aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <p class="weekly-disclaimer">
+            Professional education only. Apply current evidence, product instructions, clinical
+            judgement, and the circumstances of the individual case.
+          </p>
+        </div>
+      ) : isIrrigationArticle ? (
         <div class="irrigation-article">
           <section class="irrigation-intro" aria-labelledby="irrigation-frame">
             <div>
@@ -1657,6 +1717,194 @@ const vertucciClinicalChecks = [
     line-height: 1.55;
   }
 
+  .weekly-article {
+    background: #ffffff;
+  }
+
+  .weekly-frame,
+  .weekly-content,
+  .weekly-sources,
+  .weekly-disclaimer {
+    width: min(1080px, calc(100% - 48px));
+    margin-inline: auto;
+  }
+
+  .weekly-frame {
+    padding: 72px 0 58px;
+    border-bottom: 1px solid #e3e8ee;
+  }
+
+  .weekly-frame h2 {
+    max-width: 880px;
+    margin: 10px 0 22px;
+    color: #102b3b;
+    font-size: clamp(2.2rem, 5vw, 4.4rem);
+    line-height: 1.03;
+    letter-spacing: -0.045em;
+  }
+
+  .weekly-frame > p:last-child {
+    max-width: 800px;
+    margin: 0;
+    color: #526778;
+    font-size: 1.16rem;
+    line-height: 1.72;
+  }
+
+  .weekly-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: clamp(44px, 7vw, 86px);
+    align-items: start;
+    padding: 64px 0 76px;
+  }
+
+  .weekly-content main {
+    display: grid;
+    gap: 52px;
+  }
+
+  .weekly-section {
+    padding-bottom: 50px;
+    border-bottom: 1px solid #e3e8ee;
+  }
+
+  .weekly-section:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .weekly-section h2,
+  .weekly-sources h2,
+  .weekly-aside h2 {
+    margin: 8px 0 18px;
+    color: #102b3b;
+    font-size: clamp(1.65rem, 3vw, 2.45rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+
+  .weekly-section p {
+    margin: 0 0 18px;
+    color: #34495a;
+    font-size: 1.04rem;
+    line-height: 1.78;
+  }
+
+  .weekly-section ul {
+    display: grid;
+    gap: 12px;
+    margin: 26px 0 0;
+    padding: 22px 24px 22px 44px;
+    border: 1px solid #d8e4ef;
+    border-radius: 12px;
+    background: #f8fbfd;
+    color: #34495a;
+    line-height: 1.62;
+  }
+
+  .weekly-aside {
+    position: sticky;
+    top: 92px;
+    border: 1px solid #cfe0ec;
+    border-radius: 14px;
+    padding: 26px;
+    background: #f6fafd;
+  }
+
+  .weekly-aside h2 {
+    font-size: 1.42rem;
+  }
+
+  .weekly-aside ol {
+    display: grid;
+    gap: 16px;
+    margin: 22px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: weekly-check;
+  }
+
+  .weekly-aside li {
+    counter-increment: weekly-check;
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 10px;
+    color: #526778;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .weekly-aside li::before {
+    content: counter(weekly-check, decimal-leading-zero);
+    color: #0b75b7;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .weekly-sources {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+    gap: 54px;
+    padding: 60px;
+    border-radius: 16px;
+    background: #0c1730;
+    color: #ffffff;
+  }
+
+  .weekly-sources .article-eyebrow {
+    color: #71c8ff;
+  }
+
+  .weekly-sources h2 {
+    color: #ffffff;
+  }
+
+  .weekly-sources p {
+    margin: 0;
+    color: #c8d4df;
+    line-height: 1.7;
+  }
+
+  .weekly-sources ul {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .weekly-sources li {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .weekly-sources li:first-child {
+    border-top: 0;
+  }
+
+  .weekly-sources a {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 14px 0;
+    color: #ffffff;
+    line-height: 1.45;
+    text-decoration: none;
+  }
+
+  .weekly-sources a:hover,
+  .weekly-sources a:focus-visible {
+    color: #71c8ff;
+  }
+
+  .weekly-disclaimer {
+    padding: 24px 0 80px;
+    color: #718096;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
   .vertucci-article {
     --vertucci-ink: #102b3b;
     --vertucci-teal: #087f83;
@@ -2125,6 +2373,20 @@ const vertucciClinicalChecks = [
     .vertucci-application,
     .vertucci-evidence {
       grid-template-columns: 1fr;
+    }
+
+    .weekly-content,
+    .weekly-sources {
+      grid-template-columns: 1fr;
+    }
+
+    .weekly-aside {
+      position: static;
+    }
+
+    .weekly-sources {
+      gap: 28px;
+      padding: 34px;
     }
 
     .vertucci-grid {

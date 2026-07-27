@@ -7,9 +7,54 @@ export interface BlogIdea {
   image: string;
   focus: string;
   placeholders: string[];
+  published?: string;
 }
 
 export const blogIdeas: BlogIdea[] = [
+  {
+    slug: 'working-length-when-the-file-will-not-progress',
+    title: 'Working length when the file will not progress',
+    category: 'Technique',
+    summary: 'How to separate canal negotiation, apex-locator interpretation, and the true apical endpoint.',
+    readTime: '5 min read',
+    image: '/blog/reading-anatomy-not-guessing.png',
+    focus: 'A problem-first guide to resistant canals and conflicting working-length signals.',
+    placeholders: ['Interpret the signal', 'Remove coronal interference', 'Triangulate the endpoint', 'Know when to stop'],
+    published: '27 July 2026',
+  },
+  {
+    slug: 'rubber-dam-seal-before-root-canal-access',
+    title: 'The seal before the access',
+    category: 'Clinical Thinking',
+    summary: 'Why rubber dam and pre-endodontic build-up are active parts of disinfection control.',
+    readTime: '5 min read',
+    image: '/blog/access-with-purpose.png',
+    focus: 'Isolation, restorability, deep margins, and irrigant containment before access.',
+    placeholders: ['Define the isolation problem', 'Assess restorability', 'Create the peripheral seal', 'Recheck control'],
+    published: '27 July 2026',
+  },
+  {
+    slug: 'irrigation-activation-what-is-it-solving',
+    title: 'Irrigation activation: what is it solving?',
+    category: 'Evidence',
+    summary: 'Device debates make more sense after fresh chemistry, backflow, and apical safety are controlled.',
+    readTime: '5 min read',
+    image: '/blog/irrigation-dynamics-that-matter.png',
+    focus: 'A disciplined comparison of delivery, exchange, replenishment, and activation.',
+    placeholders: ['Start with the fluid problem', 'Create a safe pathway', 'Activate fresh chemistry', 'Match method to risk'],
+    published: '27 July 2026',
+  },
+  {
+    slug: 'sodium-hypochlorite-concentration-is-not-the-protocol',
+    title: 'NaOCl concentration is not the protocol',
+    category: 'Evidence',
+    summary: 'Why stronger solution cannot replace controlled delivery, renewal, contact time, and containment.',
+    readTime: '5 min read',
+    image: '/blog/evidence-in-everyday-endo.png',
+    focus: 'A practical discussion of concentration, CHX, chemical sequence, and extrusion risk.',
+    placeholders: ['Frame the concentration debate', 'Separate irrigant roles', 'Audit delivery', 'Adapt to risk'],
+    published: '27 July 2026',
+  },
   {
     slug: 'vertucci-canal-pathways',
     title: 'Vertucci canal pathways: read the route before you shape',
