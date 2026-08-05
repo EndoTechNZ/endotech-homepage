@@ -55,6 +55,8 @@ if (root) {
   const productSearch = root.querySelector<HTMLInputElement>('[data-product-search]');
   const status = root.querySelector<HTMLElement>('[data-quote-status]');
   const downloadButton = root.querySelector<HTMLButtonElement>('[data-download-pdf]');
+  const downloadSkuListButton = root.querySelector<HTMLButtonElement>('[data-download-sku-list]');
+  const copySkuListButton = root.querySelector<HTMLButtonElement>('[data-copy-sku-list]');
   const printButton = root.querySelector<HTMLButtonElement>('[data-print-request]');
   const emailButton = root.querySelector<HTMLButtonElement>('[data-prepare-email]');
   const submitButton = root.querySelector<HTMLButtonElement>('[data-submit-request]');
@@ -113,6 +115,47 @@ if (root) {
         a.item.size.localeCompare(b.item.size, 'en-NZ', { numeric: true }) ||
         (a.item.lengthMm ?? 0) - (b.item.lengthMm ?? 0),
       );
+
+  const skuEntryRows = (lines: Array<{ item: NzLaunchCatalogItem; quantity: number }>) => [
+    ['SKU', 'Quantity'],
+    ...lines.map(({ item, quantity }) => [item.sku, String(quantity)]),
+  ];
+
+  const skuEntryText = (lines: Array<{ item: NzLaunchCatalogItem; quantity: number }>) =>
+    skuEntryRows(lines).map((row) => row.join('\t')).join('\n');
+
+  const csvCell = (value: string) => `"${value.replaceAll('"', '""')}"`;
+
+  const skuEntryCsv = (lines: Array<{ item: NzLaunchCatalogItem; quantity: number }>) =>
+    skuEntryRows(lines).map((row) => row.map(csvCell).join(',')).join('\r\n');
+
+  const downloadTextFile = (contents: string, filename: string, type: string) => {
+    const href = URL.createObjectURL(new Blob([contents], { type }));
+    const anchor = document.createElement('a');
+    anchor.href = href;
+    anchor.download = filename;
+    document.body.append(anchor);
+    anchor.click();
+    anchor.remove();
+    window.setTimeout(() => URL.revokeObjectURL(href), 2_000);
+  };
+
+  const copyText = async (contents: string) => {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(contents);
+      return;
+    }
+    const field = document.createElement('textarea');
+    field.value = contents;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.append(field);
+    field.select();
+    const copied = document.execCommand('copy');
+    field.remove();
+    if (!copied) throw new Error('The SKU list could not be copied. Download the SKU entry list instead.');
+  };
 
   const setQuantity = (sku: string, rawQuantity: number) => {
     const quantity = Math.max(0, Math.min(999, Math.floor(Number(rawQuantity) || 0)));
@@ -194,11 +237,11 @@ if (root) {
         product.append(createText('strong', quoteFamilyLabels[item.family], 'quote-product-label'));
         product.append(createText('span', item.fileType));
         [
+          createText('td', item.sku),
+          createText('td', String(quantity)),
           product,
           createText('td', item.size),
           createText('td', item.lengthMm ? `${item.lengthMm} mm` : '—'),
-          createText('td', item.sku),
-          createText('td', String(quantity)),
         ].forEach((cell) => row.append(cell));
         reviewBody.append(row);
       });
@@ -301,7 +344,7 @@ if (root) {
       body.replaceChildren();
       lines.forEach(({ item, quantity }) => {
         const row = document.createElement('tr');
-        [quoteFamilyLabels[item.family], item.size, item.lengthMm ? `${item.lengthMm} mm` : '—', item.sku, String(quantity)]
+        [item.sku, String(quantity), quoteFamilyLabels[item.family], item.size, item.lengthMm ? `${item.lengthMm} mm` : '—']
           .forEach((value) => row.append(createText('td', value)));
         body.append(row);
       });
@@ -355,7 +398,7 @@ if (root) {
     const draft = validateDraft();
     if (!draft) return;
     downloadButton.textContent = 'Building PDF…';
-    setStatus('Building your multipage quotation-request PDF…');
+    setStatus('Building your multipage pro forma invoice request PDF…');
     try {
       const bytes = await buildQuoteRequestPdf({
         draftReference,
@@ -366,10 +409,33 @@ if (root) {
         endotechLogoUrl: root.dataset.endotechLogo || '',
         contactEmail: root.dataset.contactEmail || 'steveshepherdnz@gmail.com',
       });
-      downloadQuoteRequestPdf(bytes, `EndoTech-NZ-Quotation-Request-${draftReference}.pdf`);
-      setStatus('PDF downloaded. Attach it to an email to EndoTech NZ when you are ready.', 'success');
+      downloadQuoteRequestPdf(bytes, `EndoTech-NZ-Pro-Forma-Request-${draftReference}.pdf`);
+      setStatus('Pro forma request PDF downloaded. Attach it to an email to EndoTech NZ when you are ready.', 'success');
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'The PDF could not be created.', 'error');
+    }
+  }));
+
+  downloadSkuListButton?.addEventListener('click', () => {
+    const draft = validateDraft();
+    if (!draft) return;
+    downloadTextFile(
+      skuEntryCsv(draft.lines),
+      `EndoTech-NZ-SKU-Entry-${draftReference}.csv`,
+      'text/csv;charset=utf-8',
+    );
+    setStatus('Compact SKU and quantity entry list downloaded for the EndoTech NZ desktop app.', 'success');
+  });
+
+  copySkuListButton?.addEventListener('click', () => withBusyButton(copySkuListButton, async () => {
+    const draft = validateDraft();
+    if (!draft) return;
+    copySkuListButton.textContent = 'Copying…';
+    try {
+      await copyText(skuEntryText(draft.lines));
+      setStatus('SKU and quantity list copied. It is ready to paste beside the desktop invoicing app.', 'success');
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'The SKU list could not be copied.', 'error');
     }
   }));
 
@@ -390,7 +456,7 @@ if (root) {
     const body = [
       'Hello EndoTech NZ,',
       '',
-      'Please prepare a formal quotation for the attached/requested products.',
+      'Please prepare a pro forma invoice for the attached/requested products.',
       '',
       `Draft reference: ${draftReference}`,
       `Practice / account: ${draft.customer.practice}`,
@@ -401,11 +467,11 @@ if (root) {
       ...previewLines,
       ...(remaining ? [`...plus ${remaining} additional line${remaining === 1 ? '' : 's'} shown in the downloaded PDF.`] : []),
       '',
-      'Please confirm availability, account terms, GST, freight and pricing.',
+      'Please confirm availability, account terms, GST, freight and pricing in the pro forma invoice.',
       '',
       'No patient-identifiable information is included.',
     ].join('\n');
-    window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(`Quotation request ${draftReference}`)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(`Pro forma invoice request ${draftReference}`)}&body=${encodeURIComponent(body)}`;
     setStatus('Your email application should open now. Attach the downloaded PDF before sending.', 'success');
   });
 
@@ -431,7 +497,7 @@ if (root) {
         approvedCatalog: catalog,
         pageOrigin: window.location.origin,
       });
-      setStatus(`Request received. Your EndoTech NZ reference is ${result.quoteReference}.`, 'success');
+      setStatus(`Pro forma request received. Your EndoTech NZ reference is ${result.quoteReference}.`, 'success');
       submitButton.disabled = true;
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'The request could not be sent.', 'error');

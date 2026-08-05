@@ -86,11 +86,11 @@ const drawImageContained = (
 
 export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise<Uint8Array> => {
   const pdf = await PDFDocument.create();
-  pdf.setTitle(`EndoTech NZ quotation request ${input.draftReference}`);
+  pdf.setTitle(`EndoTech NZ pro forma invoice request ${input.draftReference}`);
   pdf.setAuthor('EndoTech NZ');
-  pdf.setSubject('Unpriced customer quotation request');
-  pdf.setCreator('EndoTech NZ quotation-request builder');
-  pdf.setProducer('EndoTech NZ quotation-request builder');
+  pdf.setSubject('Unpriced customer request for an EndoTech NZ pro forma invoice');
+  pdf.setCreator('EndoTech NZ pro forma request builder');
+  pdf.setProducer('EndoTech NZ pro forma request builder');
   pdf.setCreationDate(input.createdAt);
 
   const [regular, bold, transformBytes, endotechBytes] = await Promise.all([
@@ -169,7 +169,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
 
   addPage();
 
-  page.drawText('QUOTATION REQUEST', { x: MARGIN, y, size: 21, font: bold, color: NAVY });
+  page.drawText('PRO FORMA INVOICE REQUEST', { x: MARGIN, y, size: 19, font: bold, color: NAVY });
   page.drawText('UNPRICED', {
     x: PAGE_WIDTH - MARGIN - 62,
     y: y + 1,
@@ -178,7 +178,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
     color: GOLD,
   });
   y -= 25;
-  drawWrapped('Prepared by the customer for EndoTech NZ review. This is not a quotation, invoice, purchase order or product reservation.', {
+  drawWrapped('Prepared by the customer for EndoTech NZ review. This is not the priced pro forma invoice, a tax invoice, a purchase order or a product reservation.', {
     size: 9.5,
     color: MID,
     width: 460,
@@ -222,11 +222,11 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   drawSectionTitle('Requested products');
 
   const columns = [
-    { label: 'Product', x: MARGIN, width: 151 },
-    { label: 'Size', x: MARGIN + 157, width: 76 },
-    { label: 'Length', x: MARGIN + 239, width: 52 },
-    { label: 'SKU', x: MARGIN + 297, width: 156 },
-    { label: 'Qty', x: MARGIN + 459, width: 48 },
+    { label: 'SKU', x: MARGIN, width: 160 },
+    { label: 'Qty', x: MARGIN + 166, width: 42 },
+    { label: 'Product', x: MARGIN + 214, width: 135 },
+    { label: 'Size', x: MARGIN + 355, width: 62 },
+    { label: 'Length', x: MARGIN + 423, width: 84 },
   ];
 
   const drawTableHeader = () => {
@@ -245,9 +245,9 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   );
 
   for (const [index, line] of sortedLines.entries()) {
-    const productLines = wrapText(quoteFamilyLabels[line.item.family], bold, 7.8, columns[0].width - 10).slice(0, 2);
-    const sizeLines = wrapText(line.item.size, regular, 7.8, columns[1].width - 10).slice(0, 2);
-    const skuLines = wrapText(line.item.sku, regular, 7.3, columns[3].width - 10).slice(0, 2);
+    const productLines = wrapText(quoteFamilyLabels[line.item.family], bold, 7.8, columns[2].width - 10).slice(0, 2);
+    const sizeLines = wrapText(line.item.size, regular, 7.8, columns[3].width - 10).slice(0, 2);
+    const skuLines = wrapText(line.item.sku, regular, 7.3, columns[0].width - 10).slice(0, 2);
     const rowLines = Math.max(productLines.length, sizeLines.length, skuLines.length);
     const rowHeight = Math.max(25, rowLines * 10 + 9);
 
@@ -261,19 +261,19 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
     }
 
     const values = [
+      skuLines,
+      [String(line.quantity)],
       productLines,
       sizeLines,
       [line.item.lengthMm ? `${line.item.lengthMm} mm` : '-'],
-      skuLines,
-      [String(line.quantity)],
     ];
     values.forEach((cellLines, columnIndex) => {
       cellLines.forEach((text, lineIndex) => {
         page.drawText(text, {
           x: columns[columnIndex].x + 5,
           y: y - 10 - (lineIndex * 10),
-          size: columnIndex === 3 ? 7.3 : 7.8,
-          font: columnIndex === 0 ? bold : regular,
+          size: columnIndex === 0 ? 7.3 : 7.8,
+          font: columnIndex === 2 ? bold : regular,
           color: NAVY,
         });
       });
@@ -301,7 +301,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   page.drawRectangle({ x: MARGIN, y: y - 52, width: CONTENT_WIDTH, height: 58, color: PALE, borderColor: LIGHT, borderWidth: 1 });
   page.drawText('NEXT STEP', { x: MARGIN + 14, y: y - 10, size: 7, font: bold, color: TEAL });
   const nextStep = wrapText(
-    `Email this request to ${input.contactEmail}. EndoTech NZ will confirm availability, account terms, GST, freight and pricing before issuing a formal quotation.`,
+    `Email this request to ${input.contactEmail}. EndoTech NZ will enter the listed SKUs and quantities into its desktop invoicing app, then issue the priced pro forma invoice.`,
     regular,
     8.8,
     CONTENT_WIDTH - 28,
@@ -313,7 +313,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   const pages = pdf.getPages();
   pages.forEach((currentPage, index) => {
     currentPage.drawLine({ start: { x: MARGIN, y: 56 }, end: { x: PAGE_WIDTH - MARGIN, y: 56 }, thickness: 0.6, color: LIGHT });
-    currentPage.drawText('EndoTech NZ | Unpriced quotation request | No patient-identifiable information', {
+    currentPage.drawText('EndoTech NZ | Unpriced pro forma invoice request | No patient-identifiable information', {
       x: MARGIN,
       y: 38,
       size: 6.8,

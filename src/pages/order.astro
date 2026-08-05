@@ -8,39 +8,38 @@ const orderEmailLabel = siteConfig.email.toLowerCase();
 ---
 
 <ProductLayout
-  title="Account Ordering | EndoTech NZ"
-  description="EndoTech NZ online ordering is temporarily unavailable while account ordering is introduced."
+  title="Request a Pro Forma Invoice | EndoTech NZ"
+  description="Select confirmed EndoTech NZ products and request a priced pro forma invoice for account ordering."
   accent="slate"
 >
   <section class="ordering-hold" aria-labelledby="ordering-hold-title">
     <div class="ordering-hold-card">
       <p class="ordering-hold-eyebrow">Account ordering</p>
-      <h1 id="ordering-hold-title">Online ordering is temporarily unavailable</h1>
+      <h1 id="ordering-hold-title">Request a pro forma invoice</h1>
       <p class="ordering-hold-lede">
-        EndoTech NZ has paused its online checkout while we move to account ordering.
+        Select the confirmed products and quantities you need. No prices, checkout or payment are handled on the website.
       </p>
       <p>
-        To place an order, submit a purchase order, or ask about an existing order, please email
-        <a href={orderEmailHref}>{siteConfig.email}</a>. Include your account or practice name,
-        purchase order number, products, quantities, and delivery details.
+        The website creates an unpriced request containing your practice details, product SKUs and quantities. Email it to
+        <a href={orderEmailHref}>{siteConfig.email}</a>, and EndoTech NZ will prepare the priced pro forma invoice in its desktop invoicing system.
       </p>
       <div class="ordering-hold-actions">
+        <a class="ordering-hold-primary" href={`${base}quote-request/`}>Build a pro forma request</a>
         <span class="ordering-hold-email-action">
           <a
-            class="ordering-hold-primary"
+            class="ordering-hold-secondary"
             href={orderEmailHref}
             aria-describedby="account-order-email-tooltip"
           >
-            Email an account order
+            Email EndoTech NZ
           </a>
           <span id="account-order-email-tooltip" class="ordering-hold-email-tooltip" role="tooltip">
             {orderEmailLabel}
           </span>
         </span>
-        <a class="ordering-hold-secondary" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
       </div>
       <p class="ordering-hold-note">
-        Please do not send patient-identifiable clinical information with an order enquiry.
+        The request is not a tax invoice, purchase order or confirmed order. Please do not include patient-identifiable clinical information.
       </p>
     </div>
   </section>

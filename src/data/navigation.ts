@@ -24,6 +24,7 @@ export const getTechnologyMenu = (base: string): NavItem[] => [
 ];
 
 export const getOrderMenu = (base: string): NavItem[] => [
+  { label: 'Request a pro forma invoice', href: `${base}quote-request/` },
   { label: 'Request information', href: `${base}about/contact/` },
   { label: 'Account ordering', href: `${base}order/` },
 ];

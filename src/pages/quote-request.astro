@@ -50,8 +50,8 @@ const contactEmail = siteConfig.email.toLowerCase();
 ---
 
 <ProductLayout
-  title="Quotation Request Builder | EndoTech NZ"
-  description="Build an unpriced EndoTech NZ quotation request using confirmed Transform S, Micro-Path, C+ and K-File product codes."
+  title="Request a Pro Forma Invoice | EndoTech NZ"
+  description="Prepare an unpriced EndoTech NZ pro forma invoice request using confirmed Transform S, Micro-Path, C+ and K-File product codes."
   image={transformLogo.src}
   accent="slate"
 >
@@ -67,10 +67,10 @@ const contactEmail = siteConfig.email.toLowerCase();
   >
     <section class="quote-hero" aria-labelledby="quote-builder-title">
       <div class="quote-hero-copy">
-        <p class="quote-eyebrow">Account quotation request</p>
-        <h1 id="quote-builder-title">Build a clear product request for EndoTech NZ.</h1>
+        <p class="quote-eyebrow">Account pro forma request</p>
+        <h1 id="quote-builder-title">Request a pro forma invoice from EndoTech NZ.</h1>
         <p class="quote-hero-lede">
-          Select confirmed New Zealand products, enter the practice details, then download a clean multipage PDF to email for formal pricing.
+          Select confirmed New Zealand products and quantities, add the practice details, then email the request to EndoTech NZ. We will prepare the priced pro forma invoice in our invoicing system.
         </p>
         <div class="quote-hero-actions">
           <a href="#select-products">Start selecting products</a>
@@ -83,18 +83,18 @@ const contactEmail = siteConfig.email.toLowerCase();
       </div>
     </section>
 
-    <section class="quote-review-build" aria-label="Review build status">
-      <strong>Review build</strong>
+    <section class="quote-review-build" aria-label="How pro forma requests work">
+      <strong>No online checkout</strong>
       <p>
-        This version does not send anything online. It creates an unpriced quotation-request PDF that the customer can email to
+        This page records no payment and shows no prices. It creates an unpriced pro forma invoice request that the customer can email to
         <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
       </p>
     </section>
 
-    <ol class="quote-steps" aria-label="Quotation request steps">
+    <ol class="quote-steps" aria-label="Pro forma invoice request steps">
       <li><span>1</span><strong>Select products</strong><small>Only approved launch SKUs</small></li>
       <li><span>2</span><strong>Add practice details</strong><small>Nothing personal is stored</small></li>
-      <li><span>3</span><strong>Review and export</strong><small>PDF, print or prepared email</small></li>
+      <li><span>3</span><strong>Review and send</strong><small>PDF, SKU list or prepared email</small></li>
     </ol>
 
     <section id="select-products" class="quote-section" aria-labelledby="select-products-title">
@@ -268,7 +268,7 @@ const contactEmail = siteConfig.email.toLowerCase();
         </div>
         <label class="quote-consent">
           <input name="privacyConsent" type="checkbox" required />
-          <span>I confirm that this request contains no patient-identifiable information and understand that EndoTech NZ must issue the formal quotation.</span>
+          <span>I confirm that this request contains no patient-identifiable information and understand that EndoTech NZ must prepare and issue the priced pro forma invoice.</span>
         </label>
       </form>
     </section>
@@ -277,8 +277,8 @@ const contactEmail = siteConfig.email.toLowerCase();
       <div class="quote-section-heading">
         <div>
           <p class="quote-eyebrow">Step 3</p>
-          <h2 id="review-request-title">Review and export the request</h2>
-          <p>Pricing, GST, freight, availability and account terms will be confirmed by EndoTech NZ.</p>
+          <h2 id="review-request-title">Review and send the request</h2>
+          <p>The website supplies SKUs and quantities only. EndoTech NZ will add pricing, GST, freight, availability and account terms in the pro forma invoice.</p>
         </div>
         <div class="quote-draft-reference">
           <span>Draft reference</span>
@@ -297,7 +297,7 @@ const contactEmail = siteConfig.email.toLowerCase();
           <p class="quote-review-empty" data-review-empty>No products have been selected yet.</p>
           <div class="quote-review-table-scroll">
             <table class="quote-review-table">
-              <thead><tr><th>Product</th><th>Size</th><th>Length</th><th>SKU</th><th>Qty</th></tr></thead>
+              <thead><tr><th>SKU</th><th>Qty</th><th>Product</th><th>Size</th><th>Length</th></tr></thead>
               <tbody data-review-lines></tbody>
             </table>
           </div>
@@ -312,14 +312,16 @@ const contactEmail = siteConfig.email.toLowerCase();
       <div class="quote-export-card">
         <div>
           <p class="quote-eyebrow">Ready to send</p>
-          <h3>Download the PDF, then attach it to your email.</h3>
-          <p>This document is an unpriced request. It is not a quotation, invoice, purchase order or confirmed order.</p>
+          <h3>Download the request, then attach it to your email.</h3>
+          <p>The PDF is the customer copy. The compact SKU list is arranged for quick entry into the EndoTech NZ desktop invoicing app. Neither file contains prices.</p>
         </div>
         <div class="quote-export-actions">
-          <button type="button" class="quote-primary-action" data-download-pdf>Download quotation-request PDF</button>
+          <button type="button" class="quote-primary-action" data-download-pdf>Download pro forma request PDF</button>
+          <button type="button" data-download-sku-list>Download SKU entry list</button>
+          <button type="button" data-copy-sku-list>Copy SKU + quantity</button>
           <button type="button" data-print-request>Print / save as PDF</button>
           <button type="button" data-prepare-email>Prepare email to EndoTech NZ</button>
-          <button type="button" class="quote-primary-action" data-submit-request hidden>Send quotation request</button>
+          <button type="button" class="quote-primary-action" data-submit-request hidden>Send pro forma request</button>
         </div>
       </div>
       <p class="quote-status" data-quote-status data-tone="neutral" aria-live="polite"></p>
@@ -332,18 +334,18 @@ const contactEmail = siteConfig.email.toLowerCase();
       <div><strong>ENDOTECH NZ</strong><span>ENGINEERED ENDODONTICS</span></div>
     </header>
     <div class="quote-print-title">
-      <div><p>UNPRICED</p><h1>Quotation request</h1></div>
+      <div><p>UNPRICED</p><h1>Pro forma invoice request</h1></div>
       <dl><div><dt>Draft reference</dt><dd data-draft-reference></dd></div><div><dt>Created</dt><dd data-print-created></dd></div></dl>
     </div>
-    <p class="quote-print-disclaimer">Customer-prepared request for EndoTech NZ review. Not a quotation, invoice, purchase order or confirmed order.</p>
+    <p class="quote-print-disclaimer">Customer-prepared request for EndoTech NZ review. This is not the priced pro forma invoice, a tax invoice, a purchase order or a confirmed order.</p>
     <section><h2>Practice details</h2><dl class="quote-print-details" data-print-details></dl></section>
     <section>
       <h2>Requested products</h2>
-      <table><thead><tr><th>Product</th><th>Size</th><th>Length</th><th>SKU</th><th>Qty</th></tr></thead><tbody data-print-lines></tbody></table>
+      <table><thead><tr><th>SKU</th><th>Qty</th><th>Product</th><th>Size</th><th>Length</th></tr></thead><tbody data-print-lines></tbody></table>
     </section>
     <section><h2>Notes</h2><p data-print-notes></p></section>
-    <aside><strong>Next step</strong><p>Email this request to {contactEmail}. EndoTech NZ will confirm availability, account terms, GST, freight and pricing before issuing a formal quotation.</p></aside>
-    <footer>EndoTech NZ · Unpriced quotation request · No patient-identifiable information</footer>
+    <aside><strong>Next step</strong><p>Email this request to {contactEmail}. EndoTech NZ will enter the listed SKUs and quantities into its desktop invoicing app, then issue the priced pro forma invoice.</p></aside>
+    <footer>EndoTech NZ · Unpriced pro forma invoice request · No patient-identifiable information</footer>
   </article>
 </ProductLayout>
 
