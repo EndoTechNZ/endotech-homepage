@@ -418,8 +418,14 @@ const comparisonRows = [
   }
 
   .pt-hero h1 {
-    font-size: clamp(3.8rem, 7vw, 5.8rem);
+    width: max-content;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: clamp(2.15rem, 7vw, 5.8rem);
     line-height: 0.94;
+    white-space: nowrap;
+    text-wrap: nowrap;
   }
 
   .pt-hero-lede,
