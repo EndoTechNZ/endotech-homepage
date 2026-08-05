@@ -1,0 +1,671 @@
+---
+import ProductLayout from '../layouts/ProductLayout.astro';
+import endotechLogo from '../assets/endotech-logo-2.png';
+import transformLogo from '../assets/transform-s-wordmark.png';
+import { nzCustomerSelectableCatalog, type NzLaunchFamily } from '../data/nzLaunchCatalog';
+import { quoteFamilyLabels } from '../lib/quoteRequest';
+import { siteConfig } from '../config/site';
+
+const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'micro-path', 'c-plus', 'k-files'];
+const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string }> = {
+  et: {
+    eyebrow: 'Rotary shaping',
+    description: 'Constant-taper shaping files in the confirmed New Zealand ET range.',
+  },
+  pt: {
+    eyebrow: 'Progressive taper',
+    description: 'Progressive-taper shaping and finishing files for the initial New Zealand launch.',
+  },
+  'micro-path': {
+    eyebrow: 'Glide path',
+    description: 'Confirmed Micro-Path standard and MB2 glide-path packs.',
+  },
+  'c-plus': {
+    eyebrow: 'Calcified canals',
+    description: 'Ultra-stiff C+ hand files in confirmed sizes and lengths.',
+  },
+  'k-files': {
+    eyebrow: 'Hand files',
+    description: 'Confirmed stainless-steel K-File individual and assorted packs.',
+  },
+};
+
+const groupedCatalog = Object.fromEntries(
+  familyOrder.map((family) => [
+    family,
+    nzCustomerSelectableCatalog
+      .filter((item) => item.family === family)
+      .sort((a, b) =>
+        a.size.localeCompare(b.size, 'en-NZ', { numeric: true }) ||
+        (a.lengthMm ?? 0) - (b.lengthMm ?? 0) ||
+        a.sku.localeCompare(b.sku),
+      ),
+  ]),
+) as Record<NzLaunchFamily, typeof nzCustomerSelectableCatalog>;
+
+const encodedCatalog = encodeURIComponent(JSON.stringify(nzCustomerSelectableCatalog));
+const submissionEndpoint = import.meta.env.PUBLIC_QUOTE_REQUEST_ENDPOINT || '';
+const submissionEnabled = import.meta.env.PUBLIC_QUOTE_REQUEST_SUBMISSION_ENABLED === 'true';
+const contactEmail = siteConfig.email.toLowerCase();
+---
+
+<ProductLayout
+  title="Quotation Request Builder | EndoTech NZ"
+  description="Build an unpriced EndoTech NZ quotation request using confirmed Transform S, Micro-Path, C+ and K-File product codes."
+  image={transformLogo.src}
+  accent="slate"
+>
+  <div
+    class="quote-builder-page"
+    data-quote-builder
+    data-catalog={encodedCatalog}
+    data-transform-logo={transformLogo.src}
+    data-endotech-logo={endotechLogo.src}
+    data-contact-email={contactEmail}
+    data-submission-endpoint={submissionEndpoint}
+    data-submission-enabled={String(submissionEnabled)}
+  >
+    <section class="quote-hero" aria-labelledby="quote-builder-title">
+      <div class="quote-hero-copy">
+        <p class="quote-eyebrow">Account quotation request</p>
+        <h1 id="quote-builder-title">Build a clear product request for EndoTech NZ.</h1>
+        <p class="quote-hero-lede">
+          Select confirmed New Zealand products, enter the practice details, then download a clean multipage PDF to email for formal pricing.
+        </p>
+        <div class="quote-hero-actions">
+          <a href="#select-products">Start selecting products</a>
+          <a href="#review-request">Review the request</a>
+        </div>
+      </div>
+      <div class="quote-hero-brand" aria-label="Transform S root canal shaping system">
+        <img src={transformLogo.src} width="742" height="116" alt="Transform S root canal shaping system" />
+        <p>Five launch families · {nzCustomerSelectableCatalog.length} confirmed SKUs · no prices shown</p>
+      </div>
+    </section>
+
+    <section class="quote-review-build" aria-label="Review build status">
+      <strong>Review build</strong>
+      <p>
+        This version does not send anything online. It creates an unpriced quotation-request PDF that the customer can email to
+        <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+      </p>
+    </section>
+
+    <ol class="quote-steps" aria-label="Quotation request steps">
+      <li><span>1</span><strong>Select products</strong><small>Only approved launch SKUs</small></li>
+      <li><span>2</span><strong>Add practice details</strong><small>Nothing personal is stored</small></li>
+      <li><span>3</span><strong>Review and export</strong><small>PDF, print or prepared email</small></li>
+    </ol>
+
+    <section id="select-products" class="quote-section" aria-labelledby="select-products-title">
+      <div class="quote-section-heading">
+        <div>
+          <p class="quote-eyebrow">Step 1</p>
+          <h2 id="select-products-title">Select confirmed New Zealand products</h2>
+          <p>Quantities are packs. Product selections are saved on this device; customer and practice details are not.</p>
+        </div>
+        <label class="quote-search">
+          <span>Search this family</span>
+          <input type="search" data-product-search placeholder="Search size, length or SKU" autocomplete="off" />
+        </label>
+      </div>
+
+      <div class="quote-family-tabs" role="tablist" aria-label="Product family">
+        {familyOrder.map((family, index) => (
+          <button
+            type="button"
+            role="tab"
+            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-controls={`quote-family-${family}`}
+            tabindex={index === 0 ? 0 : -1}
+            class:list={{ 'is-active': index === 0 }}
+            data-family-tab={family}
+          >
+            <span class="quote-product-label">{quoteFamilyLabels[family]}</span>
+            <small>{groupedCatalog[family].length} SKUs</small>
+          </button>
+        ))}
+      </div>
+
+      <div class="quote-selector-layout">
+        <div class="quote-family-panels">
+          {familyOrder.map((family, index) => (
+            <section
+              id={`quote-family-${family}`}
+              class="quote-family-panel"
+              role="tabpanel"
+              aria-label={quoteFamilyLabels[family]}
+              data-family-panel={family}
+              hidden={index !== 0}
+            >
+              <header>
+                <div>
+                  <p>{familyMeta[family].eyebrow}</p>
+                  <h3 class="quote-product-label">{quoteFamilyLabels[family]}</h3>
+                </div>
+                <span>{familyMeta[family].description}</span>
+              </header>
+              <div class="quote-catalog-scroll">
+                <table class="quote-catalog-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Size</th>
+                      <th>Length</th>
+                      <th>Pack</th>
+                      <th>SKU</th>
+                      <th>Qty</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {groupedCatalog[family].map((item) => (
+                      <tr
+                        data-catalog-row
+                        data-search={`${item.system} ${item.publicMeaning} ${item.fileType} ${item.size} ${item.lengthMm ?? ''} ${item.sku}`.toLowerCase()}
+                      >
+                        <td>
+                          <strong class="quote-product-label">{quoteFamilyLabels[item.family]}</strong>
+                          <span>{item.fileType}</span>
+                        </td>
+                        <td data-label="Size">{item.size}</td>
+                        <td data-label="Length">{item.lengthMm ? `${item.lengthMm} mm` : '—'}</td>
+                        <td data-label="Pack">{item.packQty}</td>
+                        <td data-label="SKU"><code>{item.sku}</code></td>
+                        <td data-label="Qty">
+                          <input
+                            type="number"
+                            min="0"
+                            max="999"
+                            step="1"
+                            inputmode="numeric"
+                            placeholder="0"
+                            data-quote-quantity
+                            data-sku={item.sku}
+                            aria-label={`Quantity for ${quoteFamilyLabels[item.family]} ${item.size} ${item.lengthMm ? `${item.lengthMm} millimetres` : ''}, SKU ${item.sku}`}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p class="quote-no-results" data-no-results hidden>No confirmed products in this family match that search.</p>
+            </section>
+          ))}
+        </div>
+
+        <aside class="quote-selection-card" aria-labelledby="selected-products-title">
+          <div class="quote-selection-card-heading">
+            <div>
+              <p class="quote-eyebrow">Live request</p>
+              <h3 id="selected-products-title">Selected products</h3>
+            </div>
+            <button type="button" data-clear-selections>Clear</button>
+          </div>
+          <div class="quote-selection-empty" data-selection-empty>
+            Enter a pack quantity beside any approved product to add it here.
+          </div>
+          <div class="quote-selection-summary" data-selection-summary hidden></div>
+          <footer>
+            <strong data-selection-total>0 lines · 0 packs</strong>
+            <a href="#practice-details">Continue to practice details</a>
+          </footer>
+        </aside>
+      </div>
+    </section>
+
+    <section id="practice-details" class="quote-section quote-details-section" aria-labelledby="practice-details-title">
+      <div class="quote-section-heading">
+        <div>
+          <p class="quote-eyebrow">Step 2</p>
+          <h2 id="practice-details-title">Add the practice and delivery details</h2>
+          <p>These details are used only to build this request. They are not saved in the browser.</p>
+        </div>
+        <div class="quote-privacy-note">
+          <strong>Privacy</strong>
+          <span>Do not include patient names, NHI numbers, images or other patient-identifiable clinical information.</span>
+        </div>
+      </div>
+
+      <form class="quote-customer-form" data-customer-form novalidate>
+        <div class="quote-form-grid">
+          <label>
+            <span>Contact name <b aria-hidden="true">*</b></span>
+            <input name="fullName" type="text" autocomplete="name" maxlength="100" required />
+          </label>
+          <label>
+            <span>Practice or account name <b aria-hidden="true">*</b></span>
+            <input name="practice" type="text" autocomplete="organization" maxlength="140" required />
+          </label>
+          <label>
+            <span>Email <b aria-hidden="true">*</b></span>
+            <input name="email" type="email" autocomplete="email" maxlength="200" required />
+          </label>
+          <label>
+            <span>Phone <b aria-hidden="true">*</b></span>
+            <input name="phone" type="tel" autocomplete="tel" maxlength="50" required />
+          </label>
+          <label>
+            <span>EndoTech NZ account number</span>
+            <input name="accountNumber" type="text" maxlength="80" placeholder="If known" />
+          </label>
+          <label>
+            <span>Purchase-order reference</span>
+            <input name="purchaseOrderReference" type="text" maxlength="100" placeholder="Optional" />
+          </label>
+          <label class="quote-form-wide">
+            <span>Delivery address <b aria-hidden="true">*</b></span>
+            <textarea name="deliveryAddress" rows="4" autocomplete="shipping street-address" maxlength="500" required></textarea>
+          </label>
+          <label class="quote-form-wide">
+            <span>Notes</span>
+            <textarea name="notes" rows="4" maxlength="1500" placeholder="Availability questions or commercial notes only — no patient information"></textarea>
+          </label>
+          <label class="quote-honeypot" aria-hidden="true" tabindex="-1">
+            <span>Website</span>
+            <input name="website" type="text" autocomplete="off" tabindex="-1" />
+          </label>
+        </div>
+        <label class="quote-consent">
+          <input name="privacyConsent" type="checkbox" required />
+          <span>I confirm that this request contains no patient-identifiable information and understand that EndoTech NZ must issue the formal quotation.</span>
+        </label>
+      </form>
+    </section>
+
+    <section id="review-request" class="quote-section quote-review-section" aria-labelledby="review-request-title">
+      <div class="quote-section-heading">
+        <div>
+          <p class="quote-eyebrow">Step 3</p>
+          <h2 id="review-request-title">Review and export the request</h2>
+          <p>Pricing, GST, freight, availability and account terms will be confirmed by EndoTech NZ.</p>
+        </div>
+        <div class="quote-draft-reference">
+          <span>Draft reference</span>
+          <strong data-draft-reference>NZQ-DRAFT</strong>
+        </div>
+      </div>
+
+      <div class="quote-review-grid">
+        <div class="quote-review-card">
+          <header>
+            <div>
+              <span>Requested products</span>
+              <strong><b data-line-count>0</b> lines · <b data-pack-count>0</b> packs</strong>
+            </div>
+          </header>
+          <p class="quote-review-empty" data-review-empty>No products have been selected yet.</p>
+          <div class="quote-review-table-scroll">
+            <table class="quote-review-table">
+              <thead><tr><th>Product</th><th>Size</th><th>Length</th><th>SKU</th><th>Qty</th></tr></thead>
+              <tbody data-review-lines></tbody>
+            </table>
+          </div>
+        </div>
+
+        <aside class="quote-review-card quote-review-details">
+          <header><span>Practice details</span><strong>Live preview</strong></header>
+          <dl data-review-details></dl>
+        </aside>
+      </div>
+
+      <div class="quote-export-card">
+        <div>
+          <p class="quote-eyebrow">Ready to send</p>
+          <h3>Download the PDF, then attach it to your email.</h3>
+          <p>This document is an unpriced request. It is not a quotation, invoice, purchase order or confirmed order.</p>
+        </div>
+        <div class="quote-export-actions">
+          <button type="button" class="quote-primary-action" data-download-pdf>Download quotation-request PDF</button>
+          <button type="button" data-print-request>Print / save as PDF</button>
+          <button type="button" data-prepare-email>Prepare email to EndoTech NZ</button>
+          <button type="button" class="quote-primary-action" data-submit-request hidden>Send quotation request</button>
+        </div>
+      </div>
+      <p class="quote-status" data-quote-status data-tone="neutral" aria-live="polite"></p>
+    </section>
+  </div>
+
+  <article class="quote-print-sheet" data-quote-print-sheet aria-hidden="true">
+    <header class="quote-print-header">
+      <img src={transformLogo.src} width="742" height="116" alt="Transform S root canal shaping system" />
+      <div><strong>ENDOTECH NZ</strong><span>ENGINEERED ENDODONTICS</span></div>
+    </header>
+    <div class="quote-print-title">
+      <div><p>UNPRICED</p><h1>Quotation request</h1></div>
+      <dl><div><dt>Draft reference</dt><dd data-draft-reference></dd></div><div><dt>Created</dt><dd data-print-created></dd></div></dl>
+    </div>
+    <p class="quote-print-disclaimer">Customer-prepared request for EndoTech NZ review. Not a quotation, invoice, purchase order or confirmed order.</p>
+    <section><h2>Practice details</h2><dl class="quote-print-details" data-print-details></dl></section>
+    <section>
+      <h2>Requested products</h2>
+      <table><thead><tr><th>Product</th><th>Size</th><th>Length</th><th>SKU</th><th>Qty</th></tr></thead><tbody data-print-lines></tbody></table>
+    </section>
+    <section><h2>Notes</h2><p data-print-notes></p></section>
+    <aside><strong>Next step</strong><p>Email this request to {contactEmail}. EndoTech NZ will confirm availability, account terms, GST, freight and pricing before issuing a formal quotation.</p></aside>
+    <footer>EndoTech NZ · Unpriced quotation request · No patient-identifiable information</footer>
+  </article>
+</ProductLayout>
+
+<script src="../scripts/quote-request-builder.ts"></script>
+
+<style>
+  :global(html) { scroll-behavior: smooth; }
+  .quote-builder-page {
+    --quote-navy: #0e243e;
+    --quote-teal: #176562;
+    --quote-teal-dark: #104d4b;
+    --quote-gold: #ac7d29;
+    --quote-ink: #26394b;
+    --quote-muted: #647587;
+    --quote-line: #dce5ea;
+    --quote-pale: #f3f7f8;
+    background: #fff;
+    color: var(--quote-ink);
+  }
+  .quote-product-label { white-space: nowrap; }
+  .quote-eyebrow {
+    margin: 0 0 .65rem;
+    color: var(--quote-teal);
+    font-size: .74rem;
+    font-weight: 800;
+    letter-spacing: .17em;
+    text-transform: uppercase;
+  }
+  .quote-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(19rem, .8fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: center;
+    padding: clamp(4.5rem, 9vw, 8rem) max(1.25rem, calc((100vw - 78rem) / 2));
+    background:
+      radial-gradient(circle at 86% 18%, rgba(172,125,41,.13), transparent 22rem),
+      radial-gradient(circle at 12% 10%, rgba(23,101,98,.12), transparent 30rem),
+      linear-gradient(180deg, #f8fafb, #fff);
+    border-bottom: 1px solid var(--quote-line);
+  }
+  .quote-hero h1 {
+    max-width: 13ch;
+    margin: 0;
+    color: var(--quote-navy);
+    font-size: clamp(2.7rem, 6vw, 5.7rem);
+    line-height: .98;
+    letter-spacing: -.055em;
+  }
+  .quote-hero-lede {
+    max-width: 43rem;
+    margin: 1.5rem 0 0;
+    color: #3a5064;
+    font-size: clamp(1.08rem, 2vw, 1.35rem);
+    line-height: 1.65;
+  }
+  .quote-hero-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2rem; }
+  .quote-hero-actions a {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    padding: .7rem 1.15rem;
+    border: 1px solid var(--quote-teal);
+    border-radius: 999px;
+    color: var(--quote-teal-dark);
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .quote-hero-actions a:first-child { background: var(--quote-teal); color: #fff; }
+  .quote-hero-brand {
+    padding: clamp(1.8rem, 4vw, 3rem);
+    border: 1px solid rgba(14,36,62,.12);
+    border-top: 4px solid var(--quote-teal);
+    border-radius: 1rem;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 1.5rem 4rem rgba(14,36,62,.09);
+  }
+  .quote-hero-brand img { display: block; width: 100%; height: auto; }
+  .quote-hero-brand p { margin: 1.25rem 0 0; color: var(--quote-muted); font-size: .91rem; line-height: 1.5; }
+  .quote-review-build {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    max-width: 78rem;
+    margin: 1.5rem auto 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid #ead8b5;
+    border-radius: .75rem;
+    background: #fffaf0;
+    color: #5b451f;
+  }
+  .quote-review-build strong { white-space: nowrap; color: #7c591b; }
+  .quote-review-build p { margin: 0; line-height: 1.55; }
+  .quote-review-build a { color: inherit; font-weight: 800; }
+  .quote-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 78rem;
+    margin: 1.5rem auto 0;
+    padding: 0;
+    border: 1px solid var(--quote-line);
+    border-radius: .9rem;
+    list-style: none;
+    overflow: hidden;
+  }
+  .quote-steps li { display: grid; grid-template-columns: 2.25rem 1fr; gap: .12rem .75rem; padding: 1rem 1.25rem; }
+  .quote-steps li + li { border-left: 1px solid var(--quote-line); }
+  .quote-steps li > span { grid-row: 1 / 3; display: grid; width: 2.1rem; height: 2.1rem; place-items: center; border-radius: 50%; background: var(--quote-teal); color: #fff; font-weight: 900; }
+  .quote-steps strong { color: var(--quote-navy); }
+  .quote-steps small { color: var(--quote-muted); }
+  .quote-section { max-width: 78rem; margin: 0 auto; padding: clamp(4rem, 8vw, 7rem) 0; }
+  .quote-section + .quote-section { border-top: 1px solid var(--quote-line); }
+  .quote-section-heading { display: flex; gap: 2rem; justify-content: space-between; align-items: end; margin-bottom: 2rem; }
+  .quote-section-heading h2 { margin: 0; color: var(--quote-navy); font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.08; letter-spacing: -.035em; }
+  .quote-section-heading p:not(.quote-eyebrow) { max-width: 48rem; margin: .9rem 0 0; color: var(--quote-muted); line-height: 1.65; }
+  .quote-search { width: min(100%, 22rem); }
+  .quote-search span, .quote-customer-form label > span { display: block; margin-bottom: .45rem; color: var(--quote-navy); font-size: .82rem; font-weight: 800; }
+  .quote-search input, .quote-customer-form input, .quote-customer-form textarea {
+    width: 100%;
+    border: 1px solid #c8d5dc;
+    border-radius: .65rem;
+    background: #fff;
+    color: var(--quote-navy);
+    font: inherit;
+  }
+  .quote-search input, .quote-customer-form input { min-height: 3rem; padding: .7rem .85rem; }
+  .quote-customer-form textarea { padding: .8rem .85rem; resize: vertical; }
+  .quote-search input:focus, .quote-customer-form input:focus, .quote-customer-form textarea:focus, .quote-catalog-table input:focus { outline: 3px solid rgba(23,101,98,.18); border-color: var(--quote-teal); }
+  .quote-family-tabs { display: flex; gap: .6rem; padding-bottom: .8rem; overflow-x: auto; scrollbar-width: thin; }
+  .quote-family-tabs button {
+    display: grid;
+    gap: .15rem;
+    flex: 0 0 auto;
+    min-height: 3.75rem;
+    padding: .65rem 1rem;
+    border: 1px solid var(--quote-line);
+    border-radius: .75rem;
+    background: #fff;
+    color: var(--quote-navy);
+    font: inherit;
+    font-weight: 800;
+    text-align: left;
+    cursor: pointer;
+  }
+  .quote-family-tabs small { color: var(--quote-muted); font-weight: 600; }
+  .quote-family-tabs button.is-active { border-color: var(--quote-teal); background: var(--quote-teal); color: #fff; box-shadow: 0 .5rem 1.5rem rgba(23,101,98,.18); }
+  .quote-family-tabs button.is-active small { color: rgba(255,255,255,.78); }
+  .quote-selector-layout { display: grid; grid-template-columns: minmax(0, 1fr) 22rem; gap: 1.25rem; align-items: start; }
+  .quote-selector-layout > *, .quote-review-grid > * { min-width: 0; }
+  .quote-family-panels, .quote-family-panel { min-width: 0; max-width: 100%; }
+  .quote-family-panel { border: 1px solid var(--quote-line); border-radius: .9rem; background: #fff; overflow: hidden; }
+  .quote-family-panel[hidden] { display: none; }
+  .quote-family-panel > header { display: flex; gap: 2rem; justify-content: space-between; align-items: end; padding: 1.4rem 1.5rem; border-bottom: 1px solid var(--quote-line); background: var(--quote-pale); }
+  .quote-family-panel > header p { margin: 0 0 .3rem; color: var(--quote-teal); font-size: .7rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+  .quote-family-panel > header h3 { margin: 0; color: var(--quote-navy); font-size: 1.45rem; }
+  .quote-family-panel > header > span { max-width: 30rem; color: var(--quote-muted); font-size: .88rem; line-height: 1.45; text-align: right; }
+  .quote-catalog-scroll, .quote-review-table-scroll { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
+  .quote-catalog-table { width: 100%; min-width: 47rem; border-collapse: collapse; }
+  .quote-catalog-table th { padding: .65rem .75rem; background: var(--quote-navy); color: #fff; font-size: .68rem; letter-spacing: .08em; text-align: left; text-transform: uppercase; }
+  .quote-catalog-table td { padding: .72rem .75rem; border-bottom: 1px solid #e8eef1; color: var(--quote-ink); font-size: .86rem; vertical-align: middle; }
+  .quote-catalog-table tbody tr:hover { background: #f7fafb; }
+  .quote-catalog-table td:first-child strong, .quote-review-table td:first-child strong { display: block; color: var(--quote-navy); }
+  .quote-catalog-table td:first-child span, .quote-review-table td:first-child span { display: block; margin-top: .18rem; color: var(--quote-muted); font-size: .75rem; }
+  .quote-catalog-table code { color: var(--quote-navy); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .78rem; white-space: nowrap; }
+  .quote-catalog-table input { width: 4.4rem; min-height: 2.65rem; padding: .45rem .4rem; border: 1px solid #bdcbd3; border-radius: .5rem; color: var(--quote-navy); font: inherit; font-weight: 800; text-align: center; }
+  .quote-no-results { margin: 0; padding: 2rem; color: var(--quote-muted); text-align: center; }
+  .quote-selection-card { position: sticky; top: 6rem; border: 1px solid var(--quote-line); border-top: 4px solid var(--quote-teal); border-radius: .9rem; background: #fff; box-shadow: 0 1rem 3rem rgba(14,36,62,.08); overflow: hidden; }
+  .quote-selection-card-heading { display: flex; justify-content: space-between; align-items: start; padding: 1.2rem; border-bottom: 1px solid var(--quote-line); }
+  .quote-selection-card-heading h3 { margin: 0; color: var(--quote-navy); font-size: 1.25rem; }
+  .quote-selection-card-heading button { border: 0; background: transparent; color: #9b3535; font: inherit; font-size: .78rem; font-weight: 800; cursor: pointer; }
+  .quote-selection-empty { padding: 1.5rem 1.2rem; color: var(--quote-muted); font-size: .88rem; line-height: 1.55; }
+  .quote-selection-summary { max-height: 29rem; overflow-y: auto; }
+  :global(.quote-summary-line) { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .7rem; padding: .85rem 1.2rem; border-bottom: 1px solid #e8eef1; }
+  :global(.quote-summary-line strong) { display: block; color: var(--quote-navy); font-size: .82rem; }
+  :global(.quote-summary-line span) { display: block; margin-top: .2rem; color: var(--quote-muted); font-size: .72rem; line-height: 1.4; }
+  :global(.quote-summary-controls) { display: grid; gap: .25rem; justify-items: end; }
+  :global(.quote-summary-controls input) { width: 3.8rem; min-height: 2.35rem; border: 1px solid #c8d5dc; border-radius: .45rem; text-align: center; }
+  :global(.quote-summary-controls button) { border: 0; background: transparent; color: #9b3535; font-size: .68rem; font-weight: 800; cursor: pointer; }
+  .quote-selection-card footer { display: grid; gap: .75rem; padding: 1rem 1.2rem; background: var(--quote-pale); }
+  .quote-selection-card footer strong { color: var(--quote-navy); }
+  .quote-selection-card footer a { color: var(--quote-teal-dark); font-size: .82rem; font-weight: 800; }
+  .quote-details-section { background: linear-gradient(180deg, #fff, #f9fbfc); }
+  .quote-privacy-note { display: grid; gap: .25rem; max-width: 24rem; padding: .9rem 1rem; border-left: 3px solid var(--quote-gold); background: #fffaf0; color: #695126; font-size: .82rem; line-height: 1.45; }
+  .quote-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
+  .quote-form-wide { grid-column: 1 / -1; }
+  .quote-customer-form label b { color: #9b3535; }
+  .quote-honeypot { position: absolute !important; left: -10000px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; }
+  .quote-consent { display: flex; gap: .7rem; align-items: start; margin-top: 1.2rem; padding: 1rem; border: 1px solid var(--quote-line); border-radius: .65rem; background: #fff; }
+  .quote-consent input { flex: 0 0 auto; width: 1.15rem; min-height: 1.15rem; margin-top: .1rem; }
+  .quote-consent span { margin: 0 !important; color: var(--quote-ink) !important; font-weight: 600 !important; line-height: 1.5; }
+  .quote-draft-reference { display: grid; gap: .2rem; max-width: 21rem; padding: .85rem 1rem; border: 1px solid var(--quote-line); border-radius: .65rem; background: var(--quote-pale); }
+  .quote-draft-reference span { color: var(--quote-teal); font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .quote-draft-reference strong { color: var(--quote-navy); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .8rem; overflow-wrap: anywhere; }
+  .quote-review-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(18rem, .5fr); gap: 1.25rem; }
+  .quote-review-card { border: 1px solid var(--quote-line); border-radius: .85rem; background: #fff; overflow: hidden; }
+  .quote-review-card > header { padding: 1rem 1.2rem; border-bottom: 1px solid var(--quote-line); background: var(--quote-pale); }
+  .quote-review-card > header div, .quote-review-card > header { display: flex; justify-content: space-between; gap: 1rem; }
+  .quote-review-card > header span { color: var(--quote-teal); font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+  .quote-review-card > header strong { color: var(--quote-navy); font-size: .85rem; }
+  .quote-review-empty { margin: 0; padding: 2rem 1.2rem; color: var(--quote-muted); }
+  .quote-review-table-scroll { overflow-x: auto; }
+  .quote-review-table { width: 100%; min-width: 39rem; border-collapse: collapse; }
+  .quote-review-table th, .quote-review-table td { padding: .65rem .75rem; border-bottom: 1px solid #e8eef1; font-size: .8rem; text-align: left; }
+  .quote-review-table th { color: var(--quote-muted); font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; }
+  :global(.quote-review-product strong), :global(.quote-review-product span) { display: block; }
+  :global(.quote-review-product span) { margin-top: .2rem; color: var(--quote-muted); font-size: .74rem; }
+  .quote-review-details dl, :global(.quote-print-details) { display: grid; gap: 0; margin: 0; }
+  .quote-review-details dl :global(div) { padding: .75rem 1.2rem; border-bottom: 1px solid #e8eef1; }
+  .quote-review-details dt { color: var(--quote-muted); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .quote-review-details dd { margin: .25rem 0 0; color: var(--quote-navy); font-size: .85rem; line-height: 1.45; overflow-wrap: anywhere; }
+  .quote-export-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; align-items: center; margin-top: 1.25rem; padding: 1.5rem; border: 1px solid var(--quote-line); border-top: 4px solid var(--quote-teal); border-radius: .9rem; background: var(--quote-pale); }
+  .quote-export-card h3 { margin: 0; color: var(--quote-navy); font-size: 1.35rem; }
+  .quote-export-card p:not(.quote-eyebrow) { max-width: 47rem; margin: .6rem 0 0; color: var(--quote-muted); line-height: 1.5; }
+  .quote-export-actions { display: grid; gap: .55rem; min-width: 17rem; }
+  .quote-export-actions button { min-height: 2.8rem; padding: .65rem 1rem; border: 1px solid var(--quote-teal); border-radius: .6rem; background: #fff; color: var(--quote-teal-dark); font: inherit; font-size: .82rem; font-weight: 800; cursor: pointer; }
+  .quote-export-actions button.quote-primary-action { background: var(--quote-teal); color: #fff; }
+  .quote-export-actions button:disabled { cursor: wait; opacity: .65; }
+  .quote-status { min-height: 1.5rem; margin: 1rem 0 0; color: var(--quote-muted); font-weight: 700; }
+  .quote-status[data-tone="success"] { color: #17623d; }
+  .quote-status[data-tone="error"] { color: #9b3535; }
+  .quote-print-sheet { display: none; }
+  @media (max-width: 82rem) {
+    .quote-review-build, .quote-steps, .quote-section { margin-right: 1.25rem; margin-left: 1.25rem; }
+  }
+  @media (max-width: 62rem) {
+    .quote-hero { grid-template-columns: 1fr; }
+    .quote-hero-brand { max-width: 35rem; }
+    .quote-selector-layout, .quote-review-grid { grid-template-columns: 1fr; }
+    .quote-selection-card { position: static; }
+    .quote-selection-summary { max-height: none; }
+    .quote-section-heading { align-items: start; flex-direction: column; }
+    .quote-export-card { grid-template-columns: 1fr; }
+    .quote-export-actions { min-width: 0; }
+  }
+  @media (max-width: 44rem) {
+    .quote-hero { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+    .quote-hero h1 { font-size: clamp(2.45rem, 13vw, 4rem); }
+    .quote-review-build { align-items: start; flex-direction: column; }
+    .quote-steps { grid-template-columns: 1fr; }
+    .quote-steps li + li { border-top: 1px solid var(--quote-line); border-left: 0; }
+    .quote-section { padding: 3.5rem 0; }
+    .quote-form-grid { grid-template-columns: 1fr; }
+    .quote-form-wide { grid-column: auto; }
+    .quote-family-panel > header { align-items: start; flex-direction: column; gap: .7rem; }
+    .quote-family-panel > header > span { text-align: left; }
+    .quote-product-label { white-space: nowrap; }
+    .quote-catalog-scroll { overflow-x: visible; }
+    .quote-catalog-table { min-width: 0; }
+    .quote-catalog-table thead { display: none; }
+    .quote-catalog-table tbody { display: grid; }
+    .quote-catalog-table tbody tr {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 5rem;
+      gap: .35rem .8rem;
+      padding: .9rem 1rem;
+      border-bottom: 1px solid #e0e8ec;
+    }
+    .quote-catalog-table td {
+      display: flex;
+      gap: .45rem;
+      align-items: baseline;
+      padding: 0;
+      border: 0;
+      font-size: .8rem;
+    }
+    .quote-catalog-table td:first-child { display: block; grid-column: 1; }
+    .quote-catalog-table td:not(:first-child):not(:last-child)::before {
+      flex: 0 0 3.3rem;
+      color: var(--quote-muted);
+      content: attr(data-label);
+      font-size: .64rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .quote-catalog-table td:last-child {
+      grid-column: 2;
+      grid-row: 1 / span 5;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+    }
+    .quote-catalog-table td:last-child::before {
+      color: var(--quote-muted);
+      content: attr(data-label);
+      font-size: .64rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .quote-catalog-table input { width: 4.5rem; min-height: 3rem; }
+  }
+  @media print {
+    @page { size: A4 portrait; margin: 14mm 13mm 16mm; }
+    :global(body) { background: #fff !important; color: #102a43 !important; }
+    :global(.product-site-header), :global(.product-site-footer), .quote-builder-page { display: none !important; }
+    .quote-print-sheet { display: block !important; font-family: Arial, sans-serif; color: #102a43; }
+    .quote-print-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 7mm; border-bottom: 1px solid #dce5ea; }
+    .quote-print-header img { width: 72mm; height: auto; }
+    .quote-print-header div { display: grid; gap: 1mm; text-align: right; }
+    .quote-print-header strong { font-size: 9pt; }
+    .quote-print-header span { color: #647587; font-size: 5.5pt; letter-spacing: .08em; }
+    .quote-print-title { display: flex; justify-content: space-between; gap: 15mm; margin-top: 10mm; }
+    .quote-print-title p { margin: 0 0 2mm; color: #ac7d29; font-size: 7pt; font-weight: 800; letter-spacing: .14em; }
+    .quote-print-title h1 { margin: 0; font-size: 23pt; letter-spacing: -.04em; }
+    .quote-print-title dl { display: grid; gap: 2mm; min-width: 72mm; margin: 0; }
+    .quote-print-title dl div { display: grid; grid-template-columns: 27mm 1fr; gap: 3mm; }
+    .quote-print-title dt { color: #176562; font-size: 6.5pt; font-weight: 800; text-transform: uppercase; }
+    .quote-print-title dd { margin: 0; font-family: Consolas, monospace; font-size: 7.5pt; overflow-wrap: anywhere; }
+    .quote-print-disclaimer { padding: 3mm 4mm; background: #f3f7f8; color: #3d4f61; font-size: 8pt; line-height: 1.4; }
+    .quote-print-sheet section { margin-top: 8mm; break-inside: auto; }
+    .quote-print-sheet h2 { padding-left: 3mm; border-left: 1.2mm solid #176562; font-size: 10pt; letter-spacing: .08em; text-transform: uppercase; }
+    .quote-print-details div { display: grid; grid-template-columns: 40mm 1fr; gap: 4mm; padding: 2mm 0; border-bottom: .2mm solid #e6ecef; }
+    .quote-print-details dt { color: #176562; font-size: 6.5pt; font-weight: 800; text-transform: uppercase; }
+    .quote-print-details dd { margin: 0; font-size: 8.5pt; white-space: pre-line; }
+    .quote-print-sheet table { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+    .quote-print-sheet thead { display: table-header-group; }
+    .quote-print-sheet tr { break-inside: avoid; }
+    .quote-print-sheet th { padding: 2.2mm; background: #0e243e !important; color: #fff !important; text-align: left; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .quote-print-sheet td { padding: 2.2mm; border-bottom: .2mm solid #dce5ea; }
+    .quote-print-sheet aside { margin-top: 8mm; padding: 4mm; border: .2mm solid #dce5ea; background: #f3f7f8 !important; break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .quote-print-sheet aside strong { color: #176562; font-size: 7pt; letter-spacing: .1em; text-transform: uppercase; }
+    .quote-print-sheet aside p { margin: 2mm 0 0; font-size: 8pt; line-height: 1.45; }
+    .quote-print-sheet footer { margin-top: 10mm; padding-top: 3mm; border-top: .2mm solid #dce5ea; color: #647587; font-size: 6.5pt; }
+  }
+</style>
