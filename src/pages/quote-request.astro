@@ -291,7 +291,7 @@ const contactEmail = siteConfig.email.toLowerCase();
           <header>
             <div>
               <span>Requested products</span>
-              <strong><b data-line-count>0</b> lines · <b data-pack-count>0</b> packs</strong>
+              <strong data-review-total>0 lines · 0 packs</strong>
             </div>
           </header>
           <p class="quote-review-empty" data-review-empty>No products have been selected yet.</p>
@@ -312,15 +312,17 @@ const contactEmail = siteConfig.email.toLowerCase();
       <div class="quote-export-card">
         <div>
           <p class="quote-eyebrow">Ready to send</p>
-          <h3>Download the request, then attach it to your email.</h3>
-          <p>The PDF is the customer copy. The compact SKU list is arranged for quick entry into the EndoTech NZ desktop invoicing app. Neither file contains prices.</p>
+          <h3>Create an email with the request PDF attached.</h3>
+          <p id="email-attachment-help">On supported phones and computers, the sharing window opens with the PDF attached. Otherwise, the site downloads a ready-to-open email draft containing the PDF, the recipient and an editable message. If a browser-only email service cannot open the draft, download the PDF and use the email address shown below.</p>
+          <p><strong>Email recipient:</strong> <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
         </div>
         <div class="quote-export-actions">
+          <button type="button" class="quote-primary-action" data-prepare-email aria-describedby="email-attachment-help">Email PDF request to EndoTech NZ</button>
+          <button type="button" data-download-email-draft aria-describedby="email-attachment-help">Download attached email draft</button>
           <button type="button" class="quote-primary-action" data-download-pdf>Download pro forma request PDF</button>
           <button type="button" data-download-sku-list>Download SKU entry list</button>
           <button type="button" data-copy-sku-list>Copy SKU + quantity</button>
           <button type="button" data-print-request>Print / save as PDF</button>
-          <button type="button" data-prepare-email>Prepare email to EndoTech NZ</button>
           <button type="button" class="quote-primary-action" data-submit-request hidden>Send pro forma request</button>
         </div>
       </div>

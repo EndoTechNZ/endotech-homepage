@@ -8,6 +8,11 @@ import {
   type QuoteRequestLine,
 } from '../lib/quoteRequest';
 import { buildQuoteRequestPdf, downloadQuoteRequestPdf } from '../lib/quoteRequestPdf';
+import {
+  buildQuoteRequestEmailDraft,
+  canNativeSharePdf,
+  quoteRequestPdfFile,
+} from '../lib/quoteRequestEmail';
 import { submitQuoteRequest } from '../lib/quoteRequestSubmission';
 
 const root = document.querySelector<HTMLElement>('[data-quote-builder]');
@@ -47,8 +52,7 @@ if (root) {
   const summary = root.querySelector<HTMLElement>('[data-selection-summary]');
   const summaryEmpty = root.querySelector<HTMLElement>('[data-selection-empty]');
   const selectionTotal = root.querySelector<HTMLElement>('[data-selection-total]');
-  const lineCount = root.querySelector<HTMLElement>('[data-line-count]');
-  const packCount = root.querySelector<HTMLElement>('[data-pack-count]');
+  const reviewTotal = root.querySelector<HTMLElement>('[data-review-total]');
   const reviewBody = root.querySelector<HTMLTableSectionElement>('[data-review-lines]');
   const reviewEmpty = root.querySelector<HTMLElement>('[data-review-empty]');
   const reviewDetails = root.querySelector<HTMLElement>('[data-review-details]');
@@ -59,6 +63,7 @@ if (root) {
   const copySkuListButton = root.querySelector<HTMLButtonElement>('[data-copy-sku-list]');
   const printButton = root.querySelector<HTMLButtonElement>('[data-print-request]');
   const emailButton = root.querySelector<HTMLButtonElement>('[data-prepare-email]');
+  const emailDraftButton = root.querySelector<HTMLButtonElement>('[data-download-email-draft]');
   const submitButton = root.querySelector<HTMLButtonElement>('[data-submit-request]');
   const printSheet = document.querySelector<HTMLElement>('[data-quote-print-sheet]');
   const draftReferenceNodes = document.querySelectorAll<HTMLElement>('[data-draft-reference]');
@@ -129,8 +134,8 @@ if (root) {
   const skuEntryCsv = (lines: Array<{ item: NzLaunchCatalogItem; quantity: number }>) =>
     skuEntryRows(lines).map((row) => row.map(csvCell).join(',')).join('\r\n');
 
-  const downloadTextFile = (contents: string, filename: string, type: string) => {
-    const href = URL.createObjectURL(new Blob([contents], { type }));
+  const downloadBlob = (blob: Blob, filename: string) => {
+    const href = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = href;
     anchor.download = filename;
@@ -138,6 +143,10 @@ if (root) {
     anchor.click();
     anchor.remove();
     window.setTimeout(() => URL.revokeObjectURL(href), 2_000);
+  };
+
+  const downloadTextFile = (contents: string, filename: string, type: string) => {
+    downloadBlob(new Blob([contents], { type }), filename);
   };
 
   const copyText = async (contents: string) => {
@@ -179,9 +188,8 @@ if (root) {
   const renderSelections = () => {
     const lines = selectedLines();
     const packs = lines.reduce((total, line) => total + line.quantity, 0);
-    if (lineCount) lineCount.textContent = String(lines.length);
-    if (packCount) packCount.textContent = String(packs);
     if (selectionTotal) selectionTotal.textContent = `${lines.length} line${lines.length === 1 ? '' : 's'} · ${packs} pack${packs === 1 ? '' : 's'}`;
+    if (reviewTotal) reviewTotal.textContent = `${lines.length} line${lines.length === 1 ? '' : 's'} · ${packs} pack${packs === 1 ? '' : 's'}`;
 
     if (summary) {
       summary.replaceChildren();
@@ -447,10 +455,12 @@ if (root) {
     window.requestAnimationFrame(() => window.print());
   });
 
-  emailButton?.addEventListener('click', () => {
+  const buildAttachedEmail = async () => {
     const draft = validateDraft();
-    if (!draft) return;
+    if (!draft) return null;
     const email = root.dataset.contactEmail || 'steveshepherdnz@gmail.com';
+    const subject = `Pro forma invoice request ${draftReference}`;
+    const pdfFilename = `EndoTech-NZ-Pro-Forma-Request-${draftReference}.pdf`;
     const previewLines = draft.lines.slice(0, 20).map(({ item, quantity }) => `${item.sku} - ${quoteFamilyLabels[item.family]} ${item.size} - Qty ${quantity}`);
     const remaining = Math.max(0, draft.lines.length - previewLines.length);
     const body = [
@@ -464,16 +474,86 @@ if (root) {
       `Phone: ${draft.customer.phone}`,
       `PO reference: ${draft.customer.purchaseOrderReference || '-'}`,
       '',
+      'Customer comments:',
+      draft.customer.notes || '[Type any additional comments here]',
+      '',
+      'Requested products:',
       ...previewLines,
-      ...(remaining ? [`...plus ${remaining} additional line${remaining === 1 ? '' : 's'} shown in the downloaded PDF.`] : []),
+      ...(remaining ? [`...plus ${remaining} additional line${remaining === 1 ? '' : 's'} shown in the attached PDF.`] : []),
       '',
       'Please confirm availability, account terms, GST, freight and pricing in the pro forma invoice.',
       '',
       'No patient-identifiable information is included.',
     ].join('\n');
-    window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(`Pro forma invoice request ${draftReference}`)}&body=${encodeURIComponent(body)}`;
-    setStatus('Your email application should open now. Attach the downloaded PDF before sending.', 'success');
-  });
+
+    const pdfBytes = await buildQuoteRequestPdf({
+      draftReference,
+      createdAt: new Date(),
+      customer: draft.customer,
+      lines: draft.lines,
+      transformLogoUrl: root.dataset.transformLogo || '',
+      endotechLogoUrl: root.dataset.endotechLogo || '',
+      contactEmail: email,
+    });
+    const pdfFile = quoteRequestPdfFile(pdfBytes, pdfFilename);
+    const emailDraft = buildQuoteRequestEmailDraft({
+      to: email,
+      subject,
+      body,
+      pdfFilename,
+      pdfBytes,
+      draftReference,
+    });
+    return { email, subject, body, pdfFile, emailDraft };
+  };
+
+  const downloadAttachedEmail = (emailDraft: Blob, email: string) => {
+    downloadBlob(emailDraft, `EndoTech-NZ-Email-${draftReference}.eml`);
+    setStatus(`Attached email draft downloaded. Open the .eml file to compose it: ${email} and the request PDF are already included.`, 'success');
+  };
+
+  emailButton?.addEventListener('click', () => withBusyButton(emailButton, async () => {
+    emailButton.textContent = 'Building attached email…';
+    setStatus('Building the PDF and attached email draft…');
+    try {
+      const emailPackage = await buildAttachedEmail();
+      if (!emailPackage) return;
+      const { email, subject, body, pdfFile, emailDraft } = emailPackage;
+
+      if (canNativeSharePdf(pdfFile)) {
+        try {
+          await navigator.share({
+            files: [pdfFile],
+            title: subject,
+            text: `Send to ${email}\n\n${body}`,
+          });
+          setStatus(`The PDF was passed to your sharing window. Choose your email app and confirm the recipient is ${email}.`, 'success');
+          return;
+        } catch (error) {
+          if (error instanceof DOMException && error.name === 'AbortError') {
+            setStatus('Email sharing was cancelled. Nothing was sent. You can use “Download attached email draft” instead.');
+            return;
+          }
+          // If native sharing fails, fall through to the attached email draft.
+        }
+      }
+      downloadAttachedEmail(emailDraft, email);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'The attached email draft could not be created.', 'error');
+    }
+  }));
+
+  emailDraftButton?.addEventListener('click', () => withBusyButton(emailDraftButton, async () => {
+    emailDraftButton.textContent = 'Building email draft…';
+    setStatus('Building the PDF and attached email draft…');
+    try {
+      const emailPackage = await buildAttachedEmail();
+      if (!emailPackage) return;
+      downloadAttachedEmail(emailPackage.emailDraft, emailPackage.email);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'The attached email draft could not be created.', 'error');
+    }
+  }));
 
   const submissionEnabled = root.dataset.submissionEnabled === 'true' && Boolean(root.dataset.submissionEndpoint);
   if (submitButton) submitButton.hidden = !submissionEnabled;
