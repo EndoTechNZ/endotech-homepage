@@ -44,7 +44,7 @@ export function getWorkflowStripItems(base: string): WorkflowStripItem[] {
       id: 'glide',
       step: 'Glide',
       note: 'Establish reproducible rotary access before shaping.',
-      href: `${base}products/acrobat-glide-path/`,
+      href: `${base}products/micro-path/`,
       icon: 'glide',
     },
     {

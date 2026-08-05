@@ -1,12 +1,12 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import WorkflowStrip, { type WorkflowStripItem } from '../../components/navigation/WorkflowStrip.astro';
-import homepageSplash from '../../assets/homepage-transformx-clinical-splash.png';
-import transformxSystem from '../../assets/transformx-rotary-file-system.png';
+import homepageSplash from '../../assets/homepage-transform-s-et.png';
+import transformSSystem from '../../assets/homepage-transform-s-et.png';
 import etFirewireMachine from '../../assets/et-firewire-machine.png';
 import avatarComparison from '../../assets/avatar-tip-comparison.png';
-import etProduct from '../../assets/et-transformx.png';
-import ptProduct from '../../assets/pt-transformx.png';
+import etProduct from '../../assets/transform-s-et.png';
+import ptProduct from '../../assets/transform-s-pt.png';
 
 const base = import.meta.env.BASE_URL;
 
@@ -68,18 +68,18 @@ const technologyPaths = [
 
 const productRoutes = [
   {
-    title: 'TransformX ET',
-    text: 'ET-style sequence logic for clinicians who want familiar .04 and .06 shaping behaviour with the TransformX control platform.',
-    href: `${base}products/et-transformx/`,
+    title: 'Transform S ET',
+    text: 'ET-style sequence logic for clinicians who want familiar .04 and .06 shaping behaviour with the Transform S control platform.',
+    href: `${base}products/transform-s-et/`,
     image: etProduct,
-    alt: 'TransformX ET rotary file system',
+    alt: 'Transform S ET rotary file system',
   },
   {
-    title: 'TransformX PT',
+    title: 'Transform S PT',
     text: 'PT-style progressive shaping sequence using the same material response and apical guidance platform.',
-    href: `${base}products/pt-transformx/`,
+    href: `${base}products/transform-s-pt/`,
     image: ptProduct,
-    alt: 'TransformX PT rotary file system',
+    alt: 'Transform S PT rotary file system',
   },
 ];
 
@@ -88,13 +88,13 @@ const schema = {
   '@type': 'WebPage',
   name: 'Technology | EndoTech NZ',
   description:
-    'EndoTech NZ technology platform overview for Transform Technology, Avatar Tip, and the TransformX shaping systems.',
+    'EndoTech NZ technology platform overview for Transform Technology, Avatar Tip, and the Transform S shaping systems.',
 };
 ---
 
 <ProductLayout
   title="Technology | EndoTech NZ"
-  description="Explore the EndoTech NZ technology platform behind TransformX shaping: Transform Technology for adaptive file response and Avatar Tip for apical guidance."
+  description="Explore the EndoTech NZ technology platform behind Transform S shaping: Transform Technology for adaptive file response and Avatar Tip for apical guidance."
   image={homepageSplash.src}
   schema={schema}
   accent="slate"
@@ -113,7 +113,7 @@ const schema = {
           <span>controlled shaping.</span>
         </h1>
         <p class="technology-hero-lede">
-          TransformX connects material behaviour and apical guidance into one clinical platform: adaptive NiTi response through curvature, and smoother advancement where tolerance is lowest.
+          Transform S connects material behaviour and apical guidance into one clinical platform: adaptive NiTi response through curvature, and smoother advancement where tolerance is lowest.
         </p>
         <div class="technology-hero-actions">
           <a class="technology-button technology-button-primary" href={`${base}technology/transform-technology/`}>
@@ -176,7 +176,7 @@ const schema = {
 
       <figure class="technology-mechanism-visual" aria-labelledby="technology-diagram-title">
         <svg viewBox="0 0 760 520" role="img" aria-labelledby="technology-diagram-title technology-diagram-desc">
-          <title id="technology-diagram-title">TransformX technology mechanism diagram</title>
+          <title id="technology-diagram-title">Transform S technology mechanism diagram</title>
           <desc id="technology-diagram-desc">
             Diagram showing variable file response through a curved canal and a rounded apical guidance tip.
           </desc>
@@ -263,14 +263,14 @@ const schema = {
 
     <section class="technology-section technology-product-section" aria-labelledby="technology-product-title">
       <div class="technology-product-visual">
-        <img src={transformxSystem.src} alt="TransformX rotary file system" loading="lazy" />
+        <img src={transformSSystem.src} alt="Transform S rotary file system" loading="lazy" />
       </div>
 
       <div class="technology-product-copy">
         <p class="technology-eyebrow">Product Connection</p>
         <h2 id="technology-product-title">The technology leads back to clinical sequence selection.</h2>
         <p>
-          Once the clinician understands the control platform, the practical question becomes sequence preference. TransformX ET and TransformX PT preserve familiar shaping pathways while using the same technology logic.
+          Once the clinician understands the control platform, the practical question becomes sequence preference. Transform S ET and Transform S PT preserve familiar shaping pathways while using the same technology logic.
         </p>
 
         <div class="technology-product-routes">

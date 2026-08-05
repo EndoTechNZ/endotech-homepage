@@ -1,11 +1,11 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
-import acrobatMb2FileImage from '../../assets/acrobat-mb2-file-transparent.png';
+import microPathMb2FileImage from '../../assets/micro-path-mb2-file-transparent.png';
 
 const base = import.meta.env.BASE_URL;
 const mb2GatewayNumbers = Array.from({ length: 15 }, (_, index) => String(index + 1).padStart(2, '0'));
 const mb2ChecklistPdfHref = `${base}downloads/EndoTech-NZ-MB2-15-Point-Protocol-Checklist.pdf`;
-const acrobatMb2ProductHref = `${base}products/acrobat-glide-path/`;
+const microPathMb2ProductHref = `${base}products/micro-path/`;
 
 const protocolNav = [
   { label: 'Technique', href: '#technique' },
@@ -56,7 +56,7 @@ const sequenceSteps = [
   {
     number: '03',
     title: 'MB2 file negotiation',
-    text: "Introduce the Acrobat MB2 file using feedback to confirm forward direction - never force. Use 'Available' length and then re inspect with a pre-curved hand file.",
+    text: "Introduce the Micro-Path MB2 file using feedback to confirm forward direction - never force. Use 'Available' length and then re inspect with a pre-curved hand file.",
   },
   {
     number: '04',
@@ -84,7 +84,7 @@ const problemRows = [
   {
     constraint: 'Narrow secondary canal',
     why: 'MB2 anatomy may hide under shelf dentin and isthmus detail.',
-    response: 'The file is used to confirm a reproducible path before TransformX shaping.',
+    response: 'The file is used to confirm a reproducible path before Transform S shaping.',
   },
 ];
 
@@ -101,8 +101,8 @@ const featureCards = [
   },
   {
     label: 'Workflow',
-    title: 'Acrobat sequence compatibility',
-    text: 'Keeps MB2 access inside the wider EndoTech glide path and TransformX workflow.',
+    title: 'Micro-Path sequence compatibility',
+    text: 'Keeps MB2 access inside the wider EndoTech glide path and Transform S workflow.',
   },
 ];
 
@@ -111,7 +111,7 @@ const benefits = [
   'More controlled canal entry',
   'Cleaner separation between access and shaping',
   'Improved tactile confidence',
-  'More predictable handoff into TransformX shaping',
+  'More predictable handoff into Transform S shaping',
   'Useful in restricted maxillary molar anatomy',
 ];
 
@@ -161,21 +161,21 @@ const evidenceStats = [
 ];
 
 const relatedLinks = [
-  { label: 'Acrobat Glide Path Files', href: `${base}products/acrobat-glide-path/` },
-  { label: 'Rotary Glide Path Files', href: `${base}products/rotary-glide-path-files/` },
+  { label: 'Micro-Path Files', href: `${base}products/micro-path/` },
+  { label: 'Micro-Path Files', href: `${base}products/micro-path/` },
   { label: 'Motor Settings', href: `${base}technique/motor-settings/` },
-  { label: 'TransformX ET Files', href: `${base}products/et-transformx/` },
+  { label: 'Transform S ET Files', href: `${base}products/transform-s-et/` },
 ];
 ---
 
 <ProductLayout
   title="MB2 File Protocol | EndoTech NZ"
-  description="Clinical MB2 file protocol for restricted molar access, including when a shorter Acrobat glide path file improves control before TransformX shaping."
+  description="Clinical MB2 file protocol for restricted molar access, including when a shorter Micro-Path file improves control before Transform S shaping."
   accent="teal"
 >
   <div class="mb2-protocol-page">
     <section class="mb2-protocol-hero" aria-labelledby="mb2-protocol-title">
-      <p class="mb2-protocol-eyebrow">Clinical protocol / Acrobat MB2</p>
+      <p class="mb2-protocol-eyebrow">Clinical protocol / Micro-Path MB2</p>
       <h1 id="mb2-protocol-title">MB2 Mastery: Control-First Negotiation</h1>
       <nav class="mb2-protocol-local-nav" aria-label="MB2 page sections">
         <span>On this protocol</span>
@@ -308,28 +308,28 @@ const relatedLinks = [
         <section class="mb2-available-file" aria-labelledby="mb2-available-file-title">
           <div class="mb2-available-file-visual" aria-hidden="true">
             <img
-              src={acrobatMb2FileImage.src}
+              src={microPathMb2FileImage.src}
               alt=""
               loading="lazy"
-              width={acrobatMb2FileImage.width}
-              height={acrobatMb2FileImage.height}
+              width={microPathMb2FileImage.width}
+              height={microPathMb2FileImage.height}
             />
             <span class="mb2-available-status">Available</span>
           </div>
 
           <div class="mb2-available-file-copy">
-            <p class="mb2-protocol-eyebrow">Acrobat MB2 file</p>
+            <p class="mb2-protocol-eyebrow">Micro-Path MB2 file</p>
             <h3 id="mb2-available-file-title">Size 15, .05 taper, 17 mm short-access file.</h3>
             <p>
-              This is the Acrobat MB2 file used in the sequence above: a short access
+              This is the Micro-Path MB2 file used in the sequence above: a short access
               glide-path option for controlled MB2 negotiation after the hand file has
               confirmed direction.
             </p>
 
-            <dl class="mb2-available-file-specs" aria-label="Acrobat MB2 file ordering details">
+            <dl class="mb2-available-file-specs" aria-label="Micro-Path MB2 file ordering details">
               <div>
                 <dt>Ordering code</dt>
-                <dd>ACGP-150517RF</dd>
+                <dd>TSMP-150517RF</dd>
               </div>
               <div>
                 <dt>Pack</dt>
@@ -341,7 +341,7 @@ const relatedLinks = [
               </div>
             </dl>
 
-            <a class="mb2-available-file-link" href={acrobatMb2ProductHref}>View Acrobat files</a>
+            <a class="mb2-available-file-link" href={microPathMb2ProductHref}>View Micro-Path files</a>
           </div>
         </section>
       </section>
@@ -385,11 +385,11 @@ const relatedLinks = [
 
     <section class="mb2-protocol-solution" aria-labelledby="mb2-solution-title">
       <article class="mb2-protocol-panel mb2-protocol-solution-copy">
-        <p class="mb2-protocol-eyebrow">TransformX Solution</p>
+        <p class="mb2-protocol-eyebrow">Transform S Solution</p>
         <h2 id="mb2-solution-title">Control the entry before shaping begins.</h2>
         <p>
-          The Acrobat MB2 option supports a deliberate glide path step before the clinician
-          transitions into TransformX ET or PT shaping. The objective is not simply to use
+          The Micro-Path MB2 option supports a deliberate glide path step before the clinician
+          transitions into Transform S ET or PT shaping. The objective is not simply to use
           a smaller file. The objective is to establish a controlled, reproducible path.
         </p>
       </article>
@@ -526,13 +526,13 @@ const relatedLinks = [
       <p class="mb2-protocol-eyebrow">Next step</p>
       <h2>Questions about MB2 access or file selection?</h2>
       <p>
-        Send a clinical question or review the Acrobat range if you want to connect the MB2
-        access step into the wider EndoTech glide path and TransformX shaping workflow.
+        Send a clinical question or review the Micro-Path range if you want to connect the MB2
+        access step into the wider EndoTech glide path and Transform S shaping workflow.
       </p>
     </div>
     <nav aria-label="MB2 footer actions">
       <a href={`${base}about/contact/`}>Ask a clinical question</a>
-      <a href={`${base}products/acrobat-glide-path/`}>View Acrobat files</a>
+      <a href={`${base}products/micro-path/`}>View Micro-Path files</a>
     </nav>
   </footer>
 

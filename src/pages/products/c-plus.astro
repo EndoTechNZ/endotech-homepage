@@ -1,0 +1,70 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import transformSWordmark from '../../assets/transform-s-wordmark.png';
+import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
+
+const base = import.meta.env.BASE_URL;
+const products = nzCustomerSelectableCatalog.filter((item) => item.family === 'c-plus');
+const partNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-C-Plus-Part-Numbers.pdf`;
+---
+
+<ProductLayout
+  title="Transform S™ C+ Files | EndoTech NZ"
+  description="Transform S C+ stainless-steel hand files for calcified-canal negotiation, available through EndoTech NZ account ordering."
+  image={transformSWordmark.src}
+  accent="teal"
+>
+  <main class="launch-product-page">
+    <section class="launch-hero">
+      <div>
+        <img src={transformSWordmark.src} width="742" height="116" alt="Transform S™ root canal shaping system" />
+        <p class="eyebrow">Hand instrumentation</p>
+        <h1>Transform S™ C+ Files</h1>
+        <p>Ultra-stiff stainless-steel hand files for controlled negotiation of calcified canals. The New Zealand launch range is supplied in sterile packs of six.</p>
+        <a href={`${base}order/#c-plus-order`}>Request an account order</a>
+      </div>
+    </section>
+
+    <section class="range" aria-labelledby="c-plus-range-title">
+      <div class="heading">
+        <p class="eyebrow">Approved launch catalogue</p>
+        <h2 id="c-plus-range-title">C+ article numbers</h2>
+        <p>Article numbers below are taken from the approved 5 August 2026 Transform S product workbook.</p>
+      </div>
+      <div class="table-shell">
+        <table>
+          <thead><tr><th>Size</th><th>Length</th><th>Pack</th><th>Article number</th></tr></thead>
+          <tbody>
+            {products.map((product) => (
+              <tr><td>{product.size}</td><td>{product.lengthMm} mm</td><td>{product.packQty}</td><td><code>{product.sku}</code></td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <a class="download-link" href={partNumbersHref}>Download C+ part-number guide</a>
+      <p class="document-note">Product-specific technique and IFU documents will be published after final approval. Confirm availability with EndoTech NZ when ordering.</p>
+    </section>
+  </main>
+</ProductLayout>
+
+<style>
+  .launch-product-page { color: #172033; background: #fff; }
+  .launch-hero, .range { padding: 76px 56px; }
+  .launch-hero { background: linear-gradient(135deg, #f7fafc, #edf6f5); }
+  .launch-hero > div, .range > * { width: min(100%, 1060px); margin-inline: auto; }
+  .launch-hero img { display: block; width: min(100%, 380px); height: auto; margin-bottom: 30px; }
+  .eyebrow { margin: 0 0 12px; color: #2f706b; font: 700 .72rem/1.2 Inter, sans-serif; letter-spacing: .16em; text-transform: uppercase; }
+  h1, h2 { margin: 0; color: #14233a; font-family: Inter, sans-serif; letter-spacing: -.04em; }
+  h1 { font-size: clamp(2.5rem, 6vw, 4.6rem); }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); }
+  .launch-hero p:not(.eyebrow), .heading p:not(.eyebrow), .document-note { max-width: 68ch; color: #526174; line-height: 1.7; }
+  .launch-hero a { display: inline-flex; margin-top: 18px; border-radius: 999px; padding: 13px 20px; background: #356e69; color: #fff; font: 700 .9rem Inter, sans-serif; text-decoration: none; }
+  .download-link { display: inline-flex; margin-top: 22px; border-radius: 999px; padding: 13px 20px; background: #183751; color: #fff; font: 700 .9rem Inter, sans-serif; text-decoration: none; }
+  .table-shell { overflow-x: auto; margin-top: 28px; border: 1px solid #dce4e8; border-radius: 12px; }
+  table { width: 100%; border-collapse: collapse; font-family: Inter, sans-serif; }
+  th, td { padding: 14px 16px; border-bottom: 1px solid #e5ebee; text-align: left; }
+  th { background: #eef6f5; color: #254c49; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+  code { color: #193d61; font-size: .9rem; }
+  .document-note { margin-top: 24px; }
+  @media (max-width: 720px) { .launch-hero, .range { padding: 52px 18px; } }
+</style>

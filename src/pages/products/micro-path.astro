@@ -1,0 +1,1084 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import microPathFiles from '../../assets/micro-path-files.png';
+import microPathBox from '../../assets/transform-s-micro-path-box.png';
+import { siteConfig } from '../../config/site';
+import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
+
+const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
+const base = import.meta.env.BASE_URL;
+const microPathOrderHref = `${base}order/#micro-path-order`;
+const microPathPartNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-Micro-Path-Part-Numbers.pdf`;
+const workflowHref = `${base}technique/workflow/`;
+const motorSettingsHref = `${base}technique/motor-settings/`;
+
+const microPathEntries = nzCustomerSelectableCatalog.filter((item) => item.family === 'micro-path');
+const standardSizes = [...new Set(
+  microPathEntries.filter((item) => item.fileType === 'Standard glide path').map((item) => item.size)
+)];
+const standardRange = standardSizes.map((size) => ({
+  size,
+  items: microPathEntries
+    .filter((item) => item.size === size)
+    .sort((a, b) => (a.lengthMm ?? 0) - (b.lengthMm ?? 0))
+    .map((item) => ({ length: `${item.lengthMm} mm`, sku: item.sku })),
+}));
+const mb2Entry = microPathEntries.find((item) => item.size === '15/.05' && item.lengthMm === 17);
+
+const technicalCards = [
+  {
+    title: 'Rotary glide path progression',
+    body:
+      'Micro-Path separates the glide stage from shaping so clinicians can create a reproducible rotary path before larger shaping files enter the canal.',
+    tone: 'light',
+  },
+  {
+    title: 'Transform Metal Technology',
+    body:
+      'Flexibility is positioned around the clinical problem it helps address: narrow, curved, and less forgiving anatomy during glide path development.',
+    tone: 'dark',
+    metric: '15/.03 + MB2 15/.05',
+  },
+];
+
+const workflowSteps = [
+  {
+    number: '1',
+    title: 'Negotiate and confirm access',
+    description:
+      'Establish coronal access and a readable path before the glide sequence begins so the shaping stage is not forced too early.',
+  },
+  {
+    number: '2',
+    title: 'Create the rotary glide path',
+    description:
+      'Use the confirmed 15/.03 configurations to create a more controlled route to working length in routine and curved anatomy.',
+  },
+  {
+    number: '3',
+    title: 'Move into shaping with intent',
+    description:
+      'Once the path is established, the clinician can transition into Transform S™ shaping with a cleaner, more reproducible handoff.',
+  },
+];
+
+const comparisonRows = [
+  {
+    feature: 'Workflow role',
+    microPath: 'Dedicated rotary glide stage',
+    standard: 'Often improvised before shaping',
+  },
+  {
+    feature: 'Progression logic',
+    microPath: 'Confirmed 15/.03 configurations',
+    standard: 'Varies across systems',
+  },
+  {
+    feature: 'Length options',
+    microPath: '21 mm, 25 mm, 29 mm',
+    standard: 'May be more limited',
+  },
+  {
+    feature: 'Restricted access option',
+    microPath: '15/.05 MB2 in 17 mm',
+    standard: 'Not always available',
+  },
+];
+
+const microPathSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Micro-Path Files',
+  description:
+    'Rotary glide path files using Transform Metal Technology to create a controlled path to working length before shaping, with confirmed 15/.03 configurations plus an MB2 option.',
+  brand: {
+    '@type': 'Brand',
+    name: siteConfig.name,
+  },
+  category: 'Endodontic glide path files',
+  image: [new URL(microPathBox.src, siteUrl).toString()],
+  url: new URL('/products/micro-path/', siteUrl).toString(),
+  additionalProperty: [
+    { '@type': 'PropertyValue', name: 'System type', value: 'Rotary glide path files' },
+    { '@type': 'PropertyValue', name: 'Technology', value: 'Transform Metal Technology' },
+    { '@type': 'PropertyValue', name: 'Standard size', value: '15/.03' },
+    { '@type': 'PropertyValue', name: 'Lengths', value: '21 mm, 25 mm, 29 mm' },
+    { '@type': 'PropertyValue', name: 'MB2 option', value: '15/.05 17 mm' },
+  ],
+};
+
+---
+
+<ProductLayout
+  title="Micro-Path Files | Rotary Glide Path Files for Endodontics"
+  description="Micro-Path Files are rotary glide path files for endodontics, using Transform Metal Technology to support controlled progression to working length before shaping."
+  image={microPathBox.src}
+  schema={microPathSchema}
+  accent="teal"
+>
+  <main class="microPath-stitch-page">
+    <section class="microPath-hero" aria-labelledby="microPath-hero-title">
+      <div class="microPath-hero-copy">
+        <div class="microPath-rotary-glide-reveal-mask">
+          <p class="microPath-rotary-glide-reveal-text js-microPath-rotary-glide-reveal">Rotary glide path system</p>
+        </div>
+        <h1 id="microPath-hero-title">Micro-Path</h1>
+        <p class="microPath-hero-lede">
+          Controlled rotary glide path preparation before shaping begins, with a simple sequence designed to lead cleanly into Transform S™.
+        </p>
+      </div>
+
+      <figure
+        data-microPath-hero-visual
+        class="microPath-hero-visual microPath-hero-visual--pre-reveal"
+        style="transform: translateZ(0) scale(0.9);"
+      >
+        <img
+          class="microPath-hero-image"
+          src={microPathBox.src}
+          loading="eager"
+          decoding="sync"
+          fetchpriority="high"
+          alt="Micro-Path files displayed as a rotary glide path system"
+        />
+      </figure>
+
+      <div class="microPath-hero-actions">
+        <a class="microPath-button primary" href="#product-range">Technical Specifications</a>
+        <a class="microPath-button secondary" href={motorSettingsHref}>Motor Settings</a>
+      </div>
+
+      <div class="microPath-hero-meta" aria-label="Micro-Path key range">
+        <span>13/.03</span>
+        <span>15/.03</span>
+        <span>17/.03</span>
+        <span>MB2 15/.05</span>
+      </div>
+    </section>
+
+    <section class="microPath-technical-band" aria-labelledby="microPath-technical-title">
+      <h2 class="sr-only" id="microPath-technical-title">Technical overview</h2>
+      <div class="microPath-technical-grid">
+        {technicalCards.map((card) => (
+          <article class:list={['microPath-technical-card', card.tone === 'dark' && 'is-dark']}>
+            <div>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </div>
+            {card.metric ? (
+              <div class="microPath-technical-meta">
+                <span>{card.metric}</span>
+              </div>
+            ) : (
+              <img src={microPathFiles.src} alt="Micro-Path files showing staged size progression" />
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="microPath-journey-section" aria-labelledby="microPath-journey-title">
+      <div class="microPath-journey-media">
+        <img src={microPathFiles.src} alt="Micro-Path files shown as the access-to-shaping bridge" />
+      </div>
+
+      <div class="microPath-journey-copy">
+        <p class="microPath-eyebrow">The clinical journey</p>
+        <h2 id="microPath-journey-title">Create the path before shaping asks more of the canal.</h2>
+        <div class="microPath-journey-steps">
+          {workflowSteps.map((step) => (
+            <article>
+              <span>{step.number}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="product-range" class="microPath-range-section" aria-labelledby="microPath-range-title">
+      <div class="microPath-range-heading">
+        <p class="microPath-eyebrow">Product range</p>
+        <h2 id="microPath-range-title">Sizes, lengths, and part numbers.</h2>
+        <p>
+          The core Micro-Path range stays deliberately simple: 13/.03, 15/.03, and 17/.03 in 21 mm, 25 mm, and 29 mm lengths, plus a dedicated MB2 option.
+        </p>
+      </div>
+
+      <div class="microPath-table-shell">
+        <table class="microPath-range-table">
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>21 mm</th>
+              <th>25 mm</th>
+              <th>29 mm</th>
+            </tr>
+          </thead>
+          <tbody>
+            {standardRange.map((row) => (
+              <tr>
+                <th>{row.size}</th>
+                <td>{row.items.find((item) => item.length === '21 mm')?.sku ?? '—'}</td>
+                <td>{row.items.find((item) => item.length === '25 mm')?.sku ?? '—'}</td>
+                <td>{row.items.find((item) => item.length === '29 mm')?.sku ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <article class="microPath-mb2-card">
+        <div>
+          <p class="microPath-eyebrow">MB2 option</p>
+          <h3>15/.05 in 17 mm</h3>
+        </div>
+        <p>
+          SKU <code>{mb2Entry?.sku}</code> extends the glide path system into restricted-access cases where a shorter file format and more deliberate coronal headroom can matter.
+        </p>
+      </article>
+    </section>
+
+    <section class="microPath-comparison-section" aria-labelledby="microPath-comparison-title">
+      <div class="microPath-comparison-heading">
+        <h2 id="microPath-comparison-title">Product comparison</h2>
+        <p>Transparent information for clinicians evaluating how the glide stage fits into the broader endodontic workflow.</p>
+      </div>
+
+      <div class="microPath-table-shell">
+        <table class="microPath-comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Micro-Path</th>
+              <th>Typical Alternative</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonRows.map((row) => (
+              <tr>
+                <th>{row.feature}</th>
+                <td>{row.microPath}</td>
+                <td>{row.standard}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="microPath-downloads-section" aria-labelledby="microPath-downloads-title">
+      <div class="microPath-downloads-heading">
+        <p class="microPath-eyebrow">Downloads</p>
+        <h2 id="microPath-downloads-title">Confirmed Micro-Path part-number guide.</h2>
+        <p>The customer-selectable article numbers are available as a clean PDF. Technique and IFU documents remain pending approval.</p>
+      </div>
+      <a class="microPath-button dark" href={microPathPartNumbersHref}>Download Micro-Path guide</a>
+    </section>
+
+    <section class="microPath-cta-section" aria-labelledby="microPath-cta-title">
+      <div class="microPath-cta-copy">
+        <h2 id="microPath-cta-title">Bring more control to the glide stage.</h2>
+        <p>
+          Review the Micro-Path range, then move into the central ordering section when you are ready to combine glide path and shaping files in one order.
+        </p>
+      </div>
+      <div class="microPath-cta-actions">
+        <a class="microPath-button primary" href={microPathOrderHref}>Order Micro-Path</a>
+        <a class="microPath-button secondary on-dark" href={`${base}resources/downloads/`}>Evidence &amp; Downloads</a>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    (() => {
+      const visual = document.querySelector('[data-microPath-hero-visual]');
+      if (!(visual instanceof HTMLElement)) return;
+
+      const playReveal = () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              visual.style.transform = '';
+              visual.classList.remove('microPath-hero-visual--pre-reveal');
+            }, 70);
+          });
+        });
+      };
+
+      playReveal();
+    })();
+  </script>
+
+  <script is:inline>
+    (() => {
+      const mask = document.querySelector('.microPath-rotary-glide-reveal-mask');
+      const text = document.querySelector('.js-microPath-rotary-glide-reveal');
+      if (!(mask instanceof HTMLElement) || !(text instanceof HTMLElement)) return;
+
+      const originalText = 'Rotary glide path system';
+      text.setAttribute('aria-label', originalText);
+      text.innerHTML = Array.from(originalText)
+        .map((char, index) => {
+          const safeChar = char === ' ' ? '&nbsp;' : char;
+          return `<span class="microPath-rotary-glide-reveal-char" aria-hidden="true" style="--char-index:${index}">${safeChar}</span>`;
+        })
+        .join('');
+
+      const observer = new IntersectionObserver(
+        (entries, observerInstance) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              window.setTimeout(() => {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(() => {
+                    mask.classList.add('is-visible');
+                  });
+                });
+              }, 180);
+
+              observerInstance.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.2,
+        }
+      );
+
+      observer.observe(mask);
+    })();
+  </script>
+</ProductLayout>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .microPath-stitch-page {
+    background: #ffffff;
+    color: #181c20;
+  }
+
+  .microPath-hero,
+  .microPath-technical-band,
+  .microPath-journey-section,
+  .microPath-range-section,
+  .microPath-bcs-section,
+  .microPath-comparison-section,
+  .microPath-downloads-section,
+  .microPath-cta-section {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .microPath-eyebrow {
+    margin: 0 0 14px;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .microPath-hero h1,
+  .microPath-technical-card h3,
+  .microPath-journey-copy h2,
+  .microPath-journey-copy h3,
+  .microPath-range-heading h2,
+  .microPath-bcs-copy h2,
+  .microPath-mb2-card h3,
+  .microPath-comparison-heading h2,
+  .microPath-downloads-heading h2,
+  .microPath-cta-copy h2 {
+    margin: 0;
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .microPath-hero {
+    display: grid;
+    justify-items: center;
+    padding-top: 104px;
+    padding-bottom: 88px;
+    text-align: center;
+    background: #ffffff;
+  }
+
+  .microPath-hero-copy {
+    max-width: 740px;
+  }
+
+  .microPath-rotary-glide-reveal-mask {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    padding: 0 0 14px;
+    min-height: 24px;
+  }
+
+  .microPath-rotary-glide-reveal-text {
+    margin: 0;
+    color: #00639c;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  :global(.microPath-rotary-glide-reveal-char) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.5px);
+    transition:
+      opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--char-index) * 12ms);
+    will-change: opacity, transform, filter;
+  }
+
+  :global(.microPath-rotary-glide-reveal-mask.is-visible .microPath-rotary-glide-reveal-char) {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  .microPath-hero h1 {
+    font-size: clamp(3.8rem, 7vw, 5.8rem);
+    line-height: 0.94;
+  }
+
+  .microPath-hero-lede,
+  .microPath-technical-card p,
+  .microPath-journey-copy p,
+  .microPath-range-heading p,
+  .microPath-mb2-card p,
+  .microPath-bcs-copy p,
+  .microPath-comparison-heading p,
+  .microPath-download-list span,
+  .microPath-cta-copy p {
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    line-height: 1.65;
+  }
+
+  .microPath-hero-lede {
+    max-width: 560px;
+    margin: 18px auto 0;
+    font-size: 1rem;
+  }
+
+  .microPath-hero-visual {
+    width: 100%;
+    max-width: 1080px;
+    margin: 52px 0 0;
+    transform-origin: center center;
+    transform: translateZ(0) scale(1);
+    transition: transform 1320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .microPath-hero-visual--pre-reveal {
+    transform: translateZ(0) scale(0.9);
+  }
+
+  .microPath-hero-visual img,
+  .microPath-hero-image {
+    display: block;
+    width: 100%;
+    max-height: 780px;
+    object-fit: contain;
+    backface-visibility: hidden;
+  }
+
+  .microPath-hero-actions,
+  .microPath-cta-actions,
+  .microPath-bcs-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .microPath-hero-actions {
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .microPath-hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .microPath-hero-meta span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    border: 1px solid #d7e0e8;
+    border-radius: 999px;
+    padding: 0 14px;
+    color: #4e5a68;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #fbfdff;
+  }
+
+  .microPath-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border-radius: 6px;
+    padding: 0 18px;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition:
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 180ms ease,
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .microPath-button:hover,
+  .microPath-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow:
+      0 12px 24px rgba(15, 23, 42, 0.08),
+      0 2px 6px rgba(15, 23, 42, 0.05);
+  }
+
+  .microPath-button.primary {
+    background: #005c92;
+    border: 1px solid #005c92;
+    color: #ffffff;
+  }
+
+  .microPath-button.primary:hover,
+  .microPath-button.primary:focus-visible {
+    background: #0a6ca8;
+    border-color: #0a6ca8;
+  }
+
+  .microPath-button.secondary {
+    background: #ffffff;
+    border: 1px solid #c0c7d2;
+    color: #404750;
+  }
+
+  .microPath-button.secondary:hover,
+  .microPath-button.secondary:focus-visible {
+    background: #f8fbfd;
+    border-color: #aeb8c5;
+    color: #1f2937;
+  }
+
+  .microPath-button.dark {
+    background: #181c20;
+    border: 1px solid #181c20;
+    color: #ffffff;
+  }
+
+  .microPath-button.dark:hover,
+  .microPath-button.dark:focus-visible {
+    background: #111827;
+    border-color: #111827;
+  }
+
+  .microPath-button.on-dark,
+  .microPath-button.secondary.on-dark {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+  }
+
+  .microPath-button.on-dark:hover,
+  .microPath-button.on-dark:focus-visible,
+  .microPath-button.secondary.on-dark:hover,
+  .microPath-button.secondary.on-dark:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.42);
+    color: #ffffff;
+  }
+
+  .microPath-technical-band,
+  .microPath-journey-section,
+  .microPath-range-section,
+  .microPath-bcs-section,
+  .microPath-comparison-section,
+  .microPath-downloads-section {
+    border-top: 1px solid #e3e8ee;
+  }
+
+  .microPath-technical-band,
+  .microPath-journey-section,
+  .microPath-range-section,
+  .microPath-bcs-section,
+  .microPath-downloads-section {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .microPath-comparison-section {
+    padding-top: 88px;
+    padding-bottom: 88px;
+    background: #f7f9ff;
+  }
+
+  .microPath-technical-grid,
+  .microPath-journey-section,
+  .microPath-range-section,
+  .microPath-bcs-section,
+  .microPath-download-list {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .microPath-technical-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.74fr);
+    gap: 18px;
+  }
+
+  .microPath-technical-card {
+    display: grid;
+    gap: 28px;
+    align-content: space-between;
+    min-height: 280px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 28px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 55, 112, 0.06);
+  }
+
+  .microPath-technical-card h3 {
+    font-size: 1.28rem;
+    line-height: 1.16;
+  }
+
+  .microPath-technical-card p {
+    max-width: 35ch;
+    margin: 12px 0 0;
+    font-size: 0.94rem;
+  }
+
+  .microPath-technical-card img {
+    width: 100%;
+    max-width: 320px;
+    max-height: 170px;
+    justify-self: end;
+    object-fit: contain;
+    opacity: 0.88;
+  }
+
+  .microPath-technical-card.is-dark {
+    background: #005c92;
+    border-color: #005c92;
+  }
+
+  .microPath-technical-card.is-dark h3,
+  .microPath-technical-card.is-dark p,
+  .microPath-technical-card.is-dark span {
+    color: #ffffff;
+  }
+
+  .microPath-technical-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 18px;
+  }
+
+  .microPath-technical-meta span {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .microPath-journey-section,
+  .microPath-bcs-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    gap: 40px;
+    align-items: center;
+  }
+
+  .microPath-journey-media,
+  .microPath-bcs-visual {
+    display: grid;
+    place-items: center;
+    min-height: 280px;
+    padding: 26px;
+    border-radius: 8px;
+    background: #f4f6fb;
+  }
+
+  .microPath-journey-media img,
+  .microPath-bcs-visual img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+  }
+
+  .microPath-journey-copy h2,
+  .microPath-range-heading h2,
+  .microPath-bcs-copy h2,
+  .microPath-comparison-heading h2,
+  .microPath-downloads-heading h2,
+  .microPath-cta-copy h2 {
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .microPath-journey-steps {
+    display: grid;
+    gap: 22px;
+    margin-top: 24px;
+  }
+
+  .microPath-journey-steps article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .microPath-journey-steps span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: #eef8fc;
+    color: #005c92;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .microPath-journey-steps h3 {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .microPath-journey-steps p {
+    margin: 6px 0 0;
+    font-size: 0.92rem;
+  }
+
+  .microPath-range-heading {
+    max-width: 780px;
+    margin-bottom: 36px;
+  }
+
+  .microPath-range-heading p:not(.microPath-eyebrow) {
+    margin: 16px 0 0;
+  }
+
+  .microPath-table-shell {
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .microPath-range-table,
+  .microPath-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .microPath-range-table th,
+  .microPath-range-table td,
+  .microPath-comparison-table th,
+  .microPath-comparison-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid #e3e8ee;
+    text-align: left;
+  }
+
+  .microPath-range-table thead th,
+  .microPath-comparison-table thead th {
+    background: #e8edf2;
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .microPath-range-table tbody th,
+  .microPath-comparison-table tbody th {
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .microPath-range-table tbody td,
+  .microPath-comparison-table tbody td {
+    color: #404750;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .microPath-range-table tbody tr:last-child th,
+  .microPath-range-table tbody tr:last-child td,
+  .microPath-comparison-table tbody tr:last-child th,
+  .microPath-comparison-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .microPath-mb2-card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 28px;
+    margin-top: 20px;
+    padding: 24px 28px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  .microPath-mb2-card p {
+    margin: 0;
+  }
+
+  .microPath-bcs-lede {
+    max-width: 44ch;
+    margin: 16px 0 0;
+    font-size: 1rem;
+  }
+
+  .microPath-bcs-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 460px;
+    margin: 28px 0 24px;
+  }
+
+  .microPath-bcs-metrics div {
+    border-left: 3px solid #006a6a;
+    padding-left: 14px;
+  }
+
+  .microPath-bcs-metrics strong {
+    display: block;
+    color: #006a6a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .microPath-bcs-metrics span {
+    display: block;
+    margin-top: 6px;
+    color: #707881;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .microPath-inline-link {
+    color: #005c92;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .microPath-comparison-heading,
+  .microPath-downloads-heading {
+    max-width: 760px;
+    margin: 0 auto 36px;
+    text-align: center;
+  }
+
+  .microPath-comparison-heading p,
+  .microPath-downloads-heading p {
+    margin: 14px 0 0;
+  }
+
+  .microPath-download-list {
+    display: grid;
+    gap: 16px;
+    max-width: 960px;
+  }
+
+  .microPath-download-list a {
+    display: grid;
+    gap: 8px;
+    padding: 20px 22px;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+    background: #ffffff;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .microPath-download-list a:hover,
+  .microPath-download-list a:focus-visible {
+    transform: translateY(-1px);
+    border-color: #c0c7d2;
+    box-shadow: 0 8px 24px rgba(0, 55, 112, 0.08);
+  }
+
+  .microPath-download-list strong {
+    color: #181c20;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .microPath-download-list span {
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .microPath-cta-section {
+    padding-top: 92px;
+    padding-bottom: 104px;
+    background: #102033;
+    text-align: center;
+  }
+
+  .microPath-cta-copy {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .microPath-cta-copy h2,
+  .microPath-cta-copy p {
+    color: #ffffff;
+  }
+
+  .microPath-cta-copy p {
+    max-width: 560px;
+    margin: 18px auto 0;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .microPath-cta-actions {
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  @media (max-width: 1120px) {
+    .microPath-hero,
+    .microPath-technical-band,
+    .microPath-journey-section,
+    .microPath-range-section,
+    .microPath-bcs-section,
+    .microPath-comparison-section,
+    .microPath-downloads-section,
+    .microPath-cta-section {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .microPath-technical-grid,
+    .microPath-journey-section,
+    .microPath-bcs-section,
+    .microPath-mb2-card {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .microPath-hero,
+    .microPath-technical-band,
+    .microPath-journey-section,
+    .microPath-range-section,
+    .microPath-bcs-section,
+    .microPath-comparison-section,
+    .microPath-downloads-section,
+    .microPath-cta-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .microPath-hero {
+      padding-top: 52px;
+      padding-bottom: 56px;
+    }
+
+    .microPath-hero-actions,
+    .microPath-cta-actions,
+    .microPath-bcs-actions {
+      display: grid;
+      width: 100%;
+      max-width: 354px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .microPath-hero-meta {
+      display: grid;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .microPath-button {
+      width: 100%;
+    }
+
+    .microPath-bcs-metrics {
+      grid-template-columns: 1fr;
+    }
+
+    .microPath-table-shell {
+      overflow-x: auto;
+    }
+
+    .microPath-range-table,
+    .microPath-comparison-table {
+      min-width: 680px;
+    }
+  }
+</style>

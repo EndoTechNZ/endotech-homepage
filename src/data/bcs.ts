@@ -70,7 +70,7 @@ export const bcsFamilyPage = {
 
 export const bcsSealer: ProductRecord & {
   clinicalProblem: string;
-  transformxSolution: string;
+  transformSSolution: string;
   clinicalBenefits: string[];
   clinicianReasons: string[];
   story: string;
@@ -108,8 +108,8 @@ export const bcsSealer: ProductRecord & {
     'For professional dental use only. Refer to the IFU for indications, contraindications, precautions, and instructions for use.',
   clinicalProblem:
     'Conventional mixed sealers introduce avoidable variability at the point of obturation. Mixing inconsistency, handling changes over time, and workflow interruptions can make it harder to achieve a controlled final seal after shaping and irrigation have already been done well.',
-  transformxSolution:
-    'Within the EndoTech workflow, TransformX™ shaping creates the controlled canal geometry; BCS BioCeramic Sealer completes that workflow with a premixed bioceramic sealer designed for moisture-assisted setting, consistent delivery, and stable canal sealing.',
+  transformSSolution:
+    'Within the EndoTech workflow, Transform S™ shaping creates the controlled canal geometry; BCS BioCeramic Sealer completes that workflow with a premixed bioceramic sealer designed for moisture-assisted setting, consistent delivery, and stable canal sealing.',
   clinicalBenefits: [
     'Removes chairside mixing from the obturation step',
     'Supports flow into canal irregularities during placement',
@@ -163,7 +163,7 @@ export const bcsSealer: ProductRecord & {
 
 export const bcsPutty: ProductRecord & {
   clinicalProblem: string;
-  transformxSolution: string;
+  transformSSolution: string;
   clinicalBenefits: string[];
   clinicianReasons: string[];
   story: string;
@@ -199,7 +199,7 @@ export const bcsPutty: ProductRecord & {
     'For professional dental use only. Refer to the IFU for full indications, contraindications, precautions, and instructions for use.',
   clinicalProblem:
     'Repair procedures often happen under clinical pressure, where material handling and placement control matter as much as the chemistry itself. Mixed repair materials can add variability, waste, and interruption at exactly the point when procedural control needs to stay high.',
-  transformxSolution:
+  transformSSolution:
     'The EndoTech workflow is built around control at every stage. After access, shaping, and disinfection are completed, BCS BioCeramic Putty extends that logic into repair procedures with a premixed bioceramic material designed for practical delivery and biologically aligned case management.',
   clinicalBenefits: [
     'Simplifies placement by removing hand mixing',

@@ -1,49 +1,55 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
-import etProduct from '../../assets/et-transformx.png';
-import ptProduct from '../../assets/pt-transformx.png';
-import acrobatProduct from '../../assets/acrobat-glide-path-files.png';
-import bcsSealer from '../../assets/bcs-sealer.png';
-import vortiflowFlow from '../../assets/vortiflow/vortiflow-fluid-dynamics-clean.png';
+import etProduct from '../../assets/transform-s-et.png';
+import ptProduct from '../../assets/transform-s-pt.png';
+import microPathProduct from '../../assets/micro-path-files.png';
+import transformSWordmark from '../../assets/transform-s-wordmark.png';
 
 const base = import.meta.env.BASE_URL;
 
 const systems = [
   {
     eyebrow: 'Rotary shaping system',
-    title: 'TransformX™ ET',
+    title: 'Transform S™ ET',
     description:
       'ET-style shaping for clinicians who want familiar .04/.06 sequence logic and a clear apical sequence, positioned as a replacement for EdgeFile X7, HyFlex CM, FKG RACE EVO / RaCe, MicroMega, Komet FQ, and HERO systems.',
-    href: `${base}products/et-transformx/`,
+    href: `${base}products/transform-s-et/`,
     image: etProduct.src,
-    alt: 'TransformX™ ET rotary files',
+    alt: 'Transform S™ ET rotary files',
   },
   {
     eyebrow: 'Rotary shaping system',
-    title: 'TransformX™ PT',
+    title: 'Transform S™ PT',
     description:
       'PT-style shaping for clinicians preserving progressive crown-down sequence logic through more demanding anatomy, positioned as a replacement for ProTaper, ProTaper Gold, and ProTaper Next.',
-    href: `${base}products/pt-transformx/`,
+    href: `${base}products/transform-s-pt/`,
     image: ptProduct.src,
-    alt: 'TransformX™ PT rotary file system',
+    alt: 'Transform S™ PT rotary file system',
   },
   {
     eyebrow: 'Glide path',
-    title: 'Acrobat',
+    title: 'Micro-Path',
     description:
       'Rotary glide path files positioned before shaping to establish a clearer route through curved or demanding canals.',
-    href: `${base}products/acrobat-glide-path/`,
-    image: acrobatProduct.src,
-    alt: 'Acrobat glide path files',
+    href: `${base}products/micro-path/`,
+    image: microPathProduct.src,
+    alt: 'Micro-Path files',
   },
   {
-    eyebrow: 'Irrigation',
-    title: 'VortiFlow',
-    description:
-      'Irrigation support engineered around controlled fluid behaviour after shaping and before final sealing.',
-    href: `${base}products/vortiflow-irrigation-needle/`,
-    image: vortiflowFlow.src,
-    alt: 'VortiFlow irrigation support image',
+    eyebrow: 'Calcified-canal hand files',
+    title: 'Transform S™ C+ Files',
+    description: 'C+ hand files for initial negotiation of narrow or calcified canals.',
+    href: `${base}products/c-plus/`,
+    image: transformSWordmark.src,
+    alt: 'Transform S™ C+ files',
+  },
+  {
+    eyebrow: 'Stainless-steel hand files',
+    title: 'Transform S™ K-Files',
+    description: 'K-Files in individual and assorted packs for manual canal preparation.',
+    href: `${base}products/k-files/`,
+    image: transformSWordmark.src,
+    alt: 'Transform S™ K-Files',
   },
 ];
 
@@ -57,12 +63,12 @@ const workflowSteps = [
     description: 'Use ET or PT sequence logic according to the preparation style you already trust.',
   },
   {
-    title: 'Clean 3D',
-    description: 'Support irrigant exchange once preparation geometry is established.',
+    title: 'Negotiate',
+    description: 'Use C+ or K-Files where manual canal negotiation and preparation are indicated.',
   },
   {
-    title: 'Seal',
-    description: 'Move directly into the BCS / iRoot bioceramic pathway for final sealing.',
+    title: 'Review',
+    description: 'Select only the confirmed catalogue item and article number required for the case.',
   },
 ];
 
@@ -71,32 +77,32 @@ const compareRows = [
     feature: 'Primary shaping path',
     et: 'ET-style .04 / .06 sequence logic',
     pt: 'PT-style progressive shaping logic',
-    support: 'BCS family completes the sealing stage',
+    support: 'C+ and K-Files support manual preparation',
   },
   {
     feature: 'Best fit',
     et: 'Clinicians preserving ET-style habits',
     pt: 'Clinicians preserving ProTaper-style habits',
-    support: 'Practices building a matched shaping-to-sealing system',
+    support: 'Narrow, calcified, or manually prepared canals',
   },
   {
     feature: 'Workflow role',
     et: 'Shape',
     pt: 'Shape',
-    support: 'Seal',
+    support: 'Negotiate / prepare',
   },
   {
     feature: 'Open next',
-    et: 'TransformX™ ET page',
-    pt: 'TransformX™ PT page',
-    support: 'BCS family page',
+    et: 'Transform S™ ET page',
+    pt: 'Transform S™ PT page',
+    support: 'C+ or K-Files page',
   },
 ];
 ---
 
 <ProductLayout
   title="Product Systems | EndoTech NZ"
-  description="Review the EndoTech NZ product system from glide path to shaping, irrigation, and bioceramic sealing."
+  description="Review the initial EndoTech NZ Transform S product range: ET, PT, Micro-Path, C+ and K-Files."
   image={etProduct.src}
   accent="teal"
 >
@@ -108,26 +114,26 @@ const compareRows = [
             Product Systems
           </p>
         </div>
-        <h1 id="overview-hero-title">A clinical system from glide path to final seal.</h1>
+        <h1 id="overview-hero-title">The initial Transform S™ range for New Zealand.</h1>
         <p class="overview-hero-lede">
-          Review the EndoTech NZ product architecture first, then move into the shaping system, glide path, irrigation, or bioceramic pathway that fits the case.
+          Review the five launch families, then open the exact product range that fits the case and your account-order request.
         </p>
       </div>
 
       <figure class="overview-hero-visual">
-        <img src={etProduct.src} alt="TransformX™ ET and PT product imagery presented as the core shaping system" />
+        <img src={etProduct.src} alt="Transform S™ ET and PT product imagery presented as the core shaping system" />
       </figure>
 
       <div class="overview-hero-actions">
-        <a class="overview-button primary" href={`${base}products/et-transformx/`}>View TransformX™ ET</a>
-        <a class="overview-button secondary" href={`${base}products/pt-transformx/`}>View TransformX™ PT</a>
+        <a class="overview-button primary" href={`${base}products/transform-s-et/`}>View Transform S™ ET</a>
+        <a class="overview-button secondary" href={`${base}products/transform-s-pt/`}>View Transform S™ PT</a>
       </div>
     </section>
 
     <section class="overview-systems-section" aria-labelledby="overview-systems-title">
       <div class="overview-section-heading">
         <p class="overview-eyebrow">Rotary shaping systems</p>
-        <h2 id="overview-systems-title">TransformX™ ET and PT form the core shaping pathways.</h2>
+        <h2 id="overview-systems-title">Transform S™ ET and PT form the core shaping pathways.</h2>
       </div>
 
       <div class="overview-systems-grid">
@@ -149,50 +155,50 @@ const compareRows = [
 
     <section class="overview-supporting-systems" aria-labelledby="overview-supporting-title">
       <div class="overview-section-heading">
-        <p class="overview-eyebrow">Supporting systems</p>
-        <h2 id="overview-supporting-title">Glide path, irrigation, and bioceramics complete the workflow.</h2>
+        <p class="overview-eyebrow">Glide path and hand files</p>
+        <h2 id="overview-supporting-title">Micro-Path, C+ and K-Files complete the initial range.</h2>
       </div>
 
       <div class="overview-support-grid">
         <article class="overview-support-card">
           <figure>
-            <img src={acrobatProduct.src} alt="Acrobat glide path files" />
+            <img src={microPathProduct.src} alt="Micro-Path files" />
           </figure>
           <div>
             <span>Glide path</span>
-            <h3>Acrobat</h3>
+            <h3>Micro-Path</h3>
             <p>
               Establish a reproducible route before shaping becomes more demanding.
             </p>
-            <a href={`${base}products/acrobat-glide-path/`}>View Acrobat</a>
+            <a href={`${base}products/micro-path/`}>View Micro-Path</a>
           </div>
         </article>
 
         <article class="overview-support-card">
           <figure>
-            <img src={vortiflowFlow.src} alt="VortiFlow fluid dynamics image" />
+            <img src={transformSWordmark.src} alt="Transform S™ C+ files" />
           </figure>
           <div>
-            <span>Irrigation</span>
-            <h3>VortiFlow</h3>
+            <span>Calcified-canal hand files</span>
+            <h3>Transform S™ C+ Files</h3>
             <p>
-              Support cleaner irrigant exchange once preparation geometry is established.
+              Select confirmed C+ sizes for initial negotiation of narrow or calcified canals.
             </p>
-            <a href={`${base}products/vortiflow-irrigation-needle/`}>View VortiFlow</a>
+            <a href={`${base}products/c-plus/`}>View C+ Files</a>
           </div>
         </article>
 
         <article class="overview-support-card overview-support-card-wide">
           <div class="overview-support-copy">
-            <p class="overview-eyebrow">Bioceramics</p>
-            <h3>BCS / iRoot</h3>
+            <p class="overview-eyebrow">Stainless-steel hand files</p>
+            <h3>Transform S™ K-Files</h3>
             <p>
-              Complete the pathway with a premixed bioceramic family designed for final sealing and repair after shaping and irrigation decisions are made.
+              Select individual or assorted K-File packs using the approved article-number catalogue.
             </p>
-            <a class="overview-button dark" href={`${base}products/bcs/`}>View BCS Family</a>
+            <a class="overview-button dark" href={`${base}products/k-files/`}>View K-Files</a>
           </div>
           <figure>
-            <img src={bcsSealer.src} alt="BCS BioCeramic sealer packaging" />
+            <img src={transformSWordmark.src} alt="Transform S™ K-Files" />
           </figure>
         </article>
       </div>
@@ -200,12 +206,12 @@ const compareRows = [
 
     <section class="overview-workflow-section" aria-labelledby="overview-workflow-title">
       <div class="overview-workflow-media">
-        <img src={vortiflowFlow.src} alt="Workflow support visual linking shaping, cleaning, and sealing" />
+        <img src={microPathProduct.src} alt="Micro-Path glide path files" />
       </div>
 
       <div class="overview-workflow-copy">
         <p class="overview-eyebrow">Workflow connection</p>
-        <h2 id="overview-workflow-title">Glide to shape, clean 3D, then seal.</h2>
+        <h2 id="overview-workflow-title">Glide, negotiate and shape with the confirmed launch range.</h2>
         <div class="overview-workflow-steps">
           {workflowSteps.map((step, index) => (
             <article>
@@ -231,9 +237,9 @@ const compareRows = [
           <thead>
             <tr>
               <th>Feature</th>
-              <th>TransformX™ ET</th>
-              <th>TransformX™ PT</th>
-              <th>BCS / iRoot</th>
+              <th>Transform S™ ET</th>
+              <th>Transform S™ PT</th>
+              <th>C+ / K-Files</th>
             </tr>
           </thead>
           <tbody>
@@ -254,7 +260,7 @@ const compareRows = [
       <div class="overview-cta-copy">
         <h2 id="overview-cta-title">Move from system review into product detail.</h2>
         <p>
-          Start with the shaping path that matches your workflow, then move into Acrobat, VortiFlow, or the BCS family as the case demands.
+          Start with the shaping path that matches your workflow, then move into Micro-Path, C+ or K-Files as the case demands.
         </p>
       </div>
       <div class="overview-cta-actions">

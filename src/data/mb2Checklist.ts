@@ -161,7 +161,7 @@ export const mb2ChecklistGroups = [
         text: 'Rotary shaping should follow a reproducible path with minimal torsional stress.',
         summary: 'The shaping file should receive a pathway it can re-enter, not a mystery it must discover.',
         detail:
-          'A glide path is not a single lucky pass to length. It is a reproducible route that the instrument can leave and re-enter without force. Confirm that the small file returns to the path predictably before rotary shaping. Acrobat MB2 or other glide-path files should follow the proven direction, using feedback to confirm forward movement. A smooth glide path reduces torsional load, protects the apical third, and makes the handoff into TransformX shaping more controlled.',
+          'A glide path is not a single lucky pass to length. It is a reproducible route that the instrument can leave and re-enter without force. Confirm that the small file returns to the path predictably before rotary shaping. Micro-Path MB2 or other glide-path files should follow the proven direction, using feedback to confirm forward movement. A smooth glide path reduces torsional load, protects the apical third, and makes the handoff into Transform S shaping more controlled.',
       },
       {
         number: '12',

@@ -39,13 +39,18 @@ const starlightHead = shouldNoIndex
 export default defineConfig({
   site,
   base,
+  redirects: {
+    '/products/et-transformx': '/products/transform-s-et',
+    '/products/pt-transformx': '/products/transform-s-pt',
+    '/products/acrobat-glide-path': '/products/micro-path',
+  },
   integrations: [
     starlight({
       title: docsTitle,
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
-          exclude: ['/products/bcs/**', '/products/acrobat-glide-path/**'],
+          exclude: ['/products/micro-path/**', '/products/c-plus/**', '/products/k-files/**'],
         }),
       ],
       head: starlightHead,
@@ -62,11 +67,11 @@ export default defineConfig({
           label: 'Products',
           items: [
             { label: 'Overview', slug: 'products/overview' },
-            { label: 'Rotary Glide Path Files', slug: 'products/rotary-glide-path-files' },
-            { label: 'ET TransformX Files', slug: 'products/et-transformx' },
-            { label: 'PT TransformX Files', slug: 'products/pt-transformx' },
-            { label: 'VortiFlow Irrigation Needle', slug: 'products/vortiflow-irrigation-needle' },
-            { label: 'BCS BioCeramics Family', slug: 'products/bcs' },
+            { label: 'Micro-Path Files', slug: 'products/micro-path' },
+            { label: 'Transform S™ ET Files', slug: 'products/transform-s-et' },
+            { label: 'Transform S™ PT Files', slug: 'products/transform-s-pt' },
+            { label: 'Transform S™ C+ Files', slug: 'products/c-plus' },
+            { label: 'Transform S™ K-Files', slug: 'products/k-files' },
           ],
         },
         {
