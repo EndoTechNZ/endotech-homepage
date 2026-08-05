@@ -26,7 +26,7 @@ export const getTechnologyMenu = (base: string): NavItem[] => [
 
 export const getOrderMenu = (base: string): NavItem[] => [
   { label: 'Request information', href: `${base}about/contact/` },
-  { label: 'Order products', href: `${base}order/` },
+  { label: 'Account ordering', href: `${base}order/` },
 ];
 
 export const getPrimaryNavItems = (base: string): NavItem[] => [
@@ -41,10 +41,7 @@ export const getPrimaryNavItems = (base: string): NavItem[] => [
   { label: 'About', href: `${base}about/company/` },
 ];
 
-export const getProductMobileNavItems = (
-  base: string,
-  accountUrl = 'https://shopify.com/67488153666/account',
-): NavItem[] => [
+export const getProductMobileNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
   { label: 'Product Overview', href: `${base}products/overview/` },
   { label: 'TransformX™ ET', href: `${base}products/et-transformx/` },
@@ -58,17 +55,13 @@ export const getProductMobileNavItems = (
   { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
   { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
   { label: 'Order', href: `${base}order/` },
-  { label: 'Account / Orders', href: accountUrl },
   { label: 'Blog', href: `${base}resources/ideas/` },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
   { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
   { label: 'About', href: `${base}about/company/` },
 ];
 
-export const getHomepageMobileNavItems = (
-  base: string,
-  accountUrl = 'https://shopify.com/67488153666/account',
-): NavItem[] => [
+export const getHomepageMobileNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
   { label: 'Product Overview', href: `${base}products/overview/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
@@ -76,7 +69,6 @@ export const getHomepageMobileNavItems = (
   { label: 'Transform Technology', href: `${base}technology/transform-technology/` },
   { label: 'Avatar Tip', href: `${base}technology/avatar-tip/` },
   { label: 'Order', href: `${base}order/` },
-  { label: 'Account / Orders', href: accountUrl },
   { label: 'Blog', href: `${base}resources/ideas/` },
   { label: 'Acrobat Glide Path', href: `${base}products/acrobat-glide-path/` },
   { label: 'TransformX™ ET', href: `${base}products/et-transformx/` },

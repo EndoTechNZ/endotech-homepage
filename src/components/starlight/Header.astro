@@ -6,7 +6,6 @@ import Search from 'virtual:starlight/components/Search';
 import SocialIcons from 'virtual:starlight/components/SocialIcons';
 import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
 import logoIcon from '../../assets/endotech-logo-2.png';
-import { siteConfig } from '../../config/site';
 import { getOrderMenu, getPrimaryNavItems, getProductMenu, getProductMobileNavItems, getTechnologyMenu } from '../../data/navigation';
 
 const base = import.meta.env.BASE_URL;
@@ -14,7 +13,7 @@ const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
 const technologyMenu = getTechnologyMenu(base);
 const orderMenu = getOrderMenu(base);
-const mobileNavItems = getProductMobileNavItems(base, siteConfig.shopifyAccountUrl);
+const mobileNavItems = getProductMobileNavItems(base);
 
 const shouldRenderSearch =
 	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
@@ -91,7 +90,6 @@ const shouldRenderSearch =
             </div>
           </div>
         </div>
-        <a class="docs-header-action" href={siteConfig.shopifyAccountUrl}>Account / Orders</a>
         <a class="docs-header-action" href={`${base}about/contact/`}>Contact</a>
         <button class="docs-menu-toggle" id="docs-mobile-menu-button" type="button" aria-expanded="false" aria-controls="docs-mobile-menu">
           Menu

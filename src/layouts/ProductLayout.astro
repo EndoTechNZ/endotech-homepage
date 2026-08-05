@@ -18,7 +18,7 @@ const navItems = getPrimaryNavItems(base);
 const productMenu = getProductMenu(base);
 const technologyMenu = getTechnologyMenu(base);
 const orderMenu = getOrderMenu(base);
-const mobileNavItems = getProductMobileNavItems(base, siteConfig.shopifyAccountUrl);
+const mobileNavItems = getProductMobileNavItems(base);
 const footerSections = getFooterSections(base);
 const footerUtilityLinks = getFooterUtilityLinks(base);
 ---
@@ -95,7 +95,6 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
             </div>
           </div>
         </div>
-        <a class="product-header-action account-header-action" href={siteConfig.shopifyAccountUrl}>Account / Orders</a>
         <a class="product-header-action" href={`${base}about/contact/`}>Contact</a>
         <button class="product-menu-toggle" id="product-mobile-menu-button" type="button" aria-expanded="false" aria-controls="product-mobile-menu">
           Menu
