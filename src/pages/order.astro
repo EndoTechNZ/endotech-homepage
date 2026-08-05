@@ -4,6 +4,7 @@ import { siteConfig } from '../config/site';
 
 const base = import.meta.env.BASE_URL;
 const orderEmailHref = `mailto:${siteConfig.email}?subject=EndoTech%20NZ%20account%20order`;
+const orderEmailLabel = siteConfig.email.toLowerCase();
 ---
 
 <ProductLayout
@@ -24,7 +25,18 @@ const orderEmailHref = `mailto:${siteConfig.email}?subject=EndoTech%20NZ%20accou
         purchase order number, products, quantities, and delivery details.
       </p>
       <div class="ordering-hold-actions">
-        <a class="ordering-hold-primary" href={orderEmailHref}>Email an account order</a>
+        <span class="ordering-hold-email-action">
+          <a
+            class="ordering-hold-primary"
+            href={orderEmailHref}
+            aria-describedby="account-order-email-tooltip"
+          >
+            Email an account order
+          </a>
+          <span id="account-order-email-tooltip" class="ordering-hold-email-tooltip" role="tooltip">
+            {orderEmailLabel}
+          </span>
+        </span>
         <a class="ordering-hold-secondary" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
       </div>
       <p class="ordering-hold-note">
@@ -110,6 +122,52 @@ const orderEmailHref = `mailto:${siteConfig.email}?subject=EndoTech%20NZ%20accou
     text-decoration: none;
   }
 
+  .ordering-hold-email-action {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .ordering-hold-email-tooltip {
+    position: absolute;
+    bottom: calc(100% + 0.75rem);
+    left: 50%;
+    z-index: 2;
+    visibility: hidden;
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.55rem;
+    background: #102a43;
+    box-shadow: 0 0.65rem 1.5rem rgba(15, 35, 55, 0.2);
+    color: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 0.35rem);
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease,
+      visibility 150ms ease;
+    white-space: nowrap;
+  }
+
+  .ordering-hold-email-tooltip::after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    border: 0.4rem solid transparent;
+    border-top-color: #102a43;
+    content: '';
+    transform: translateX(-50%);
+  }
+
+  .ordering-hold-email-action:hover .ordering-hold-email-tooltip,
+  .ordering-hold-email-action:focus-within .ordering-hold-email-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
   .ordering-hold-primary {
     background: #166562;
     color: #ffffff;
@@ -129,6 +187,10 @@ const orderEmailHref = `mailto:${siteConfig.email}?subject=EndoTech%20NZ%20accou
   }
 
   @media (max-width: 40rem) {
+    .ordering-hold-email-action {
+      width: 100%;
+    }
+
     .ordering-hold-actions a {
       width: 100%;
     }
