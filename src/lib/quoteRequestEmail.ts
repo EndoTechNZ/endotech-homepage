@@ -57,4 +57,3 @@ export const buildQuoteRequestEmailDraft = ({
 
   return new Blob([message], { type: 'message/rfc822;charset=utf-8' });
 };
-
