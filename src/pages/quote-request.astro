@@ -70,7 +70,7 @@ const contactEmail = siteConfig.email.toLowerCase();
         <p class="quote-eyebrow">Account pro forma request</p>
         <h1 id="quote-builder-title">Request a pro forma invoice from EndoTech NZ.</h1>
         <p class="quote-hero-lede">
-          Select confirmed New Zealand products and quantities, add the practice details, then email the request to EndoTech NZ. We will prepare the priced pro forma invoice in our invoicing system.
+          Select confirmed New Zealand products and quantities, add the practice details, then send the PDF request directly to EndoTech NZ. We will prepare the priced pro forma invoice in our invoicing system.
         </p>
         <div class="quote-hero-actions">
           <a href="#select-products">Start selecting products</a>
@@ -312,18 +312,17 @@ const contactEmail = siteConfig.email.toLowerCase();
       <div class="quote-export-card">
         <div>
           <p class="quote-eyebrow">Ready to send</p>
-          <h3>Create an email with the request PDF attached.</h3>
-          <p id="email-attachment-help">On supported phones and computers, the sharing window opens with the PDF attached. Otherwise, the site downloads a ready-to-open email draft containing the PDF, the recipient and an editable message. If a browser-only email service cannot open the draft, download the PDF and use the email address shown below.</p>
+          <h3>Send the PDF request directly to EndoTech NZ.</h3>
+          <p id="email-attachment-help">The main button securely emails the generated PDF and customer comments straight to EndoTech NZ. It does not open an email program. Download options remain available as a backup.</p>
           <p><strong>Email recipient:</strong> <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
         </div>
         <div class="quote-export-actions">
-          <button type="button" class="quote-primary-action" data-prepare-email aria-describedby="email-attachment-help">Email PDF request to EndoTech NZ</button>
+          <button type="button" class="quote-primary-action" data-prepare-email aria-describedby="email-attachment-help">Send PDF request directly to EndoTech NZ</button>
           <button type="button" data-download-email-draft aria-describedby="email-attachment-help">Download attached email draft</button>
           <button type="button" class="quote-primary-action" data-download-pdf>Download pro forma request PDF</button>
           <button type="button" data-download-sku-list>Download SKU entry list</button>
           <button type="button" data-copy-sku-list>Copy SKU + quantity</button>
           <button type="button" data-print-request>Print / save as PDF</button>
-          <button type="button" class="quote-primary-action" data-submit-request hidden>Send pro forma request</button>
         </div>
       </div>
       <p class="quote-status" data-quote-status data-tone="neutral" aria-live="polite"></p>

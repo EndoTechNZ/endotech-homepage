@@ -27,12 +27,18 @@ export interface QuoteRequestLine {
   quantity: number;
 }
 
+export interface QuoteRequestAttachment {
+  filename: string;
+  contentBase64: string;
+}
+
 export interface QuoteRequestPayload {
   schemaVersion: string;
   draftReference: string;
   submittedAt: string;
   customer: QuoteCustomerDetails;
   lines: QuoteRequestLine[];
+  attachment: QuoteRequestAttachment;
   source: {
     site: 'endotechnz.com';
     path: string;
@@ -138,6 +144,7 @@ export const createQuoteRequestPayload = ({
   customer,
   lines,
   formStartedAt,
+  attachment,
   website = '',
   path = '/quote-request/',
 }: {
@@ -145,6 +152,7 @@ export const createQuoteRequestPayload = ({
   customer: QuoteCustomerDetails;
   lines: QuoteRequestLine[];
   formStartedAt: string;
+  attachment: QuoteRequestAttachment;
   website?: string;
   path?: string;
 }): QuoteRequestPayload => ({
@@ -162,6 +170,10 @@ export const createQuoteRequestPayload = ({
     notes: clean(customer.notes),
   },
   lines: lines.map((line) => ({ sku: clean(line.sku).toUpperCase(), quantity: normaliseQuoteQuantity(line.quantity) })),
+  attachment: {
+    filename: clean(attachment.filename),
+    contentBase64: clean(attachment.contentBase64),
+  },
   source: {
     site: 'endotechnz.com',
     path,

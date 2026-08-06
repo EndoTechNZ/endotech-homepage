@@ -21,6 +21,8 @@ jobs:
     env:
       DEPLOY_TARGET: github-pages
       PUBLIC_SITE_URL: https://endotechnz.com
+      PUBLIC_QUOTE_REQUEST_SUBMISSION_ENABLED: "true"
+      PUBLIC_QUOTE_REQUEST_ENDPOINT: https://endotechsg.com/.netlify/functions/nz-quote-request
       SHOPIFY_STORE_DOMAIN: ${{ vars.SHOPIFY_STORE_DOMAIN }}
       SHOPIFY_STOREFRONT_API_VERSION: ${{ vars.SHOPIFY_STOREFRONT_API_VERSION }}
       SHOPIFY_STOREFRONT_PUBLIC_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PUBLIC_TOKEN }}

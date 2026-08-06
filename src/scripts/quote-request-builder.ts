@@ -10,8 +10,7 @@ import {
 import { buildQuoteRequestPdf, downloadQuoteRequestPdf } from '../lib/quoteRequestPdf';
 import {
   buildQuoteRequestEmailDraft,
-  canNativeSharePdf,
-  quoteRequestPdfFile,
+  quoteRequestPdfBase64,
 } from '../lib/quoteRequestEmail';
 import { submitQuoteRequest } from '../lib/quoteRequestSubmission';
 
@@ -64,9 +63,9 @@ if (root) {
   const printButton = root.querySelector<HTMLButtonElement>('[data-print-request]');
   const emailButton = root.querySelector<HTMLButtonElement>('[data-prepare-email]');
   const emailDraftButton = root.querySelector<HTMLButtonElement>('[data-download-email-draft]');
-  const submitButton = root.querySelector<HTMLButtonElement>('[data-submit-request]');
   const printSheet = document.querySelector<HTMLElement>('[data-quote-print-sheet]');
   const draftReferenceNodes = document.querySelectorAll<HTMLElement>('[data-draft-reference]');
+  const submissionEnabled = root.dataset.submissionEnabled === 'true' && Boolean(root.dataset.submissionEndpoint);
 
   draftReferenceNodes.forEach((node) => { node.textContent = draftReference; });
 
@@ -495,7 +494,6 @@ if (root) {
       endotechLogoUrl: root.dataset.endotechLogo || '',
       contactEmail: email,
     });
-    const pdfFile = quoteRequestPdfFile(pdfBytes, pdfFilename);
     const emailDraft = buildQuoteRequestEmailDraft({
       to: email,
       subject,
@@ -504,7 +502,7 @@ if (root) {
       pdfBytes,
       draftReference,
     });
-    return { email, subject, body, pdfFile, emailDraft };
+    return { draft, email, pdfFilename, pdfBytes, emailDraft };
   };
 
   const downloadAttachedEmail = (emailDraft: Blob, email: string) => {
@@ -512,36 +510,50 @@ if (root) {
     setStatus(`Attached email draft downloaded. Open the .eml file to compose it: ${email} and the request PDF are already included.`, 'success');
   };
 
-  emailButton?.addEventListener('click', () => withBusyButton(emailButton, async () => {
-    emailButton.textContent = 'Building attached email…';
-    setStatus('Building the PDF and attached email draft…');
+  emailButton?.addEventListener('click', async () => {
+    if (emailButton.disabled) return;
+    const originalLabel = emailButton.textContent;
+    emailButton.disabled = true;
+    emailButton.dataset.busy = 'true';
+    emailButton.textContent = 'Sending PDF request…';
+    setStatus('Building the PDF and sending it directly to steveshepherdnz@gmail.com…');
     try {
       const emailPackage = await buildAttachedEmail();
-      if (!emailPackage) return;
-      const { email, subject, body, pdfFile, emailDraft } = emailPackage;
-
-      if (canNativeSharePdf(pdfFile)) {
-        try {
-          await navigator.share({
-            files: [pdfFile],
-            title: subject,
-            text: `Send to ${email}\n\n${body}`,
-          });
-          setStatus(`The PDF was passed to your sharing window. Choose your email app and confirm the recipient is ${email}.`, 'success');
-          return;
-        } catch (error) {
-          if (error instanceof DOMException && error.name === 'AbortError') {
-            setStatus('Email sharing was cancelled. Nothing was sent. You can use “Download attached email draft” instead.');
-            return;
-          }
-          // If native sharing fails, fall through to the attached email draft.
-        }
+      if (!emailPackage) {
+        emailButton.disabled = false;
+        emailButton.textContent = originalLabel;
+        return;
       }
-      downloadAttachedEmail(emailDraft, email);
+      const formData = new FormData(customerForm || undefined);
+      const payload = createQuoteRequestPayload({
+        draftReference,
+        customer: emailPackage.draft.customer,
+        lines: emailPackage.draft.lines.map(({ item, quantity }): QuoteRequestLine => ({ sku: item.sku, quantity })),
+        formStartedAt,
+        website: String(formData.get('website') || ''),
+        path: window.location.pathname,
+        attachment: {
+          filename: emailPackage.pdfFilename,
+          contentBase64: quoteRequestPdfBase64(emailPackage.pdfBytes),
+        },
+      });
+      const result = await submitQuoteRequest(payload, {
+        enabled: submissionEnabled,
+        endpoint: root.dataset.submissionEndpoint || '',
+        approvedCatalog: catalog,
+        pageOrigin: window.location.origin,
+      });
+      emailButton.dataset.completed = 'true';
+      emailButton.textContent = 'PDF request sent';
+      setStatus(`Sent directly to steveshepherdnz@gmail.com with the PDF attached. Your reference is ${result.quoteReference}.`, 'success');
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'The attached email draft could not be created.', 'error');
+      emailButton.disabled = false;
+      emailButton.textContent = originalLabel;
+      setStatus(error instanceof Error ? error.message : 'The PDF request could not be sent.', 'error');
+    } finally {
+      delete emailButton.dataset.busy;
     }
-  }));
+  });
 
   emailDraftButton?.addEventListener('click', () => withBusyButton(emailDraftButton, async () => {
     emailDraftButton.textContent = 'Building email draft…';
@@ -552,35 +564,6 @@ if (root) {
       downloadAttachedEmail(emailPackage.emailDraft, emailPackage.email);
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'The attached email draft could not be created.', 'error');
-    }
-  }));
-
-  const submissionEnabled = root.dataset.submissionEnabled === 'true' && Boolean(root.dataset.submissionEndpoint);
-  if (submitButton) submitButton.hidden = !submissionEnabled;
-  submitButton?.addEventListener('click', () => withBusyButton(submitButton, async () => {
-    const draft = validateDraft();
-    if (!draft) return;
-    submitButton.textContent = 'Sending request…';
-    const formData = new FormData(customerForm || undefined);
-    const payload = createQuoteRequestPayload({
-      draftReference,
-      customer: draft.customer,
-      lines: draft.lines.map(({ item, quantity }): QuoteRequestLine => ({ sku: item.sku, quantity })),
-      formStartedAt,
-      website: String(formData.get('website') || ''),
-      path: window.location.pathname,
-    });
-    try {
-      const result = await submitQuoteRequest(payload, {
-        enabled: submissionEnabled,
-        endpoint: root.dataset.submissionEndpoint || '',
-        approvedCatalog: catalog,
-        pageOrigin: window.location.origin,
-      });
-      setStatus(`Pro forma request received. Your EndoTech NZ reference is ${result.quoteReference}.`, 'success');
-      submitButton.disabled = true;
-    } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'The request could not be sent.', 'error');
     }
   }));
 

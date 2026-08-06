@@ -7,7 +7,7 @@ export interface QuoteRequestEmailDraftOptions {
   draftReference: string;
 }
 
-const bytesToBase64 = (bytes: Uint8Array): string => {
+export const quoteRequestPdfBase64 = (bytes: Uint8Array): string => {
   const chunkSize = 0x8000;
   let binary = '';
   for (let offset = 0; offset < bytes.length; offset += chunkSize) {
@@ -29,8 +29,8 @@ export const buildQuoteRequestEmailDraft = ({
   draftReference,
 }: QuoteRequestEmailDraftOptions): Blob => {
   const boundary = `=_EndoTechNZ_${draftReference.replace(/[^A-Za-z0-9]/g, '_')}`;
-  const bodyBase64 = wrapBase64(bytesToBase64(new TextEncoder().encode(body)));
-  const pdfBase64 = wrapBase64(bytesToBase64(pdfBytes));
+  const bodyBase64 = wrapBase64(quoteRequestPdfBase64(new TextEncoder().encode(body)));
+  const pdfBase64 = wrapBase64(quoteRequestPdfBase64(pdfBytes));
   const safeFilename = sanitiseHeader(pdfFilename).replaceAll('"', '');
 
   const message = [
@@ -58,17 +58,3 @@ export const buildQuoteRequestEmailDraft = ({
   return new Blob([message], { type: 'message/rfc822;charset=utf-8' });
 };
 
-export const quoteRequestPdfFile = (pdfBytes: Uint8Array, filename: string): File => {
-  const pdfCopy = new Uint8Array(pdfBytes.byteLength);
-  pdfCopy.set(pdfBytes);
-  return new File([pdfCopy.buffer], filename, { type: 'application/pdf', lastModified: Date.now() });
-};
-
-export const canNativeSharePdf = (file: File): boolean => {
-  if (typeof navigator.share !== 'function' || typeof navigator.canShare !== 'function') return false;
-  try {
-    return navigator.canShare({ files: [file] });
-  } catch {
-    return false;
-  }
-};
