@@ -5,7 +5,7 @@ import transformSWordmark from '../../assets/transform-s-wordmark.png';
 import avatarTipComparison from '../../assets/avatar-tip-comparison.png';
 import etFirewireMachine from '../../assets/et-firewire-machine.png';
 import { siteConfig } from '../../config/site';
-import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
+import { nzLaunchCatalog } from '../../data/nzLaunchCatalog';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const base = import.meta.env.BASE_URL;
@@ -13,7 +13,7 @@ const etOrderHref = `${base}order/#et-order`;
 const workflowHref = `${base}technique/workflow/`;
 const downloadsHref = `${base}resources/downloads/`;
 const etPartNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-ET-Part-Numbers.pdf`;
-const etProducts = nzCustomerSelectableCatalog.filter((item) => item.family === 'et');
+const etProducts = nzLaunchCatalog.filter((item) => item.family === 'et');
 
 const etSchema = {
   '@context': 'https://schema.org',
@@ -87,7 +87,7 @@ const comparisonRows = [
   },
   {
     feature: 'Next step',
-    et: 'Approved article-number catalogue',
+    et: 'Complete part-number list',
     standard: 'Compare to your current protocol',
   },
 ];
@@ -205,12 +205,12 @@ const comparisonRows = [
 
     <section class="et-comparison-section" aria-labelledby="et-catalogue-title">
       <div class="et-comparison-heading">
-        <h2 id="et-catalogue-title">Approved ET launch catalogue</h2>
-        <p>Only confirmed rows from the 5 August 2026 Transform S workbook are shown for account ordering.</p>
+        <img class="et-catalogue-wordmark" src={transformSWordmark.src} width="742" height="116" alt="Transform S™" />
+        <h2 id="et-catalogue-title">ET — Complete Part Number List</h2>
       </div>
       <div class="et-table-shell">
         <table class="et-comparison-table">
-          <thead><tr><th>Size</th><th>Length</th><th>Pack</th><th>Article number</th></tr></thead>
+          <thead><tr><th>Size</th><th>Length</th><th>Pack</th><th>Part number</th></tr></thead>
           <tbody>
             {etProducts.map((product) => (
               <tr><td>{product.size}</td><td>{product.lengthMm === null ? '—' : `${product.lengthMm} mm`}</td><td>{product.packQty}</td><td><code>{product.sku}</code></td></tr>
@@ -820,6 +820,13 @@ const comparisonRows = [
     max-width: 760px;
     margin: 0 auto 36px;
     text-align: center;
+  }
+
+  .et-catalogue-wordmark {
+    display: block;
+    width: min(100%, 420px);
+    height: auto;
+    margin: 0 auto 26px;
   }
 
   .et-comparison-heading p,
