@@ -10,7 +10,7 @@ const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'micro-path', 'c-plus', 'k-fi
 const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string }> = {
   et: {
     eyebrow: 'Rotary shaping',
-    description: 'Constant-taper shaping files in the confirmed New Zealand ET range.',
+    description: 'Constant-taper shaping files in the complete New Zealand ET range.',
   },
   pt: {
     eyebrow: 'Progressive taper',
@@ -18,11 +18,11 @@ const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string 
   },
   'micro-path': {
     eyebrow: 'Glide path',
-    description: 'Confirmed Micro-Path standard and MB2 glide-path packs.',
+    description: 'Micro-Path standard, MB2 and extended glide-path packs.',
   },
   'c-plus': {
     eyebrow: 'Calcified canals',
-    description: 'Ultra-stiff C+ hand files in confirmed sizes and lengths.',
+    description: 'Ultra-stiff C+ hand files across the listed sizes and lengths.',
   },
   'k-files': {
     eyebrow: 'Hand files',
@@ -51,7 +51,7 @@ const contactEmail = siteConfig.email.toLowerCase();
 
 <ProductLayout
   title="Request a Pro Forma Invoice | EndoTech NZ"
-  description="Prepare an unpriced EndoTech NZ pro forma invoice request using confirmed Transform S, Micro-Path, C+ and K-File product codes."
+  description="Prepare an unpriced EndoTech NZ pro forma invoice request using the complete listed Transform S, Micro-Path, C+ and K-File product range."
   image={transformLogo.src}
   accent="slate"
 >
@@ -70,7 +70,7 @@ const contactEmail = siteConfig.email.toLowerCase();
         <p class="quote-eyebrow">Account pro forma request</p>
         <h1 id="quote-builder-title">Request a pro forma invoice from EndoTech NZ.</h1>
         <p class="quote-hero-lede">
-          Select confirmed New Zealand products and quantities, add the practice details, then send the PDF request directly to EndoTech NZ. We will prepare the priced pro forma invoice in our invoicing system.
+          Select New Zealand products and quantities, add the practice details, then send the PDF request directly to EndoTech NZ. We will prepare the priced pro forma invoice in our invoicing system.
         </p>
         <div class="quote-hero-actions">
           <a href="#select-products">Start selecting products</a>
@@ -79,7 +79,7 @@ const contactEmail = siteConfig.email.toLowerCase();
       </div>
       <div class="quote-hero-brand" aria-label="Transform S root canal shaping system">
         <img src={transformLogo.src} width="742" height="116" alt="Transform S root canal shaping system" />
-        <p>Five launch families · {nzCustomerSelectableCatalog.length} confirmed SKUs · no prices shown</p>
+        <p>Five launch families · {nzCustomerSelectableCatalog.length} listed SKUs · no prices shown</p>
       </div>
     </section>
 
@@ -92,7 +92,7 @@ const contactEmail = siteConfig.email.toLowerCase();
     </section>
 
     <ol class="quote-steps" aria-label="Pro forma invoice request steps">
-      <li><span>1</span><strong>Select products</strong><small>Only approved launch SKUs</small></li>
+      <li><span>1</span><strong>Select products</strong><small>Complete NZ launch list</small></li>
       <li><span>2</span><strong>Add practice details</strong><small>Nothing personal is stored</small></li>
       <li><span>3</span><strong>Review and send</strong><small>PDF, SKU list or prepared email</small></li>
     </ol>
@@ -101,7 +101,7 @@ const contactEmail = siteConfig.email.toLowerCase();
       <div class="quote-section-heading">
         <div>
           <p class="quote-eyebrow">Step 1</p>
-          <h2 id="select-products-title">Select confirmed New Zealand products</h2>
+          <h2 id="select-products-title">Select New Zealand products</h2>
           <p>Quantities are packs. Product selections are saved on this device; customer and practice details are not.</p>
         </div>
         <label class="quote-search">
@@ -189,7 +189,7 @@ const contactEmail = siteConfig.email.toLowerCase();
                   </tbody>
                 </table>
               </div>
-              <p class="quote-no-results" data-no-results hidden>No confirmed products in this family match that search.</p>
+              <p class="quote-no-results" data-no-results hidden>No products in this family match that search.</p>
             </section>
           ))}
         </div>
@@ -203,7 +203,7 @@ const contactEmail = siteConfig.email.toLowerCase();
             <button type="button" data-clear-selections>Clear</button>
           </div>
           <div class="quote-selection-empty" data-selection-empty>
-            Enter a pack quantity beside any approved product to add it here.
+            Enter a pack quantity beside any listed product to add it here.
           </div>
           <div class="quote-selection-summary" data-selection-summary hidden></div>
           <footer>

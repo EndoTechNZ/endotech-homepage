@@ -102,9 +102,7 @@ export const validateQuoteLines = (
 ): QuoteValidationResult => {
   const errors: string[] = [];
   const allowed = new Map(
-    approvedCatalog
-      .filter((item) => !item.requiresConfirmation)
-      .map((item) => [item.sku.toUpperCase(), item]),
+    approvedCatalog.map((item) => [item.sku.toUpperCase(), item]),
   );
   const seen = new Set<string>();
   const validated: ValidatedQuoteLine[] = [];

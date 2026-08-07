@@ -25,7 +25,7 @@ if (root) {
     }
   };
 
-  const catalog = decodeCatalog().filter((item) => !item.requiresConfirmation);
+  const catalog = decodeCatalog();
   const catalogBySku = new Map(catalog.map((item) => [item.sku, item]));
   const selectionStorageKey = 'endotechnz_quote_request_selections_v1';
   const formStartedAt = new Date().toISOString();

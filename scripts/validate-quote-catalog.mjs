@@ -2,6 +2,8 @@ import { readFile } from 'node:fs/promises';
 
 const sourceUrl = new URL('../src/data/nzLaunchCatalog.ts', import.meta.url);
 const source = await readFile(sourceUrl, 'utf8');
+const builderSource = await readFile(new URL('../src/scripts/quote-request-builder.ts', import.meta.url), 'utf8');
+const validationSource = await readFile(new URL('../src/lib/quoteRequest.ts', import.meta.url), 'utf8');
 const objectRows = [...source.matchAll(/^\s{2}(\{ family: .* \}),?\r?$/gm)].map((match) => match[1]);
 
 if (!objectRows.length) {
@@ -18,12 +20,12 @@ const rows = objectRows.map((row, index) => {
 });
 
 const expectedAll = 159;
-const expectedSelectable = 121;
+const expectedSelectable = 159;
 const expectedSelectableFamilies = new Map([
-  ['et', 36],
-  ['pt', 20],
-  ['micro-path', 4],
-  ['c-plus', 8],
+  ['et', 50],
+  ['pt', 25],
+  ['micro-path', 16],
+  ['c-plus', 15],
   ['k-files', 53],
 ]);
 const expectedPrefixes = new Map([
@@ -36,10 +38,47 @@ const expectedPrefixes = new Map([
 
 const failures = [];
 if (rows.length !== expectedAll) failures.push(`Expected ${expectedAll} total catalogue rows; found ${rows.length}.`);
+if (!source.includes('export const nzCustomerSelectableCatalog = nzLaunchCatalog;')) {
+  failures.push('The customer-selectable catalogue does not expose the complete workbook-backed NZ catalogue.');
+}
+if (/decodeCatalog\(\)\.filter\([^\n]*requiresConfirmation/.test(builderSource)) {
+  failures.push('The browser quote builder still filters rows by internal confirmation notes.');
+}
+if (/approvedCatalog[\s\S]{0,120}\.filter\([^\n]*requiresConfirmation/.test(validationSource)) {
+  failures.push('Quote-line validation still filters rows by internal confirmation notes.');
+}
 
-const selectable = rows.filter((row) => row.requiresConfirmation === false);
-if (selectable.length !== expectedSelectable) failures.push(`Expected ${expectedSelectable} confirmed rows; found ${selectable.length}.`);
-if (rows.length - selectable.length !== 38) failures.push(`Expected 38 withheld rows; found ${rows.length - selectable.length}.`);
+const selectable = rows;
+if (selectable.length !== expectedSelectable) failures.push(`Expected ${expectedSelectable} customer-selectable rows; found ${selectable.length}.`);
+const internallyFlagged = rows.filter((row) => row.requiresConfirmation === true);
+if (internallyFlagged.length !== 38) failures.push(`Expected 38 internally flagged rows; found ${internallyFlagged.length}.`);
+
+const requiredEtSizes = new Map([
+  ['15/.04', [21, 25, 29]],
+  ['17/.04', [21, 25, 29]],
+  ['17/.06', [21, 25, 29]],
+]);
+for (const [size, lengths] of requiredEtSizes) {
+  for (const lengthMm of lengths) {
+    const match = selectable.find((row) => row.family === 'et' && row.size === size && row.lengthMm === lengthMm);
+    if (!match) failures.push(`Missing customer-selectable ET ${size}, ${lengthMm} mm row.`);
+  }
+}
+
+const requiredMicroPathSizes = new Map([
+  ['13/.03', [21, 25, 29]],
+  ['15/.03', [21, 25, 29]],
+  ['17/.03', [21, 25, 29]],
+  ['20/.03', [21, 25, 29]],
+  ['25/.03', [21, 25, 29]],
+  ['15/.05', [17]],
+]);
+for (const [size, lengths] of requiredMicroPathSizes) {
+  for (const lengthMm of lengths) {
+    const match = selectable.find((row) => row.family === 'micro-path' && row.size === size && row.lengthMm === lengthMm);
+    if (!match) failures.push(`Missing customer-selectable Micro-Path ${size}, ${lengthMm} mm row.`);
+  }
+}
 
 const seen = new Set();
 for (const row of rows) {
@@ -62,4 +101,4 @@ if (failures.length) {
   throw new Error(`Quotation catalogue validation failed:\n- ${failures.join('\n- ')}`);
 }
 
-console.log(`Quotation catalogue valid: ${rows.length} total rows, ${selectable.length} customer-selectable rows, 38 withheld.`);
+console.log(`Quotation catalogue valid: ${rows.length} workbook rows and ${selectable.length} customer-selectable rows; ${internallyFlagged.length} retain internal source notes.`);

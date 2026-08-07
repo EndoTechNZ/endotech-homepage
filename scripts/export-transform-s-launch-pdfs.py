@@ -61,36 +61,36 @@ FAMILIES = [
     {
         "sheet": "Transform S ET",
         "title": "Transform S\u2122 ET",
-        "subtitle": "Confirmed New Zealand article numbers",
-        "summary": "ET rotary shaping files in confirmed individual and assorted pack configurations.",
+        "subtitle": "Complete New Zealand article-number list",
+        "summary": "ET rotary shaping files in individual, orifice-opener and assorted pack configurations.",
         "filename": "EndoTech-NZ-Transform-S-ET-Part-Numbers.pdf",
     },
     {
         "sheet": "Transform S PT",
         "title": "Transform S\u2122 PT",
-        "subtitle": "Confirmed New Zealand article numbers",
-        "summary": "Progressive taper shaping files and confirmed assorted pack configurations.",
+        "subtitle": "Complete New Zealand article-number list",
+        "summary": "Progressive taper shaping files and assorted pack configurations.",
         "filename": "EndoTech-NZ-Transform-S-PT-Part-Numbers.pdf",
     },
     {
         "sheet": "Transform S MicroPath",
         "title": "Transform S\u2122 Micro-Path",
-        "subtitle": "Confirmed New Zealand article numbers",
-        "summary": "Rotary glide path files, including the confirmed MB2 short glide path configuration.",
+        "subtitle": "Complete New Zealand article-number list",
+        "summary": "Rotary glide path files, including standard, MB2 short and extended configurations.",
         "filename": "EndoTech-NZ-Transform-S-Micro-Path-Part-Numbers.pdf",
     },
     {
         "sheet": "C Plus",
         "title": "Transform S\u2122 C+ Files",
-        "subtitle": "Confirmed New Zealand article numbers",
-        "summary": "Confirmed ultra-stiff stainless-steel hand file configurations for calcified-canal negotiation.",
+        "subtitle": "Complete New Zealand article-number list",
+        "summary": "Ultra-stiff stainless-steel hand file configurations for calcified-canal negotiation.",
         "filename": "EndoTech-NZ-Transform-S-C-Plus-Part-Numbers.pdf",
     },
     {
         "sheet": "K Files",
         "title": "Transform S\u2122 K-Files",
-        "subtitle": "Confirmed New Zealand article numbers",
-        "summary": "Confirmed stainless-steel K-File individual and assorted pack configurations.",
+        "subtitle": "Complete New Zealand article-number list",
+        "summary": "Stainless-steel K-File individual and assorted pack configurations.",
         "filename": "EndoTech-NZ-Transform-S-K-Files-Part-Numbers.pdf",
     },
 ]
@@ -122,17 +122,16 @@ def row_requires_confirmation(sheet: str, values: list[object]) -> tuple[bool, s
 
 def load_family_rows(workbook, sheet_name: str) -> tuple[list[dict[str, object]], int]:
     sheet = workbook[sheet_name]
-    confirmed: list[dict[str, object]] = []
-    held = 0
+    listed: list[dict[str, object]] = []
+    internally_flagged = 0
 
     for row in sheet.iter_rows(min_row=2, max_col=29, values_only=True):
         if not clean(row[4]):
             continue
         requires_confirmation, _ = row_requires_confirmation(sheet_name, list(row))
         if requires_confirmation:
-            held += 1
-            continue
-        confirmed.append(
+            internally_flagged += 1
+        listed.append(
             {
                 "sku": clean(row[4]),
                 "file_type": clean(row[7]),
@@ -141,7 +140,7 @@ def load_family_rows(workbook, sheet_name: str) -> tuple[list[dict[str, object]]
                 "pack": clean(row[10]),
             }
         )
-    return confirmed, held
+    return listed, internally_flagged
 
 
 def make_styles():
@@ -258,10 +257,10 @@ def page_chrome(canvas, doc) -> None:
     canvas.restoreState()
 
 
-def summary_card(config, count: int, held: int, styles) -> Table:
+def summary_card(config, count: int, styles) -> Table:
     availability = (
-        f"<b>{count}</b> confirmed article number{'s' if count != 1 else ''} are shown for account-order requests. "
-        f"<b>{held}</b> workbook row{'s are' if held != 1 else ' is'} held from customer selection pending confirmation."
+        f"<b>{count}</b> New Zealand article number{'s' if count != 1 else ''} are listed for account-order requests. "
+        "Use the exact article number and pack quantity when preparing a request."
     )
     rows = [
         [Paragraph("CATALOGUE STATUS", styles["table_header"]), ""],
@@ -329,7 +328,7 @@ def catalogue_table(rows: list[dict[str, object]], styles) -> Table:
     return table
 
 
-def build_pdf(config, rows, held, styles) -> Path:
+def build_pdf(config, rows, styles) -> Path:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
     output_path = OUTPUT_DIR / config["filename"]
@@ -342,7 +341,7 @@ def build_pdf(config, rows, held, styles) -> Path:
         bottomMargin=20 * mm,
         title=f"{config['title']} part numbers",
         author="EndoTech NZ",
-        subject="Confirmed New Zealand Transform S launch catalogue",
+        subject="Complete New Zealand Transform S launch catalogue",
     )
 
     story = [
@@ -352,9 +351,9 @@ def build_pdf(config, rows, held, styles) -> Path:
         Paragraph("NEW ZEALAND LAUNCH CATALOGUE | 5 AUGUST 2026", styles["kicker"]),
         Paragraph(config["title"], styles["title"]),
         Paragraph(config["subtitle"], styles["subtitle"]),
-        summary_card(config, len(rows), held, styles),
+        summary_card(config, len(rows), styles),
         Spacer(1, 7 * mm),
-        Paragraph("Confirmed article numbers", styles["section"]),
+        Paragraph("Complete article-number list", styles["section"]),
         catalogue_table(rows, styles),
         Spacer(1, 5 * mm),
         KeepTogether(
@@ -391,17 +390,17 @@ def main() -> None:
     total_rows = 0
     total_held = 0
     for config in FAMILIES:
-        rows, held = load_family_rows(workbook, config["sheet"])
+        rows, internally_flagged = load_family_rows(workbook, config["sheet"])
         total_rows += len(rows)
-        total_held += held
-        output_path = build_pdf(config, rows, held, styles)
-        print(f"{output_path.name}: confirmed={len(rows)} held={held}")
+        total_held += internally_flagged
+        output_path = build_pdf(config, rows, styles)
+        print(f"{output_path.name}: listed={len(rows)} internal_notes={internally_flagged}")
 
-    if total_rows != 121 or total_held != 38:
+    if total_rows != 159 or total_held != 38:
         raise RuntimeError(
-            f"Workbook reconciliation failed: expected 121 confirmed and 38 held; got {total_rows} confirmed and {total_held} held."
+            f"Workbook reconciliation failed: expected 159 listed rows and 38 internal-note rows; got {total_rows} listed and {total_held} internal-note rows."
         )
-    print(f"TOTAL: confirmed={total_rows} held={total_held}")
+    print(f"TOTAL: listed={total_rows} internal_notes={total_held}")
 
 
 if __name__ == "__main__":

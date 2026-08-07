@@ -176,4 +176,7 @@ export const nzLaunchCatalog: NzLaunchCatalogItem[] = [
   { family: "c-plus", system: "Transform S C Plus", publicMeaning: "Ultra-stiff calcified-canal hand files", sku: "TSCP-ASST0815-25-6PK", fileType: "Assorted C+ hand file pack", size: "08-15 assorted", lengthMm: 25, packQty: 6, requiresConfirmation: true, confirmationNote: "Source reference SKU and final assorted-pack composition are marked TO CONFIRM." },
 ];
 
-export const nzCustomerSelectableCatalog = nzLaunchCatalog.filter((item) => !item.requiresConfirmation);
+// Every row in the workbook-backed New Zealand launch catalogue is available
+// to place on a quote request. `requiresConfirmation` records internal source
+// notes only; it must not remove a published NZ article number from the site.
+export const nzCustomerSelectableCatalog = nzLaunchCatalog;
