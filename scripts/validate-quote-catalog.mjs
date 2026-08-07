@@ -76,7 +76,7 @@ const requiredMicroPathSizes = new Map([
 for (const [size, lengths] of requiredMicroPathSizes) {
   for (const lengthMm of lengths) {
     const match = selectable.find((row) => row.family === 'micro-path' && row.size === size && row.lengthMm === lengthMm);
-    if (!match) failures.push(`Missing customer-selectable Micro-Path ${size}, ${lengthMm} mm row.`);
+    if (!match) failures.push(`Missing customer-selectable Micro-Path™ ${size}, ${lengthMm} mm row.`);
   }
 }
 

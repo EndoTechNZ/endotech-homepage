@@ -6,7 +6,7 @@ export const QUOTE_REQUEST_MAX_QUANTITY = 999;
 export const quoteFamilyLabels: Record<NzLaunchFamily, string> = {
   et: 'Transform S™ ET',
   pt: 'Transform S™ PT',
-  'micro-path': 'Micro-Path',
+  'micro-path': 'Micro-Path™',
   'c-plus': 'Transform S™ C+ Files',
   'k-files': 'Transform S™ K-Files',
 };

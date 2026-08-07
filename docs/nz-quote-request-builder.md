@@ -22,7 +22,7 @@ The Singapore `/order/` workflow was inspected as a functional reference. Its us
 
 The New Zealand implementation deliberately changes the model:
 
-- Transform S™ and Micro-Path branding replaces Transform X and Acrobat;
+- Transform S™ and Micro-Path™ branding replaces Transform X and Acrobat;
 - only the five initial NZ families are present;
 - only confirmed rows from `src/data/nzLaunchCatalog.ts` are selectable;
 - the document is an **unpriced quotation request**, not a pro forma invoice or order;
@@ -39,7 +39,7 @@ The source catalogue has 159 rows. The builder imports `nzCustomerSelectableCata
 | --- | ---: |
 | Transform S™ ET | 36 |
 | Transform S™ PT | 20 |
-| Micro-Path | 4 |
+| Micro-Path™ | 4 |
 | Transform S™ C+ Files | 8 |
 | Transform S™ K-Files | 53 |
 

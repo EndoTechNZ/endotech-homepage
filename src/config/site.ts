@@ -1,5 +1,5 @@
 const defaultDescription =
-  'EndoTech NZ offers Transform S™ rotary endodontic files, Micro-Path instruments, and bioceramic materials for clinically controlled shaping and sealing workflows.';
+  'EndoTech NZ offers Transform S™ rotary endodontic files, Micro-Path™ instruments, and bioceramic materials for clinically controlled shaping and sealing workflows.';
 
 export const siteConfig = {
   name: import.meta.env.PUBLIC_SITE_NAME ?? 'EndoTech NZ',

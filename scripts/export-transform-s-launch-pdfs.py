@@ -74,7 +74,7 @@ FAMILIES = [
     },
     {
         "sheet": "Transform S MicroPath",
-        "title": "Transform S\u2122 Micro-Path",
+        "title": "Transform S\u2122 Micro-Path\u2122",
         "subtitle": "Complete New Zealand article-number list",
         "summary": "Rotary glide path files, including standard, MB2 short and extended configurations.",
         "filename": "EndoTech-NZ-Transform-S-Micro-Path-Part-Numbers.pdf",

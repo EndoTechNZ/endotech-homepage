@@ -67,7 +67,7 @@ export default defineConfig({
           label: 'Products',
           items: [
             { label: 'Overview', slug: 'products/overview' },
-            { label: 'Micro-Path Files', slug: 'products/micro-path' },
+            { label: 'Micro-Path™ Files', slug: 'products/micro-path' },
             { label: 'Transform S™ ET Files', slug: 'products/transform-s-et' },
             { label: 'Transform S™ PT Files', slug: 'products/transform-s-pt' },
             { label: 'Transform S™ C+ Files', slug: 'products/c-plus' },
