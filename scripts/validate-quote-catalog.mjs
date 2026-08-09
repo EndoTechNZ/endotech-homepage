@@ -38,8 +38,8 @@ const expectedPrefixes = new Map([
 
 const failures = [];
 if (rows.length !== expectedAll) failures.push(`Expected ${expectedAll} total catalogue rows; found ${rows.length}.`);
-if (!source.includes('export const nzCustomerSelectableCatalog = nzLaunchCatalog;')) {
-  failures.push('The customer-selectable catalogue does not expose the complete workbook-backed NZ catalogue.');
+if (!source.includes('export const nzCustomerSelectableCatalog = [...nzLaunchCatalog].sort(compareNzLaunchCatalogItems);')) {
+  failures.push('The customer-selectable catalogue is not using the shared clinical ordering rule.');
 }
 if (/decodeCatalog\(\)\.filter\([^\n]*requiresConfirmation/.test(builderSource)) {
   failures.push('The browser quote builder still filters rows by internal confirmation notes.');

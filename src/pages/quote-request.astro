@@ -3,6 +3,7 @@ import ProductLayout from '../layouts/ProductLayout.astro';
 import endotechLogo from '../assets/endotech-logo-2.png';
 import transformLogo from '../assets/transform-s-wordmark.png';
 import { nzCustomerSelectableCatalog, type NzLaunchFamily } from '../data/nzLaunchCatalog';
+import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 import { quoteFamilyLabels } from '../lib/quoteRequest';
 import { siteConfig } from '../config/site';
 
@@ -35,11 +36,7 @@ const groupedCatalog = Object.fromEntries(
     family,
     nzCustomerSelectableCatalog
       .filter((item) => item.family === family)
-      .sort((a, b) =>
-        a.size.localeCompare(b.size, 'en-NZ', { numeric: true }) ||
-        (a.lengthMm ?? 0) - (b.lengthMm ?? 0) ||
-        a.sku.localeCompare(b.sku),
-      ),
+      .sort(compareNzLaunchCatalogItems),
   ]),
 ) as Record<NzLaunchFamily, typeof nzCustomerSelectableCatalog>;
 

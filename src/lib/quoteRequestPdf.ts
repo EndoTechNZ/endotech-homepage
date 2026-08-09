@@ -1,5 +1,6 @@
 import { PDFDocument, StandardFonts, rgb, type PDFImage, type PDFPage, type PDFFont } from 'pdf-lib';
 import type { NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
+import { compareNzLaunchCatalogItems } from './catalogOrder';
 import { quoteFamilyLabels, type QuoteCustomerDetails } from './quoteRequest';
 
 export interface QuoteRequestPdfLine {
@@ -238,11 +239,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   };
 
   drawTableHeader();
-  const sortedLines = [...input.lines].sort((a, b) =>
-    a.item.system.localeCompare(b.item.system, 'en-NZ', { numeric: true }) ||
-    a.item.size.localeCompare(b.item.size, 'en-NZ', { numeric: true }) ||
-    (a.item.lengthMm ?? 0) - (b.item.lengthMm ?? 0),
-  );
+  const sortedLines = [...input.lines].sort((a, b) => compareNzLaunchCatalogItems(a.item, b.item));
 
   for (const [index, line] of sortedLines.entries()) {
     const productLines = wrapText(quoteFamilyLabels[line.item.family], bold, 7.8, columns[2].width - 10).slice(0, 2);

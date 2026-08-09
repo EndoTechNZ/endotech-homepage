@@ -1,3 +1,5 @@
+import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
+
 export type NzLaunchFamily = 'micro-path' | 'et' | 'pt' | 'k-files' | 'c-plus';
 
 export interface NzLaunchCatalogItem {
@@ -179,4 +181,4 @@ export const nzLaunchCatalog: NzLaunchCatalogItem[] = [
 // Every row in the workbook-backed New Zealand launch catalogue is available
 // to place on a quote request. `requiresConfirmation` records internal source
 // notes only; it must not remove a published NZ article number from the site.
-export const nzCustomerSelectableCatalog = nzLaunchCatalog;
+export const nzCustomerSelectableCatalog = [...nzLaunchCatalog].sort(compareNzLaunchCatalogItems);

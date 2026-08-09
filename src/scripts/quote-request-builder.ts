@@ -1,4 +1,5 @@
 import type { NzLaunchCatalogItem, NzLaunchFamily } from '../data/nzLaunchCatalog';
+import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 import {
   createQuoteRequestPayload,
   quoteFamilyLabels,
@@ -116,8 +117,7 @@ if (root) {
       .filter((line): line is { item: NzLaunchCatalogItem; quantity: number } => Boolean(line.item))
       .sort((a, b) =>
         familyOrder.indexOf(a.item.family) - familyOrder.indexOf(b.item.family) ||
-        a.item.size.localeCompare(b.item.size, 'en-NZ', { numeric: true }) ||
-        (a.item.lengthMm ?? 0) - (b.item.lengthMm ?? 0),
+        compareNzLaunchCatalogItems(a.item, b.item),
       );
 
   const skuEntryRows = (lines: Array<{ item: NzLaunchCatalogItem; quantity: number }>) => [

@@ -120,6 +120,51 @@ def row_requires_confirmation(sheet: str, values: list[object]) -> tuple[bool, s
     return False, ""
 
 
+def first_number(value: object, fallback: int = 999) -> int:
+    match = re.search(r"\d+", clean(value))
+    return int(match.group(0)) if match else fallback
+
+
+def catalogue_sort_key(sheet_name: str, row: dict[str, object]) -> tuple[object, ...]:
+    file_type = clean(row["file_type"]).lower()
+    size = clean(row["size"])
+    length = first_number(row["length"])
+    sku = clean(row["sku"])
+
+    if sheet_name in {"Transform S ET", "Transform S MicroPath"}:
+        individual = re.fullmatch(r"(\d+)/\.(\d+)", size)
+        assorted = re.match(r"\.(\d+)", size)
+        if individual:
+            tip = int(individual.group(1))
+            taper = int(individual.group(2))
+            type_rank = 2 if "orifice" in file_type else 0
+        elif assorted:
+            taper = int(assorted.group(1))
+            tip = 999
+            type_rank = 1
+        else:
+            taper = 7 if "orifice" in file_type else 999
+            tip = first_number(size)
+            type_rank = 1 if "assorted" in file_type else 0
+        return taper, type_rank, tip, length, sku
+
+    if sheet_name == "Transform S PT":
+        if "assorted" in file_type:
+            sequence_rank = 100
+        elif size == "SX":
+            sequence_rank = 0
+        elif re.fullmatch(r"S\d+", size):
+            sequence_rank = int(size[1:])
+        elif re.fullmatch(r"F\d+", size):
+            sequence_rank = 10 + int(size[1:])
+        else:
+            sequence_rank = 90
+        return sequence_rank, length, size, sku
+
+    assorted_rank = 1 if "assorted" in file_type else 0
+    return assorted_rank, first_number(size), length, size, sku
+
+
 def load_family_rows(workbook, sheet_name: str) -> tuple[list[dict[str, object]], int]:
     sheet = workbook[sheet_name]
     listed: list[dict[str, object]] = []
@@ -140,6 +185,7 @@ def load_family_rows(workbook, sheet_name: str) -> tuple[list[dict[str, object]]
                 "pack": clean(row[10]),
             }
         )
+    listed.sort(key=lambda item: catalogue_sort_key(sheet_name, item))
     return listed, internally_flagged
 
 

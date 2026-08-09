@@ -5,7 +5,7 @@ import transformSWordmark from '../../assets/transform-s-wordmark.png';
 import avatarTipComparison from '../../assets/avatar-tip-comparison.png';
 import etFirewireMachine from '../../assets/et-firewire-machine.png';
 import { siteConfig } from '../../config/site';
-import { nzLaunchCatalog } from '../../data/nzLaunchCatalog';
+import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const base = import.meta.env.BASE_URL;
@@ -13,7 +13,7 @@ const etOrderHref = `${base}order/#et-order`;
 const workflowHref = `${base}technique/workflow/`;
 const downloadsHref = `${base}resources/downloads/`;
 const etPartNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-ET-Part-Numbers.pdf`;
-const etProducts = nzLaunchCatalog.filter((item) => item.family === 'et');
+const etProducts = nzCustomerSelectableCatalog.filter((item) => item.family === 'et');
 
 const etSchema = {
   '@context': 'https://schema.org',
