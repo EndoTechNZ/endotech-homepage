@@ -106,16 +106,6 @@ export const blogIdeas: BlogIdea[] = [
     placeholders: ['Clinical problem', 'Evidence notes', 'Irrigation variables', 'Clinical implications'],
   },
   {
-    slug: 'evidence-in-everyday-endo',
-    title: 'Evidence in Everyday Endo',
-    category: 'Clinical',
-    summary: 'Applying research where it changes patient outcomes.',
-    readTime: '9 min read',
-    image: '/blog/evidence-in-everyday-endo.png',
-    focus: 'Practical translation of research into routine endodontic decisions.',
-    placeholders: ['Clinical problem', 'Evidence summary', 'Practice application', 'Outcome considerations'],
-  },
-  {
     slug: 'stepwise-chairside-vital-pulp-therapy-technique',
     title: 'Stepwise Chairside vital pulp therapy technique',
     category: 'VPT',
