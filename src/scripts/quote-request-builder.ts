@@ -30,7 +30,7 @@ if (root) {
   const catalogBySku = new Map(catalog.map((item) => [item.sku, item]));
   const selectionStorageKey = 'endotechnz_quote_request_selections_v1';
   const formStartedAt = new Date().toISOString();
-  const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'micro-path', 'c-plus', 'k-files'];
+  const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'k-files'];
   const selections = new Map<string, number>();
   const draftReference = (() => {
     const now = new Date();

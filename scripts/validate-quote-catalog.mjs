@@ -19,11 +19,12 @@ const rows = objectRows.map((row, index) => {
   }
 });
 
-const expectedAll = 159;
-const expectedSelectable = 159;
+const expectedAll = 194;
+const expectedSelectable = 194;
 const expectedSelectableFamilies = new Map([
   ['et', 50],
   ['pt', 25],
+  ['rg', 35],
   ['micro-path', 16],
   ['c-plus', 15],
   ['k-files', 53],
@@ -31,6 +32,7 @@ const expectedSelectableFamilies = new Map([
 const expectedPrefixes = new Map([
   ['et', 'TSET-'],
   ['pt', 'TSPT-'],
+  ['rg', 'TSRG-'],
   ['micro-path', 'TSMP-'],
   ['c-plus', 'TSCP-'],
   ['k-files', 'TSKF-'],
@@ -51,7 +53,7 @@ if (/approvedCatalog[\s\S]{0,120}\.filter\([^\n]*requiresConfirmation/.test(vali
 const selectable = rows;
 if (selectable.length !== expectedSelectable) failures.push(`Expected ${expectedSelectable} customer-selectable rows; found ${selectable.length}.`);
 const internallyFlagged = rows.filter((row) => row.requiresConfirmation === true);
-if (internallyFlagged.length !== 38) failures.push(`Expected 38 internally flagged rows; found ${internallyFlagged.length}.`);
+if (internallyFlagged.length !== 73) failures.push(`Expected 73 internally flagged rows; found ${internallyFlagged.length}.`);
 
 const requiredEtSizes = new Map([
   ['15/.04', [21, 25, 29]],
@@ -78,6 +80,35 @@ for (const [size, lengths] of requiredMicroPathSizes) {
     const match = selectable.find((row) => row.family === 'micro-path' && row.size === size && row.lengthMm === lengthMm);
     if (!match) failures.push(`Missing customer-selectable Micro-Path™ ${size}, ${lengthMm} mm row.`);
   }
+}
+
+const requiredRgSeries = new Map([
+  ['TSRG-GL', 'Glider (15/.02v)'],
+  ['TSRG-SML', 'Small (20/.07v)'],
+  ['TSRG-PRI', 'Primary (25/.07v)'],
+  ['TSRG-MED', 'Medium (35/.06v)'],
+  ['TSRG-LRG', 'Large (45/.05v)'],
+]);
+for (const [prefix, size] of requiredRgSeries) {
+  for (const packQty of [3, 6]) {
+    for (const lengthMm of [21, 25, 31]) {
+      const expectedSku = `${prefix}-${lengthMm}-${packQty}PK`;
+      const match = selectable.find((row) => row.family === 'rg' && row.sku === expectedSku && row.size === size && row.lengthMm === lengthMm && row.packQty === packQty);
+      if (!match) failures.push(`Missing customer-selectable RG row ${expectedSku}.`);
+    }
+  }
+}
+
+const requiredRgSpecials = [
+  ['TSRG-OS-16-3PK', 16, 3],
+  ['TSRG-ASS-21-4PK', 21, 4],
+  ['TSRG-ASS-25-4PK', 25, 4],
+  ['TSRG-ASS-31-4PK', 31, 4],
+  ['TSRG-ASS-25-3PK', 25, 3],
+];
+for (const [sku, lengthMm, packQty] of requiredRgSpecials) {
+  const match = selectable.find((row) => row.family === 'rg' && row.sku === sku && row.lengthMm === lengthMm && row.packQty === packQty);
+  if (!match) failures.push(`Missing customer-selectable RG row ${sku}.`);
 }
 
 const seen = new Set();

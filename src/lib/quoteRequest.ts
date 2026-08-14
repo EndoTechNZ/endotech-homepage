@@ -1,11 +1,12 @@
 import type { NzLaunchCatalogItem, NzLaunchFamily } from '../data/nzLaunchCatalog';
 
-export const QUOTE_REQUEST_SCHEMA_VERSION = '2026-08-06';
+export const QUOTE_REQUEST_SCHEMA_VERSION = '2026-08-14';
 export const QUOTE_REQUEST_MAX_QUANTITY = 999;
 
 export const quoteFamilyLabels: Record<NzLaunchFamily, string> = {
   et: 'Transform S™ ET',
   pt: 'Transform S™ PT',
+  rg: 'Transform S™ RG',
   'micro-path': 'Micro-Path™',
   'c-plus': 'Transform S™ C+ Files',
   'k-files': 'Transform S™ K-Files',

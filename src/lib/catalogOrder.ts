@@ -1,6 +1,6 @@
 import type { NzLaunchCatalogItem, NzLaunchFamily } from '../data/nzLaunchCatalog';
 
-const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'micro-path', 'c-plus', 'k-files'];
+const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'k-files'];
 
 const firstNumber = (value: string, fallback = Number.MAX_SAFE_INTEGER): number => {
   const match = value.match(/\d+(?:\.\d+)?/);
@@ -39,6 +39,18 @@ const ptSequenceRank = (item: NzLaunchCatalogItem): number => {
   return 90;
 };
 
+const rgSequenceRank = (item: NzLaunchCatalogItem): number => {
+  if (item.sku.includes('-OS-')) return 0;
+  if (item.sku.includes('-GL-')) return 1;
+  if (item.sku.includes('-SML-')) return 2;
+  if (item.sku.includes('-PRI-')) return 3;
+  if (item.sku.includes('-MED-')) return 4;
+  if (item.sku.includes('-LRG-')) return 5;
+  if (item.sku.includes('-ASS-') && item.packQty === 4) return 6;
+  if (item.sku.includes('-ASS-')) return 7;
+  return 90;
+};
+
 // Customer-facing order: taper first, then tip/sequence, then length.
 // Assorted packs follow the individual files for their taper; orifice shapers are last.
 export const compareNzLaunchCatalogItems = (a: NzLaunchCatalogItem, b: NzLaunchCatalogItem): number => {
@@ -59,6 +71,13 @@ export const compareNzLaunchCatalogItems = (a: NzLaunchCatalogItem, b: NzLaunchC
     return ptSequenceRank(a) - ptSequenceRank(b) ||
       (a.lengthMm ?? Number.MAX_SAFE_INTEGER) - (b.lengthMm ?? Number.MAX_SAFE_INTEGER) ||
       a.size.localeCompare(b.size, 'en-NZ', { numeric: true }) ||
+      a.sku.localeCompare(b.sku, 'en-NZ', { numeric: true });
+  }
+
+  if (a.family === 'rg') {
+    return rgSequenceRank(a) - rgSequenceRank(b) ||
+      a.packQty - b.packQty ||
+      (a.lengthMm ?? Number.MAX_SAFE_INTEGER) - (b.lengthMm ?? Number.MAX_SAFE_INTEGER) ||
       a.sku.localeCompare(b.sku, 'en-NZ', { numeric: true });
   }
 
