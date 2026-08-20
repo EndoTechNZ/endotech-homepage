@@ -95,13 +95,14 @@ if (root) {
   };
 
   const clearRequestConfirmation = () => {
-    if (emailButton?.dataset.completed !== 'true') return;
-    delete emailButton.dataset.completed;
-    emailButton.disabled = false;
-    emailButton.textContent = emailButtonDefaultLabel;
-    confirmation?.replaceChildren();
-    if (confirmation) confirmation.hidden = true;
-    refreshDraftReference();
+    if (emailButton?.dataset.completed === 'true') {
+      delete emailButton.dataset.completed;
+      emailButton.disabled = false;
+      emailButton.textContent = emailButtonDefaultLabel;
+      confirmation?.replaceChildren();
+      if (confirmation) confirmation.hidden = true;
+      refreshDraftReference();
+    }
     setStatus('');
   };
 
