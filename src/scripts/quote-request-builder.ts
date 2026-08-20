@@ -516,7 +516,7 @@ if (root) {
     emailButton.disabled = true;
     emailButton.dataset.busy = 'true';
     emailButton.textContent = 'Sending PDF request…';
-    setStatus('Building the PDF and sending it directly to steveshepherdnz@gmail.com…');
+    setStatus('Building the PDF and sending it securely to EndoTech NZ…');
     try {
       const emailPackage = await buildAttachedEmail();
       if (!emailPackage) {
@@ -544,8 +544,8 @@ if (root) {
         pageOrigin: window.location.origin,
       });
       emailButton.dataset.completed = 'true';
-      emailButton.textContent = 'PDF request sent';
-      setStatus(`Sent directly to steveshepherdnz@gmail.com with the PDF attached. Your reference is ${result.quoteReference}.`, 'success');
+      emailButton.textContent = 'Request sent — PDF emailed';
+      setStatus(`Your request has been sent to EndoTech NZ and a confirmation PDF has been emailed to ${emailPackage.draft.customer.email}. Your reference is ${result.quoteReference}.`, 'success');
     } catch (error) {
       emailButton.disabled = false;
       emailButton.textContent = originalLabel;
