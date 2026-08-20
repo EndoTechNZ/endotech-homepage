@@ -325,8 +325,9 @@ const contactEmail = siteConfig.email.toLowerCase();
           <button type="button" data-copy-sku-list>Copy SKU + quantity</button>
           <button type="button" data-print-request>Print / save as PDF</button>
         </div>
+        <div class="quote-request-confirmation" data-quote-confirmation role="status" aria-live="polite" hidden></div>
       </div>
-      <p class="quote-status" data-quote-status data-tone="neutral" aria-live="polite"></p>
+      <p class="quote-status" data-quote-status data-tone="neutral" aria-live="polite" hidden></p>
     </section>
   </div>
 
@@ -564,6 +565,10 @@ const contactEmail = siteConfig.email.toLowerCase();
   .quote-export-actions button { min-height: 2.8rem; padding: .65rem 1rem; border: 1px solid var(--quote-teal); border-radius: .6rem; background: #fff; color: var(--quote-teal-dark); font: inherit; font-size: .82rem; font-weight: 800; cursor: pointer; }
   .quote-export-actions button.quote-primary-action { background: var(--quote-teal); color: #fff; }
   .quote-export-actions button:disabled { cursor: wait; opacity: .65; }
+  .quote-request-confirmation { display: grid; grid-column: 1 / -1; gap: .2rem; padding: 1rem 1.1rem; border: 1px solid #91bdaa; border-radius: .65rem; background: #edf7f1; color: #17623d; }
+  .quote-request-confirmation[hidden] { display: none; }
+  .quote-request-confirmation strong { font-size: .88rem; letter-spacing: .04em; text-transform: uppercase; }
+  .quote-request-confirmation span { font-size: .88rem; line-height: 1.5; overflow-wrap: anywhere; }
   .quote-status { min-height: 1.5rem; margin: 1rem 0 0; color: var(--quote-muted); font-weight: 700; }
   .quote-status[data-tone="success"] { color: #17623d; }
   .quote-status[data-tone="error"] { color: #9b3535; }

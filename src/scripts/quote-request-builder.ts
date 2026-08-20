@@ -32,7 +32,7 @@ if (root) {
   const formStartedAt = new Date().toISOString();
   const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'k-files'];
   const selections = new Map<string, number>();
-  const draftReference = (() => {
+  const createDraftReference = () => {
     const now = new Date();
     const date = now.toLocaleDateString('en-CA', { timeZone: 'Pacific/Auckland' }).replaceAll('-', '');
     const time = now.toLocaleTimeString('en-NZ', {
@@ -46,7 +46,8 @@ if (root) {
       ? Array.from(window.crypto.getRandomValues(new Uint8Array(2)), (value) => value.toString(16).padStart(2, '0')).join('').toUpperCase()
       : Math.random().toString(16).slice(2, 6).toUpperCase();
     return `NZQ-DRAFT-${date}-${time}-${random}`;
-  })();
+  };
+  let draftReference = createDraftReference();
 
   const customerForm = root.querySelector<HTMLFormElement>('[data-customer-form]');
   const summary = root.querySelector<HTMLElement>('[data-selection-summary]');
@@ -58,6 +59,7 @@ if (root) {
   const reviewDetails = root.querySelector<HTMLElement>('[data-review-details]');
   const productSearch = root.querySelector<HTMLInputElement>('[data-product-search]');
   const status = root.querySelector<HTMLElement>('[data-quote-status]');
+  const confirmation = root.querySelector<HTMLElement>('[data-quote-confirmation]');
   const downloadButton = root.querySelector<HTMLButtonElement>('[data-download-pdf]');
   const downloadSkuListButton = root.querySelector<HTMLButtonElement>('[data-download-sku-list]');
   const copySkuListButton = root.querySelector<HTMLButtonElement>('[data-copy-sku-list]');
@@ -67,13 +69,40 @@ if (root) {
   const printSheet = document.querySelector<HTMLElement>('[data-quote-print-sheet]');
   const draftReferenceNodes = document.querySelectorAll<HTMLElement>('[data-draft-reference]');
   const submissionEnabled = root.dataset.submissionEnabled === 'true' && Boolean(root.dataset.submissionEndpoint);
+  const emailButtonDefaultLabel = emailButton?.textContent?.trim() || 'Send PDF request directly to EndoTech NZ';
 
   draftReferenceNodes.forEach((node) => { node.textContent = draftReference; });
+
+  const refreshDraftReference = () => {
+    draftReference = createDraftReference();
+    draftReferenceNodes.forEach((node) => { node.textContent = draftReference; });
+  };
 
   const setStatus = (message: string, tone: 'neutral' | 'success' | 'error' = 'neutral') => {
     if (!status) return;
     status.textContent = message;
     status.dataset.tone = tone;
+    status.hidden = !message;
+  };
+
+  const showRequestConfirmation = (customerEmail: string, quoteReference: string) => {
+    if (!confirmation) return;
+    confirmation.replaceChildren(
+      createText('strong', 'Pro forma request sent'),
+      createText('span', `The PDF request has been accepted for delivery to EndoTech NZ and ${customerEmail}. Reference: ${quoteReference}.`),
+    );
+    confirmation.hidden = false;
+  };
+
+  const clearRequestConfirmation = () => {
+    if (emailButton?.dataset.completed !== 'true') return;
+    delete emailButton.dataset.completed;
+    emailButton.disabled = false;
+    emailButton.textContent = emailButtonDefaultLabel;
+    confirmation?.replaceChildren();
+    if (confirmation) confirmation.hidden = true;
+    refreshDraftReference();
+    setStatus('');
   };
 
   const persistSelections = () => {
@@ -168,6 +197,7 @@ if (root) {
   const setQuantity = (sku: string, rawQuantity: number) => {
     const quantity = Math.max(0, Math.min(999, Math.floor(Number(rawQuantity) || 0)));
     if (!catalogBySku.has(sku)) return;
+    if ((selections.get(sku) || 0) !== quantity) clearRequestConfirmation();
     if (quantity > 0) selections.set(sku, quantity);
     else selections.delete(sku);
     root.querySelectorAll<HTMLInputElement>(`[data-quote-quantity][data-sku="${CSS.escape(sku)}"]`).forEach((input) => {
@@ -366,7 +396,10 @@ if (root) {
     if (target instanceof HTMLInputElement && target.matches('[data-summary-quantity]')) {
       setQuantity(target.dataset.summaryQuantity || '', Number(target.value));
     }
-    if (customerForm?.contains(target as Node)) renderReview();
+    if (customerForm?.contains(target as Node)) {
+      clearRequestConfirmation();
+      renderReview();
+    }
   });
 
   root.addEventListener('click', (event) => {
@@ -545,7 +578,8 @@ if (root) {
       });
       emailButton.dataset.completed = 'true';
       emailButton.textContent = 'Request sent — PDF emailed';
-      setStatus(`Your request has been sent to EndoTech NZ and a confirmation PDF has been emailed to ${emailPackage.draft.customer.email}. Your reference is ${result.quoteReference}.`, 'success');
+      showRequestConfirmation(emailPackage.draft.customer.email, result.quoteReference);
+      setStatus('');
     } catch (error) {
       emailButton.disabled = false;
       emailButton.textContent = originalLabel;
