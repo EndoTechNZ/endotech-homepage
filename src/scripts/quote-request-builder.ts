@@ -70,6 +70,7 @@ if (root) {
   const draftReferenceNodes = document.querySelectorAll<HTMLElement>('[data-draft-reference]');
   const submissionEnabled = root.dataset.submissionEnabled === 'true' && Boolean(root.dataset.submissionEndpoint);
   const emailButtonDefaultLabel = emailButton?.textContent?.trim() || 'Send PDF request directly to EndoTech NZ';
+  const mobileSendMedia = window.matchMedia('(max-width: 44rem)');
 
   draftReferenceNodes.forEach((node) => { node.textContent = draftReference; });
 
@@ -83,6 +84,46 @@ if (root) {
     status.textContent = message;
     status.dataset.tone = tone;
     status.hidden = !message;
+  };
+
+  const reportMobileSendFailure = (stage: 'pdf' | 'delivery', error: unknown) => {
+    if (!mobileSendMedia.matches || !submissionEnabled) return;
+    const endpoint = root.dataset.submissionEndpoint || '';
+    if (!endpoint) return;
+    let diagnosticsEndpoint: URL;
+    try {
+      diagnosticsEndpoint = new URL(endpoint);
+      diagnosticsEndpoint.pathname = diagnosticsEndpoint.pathname.replace(/nz-quote-request$/, 'nz-quote-request-diagnostic');
+    } catch {
+      return;
+    }
+
+    const message = error instanceof Error ? error.message : '';
+    const code = stage === 'pdf'
+      ? 'pdf_build_failed'
+      : /timed out/i.test(message)
+        ? 'delivery_timed_out'
+        : /not enabled|not configured/i.test(message)
+          ? 'delivery_not_configured'
+          : 'delivery_failed';
+
+    // No practice, patient, order or contact details are included in this diagnostic payload.
+    void fetch(diagnosticsEndpoint, {
+      method: 'POST',
+      credentials: 'omit',
+      cache: 'no-store',
+      keepalive: true,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        version: '2026-08-26',
+        draftReference,
+        stage,
+        code,
+        mobile: true,
+      }),
+    }).catch(() => {
+      // Diagnostics must never block a customer from retrying or using the PDF fallback.
+    });
   };
 
   const showRequestConfirmation = (customerEmail: string, quoteReference: string) => {
@@ -549,8 +590,11 @@ if (root) {
     const originalLabel = emailButton.textContent;
     emailButton.disabled = true;
     emailButton.dataset.busy = 'true';
-    emailButton.textContent = 'Sending PDF request…';
-    setStatus('Building the PDF and sending it securely to EndoTech NZ…');
+    const mobileSend = mobileSendMedia.matches;
+    let failureStage: 'pdf' | 'delivery' = 'pdf';
+    emailButton.setAttribute('aria-busy', 'true');
+    emailButton.textContent = mobileSend ? 'Preparing request PDF…' : 'Sending PDF request…';
+    setStatus(mobileSend ? 'Preparing your request PDF…' : 'Building the PDF and sending it securely to EndoTech NZ…');
     try {
       const emailPackage = await buildAttachedEmail();
       if (!emailPackage) {
@@ -558,6 +602,11 @@ if (root) {
         emailButton.textContent = originalLabel;
         return;
       }
+      if (mobileSend) {
+        emailButton.textContent = 'Sending request…';
+        setStatus('PDF ready. Sending your request securely to EndoTech NZ…');
+      }
+      failureStage = 'delivery';
       const formData = new FormData(customerForm || undefined);
       const payload = createQuoteRequestPayload({
         draftReference,
@@ -582,11 +631,16 @@ if (root) {
       showRequestConfirmation(emailPackage.draft.customer.email, result.quoteReference);
       setStatus('');
     } catch (error) {
+      reportMobileSendFailure(failureStage, error);
       emailButton.disabled = false;
       emailButton.textContent = originalLabel;
-      setStatus(error instanceof Error ? error.message : 'The PDF request could not be sent.', 'error');
+      const message = error instanceof Error ? error.message : 'The PDF request could not be sent.';
+      setStatus(mobileSend
+        ? `Your request has not been sent. ${message} You can retry or download the PDF below.`
+        : message, 'error');
     } finally {
       delete emailButton.dataset.busy;
+      emailButton.removeAttribute('aria-busy');
     }
   });
 

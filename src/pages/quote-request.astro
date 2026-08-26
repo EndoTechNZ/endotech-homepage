@@ -643,6 +643,11 @@ const contactEmail = siteConfig.email.toLowerCase();
       text-transform: uppercase;
     }
     .quote-catalog-table input { width: 4.5rem; min-height: 3rem; }
+    .quote-export-actions button[data-busy="true"] { min-height: 3.35rem; }
+    .quote-request-confirmation { margin-top: .25rem; padding: 1.1rem; border-width: 2px; }
+    .quote-status:not([hidden]) { padding: .9rem 1rem; border-radius: .65rem; background: #eef4f6; line-height: 1.45; }
+    .quote-status[data-tone="success"] { background: #edf7f1; }
+    .quote-status[data-tone="error"] { background: #fff2f2; }
   }
   @media print {
     @page { size: A4 portrait; margin: 14mm 13mm 16mm; }
