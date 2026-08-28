@@ -85,15 +85,15 @@ const contactEmail = siteConfig.email.toLowerCase();
     </section>
 
     <ol class="quote-steps" aria-label="Pro forma invoice request steps">
-      <li><span>1</span><strong>Select products</strong><small>Complete NZ launch list</small></li>
-      <li><span>2</span><strong>Add practice details</strong><small>Nothing personal is stored</small></li>
-      <li><span>3</span><strong>Review and send</strong><small>PDF, SKU list or prepared email</small></li>
+      <li><span>1</span><div><em>Step 1</em><strong>Select products</strong><small>Complete NZ launch list</small></div></li>
+      <li><span>2</span><div><em>Step 2</em><strong>Add practice details</strong><small>Nothing personal is stored</small></div></li>
+      <li><span>3</span><div><em>Step 3</em><strong>Review and send</strong><small>PDF, SKU list or prepared email</small></div></li>
     </ol>
 
     <section id="select-products" class="quote-section" aria-labelledby="select-products-title">
       <div class="quote-section-heading">
         <div>
-          <p class="quote-eyebrow">Step 1</p>
+          <p class="quote-eyebrow quote-section-step">Step 1</p>
           <h2 id="select-products-title">Select New Zealand products</h2>
           <p>Quantities are packs. Product selections are saved on this device; customer and practice details are not.</p>
         </div>
@@ -210,7 +210,7 @@ const contactEmail = siteConfig.email.toLowerCase();
     <section id="practice-details" class="quote-section quote-details-section" aria-labelledby="practice-details-title">
       <div class="quote-section-heading">
         <div>
-          <p class="quote-eyebrow">Step 2</p>
+          <p class="quote-eyebrow quote-section-step">Step 2</p>
           <h2 id="practice-details-title">Add the practice and delivery details</h2>
           <p>These details are used only to build this request. They are not saved in the browser.</p>
         </div>
@@ -269,7 +269,7 @@ const contactEmail = siteConfig.email.toLowerCase();
     <section id="review-request" class="quote-section quote-review-section" aria-labelledby="review-request-title">
       <div class="quote-section-heading">
         <div>
-          <p class="quote-eyebrow">Step 3</p>
+          <p class="quote-eyebrow quote-section-step">Step 3</p>
           <h2 id="review-request-title">Review and send the request</h2>
           <p>The website supplies SKUs and quantities only. EndoTech NZ will add pricing, GST, freight, availability and account terms in the pro forma invoice.</p>
         </div>
@@ -445,14 +445,17 @@ const contactEmail = siteConfig.email.toLowerCase();
     list-style: none;
     overflow: hidden;
   }
-  .quote-steps li { display: grid; grid-template-columns: 2.25rem 1fr; gap: .12rem .75rem; padding: 1rem 1.25rem; }
+  .quote-steps li { display: grid; grid-template-columns: 2.75rem 1fr; gap: .75rem; align-items: start; padding: 1.25rem; background: #fff; }
   .quote-steps li + li { border-left: 1px solid var(--quote-line); }
-  .quote-steps li > span { grid-row: 1 / 3; display: grid; width: 2.1rem; height: 2.1rem; place-items: center; border-radius: 50%; background: var(--quote-teal); color: #fff; font-weight: 900; }
-  .quote-steps strong { color: var(--quote-navy); }
-  .quote-steps small { color: var(--quote-muted); }
+  .quote-steps li > span { display: grid; width: 2.75rem; height: 2.75rem; place-items: center; border-radius: .7rem; background: var(--quote-teal); box-shadow: 0 .25rem .7rem rgba(23, 101, 98, .18); color: #fff; font-size: 1.2rem; font-weight: 900; }
+  .quote-steps li > div { display: grid; gap: .16rem; min-width: 0; }
+  .quote-steps em { color: var(--quote-teal-dark); font-size: .72rem; font-style: normal; font-weight: 900; letter-spacing: .12em; line-height: 1.2; text-transform: uppercase; }
+  .quote-steps strong { color: var(--quote-navy); font-size: 1.08rem; line-height: 1.25; }
+  .quote-steps small { color: var(--quote-muted); font-size: .84rem; line-height: 1.4; }
   .quote-section { max-width: 78rem; margin: 0 auto; padding: clamp(4rem, 8vw, 7rem) 0; }
   .quote-section + .quote-section { border-top: 1px solid var(--quote-line); }
   .quote-section-heading { display: flex; gap: 2rem; justify-content: space-between; align-items: end; margin-bottom: 2rem; }
+  .quote-section-step { display: inline-flex; align-items: center; min-height: 2rem; margin-bottom: .85rem !important; padding: .35rem .7rem; border: 1px solid #a9cecb; border-radius: 999px; background: #edf7f6; color: var(--quote-teal-dark) !important; font-size: .78rem !important; font-weight: 900 !important; letter-spacing: .12em; }
   .quote-section-heading h2 { margin: 0; color: var(--quote-navy); font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.08; letter-spacing: -.035em; }
   .quote-section-heading p:not(.quote-eyebrow) { max-width: 48rem; margin: .9rem 0 0; color: var(--quote-muted); line-height: 1.65; }
   .quote-search { width: min(100%, 22rem); }
