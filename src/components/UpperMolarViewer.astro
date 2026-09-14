@@ -1,0 +1,28 @@
+---
+const base=import.meta.env.BASE_URL;
+const viewer=`${base}viewers/upper-molar-mb2/`;
+const assets=`${base}models/upper-molar-mb2/`;
+---
+<section id="upper-molar-3d" class="upper-molar-module" aria-labelledby="upper-molar-heading" data-molar-module data-viewer={viewer}>
+  <div class="module-heading"><div><p>Interactive anatomy</p><h2 id="upper-molar-heading">Explore the upper first molar in 3D</h2></div><a href={viewer} target="_blank" rel="noopener">Open larger viewer ↗</a></div>
+  <div class="viewer-host" data-viewer-host>
+    <div class="viewer-poster" data-viewer-poster><img src={`${assets}poster.webp`} alt="Upper first molar with translucent exterior, red canals and a MicroPath file following MB2; its handle is outside the crown." width="1280" height="800" loading="lazy"/><div class="poster-action"><button type="button" data-load-model>Load interactive 3D model</button><p>Rotate · zoom · isolate canals · inspect apical branches</p></div></div>
+  </div>
+  <div class="module-notes"><p><strong>MB2 glide path:</strong> the thicker rotating file follows the approved route to its apical endpoint, with the single 21 mm CAD stopper seated at the top cusp reference. Non-to-scale educational animation; wall contact/overlap is permitted, not simulated as cutting or a clinical file-fit measurement.</p><a href={`${assets}upper-molar-with-mb2.mp4`} target="_blank" rel="noopener">Watch video instead</a></div>
+  <noscript><p>JavaScript is needed for interactive 3D. The video and anatomy map below remain available.</p></noscript>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-molar-module]').forEach(section=>{
+    const button=section.querySelector<HTMLButtonElement>('[data-load-model]');
+    button?.addEventListener('click',()=>{
+      const host=section.querySelector<HTMLElement>('[data-viewer-host]');if(!host||host.querySelector('iframe'))return;
+      const iframe=document.createElement('iframe');iframe.src=section.dataset.viewer!;iframe.title='Interactive upper first molar and MB2 MicroPath model';iframe.allowFullscreen=true;iframe.setAttribute('allow','fullscreen');iframe.loading='eager';
+      iframe.addEventListener('load',()=>{section.querySelector('[data-viewer-poster]')?.remove();iframe.focus();});host.append(iframe);button.disabled=true;button.textContent='Opening model…';
+      const observer=new IntersectionObserver(entries=>{iframe.contentWindow?.postMessage({type:'endo-viewer-visibility',visible:entries[0].isIntersecting},location.origin);},{threshold:0});observer.observe(host);
+    });
+  });
+</script>
+<style>
+.upper-molar-module{margin:0 0 44px;border:1px solid #dce4e4;border-radius:24px;overflow:hidden;background:#fff;scroll-margin-top:100px}.module-heading{display:flex;justify-content:space-between;gap:24px;align-items:center;padding:26px 30px}.module-heading p{font-size:11px;text-transform:uppercase;letter-spacing:.16em;font-weight:700;color:#647c7b;margin:0 0 9px}.module-heading h2{font-size:26px;line-height:1.2;font-weight:600;letter-spacing:-.5px;margin:0;color:#19373d}.module-heading a,.module-notes a{font-size:13px;white-space:nowrap;color:#22647b;text-decoration:underline;text-underline-offset:4px}.viewer-host{position:relative;height:770px;background:#f0f3f7}.viewer-host :global(iframe){position:absolute;inset:0;width:100%;height:100%;border:0;background:#f0f3f7}.viewer-poster{position:absolute;inset:0}.viewer-poster img{width:100%;height:100%;object-fit:contain}.poster-action{position:absolute;left:30px;top:38%;max-width:340px;padding:22px;background:#ffffffed;border:1px solid #dce4ea;border-radius:16px}.poster-action button{border:0;border-radius:8px;background:#233c58;color:#fff;font:inherit;font-size:15px;font-weight:600;padding:14px 20px;cursor:pointer}.poster-action button:focus-visible,.module-heading a:focus-visible,.module-notes a:focus-visible{outline:3px solid #0b75b7;outline-offset:5px}.poster-action p{font-size:13px;line-height:1.6;color:#66788d;margin:13px 0 0}.module-notes{display:flex;align-items:center;gap:25px;padding:20px 30px;color:#5d7479;font-size:13px;line-height:1.6}.module-notes p{margin:0;flex:1;max-width:920px}.module-notes strong{font-weight:600}@media(max-width:720px){.upper-molar-module{margin-bottom:28px;border-radius:18px}.module-heading{padding:20px;align-items:start;flex-direction:column;gap:13px}.module-heading h2{font-size:22px}.viewer-host{height:1000px}.poster-action{left:16px;right:16px;top:auto;bottom:24px;max-width:none;padding:18px}.viewer-poster img{height:78%}.module-notes{padding:18px 20px;flex-direction:column;align-items:start;gap:12px;font-size:12px}}
+</style>
+<style>.upper-molar-module .viewer-host{height:960px}@media(max-width:720px){.upper-molar-module .viewer-host{height:1100px}}</style>

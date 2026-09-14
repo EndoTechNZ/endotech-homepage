@@ -1,5 +1,6 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
+import UpperMolarViewer from '../../components/UpperMolarViewer.astro';
 import microPathMb2FileImage from '../../assets/micro-path-mb2-file-transparent.png';
 
 const base = import.meta.env.BASE_URL;
@@ -184,6 +185,8 @@ const relatedLinks = [
         ))}
       </nav>
     </section>
+
+    <UpperMolarViewer />
 
     <section id="technique" class="mb2-protocol-grid" aria-label="MB2 technique overview">
       <aside class="mb2-protocol-left-stack">
