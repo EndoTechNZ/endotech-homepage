@@ -1,5 +1,19 @@
 # MB2 3D viewer - local implementation
 
+## Current correction: roots-up video v8 and mobile viewer v9
+
+This section supersedes the historical implementation notes below. Stephen requested both live-site corrections on 14 September 2026 and had authorized commit, push and deployment. NZ and USA now share the corrected assets; NZ placement remains below protocol navigation and above Anatomy Map.
+
+The current film is `Upper-Molar-With-MicroPath-Roots-Up-v8.mp4`: the existing 36-second roots-up anatomy introduction plus a re-rendered 32-second roots-up MicroPath animation. Only the camera presentation changed. Titles remain upright: EndoTech (72 px), Upper First Molar - Micropath (36 px), #13 - 03 Taper (51 px). Public links use the fresh `upper-molar-with-mb2-roots-up-v8.mp4` filename; the old canonical MP4 is also replaced so existing links recover. H264, 1920x1080, 24 fps, 68 seconds, 1,632 frames; full decode passed.
+
+The previous viewer required a 16,384-pixel-wide float texture, rejecting GPUs with smaller limits. The same 16,093 path/basis samples now occupy a 4096x16 tiled texture. Phones also use a 1,244,760-byte anatomy display mesh (desktop: 4,996,192 bytes), one Draco worker, a 1x backbuffer and no multisampling/preserved backbuffer. Phone rendering drops from 2,785,666 to 686,470 drawn triangles. `prepare-mobile-anatomy.py` decimates temporary Blender objects and does not modify/save the approved master. Desktop anatomy and all motion/CAD data are unchanged. The lighter display does not change the prescribed glide path, full endpoint, file dimensions, rotation or stopper.
+
+Local browser checks passed: Chrome with Pixel 7 emulation and an enforced 4096 texture limit; WebKit with iPhone 13 emulation; USA Chrome phone emulation; NZ desktop Chrome. Checked lazy load, whole/apical/cusp views, mode/reset controls, full feed 7.183999999982163, 21 mm CAD stopper setting, two revolutions/second, no contact marks, no horizontal overflow, and video HTTP 200. No console/page errors. This is browser emulation, not verification on Stephen's physical phone. A context-loss message retains a clear video fallback.
+
+Engineering references: [MDN WebGL best practices](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices), [Three renderer capabilities](https://threejs.org/docs/pages/WebGLRenderer.html), [Draco worker limit](https://threejs.org/docs/pages/DRACOLoader.html).
+
+## Historical implementation notes
+
 Status: Stephen authorized commit, push and live publication on 14 September 2026. Prepared for the existing NZ GitHub Pages deployment workflow. The module appears below the protocol navigation and above Anatomy Map, with “Watch video instead” links in both the module and standalone viewer. The approved web orientation, geometry and motion are unchanged.
 
 Current video titles (revision 7): canonical `upper-molar-with-mb2.mp4` comes from `Full-Length-v4/Upper-Molar-With-MicroPath-13-03-EndoTech.mp4`. Closing text is “EndoTech” (72 px), “Upper First Molar - Micropath” (36 px), “#13 - 03 Taper” (51 px). The video camera, model and motion remain as approved; this text-only revision does not alter the web orientation below. Previous source MP4s are preserved.

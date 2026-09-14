@@ -35,10 +35,12 @@ for i,record in enumerate(json.loads((SOURCE/'cad-components.json').read_text())
     components.append({'role':record['role']})
 shutil.copyfile(SOURCE/'animation-data.bin',OUT/'motion.bin')
 shutil.copyfile(SOURCE/'animation-data.json',OUT/'motion.json')
-video=SOURCE/'Upper-Molar-With-MicroPath-13-03-EndoTech.mp4'
+video=SOURCE/'Upper-Molar-With-MicroPath-Roots-Up-v8.mp4'
+if not video.exists():video=SOURCE/'Upper-Molar-With-MicroPath-13-03-EndoTech.mp4'
 if not video.exists():video=SOURCE/'Upper-Molar-With-MicroPath-13-03.mp4'
 if not video.exists():video=SOURCE/'Upper-Molar-With-MB2-MicroPath.mp4'
 if video.exists():shutil.copyfile(video,OUT/'upper-molar-with-mb2.mp4')
+if video.name=='Upper-Molar-With-MicroPath-Roots-Up-v8.mp4':shutil.copyfile(video,OUT/'upper-molar-with-mb2-roots-up-v8.mp4')
 tooth.data.calc_loop_triangles();bvh=BVHTree.FromPolygons([list(v.co) for v in tooth.data.vertices],[list(t.vertices) for t in tooth.data.loop_triangles],all_triangles=True)
 bad=0;min_dist=1e6
 for v in stopper.data.vertices:
