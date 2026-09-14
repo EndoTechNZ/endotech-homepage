@@ -136,6 +136,8 @@ const microPathSchema = {
         <img
           class="microPath-hero-image"
           src={microPathBox.src}
+          width={microPathBox.width}
+          height={microPathBox.height}
           loading="eager"
           decoding="sync"
           fetchpriority="high"
@@ -170,7 +172,7 @@ const microPathSchema = {
                 <span>{card.metric}</span>
               </div>
             ) : (
-              <img src={microPathFiles.src} alt="Micro-Path™ files showing staged size progression" />
+              <img src={microPathFiles.src} width={microPathFiles.width} height={microPathFiles.height} alt="Micro-Path™ files showing staged size progression" />
             )}
           </article>
         ))}
@@ -179,7 +181,7 @@ const microPathSchema = {
 
     <section class="microPath-journey-section" aria-labelledby="microPath-journey-title">
       <div class="microPath-journey-media">
-        <img src={microPathFiles.src} alt="Micro-Path™ files shown as the access-to-shaping bridge" />
+        <img src={microPathFiles.src} width={microPathFiles.width} height={microPathFiles.height} alt="Micro-Path™ files shown as the access-to-shaping bridge" />
       </div>
 
       <div class="microPath-journey-copy">
