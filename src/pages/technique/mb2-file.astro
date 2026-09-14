@@ -13,6 +13,8 @@ const protocolNav = [
   { label: 'Specifications', href: '#specifications' },
   { label: 'Checklist', href: '#checklist' },
   { label: 'Evidence', href: '#evidence' },
+  { label: 'MicroPath MB2 File', href: `${microPathMb2ProductHref}#mb2-file` },
+  { label: 'MicroPath GlidePath Files', href: `${base}products/micro-path/#product-range` },
 ];
 
 const anatomyViews = [
@@ -178,7 +180,7 @@ const relatedLinks = [
     <section class="mb2-protocol-hero" aria-labelledby="mb2-protocol-title">
       <p class="mb2-protocol-eyebrow">Clinical protocol / Micro-Path™ MB2</p>
       <h1 id="mb2-protocol-title">MB2 Mastery: Control-First Negotiation</h1>
-      <nav class="mb2-protocol-local-nav" aria-label="MB2 page sections">
+      <nav class="mb2-protocol-local-nav" aria-label="MB2 page sections and products">
         <span>On this protocol</span>
         {protocolNav.map((item) => (
           <a href={item.href}>{item.label}</a>
