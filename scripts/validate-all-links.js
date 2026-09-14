@@ -52,8 +52,8 @@ function resolveLink(link, basePath) {
 }
 
 function linkExistsInDist(link) {
-  // Remove trailing slash and anchor
-  let cleanLink = link.split('#')[0];
+  // Queries (including asset/viewer cache versions) and fragments are not filenames.
+  let cleanLink = link.split(/[?#]/)[0];
   const normalizedBase = basePath === '/' ? '' : basePath.replace(/\/$/, '');
 
   if (normalizedBase && cleanLink === normalizedBase) {
