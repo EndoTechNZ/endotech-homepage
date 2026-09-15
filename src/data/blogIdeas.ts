@@ -123,10 +123,11 @@ export const blogIdeas: BlogIdea[] = [
     title: 'Access With Purpose',
     category: 'Clinical Thinking',
     summary: 'Design thinking for visibility, conservation and cleanliness.',
-    readTime: '7 min read',
+    readTime: '8 min read',
     image: '/blog/access-with-purpose.png',
     focus: 'Access design as a clinical control decision.',
     placeholders: ['Clinical problem', 'Access objectives', 'Decision framework', 'Case notes'],
+    published: '16 September 2026',
   },
   {
     slug: 'irrigation-dynamics-that-matter',

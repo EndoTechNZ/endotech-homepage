@@ -191,6 +191,122 @@ export const weeklyClinicalArticles: Record<string, WeeklyClinicalArticle> = {
     ],
     sources: [],
   },
+  'access-with-purpose': {
+    question: 'How much tooth structure should an access cavity remove, and how much must it reveal?',
+    standfirst:
+      'Access creates the working environment for everything that follows. The cavity must expose the chamber, reveal the canal map and let instruments enter without harmful deflection, while preserving dentine that still serves a structural purpose.',
+    sections: [
+      {
+        eyebrow: 'Before the bur',
+        title: 'The access begins with orientation',
+        paragraphs: [
+          'A crown can disguise the tooth beneath it. Large restorations erase the normal landmarks. Rotation, tipping and attrition alter the apparent long axis, while calcification changes both the expected depth and the tactile sensation of entering the chamber. Starting from the centre of an occlusal surface without reconciling those changes invites the bur to follow the restoration rather than the root.',
+          'Read the pre-operative radiograph for more than root length. Estimate the chamber depth, roof thickness and direction of the roots. Compare the clinical crown with the root axis. An angled radiograph may expose an additional root or a bucco-lingual relationship hidden in the first view. CBCT can clarify complex anatomy or a previously unsuccessful search when its use is clinically justified, but it should answer a defined question rather than serve as routine screening.',
+          'Restorability also belongs in this first decision. Remove unsupported caries and decide whether defective restorative material compromises isolation, visibility or the coronal seal. A predictable rubber-dam field and a sealable perimeter matter before sodium hypochlorite enters the cavity. Sometimes a pre-endodontic build-up provides that control. Sometimes the correct decision is to stop and reassess the tooth.',
+        ],
+      },
+      {
+        eyebrow: 'Finding the chamber',
+        title: 'Depth control prevents an access from becoming a perforation',
+        paragraphs: [
+          'Initial penetration should follow the planned long axis towards the centre of the pulp chamber. Penetrating a ceramic crown, metal substructure and dentine are separate cutting tasks. Each material deserves the appropriate bur and a deliberate change in pressure. Treating the restoration and tooth as one uniform layer increases heat, vibration and the risk of losing orientation.',
+          'The familiar “drop” into the chamber may occur in a young tooth with a generous pulp space. It may be absent in an older or heavily restored tooth. The operator still needs a depth estimate. Marking the expected chamber depth on the bur, measuring against the radiograph and pausing before the floor is reached provide more reliable control than waiting for a tactile event that may never come.',
+          'Once the chamber is entered, the floor becomes the anatomical reference. Blind downward cutting after entry risks furcal or axial perforation. The objective changes from penetration to lateral deroofing, visual inspection and controlled refinement.',
+        ],
+      },
+      {
+        eyebrow: 'Deroofing',
+        title: 'A small opening can conceal a large clinical problem',
+        paragraphs: [
+          'Leaving roof dentine over the chamber creates shadows, traps pulp tissue and hides the line angles where canals are commonly found. It also directs instruments through an artificial coronal bend. A cavity may look conservative from above while making every later stage more difficult.',
+          'Complete deroofing does not require indiscriminate widening. Remove the chamber roof and unsupported overhangs until the floor-wall junction can be inspected. Smooth axial walls where they obstruct vision or deflect instruments. Preserve dentine that does not interfere with canal location, irrigation or safe instrument entry.',
+          'The useful endpoint is functional. The clinician should be able to inspect the floor, introduce an explorer and place small instruments into the orifices without the shaft striking an avoidable coronal shelf. It is unnecessary to remove dentine merely so every orifice appears simultaneously in the mirror.',
+          'Access remains dynamic. If a file repeatedly catches, bows or enters at a damaging angle, return to the chamber and identify the coronal interference. A small, directed modification often provides more control than applying more force to the instrument.',
+        ],
+      },
+      {
+        eyebrow: 'Reading the floor',
+        title: 'The pulp chamber carries its own map',
+        paragraphs: [
+          'External crown anatomy becomes unreliable after restoration, wear or rotation. The cemento-enamel junction and the internal chamber floor are more consistent guides. At the level of the CEJ, the chamber tends to sit centrally within the tooth. This relationship helps the operator regain orientation when the visible crown is misleading.',
+          'Colour provides another boundary. The chamber floor usually appears darker than the surrounding dentinal walls. Canal orifices commonly lie at the floor-wall junction, at its line angles and where developmental grooves terminate. These are search zones, not instructions to trough the entire floor.',
+          'A sharp DG16 explorer can trace subtle depressions and grooves. Magnification and coaxial illumination make colour changes and dentinal maps easier to read. Long-shank burs improve the line of sight by moving the handpiece head away from the field. Fine ultrasonic tips can remove small volumes of calcified dentine under direct vision with more control than a conventional bur.',
+          'Other clues remain useful when the anatomy is difficult. Sodium hypochlorite may effervesce over residual tissue in a hidden orifice. Transillumination can reveal changes in density and crack lines. Dye can improve contrast. Each method should confirm an anatomical hypothesis rather than encourage random cutting.',
+        ],
+      },
+      {
+        eyebrow: 'Locating canals',
+        title: 'Search patterns should follow the tooth, not a memorised outline',
+        paragraphs: [
+          'Traditional access outlines provide a starting expectation, but the pulp chamber determines the final shape. Lower incisors may contain a lingual canal hidden beneath the cingulum. Premolars may divide below a single apparent orifice. Mandibular molars may contain a second distal canal or an additional mesial canal. Upper molars frequently demand a deliberate search for MB2.',
+          'In a maxillary molar, MB2 usually lies mesial and palatal to MB1 along the developmental groove towards the palatal canal. The search should begin by exposing and reading that groove, then removing small amounts of dentine under magnification. Widening the whole chamber does not improve the search. It sacrifices structure without necessarily revealing the canal.',
+          'Calcification changes the strategy. Start where the chamber or pulp horn remains largest on the radiograph, or locate the largest predictable canal first. In an upper molar, the palatal canal can restore depth and orientation. In a lower molar, the distal canal can serve the same purpose. Once one canal is confirmed, the chamber-floor relationships help predict the others.',
+          'Bleeding can erase those landmarks. With a hyperaemic pulp, establish haemostasis and irrigate before exploring the floor. Continuing to cut through a pool of blood removes the visual information needed to distinguish floor, wall and orifice.',
+        ],
+      },
+      {
+        eyebrow: 'The conservation question',
+        title: 'Conserve structure without compromising the pathway',
+        paragraphs: [
+          'The debate between traditional and contracted access can become too geometric. A smaller outline does not automatically preserve the tooth if it produces coronal interference, missed tissue or instrument stress. A larger outline does not automatically improve treatment if the additional dentine serves no clinical purpose.',
+          'The defensible access preserves peri-cervical dentine where possible while providing visibility, chamber debridement and a smooth route to each canal. Straight-line access should be understood as removing harmful coronal deflection towards the canal or its initial curvature. It does not mean sacrificing the entire roof of sound dentine in pursuit of a perfectly straight line to the apex.',
+          'Access design should therefore respond to the individual tooth. The correct outline may change after the chamber is opened, after calcification is uncovered or when a small file reveals an unexpected direction. Conservation and convenience are not opposing principles when every cut has a defined purpose.',
+        ],
+      },
+      {
+        eyebrow: 'Common errors',
+        title: 'Under-extension and over-extension fail in different ways',
+        paragraphs: [
+          'Under-extension leaves roof dentine, hides canals and forces files around coronal obstacles. It can lead to retained tissue, poor irrigation, ledging and instrument separation. A missed canal may ultimately represent an access failure rather than a shaping failure.',
+          'Over-extension weakens cusps and peri-cervical dentine. Cutting in the wrong direction risks gouging the axial wall, perforating the furcation or exiting through the crown or root. These errors often begin with a lost long axis, an unmeasured chamber depth or an attempt to find a canal by drilling deeper instead of reading the floor.',
+          'When the landmarks stop making sense, stop cutting. Re-establish the tooth axis, review the radiograph or CBCT, clear the field and reassess under magnification. Referral remains a controlled clinical decision when further searching would add more risk than information.',
+        ],
+      },
+      {
+        eyebrow: 'The endpoint',
+        title: 'A good access makes the next stage calmer',
+        paragraphs: [
+          'The completed access should allow the chamber to be cleaned, the canals to be located and small instruments to enter without avoidable deflection. It should support irrigant exchange and later obturation while retaining useful tooth structure for restoration.',
+          'That endpoint cannot be judged by outline shape alone. Watch what the instruments do. Check whether visibility remains clear and whether tissue or roof dentine remains. Revisit the cavity whenever the pathway feels less controlled than the anatomy predicted.',
+          'Access with purpose means that every cut answers a clinical problem: reach the chamber, reveal the map, remove an obstruction or improve control. When a cut has no clear purpose, it probably does not belong in the tooth.',
+        ],
+      },
+    ],
+    chairsideChecks: [
+      'Does the planned entry follow the true root axis rather than the restoration?',
+      'Has chamber depth been estimated before cutting begins?',
+      'Is the entire chamber roof removed without indiscriminate widening?',
+      'Can the floor-wall junction and developmental grooves be inspected clearly?',
+      'Do small instruments enter without striking a coronal shelf?',
+      'Would further troughing add useful information or only procedural risk?',
+    ],
+    sources: [
+      {
+        label: 'Adams and Tomson: Access cavity preparation, British Dental Journal',
+        url: 'https://doi.org/10.1038/sj.bdj.2014.206',
+      },
+      {
+        label: 'Druttman: Access cavities and canal location',
+        url: 'https://www.endopracticeus.com/endo-essentials/top-ten-tips-tip-number-5-access-cavities-canal-location/',
+      },
+      {
+        label: 'Marchesan et al.: Contracted access and canal curvature parameters',
+        url: 'https://doi.org/10.1016/j.joen.2018.07.008',
+      },
+      {
+        label: 'Video: Coronal access in a maxillary first molar',
+        url: 'https://www.youtube.com/watch?v=zoywoDL7DNk',
+      },
+      {
+        label: 'Video: Canal-location laws during access preparation',
+        url: 'https://www.youtube.com/watch?v=RObnHj9Y4-Y',
+      },
+      {
+        label: 'Video: Ultrasonic location of MB2',
+        url: 'https://www.youtube.com/watch?v=lOk6ayaz0DY',
+      },
+    ],
+  },
   'working-length-when-the-file-will-not-progress': {
     question: 'If the locator says “not there” but the file says “no further”, which signal should you trust?',
     standfirst:
