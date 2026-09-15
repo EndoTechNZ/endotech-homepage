@@ -109,16 +109,6 @@ export const blogIdeas: BlogIdea[] = [
     placeholders: ['Clinical problem', 'Anatomical observations', 'Technique implications', 'Case notes'],
   },
   {
-    slug: 'file-design-in-real-life',
-    title: 'File Design in Real Life',
-    category: 'Technique',
-    summary: 'How metallurgy and motion translate to clinical confidence.',
-    readTime: '8 min read',
-    image: '/blog/file-design-in-real-life.png',
-    focus: 'Connecting file geometry, motion, and controlled preparation.',
-    placeholders: ['Clinical problem', 'Design notes', 'Workflow application', 'Key takeaways'],
-  },
-  {
     slug: 'access-with-purpose',
     title: 'Access With Purpose',
     category: 'Clinical Thinking',
