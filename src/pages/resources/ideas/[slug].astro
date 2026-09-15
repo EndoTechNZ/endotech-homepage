@@ -420,25 +420,27 @@ const vertucciClinicalChecks = [
             </aside>
           </div>
 
-          <section class="weekly-sources" aria-labelledby="weekly-sources-title">
-            <div>
-              <p class="article-eyebrow">Discussion and evidence</p>
-              <h2 id="weekly-sources-title">Sources reviewed</h2>
-              <p>
-                Practitioner discussions identify the live clinical questions. Videos and published
-                evidence are used to test and structure the chairside conclusions.
-              </p>
-            </div>
-            <ul>
-              {weeklyArticle.sources.map((source) => (
-                <li>
-                  <a href={source.url} target="_blank" rel="noopener noreferrer">
-                    {source.label} <span aria-hidden="true">↗</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {weeklyArticle.sources.length > 0 && (
+            <section class="weekly-sources" aria-labelledby="weekly-sources-title">
+              <div>
+                <p class="article-eyebrow">Discussion and evidence</p>
+                <h2 id="weekly-sources-title">Sources reviewed</h2>
+                <p>
+                  Practitioner discussions identify the live clinical questions. Videos and published
+                  evidence are used to test and structure the chairside conclusions.
+                </p>
+              </div>
+              <ul>
+                {weeklyArticle.sources.map((source) => (
+                  <li>
+                    <a href={source.url} target="_blank" rel="noopener noreferrer">
+                      {source.label} <span aria-hidden="true">↗</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <p class="weekly-disclaimer">
             Professional education only. Apply current evidence, product instructions, clinical
