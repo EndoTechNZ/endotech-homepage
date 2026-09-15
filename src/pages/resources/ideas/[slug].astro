@@ -35,11 +35,11 @@ const irrigationChecklistPdfHref = withBasePath('/downloads/EndoTech-NZ-Irrigati
 const vptGuideHref = withBasePath('/downloads/Vital_Pulp_Therapy_Chairside_Quick_Guide.pdf');
 
 const vptReadiness = [
-  'A restorable permanent tooth with a defensible periodontal prognosis',
-  'A pulpal and apical diagnosis based on history, tests, examination, and imaging',
-  'Profound anaesthesia, rubber dam, magnification, and a disinfected field',
-  'Sterile instruments and coolant reserved for the pulp phase',
-  'A calcium-silicate cement and definitive coronal seal planned before exposure',
+  'Select a restorable, isolatable tooth with a defensible pulpal and apical diagnosis',
+  'Treat exposure as a second diagnostic stage and inspect the pulp under magnification',
+  'Remove diseased tissue until the remaining pulp is healthy and bleeding is controllable',
+  'Maintain asepsis with rubber dam, a disinfected field, and a separate sterile pulp set',
+  'Seal the tooth, arrange review, and change the treatment when a controllable endpoint cannot be reached',
 ];
 
 const vptSelectionChecks = [
@@ -692,7 +692,7 @@ const vertucciClinicalChecks = [
               </a>
             </div>
             <aside class="vpt-readiness" aria-label="VPT readiness checks">
-              <p>Five requirements before exposure</p>
+              <p>Five decisions that govern VPT</p>
               <ol>
                 {vptReadiness.map((item, index) => (
                   <li>

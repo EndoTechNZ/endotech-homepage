@@ -23,6 +23,7 @@ Each page must include:
 - Always link product features to clinical problems
 - Emphasise control, safety, and adaptability
 - Use simple, clear, professional language
+- Give every clinical blog post a compact numbered key-points panel near the opening. Tailor three to five points to the article's central clinical decisions; do not reuse a generic checklist.
 
 ## Website Structure
 - Home
