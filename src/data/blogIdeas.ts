@@ -131,13 +131,14 @@ export const blogIdeas: BlogIdea[] = [
   },
   {
     slug: 'stepwise-chairside-vital-pulp-therapy-technique',
-    title: 'Stepwise Chairside vital pulp therapy technique',
+    title: 'Vital Pulp Therapy in Permanent Teeth',
     category: 'VPT',
-    summary: 'A controlled sequence for case selection, asepsis, haemostasis, pulp protection, and definitive sealing.',
-    readTime: '7 min read',
+    summary: 'Case selection, intra-operative pulp assessment, controlled tissue removal, sealing, and review.',
+    readTime: '12 min read',
     image: '/blog/stepwise-chairside-vital-pulp-therapy-technique.png',
-    focus: 'A practical permanent-tooth VPT sequence for selection, treatment, sealing, and review.',
-    placeholders: ['Case selection', 'Operative sequence', 'Haemostasis pathway', 'Seal and review'],
+    focus: 'A permanent-tooth VPT protocol built around selection, reassessment, asepsis, sealing, and review.',
+    placeholders: ['Select the tooth', 'Reassess the pulp', 'Control the wound', 'Seal and review'],
+    published: '16 September 2026',
   },
 ];
 
