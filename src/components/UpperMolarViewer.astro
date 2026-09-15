@@ -1,10 +1,12 @@
 ---
+import MB2TeachingText from './MB2TeachingText.astro';
 const base=import.meta.env.BASE_URL;
 const viewer=`${base}viewers/upper-molar-mb2/?v=mobile-9`;
 const assets=`${base}models/upper-molar-mb2/`;
 ---
 <section id="upper-molar-3d" class="upper-molar-module" aria-labelledby="upper-molar-heading" data-molar-module data-viewer={viewer}>
   <div class="module-heading"><div><p>Interactive anatomy</p><h2 id="upper-molar-heading">Explore the upper first molar in 3D</h2></div><a href={viewer} target="_blank" rel="noopener">Open larger viewer ↗</a></div>
+  <MB2TeachingText />
   <div class="viewer-host" data-viewer-host>
     <div class="viewer-poster" data-viewer-poster><img src={`${assets}poster.webp`} alt="Upper first molar with translucent exterior, red canals and a MicroPath file following MB2; its handle is outside the crown." width="1280" height="800" loading="lazy"/><div class="poster-action"><button type="button" data-load-model>Load interactive 3D model</button><p>Rotate · zoom · isolate canals · inspect apical branches</p></div></div>
   </div>
