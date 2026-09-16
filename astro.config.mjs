@@ -26,14 +26,41 @@ const base = isGitHubPages ? (usesCustomDomain ? '/' : '/endotech-homepage/') : 
 const shouldNoIndex = process.env.NETLIFY === 'true' && process.env.CONTEXT !== 'production';
 const docsTitle = process.env.PUBLIC_DOCS_TITLE || 'EndoTech Docs';
 const contactEmail = process.env.PUBLIC_CONTACT_EMAIL || 'Steveshepherdnz@gmail.com';
-const starlightHead = shouldNoIndex
-  ? [
+const googleAnalyticsId = process.env.PUBLIC_GOOGLE_ANALYTICS_ID;
+const clarityProjectId = process.env.PUBLIC_CLARITY_PROJECT_ID;
+const starlightHead = [
+  ...(shouldNoIndex
+    ? [
       {
         tag: /** @type {'meta'} */ ('meta'),
         attrs: { name: 'robots', content: 'noindex, nofollow' },
       },
     ]
-  : [];
+    : []),
+  ...(googleAnalyticsId
+    ? [
+        {
+          tag: /** @type {'script'} */ ('script'),
+          attrs: {
+            async: true,
+            src: `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`,
+          },
+        },
+        {
+          tag: /** @type {'script'} */ ('script'),
+          content: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',${JSON.stringify(googleAnalyticsId)});`,
+        },
+      ]
+    : []),
+  ...(clarityProjectId
+    ? [
+        {
+          tag: /** @type {'script'} */ ('script'),
+          content: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",${JSON.stringify(clarityProjectId)});`,
+        },
+      ]
+    : []),
+];
 
 // https://astro.build/config
 export default defineConfig({
