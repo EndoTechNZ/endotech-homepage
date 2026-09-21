@@ -12,6 +12,17 @@ export interface BlogIdea {
 
 export const blogIdeas: BlogIdea[] = [
   {
+    slug: 'iowa-staging-index-cracked-teeth',
+    title: 'Cracked teeth: making prognosis visible with the Iowa Staging Index',
+    category: 'Clinical Thinking',
+    summary: 'A practical way to combine probing depth, crack location, apical status and crack extension before discussing whether a cracked tooth can be predictably retained.',
+    readTime: '8 min read',
+    image: '/blog/iowa-staging-index-cracked-tooth.webp',
+    focus: 'A cracked posterior tooth isolated for magnified examination, transillumination and site-specific periodontal probing.',
+    placeholders: ['Diagnose before staging', 'The four Iowa stages', 'Modified C/R extension', 'Consult, stabilise and review'],
+    published: '21 September 2026',
+  },
+  {
     slug: 'what-heat-treatment-really-does-to-a-niti-file',
     title: 'What heat treatment really does to a NiTi file',
     category: 'Evidence',
