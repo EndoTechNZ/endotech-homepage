@@ -16,9 +16,169 @@ export interface WeeklyClinicalArticle {
   sections: WeeklyClinicalSection[];
   chairsideChecks: string[];
   sources: WeeklyClinicalSource[];
+  stages?: Array<{
+    stage: string;
+    title: string;
+    criteria: string;
+    outcome: string;
+    signal: 'favourable' | 'guarded' | 'high-risk';
+  }>;
 }
 
 export const weeklyClinicalArticles: Record<string, WeeklyClinicalArticle> = {
+  'iowa-staging-index-cracked-teeth': {
+    question: 'Can we turn a visible crack into a prognosis the patient can actually understand?',
+    standfirst:
+      'The Iowa Staging Index does not tell us whether every cracked tooth should be treated. It gives structure to a narrower—and very useful—question: once a cracked posterior tooth requires root canal treatment and restoration, which clinical findings make success more or less likely?',
+    stages: [
+      {
+        stage: 'Stage I',
+        title: 'Mesial-only crack, no apical disease',
+        criteria: 'Crack-associated probing is less than 5 mm; no distal marginal-ridge crack; no periapical pathosis.',
+        outcome: '93% success in the original cohort',
+        signal: 'favourable',
+      },
+      {
+        stage: 'Stage II',
+        title: 'Distal ridge involved',
+        criteria: 'Probing remains less than 5 mm; a distal marginal-ridge crack is present; no periapical pathosis.',
+        outcome: '84% success in the original cohort',
+        signal: 'favourable',
+      },
+      {
+        stage: 'Stage III',
+        title: 'Apical disease joins the picture',
+        criteria: 'Probing remains less than 5 mm; distal marginal ridge is involved; periapical disease is present.',
+        outcome: '69% success in the original cohort',
+        signal: 'guarded',
+      },
+      {
+        stage: 'Stage IV',
+        title: 'A deep crack-associated pocket',
+        criteria: 'A probing depth of 5 mm or more is present along the crack, regardless of marginal-ridge location.',
+        outcome: '41% success in the original cohort',
+        signal: 'high-risk',
+      },
+    ],
+    sections: [
+      {
+        eyebrow: 'Start with diagnosis',
+        title: 'A crack line is a finding—not a pulpal diagnosis and not a treatment plan.',
+        paragraphs: [
+          'The first task is to establish whether this is a superficial craze line, a cracked tooth extending into dentine, a fractured cusp, a split tooth or a vertical root fracture. Those entities do not share the same biology or prognosis. The European Society of Endodontology defines a cracked tooth as a dentinal crack of unknown depth that may extend subcrestally and may involve the pulp. A split tooth, by contrast, has complete visible separation and an unfavourable prognosis.',
+          'Begin with the history: pain on loading or release, temperature sensitivity, spontaneous pain, previous episodes, a remembered hard-food event, previous fractured teeth and possible parafunction. Then examine the tooth clean and dry under strong illumination and magnification. Transillumination can reveal how light is interrupted, while a high-quality clinical photograph records what was actually visible before treatment. Staining may help in selected cases, but colour alone cannot reveal the true depth of a crack.',
+          'Localise the familiar symptom gently, cusp by cusp. Probe the entire sulcus and record the exact depth and site of any isolated defect rather than writing “deep pocket”. Compare cold responses, percussion and palpation with control teeth, assess mobility, and obtain appropriate periapical and bitewing views. A normal radiograph does not exclude a crack: the ESE statement notes that only a small minority of vital cracked teeth show the crack radiographically. CBCT can reveal associated bone changes when conventional findings are inconclusive, but it cannot reliably display every fine crack.',
+        ],
+        points: [
+          'Dry, magnify, transilluminate and photograph before removing tooth structure.',
+          'Reproduce biting pain gently and stop when the patient recognises the symptom.',
+          'Chart six-point probing and identify whether a deep site follows the crack line.',
+          'Record separate pulpal and apical diagnoses; “cracked tooth” is not enough.',
+        ],
+      },
+      {
+        eyebrow: 'What the index measures',
+        title: 'Three findings move the original Iowa stage: pocket depth, distal ridge involvement and apical disease.',
+        paragraphs: [
+          'Krell and Caplan developed the Iowa Staging Index from a 25-year observational dataset of cracked teeth receiving orthograde root canal treatment. Among the teeth available for multivariable outcome analysis, 82% met the study definition of success at 12 months. The three clinical variables most strongly associated with outcome were crack-associated probing depth, a distal marginal-ridge crack and the periapical diagnosis.',
+          'The order matters. First ask whether a crack-associated periodontal probing is 5 mm or deeper. If it is, the tooth enters Stage IV. If probing remains below 5 mm, look for distal marginal-ridge involvement. Its absence places the case in Stage I; its presence leads to the final question—whether periapical disease is present—separating Stage II from Stage III.',
+          'These are outcome groups, not a biological claim that every crack progresses neatly from I to IV. They were derived from teeth selected for root canal treatment and then restored, so the index should not be applied to every asymptomatic craze line or used to justify endodontic treatment by itself. It is most useful after the pulpal diagnosis and restorability assessment indicate that treatment is being considered.',
+        ],
+      },
+      {
+        eyebrow: 'The modified index',
+        title: 'Coronal versus radicular extension adds information the original tree could not show.',
+        paragraphs: [
+          'A newer retrospective cohort divided each Iowa stage into C and R subgroups. “C” meant the crack remained within the pulp chamber; “R” meant it extended beyond a canal orifice into the root. Across 263 treated posterior teeth followed for one to five years, overall success was 82.9% and survival was 89.7%. Success ranged from 98.3% for Stage I-C to 33.3% for Stage IV-R.',
+          'The most useful message is not that any radicular extension automatically condemns the tooth. Short radicular extensions can be retained in selected cases. Risk rose sharply when a radicular crack of 3 mm or more combined with a crack-associated probing depth of at least 5 mm. In that cohort, teeth with neither finding achieved 93.2% success; teeth with both achieved 33.3%. That combination deserves a distinctly different consent conversation.',
+          'Stage IV-C is a reminder not to over-read small subgroups: it showed 75% success, but included only four teeth. The modified figures come from one retrospective protocol with defined exclusions, microscope-assisted assessment, root canal treatment and restorative management. They refine prognosis; they do not replace judgement about restorability, patient priorities, operator skill or the possibility that exploration will reveal a non-restorable fracture.',
+        ],
+        points: [
+          'C = crack confined to the chamber; R = extension beyond a canal orifice into the root.',
+          'Radicular extension of 3 mm or more was an independent failure predictor.',
+          'A pocket of 5 mm or more along the crack remained one of the strongest warning signs.',
+          'Multiple crack lines, a periapical lesion and unmanaged parafunction also reduced prognosis.',
+        ],
+      },
+      {
+        eyebrow: 'From stage to plan',
+        title: 'Use the stage to shape the consultation—not to skip the restorative questions.',
+        paragraphs: [
+          'Before promising root canal treatment, ask whether the tooth can be isolated, sealed and restored with a durable cuspal-protection strategy. Inspect the opposing tooth and the contact pattern in closure and excursions. Ask why previous teeth were lost, whether an appliance is worn or damaged, and whether clenching, grinding or heavy chewing is plausible. The modified-index cohort identified multiple cracks, lack of an occlusal splint in patients with parafunctional habits, and the definitive restoration as additional outcome variables.',
+          'Crack tracing should have a stopping point. Removing every stained line can sacrifice sound dentine, expose the pulp or destroy a maintainable margin without proving that the crack has been eliminated. Explore only when the result can change diagnosis or treatment, under isolation and magnification, and reassess remaining structure as you proceed. If the segments separate, the crack crosses the pulpal floor extensively, the periodontal defect is non-maintainable or a predictable restoration cannot be achieved, the plan changes.',
+          'Where the pulp is vital and the tooth is restorable, not every crack needs immediate root canal treatment. Practice-based evidence shows that many posterior teeth selected for monitoring remain under monitoring at three years. Where irreversible pulpitis, necrosis or apical disease is present and the tooth remains restorable, endodontic treatment can offer meaningful survival. The stage helps explain the gradient of risk; the pulpal diagnosis determines whether endodontic treatment is indicated.',
+        ],
+      },
+      {
+        eyebrow: 'The patient conversation',
+        title: 'Show the evidence, name the uncertainty and agree what would trigger reassessment.',
+        paragraphs: [
+          'A useful consultation separates “success” from “survival”. In the Iowa literature, success is the stricter clinician-centred outcome: resolution of previous pathosis with no signs or symptoms. Survival is patient-centred: the tooth remains present, functional and asymptomatic, even if it has not met every radiographic healing criterion. Patients should know which outcome a percentage refers to.',
+          'Show the photograph, the probing chart and the radiographs. Explain the stage in plain language: “Your tooth has a crack, but the gum attachment beside it is still shallow,” or “This isolated deep pocket suggests the crack may communicate farther down the root.” Discuss reasonable options, the need for timely definitive cuspal protection when treating a cracked tooth, the possibility of later pulpal disease or fracture, and the consequences of delay.',
+          'Document the findings and the limits of what can be known before access or restoration removal. Arrange review of symptoms, pulp status, periodontal probing and radiographic healing. New spontaneous pain, swelling, mobility, a deeper isolated pocket or worsening biting pain should bring the review forward. A transparent plan is safer than promising that a crack has been “fixed”.',
+        ],
+      },
+      {
+        eyebrow: 'A practical synthesis',
+        title: 'The index works best as one layer in a controlled cracked-tooth workflow.',
+        paragraphs: [
+          'The ten chairside ideas from this week’s clinical review fit naturally around the index: make the crack visible; localise the symptom; diagnose the pulp separately; understand the limits of a PA; distinguish a craze line from structural disease; ask about fracture history; assess the opposing dentition; set a stopping point for exploration; match cuspal protection to the remaining tooth; and make uncertainty part of consent.',
+          'Used this way, the Iowa stage is neither a verdict nor a decorative number. It is a disciplined summary of the findings most likely to change prognosis. It helps the clinician and patient see why a shallow, coronal, single crack without apical disease is a different proposition from a radicular crack accompanied by a 6 mm isolated pocket and a periapical lesion.',
+        ],
+      },
+    ],
+    chairsideChecks: [
+      'Have the crack type, pulpal diagnosis and apical diagnosis been recorded separately?',
+      'Was probing completed circumferentially and the crack-associated depth documented?',
+      'Is the distal marginal ridge involved?',
+      'Is there periapical disease—not merely a negative radiograph for the crack itself?',
+      'If accessed, is the crack coronal or radicular, and how far does it extend beyond the orifice?',
+      'Can the tooth be isolated, sealed and protected with a durable definitive restoration?',
+      'Have parafunction, opposing contacts, alternatives and uncertainty been discussed?',
+    ],
+    sources: [
+      {
+        label: 'Krell & Caplan (2018): original Iowa Staging Index study',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/29429822/',
+      },
+      {
+        label: 'Wongkornchaowalit et al. (2025): Modified Iowa Index',
+        url: 'https://doi.org/10.1016/j.joen.2025.08.012',
+      },
+      {
+        label: 'ESE (2025): position statement on longitudinal cracks and fractures',
+        url: 'https://doi.org/10.1111/iej.14186',
+      },
+      {
+        label: 'AAE: Cracked Teeth and Vertical Root Fractures—Colleagues for Excellence',
+        url: 'https://www.aae.org/specialty/wp-content/uploads/sites/2/2022/12/ecfe-2022-edition-FINAL.pdf',
+      },
+      {
+        label: 'Leong et al. (2020): systematic review and meta-analysis of endodontically treated cracked teeth',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/31797172/',
+      },
+      {
+        label: 'Ferracane et al. (2022): three-year treatment and monitoring outcomes',
+        url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8898304/',
+      },
+      {
+        label: 'Zhang et al. (2024): systematic review and meta-analysis of cracked-tooth treatment outcomes',
+        url: 'https://doi.org/10.1016/j.jdent.2024.104843',
+      },
+      {
+        label: 'Kakka et al. (2022): comprehensive narrative review',
+        url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9562569/',
+      },
+      {
+        label: 'Protrusive PDP246: Cracked Teeth Clinical Guidelines',
+        url: 'https://www.youtube.com/watch?v=VHYRBnfJS3I',
+      },
+      {
+        label: 'Protrusive PS019: Understanding Cracked Tooth Syndrome and the Dental Occlusion Triad',
+        url: 'https://www.youtube.com/watch?v=mU8mM8ZNIVU',
+      },
+    ],
+  },
   'what-heat-treatment-really-does-to-a-niti-file': {
     question: 'What does heat treatment do to an endodontic file?',
     standfirst:

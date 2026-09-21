@@ -481,6 +481,36 @@ const vertucciClinicalChecks = [
             <p>{weeklyArticle.standfirst}</p>
           </section>
 
+          {weeklyArticle.stages && (
+            <section class="iowa-index" aria-labelledby="iowa-index-title">
+              <div class="iowa-index__intro">
+                <p class="article-eyebrow">The original Iowa decision tree</p>
+                <h2 id="iowa-index-title">Four stages. Three prognostic questions.</h2>
+                <p>
+                  The published percentages below describe success after root canal treatment and
+                  restoration in the original cohort. They support a prognosis discussion; they do not
+                  diagnose the pulp or prescribe treatment on their own.
+                </p>
+              </div>
+              <div class="iowa-index__grid">
+                {weeklyArticle.stages.map((stage) => (
+                  <article class={`iowa-stage iowa-stage--${stage.signal}`}>
+                    <div class="iowa-stage__topline">
+                      <span>{stage.stage}</span>
+                      <strong>{stage.outcome}</strong>
+                    </div>
+                    <h3>{stage.title}</h3>
+                    <p>{stage.criteria}</p>
+                  </article>
+                ))}
+              </div>
+              <p class="iowa-index__modifier">
+                <strong>Modified Iowa Index:</strong> add <b>C</b> when the crack is confined to the pulp
+                chamber, or <b>R</b> when it extends beyond a canal orifice into the root.
+              </p>
+            </section>
+          )}
+
           <div class="weekly-content">
             <main>
               {weeklyArticle.sections.map((section) => (
@@ -2072,6 +2102,135 @@ const vertucciClinicalChecks = [
     padding: 64px 0 76px;
   }
 
+  .iowa-index {
+    width: min(100% - 48px, 1160px);
+    margin: 0 auto 72px;
+  }
+
+  .iowa-index__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.7fr);
+    gap: 28px 72px;
+    align-items: end;
+    margin-bottom: 28px;
+  }
+
+  .iowa-index__intro .article-eyebrow {
+    grid-column: 1 / -1;
+    margin-bottom: -12px;
+  }
+
+  .iowa-index__intro h2 {
+    margin: 0;
+    color: #0c1730;
+    font-size: clamp(2rem, 4vw, 3.65rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
+  .iowa-index__intro > p:last-child {
+    margin: 0;
+    color: #5e6f82;
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .iowa-index__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .iowa-stage {
+    position: relative;
+    min-height: 270px;
+    overflow: hidden;
+    border: 1px solid #dce6ec;
+    border-radius: 12px;
+    padding: 24px;
+    background: #ffffff;
+  }
+
+  .iowa-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: #2b9a84;
+  }
+
+  .iowa-stage--guarded::before {
+    background: #d79a3b;
+  }
+
+  .iowa-stage--high-risk::before {
+    background: #c75a4b;
+  }
+
+  .iowa-stage__topline {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .iowa-stage__topline span {
+    color: #0b7180;
+    font-family: 'Geist Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .iowa-stage__topline strong {
+    width: fit-content;
+    border-radius: 999px;
+    padding: 6px 9px;
+    background: #edf7f4;
+    color: #216f61;
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+
+  .iowa-stage--guarded .iowa-stage__topline strong {
+    background: #fff5e5;
+    color: #8d5a14;
+  }
+
+  .iowa-stage--high-risk .iowa-stage__topline strong {
+    background: #fff0ed;
+    color: #9a4035;
+  }
+
+  .iowa-stage h3 {
+    margin: 0 0 12px;
+    color: #12213b;
+    font-size: 1.15rem;
+    line-height: 1.2;
+  }
+
+  .iowa-stage p {
+    margin: 0;
+    color: #5d6d7e;
+    font-size: 0.9rem;
+    line-height: 1.58;
+  }
+
+  .iowa-index__modifier {
+    margin: 12px 0 0;
+    border-radius: 10px;
+    padding: 18px 22px;
+    background: #0b5d67;
+    color: #d8f0f0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .iowa-index__modifier strong,
+  .iowa-index__modifier b {
+    color: #ffffff;
+  }
+
   .weekly-content main {
     display: grid;
     gap: 52px;
@@ -2696,6 +2855,15 @@ const vertucciClinicalChecks = [
       grid-template-columns: 1fr;
     }
 
+    .iowa-index__intro {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .iowa-index__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .weekly-aside {
       position: static;
     }
@@ -2728,6 +2896,19 @@ const vertucciClinicalChecks = [
     .vpt-intro,
     .vpt-section {
       width: min(100% - 36px, 1040px);
+    }
+
+    .iowa-index {
+      width: min(100% - 36px, 1160px);
+      margin-bottom: 52px;
+    }
+
+    .iowa-index__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .iowa-stage {
+      min-height: 0;
     }
 
     .article-media--contain img {
