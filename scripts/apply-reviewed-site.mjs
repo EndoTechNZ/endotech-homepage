@@ -15,6 +15,9 @@ function publish(dir,rel=''){
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
+  if(next.replaceAll('\\', '/') === 'quote-request/index.html') {
+   html=html.replace('</body>', '<script src="/quote-search.js" defer></script></body>');
+  }
   fs.writeFileSync(to,html);pages++;
  }
 }
