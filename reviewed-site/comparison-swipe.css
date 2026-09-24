@@ -1,0 +1,40 @@
+/* One quiet arrival sweep, matching the homepage price treatment. */
+.comparison-swipe-text {
+  display: inline-block;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.comparison-swipe-text::after {
+  content: "";
+  position: absolute;
+  inset: -8px auto -8px 0;
+  width: 45%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  background: linear-gradient(100deg, transparent, rgba(85,165,205,.18), transparent);
+}
+.comparison-swipe-text.is-arriving::after {
+  animation: comparison-arrival-sweep 850ms ease-in-out 350ms 1;
+}
+@keyframes comparison-arrival-sweep {
+  0% { transform: translateX(-120%) skewX(-12deg); opacity: 0; }
+  20%, 75% { opacity: 1; }
+  100% { transform: translateX(340%) skewX(-12deg); opacity: 0; }
+}
+.microPath-hero { position: relative; padding-bottom: 80px !important; }
+.microPath-hero .microPath-hero-comparison {
+  position: absolute; right: 32px; bottom: 24px; margin: 0;
+  color: #0c4a6e; font-size: 14px; font-weight: 400;
+  line-height: 1.5; text-align: right;
+}
+@media (max-width: 600px) {
+  .microPath-hero .microPath-hero-comparison {
+    right: 24px; left: 24px; font-size: 13px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .comparison-swipe-text.is-arriving::after { animation: none; }
+}

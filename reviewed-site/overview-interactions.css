@@ -1,6 +1,11 @@
-/* Only the five available product cards respond to their product-link hover. */
-/* A short, fading floor reflection in these four overview panels only.
-   The C+ artwork already contains its own reflection. Original assets stay intact. */
+/* Page-scoped imagery treatment; navigation branding is deliberately excluded.
+   C+ already contains its reflection, so do not reflect it a second time. */
+.overview-stitch-page img {
+  filter: drop-shadow(0 3px 3px rgba(25, 43, 65, .12));
+}
+.overview-stitch-page img:not([src="/assets/cplus-10-21mm-catalogue.png"]) {
+  -webkit-box-reflect: below 2px linear-gradient(to bottom, transparent 86%, rgba(0,0,0,.18) 100%);
+}
 .overview-system-card figure img,
 .overview-support-card:has(a[href="/products/micro-path/"]) figure img,
 .overview-workflow-media > img {
