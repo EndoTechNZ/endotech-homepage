@@ -1,0 +1,32 @@
+.email-options { position: relative; text-align: left; }
+.email-options[open] { width: 320px; max-width: 100%; }
+div:has(> .email-options[open]) { align-items: flex-start; }
+.email-options summary {
+  list-style: none; cursor: pointer; padding: 14px 32px;
+  background: #fff; color: #334155; border: 1px solid #e2e8f0;
+  border-radius: 999px; font-weight: 500; text-align: center;
+}
+.email-options summary::-webkit-details-marker { display: none; }
+.email-options summary:hover { background: #f8fafc; border-color: #94a3b8; }
+.email-options-panel {
+  position: relative; margin-top: 12px;
+  width: 100%; padding: 20px;
+  background: #fff; color: #334155; border: 1px solid #e2e8f0;
+  border-radius: 16px; box-shadow: 0 8px 24px rgba(0,55,112,.10);
+}
+.email-options-title { margin: 0 0 6px; font-weight: 600; color: #0c4a6e; }
+.email-options-address { margin: 0 0 16px; font-size: 14px; overflow-wrap: anywhere; user-select: all; }
+.email-options-actions { display: grid; gap: 8px; }
+.email-options-actions :is(a,button) {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; padding: 10px 14px; border: 1px solid #dce5ed;
+  border-radius: 10px; background: #f8fafc; color: #0c4a6e;
+  font: inherit; font-size: 14px; text-decoration: none; cursor: pointer;
+}
+.email-options-actions :is(a,button):hover { background: #eef6fb; }
+.email-options :is(summary,a,button):focus-visible { outline: 2px solid #0b75b7; outline-offset: 3px; }
+.email-options-status { margin: 12px 0 0; font-size: 12px; line-height: 1.5; color: #64748b; }
+@media (max-width: 640px) {
+  .email-options { width: 100%; }
+  .email-options-panel { position: relative; top: auto; right: auto; margin-top: 12px; width: 100%; max-width: none; }
+}

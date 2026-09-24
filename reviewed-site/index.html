@@ -2,6 +2,8 @@
     <meta charset="UTF-8" vid="2">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
     <title vid="4">EndoTech NZ — File Systems</title>
+    <link rel="stylesheet" href="/email-options.css">
+    <script src="/email-options.js" defer></script>
     <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" vid="6">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="7">
@@ -321,9 +323,19 @@ h1,h1 span{font-family:system-ui,sans-serif!important;font-weight:300!important;
                         <a href="/about/contact/" class="w-full sm:w-auto px-8 py-3.5 bg-brand-900 text-white font-medium rounded-full hover:bg-slate-800 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200" vid="144">
                             Contact a Specialist
                         </a>
-                        <a href="mailto:Steveshepherdnz@gmail.com" class="w-full sm:w-auto px-8 py-3.5 bg-white text-slate-700 font-medium rounded-full border border-slate-200 hover:border-slate-400 hover:bg-slate-50 transition-colors" vid="145">
-                            Email us directly
-                        </a>
+                        <details class="email-options">
+                            <summary>Email us directly</summary>
+                            <div class="email-options-panel">
+                                <p class="email-options-title">Email EndoTech NZ</p>
+                                <p class="email-options-address">steveshepherdnz@gmail.com</p>
+                                <div class="email-options-actions">
+                                    <a href="mailto:steveshepherdnz@gmail.com">Open email app <span aria-hidden="true">↗</span></a>
+                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=steveshepherdnz%40gmail.com" target="_blank" rel="noopener noreferrer">Open Gmail <span aria-hidden="true">↗</span></a>
+                                    <button type="button" data-copy-email>Copy email address</button>
+                                </div>
+                                <p class="email-options-status" role="status" aria-live="polite">No email app? Open Gmail or copy the address.</p>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </div>
