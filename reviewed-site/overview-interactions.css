@@ -1,4 +1,14 @@
 /* Only the five available product cards respond to their product-link hover. */
+/* A short, fading floor reflection in these four overview panels only.
+   The C+ artwork already contains its own reflection. Original assets stay intact. */
+.overview-system-card figure img,
+.overview-support-card:has(a[href="/products/micro-path/"]) figure img,
+.overview-workflow-media > img {
+  -webkit-box-reflect: below -18px linear-gradient(to bottom, transparent 80%, rgba(0,0,0,.22) 100%);
+}
+.overview-workflow-media > img {
+  -webkit-box-reflect: below -32px linear-gradient(to bottom, transparent 82%, rgba(0,0,0,.22) 100%);
+}
 :is(.overview-system-card, .overview-support-card:not(.overview-support-card-wide)) {
   --product-zoom: 1;
 }
