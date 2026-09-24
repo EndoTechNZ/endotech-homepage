@@ -319,23 +319,20 @@ h1,h1 span{font-family:system-ui,sans-serif!important;font-weight:300!important;
                     <p class="text-lg text-slate-500 font-light mb-10 max-w-xl mx-auto" vid="142">
                         Tell us which system you currently use. We can help you explore the EndoTech range and arrange a clinical trial.
                     </p>
-                    <div class="flex flex-col sm:flex-row justify-center items-center gap-4" vid="143">
+                    <div class="email-contact-actions" vid="143">
                         <a href="/about/contact/" class="w-full sm:w-auto px-8 py-3.5 bg-brand-900 text-white font-medium rounded-full hover:bg-slate-800 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200" vid="144">
                             Contact a Specialist
                         </a>
-                        <details class="email-options">
-                            <summary>Email us directly</summary>
-                            <div class="email-options-panel">
-                                <p class="email-options-title">Email EndoTech NZ</p>
+                        <button class="email-options-trigger" type="button" aria-expanded="false" aria-controls="email-options-panel">Email us directly</button>
+                            <div class="email-options-panel" id="email-options-panel" hidden>
                                 <p class="email-options-address">steveshepherdnz@gmail.com</p>
                                 <div class="email-options-actions">
-                                    <a href="mailto:steveshepherdnz@gmail.com">Open email app <span aria-hidden="true">↗</span></a>
-                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=steveshepherdnz%40gmail.com" target="_blank" rel="noopener noreferrer">Open Gmail <span aria-hidden="true">↗</span></a>
+                                    <a href="mailto:steveshepherdnz@gmail.com">Open email app <span class="email-arrow" aria-hidden="true">→</span></a>
+                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=steveshepherdnz%40gmail.com" target="_blank" rel="noopener noreferrer">Open Gmail <span class="email-arrow" aria-hidden="true">→</span></a>
                                     <button type="button" data-copy-email>Copy email address</button>
                                 </div>
-                                <p class="email-options-status" role="status" aria-live="polite">No email app? Open Gmail or copy the address.</p>
+                                <p class="email-options-status" role="status" aria-live="polite"></p>
                             </div>
-                        </details>
                     </div>
                 </div>
             </div>
@@ -344,7 +341,7 @@ h1,h1 span{font-family:system-ui,sans-serif!important;font-weight:300!important;
     </main>
 
     
-    <footer class="clean-footer"><div><a href="/">EndoTech NZ</a><p>Product systems. Local support.</p></div><nav aria-label="Footer navigation"><a href="/products/overview/">All systems</a><a href="/resources/downloads/">Downloads</a><a href="/about/company/">About</a><a href="/resources/ideas/">Clinical articles</a><a href="/about/contact/">Contact Sales</a><a href="/quote-request/">Order / request a pro forma</a></nav><small>© 2026 EndoTech NZ</small></footer>
+    <footer class="clean-footer"><div><a href="/">EndoTech NZ</a><p>Product systems. Local support.</p></div><nav aria-label="Footer navigation"><a href="/products/overview/">All systems</a><a href="/resources/downloads/">Downloads</a><a href="/about/company/">About</a><a href="/resources/ideas/">Clinical articles</a><a href="/about/contact/">Contact Sales</a><a href="/quote-request/">orders/requests</a></nav><small>© 2026 EndoTech NZ</small></footer>
 
 
     

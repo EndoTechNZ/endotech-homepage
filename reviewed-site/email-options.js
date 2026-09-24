@@ -1,6 +1,13 @@
-document.querySelectorAll('.email-options').forEach(panel => {
-  const summary = panel.querySelector('summary');
+document.querySelectorAll('.email-contact-actions').forEach(container => {
+  const summary = container.querySelector('.email-options-trigger');
+  const panel = container.querySelector('.email-options-panel');
   const status = panel.querySelector('[role="status"]');
+  const close = () => { panel.hidden = true; summary.setAttribute('aria-expanded', 'false'); };
+  summary.addEventListener('click', () => {
+    panel.hidden = !panel.hidden;
+    summary.setAttribute('aria-expanded', String(!panel.hidden));
+    status.textContent = '';
+  });
   panel.querySelector('[data-copy-email]').addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText('steveshepherdnz@gmail.com');
@@ -10,11 +17,11 @@ document.querySelectorAll('.email-options').forEach(panel => {
     }
   });
   document.addEventListener('click', event => {
-    if (panel.open && !panel.contains(event.target)) panel.open = false;
+    if (!panel.hidden && !container.contains(event.target)) close();
   });
-  panel.addEventListener('keydown', event => {
+  container.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
-      panel.open = false;
+      close();
       summary.focus();
     }
   });
