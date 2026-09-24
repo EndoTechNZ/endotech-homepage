@@ -1,0 +1,26 @@
+/* Only the five available product cards respond to their product-link hover. */
+:is(.overview-system-card, .overview-support-card:not(.overview-support-card-wide)) {
+  --product-zoom: 1;
+}
+:is(.overview-system-card, .overview-support-card:not(.overview-support-card-wide)) figure {
+  overflow: hidden;
+}
+:is(.overview-system-card, .overview-support-card:not(.overview-support-card-wide)) figure img {
+  transform: scale(var(--product-zoom));
+  transition: transform 200ms ease;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :is(.overview-system-card, .overview-support-card:not(.overview-support-card-wide)):has(a:hover) {
+    --product-zoom: 1.06;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  :is(.overview-system-card, .overview-support-card:not(.overview-support-card-wide)):has(a:focus-visible) {
+    --product-zoom: 1.06;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.overview-system-card, .overview-support-card:not(.overview-support-card-wide)) figure img {
+    transition: none;
+  }
+}
