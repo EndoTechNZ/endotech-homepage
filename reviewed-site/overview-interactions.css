@@ -3,6 +3,12 @@
 .overview-stitch-page img {
   filter: drop-shadow(0 3px 3px rgba(25, 43, 65, .12));
 }
+/* This catalogue image has an opaque studio background: a drop shadow would
+   outline the entire rectangle rather than the instrument. */
+.overview-stitch-page img[src="/assets/cplus-10-21mm-catalogue.png"] {
+  filter: none;
+  mask-image: linear-gradient(to right, transparent, #000 30%, #000 70%, transparent);
+}
 .overview-stitch-page img:not([src="/assets/cplus-10-21mm-catalogue.png"]) {
   -webkit-box-reflect: below 2px linear-gradient(to bottom, transparent 86%, rgba(0,0,0,.18) 100%);
 }
