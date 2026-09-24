@@ -125,7 +125,7 @@ h1,h1 span{font-family:system-ui,sans-serif!important;font-weight:300!important;
 <a class="clean-brand" href="/" aria-label="EndoTech NZ home"><img src="/assets/01-EndoTech-NZ-approved-logo.png" alt="EndoTech NZ"></a>
 <nav aria-label="Main navigation"><a href="/products/overview/">Systems</a>
 <details class="clean-explore"><summary>Explore <span aria-hidden="true">⌄</span></summary><div class="clean-dropdown">
-<a href="/products/transform-s-et/">Transform S ET</a><a href="/products/transform-s-pt/">Transform S PT</a><a href="/products/transform-s-rg/">Transform S RG</a><a href="/products/micro-path/">Micro-Path</a>
+<a href="/products/transform-s-et/">Transform S ET</a><a href="/products/transform-s-pt/">Transform S PT</a><a href="/products/transform-s-rg/">Transform S RG</a><a href="/products/micro-path/">Micro-Path</a><a href="/products/c-plus/">Transform S C+</a>
 <hr><a href="/technology/">Technology</a><a href="/technique/workflow/">Clinical workflow</a><a href="/resources/clinical-tips/">Education</a><a href="/resources/downloads/">Evidence &amp; downloads</a><a href="/promotions/transform-s-catalogue/?intro=flip">NZ promotional brochure</a><a href="/about/company/">About EndoTech</a>
 </div></details><a class="clean-order" href="/quote-request/">Order <span aria-hidden="true">↗</span></a></nav>
 </div></header>
@@ -395,4 +395,4 @@ const priceSweep=document.createElement('span');priceSweep.className='price-swip
 document.querySelectorAll('.system-btn').forEach(b=>b.addEventListener('click',()=>{if(priceSystem===b.dataset.system)return;priceSystem=b.dataset.system;if(priceSweep.getAnimations().some(a=>a.playState==='running'))return;if(!matchMedia('(prefers-reduced-motion: reduce)').matches)priceSweep.animate([{transform:'translateX(-120%) skewX(-12deg)',opacity:0},{opacity:1,offset:.2},{opacity:1,offset:.75},{transform:'translateX(340%) skewX(-12deg)',opacity:0}],{duration:850,easing:'ease-in-out'});}));
 document.querySelectorAll('.system-btn').forEach(b=>b.addEventListener('click',()=>{const caption=document.getElementById('comparison-caption');caption.textContent=comparisonLabels[b.dataset.system]||'';if(b.dataset.system==='micro'){const note=document.createElement('small');note.textContent='Remember the Mini Magic.';caption.append(note)}}));
 </script>
-<script src="/site-nav.js"></script></body></html>
+<script src="/site-nav.js?v=cplus-20260925"></script></body></html>
