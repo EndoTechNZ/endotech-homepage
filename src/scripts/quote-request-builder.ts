@@ -30,7 +30,7 @@ if (root) {
   const catalogBySku = new Map(catalog.map((item) => [item.sku, item]));
   const selectionStorageKey = 'endotechnz_quote_request_selections_v1';
   const formStartedAt = new Date().toISOString();
-  const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'k-files'];
+  const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus'];
   const selections = new Map<string, number>();
   const createDraftReference = () => {
     const now = new Date();
@@ -661,6 +661,10 @@ if (root) {
     const quantity = selections.get(input.dataset.sku || '');
     input.value = quantity ? String(quantity) : '';
   });
-  setActiveFamily(root.querySelector<HTMLButtonElement>('[data-family-tab]')?.dataset.familyTab || 'et');
+  const requestedFamily = new URLSearchParams(window.location.search).get('family');
+  const initialFamily = requestedFamily && familyOrder.includes(requestedFamily as NzLaunchFamily)
+    ? requestedFamily
+    : root.querySelector<HTMLButtonElement>('[data-family-tab]')?.dataset.familyTab || 'et';
+  setActiveFamily(initialFamily);
   renderSelections();
 }

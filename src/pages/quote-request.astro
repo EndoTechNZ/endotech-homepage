@@ -1,13 +1,14 @@
 ---
 import ProductLayout from '../layouts/ProductLayout.astro';
-import endotechLogo from '../assets/endotech-logo-2.png';
+import endotechLogo from '../assets/endotech-nz-logo-2026.jpg';
+import BrandLogo from '../components/BrandLogo.astro';
 import transformLogo from '../assets/transform-s-wordmark.png';
 import { nzCustomerSelectableCatalog, type NzLaunchFamily } from '../data/nzLaunchCatalog';
 import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 import { quoteFamilyLabels } from '../lib/quoteRequest';
 import { siteConfig } from '../config/site';
 
-const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'k-files'];
+const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus'];
 const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string }> = {
   et: {
     eyebrow: 'Rotary shaping',
@@ -31,20 +32,22 @@ const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string 
   },
   'k-files': {
     eyebrow: 'Hand files',
-    description: 'Confirmed stainless-steel K-File individual and assorted packs.',
+    description: 'K-Files are not yet available for ordering.',
   },
 };
+
+const quoteRequestCatalog = nzCustomerSelectableCatalog.filter((item) => item.family !== 'k-files');
 
 const groupedCatalog = Object.fromEntries(
   familyOrder.map((family) => [
     family,
-    nzCustomerSelectableCatalog
+    quoteRequestCatalog
       .filter((item) => item.family === family)
       .sort(compareNzLaunchCatalogItems),
   ]),
-) as Record<NzLaunchFamily, typeof nzCustomerSelectableCatalog>;
+) as Record<NzLaunchFamily, typeof quoteRequestCatalog>;
 
-const encodedCatalog = encodeURIComponent(JSON.stringify(nzCustomerSelectableCatalog));
+const encodedCatalog = encodeURIComponent(JSON.stringify(quoteRequestCatalog));
 const submissionEndpoint = import.meta.env.PUBLIC_QUOTE_REQUEST_ENDPOINT || '';
 const submissionEnabled = import.meta.env.PUBLIC_QUOTE_REQUEST_SUBMISSION_ENABLED === 'true';
 const contactEmail = siteConfig.email.toLowerCase();
@@ -52,7 +55,7 @@ const contactEmail = siteConfig.email.toLowerCase();
 
 <ProductLayout
   title="Request a Pro Forma Invoice | EndoTech NZ"
-  description="Prepare an unpriced EndoTech NZ pro forma invoice request using the complete listed Transform S ET, PT, RG, Micro-Path™, C+ and K-File product range."
+  description="Prepare an unpriced EndoTech NZ pro forma invoice request using the available Transform S ET, PT, RG, Micro-Path™ and C+ product range."
   image={transformLogo.src}
   accent="slate"
 >
@@ -78,9 +81,9 @@ const contactEmail = siteConfig.email.toLowerCase();
           <a href="#review-request">Review the request</a>
         </div>
       </div>
-      <div class="quote-hero-brand" aria-label="Transform S root canal shaping system">
-        <img src={transformLogo.src} width="742" height="116" alt="Transform S root canal shaping system" />
-        <p>Six launch families · {nzCustomerSelectableCatalog.length} listed SKUs · no prices shown</p>
+      <div class="quote-hero-brand" aria-label="Transform S root canal shaping system">
+        <img src={transformLogo.src} width="742" height="116" alt="Transform S root canal shaping system" />
+        <p>Five available families · {quoteRequestCatalog.length} listed SKUs · no prices shown</p>
       </div>
     </section>
 
@@ -325,8 +328,8 @@ const contactEmail = siteConfig.email.toLowerCase();
 
   <article class="quote-print-sheet" data-quote-print-sheet aria-hidden="true">
     <header class="quote-print-header">
-      <img src={transformLogo.src} width="742" height="116" alt="Transform S root canal shaping system" />
-      <div><strong>ENDOTECH NZ</strong><span>ENGINEERED ENDODONTICS</span></div>
+      <img src={transformLogo.src} width="742" height="116" alt="Transform S root canal shaping system" />
+      <BrandLogo />
     </header>
     <div class="quote-print-title">
       <div><p>UNPRICED</p><h1>Pro forma invoice request</h1></div>
@@ -650,7 +653,7 @@ const contactEmail = siteConfig.email.toLowerCase();
     :global(.product-site-header), :global(.product-site-footer), .quote-builder-page { display: none !important; }
     .quote-print-sheet { display: block !important; font-family: Arial, sans-serif; color: #102a43; }
     .quote-print-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 7mm; border-bottom: 1px solid #dce5ea; }
-    .quote-print-header img { width: 72mm; height: auto; }
+    .quote-print-header > img { width: 72mm; height: auto; }
     .quote-print-header div { display: grid; gap: 1mm; text-align: right; }
     .quote-print-header strong { font-size: 9pt; }
     .quote-print-header span { color: #647587; font-size: 5.5pt; letter-spacing: .08em; }

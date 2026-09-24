@@ -101,7 +101,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
     fetchBytes(input.endotechLogoUrl),
   ]);
   const transformLogo = await pdf.embedPng(transformBytes);
-  const endotechLogo = await pdf.embedPng(endotechBytes);
+  const endotechLogo = await pdf.embedJpg(endotechBytes);
 
   let page!: PDFPage;
   let y = 0;
@@ -109,21 +109,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   const drawHeader = (currentPage: PDFPage) => {
     currentPage.drawRectangle({ x: 0, y: PAGE_HEIGHT - 8, width: PAGE_WIDTH, height: 8, color: TEAL });
     drawImageContained(currentPage, transformLogo, { x: MARGIN, y: PAGE_HEIGHT - 91, width: 236, height: 56 });
-    drawImageContained(currentPage, endotechLogo, { x: PAGE_WIDTH - MARGIN - 40, y: PAGE_HEIGHT - 83, width: 40, height: 40 });
-    currentPage.drawText('ENDOTECH NZ', {
-      x: PAGE_WIDTH - MARGIN - 133,
-      y: PAGE_HEIGHT - 57,
-      size: 8.5,
-      font: bold,
-      color: NAVY,
-    });
-    currentPage.drawText('ENGINEERED ENDODONTICS', {
-      x: PAGE_WIDTH - MARGIN - 133,
-      y: PAGE_HEIGHT - 69,
-      size: 5.8,
-      font: regular,
-      color: MID,
-    });
+    drawImageContained(currentPage, endotechLogo, { x: PAGE_WIDTH - MARGIN - 96, y: PAGE_HEIGHT - 105, width: 96, height: 96 });
     currentPage.drawLine({
       start: { x: MARGIN, y: PAGE_HEIGHT - 105 },
       end: { x: PAGE_WIDTH - MARGIN, y: PAGE_HEIGHT - 105 },

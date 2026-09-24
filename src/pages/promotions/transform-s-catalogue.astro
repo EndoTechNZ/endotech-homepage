@@ -1,0 +1,791 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const pdfHref = `${base}downloads/EndoTech-NZ-TransformS-Complete-Catalogue-WEB.pdf`;
+const pageHref = (page: number) => `${base}promotions/transform-s-catalogue/page-${String(page).padStart(2, '0')}.webp`;
+
+const pages = [
+  { number: 1, title: 'Transform S New Zealand catalogue cover' },
+  { number: 2, title: 'Transform S portfolio overview' },
+  { number: 3, title: 'Transform S MicroPath ordering matrix' },
+  { number: 4, title: 'Transform S ET ordering matrix' },
+  { number: 5, title: 'Transform S PT ordering matrix' },
+  { number: 6, title: 'Transform S RG ordering matrix' },
+].map((page) => ({ ...page, src: pageHref(page.number) }));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'DigitalDocument',
+  name: 'EndoTech NZ Transform S Complete Catalogue',
+  description: 'Interactive six-page New Zealand Transform S product and ordering catalogue.',
+  encodingFormat: 'application/pdf',
+  url: new URL('/promotions/transform-s-catalogue/', 'https://endotechnz.com').toString(),
+};
+---
+
+<ProductLayout
+  title="Transform S™ New Zealand Catalogue | Current Promotion"
+  description="Browse the interactive EndoTech NZ Transform S catalogue and review the current $39.95 plus GST rotary-file promotion."
+  image={pages[0].src}
+  schema={schema}
+  accent="slate"
+>
+  <section class="catalogue-hero" aria-labelledby="catalogue-title">
+    <p class="catalogue-eyebrow">Current promotion · New Zealand ordering catalogue</p>
+    <h1 id="catalogue-title">The <span class="catalogue-brand-name">Transform S<span class="catalogue-trademark">™</span></span> portfolio.</h1>
+    <p class="catalogue-intro">Click the catalogue page to turn it, or use the arrows and thumbnails to browse.</p>
+    <div class="catalogue-offer" aria-label="Current promotional offer">
+      <span>Any box of rotary files</span>
+      <strong>$39.95 <small>+ GST</small></strong>
+      <span>Offer runs until 31 December 2026</span>
+    </div>
+  </section>
+
+  <section
+    id="catalogue-reader"
+    class="catalogue-reader"
+    aria-label="Interactive Transform S catalogue"
+    data-catalogue-reader
+    data-pages={JSON.stringify(pages)}
+  >
+    <div class="catalogue-reader-bar">
+      <div>
+        <p>Interactive catalogue</p>
+        <span>Use the arrows, page thumbnails or your keyboard.</span>
+      </div>
+      <div class="catalogue-reader-actions">
+        <a href={pdfHref} target="_blank" rel="noreferrer">Open native PDF</a>
+        <a class="catalogue-download" href={pdfHref} download>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"></path></svg>
+          Download PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="catalogue-stage-shell">
+      <button class="catalogue-page-control previous" type="button" data-catalogue-previous aria-label="Previous catalogue page">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+      </button>
+
+      <div class="catalogue-stage" data-catalogue-stage>
+        <button class="catalogue-page-sheet" type="button" data-catalogue-sheet aria-label="Turn to catalogue page 2">
+          <img
+            src={pages[0].src}
+            width="1488"
+            height="2105"
+            alt={pages[0].title}
+            decoding="sync"
+            fetchpriority="high"
+            data-catalogue-image
+          />
+        </button>
+        <div class="catalogue-arrival" data-catalogue-arrival hidden aria-hidden="true">
+          {[...pages].reverse().map((page) => (
+            <div class="catalogue-arrival-leaf" data-arrival-leaf={page.number}>
+              <img src={page.src} width="1488" height="2105" alt="" loading="eager" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button class="catalogue-page-control next" type="button" data-catalogue-next aria-label="Next catalogue page">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+      </button>
+    </div>
+
+    <div class="catalogue-page-status" aria-live="polite">
+      <span data-catalogue-status>Page 1 of 6</span>
+      <small>Click the page, use the arrows, or choose a thumbnail.</small>
+    </div>
+
+    <nav class="catalogue-thumbnails" aria-label="Catalogue pages">
+      {pages.map((page) => (
+        <button
+          type="button"
+          data-catalogue-thumbnail={page.number}
+          aria-label={`Open page ${page.number}: ${page.title}`}
+          aria-current={page.number === 1 ? 'page' : undefined}
+        >
+          <img src={page.src} width="1488" height="2105" alt="" loading={page.number === 1 ? 'eager' : 'lazy'} />
+          <span>{String(page.number).padStart(2, '0')}</span>
+        </button>
+      ))}
+    </nav>
+
+    <noscript>
+      <p class="catalogue-noscript">JavaScript is required for the page-turn reader. <a href={pdfHref}>Open the complete PDF instead.</a></p>
+    </noscript>
+  </section>
+
+  <section class="catalogue-product-links" aria-label="Continue exploring">
+    <p class="catalogue-eyebrow">Continue exploring</p>
+    <nav aria-label="Catalogue product links">
+      <a href={`${base}products/micro-path/`}>MicroPath™</a>
+      <a href={`${base}products/transform-s-et/`}>Transform S™ ET</a>
+      <a href={`${base}products/transform-s-pt/`}>Transform S™ PT</a>
+      <a href={`${base}products/transform-s-rg/`}>Transform S™ RG</a>
+      <a href={`${base}products/c-plus/`}>Transform S™ C+</a>
+    </nav>
+  </section>
+</ProductLayout>
+
+<script>
+  import { animateCatalogueTurn } from '../../lib/cataloguePageTurn';
+  const reader = document.querySelector<HTMLElement>('[data-catalogue-reader]');
+
+  if (reader) {
+    const pages = JSON.parse(reader.dataset.pages || '[]') as Array<{ number: number; title: string; src: string }>;
+    const image = reader.querySelector<HTMLImageElement>('[data-catalogue-image]');
+    const sheet = reader.querySelector<HTMLButtonElement>('[data-catalogue-sheet]');
+    const status = reader.querySelector<HTMLElement>('[data-catalogue-status]');
+    const previous = reader.querySelector<HTMLButtonElement>('[data-catalogue-previous]');
+    const next = reader.querySelector<HTMLButtonElement>('[data-catalogue-next]');
+    const thumbnails = Array.from(reader.querySelectorAll<HTMLButtonElement>('[data-catalogue-thumbnail]'));
+    const hashMatch = window.location.hash.match(/^#page-(\d+)$/);
+    let current = Math.min(pages.length - 1, Math.max(0, Number(hashMatch?.[1] || 1) - 1));
+    let isTurning = false;
+    const arrival = reader.querySelector<HTMLElement>('[data-catalogue-arrival]');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const arrivalUrl = new URL(window.location.href);
+    const shouldIntroduce = arrivalUrl.searchParams.get('intro') === 'flip' && !hashMatch;
+    let introCancelled = false;
+    let introAnimations: Animation[] = [];
+
+    // Consume the entrance request: reloads and page turns must not replay it.
+    if (arrivalUrl.searchParams.has('intro')) {
+      arrivalUrl.searchParams.delete('intro');
+      window.history.replaceState(null, '', arrivalUrl);
+    }
+
+    function finishIntroduction() {
+      introCancelled = true;
+      introAnimations.forEach((animation) => animation.cancel());
+      introAnimations = [];
+      if (arrival) arrival.hidden = true;
+      reader?.classList.remove('is-introducing');
+    }
+
+    async function introduceCatalogue() {
+      if (!reader || !arrival || !sheet || !shouldIntroduce) return;
+      reader.classList.add('catalogue-arrival-view');
+      reader.scrollIntoView({ behavior: 'instant', block: 'start' });
+      if (reducedMotion.matches) return;
+
+      // Never animate blank pages or make a slow connection block the reader.
+      const images = Array.from(arrival.querySelectorAll('img'));
+      const ready = await Promise.race([
+        Promise.all(images.map((page) => page.decode())).then(() => true, () => false),
+        new Promise<boolean>((resolve) => window.setTimeout(() => resolve(false), 1800)),
+      ]);
+      if (!ready || introCancelled || reducedMotion.matches || document.hidden) return;
+      arrival.hidden = false;
+      reader.classList.add('is-introducing');
+
+      const duration = 1250;
+      const settle = [
+        { transform: 'rotateX(10deg) rotateY(8deg) rotateZ(-18deg) scale3d(.52,.52,.52)', offset: 0 },
+        { transform: 'rotateX(10deg) rotateY(8deg) rotateZ(-18deg) scale3d(.52,.52,.52)', offset: .62 },
+        { transform: 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1)', offset: 1 },
+      ];
+      const timing = { duration, easing: 'cubic-bezier(.22,.65,.3,1)', fill: 'both' as const };
+      introAnimations.push(arrival.animate(settle, timing), sheet.animate(settle, timing));
+      arrival.querySelectorAll<HTMLElement>('[data-arrival-leaf]').forEach((leaf) => {
+        const pageIndex = Number(leaf.dataset.arrivalLeaf) - 1;
+        introAnimations.push(leaf.animate([
+          { transform: 'rotateY(0deg)', opacity: 1, offset: 0 },
+          { transform: 'rotateY(-38deg)', opacity: 1, offset: .32 },
+          { transform: 'rotateY(-100deg)', opacity: 1, offset: .65 },
+          { transform: 'rotateY(-168deg)', opacity: 0, offset: 1 },
+        ], { duration: 660, delay: 70 + pageIndex * 85, easing: 'ease-in-out', fill: 'both' }));
+      });
+      await Promise.allSettled(introAnimations.map((animation) => animation.finished));
+      finishIntroduction();
+    }
+    // Any deliberate interaction takes priority over the decorative entrance.
+    reader.addEventListener('pointerdown', finishIntroduction, { once: true });
+    reducedMotion.addEventListener('change', finishIntroduction);
+    window.addEventListener('pagehide', finishIntroduction, { once: true });
+
+    pages.slice(1).forEach((page) => {
+      const preload = new Image();
+      preload.src = page.src;
+    });
+
+    function renderPage() {
+      const page = pages[current];
+      if (!page || !image) return;
+      image.src = page.src;
+      image.alt = page.title;
+      if (status) status.textContent = `Page ${page.number} of ${pages.length}`;
+      previous?.toggleAttribute('disabled', current === 0);
+      next?.toggleAttribute('disabled', current === pages.length - 1);
+      if (sheet) {
+        sheet.disabled = current === pages.length - 1;
+        sheet.setAttribute(
+          'aria-label',
+          current === pages.length - 1 ? 'Last catalogue page' : `Turn to catalogue page ${current + 2}`,
+        );
+      }
+      thumbnails.forEach((thumbnail, index) => {
+        if (index === current) thumbnail.setAttribute('aria-current', 'page');
+        else thumbnail.removeAttribute('aria-current');
+      });
+      window.history.replaceState(null, '', `#page-${page.number}`);
+    }
+
+    async function goToPage(target: number, direction = 1) {
+      finishIntroduction();
+      const nextPage = Math.min(pages.length - 1, Math.max(0, target));
+      if (nextPage === current || isTurning || !sheet || !image) return;
+      isTurning = true;
+      const outgoing = new Image();
+      outgoing.src = image.src;
+      const incoming = new Image();
+      incoming.src = pages[nextPage].src;
+      // Hold the current page until both sides of the transition are ready.
+      try { await Promise.all([outgoing.decode(), incoming.decode()]); }
+      catch { isTurning = false; return; }
+      current = nextPage;
+      renderPage();
+      if (reducedMotion.matches) {
+        isTurning = false;
+        return;
+      }
+      const curl = document.createElement('canvas');
+      curl.setAttribute('aria-hidden', 'true');
+      // Inline positioning keeps the generated canvas aligned to the actual sheet.
+      Object.assign(curl.style, {
+        position: 'absolute', inset: '0', width: '100%', height: '100%',
+        zIndex: '6', pointerEvents: 'none', borderRadius: '2px 5px 5px 2px',
+      });
+      sheet.appendChild(curl);
+      animateCatalogueTurn(curl, outgoing, direction, () => {
+        curl.remove();
+        isTurning = false;
+      });
+    }
+
+    previous?.addEventListener('click', () => goToPage(current - 1, -1));
+    next?.addEventListener('click', () => goToPage(current + 1, 1));
+    sheet?.addEventListener('click', () => goToPage(current + 1, 1));
+    thumbnails.forEach((thumbnail, index) => {
+      thumbnail.addEventListener('click', () => goToPage(index, index >= current ? 1 : -1));
+    });
+    window.addEventListener('keydown', (event) => {
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
+      if (['ArrowRight', 'ArrowLeft', 'PageDown', 'PageUp', 'Home', 'End'].includes(event.key)) event.preventDefault();
+      if (event.key === 'ArrowRight' || event.key === 'PageDown') goToPage(current + 1, 1);
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') goToPage(current - 1, -1);
+      if (event.key === 'Home') goToPage(0, -1);
+      if (event.key === 'End') goToPage(pages.length - 1, 1);
+    });
+    renderPage();
+    void introduceCatalogue();
+  }
+</script>
+
+<style>
+  .catalogue-hero {
+    padding: 96px 56px 70px;
+    text-align: center;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(48, 109, 181, 0.12), transparent 38%),
+      linear-gradient(180deg, #f5f8fb 0%, #ffffff 100%);
+  }
+
+  .catalogue-eyebrow {
+    margin: 0 0 16px;
+    color: #1765a5;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .catalogue-hero h1 {
+    max-width: 900px;
+    margin: 0 auto;
+    color: #171c22;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.065em;
+  }
+
+  .catalogue-brand-name { white-space: nowrap; }
+
+  .catalogue-hero h1 .catalogue-trademark {
+    color: inherit;
+    font-size: .5em;
+    font-weight: 400;
+    line-height: 0;
+    letter-spacing: 0;
+    vertical-align: .5em;
+  }
+
+  .catalogue-intro {
+    max-width: 660px;
+    margin: 28px auto 0;
+    color: #526173;
+    font-size: 1.02rem;
+    line-height: 1.65;
+  }
+
+  .catalogue-offer {
+    display: inline-grid;
+    gap: 5px;
+    justify-items: center;
+    margin-top: 36px;
+    border: 1px solid #d7e1ea;
+    border-radius: 14px;
+    padding: 18px 34px 20px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 16px 42px rgba(15, 32, 51, 0.09);
+  }
+
+  .catalogue-offer span {
+    color: #526173;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .catalogue-offer strong {
+    color: #122a78;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.06em;
+  }
+
+  .catalogue-offer small {
+    font-size: 0.35em;
+    letter-spacing: 0;
+  }
+
+  .catalogue-reader {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 72px 56px 88px;
+    scroll-margin-top: 76px;
+  }
+
+  .catalogue-reader.catalogue-arrival-view { padding-top: 24px; }
+  .catalogue-arrival-view .catalogue-stage-shell { min-height: 0; }
+  .catalogue-arrival-view .catalogue-page-sheet,
+  .catalogue-arrival-view .catalogue-arrival {
+    width: min(100%, 670px, max(160px, calc((100svh - 330px) * 1488 / 2105)));
+  }
+
+  .catalogue-arrival {
+    position: absolute;
+    width: min(100%, 670px);
+    aspect-ratio: 1488 / 2105;
+    z-index: 8;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    transform-origin: center;
+  }
+  .catalogue-arrival[hidden] { display: none; }
+  .catalogue-arrival-leaf {
+    position: absolute;
+    inset: 0;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    border-radius: 2px 12px 12px 2px;
+    background: #f7f8fa;
+    box-shadow: 8px 12px 28px #0005;
+  }
+  .catalogue-arrival-leaf img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    backface-visibility: hidden;
+  }
+  .catalogue-arrival-leaf::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #091e3833, transparent 9%, transparent 68%, #091e3818 94%, #fff9);
+    pointer-events: none;
+  }
+  .is-introducing .catalogue-page-sheet { transform-origin: center; }
+
+  .catalogue-reader-bar {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 26px;
+  }
+
+  .catalogue-reader-bar p {
+    margin: 0;
+    color: #102033;
+    font-size: 1.08rem;
+    font-weight: 750;
+  }
+
+  .catalogue-reader-bar span {
+    display: block;
+    margin-top: 3px;
+    color: #6b7786;
+    font-size: 0.83rem;
+  }
+
+  .catalogue-reader-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .catalogue-reader-actions a {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border: 1px solid #cdd6df;
+    border-radius: 7px;
+    padding: 0 15px;
+    color: #28384a;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .catalogue-reader-actions .catalogue-download {
+    border-color: #102033;
+    background: #102033;
+    color: #ffffff;
+  }
+
+  .catalogue-reader-actions svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .catalogue-reader-actions path,
+  .catalogue-page-control path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  .catalogue-stage-shell {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr) 54px;
+    gap: 20px;
+    align-items: center;
+    min-height: min(78vh, 1000px);
+    border-radius: 22px;
+    padding: 36px 30px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 48%, rgba(58, 91, 126, 0.22), transparent 38%),
+      linear-gradient(135deg, #17283a 0%, #0f1e2e 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 54px rgba(15, 32, 51, 0.16);
+  }
+
+  .catalogue-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-width: 0;
+    perspective: 2200px;
+  }
+
+  .catalogue-page-sheet {
+    position: relative;
+    width: min(100%, 670px);
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    will-change: transform, opacity;
+  }
+
+  .catalogue-page-sheet:focus-visible {
+    outline: 3px solid #5eb4ee;
+    outline-offset: 8px;
+  }
+
+  .catalogue-page-sheet:disabled {
+    cursor: default;
+  }
+
+  .catalogue-page-sheet::before,
+  .catalogue-page-sheet::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 6px -8px -8px 8px;
+    border-radius: 2px 6px 6px 2px;
+    background: #edf1f5;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
+  }
+
+  .catalogue-page-sheet::after {
+    inset: 12px -14px -14px 14px;
+    z-index: -2;
+    background: #cfd7df;
+  }
+
+  .catalogue-page-sheet > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 2px 5px 5px 2px;
+    background: #ffffff;
+    box-shadow: 0 24px 72px rgba(0, 0, 0, 0.42);
+  }
+
+  .catalogue-page-control {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 160ms ease, transform 160ms ease, opacity 160ms ease;
+  }
+
+  .catalogue-page-control:hover,
+  .catalogue-page-control:focus-visible {
+    background: rgba(255, 255, 255, 0.17);
+    transform: scale(1.04);
+  }
+
+  .catalogue-page-control:disabled {
+    opacity: 0.22;
+    cursor: default;
+    transform: none;
+  }
+
+  .catalogue-page-control svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .catalogue-page-status {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 18px;
+    color: #4b5a6b;
+    font-family: Inter, 'Segoe UI', sans-serif;
+  }
+
+  .catalogue-page-status span {
+    font-size: 0.82rem;
+    font-weight: 750;
+  }
+
+  .catalogue-page-status small {
+    color: #7a8795;
+    font-size: 0.76rem;
+  }
+
+  .catalogue-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(76px, 1fr));
+    gap: 14px;
+    margin-top: 22px;
+  }
+
+  .catalogue-thumbnails button {
+    position: relative;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 7px;
+    overflow: hidden;
+    background: #eef2f6;
+    cursor: pointer;
+    transition: border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  }
+
+  .catalogue-thumbnails button:hover,
+  .catalogue-thumbnails button:focus-visible {
+    transform: translateY(-2px);
+    border-color: #97acc0;
+  }
+
+  .catalogue-thumbnails button[aria-current='page'] {
+    border-color: #1765a5;
+    box-shadow: 0 8px 18px rgba(23, 101, 165, 0.13);
+  }
+
+  .catalogue-thumbnails img {
+    display: block;
+    width: 100%;
+    height: 130px;
+    object-fit: contain;
+    background: #ffffff;
+  }
+
+  .catalogue-thumbnails span {
+    position: absolute;
+    right: 10px;
+    bottom: 9px;
+    display: grid;
+    place-items: center;
+    width: 27px;
+    height: 27px;
+    border-radius: 999px;
+    background: rgba(16, 32, 51, 0.9);
+    color: #ffffff;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 750;
+  }
+
+  .catalogue-product-links {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    align-items: start;
+    padding: 82px max(56px, calc((100vw - 1180px) / 2)) 96px;
+    background: #f5f8fb;
+    border-top: 1px solid #e0e7ee;
+  }
+
+  .catalogue-product-links nav {
+    display: grid;
+    border-top: 1px solid #cfd9e3;
+  }
+
+  .catalogue-product-links nav a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 60px;
+    border-bottom: 1px solid #cfd9e3;
+    color: #243649;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .catalogue-product-links nav a::after {
+    content: '→';
+    color: #1765a5;
+    font-size: 1.2rem;
+  }
+
+  .catalogue-noscript {
+    margin-top: 18px;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .catalogue-reader {
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+
+    .catalogue-stage-shell {
+      grid-template-columns: 46px minmax(0, 1fr) 46px;
+      gap: 12px;
+      padding-right: 18px;
+      padding-left: 18px;
+    }
+
+    .catalogue-page-control {
+      width: 44px;
+      height: 44px;
+    }
+
+    .catalogue-product-links {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .catalogue-hero {
+      padding: 70px 18px 54px;
+    }
+
+    .catalogue-reader {
+      padding: 54px 18px 64px;
+    }
+
+    .catalogue-reader-bar {
+      display: grid;
+      justify-content: stretch;
+    }
+
+    .catalogue-reader-actions a {
+      flex: 1;
+    }
+
+    .catalogue-stage-shell {
+      position: relative;
+      display: block;
+      min-height: 0;
+      padding: 24px 34px 76px;
+      border-radius: 14px;
+    }
+
+    .catalogue-page-control {
+      position: absolute;
+      z-index: 4;
+      bottom: 16px;
+    }
+
+    .catalogue-page-control.previous {
+      left: calc(50% - 54px);
+    }
+
+    .catalogue-page-control.next {
+      right: calc(50% - 54px);
+    }
+
+    .catalogue-thumbnails {
+      display: flex;
+      gap: 10px;
+      padding-bottom: 8px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+
+    .catalogue-thumbnails button {
+      flex: 0 0 104px;
+      scroll-snap-align: start;
+    }
+
+    .catalogue-thumbnails img {
+      height: 126px;
+    }
+
+    .catalogue-page-status {
+      display: grid;
+      gap: 4px;
+    }
+
+    .catalogue-product-links {
+      padding: 64px 18px 72px;
+    }
+
+  }
+
+</style>

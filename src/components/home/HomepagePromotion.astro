@@ -1,0 +1,354 @@
+---
+interface Props {
+  base: string;
+}
+
+const { base } = Astro.props;
+const readerHref = `${base}promotions/transform-s-catalogue/?intro=flip#catalogue-reader`;
+const pdfHref = `${base}downloads/EndoTech-NZ-TransformS-Complete-Catalogue-WEB.pdf`;
+const coverHref = `${base}promotions/transform-s-catalogue/page-01.webp`;
+---
+
+<section class="homepage-promotion" aria-labelledby="homepage-promotion-title">
+  <div class="homepage-promotion-shell">
+    <a class="homepage-brochure" href={readerHref} aria-label="Open the interactive Transform S New Zealand catalogue">
+      <span class="homepage-brochure-pages" aria-hidden="true"></span>
+      <img src={coverHref} width="1488" height="2105" alt="Front cover of the EndoTech NZ Transform S catalogue" />
+      <span class="homepage-brochure-cue">
+        <span>Open interactive catalogue</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+      </span>
+    </a>
+
+    <div class="homepage-promotion-copy">
+      <p class="homepage-promotion-eyebrow">Current promos available</p>
+      <h2 id="homepage-promotion-title">Any box of rotary files.</h2>
+      <div class="homepage-promotion-price" aria-label="39 dollars and 95 cents plus GST">
+        <strong>$39.95</strong>
+        <span>+ GST</span>
+      </div>
+      <p class="homepage-promotion-lede">
+        Explore the complete Transform S™ New Zealand portfolio and current ordering catalogue.
+      </p>
+      <p class="homepage-promotion-expiry">Offer runs until 31 December 2026.</p>
+      <div class="homepage-promotion-actions">
+        <a class="homepage-button primary" href={readerHref}>Browse the catalogue</a>
+        <a class="homepage-button secondary" href={pdfHref} download>Download PDF</a>
+      </div>
+      <ul class="homepage-promotion-features" aria-label="Catalogue features">
+        <li>Page-turn reader</li>
+      <li>Downloadable PDF</li>
+        <li>Six-page catalogue</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .homepage-promotion {
+    padding: 78px 56px 88px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 17% 22%, rgba(36, 95, 170, 0.13), transparent 30%),
+      linear-gradient(135deg, #f7f9fc 0%, #edf3f8 56%, #f8fafc 100%);
+    border-top: 1px solid #dfe7ef;
+    border-bottom: 1px solid #dfe7ef;
+  }
+
+  .homepage-promotion-shell {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.78fr) minmax(420px, 1.22fr);
+    gap: clamp(54px, 8vw, 112px);
+    align-items: center;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .homepage-brochure {
+    position: relative;
+    display: block;
+    width: min(100%, 382px);
+    margin: 0 auto;
+    color: inherit;
+    text-decoration: none;
+    perspective: 1300px;
+  }
+
+  .homepage-brochure::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    right: 2%;
+    bottom: -4%;
+    left: 9%;
+    height: 12%;
+    border-radius: 50%;
+    background: rgba(15, 32, 51, 0.28);
+    filter: blur(24px);
+    transform: rotate(-2deg);
+    transition: transform 260ms ease, opacity 260ms ease;
+  }
+
+  .homepage-brochure-pages {
+    position: absolute;
+    z-index: 1;
+    inset: 9px -10px -10px 12px;
+    border: 1px solid #d7dde5;
+    border-radius: 3px 7px 7px 3px;
+    background: repeating-linear-gradient(180deg, #ffffff 0 3px, #e9edf2 3px 4px);
+    box-shadow: 0 12px 28px rgba(15, 32, 51, 0.13);
+    transform: rotate(1.4deg);
+  }
+
+  .homepage-brochure img {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba(100, 116, 139, 0.24);
+    border-radius: 3px 6px 6px 3px;
+    box-shadow: 0 26px 54px rgba(15, 32, 51, 0.22), 0 5px 14px rgba(15, 32, 51, 0.13);
+    transform: rotate(-1.7deg);
+    transform-origin: left center;
+    transition: transform 280ms cubic-bezier(0.2, 0.75, 0.25, 1), box-shadow 280ms ease;
+  }
+
+  .homepage-brochure:hover img,
+  .homepage-brochure:focus-visible img {
+    transform: rotate(-0.6deg) translateY(-8px) rotateY(-3deg);
+    box-shadow: 0 34px 70px rgba(15, 32, 51, 0.27), 0 7px 18px rgba(15, 32, 51, 0.14);
+  }
+
+  .homepage-brochure:hover::after,
+  .homepage-brochure:focus-visible::after {
+    opacity: 0.86;
+    transform: rotate(-2deg) scale(0.95);
+  }
+
+  .homepage-brochure:focus-visible {
+    outline: 3px solid #2365a8;
+    outline-offset: 10px;
+    border-radius: 6px;
+  }
+
+  .homepage-brochure-cue {
+    position: absolute;
+    z-index: 3;
+    right: -18px;
+    bottom: 26px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    border-radius: 999px;
+    padding: 11px 14px 11px 17px;
+    background: #102033;
+    color: #ffffff;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.035em;
+    box-shadow: 0 10px 24px rgba(15, 32, 51, 0.2);
+  }
+
+  .homepage-brochure-cue svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .homepage-brochure-cue path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  .homepage-promotion-copy {
+    max-width: 620px;
+  }
+
+  .homepage-promotion-eyebrow {
+    margin: 0 0 14px;
+    color: #1765a5;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 750;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .homepage-promotion-copy h2 {
+    max-width: 13ch;
+    margin: 0;
+    color: #122a78;
+    font-size: clamp(2.4rem, 5.2vw, 4.7rem);
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+  }
+
+  .homepage-promotion-price {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    margin-top: 22px;
+    color: #102033;
+  }
+
+  .homepage-promotion-price strong {
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.075em;
+  }
+
+  .homepage-promotion-price span {
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: clamp(1.05rem, 2vw, 1.45rem);
+    font-weight: 750;
+    letter-spacing: 0.02em;
+  }
+
+  .homepage-promotion-lede {
+    max-width: 50ch;
+    margin: 24px 0 0;
+    color: #415367;
+    font-size: 1.04rem;
+    line-height: 1.65;
+  }
+
+  .homepage-promotion-expiry {
+    margin: 10px 0 0;
+    color: #122a78;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .homepage-promotion-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .homepage-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    padding: 0 18px;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  }
+
+  .homepage-button.primary {
+    border-color: #214f98;
+    background: linear-gradient(180deg, #3267ad 0%, #24528f 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 18px rgba(32, 78, 145, 0.17);
+  }
+
+  .homepage-button.secondary {
+    border-color: #bfcbd7;
+    background: rgba(255, 255, 255, 0.78);
+    color: #23374d;
+  }
+
+  .homepage-button:hover,
+  .homepage-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 22px rgba(15, 32, 51, 0.14);
+  }
+
+  .homepage-promotion-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin: 24px 0 0;
+    padding: 0;
+    color: #627186;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 650;
+    letter-spacing: 0.04em;
+    list-style: none;
+    text-transform: uppercase;
+  }
+
+  .homepage-promotion-features li {
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .homepage-promotion-features li::before {
+    content: '';
+    position: absolute;
+    top: 0.43em;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #cf9f16;
+  }
+
+  @media (max-width: 920px) {
+    .homepage-promotion {
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+
+    .homepage-promotion-shell {
+      grid-template-columns: minmax(230px, 0.8fr) minmax(340px, 1.2fr);
+      gap: 48px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .homepage-promotion {
+      padding: 58px 18px 64px;
+    }
+
+    .homepage-promotion-shell {
+      grid-template-columns: 1fr;
+      gap: 52px;
+    }
+
+    .homepage-brochure {
+      width: min(78vw, 330px);
+    }
+
+    .homepage-promotion-copy {
+      text-align: center;
+    }
+
+    .homepage-promotion-copy h2 {
+      max-width: 14ch;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .homepage-promotion-price,
+    .homepage-promotion-actions,
+    .homepage-promotion-features {
+      justify-content: center;
+    }
+
+    .homepage-promotion-lede {
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .homepage-brochure img,
+    .homepage-brochure::after {
+      transition: none;
+    }
+  }
+</style>

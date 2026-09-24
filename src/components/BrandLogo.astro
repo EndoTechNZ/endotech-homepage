@@ -1,0 +1,35 @@
+---
+import logo from '../assets/endotech-nz-logo-2026.jpg';
+
+interface Props { size?: 'header' | 'footer' }
+const { size = 'header' } = Astro.props;
+---
+
+<picture class:list={['endotech-brand-logo', { 'is-footer': size === 'footer' }]}>
+  <img src={logo.src} width="2000" height="2000" alt="EndoTech NZ — Distributing Dental Products" decoding="async" />
+</picture>
+
+<style>
+  /* Present the supplied artwork intact; only its surrounding white margin is hidden. */
+  .endotech-brand-logo {
+    display: block;
+    position: relative;
+    flex: none;
+    width: 104px;
+    height: 98px;
+    overflow: hidden;
+    margin-block: 4px;
+    background: white;
+  }
+  .endotech-brand-logo > img {
+    position: absolute;
+    display: block;
+    width: 125%;
+    max-width: none;
+    height: auto;
+    left: -12.5%;
+    top: -17%;
+    margin: 0;
+  }
+  .endotech-brand-logo.is-footer { width: 180px; height: 170px; }
+</style>

@@ -1,6 +1,6 @@
 ---
 import Layout from './Layout.astro';
-import logoIcon from '../assets/endotech-logo-2.png';
+import BrandLogo from '../components/BrandLogo.astro';
 import { siteConfig } from '../config/site';
 import { getFooterSections, getFooterUtilityLinks, getOrderMenu, getPrimaryNavItems, getProductMenu, getProductMobileNavItems, getTechnologyMenu } from '../data/navigation';
 
@@ -28,11 +28,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
   <header class="product-site-header">
     <div class="product-site-header-inner">
       <a href={base} class="product-site-brand" aria-label={`${siteConfig.name} home`}>
-        <img src={logoIcon.src} alt="" />
-        <span>
-          <strong>{siteConfig.name}</strong>
-          <small>Engineered endodontics</small>
-        </span>
+        <BrandLogo />
       </a>
 
       <nav aria-label="Primary navigation">
@@ -265,8 +261,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
   <footer class="product-site-footer">
     <div class="product-site-footer-shell">
       <div class="product-site-footer-brand">
-        <span class="product-site-footer-kicker">EndoTech NZ</span>
-        <strong>{siteConfig.name}</strong>
+        <BrandLogo size="footer" />
         <p>Clinical endodontic systems for New Zealand dentists.</p>
         <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
       </div>
@@ -319,8 +314,8 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
     gap: 28px;
     align-items: center;
     min-height: 72px;
-    padding: 0 56px;
-    max-width: 1280px;
+    padding: 0 24px;
+    max-width: none;
     margin: 0 auto;
   }
 
@@ -334,9 +329,6 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
     text-decoration: none;
   }
 
-  .product-site-brand img {
-    width: 34px;
-  }
 
   .product-site-brand span {
     display: grid;
@@ -810,9 +802,6 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
       gap: 10px;
     }
 
-    .product-site-brand img {
-      width: 32px;
-    }
 
     .product-site-brand strong {
       font-size: 0.9rem;

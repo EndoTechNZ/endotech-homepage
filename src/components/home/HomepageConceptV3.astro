@@ -1,11 +1,13 @@
 ---
-import logoIcon from '../../assets/endotech-logo-2.png';
+import BrandLogo from '../BrandLogo.astro';
 import homepageSplash from '../../assets/homepage-transform-s-clinical-splash.png';
 import transformSWordmark from '../../assets/transform-s-wordmark.png';
-import etProduct from '../../assets/transform-s-et.png';
-import ptProduct from '../../assets/transform-s-pt.png';
-import microPathProduct from '../../assets/micro-path-files.png';
+import etProduct from '../../assets/transform-s-et-thumbnail.png';
+import ptProduct from '../../assets/transform-s-pt-thumbnail.png';
+import rgProduct from '../../assets/transform-s-rg-system-alpha.png';
+import microPathProduct from '../../assets/micro-path-thumbnail.png';
 import ClinicalWorkflowWheel from './ClinicalWorkflowWheel.astro';
+import HomepagePromotion from './HomepagePromotion.astro';
 import { siteConfig } from '../../config/site';
 import { getFooterSections, getFooterUtilityLinks, getHomepageMobileNavItems, getOrderMenu, getPrimaryNavItems, getProductMenu } from '../../data/navigation';
 
@@ -20,20 +22,28 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 
 const systems = [
   {
-    title: 'Transform S™ ET',
+    title: 'Transform S™ ET',
     label: 'Rotary shaping',
     description: 'ET-style shaping with a familiar .04/.06 sequence path.',
     href: `${base}products/transform-s-et/`,
     image: etProduct.src,
-    alt: 'Transform S™ ET rotary files',
+    alt: 'Transform S™ ET rotary files',
   },
   {
-    title: 'Transform S™ PT',
+    title: 'Transform S™ PT',
     label: 'Rotary shaping',
     description: 'PT-style shaping with a clearer coronal-to-apical progression.',
     href: `${base}products/transform-s-pt/`,
     image: ptProduct.src,
-    alt: 'Transform S™ PT rotary file system',
+    alt: 'Transform S™ PT rotary file system',
+  },
+  {
+    title: 'Transform S™ RG',
+    label: 'Reciprocating shaping',
+    description: 'A dedicated glide path and four shaping sizes for a clear reciprocating workflow.',
+    href: `${base}products/transform-s-rg/`,
+    image: rgProduct.src,
+    alt: 'Transform S™ RG orifice shaper, glide-path file and Small, Primary, Medium and Large shaping files',
   },
   {
     title: 'Micro-Path™',
@@ -44,20 +54,21 @@ const systems = [
     alt: 'Micro-Path™ files',
   },
   {
-    title: 'Transform S™ C+ Files',
+    title: 'Transform S™ C+ Files',
     label: 'Calcified-canal hand files',
     description: 'C+ hand files for initial negotiation of narrow or calcified canals.',
     href: `${base}products/c-plus/`,
     image: transformSWordmark.src,
-    alt: 'Transform S™ C+ files',
+    alt: 'Transform S™ C+ files',
   },
   {
-    title: 'Transform S™ K-Files',
+    title: 'Transform S™ K-Files',
     label: 'Stainless-steel hand files',
-    description: 'K-Files in individual and assorted packs for manual canal preparation.',
+    description: 'K-Files are planned for manual canal preparation but are not available yet.',
+    availability: 'Not available yet',
     href: `${base}products/k-files/`,
     image: transformSWordmark.src,
-    alt: 'Transform S™ K-Files',
+    alt: 'Transform S™ K-Files',
   },
 ];
 
@@ -93,7 +104,7 @@ const workflowSteps = [
     title: 'Shape',
     description: 'Adaptive shaping for efficient dentin removal and anatomy conformance.',
     href: `${base}products/overview/`,
-    ariaLabel: 'View Transform S™ shaping products',
+    ariaLabel: 'View Transform S™ shaping products',
     path: 'M19 3c-2.7 0-4.3 2.2-5 4.2C13.3 5.2 11.7 3 9 3 5.8 3 4 5.5 4 8.7c0 3.1 2 5.1 3 8.6.6 2.2 1.2 3.7 2.4 3.7 1.5 0 1.1-5.2 4.6-5.2s3.1 5.2 4.6 5.2c1.2 0 1.8-1.5 2.4-3.7 1-3.5 3-5.5 3-8.6C24 5.5 22.2 3 19 3Z M14 6.5v9.8 M10.8 9.4h6.4 M11.8 12.2h4.4',
   },
   {
@@ -101,7 +112,7 @@ const workflowSteps = [
     title: 'Finish',
     description: 'Refine the canal to final taper for optimal cleaning and disinfection.',
     href: `${base}products/overview/`,
-    ariaLabel: 'View Transform S™ finishing products',
+    ariaLabel: 'View Transform S™ finishing products',
     path: 'M19 3c-2.7 0-4.3 2.2-5 4.2C13.3 5.2 11.7 3 9 3 5.8 3 4 5.5 4 8.7c0 3.1 2 5.1 3 8.6.6 2.2 1.2 3.7 2.4 3.7 1.5 0 1.1-5.2 4.6-5.2s3.1 5.2 4.6 5.2c1.2 0 1.8-1.5 2.4-3.7 1-3.5 3-5.5 3-8.6C24 5.5 22.2 3 19 3Z M14 7.2c.8 2.7.8 5.9 0 9.6 M11.2 8.8c1.9 1.7 3.8 1.7 5.6 0',
   },
 ];
@@ -110,11 +121,7 @@ const workflowSteps = [
 <header class="homepage-shell-header">
   <div class="homepage-shell-header-inner">
     <a class="homepage-brand" href={base} aria-label={`${siteConfig.name} home`}>
-      <img src={logoIcon.src} alt="" />
-      <span>
-        <strong>{siteConfig.name}</strong>
-        <small>Engineered endodontics</small>
-      </span>
+      <BrandLogo />
     </a>
 
     <nav aria-label="Primary navigation">
@@ -197,40 +204,11 @@ const workflowSteps = [
     </figure>
     <div class="homepage-hero-panel">
       <div class="homepage-hero-copy">
-        <img
-          class="homepage-transform-s-wordmark"
-          src={transformSWordmark.src}
-          width="742"
-          height="116"
-          alt="Transform S™ root canal shaping system"
-        />
-        <div class="clinical-workflow-reveal-mask">
-          <p class="clinical-workflow-reveal-text js-clinical-workflow-reveal">
-            EndoTech NZ Clinical Workflow
-          </p>
-        </div>
-        <h1 id="homepage-hero-title" class="homepage-hero-title homepage-hero-title--pre-reveal" data-homepage-hero-title>
-          <span class="homepage-hero-line" style="--hero-line-delay: 0ms;">
-            <span class="homepage-hero-dark">Shape</span>
-            <span class="homepage-hero-light">with confidence.</span>
-          </span>
-          <span class="homepage-hero-line" style="--hero-line-delay: 70ms;">
-            <span class="homepage-hero-dark">Clean</span>
-            <span class="homepage-hero-light">with purpose.</span>
-          </span>
-          <span class="homepage-hero-line" style="--hero-line-delay: 140ms;">
-            <span class="homepage-hero-dark">Seal</span>
-            <span class="homepage-hero-light">with control.</span>
-          </span>
-        </h1>
-        <p class="homepage-hero-lede">
-          EndoTech brings together glide path, shaping, irrigation and obturation into one practical clinical workflow for New Zealand endodontics.
-        </p>
+        <h1 id="homepage-hero-title" class="homepage-hero-title">Endotech NZ</h1>
       </div>
 
       <div class="homepage-hero-actions">
         <a class="homepage-button primary" href={`${base}products/overview/`}>Product Systems</a>
-        <a class="homepage-button secondary" href={`${base}technique/workflow/`}>Clinical Workflow</a>
       </div>
     </div>
   </section>
@@ -265,6 +243,8 @@ const workflowSteps = [
     </div>
   </section>
 
+  <HomepagePromotion base={base} />
+
   <div class="homepage-core-separator" aria-hidden="true"></div>
 
   <section class="homepage-systems-section" aria-labelledby="homepage-systems-title">
@@ -283,6 +263,7 @@ const workflowSteps = [
             <span>{system.label}</span>
             <h3>{system.title}</h3>
             <p>{system.description}</p>
+            {system.availability && <small class="homepage-system-availability">{system.availability}</small>}
           </div>
         </a>
       ))}
@@ -324,8 +305,7 @@ const workflowSteps = [
 <footer class="homepage-shell-footer">
   <div class="homepage-shell-footer-shell">
     <div class="homepage-shell-footer-brand">
-      <span class="homepage-shell-footer-kicker">EndoTech NZ</span>
-      <strong>{siteConfig.name}</strong>
+      <BrandLogo size="footer" />
       <p>Clinical endodontic systems for New Zealand dentists.</p>
       <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
     </div>
@@ -558,8 +538,8 @@ const workflowSteps = [
     gap: 28px;
     align-items: center;
     min-height: 72px;
-    padding: 0 56px;
-    max-width: 1280px;
+    padding: 0 24px;
+    max-width: none;
     margin: 0 auto;
   }
 
@@ -571,9 +551,6 @@ const workflowSteps = [
     text-decoration: none;
   }
 
-  .homepage-brand img {
-    width: 34px;
-  }
 
   .homepage-brand span {
     display: grid;
@@ -900,7 +877,7 @@ const workflowSteps = [
   .homepage-hero-panel {
     position: relative;
     z-index: 2;
-    width: min(920px, calc(100% - 48px));
+    width: min(560px, calc(100% - 48px));
     padding: 44px 52px 46px;
     border: 1px solid rgba(226, 232, 240, 0.72);
     border-radius: 24px;
@@ -984,7 +961,7 @@ const workflowSteps = [
     margin: 0;
     font-family: Inter, 'Segoe UI', sans-serif;
     font-size: clamp(3.3rem, 4.26vw, 3.9rem);
-    font-weight: 760;
+    font-weight: 600;
     letter-spacing: -0.035em;
     line-height: 1.1;
     text-shadow:
@@ -1463,7 +1440,7 @@ const workflowSteps = [
 
   .homepage-systems-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: 18px;
   }
 
@@ -1527,6 +1504,21 @@ const workflowSteps = [
   .homepage-system-card p {
     margin: 14px 0 0;
     font-size: 0.92rem;
+  }
+
+  .homepage-system-availability {
+    display: inline-flex;
+    width: fit-content;
+    margin-top: 14px;
+    border: 1px solid #d8dee7;
+    border-radius: 999px;
+    padding: 6px 10px;
+    background: #f7f9fc;
+    color: #607084;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
   }
 
   .homepage-evidence-list {
@@ -1785,6 +1777,12 @@ const workflowSteps = [
     }
   }
 
+  @media (max-width: 480px) {
+    .homepage-shell-header-inner { gap: 12px; }
+    .homepage-header-actions { gap: 8px; }
+    .homepage-header-actions > a.homepage-header-action { display: none; }
+  }
+
   @media (max-width: 820px) {
     .homepage-hero::after {
       display: none;
@@ -1918,7 +1916,7 @@ const workflowSteps = [
     }
 
     .homepage-hero h1.homepage-hero-title {
-      font-size: clamp(1.42rem, 6.2vw, 1.86rem);
+      font-size: clamp(2rem, 8vw, 2.6rem);
       line-height: 1.12;
       letter-spacing: -0.035em;
     }

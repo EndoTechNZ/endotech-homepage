@@ -54,9 +54,10 @@ export default defineConfig({
         }),
       ],
       head: starlightHead,
+      favicon: '/brand/endotech-nz-logo-2026.jpg',
       logo: {
-        light: './src/assets/logo-wordmark.png',
-        dark: './src/assets/logo-wordmark-dark.png',
+        light: './src/assets/endotech-nz-logo-2026.jpg',
+        dark: './src/assets/endotech-nz-logo-2026.jpg',
         replacesTitle: true,
       },
       social: [
@@ -68,10 +69,10 @@ export default defineConfig({
           items: [
             { label: 'Overview', slug: 'products/overview' },
             { label: 'Micro-Path™ Files', slug: 'products/micro-path' },
-            { label: 'Transform S™ ET Files', slug: 'products/transform-s-et' },
-            { label: 'Transform S™ PT Files', slug: 'products/transform-s-pt' },
-            { label: 'Transform S™ C+ Files', slug: 'products/c-plus' },
-            { label: 'Transform S™ K-Files', slug: 'products/k-files' },
+            { label: 'Transform S™ ET Files', slug: 'products/transform-s-et' },
+            { label: 'Transform S™ PT Files', slug: 'products/transform-s-pt' },
+            { label: 'Transform S™ C+ Files', slug: 'products/c-plus' },
+            { label: 'Transform S™ K-Files', slug: 'products/k-files' },
           ],
         },
         {

@@ -5,7 +5,7 @@ import LanguageSelect from 'virtual:starlight/components/LanguageSelect';
 import Search from 'virtual:starlight/components/Search';
 import SocialIcons from 'virtual:starlight/components/SocialIcons';
 import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
-import logoIcon from '../../assets/endotech-logo-2.png';
+import BrandLogo from '../BrandLogo.astro';
 import { getOrderMenu, getPrimaryNavItems, getProductMenu, getProductMobileNavItems, getTechnologyMenu } from '../../data/navigation';
 
 const base = import.meta.env.BASE_URL;
@@ -23,11 +23,7 @@ const shouldRenderSearch =
   <div class="header">
     <div class="docs-product-header-inner">
       <a href={base} class="docs-brand" aria-label="EndoTechNZ home">
-        <img src={logoIcon.src} alt="EndoTechNZ" class="docs-brand-icon" />
-        <span class="docs-brand-copy">
-          <span class="docs-brand-name">EndoTech NZ</span>
-          <span class="docs-brand-region">Engineered Endodontics</span>
-        </span>
+        <BrandLogo />
       </a>
 
       <nav class="docs-product-nav" aria-label="Primary navigation">
@@ -324,8 +320,8 @@ const shouldRenderSearch =
       gap: 28px;
       align-items: center;
       min-height: 72px;
-      padding: 0 56px;
-      max-width: 1280px;
+      padding: 0;
+      max-width: none;
       margin: 0 auto;
     }
 
@@ -575,8 +571,8 @@ const shouldRenderSearch =
     @media (max-width: 1120px) {
       .docs-product-header-inner {
         grid-template-columns: auto auto;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 0;
+        padding-right: 0;
       }
 
       .docs-product-nav {
@@ -595,8 +591,8 @@ const shouldRenderSearch =
     @media (max-width: 720px) {
       .docs-product-header-inner {
         min-height: 70px;
-        padding-left: 18px;
-        padding-right: 18px;
+        padding-left: 0;
+        padding-right: 0;
       }
 
       .docs-mobile-menu {
@@ -607,6 +603,7 @@ const shouldRenderSearch =
       }
 
       .docs-brand-region,
+      .docs-order-menu,
       .docs-header-action {
         display: none;
       }

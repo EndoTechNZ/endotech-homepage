@@ -1,5 +1,8 @@
 # build output
 dist/
+# Local visual checks, server logs, and browser automation sessions
+output/
+.playwright-cli/
 # generated types
 .astro/
 

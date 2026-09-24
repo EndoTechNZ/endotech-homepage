@@ -1,5 +1,6 @@
 /* EndoTech brand colors - Dark mode (default) */
 :root {
+	--sl-nav-height: 6.75rem;
 	--sl-color-accent-low: #dceff8;
 	--sl-color-accent: #0b75b7;
 	--sl-color-accent-high: #064b78;
@@ -35,7 +36,7 @@
 
 @media (min-width: 64rem) {
 	:root {
-		--sl-nav-height: 6.25rem;
+		--sl-nav-height: 6.75rem;
 		--sl-sidebar-width: 18rem;
 		--sl-content-width: 55rem;
 	}

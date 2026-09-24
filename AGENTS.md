@@ -20,6 +20,8 @@ Each page must include:
 4. Clinical Benefits
 
 ## Messaging Rules
+
+- Keep the brand name `Transform S™` on one line in all displayed text. Use a non-breaking space between `Transform` and `S`; keep any separately styled trademark inside the same no-wrap wrapper. Let surrounding words wrap, and size headings responsively without splitting the brand or changing its trademark placement.
 - Always link product features to clinical problems
 - Emphasise control, safety, and adaptability
 - Use simple, clear, professional language

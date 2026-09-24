@@ -1,6 +1,6 @@
 ---
 import '../styles/tailwind.css';
-import logoDefault from '../assets/endotech-logo-2.png';
+import logoDefault from '../assets/endotech-nz-logo-2026.jpg';
 import { siteConfig } from '../config/site';
 
 interface Props {
@@ -51,10 +51,8 @@ const organizationSchema = Astro.site
     <meta name="twitter:description" content={description} />
     {socialImage && <meta name="twitter:image" content={socialImage} />}
     {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
-    <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}favicon-96x96.png`} sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
-    <link rel="shortcut icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
-    <link rel="apple-touch-icon" sizes="180x180" href={`${import.meta.env.BASE_URL}apple-touch-icon.png`} />
+    <link rel="icon" type="image/jpeg" href={`${import.meta.env.BASE_URL}brand/endotech-nz-logo-2026.jpg`} />
+    <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}brand/endotech-nz-logo-2026.jpg`} />
     <link rel="manifest" href={`${import.meta.env.BASE_URL}site.webmanifest`} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -93,7 +91,7 @@ const organizationSchema = Astro.site
     font-family: 'Nunito Sans', system-ui, sans-serif;
   }
 
-  body.landing-page img[src*='transform-s-pt'] {
+  body.landing-page img[src*='transform-s-pt']:not([src*='thumbnail']) {
     transform: scaleY(-1);
     transform-origin: center;
   }

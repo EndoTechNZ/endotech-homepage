@@ -9,19 +9,20 @@ const partNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-K-Files-Part-N
 ---
 
 <ProductLayout
-  title="Transform S™ K-Files | EndoTech NZ"
-  description="Transform S stainless-steel hand K-files for New Zealand account ordering."
+  title="Transform S™ K-Files | EndoTech NZ"
+  description="Transform S stainless-steel hand K-files for New Zealand account ordering."
   image={transformSWordmark.src}
   accent="teal"
 >
   <main class="launch-product-page">
     <section class="launch-hero">
       <div>
-        <img src={transformSWordmark.src} width="742" height="116" alt="Transform S™ root canal shaping system" />
+        <img src={transformSWordmark.src} width="742" height="116" alt="Transform S™ root canal shaping system" />
         <p class="eyebrow">Hand instrumentation</p>
-        <h1>Transform S™ K-Files</h1>
+        <h1>Transform S™ K-Files</h1>
         <p>Stainless-steel hand K-files in individual and assorted packs for New Zealand account customers.</p>
-        <a href={`${base}order/#k-files-order`}>Request an account order</a>
+        <p class="availability-note"><strong>Not available yet.</strong> Product availability will be confirmed before ordering opens.</p>
+        <a href={`${base}about/contact/`}>Contact EndoTech NZ for updates</a>
       </div>
     </section>
 
@@ -29,7 +30,7 @@ const partNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-K-Files-Part-N
       <div class="heading">
         <p class="eyebrow">New Zealand launch catalogue</p>
         <h2 id="k-files-range-title">K-File article numbers</h2>
-        <p>Article numbers below are taken from the approved 5 August 2026 Transform S product workbook.</p>
+        <p>Article numbers below are taken from the approved 5 August 2026 Transform S product workbook.</p>
       </div>
       <div class="table-shell">
         <table>
@@ -58,6 +59,7 @@ const partNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-K-Files-Part-N
   h1 { font-size: clamp(2.5rem, 6vw, 4.6rem); }
   h2 { font-size: clamp(2rem, 4vw, 3rem); }
   .launch-hero p:not(.eyebrow), .heading p:not(.eyebrow), .document-note { max-width: 68ch; color: #526174; line-height: 1.7; }
+  .availability-note { margin-top: 18px; border-left: 3px solid #b7791f; padding: 10px 14px; background: #fff9ed; color: #6f4c16 !important; }
   .launch-hero a { display: inline-flex; margin-top: 18px; border-radius: 999px; padding: 13px 20px; background: #356e69; color: #fff; font: 700 .9rem Inter, sans-serif; text-decoration: none; }
   .download-link { display: inline-flex; margin-top: 22px; border-radius: 999px; padding: 13px 20px; background: #183751; color: #fff; font: 700 .9rem Inter, sans-serif; text-decoration: none; }
   .table-shell { overflow-x: auto; margin-top: 28px; border: 1px solid #dce4e8; border-radius: 12px; }
