@@ -1,0 +1,23 @@
+/* Compact monochrome signature, cropped in layout from the approved logo master. */
+.nz-branded-hero { padding-top: 40px !important; }
+.nz-hero-wordmark {
+  position: relative;
+  width: 208px;
+  aspect-ratio: 1590 / 455;
+  overflow: hidden;
+  margin: 0 0 24px;
+  mix-blend-mode: multiply;
+}
+.nz-hero-wordmark img {
+  position: absolute;
+  width: 125.7862%;
+  max-width: none;
+  height: auto;
+  left: -14.1509%;
+  top: -256.04396%;
+  filter: grayscale(1) contrast(8);
+}
+@media (max-width: 640px) {
+  .nz-branded-hero { padding-top: 28px !important; }
+  .nz-hero-wordmark { width: 180px; margin-bottom: 24px; }
+}
