@@ -1,0 +1,105 @@
+body.nz-flexion.nz-flexion{--paper:#fafafa;--ink:#0f172a;--blue:#0c4a6e}
+body.nz-flexion.nz-flexion .technology-grid h3 a{font-weight:400!important;color:#0c4a6e}
+body.nz-flexion.nz-flexion .crystal-phases button{box-shadow:none!important}
+body.nz-flexion.nz-flexion .prerequisite-readings a i{color:#0c4a6e!important}
+body.nz-flexion.nz-flexion .flexion{--tech-bg:#fafafa;--tech-panel:#f1f5f9;--tech-panel-2:#0f172a;--tech-fg:#0f172a;--tech-muted:#64748b;--tech-line:#e2e8f0;--tech-red:#0c4a6e;--page-left:max(24px,calc((100% - 1280px)/2));--page-right:max(24px,calc((100% - 1280px)/2));font-family:"Segoe UI",system-ui,sans-serif}
+body.nz-flexion.nz-flexion .flexion :is(h1,h2,h3){font-family:"Segoe UI",system-ui,sans-serif;letter-spacing:-.035em;line-height:1.15}
+body.nz-flexion.nz-flexion .flexion :is(h1,h2){font-weight:300!important}
+body.nz-flexion.nz-flexion .flexion :is(h3,h4){font-weight:500}
+body.nz-flexion.nz-flexion .flexion-motion__sticky{padding-top:40px;gap:24px;grid-template-columns:minmax(240px,1fr) minmax(320px,1.4fr) minmax(130px,.4fr)}
+body.nz-flexion.nz-flexion .motion-header h1{font-size:clamp(38px,4.4vw,64px)!important}
+body.nz-flexion.nz-flexion .motion-header h1 span{font-size:1em;font-weight:300}
+body.nz-flexion.nz-flexion [data-motion-readout]{display:none}
+body.nz-flexion.nz-flexion :is(.flexion-kicker,.motion-copy article>p,.motion-data>p,.motion-data li,.motion-data li span,.motion-reticle,.science-label,.technology-grid article>span,.prerequisite-label>span,.prerequisite-readings a>span){font-family:"Segoe UI",system-ui,sans-serif!important;font-weight:500!important;letter-spacing:.1em;font-size:11px;color:#64748b!important}
+body.nz-flexion.nz-flexion .motion-copy h2{line-height:1.12;letter-spacing:-.035em}
+body.nz-flexion.nz-flexion .motion-copy article>span{font:300 18px/1.65 "Segoe UI",system-ui,sans-serif;color:#64748b}
+body.nz-flexion.nz-flexion .motion-visual{border:1px solid #e2e8f0;border-radius:24px;background:#fff;box-shadow:none}
+body.nz-flexion.nz-flexion .motion-panel-title{font-weight:300;color:#0f172a}
+body.nz-flexion.nz-flexion .motion-scan{background:#94b8cc;box-shadow:none;opacity:.6}
+body.nz-flexion.nz-flexion .motion-progress{left:0;height:2px}
+body.nz-flexion.nz-flexion .motion-data li{font-size:13px;text-transform:none;letter-spacing:0}
+body.nz-flexion.nz-flexion .motion-data li.is-active{color:#0c4a6e!important;border-top-color:#0c4a6e}
+body.nz-flexion.nz-flexion .tip-callout{background:#0f172a;border:1px solid #334155;border-radius:14px;box-shadow:none}
+body.nz-flexion.nz-flexion .tip-callout>span{color:#a4c7dc;font:500 10px/1.5 "Segoe UI",sans-serif;letter-spacing:.08em}
+body.nz-flexion.nz-flexion .tip-callout strong{font-weight:400;font-size:18px}
+body.nz-flexion.nz-flexion .prerequisite-readings{border:0;background:transparent}
+body.nz-flexion.nz-flexion .prerequisite-readings a{background:#fff;border:1px solid #e2e8f0!important;padding:14px 16px;box-shadow:none!important}
+body.nz-flexion.nz-flexion .prerequisite-readings a strong{font:400 13px/1.5 "Segoe UI",system-ui,sans-serif;color:#0c4a6e}
+body.nz-flexion.nz-flexion .prerequisite-readings a i{color:#0c4a6e}
+body.nz-flexion.nz-flexion .prerequisite-label strong{font-weight:400;color:#475569}
+body.nz-flexion.nz-flexion .flexion-architecture{padding-top:80px;padding-bottom:80px;background:#fff!important;min-height:0}
+body.nz-flexion.nz-flexion .architecture-heading{gap:48px}
+body.nz-flexion.nz-flexion .architecture-heading>p{font:300 18px/1.7 "Segoe UI",sans-serif;color:#64748b}
+body.nz-flexion.nz-flexion .architecture-heading h2{font-size:clamp(32px,4vw,48px);line-height:1.15}
+body.nz-flexion.nz-flexion .technology-grid{border:0;gap:16px;margin-top:36px}
+body.nz-flexion.nz-flexion .technology-grid article{border:1px solid #e2e8f0;min-height:160px;padding:24px;background:#fafafa;opacity:1;transform:none}
+body.nz-flexion.nz-flexion .technology-grid article>span{display:none}
+body.nz-flexion.nz-flexion .technology-grid article p{margin:0 0 16px;font-size:12px;color:#64748b}
+body.nz-flexion.nz-flexion .technology-grid h3{font-size:20px;line-height:1.35;color:#0c4a6e}
+body.nz-flexion.nz-flexion .architecture-statement{display:flex;justify-content:center;margin:40px 0 20px;opacity:1;transform:none}
+body.nz-flexion.nz-flexion .architecture-statement>span,body.nz-flexion.nz-flexion .architecture-statement>strong{display:none}
+body.nz-flexion.nz-flexion .architecture-statement p{font:400 13px/1.5 "Segoe UI",sans-serif;text-transform:none;letter-spacing:0;color:#64748b}
+body.nz-flexion.nz-flexion .martensite-art{max-width:100%;border:1px solid #e2e8f0;border-radius:24px;overflow:hidden;background:#fff;box-shadow:none}
+body.nz-flexion.nz-flexion .crystal-stage{background:#fff}
+body.nz-flexion.nz-flexion :is(.crystal-phases button,.crystal-zoom,.reading-toggle,.science-footer button){border-radius:24px;border-color:#cbd5e1;background:#fff;color:#0c4a6e;font-family:"Segoe UI",sans-serif}
+body.nz-flexion.nz-flexion .crystal-phases button[aria-pressed=true]{background:#0c4a6e;color:white;border-color:#0c4a6e}
+body.nz-flexion.nz-flexion :is(.science,.science-evidence){background:#f8fafc;color:#0f172a}
+body.nz-flexion.nz-flexion .science-sticky{top:113px}
+body.nz-flexion.nz-flexion .science.is-horizontal .science-sticky{height:calc(100svh - 113px)}
+body.nz-flexion.nz-flexion .science-copy h2{font-size:clamp(32px,3.3vw,48px);font-weight:300;line-height:1.15}
+body.nz-flexion.nz-flexion .science-copy>p:not(.science-label):not(.science-lead):not(.science-sources){font:400 17px/1.75 "Segoe UI",sans-serif;color:#475569}
+body.nz-flexion.nz-flexion .science-copy .science-lead{font-size:23px;font-weight:300;color:#0c4a6e}
+body.nz-flexion.nz-flexion .science-header nav button[aria-current]{border-color:#0c4a6e!important;color:#0c4a6e!important}
+body.nz-flexion.nz-flexion .science-progress span{background:#0c4a6e}
+body.nz-flexion.nz-flexion .temperature-number{font-weight:300;letter-spacing:-.065em;color:#0c4a6e}
+body.nz-flexion.nz-flexion :is(.af-annotation strong,.metallurgy-application h3,.motor-enquiry span){color:#0c4a6e}
+body.nz-flexion.nz-flexion .af-annotation path{stroke:#0c4a6e}
+body.nz-flexion.nz-flexion .temperature-line span{background:#0c4a6e;box-shadow:none}
+body.nz-flexion.nz-flexion :is(.science-product-link,.motor-enquiry){border-radius:28px;font-weight:400}
+body.nz-flexion.nz-flexion .science-product-link{background:#0c4a6e;color:#fff}
+body.nz-flexion.nz-flexion :is(.science,.prerequisite-readings,.flexion-architecture) a:hover{color:#0369a1}
+body.nz-flexion.nz-flexion .science-product-link:hover{color:#fff;background:#075985}
+body.nz-flexion.nz-flexion .reading-page{--paper:#fafafa;--ink:#0f172a;--red:#0c4a6e}
+@media(max-width:1200px){body.nz-flexion.nz-flexion .flexion-motion__sticky{grid-template-columns:minmax(220px,1fr) minmax(300px,1.2fr)}body.nz-flexion.nz-flexion .motion-data{display:none}}
+@media(max-width:800px){
+ body.nz-flexion.nz-flexion .flexion{--page-left:24px;--page-right:24px}
+ body.nz-flexion.nz-flexion .flexion-motion{height:auto}
+ body.nz-flexion.nz-flexion .flexion-motion__sticky{position:relative;top:0!important;height:auto!important;display:flex;flex-direction:column;overflow:visible;padding:36px 24px}
+ body.nz-flexion.nz-flexion .motion-header h1{font-size:38px!important;line-height:1.1}
+ body.nz-flexion.nz-flexion .prerequisite-readings{order:4;margin-top:20px;width:100%}
+ body.nz-flexion.nz-flexion .prerequisite-readings nav{display:grid;grid-template-columns:1fr;gap:10px}
+ body.nz-flexion.nz-flexion .motion-copy{position:static;height:auto;display:grid;gap:20px;order:3}
+ body.nz-flexion.nz-flexion .motion-copy article{position:static;opacity:1!important;visibility:visible!important;transform:none!important}
+ body.nz-flexion.nz-flexion .motion-copy article>p{margin:0 0 8px}
+ body.nz-flexion.nz-flexion .motion-copy h2{font-size:30px}
+ body.nz-flexion.nz-flexion .motion-copy article>span{margin-top:10px;font-size:16px}
+ body.nz-flexion.nz-flexion .motion-visual{position:relative;inset:auto;height:560px;min-height:560px;width:100%;order:2;flex-shrink:0}
+ body.nz-flexion.nz-flexion .motion-copy{align-self:stretch;width:100%;max-width:none}
+ body.nz-flexion.nz-flexion .motion-file-frame{inset:54px 18px 32px}
+ body.nz-flexion.nz-flexion .tip-callout{width:43%;right:10px;padding:10px}
+ body.nz-flexion.nz-flexion .tip-callout strong{font-size:14px}
+ body.nz-flexion.nz-flexion .tip-callout p{font-size:12px}
+ body.nz-flexion.nz-flexion .motion-progress{display:none}
+ body.nz-flexion.nz-flexion .architecture-heading{grid-template-columns:1fr;gap:24px}
+ body.nz-flexion.nz-flexion .technology-grid{grid-template-columns:1fr 1fr;gap:12px}
+ body.nz-flexion.nz-flexion .technology-grid article{padding:18px;min-height:145px}
+ body.nz-flexion.nz-flexion .technology-grid h3{font-size:18px}
+ body.nz-flexion.nz-flexion .flexion-architecture{padding-top:48px;padding-bottom:48px}
+ body.nz-flexion.nz-flexion .science-panel{grid-template-columns:1fr}
+ body.nz-flexion.nz-flexion .science-header nav{flex-wrap:wrap}
+ body.nz-flexion.nz-flexion .science-copy h2{font-size:36px}
+ body.nz-flexion.nz-flexion .science-sticky{top:79px}
+}
+body.nz-flexion.nz-flexion .site-main{padding-top:0!important}body.nz-flexion.nz-flexion .flexion-motion{border-top:0}body.nz-flexion.nz-flexion .motion-header h1{margin:0}
+body.nz-flexion.nz-flexion .flexion,body.nz-flexion.nz-flexion .reading-page,body.nz-flexion.nz-flexion .flexion-motion__sticky,body.nz-flexion.nz-flexion .flexion-architecture{background:#fafafa!important;color:#0f172a}
+body.nz-flexion.nz-flexion .flexion-scanner,body.nz-flexion.nz-flexion .flexion-rail{display:none}
+body.nz-flexion.nz-flexion .flexion-motion__sticky{top:113px;height:calc(100svh - 113px)}
+body.nz-flexion.nz-flexion .motion-header h1,body.nz-flexion.nz-flexion .reading-page h1{font-weight:300!important;letter-spacing:-.035em!important}
+body.nz-flexion.nz-flexion .motion-header h1 span{color:#64748b}
+body.nz-flexion.nz-flexion .motion-copy h2,body.nz-flexion.nz-flexion .architecture-heading h2{font-size:clamp(30px,4vw,52px);font-weight:300}
+body.nz-flexion.nz-flexion .technology-grid article,body.nz-flexion.nz-flexion .prerequisite-readings a{border-color:#e2e8f0;border-radius:12px;box-shadow:none}
+body.nz-flexion.nz-flexion .reading-page{padding-top:64px}body.nz-flexion.nz-flexion .reading-page header{position:static;background:transparent;box-shadow:none}
+body.nz-flexion.nz-flexion .reading-copy p{font-family:system-ui,sans-serif;font-size:17px;color:#475569;line-height:1.8}
+body.nz-flexion.nz-flexion .return-button,body.nz-flexion.nz-flexion .aside-return-button{border-radius:30px;border-color:#cbd5e1;text-transform:none;letter-spacing:0;font-weight:500}
+body.nz-flexion.nz-flexion .reading-layout aside{border-color:#0c4a6e}
+@media(max-width:800px){body.nz-flexion.nz-flexion .flexion-motion__sticky{top:79px;height:calc(100svh - 79px)}body.nz-flexion.nz-flexion .motion-header h1{font-size:36px!important}body.nz-flexion.nz-flexion .reading-page{padding:36px 22px}body.nz-flexion.nz-flexion .reading-page h1{font-size:36px!important}}

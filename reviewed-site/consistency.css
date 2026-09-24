@@ -1,0 +1,45 @@
+/* Shared presentation only. Quote forms, filters, media and clinical warning colours are excluded. */
+:root{--nz-navy:#0c4a6e;--nz-ink:#0f172a;--nz-muted:#64748b;--nz-line:#e2e8f0;--nz-paper:#fafafa}
+body.nz-consistent main :is(h1,h2,h3,h4){font-family:system-ui,sans-serif!important;text-shadow:none!important}
+body.nz-consistent main :is(h1,h2){font-weight:300!important;letter-spacing:-.03em!important;line-height:1.18!important}
+body.nz-consistent main :is(h3,h4){font-weight:500!important;line-height:1.35!important}
+body.nz-consistent main h2{font-size:clamp(28px,3vw,42px)!important}
+body.nz-consistent main a.nz-action,.nz-route-moved .nz-action{display:inline-flex!important;align-items:center;justify-content:center;gap:.55em;min-height:44px;max-width:100%;box-sizing:border-box;padding:12px 22px!important;border:1px solid transparent!important;border-radius:999px!important;font:500 14px/1.4 system-ui,sans-serif!important;letter-spacing:0!important;text-transform:none!important;text-align:center;text-decoration:none!important;box-shadow:none!important;transform:none!important;transition:background-color .18s,color .18s,border-color .18s!important}
+body.nz-consistent main a.nz-action-primary,.nz-route-moved .nz-action-primary{background:var(--nz-navy)!important;color:#fff!important;border-color:var(--nz-navy)!important}
+body.nz-consistent main a.nz-action-secondary{background:#fff!important;color:var(--nz-navy)!important;border-color:#cbd5e1!important}
+body.nz-consistent main a.nz-action-primary:hover{background:#075985!important;border-color:#075985!important}
+body.nz-consistent main a.nz-action-secondary:hover{background:#f1f5f9!important;border-color:#94a3b8!important}
+body.nz-consistent main a.nz-action :is(span,svg){color:inherit!important}
+body.nz-consistent main :is(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #0284c7!important;outline-offset:4px!important}
+body.nz-consistent :is(section,[id]){scroll-margin-top:130px}
+body.nz-flexion.nz-flexion .reading-page :is(.kicker,.eyebrow,.reading-kicker,.reading-label){color:var(--nz-navy)!important}
+body.nz-flexion.nz-flexion .reading-page header>p:not(.description),body.nz-flexion.nz-flexion .reading-layout aside>span{color:var(--nz-navy)!important}
+body.nz-flexion.nz-flexion .reading-copy .lead{font-weight:300!important;font-size:clamp(26px,2.5vw,36px)!important;line-height:1.3!important;color:var(--nz-ink)!important;letter-spacing:-.025em}
+body.nz-consistent .mb2-page{--ink:#0f172a;--teal:#0c4a6e;--mint:#f1f5f9}
+body.nz-consistent :is(.checklist-page,.outcome-checklist-page){background:#fafafa!important;color:var(--nz-ink)!important}
+body.nz-consistent .point-trigger{background:#fff!important;color:var(--nz-navy)!important;border-color:var(--nz-line)!important;box-shadow:none!important;font-family:system-ui,sans-serif!important}
+body.nz-consistent .point-trigger:is(.is-active,:hover){background:#eaf1f6!important;border-color:#94b8cc!important}
+.nz-route-moved{max-width:1000px;margin:auto;padding:100px 24px}
+body.nz-consistent .right-sidebar{font-family:system-ui,sans-serif}
+body.nz-consistent .right-sidebar :is(h2,summary){color:#0c4a6e!important;font-size:11px!important;font-weight:500!important;letter-spacing:.12em;line-height:1.6;text-transform:uppercase}
+body.nz-consistent .right-sidebar a{display:block;padding:9px 12px!important;border-radius:5px!important;color:#52657a!important;background:transparent!important;font-size:14px!important;font-weight:400!important;line-height:1.5;text-decoration:none!important;transition:background-color .2s ease,color .2s ease}
+body.nz-consistent .right-sidebar a span{font-weight:inherit!important}
+body.nz-consistent .right-sidebar a:hover{background:#f0f5f8!important;color:#0c4a6e!important}
+body.nz-consistent .right-sidebar a[aria-current="true"],body.nz-consistent .right-sidebar a[aria-current="location"],body.nz-consistent .right-sidebar a[aria-current="page"]{background:#eaf1f6!important;color:#0c4a6e!important;font-weight:500!important;box-shadow:inset 2px 0 #0c4a6e}
+body.nz-consistent .right-sidebar a:focus-visible{outline:2px solid #0c4a6e!important;outline-offset:2px}
+body.nz-consistent .right-sidebar .dropdown{background:#fff!important;border-color:#e2e8f0!important}
+@media(prefers-reduced-motion:reduce){body.nz-consistent .right-sidebar a{transition:none}}
+/* Quiet navigation for the clinical reference pages. */
+body.nz-consistent .sidebar-pane{background:#fafafa!important;border-color:#e2e8f0!important}
+body.nz-consistent .sidebar-content{font-family:system-ui,sans-serif;font-size:14px}
+body.nz-consistent .sidebar-content summary{color:#0c4a6e!important;font-size:11px!important;font-weight:500!important;letter-spacing:.12em;line-height:1.6;padding-block:12px}
+body.nz-consistent .sidebar-content summary span{font-size:inherit!important;font-weight:inherit!important}
+body.nz-consistent .sidebar-content a{display:block;color:#52657a!important;background:transparent!important;font-size:14px!important;font-weight:400!important;line-height:1.5;padding:9px 12px!important;border-radius:5px!important;text-decoration:none!important;box-shadow:none!important;transition:background-color .2s ease,color .2s ease}
+body.nz-consistent .sidebar-content a span{font-weight:inherit!important}
+body.nz-consistent .sidebar-content a:hover{background:#f0f5f8!important;color:#0c4a6e!important}
+body.nz-consistent .sidebar-content a[aria-current="page"]{background:#eaf1f6!important;color:#0c4a6e!important;font-weight:500!important;box-shadow:inset 2px 0 #0c4a6e!important}
+body.nz-consistent .sidebar-content a:focus-visible{outline:2px solid #0c4a6e!important;outline-offset:2px}
+body.nz-consistent .sidebar-content ul ul{border-color:#e2e8f0!important}
+@media(prefers-reduced-motion:reduce){body.nz-consistent .sidebar-content a{transition:none}}
+@media(max-width:600px){body.nz-consistent main a.nz-action{min-width:0!important;white-space:normal!important}body.nz-consistent :is(section,[id]){scroll-margin-top:95px}}
+@media(prefers-reduced-motion:reduce){body.nz-consistent main a.nz-action{transition:none!important}}

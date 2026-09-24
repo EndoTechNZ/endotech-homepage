@@ -1,0 +1,34 @@
+body.nz-contact-page{margin:0;background:#fafafa;color:#0f172a;font-family:system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.nz-contact-hero{background:#101729;color:#fff;padding:92px 24px 86px}
+.nz-contact-grid{max-width:1280px;margin:auto;display:grid;grid-template-columns:1.2fr 1fr;gap:96px;align-items:center}
+.nz-contact-eyebrow{font-size:11px;line-height:1.5;font-weight:500;letter-spacing:.15em;text-transform:uppercase;margin:0 0 22px;color:#a9c4df}
+.nz-contact-hero h1{font-size:clamp(40px,4.7vw,66px);font-weight:300;line-height:1.08;letter-spacing:-.04em;margin:0 0 26px;color:#fff}
+.nz-contact-lede{font-size:18px;font-weight:300;line-height:1.7;color:#b5cee6;max-width:510px;margin:0 0 32px}
+.nz-contact-actions{display:flex;flex-wrap:wrap;gap:12px}
+.nz-contact-actions a{display:inline-flex;align-items:center;justify-content:center;gap:22px;min-height:46px;box-sizing:border-box;padding:12px 23px;border-radius:30px;font-size:14px;line-height:1.5;text-decoration:none;transition:background .2s}
+.nz-contact-primary{background:#fff;color:#0c4a6e;border:1px solid #fff}
+.nz-contact-primary:hover{background:#e6f1f9}
+.nz-contact-secondary{color:#d8e9f7;border:1px solid #4b617a;background:transparent}
+.nz-contact-secondary:hover{background:#1d2a40}
+.nz-contact-direct{min-width:0;padding-left:36px;border-left:1px solid #28354a}
+.nz-contact-mesh{margin:0 0 44px;width:100%}
+.nz-contact-mesh canvas{display:block;width:100%;height:100px}
+.nz-contact-mesh figcaption{font-size:10px;line-height:1.5;letter-spacing:.12em;text-transform:uppercase;color:#a9c4df;text-align:center;margin-top:8px}
+.nz-contact-direct .nz-contact-eyebrow{margin-bottom:12px}
+.nz-contact-direct h2{margin:0 0 12px;font-size:30px;font-weight:300;letter-spacing:-.02em;color:#fff}
+.nz-contact-email{display:inline-block;max-width:100%;overflow-wrap:anywhere;color:#d0e7fb;font-size:clamp(16px,1.6vw,21px);text-decoration:underline;text-decoration-color:#546d87;text-underline-offset:6px}
+.nz-contact-email:hover{text-decoration-color:#d0e7fb}
+.nz-contact-response{color:#a9bdd3;font-size:13px;line-height:1.8;margin:22px 0 0}
+.nz-contact-help{max-width:1280px;margin:auto;padding:66px 24px 72px}
+.nz-contact-help-heading .nz-contact-eyebrow{color:#526b82;margin-bottom:12px}
+.nz-contact-help h2{font-size:clamp(28px,3vw,38px);font-weight:300;letter-spacing:-.03em;line-height:1.2;margin:0 0 36px}
+.nz-contact-topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.nz-contact-topics article{border-top:1px solid #dbe4eb;padding-top:24px}
+.nz-contact-topics h3{font-size:18px;font-weight:400;line-height:1.4;margin:0 0 12px}
+.nz-contact-topics p{font-size:15px;line-height:1.7;font-weight:300;color:#52677f;margin:0 0 20px;max-width:340px}
+.nz-contact-topics a{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:13px;color:#0c4a6e;text-decoration:none}
+.nz-contact-topics a:hover{text-decoration:underline;text-underline-offset:4px}
+.nz-contact-main a:focus-visible{outline:2px solid #82bde4;outline-offset:5px;border-radius:4px}
+@media(max-width:1000px){.nz-contact-grid{gap:40px}.nz-contact-direct{padding-left:28px}.nz-contact-hero{padding:64px 24px}.nz-contact-actions{flex-direction:column;align-items:flex-start}.nz-contact-topics{gap:24px}}
+@media(max-width:700px){.nz-contact-grid{grid-template-columns:1fr;gap:44px}.nz-contact-hero{padding:48px 24px}.nz-contact-hero h1{font-size:42px}.nz-contact-lede{font-size:17px}.nz-contact-actions{align-items:stretch}.nz-contact-direct{border-left:0;border-top:1px solid #28354a;padding:24px 0 0}.nz-contact-mesh{margin-bottom:26px}.nz-contact-mesh canvas{height:76px}.nz-contact-topics{grid-template-columns:1fr;gap:18px}.nz-contact-help{padding:44px 24px}.nz-contact-help h2{margin-bottom:28px}}
+@media(prefers-reduced-motion:reduce){.nz-contact-main *{transition:none!important}}

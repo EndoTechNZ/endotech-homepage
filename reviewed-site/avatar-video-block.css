@@ -1,0 +1,16 @@
+.nz-avatar-video-block{box-sizing:border-box;width:100%;min-width:0;margin:0;background:#fff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;align-self:start;scroll-margin-top:130px}
+.nz-avatar-video-block .nz-avatar-video-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:20px;background:#fff}
+.nz-avatar-video-block .nz-avatar-video-pair figure{display:block;min-width:0;margin:0;padding:0;border:0;background:transparent;box-shadow:none}
+.nz-avatar-video-block video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;border-radius:10px;background:#101729}
+.nz-avatar-video-block .nz-avatar-video-pair figcaption{margin:0;padding:10px 0 0;font:400 12px/1.6 system-ui,sans-serif;color:#64748b;text-align:left}
+.nz-avatar-video-block .nz-avatar-guidance-copy{padding:24px;background:#101729;color:#bed5e5}
+.nz-avatar-video-block .nz-avatar-guidance-copy p{margin:0 0 18px;font:400 15px/1.7 system-ui,sans-serif;color:#bed5e5}
+.nz-avatar-video-block .nz-avatar-guidance-copy .nz-avatar-eyebrow,.nz-avatar-video-block .nz-avatar-clinical span{display:block;font:500 11px/1.5 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#a7c9de;margin:0 0 10px}
+.nz-avatar-video-block .nz-avatar-guidance-copy h3{margin:0 0 16px;font:300 28px/1.2 system-ui,sans-serif!important;color:#fff;letter-spacing:-.02em}
+.nz-avatar-video-block .nz-avatar-clinical{border-left:2px solid #8cb9d3;padding-left:14px;margin:20px 0}
+.nz-avatar-video-block .nz-avatar-clinical p{font-size:14px;margin:0}
+.nz-avatar-video-block a.nz-avatar-link{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:10px 20px;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#0c4a6e;text-decoration:none;font:500 14px/1.4 system-ui,sans-serif;box-shadow:none}
+.nz-avatar-video-block a.nz-avatar-link:hover{background:#edf4f8}
+.nz-avatar-video-block :focus-visible{outline:3px solid #0284c7;outline-offset:4px}
+.et-journey-section:has(.nz-avatar-video-block){align-items:start}
+@media(max-width:600px){.nz-avatar-video-block .nz-avatar-video-pair{grid-template-columns:1fr;padding:16px;gap:18px}.nz-avatar-video-block .nz-avatar-guidance-copy{padding:22px}.nz-avatar-video-block{scroll-margin-top:95px}}

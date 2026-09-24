@@ -1,0 +1,52 @@
+/* Screen presentation only. No ordering selectors, state, print or PDF logic altered. */
+@media screen {
+body.nz-quote-review .quote-builder-page{--quote-navy:#0f172a;--quote-teal:#0c4a6e;--quote-teal-dark:#0c4a6e;--quote-gold:#94a3b8;--quote-ink:#334155;--quote-muted:#64748b;--quote-line:#e2e8f0;--quote-pale:#f8fafc;font-family:"Segoe UI",system-ui,sans-serif}
+body.nz-quote-review .quote-local-notice{max-width:1280px;margin:18px auto 0;padding:10px 24px;font:12px/1.5 "Segoe UI",sans-serif;color:#64748b}
+body.nz-quote-review .quote-local-notice a{color:#0c4a6e;text-decoration:underline}
+body.nz-quote-review .quote-hero{background:#fafafa;grid-template-columns:minmax(0,1.5fr) minmax(250px,.65fr);gap:60px;padding:64px max(24px,calc((100vw - 1280px)/2))}
+body.nz-quote-review .quote-hero h1{max-width:20ch;font:300 clamp(36px,4.6vw,64px)/1.08 "Segoe UI",sans-serif;letter-spacing:-.04em}
+body.nz-quote-review .quote-hero-lede{font:300 18px/1.7 "Segoe UI",sans-serif;color:#64748b}
+body.nz-quote-review .quote-eyebrow{font-weight:500;font-size:11px;color:#64748b;letter-spacing:.14em}
+body.nz-quote-review .quote-hero-brand{border:1px solid #e2e8f0;border-radius:20px;box-shadow:none;padding:32px;background:white}
+body.nz-quote-review .quote-hero-brand p{font-size:13px}
+body.nz-quote-review :is(.quote-steps,.quote-section){max-width:1280px}
+body.nz-quote-review .quote-section{padding:64px 0}
+body.nz-quote-review .quote-steps{border-radius:16px;margin-top:32px}
+body.nz-quote-review .quote-steps li>span{background:#eef5f9;color:#0c4a6e;border-radius:50%;box-shadow:none;font-weight:400}
+body.nz-quote-review .quote-steps em{font-weight:500;color:#64748b;font-size:10px}
+body.nz-quote-review .quote-steps strong{font-weight:500}
+body.nz-quote-review .quote-section-heading h2{font:300 clamp(30px,3.6vw,44px)/1.15 "Segoe UI",sans-serif;letter-spacing:-.03em}
+body.nz-quote-review .quote-section-step{background:#f1f5f9;border-color:#e2e8f0;font-weight:500!important;font-size:11px!important;color:#64748b!important}
+body.nz-quote-review .quote-builder-page :is(button,.quote-hero-actions a){min-height:44px;font-family:"Segoe UI",sans-serif;font-weight:400;border-radius:24px;box-shadow:none;transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+body.nz-quote-review .quote-hero-actions a{font-size:14px;border-color:#cbd5e1;color:#0c4a6e}
+body.nz-quote-review .quote-hero-actions a:first-child{background:#0c4a6e;color:#fff;border-color:#0c4a6e}
+body.nz-quote-review .quote-family-tabs button{border-radius:14px;font-size:15px;padding:12px 18px}
+body.nz-quote-review .quote-family-tabs button.is-active{background:#0c4a6e;border-color:#0c4a6e;box-shadow:none}
+body.nz-quote-review .quote-family-tabs small{font-weight:400;font-size:12px}
+body.nz-quote-review .quote-builder-page :is(input,textarea,select){border-color:#cbd5e1;border-radius:10px;font-weight:400;accent-color:#0c4a6e}
+body.nz-quote-review .quote-builder-page :is(input,textarea,select):focus{outline:3px solid #d9eaf4;outline-offset:1px;border-color:#0c4a6e}
+body.nz-quote-review .quote-builder-page :is(button,a):focus-visible{outline:3px solid #0c4a6e;outline-offset:4px}
+body.nz-quote-review .quote-builder-page button:disabled{opacity:.5;cursor:not-allowed}
+body.nz-quote-review .quote-builder-page button:not(:disabled):hover{border-color:#0c4a6e;filter:brightness(.96)}
+body.nz-quote-review :is(.quote-search span,.quote-customer-form label>span){font-weight:500;color:#334155}
+body.nz-quote-review :is(.quote-family-panel,.quote-review-card){border-radius:18px;box-shadow:none}
+body.nz-quote-review .quote-family-panel>header{background:#f8fafc}
+body.nz-quote-review .quote-family-panel>header h3{font-weight:400;font-size:24px}
+body.nz-quote-review .quote-family-panel>header p{font-weight:500;color:#64748b}
+body.nz-quote-review .quote-catalog-table th{background:#f1f5f9;color:#475569;font-weight:500;padding:14px 12px}
+body.nz-quote-review .quote-catalog-table td:first-child strong{font-weight:500}
+body.nz-quote-review :is(.quote-selection-card,.quote-export-card){border:1px solid #e2e8f0;box-shadow:none;border-radius:18px}
+body.nz-quote-review .quote-selection-card{top:130px}
+body.nz-quote-review :is(.quote-selection-card-heading h3,.quote-export-card h3){font-weight:400}
+body.nz-quote-review .quote-selection-card-heading button,body.nz-quote-review .quote-summary-controls button{color:#9b3535;border:1px solid #f0dada;padding:8px 12px;background:#fff}
+body.nz-quote-review .quote-summary-controls input{min-height:44px}
+body.nz-quote-review .quote-details-section{background:white}
+body.nz-quote-review .quote-privacy-note{background:#f8fafc;color:#475569;border-left-color:#94a3b8}
+body.nz-quote-review .quote-export-actions button{border-color:#cbd5e1;color:#0c4a6e;background:white}
+body.nz-quote-review .quote-export-actions button.quote-primary-action{background:#0c4a6e;color:white;border-color:#0c4a6e}
+body.nz-quote-review .quote-consent input{border-radius:4px}
+@media(max-width:1350px){body.nz-quote-review :is(.quote-steps,.quote-section){margin-left:24px;margin-right:24px}}
+@media(max-width:900px){body.nz-quote-review .quote-hero{grid-template-columns:1fr;padding:40px 24px;gap:28px}body.nz-quote-review .quote-hero-brand{max-width:400px;padding:24px}body.nz-quote-review .quote-hero-brand img{max-width:260px}body.nz-quote-review .quote-section{padding:44px 0}}
+@media(max-width:500px){body.nz-quote-review .quote-hero-actions{flex-direction:column;align-items:stretch}body.nz-quote-review .quote-hero-actions a{justify-content:center}body.nz-quote-review .quote-hero-lede{font-size:16px}}
+}
+@media print{.clean-header,.clean-footer,.quote-local-notice{display:none!important}}
