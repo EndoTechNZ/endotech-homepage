@@ -35,68 +35,136 @@ const irrigationChecklistPdfHref = withBasePath('/downloads/EndoTech-NZ-Irrigati
 const vptGuideHref = withBasePath('/downloads/Vital_Pulp_Therapy_Chairside_Quick_Guide.pdf');
 
 const vptReadiness = [
-  'Rubber dam isolation before caries removal',
-  'Magnification and strong light',
-  'New sterile burs and sterile coolant for the pulp phase',
-  '1-2% NaOCl with sterile cotton pellets',
-  'A well-sealed definitive restoration, preferably at the same visit',
+  'Select a restorable, isolatable tooth with a defensible pulpal and apical diagnosis',
+  'Treat exposure as a second diagnostic stage and inspect the pulp under magnification',
+  'Remove diseased tissue until the remaining pulp is healthy and bleeding is controllable',
+  'Maintain asepsis with rubber dam, a disinfected field, and a separate sterile pulp set',
+  'Seal the tooth, arrange review, and change the treatment when a controllable endpoint cannot be reached',
+];
+
+const vptSelectionChecks = [
+  {
+    title: 'Patient and pain',
+    text:
+      'Record provoked, spontaneous, nocturnal, and lingering pain, previous episodes, analgesic use, medical factors, expectations, and ability to attend review.',
+  },
+  {
+    title: 'Pulp and apical tests',
+    text:
+      'Compare cold and EPT responses with control teeth. Add percussion, palpation, mobility, periodontal probing, and crack assessment.',
+  },
+  {
+    title: 'Imaging and caries depth',
+    text:
+      'Use a diagnostic periapical radiograph to assess the dentine barrier, root maturity, resorption, and apical status. Additional imaging must answer a defined question.',
+  },
+  {
+    title: 'Restorability and isolation',
+    text:
+      'Confirm that caries can be removed, the tooth can be isolated, sound peripheral margins can be created, and a durable restoration is achievable.',
+  },
+  {
+    title: 'Consent and conversion',
+    text:
+      'Discuss indirect pulp treatment, direct capping, partial or full pulpotomy, root-canal treatment, extraction, and the possibility of changing course after the pulp is seen.',
+  },
 ];
 
 const vptCariesRoutes = [
   {
-    label: 'Deep caries + normal/reversible response',
+    label: '01 · Preserve the barrier',
+    title: 'Deep caries, normal pulp or reversible pulpitis',
     text:
-      'With a radiographically distinct dentine barrier, selective caries removal may avoid pulp exposure while preserving a sound peripheral seal.',
+      'When a distinct radiographic dentine barrier remains, selective caries removal and indirect pulp treatment can avoid exposure while firm peripheral dentine supports a reliable seal.',
   },
   {
-    label: 'Extremely deep / symptomatic caries',
+    label: '02 · Treat a small exposure',
+    title: 'Carious exposure with healthy, controllable tissue',
     text:
-      'Where the pulp is vital and bleeding can be controlled, complete excavation permits direct tissue assessment and may lead to full pulpotomy.',
+      'Direct pulp capping may be considered in a carefully selected exposure. Partial pulpotomy removes superficial inflamed tissue and often gives a cleaner biological endpoint.',
+  },
+  {
+    label: '03 · Remove coronal inflammation',
+    title: 'Extremely deep caries or significant symptoms',
+    text:
+      'Complete caries removal permits direct assessment. If the pulp is vital, the apical tissues are suitable, and bleeding becomes controllable, full pulpotomy may preserve the radicular pulp.',
+  },
+  {
+    label: '04 · Treat traumatic exposure',
+    title: 'Vital permanent tooth after trauma',
+    text:
+      'Exposure size, contamination, treatment delay, root maturity, and associated luxation injuries guide treatment. Current guidance favours partial or full pulpotomy over direct capping in many traumatic exposures.',
+  },
+  {
+    label: '05 · Leave the VPT pathway',
+    title: 'The tissue does not reach a controllable endpoint',
+    text:
+      'Necrosis, purulence, infection-related apical involvement, or bleeding that remains uncontrolled after appropriate pulpotomy requires a new plan: pulpectomy, root-canal treatment, or referral.',
   },
 ];
 
 const vptOperativePhases = [
   {
-    title: 'Isolate + disinfect',
+    title: 'Isolate and disinfect',
     text:
-      'Achieve profound anaesthesia, secure rubber dam before caries removal, and disinfect the isolated crown, clamp, and adjacent dam.',
+      'Achieve profound anaesthesia. Place rubber dam before caries removal and disinfect the isolated crown, clamp, and adjacent dam.',
   },
   {
-    title: 'Remove caries',
+    title: 'Create sound margins',
     text:
-      'Work through the infected phase and establish sound peripheral margins using the caries route selected for the case.',
+      'Remove caries according to the selected route. Establish clean peripheral dentine that can support a durable adhesive seal.',
   },
   {
-    title: 'Enter the clean pulp phase',
+    title: 'Change to the pulp set',
     text:
-      'Change to new sterile burs and sterile coolant before entering the pulp wound. Inspect the tissue under magnification.',
+      'Before entering the wound, change to sterile burs, instruments, and sterile coolant. Do not carry a caries-contaminated bur into the pulp.',
+  },
+  {
+    title: 'Inspect the tissue',
+    text:
+      'Use magnification and strong light. Look for uniformly vital tissue, focal necrosis, purulence, clot, debris, and the character of bleeding.',
+  },
+  {
+    title: 'Remove tissue with purpose',
+    text:
+      'Resect only to a level where the remaining pulp appears healthy and the wound can be controlled. Let the tissue determine depth, not a memorised number of millimetres.',
+  },
+  {
+    title: 'Test the endpoint',
+    text:
+      'Use sodium hypochlorite according to the clinical protocol and reassess. A clean, controllable wound can receive cement; persistent uncontrolled bleeding changes the treatment.',
   },
 ];
 
 const vptHaemostasis = [
   {
-    time: '0-2 minutes',
+    time: 'Inspect',
     text:
-      'Place a sterile cotton pellet lightly moistened with 1-2% NaOCl directly over the wound. Use gentle pressure.',
+      'Direct observation is the second diagnostic stage. Confirm that tissue is vital and that necrosis, purulence, clot, and debris are absent from the interface.',
   },
   {
-    time: '2-4 minutes',
+    time: 'Control',
     text:
-      'Remove and inspect. If bleeding remains brisk, resect a further 1-2 mm with a new sterile bur and coolant, then place a fresh pellet.',
+      'Apply sodium hypochlorite by passive irrigation or a lightly moistened sterile pellet. Use gentle pressure and follow the practice protocol for concentration and handling.',
   },
   {
-    time: '4-6 minutes',
+    time: 'Reassess',
     text:
-      'If needed, repeat once more after reassessment and further tissue removal. Treat this as the final two-minute checkpoint.',
+      'At two-minute checkpoints, remove the pellet and inspect. Extend a partial pulpotomy only when the observed tissue condition requires further removal.',
+  },
+  {
+    time: 'Decide by 6 minutes',
+    text:
+      'The 2025 AAPD guideline associates haemostasis within six minutes with higher pulpotomy success. If bleeding remains uncontrolled after full pulpotomy, stop VPT and change the plan.',
   },
 ];
 
 const vptFinishingSteps = [
   {
     number: '05',
-    title: 'Pulp material',
+    title: 'Protect the pulp',
     text:
-      'Place a validated hydraulic calcium-silicate cement directly over the clean pulp wound, typically 1-3 mm thick, following the product IFU.',
+      'Place a validated hydraulic calcium-silicate cement directly over the clean, controlled wound. Follow its IFU for thickness, moisture, setting, overlay, and use a non-staining material in an aesthetic area.',
   },
   {
     number: '06',
@@ -106,9 +174,27 @@ const vptFinishingSteps = [
   },
   {
     number: '07',
-    title: 'Follow-up',
+    title: 'Record and review',
     text:
-      'Review clinically at six months, clinically and radiographically at 12 months, then yearly when indicated for up to four years.',
+      'Record the diagnosis, procedure, haemostasis time, material, lot number, restoration, and baseline image. Review symptoms and function, then use clinical and radiographic findings to judge healing.',
+  },
+];
+
+const vptOutcomes = [
+  {
+    title: 'Findings consistent with success',
+    text:
+      'The tooth is comfortable and functional. There is no swelling, sinus tract, pathological tenderness, new apical disease, or internal resorption. Immature roots continue to develop.',
+  },
+  {
+    title: 'Findings that need prompt reassessment',
+    text:
+      'Persistent or worsening spontaneous pain, swelling, sinus tract, tenderness, loss of function, new apical change, internal resorption, or failure of the coronal seal.',
+  },
+  {
+    title: 'Interpret sensibility carefully',
+    text:
+      'Cold and EPT may help after direct capping or partial pulpotomy. A full pulpotomy may not respond even when the radicular pulp remains vital, so symptoms, examination, and radiographs carry more weight.',
   },
 ];
 
@@ -395,6 +481,36 @@ const vertucciClinicalChecks = [
             <p>{weeklyArticle.standfirst}</p>
           </section>
 
+          {weeklyArticle.stages && (
+            <section class="iowa-index" aria-labelledby="iowa-index-title">
+              <div class="iowa-index__intro">
+                <p class="article-eyebrow">The original Iowa decision tree</p>
+                <h2 id="iowa-index-title">Four stages. Three prognostic questions.</h2>
+                <p>
+                  The published percentages below describe success after root canal treatment and
+                  restoration in the original cohort. They support a prognosis discussion; they do not
+                  diagnose the pulp or prescribe treatment on their own.
+                </p>
+              </div>
+              <div class="iowa-index__grid">
+                {weeklyArticle.stages.map((stage) => (
+                  <article class={`iowa-stage iowa-stage--${stage.signal}`}>
+                    <div class="iowa-stage__topline">
+                      <span>{stage.stage}</span>
+                      <strong>{stage.outcome}</strong>
+                    </div>
+                    <h3>{stage.title}</h3>
+                    <p>{stage.criteria}</p>
+                  </article>
+                ))}
+              </div>
+              <p class="iowa-index__modifier">
+                <strong>Modified Iowa Index:</strong> add <b>C</b> when the crack is confined to the pulp
+                chamber, or <b>R</b> when it extends beyond a canal orifice into the root.
+              </p>
+            </section>
+          )}
+
           <div class="weekly-content">
             <main>
               {weeklyArticle.sections.map((section) => (
@@ -420,25 +536,27 @@ const vertucciClinicalChecks = [
             </aside>
           </div>
 
-          <section class="weekly-sources" aria-labelledby="weekly-sources-title">
-            <div>
-              <p class="article-eyebrow">Discussion and evidence</p>
-              <h2 id="weekly-sources-title">Sources reviewed</h2>
-              <p>
-                Practitioner discussions identify the live clinical questions. Videos and published
-                evidence are used to test and structure the chairside conclusions.
-              </p>
-            </div>
-            <ul>
-              {weeklyArticle.sources.map((source) => (
-                <li>
-                  <a href={source.url} target="_blank" rel="noopener noreferrer">
-                    {source.label} <span aria-hidden="true">↗</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {weeklyArticle.sources.length > 0 && (
+            <section class="weekly-sources" aria-labelledby="weekly-sources-title">
+              <div>
+                <p class="article-eyebrow">Discussion and evidence</p>
+                <h2 id="weekly-sources-title">Sources reviewed</h2>
+                <p>
+                  Practitioner discussions identify the live clinical questions. Videos and published
+                  evidence are used to test and structure the chairside conclusions.
+                </p>
+              </div>
+              <ul>
+                {weeklyArticle.sources.map((source) => (
+                  <li>
+                    <a href={source.url} target="_blank" rel="noopener noreferrer">
+                      {source.label} <span aria-hidden="true">↗</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <p class="weekly-disclaimer">
             Professional education only. Apply current evidence, product instructions, clinical
@@ -585,20 +703,26 @@ const vertucciClinicalChecks = [
         <div class="vpt-article">
           <section class="vpt-intro" aria-labelledby="vpt-clinical-frame">
             <div>
-              <p class="article-eyebrow">Clinical frame</p>
-              <h2 id="vpt-clinical-frame">Preserve vitality by controlling every decision around the pulp.</h2>
+              <p class="article-eyebrow">Permanent teeth · clinical protocol</p>
+              <h2 id="vpt-clinical-frame">Preserve the pulp that can still recover.</h2>
               <p>
-                Vital pulp therapy is not one material or one moment. It is a sequence: select the
-                case, establish asepsis, assess the exposed tissue, control bleeding, place a
-                calcium-silicate cement, and protect the result with a durable coronal seal.
+                A preoperative diagnosis of irreversible pulpitis describes the patient's clinical
+                presentation, but it cannot reveal the condition of every millimetre of pulp. Inflammation
+                can be concentrated coronally while the radicular pulp
+                remains vital and capable of repair. Treatment therefore continues the diagnosis
+                after exposure, when the tissue can be inspected directly.
               </p>
               <p>
-                This stepwise guide is designed as a clinician discussion aid for permanent teeth.
-                Diagnosis, case selection, and treatment remain the treating clinician's responsibility.
+                VPT succeeds when the right tooth is selected, the pulp is reassessed after exposure,
+                diseased tissue is removed to a controllable level, asepsis is maintained, and the tooth
+                is sealed and reviewed.
               </p>
+              <a class="vpt-guide-inline" href={vptGuideHref} target="_blank" rel="noopener noreferrer">
+                Open the chairside quick guide <span aria-hidden="true">→</span>
+              </a>
             </div>
             <aside class="vpt-readiness" aria-label="VPT readiness checks">
-              <p>Do not start without these five</p>
+              <p>Five decisions that govern VPT</p>
               <ol>
                 {vptReadiness.map((item, index) => (
                   <li>
@@ -610,27 +734,76 @@ const vertucciClinicalChecks = [
             </aside>
           </section>
 
-          <section class="vpt-section" aria-labelledby="vpt-select">
-            <p class="article-eyebrow">Select</p>
-            <h2 id="vpt-select">Choose the caries route before you pick up the bur.</h2>
-            <div class="vpt-choice-grid">
-              {vptCariesRoutes.map((route) => (
-                <section class="vpt-card">
-                  <h3>{route.label}</h3>
-                  <p>{route.text}</p>
+          <nav class="vpt-local-nav" aria-label="Vital pulp therapy article sections">
+            <a href="#vpt-select">Select</a>
+            <a href="#vpt-route">Choose the route</a>
+            <a href="#vpt-perform">Perform</a>
+            <a href="#vpt-haemostasis">Reassess</a>
+            <a href="#vpt-review">Review</a>
+          </nav>
+
+          <section class="vpt-section" id="vpt-select" aria-labelledby="vpt-select-title">
+            <p class="article-eyebrow">01 · Select the tooth</p>
+            <h2 id="vpt-select-title">Case selection carries more weight than the material.</h2>
+            <p>
+              Begin with the whole tooth, not the exposure you expect to find. The tooth must be
+              restorable, isolatable, and worth maintaining. The periodontal prognosis, crack status,
+              remaining structure, and planned restoration all belong in the VPT decision.
+            </p>
+            <p>
+              Symptoms matter, but they do not map the histology of the entire pulp. Cold and electric
+              testing are sensibility tests, not direct measures of blood supply. Combine them with the
+              pain history, examination, and radiographs. Explain before treatment that direct observation
+              may confirm VPT, require a deeper pulpotomy, or lead to root-canal treatment.
+            </p>
+            <div class="vpt-selection-grid">
+              {vptSelectionChecks.map((check) => (
+                <section class="vpt-selection-card">
+                  <h3>{check.title}</h3>
+                  <p>{check.text}</p>
                 </section>
               ))}
             </div>
             <p class="vpt-warning">
-              Stop or refer if the tooth is non-restorable, vitality is doubtful, necrosis or
-              purulence is present, significant apical pathosis is seen, or reliable rubber-dam
-              isolation cannot be achieved.
+              Do not proceed with VPT when the tooth cannot be predictably restored or isolated, or when
+              necrosis, purulence, swelling, a sinus tract, infection-related apical involvement, or an
+              uncertain diagnosis makes pulp preservation indefensible.
             </p>
           </section>
 
-          <section class="vpt-section" aria-labelledby="vpt-perform">
-            <p class="article-eyebrow">Perform</p>
-            <h2 id="vpt-perform">Keep the clean phase clean.</h2>
+          <section class="vpt-section vpt-route" id="vpt-route" aria-labelledby="vpt-route-title">
+            <p class="article-eyebrow">02 · Choose the route</p>
+            <h2 id="vpt-route-title">The radiograph starts the plan. The exposed pulp can change it.</h2>
+            <p>
+              Deep caries leaves a discernible radiographic dentine barrier. Extremely deep caries reaches
+              the full thickness of dentine, so exposure is expected. Keep that distinction clear: it
+              separates a strategy designed to preserve the barrier from one designed to expose and assess
+              the pulp.
+            </p>
+            <div class="vpt-choice-grid">
+              {vptCariesRoutes.map((route) => (
+                <section class="vpt-card">
+                  <span>{route.label}</span>
+                  <h3>{route.title}</h3>
+                  <p>{route.text}</p>
+                </section>
+              ))}
+            </div>
+            <p class="vpt-checkpoint">
+              Root maturity is one part of selection. Current permanent-tooth evidence supports VPT in
+              both immature and mature teeth when the diagnosis, tissue findings, isolation, and restoration
+              are suitable.
+            </p>
+          </section>
+
+          <section class="vpt-section" id="vpt-perform" aria-labelledby="vpt-perform-title">
+            <p class="article-eyebrow">03 · Perform under control</p>
+            <h2 id="vpt-perform-title">Keep the caries phase separate from the pulp phase.</h2>
+            <p>
+              The exposed pulp is a surgical wound. Rubber dam, disinfection, magnification, sterile
+              instruments, and sterile coolant are required parts of the treatment.
+              A caries-contaminated bur should not enter tissue that the clinician intends to preserve.
+            </p>
             <div class="vpt-step-grid">
               {vptOperativePhases.map((phase, index) => (
                 <section class="vpt-step">
@@ -642,9 +815,21 @@ const vertucciClinicalChecks = [
             </div>
           </section>
 
-          <section class="vpt-section vpt-timing" aria-labelledby="vpt-haemostasis">
-            <p class="article-eyebrow">Haemostasis pathway</p>
-            <h2 id="vpt-haemostasis">Use two-minute checkpoints to inspect, not simply wait.</h2>
+          <section class="vpt-section vpt-timing" id="vpt-haemostasis" aria-labelledby="vpt-haemostasis-title">
+            <p class="article-eyebrow">04 · Reassess after exposure</p>
+            <h2 id="vpt-haemostasis-title">Bleeding is information.</h2>
+            <p>
+              Georg Benjamin describes pulpotomy as a continuation of diagnosis. Remove inflamed coronal
+              tissue, then look again. A pulp that bleeds and becomes controllable presents a different
+              biological situation from tissue that is necrotic, purulent, or continues to haemorrhage
+              after an appropriate full pulpotomy.
+            </p>
+            <p>
+              Use time as a checkpoint and choose the depth of tissue removal from the wound itself. If a
+              partial pulpotomy does not expose uniformly vital,
+              controllable tissue, extend it deliberately. A full pulpotomy removes the chamber pulp to
+              the canal orifices and often provides a clearer field for assessing the radicular pulp.
+            </p>
             <div class="vpt-timing-grid">
               {vptHaemostasis.map((step) => (
                 <section>
@@ -654,15 +839,27 @@ const vertucciClinicalChecks = [
               ))}
             </div>
             <p class="vpt-checkpoint">
-              At every checkpoint: remove the pellet, inspect under magnification, and reassess the
-              tissue and bleeding. If control is not achieved after full pulpotomy, or necrosis or
-              purulence is seen, stop VPT and reassess the treatment plan.
+              Place calcium-silicate cement only after the wound is clean and controlled. Cement cannot
+              compensate for residual necrotic tissue, persistent haemorrhage, contamination, or an
+              uncertain endpoint.
             </p>
           </section>
 
-          <section class="vpt-section" aria-labelledby="vpt-protect">
-            <p class="article-eyebrow">Protect</p>
-            <h2 id="vpt-protect">Finish the biological job.</h2>
+          <section class="vpt-section" aria-labelledby="vpt-protect-title">
+            <p class="article-eyebrow">05 · Protect the result</p>
+            <h2 id="vpt-protect-title">The restoration is part of the pulp treatment.</h2>
+            <p>
+              Once the tissue endpoint is accepted, protect it without delay. Material choice matters,
+              but it follows case selection, asepsis, tissue assessment, and haemostasis. Place a validated
+              hydraulic calcium-silicate cement according to its instructions and avoid staining
+              formulations in the aesthetic zone.
+            </p>
+            <p>
+              Coronal leakage can undo a well-executed pulpotomy. Complete a durable restoration at the
+              same visit where feasible, using compatible materials and the manufacturer's setting and
+              overlay instructions. Plan cuspal protection according to the remaining tooth structure and
+              fracture risk.
+            </p>
             <div class="vpt-finish-list">
               {vptFinishingSteps.map((step) => (
                 <section>
@@ -674,13 +871,49 @@ const vertucciClinicalChecks = [
             </div>
           </section>
 
+          <section class="vpt-section vpt-review" id="vpt-review" aria-labelledby="vpt-review-title">
+            <p class="article-eyebrow">06 · Review what was preserved</p>
+            <h2 id="vpt-review-title">Success is a functioning tooth without clinical or radiographic disease.</h2>
+            <p>
+              Book the review before the patient leaves. A practical schedule includes clinical review at
+              six months, clinical and radiographic review at 12 months, then further review according to
+              the case and current guidance. Earlier reassessment is required when symptoms develop.
+            </p>
+            <div class="vpt-outcome-grid">
+              {vptOutcomes.map((outcome) => (
+                <section>
+                  <h3>{outcome.title}</h3>
+                  <p>{outcome.text}</p>
+                </section>
+              ))}
+            </div>
+          </section>
+
+          <section class="vpt-section vpt-evidence" aria-labelledby="vpt-evidence-title">
+            <p class="article-eyebrow">Evidence boundary</p>
+            <h2 id="vpt-evidence-title">Use the evidence without pretending every question is settled.</h2>
+            <p>
+              The 2025 AAPD guideline supports VPT in selected permanent teeth and gives the clearest
+              current treatment branches. Several recommendations remain conditional because certainty is
+              low. The 2021 AAE statement explains why preoperative symptoms cannot describe the condition
+              of the entire pulp and why direct observation matters. The ESE position statement provides
+              the deep-caries framework used in this guide.
+            </p>
+            <p>
+              The Georg Benjamin discussion adds a useful clinical frame: pulpotomy can preserve radicular
+              pulp in teeth that were once sent directly to pulpectomy, but only when the operator can
+              inspect the tissue, reach a controllable endpoint, seal the tooth, and accept that some cases
+              will still require root-canal treatment.
+            </p>
+          </section>
+
           <section class="vpt-section vpt-download" aria-labelledby="vpt-download-title">
             <div>
               <p class="article-eyebrow">Chairside download</p>
-              <h2 id="vpt-download-title">Take the full three-page protocol into the surgery.</h2>
+              <h2 id="vpt-download-title">Keep the condensed protocol in the surgery.</h2>
               <p>
-                The downloadable guide includes the case-selection framework, operative phases,
-                two-minute haemostasis pathway, finishing steps, chairside checklist, and source notes.
+                The three-page guide condenses case selection, the operative sequence, haemostasis
+                assessment, restoration, review, and the clinical exit points.
               </p>
             </div>
             <div class="vpt-download__actions">
@@ -693,6 +926,8 @@ const vertucciClinicalChecks = [
                 <span>Clinical sources</span>
                 <a href="https://www.aapd.org/globalassets/media/policies_guidelines/g_vpt-permanentteeth.pdf" target="_blank" rel="noopener noreferrer">AAPD permanent-tooth VPT guideline</a>
                 <a href="https://www.aae.org/wp-content/uploads/2021/05/VitalPulpTherapy_PositionStatement_v2.pdf" target="_blank" rel="noopener noreferrer">AAE vital pulp therapy position statement</a>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/30664240/" target="_blank" rel="noopener noreferrer">ESE deep caries and exposed pulp statement</a>
+                <a href="https://www.youtube.com/watch?v=PoWDRz714uQ" target="_blank" rel="noopener noreferrer">Georg Benjamin: rise of vital pulp therapy</a>
               </div>
             </div>
           </section>
@@ -1071,6 +1306,55 @@ const vertucciClinicalChecks = [
     line-height: 1.75;
   }
 
+  .vpt-guide-inline {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+    color: #0b75b7;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .vpt-guide-inline:hover,
+  .vpt-guide-inline:focus-visible {
+    color: #064b78;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .vpt-local-nav {
+    position: sticky;
+    z-index: 5;
+    top: 64px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    border-bottom: 1px solid #dde6ef;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+  }
+
+  .vpt-local-nav a {
+    border: 1px solid #d8e4ef;
+    border-radius: 999px;
+    padding: 8px 13px;
+    color: #365168;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .vpt-local-nav a:hover,
+  .vpt-local-nav a:focus-visible {
+    border-color: #0b75b7;
+    color: #0b75b7;
+    outline: none;
+  }
+
   .vpt-readiness {
     border: 1px solid #d8e4ef;
     border-radius: 12px;
@@ -1134,30 +1418,54 @@ const vertucciClinicalChecks = [
     line-height: 1.42;
   }
 
+  .vpt-selection-grid,
   .vpt-choice-grid,
   .vpt-step-grid,
-  .vpt-timing-grid {
+  .vpt-timing-grid,
+  .vpt-outcome-grid {
     display: grid;
     gap: 18px;
     margin-top: 30px;
+  }
+
+  .vpt-selection-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .vpt-choice-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .vpt-step-grid,
-  .vpt-timing-grid {
+  .vpt-choice-grid .vpt-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .vpt-step-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .vpt-timing-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .vpt-outcome-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .vpt-selection-card,
   .vpt-card,
   .vpt-step,
-  .vpt-timing-grid section {
+  .vpt-timing-grid section,
+  .vpt-outcome-grid section {
     border: 1px solid #dce7f0;
     border-radius: 10px;
     padding: 24px;
     background: #f8fbfd;
+  }
+
+  .vpt-selection-card {
+    padding: 20px;
+    background: #ffffff;
   }
 
   .vpt-card:first-child {
@@ -1171,8 +1479,10 @@ const vertucciClinicalChecks = [
   }
 
   .vpt-card h3,
+  .vpt-selection-card h3,
   .vpt-step h3,
-  .vpt-finish-list h3 {
+  .vpt-finish-list h3,
+  .vpt-outcome-grid h3 {
     margin: 0 0 10px;
     color: #15354c;
     font-size: 1.08rem;
@@ -1181,13 +1491,26 @@ const vertucciClinicalChecks = [
   }
 
   .vpt-card p,
+  .vpt-selection-card p,
   .vpt-step p,
   .vpt-timing-grid p,
-  .vpt-finish-list p {
+  .vpt-finish-list p,
+  .vpt-outcome-grid p {
     margin: 0;
     color: #526372;
     font-size: 0.96rem;
     line-height: 1.65;
+  }
+
+  .vpt-card > span {
+    display: block;
+    margin-bottom: 10px;
+    color: #0b75b7;
+    font-family: 'Geist Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .vpt-warning,
@@ -1235,6 +1558,26 @@ const vertucciClinicalChecks = [
     border-left-color: #0b75b7;
     background: #ffffff;
     color: #15354c;
+  }
+
+  .vpt-review {
+    background: #ffffff;
+  }
+
+  .vpt-outcome-grid section:first-child {
+    border-top: 4px solid #2b8a62;
+    background: #f3faf6;
+  }
+
+  .vpt-outcome-grid section:nth-child(2) {
+    border-top: 4px solid #c2413a;
+    background: #fff5f4;
+  }
+
+  .vpt-evidence {
+    width: 100%;
+    padding-inline: max(24px, calc((100% - 1160px) / 2));
+    background: #f7f9fc;
   }
 
   .vpt-finish-list {
@@ -1757,6 +2100,135 @@ const vertucciClinicalChecks = [
     gap: clamp(44px, 7vw, 86px);
     align-items: start;
     padding: 64px 0 76px;
+  }
+
+  .iowa-index {
+    width: min(100% - 48px, 1160px);
+    margin: 0 auto 72px;
+  }
+
+  .iowa-index__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.7fr);
+    gap: 28px 72px;
+    align-items: end;
+    margin-bottom: 28px;
+  }
+
+  .iowa-index__intro .article-eyebrow {
+    grid-column: 1 / -1;
+    margin-bottom: -12px;
+  }
+
+  .iowa-index__intro h2 {
+    margin: 0;
+    color: #0c1730;
+    font-size: clamp(2rem, 4vw, 3.65rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
+  .iowa-index__intro > p:last-child {
+    margin: 0;
+    color: #5e6f82;
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .iowa-index__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .iowa-stage {
+    position: relative;
+    min-height: 270px;
+    overflow: hidden;
+    border: 1px solid #dce6ec;
+    border-radius: 12px;
+    padding: 24px;
+    background: #ffffff;
+  }
+
+  .iowa-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: #2b9a84;
+  }
+
+  .iowa-stage--guarded::before {
+    background: #d79a3b;
+  }
+
+  .iowa-stage--high-risk::before {
+    background: #c75a4b;
+  }
+
+  .iowa-stage__topline {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .iowa-stage__topline span {
+    color: #0b7180;
+    font-family: 'Geist Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .iowa-stage__topline strong {
+    width: fit-content;
+    border-radius: 999px;
+    padding: 6px 9px;
+    background: #edf7f4;
+    color: #216f61;
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+
+  .iowa-stage--guarded .iowa-stage__topline strong {
+    background: #fff5e5;
+    color: #8d5a14;
+  }
+
+  .iowa-stage--high-risk .iowa-stage__topline strong {
+    background: #fff0ed;
+    color: #9a4035;
+  }
+
+  .iowa-stage h3 {
+    margin: 0 0 12px;
+    color: #12213b;
+    font-size: 1.15rem;
+    line-height: 1.2;
+  }
+
+  .iowa-stage p {
+    margin: 0;
+    color: #5d6d7e;
+    font-size: 0.9rem;
+    line-height: 1.58;
+  }
+
+  .iowa-index__modifier {
+    margin: 12px 0 0;
+    border-radius: 10px;
+    padding: 18px 22px;
+    background: #0b5d67;
+    color: #d8f0f0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .iowa-index__modifier strong,
+  .iowa-index__modifier b {
+    color: #ffffff;
   }
 
   .weekly-content main {
@@ -2331,9 +2803,11 @@ const vertucciClinicalChecks = [
 
     .lever-grid,
     .teaching-grid,
+    .vpt-selection-grid,
     .vpt-choice-grid,
     .vpt-step-grid,
-    .vpt-timing-grid {
+    .vpt-timing-grid,
+    .vpt-outcome-grid {
       grid-template-columns: 1fr;
     }
 
@@ -2345,7 +2819,8 @@ const vertucciClinicalChecks = [
       padding: 46px 0;
     }
 
-    .vpt-timing {
+    .vpt-timing,
+    .vpt-evidence {
       width: 100%;
       padding-inline: 18px;
     }
@@ -2378,6 +2853,15 @@ const vertucciClinicalChecks = [
     .weekly-content,
     .weekly-sources {
       grid-template-columns: 1fr;
+    }
+
+    .iowa-index__intro {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .iowa-index__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .weekly-aside {
@@ -2414,12 +2898,37 @@ const vertucciClinicalChecks = [
       width: min(100% - 36px, 1040px);
     }
 
+    .iowa-index {
+      width: min(100% - 36px, 1160px);
+      margin-bottom: 52px;
+    }
+
+    .iowa-index__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .iowa-stage {
+      min-height: 0;
+    }
+
     .article-media--contain img {
       padding: 18px;
     }
 
-    .vpt-timing {
+    .vpt-timing,
+    .vpt-evidence {
       width: 100%;
+    }
+
+    .vpt-local-nav {
+      position: static;
+      justify-content: flex-start;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+
+    .vpt-local-nav a {
+      flex: 0 0 auto;
     }
 
     .article-hero {
