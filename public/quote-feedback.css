@@ -1,0 +1,21 @@
+[data-quote-status][data-tone="error"]:not([hidden]) {
+  display: block;
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+  color: #842626;
+  background: #fff2f2;
+  border: 1px solid #e5adad;
+  border-left: 5px solid #a73535;
+  border-radius: .75rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  scroll-margin: 8rem;
+}
+[data-quote-status][data-tone="error"]:not([hidden])::before {
+  content: "Action needed";
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: .35rem;
+}
+[data-quote-status]:focus-visible { outline: 2px solid #a73535; outline-offset: 3px; }

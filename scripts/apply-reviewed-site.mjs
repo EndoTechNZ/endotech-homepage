@@ -16,7 +16,8 @@ function publish(dir,rel=''){
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
   if(next.replaceAll('\\', '/') === 'quote-request/index.html') {
-   html=html.replace('</body>', '<script src="/quote-search.js" defer></script></body>');
+   html=html.replace('</head>', '<link rel="stylesheet" href="/quote-feedback.css"></head>');
+   html=html.replace('</body>', '<script src="/quote-search.js" defer></script><script src="/quote-feedback.js" defer></script></body>');
   }
   fs.writeFileSync(to,html);pages++;
  }

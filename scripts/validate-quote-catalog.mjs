@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { nzQuoteSkus } from '../shared/nz-quote-skus.mjs';
 
 const sourceUrl = new URL('../src/data/nzLaunchCatalog.ts', import.meta.url);
 const source = await readFile(sourceUrl, 'utf8');
@@ -39,6 +40,9 @@ const expectedPrefixes = new Map([
 ]);
 
 const failures = [];
+if (JSON.stringify(rows.map(row => row.sku).sort()) !== JSON.stringify([...nzQuoteSkus].sort())) {
+  failures.push('Email backend catalogue snapshot is stale. Regenerate shared/nz-quote-skus.mjs and deploy its identical copy to the SG email backend before publishing.');
+}
 if (rows.length !== expectedAll) failures.push(`Expected ${expectedAll} total catalogue rows; found ${rows.length}.`);
 if (!source.includes('export const nzCustomerSelectableCatalog = [...nzLaunchCatalog].sort(compareNzLaunchCatalogItems);')) {
   failures.push('The customer-selectable catalogue is not using the shared clinical ordering rule.');
