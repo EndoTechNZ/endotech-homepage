@@ -1,0 +1,10 @@
+.product-local-contact{box-sizing:border-box;max-width:1232px;width:calc(100% - 48px);margin:48px auto 64px;padding:36px 0 0;border-top:1px solid #dce4ed;display:flex;justify-content:space-between;gap:24px;scroll-margin-top:130px;font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif;color:#152439}
+.product-local-contact .product-contact-eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:11px;font-weight:600;margin:0 0 18px;color:#607084}
+.product-local-contact h2{font-size:32px;font-weight:400;letter-spacing:-.03em;line-height:1.65;margin:0}
+.product-local-contact p,.product-local-contact address{color:#607084}
+.product-local-contact address{font-style:normal}
+.product-contact-actions{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0}
+.product-local-contact a{color:#0c4a6e;text-decoration:none;overflow-wrap:anywhere;align-self:flex-start;padding:5px 0}
+.product-local-contact a:is(:hover,:focus-visible){color:#09639b}
+.product-local-contact a:focus-visible{outline:2px solid #09639b;outline-offset:4px}
+@media(max-width:600px){.product-local-contact{width:calc(100% - 32px);margin:32px auto 40px;flex-direction:column;align-items:flex-start}.product-local-contact h2{font-size:28px}.product-local-contact a{font-size:14px}}

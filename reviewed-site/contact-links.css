@@ -1,0 +1,9 @@
+/* A single diagonal arrow and fine drawing rule for contact actions site-wide. */
+a.contact-ink-link{display:inline-flex;align-items:center;gap:12px;max-width:100%;text-decoration:none;transition:color 220ms ease}
+a.contact-ink-link>.contact-ink-label{min-width:0;overflow-wrap:anywhere;padding-bottom:4px;background:linear-gradient(currentColor,currentColor) no-repeat 0 100% / 0% 1px;transition:background-size 300ms cubic-bezier(.22,.61,.36,1)}
+a.contact-ink-link>.contact-ink-arrow{display:inline-block;flex:none;line-height:1;transform:rotate(-45deg);transform-origin:center;transition:transform 180ms ease}
+a.contact-ink-link:is(:hover,:focus-visible)>.contact-ink-label{background-size:100% 1px}
+a.contact-ink-link:is(:hover,:focus-visible)>.contact-ink-arrow{transform:rotate(0deg) scale(1.12)}
+.cp-contact a.contact-ink-link{align-self:flex-start;padding:5px 0}
+.cp-contact a.contact-ink-link:is(:hover,:focus-visible),.clean-footer a.contact-ink-link:is(:hover,:focus-visible){color:#09639b}
+@media(prefers-reduced-motion:reduce){a.contact-ink-link,a.contact-ink-link>.contact-ink-label,a.contact-ink-link>.contact-ink-arrow{transition:none}}
