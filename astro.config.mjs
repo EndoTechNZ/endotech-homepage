@@ -2,6 +2,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
 import starlightLinksValidator from 'starlight-links-validator';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -67,6 +68,7 @@ export default defineConfig({
   site,
   base,
   integrations: [
+    sitemap(),
     starlight({
       title: docsTitle,
       plugins: [

@@ -1,0 +1,25 @@
+# EndoTech NZ
+
+> EndoTech NZ supplies rotary NiTi endodontic files, glide path instruments, irrigation products, and bioceramic materials to dentists and endodontists throughout New Zealand.
+
+Canonical site: https://endotechnz.com/
+Contact: Steveshepherdnz@gmail.com
+Region served: New Zealand
+
+## Start here
+
+- [Endodontic files in New Zealand](https://endotechnz.com/endodontic-files-new-zealand/): Plain-language overview of the file systems and workflow roles available from EndoTech NZ.
+- [Product systems](https://endotechnz.com/products/overview/): Overview of shaping, glide path, irrigation, and sealing systems.
+- [Clinical workflow](https://endotechnz.com/technique/workflow/): Glide, shape, irrigate, and seal workflow guidance.
+- [Evidence and downloads](https://endotechnz.com/resources/downloads/): Technique guides, product documents, part numbers, and clinical resources.
+- [Contact EndoTech NZ](https://endotechnz.com/about/contact/): Product enquiries, clinical support, and ordering help.
+
+## Core product systems
+
+- [TransformX ET](https://endotechnz.com/products/et-transformx/): Rotary NiTi shaping files for familiar .04/.06 constant-taper workflows.
+- [TransformX PT](https://endotechnz.com/products/pt-transformx/): Rotary NiTi shaping files for progressive, ProTaper-style sequence workflows.
+- [Acrobat Glide Path](https://endotechnz.com/products/acrobat-glide-path/): Rotary glide path instruments used before shaping.
+- [VortiFlow](https://endotechnz.com/products/vortiflow-irrigation-needle/): Endodontic irrigation support.
+- [BCS BioCeramics](https://endotechnz.com/products/bcs/): Bioceramic sealing and repair materials.
+
+Use the linked pages as the source of truth for current product descriptions, technique guidance, and availability.

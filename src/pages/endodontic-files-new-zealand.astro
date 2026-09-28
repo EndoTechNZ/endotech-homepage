@@ -1,0 +1,400 @@
+---
+import ProductLayout from '../layouts/ProductLayout.astro';
+import etProduct from '../assets/et-transformx.png';
+
+const base = import.meta.env.BASE_URL;
+
+const fileSystems = [
+  {
+    name: 'TransformX™ ET',
+    role: 'Rotary shaping',
+    description: 'A familiar .04/.06 constant-taper sequence for controlled canal shaping.',
+    href: `${base}products/et-transformx/`,
+  },
+  {
+    name: 'TransformX™ PT',
+    role: 'Progressive shaping',
+    description: 'A progressive rotary sequence for clinicians using a crown-down shaping approach.',
+    href: `${base}products/pt-transformx/`,
+  },
+  {
+    name: 'Acrobat',
+    role: 'Glide path',
+    description: 'Rotary glide path files used to establish a reproducible route before shaping.',
+    href: `${base}products/acrobat-glide-path/`,
+  },
+];
+
+const questions = [
+  {
+    question: 'Where can I buy endodontic files in New Zealand?',
+    answer: 'EndoTech NZ supplies rotary NiTi shaping files and glide path instruments to New Zealand dental practices. Product enquiries and ordering support are available directly through the EndoTech NZ website.',
+  },
+  {
+    question: 'What is the difference between a glide path file and a shaping file?',
+    answer: 'A glide path file establishes a smooth, reproducible route through the canal before the shaping files enlarge the preparation. The two stages have different clinical roles and should be selected as part of the complete workflow.',
+  },
+  {
+    question: 'Which EndoTech system suits a .04/.06 rotary workflow?',
+    answer: 'TransformX ET is designed around familiar .04/.06 constant-taper sequence logic. The product and technique pages provide the available sizes, sequence guidance, and motor settings.',
+  },
+  {
+    question: 'Which EndoTech system follows a progressive shaping sequence?',
+    answer: 'TransformX PT uses progressive sequence logic for clinicians familiar with crown-down and ProTaper-style workflows. Review the PT product and technique guidance before use.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: questions.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+---
+
+<ProductLayout
+  title="Endodontic Files NZ | Rotary NiTi & Glide Path | EndoTech NZ"
+  description="Find rotary NiTi endodontic files and glide path instruments available to New Zealand dentists, with clear guidance on TransformX ET, TransformX PT, and Acrobat workflows."
+  image={etProduct.src}
+  schema={faqSchema}
+  accent="teal"
+>
+  <article class="nz-files-page">
+    <header class="nz-files-hero">
+      <p class="nz-files-eyebrow">Endodontic files New Zealand</p>
+      <h1>Rotary NiTi and glide path files for New Zealand clinicians.</h1>
+      <p>
+        EndoTech NZ supplies endodontic file systems for glide path creation and rotary canal shaping, supported by local product information, technique guidance, and ordering help.
+      </p>
+      <div class="nz-files-actions">
+        <a class="nz-files-button primary" href={`${base}products/overview/`}>Compare product systems</a>
+        <a class="nz-files-button secondary" href={`${base}about/contact/`}>Ask about availability</a>
+      </div>
+    </header>
+
+    <section class="nz-files-section" aria-labelledby="nz-file-systems-title">
+      <div class="nz-files-heading">
+        <p class="nz-files-eyebrow">File systems</p>
+        <h2 id="nz-file-systems-title">Choose the instrument for its role in the workflow.</h2>
+        <p>Glide path and shaping files solve different clinical problems. Start with the workflow, then review the detailed product and technique information.</p>
+      </div>
+      <div class="nz-files-grid">
+        {fileSystems.map((system) => (
+          <article class="nz-files-card">
+            <span>{system.role}</span>
+            <h3>{system.name}</h3>
+            <p>{system.description}</p>
+            <a href={system.href}>Review system details</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="nz-files-section nz-files-workflow" aria-labelledby="nz-files-workflow-title">
+      <div>
+        <p class="nz-files-eyebrow">Complete pathway</p>
+        <h2 id="nz-files-workflow-title">Files are one stage of endodontic treatment.</h2>
+      </div>
+      <p>
+        EndoTech NZ presents file selection within a connected clinical pathway: establish the glide path, shape with the appropriate rotary sequence, support irrigant exchange, and complete the seal with the selected obturation material.
+      </p>
+      <nav aria-label="Related clinical workflow pages">
+        <a href={`${base}technique/workflow/`}>Clinical workflow</a>
+        <a href={`${base}technique/motor-settings/`}>Motor settings</a>
+        <a href={`${base}resources/downloads/`}>Technique guides and downloads</a>
+      </nav>
+    </section>
+
+    <section class="nz-files-section" aria-labelledby="nz-files-questions-title">
+      <div class="nz-files-heading">
+        <p class="nz-files-eyebrow">Common questions</p>
+        <h2 id="nz-files-questions-title">Endodontic file selection and availability in NZ.</h2>
+      </div>
+      <div class="nz-files-questions">
+        {questions.map((item) => (
+          <article>
+            <h3>{item.question}</h3>
+            <p>{item.answer}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="nz-files-cta" aria-labelledby="nz-files-cta-title">
+      <div>
+        <p class="nz-files-eyebrow">Local support</p>
+        <h2 id="nz-files-cta-title">Discuss the workflow your practice uses now.</h2>
+        <p>Contact EndoTech NZ for product availability, file-system questions, and ordering support within New Zealand.</p>
+      </div>
+      <a class="nz-files-button primary" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
+    </section>
+  </article>
+</ProductLayout>
+
+<style>
+  .nz-files-page {
+    background: #ffffff;
+    color: #181c20;
+  }
+
+  .nz-files-hero,
+  .nz-files-section,
+  .nz-files-cta {
+    padding: 80px 56px;
+  }
+
+  .nz-files-hero {
+    display: grid;
+    justify-items: center;
+    min-height: 520px;
+    align-content: center;
+    text-align: center;
+    background: #f7f9fb;
+  }
+
+  .nz-files-hero h1,
+  .nz-files-heading h2,
+  .nz-files-workflow h2,
+  .nz-files-cta h2 {
+    margin: 0;
+    color: #181c20;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .nz-files-hero h1 {
+    max-width: 900px;
+    font-size: clamp(2.7rem, 5vw, 4.6rem);
+    line-height: 1;
+    text-wrap: balance;
+  }
+
+  .nz-files-hero > p:not(.nz-files-eyebrow) {
+    max-width: 720px;
+    margin: 22px 0 0;
+    color: #475569;
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .nz-files-eyebrow {
+    margin: 0 0 14px;
+    color: #00639c;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .nz-files-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .nz-files-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border: 1px solid #005c92;
+    border-radius: 6px;
+    padding: 0 18px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .nz-files-button.primary {
+    background: #005c92;
+    color: #ffffff;
+  }
+
+  .nz-files-button.secondary {
+    background: #ffffff;
+    color: #005c92;
+  }
+
+  .nz-files-section {
+    border-top: 1px solid #e3e8ee;
+  }
+
+  .nz-files-heading,
+  .nz-files-grid,
+  .nz-files-workflow,
+  .nz-files-questions,
+  .nz-files-cta {
+    max-width: 1180px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .nz-files-heading {
+    max-width: 780px;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .nz-files-heading h2,
+  .nz-files-workflow h2,
+  .nz-files-cta h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.08;
+  }
+
+  .nz-files-heading > p:last-child,
+  .nz-files-workflow > p,
+  .nz-files-cta p {
+    color: #475569;
+    line-height: 1.7;
+  }
+
+  .nz-files-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .nz-files-card {
+    border: 1px solid #dce4ea;
+    border-radius: 8px;
+    padding: 28px;
+    background: #ffffff;
+  }
+
+  .nz-files-card span {
+    color: #00639c;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nz-files-card h3,
+  .nz-files-questions h3 {
+    margin: 12px 0 0;
+    color: #181c20;
+    font-size: 1.2rem;
+    letter-spacing: 0;
+  }
+
+  .nz-files-card p,
+  .nz-files-questions p {
+    margin: 12px 0 0;
+    color: #475569;
+    line-height: 1.65;
+  }
+
+  .nz-files-card a,
+  .nz-files-workflow nav a {
+    display: inline-block;
+    margin-top: 18px;
+    color: #005c92;
+    font-weight: 700;
+  }
+
+  .nz-files-workflow {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 40px 64px;
+    align-items: start;
+  }
+
+  .nz-files-workflow nav {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+  }
+
+  .nz-files-workflow nav a {
+    margin-top: 0;
+  }
+
+  .nz-files-questions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid #dce4ea;
+  }
+
+  .nz-files-questions article {
+    padding: 28px;
+    border-right: 1px solid #dce4ea;
+    border-bottom: 1px solid #dce4ea;
+  }
+
+  .nz-files-questions article:nth-child(even) {
+    border-right: 0;
+  }
+
+  .nz-files-cta {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    align-items: center;
+    border-top: 1px solid #dce4ea;
+  }
+
+  .nz-files-cta > div {
+    max-width: 760px;
+  }
+
+  @media (max-width: 900px) {
+    .nz-files-hero,
+    .nz-files-section,
+    .nz-files-cta {
+      padding-right: 28px;
+      padding-left: 28px;
+    }
+
+    .nz-files-grid,
+    .nz-files-workflow,
+    .nz-files-questions {
+      grid-template-columns: 1fr;
+    }
+
+    .nz-files-workflow nav {
+      grid-column: auto;
+    }
+
+    .nz-files-questions article,
+    .nz-files-questions article:nth-child(even) {
+      border-right: 0;
+    }
+
+    .nz-files-cta {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .nz-files-hero,
+    .nz-files-section,
+    .nz-files-cta {
+      padding: 56px 18px;
+    }
+
+    .nz-files-hero {
+      min-height: 460px;
+    }
+
+    .nz-files-actions,
+    .nz-files-button {
+      width: 100%;
+    }
+
+    .nz-files-card,
+    .nz-files-questions article {
+      padding: 22px;
+    }
+  }
+</style>

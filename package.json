@@ -16,6 +16,7 @@
     "video:render": "npm --prefix endotech-video render"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "@astrojs/starlight": "^0.37.6",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.6.1",

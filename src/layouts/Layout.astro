@@ -20,22 +20,58 @@ const {
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.toString();
 const defaultImage = Astro.site ? new URL(logoDefault.src, Astro.site).toString() : undefined;
 const socialImage = image ? new URL(image, Astro.site ?? Astro.url).toString() : defaultImage;
+const isHomepage = Astro.url.pathname === import.meta.env.BASE_URL;
 const googleSiteVerification =
   import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION ?? '66rRw6fVQeHsCNpjSjIFm6tde0bpo4CXXigS2n2Vklg';
 const googleAnalyticsId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 const clarityProjectId = import.meta.env.PUBLIC_CLARITY_PROJECT_ID;
-const organizationSchema = Astro.site
+const siteSchema = Astro.site && isHomepage
   ? {
       '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: siteConfig.name,
-      url: Astro.site.toString(),
-      email: `mailto:${siteConfig.email}`,
+      '@graph': [
+        {
+          '@type': 'Organization',
+          '@id': new URL('/#organization', Astro.site).toString(),
+          name: siteConfig.name,
+          alternateName: siteConfig.shortName,
+          url: Astro.site.toString(),
+          description: siteConfig.organizationDescription,
+          email: siteConfig.email,
+          logo: {
+            '@type': 'ImageObject',
+            url: defaultImage,
+            contentUrl: defaultImage,
+          },
+          areaServed: {
+            '@type': 'Country',
+            name: siteConfig.regionLabel,
+          },
+          contactPoint: {
+            '@type': 'ContactPoint',
+            contactType: 'customer service',
+            email: siteConfig.email,
+            areaServed: 'NZ',
+            availableLanguage: 'English',
+          },
+        },
+        {
+          '@type': 'WebSite',
+          '@id': new URL('/#website', Astro.site).toString(),
+          url: Astro.site.toString(),
+          name: siteConfig.name,
+          alternateName: siteConfig.shortName,
+          description: siteConfig.defaultDescription,
+          inLanguage: 'en-NZ',
+          publisher: {
+            '@id': new URL('/#organization', Astro.site).toString(),
+          },
+        },
+      ],
     }
   : null;
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-NZ">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -95,7 +131,7 @@ const organizationSchema = Astro.site
     )}
 
     <title>{title}</title>
-    {organizationSchema && <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />}
+    {siteSchema && <script type="application/ld+json" set:html={JSON.stringify(siteSchema)} />}
     <slot name="head" />
   </head>
   <body class="landing-page bg-white font-sans text-slate-900 antialiased transition-colors dark:bg-slate-900 dark:text-slate-100">
