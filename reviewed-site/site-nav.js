@@ -1,5 +1,54 @@
-document.addEventListener('click',e=>{document.querySelectorAll('.clean-explore[open]').forEach(d=>{if(!d.contains(e.target))d.open=false})});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.clean-explore[open]').forEach(d=>{d.open=false;d.querySelector('summary').focus()})});
+const sharedExploreItems=[
+  {href:'/products/transform-s-et/',label:'Transform S ET'},
+  {href:'/products/transform-s-pt/',label:'Transform S PT'},
+  {href:'/products/transform-s-rg/',label:'Transform S RG'},
+  {href:'/products/micro-path/',label:'Micro-Path'},
+  {href:'/products/c-plus/',label:'Transform S C+'},
+  {divider:true},
+  {href:'/technology/',label:'Technology'},
+  {href:'/technique/workflow/',label:'Clinical workflow'},
+  {href:'/resources/clinical-tips/',label:'Education'},
+  {href:'/resources/downloads/',label:'Evidence & downloads'},
+  {href:'/promotions/transform-s-catalogue/?intro=flip',label:'NZ promotional brochure'},
+  {href:'/about/company/',label:'About EndoTech'},
+];
+
+function connectSharedExploreMenus(){
+  document.querySelectorAll('.clean-dropdown,.preview-menu').forEach(menu=>{
+    const content=sharedExploreItems.map(item=>{
+      if(item.divider)return document.createElement('hr');
+      const link=document.createElement('a');
+      link.href=item.href;
+      link.textContent=item.label;
+      return link;
+    });
+    menu.replaceChildren(...content);
+  });
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',connectSharedExploreMenus);else connectSharedExploreMenus();
+
+document.addEventListener('click',e=>{document.querySelectorAll('.clean-explore[open],.preview-explore[open]').forEach(d=>{if(!d.contains(e.target))d.open=false})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.clean-explore[open],.preview-explore[open]').forEach(d=>{d.open=false;d.querySelector('summary').focus()})});
+
+function markCurrentCleanNavigation(){
+  const path=location.pathname.replace(/\/+$/,'/')||'/';
+  const systems=document.querySelector('.clean-header nav>a[href="/products/overview/"]');
+  if(systems&&path==='/products/overview/'){
+    systems.classList.add('is-current');
+    systems.setAttribute('aria-current','page');
+  }
+  const explore=document.querySelector('.clean-explore');
+  if(!explore)return;
+  const matchingLink=[...explore.querySelectorAll('a[href]')].find(link=>{
+    const target=new URL(link.getAttribute('href'),location.href).pathname.replace(/\/+$/,'/')||'/';
+    return target===path;
+  });
+  if(matchingLink){
+    matchingLink.setAttribute('aria-current','page');
+    explore.querySelector('summary')?.classList.add('is-current');
+  }
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',markCurrentCleanNavigation);else markCurrentCleanNavigation();
 
 // Shared local-preview product navigation.
 // Shared contact-link treatment; destinations and link semantics stay unchanged.
