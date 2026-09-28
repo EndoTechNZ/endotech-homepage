@@ -1,0 +1,27 @@
+# EndoTech NZ
+
+> EndoTech NZ supplies rotary and reciprocating NiTi endodontic files, glide-path instruments, C+ hand files, irrigation products, and bioceramic materials throughout New Zealand.
+
+Canonical site: https://endotechnz.com/
+Contact: Steveshepherdnz@gmail.com
+Region served: New Zealand
+
+## Start here
+
+- [Endodontic files in New Zealand](https://endotechnz.com/endodontic-files-new-zealand/): Plain-language overview of the file systems and workflow roles available from EndoTech NZ.
+- [Product systems](https://endotechnz.com/products/overview/): Overview of shaping, glide path, irrigation, and sealing systems.
+- [Clinical workflow](https://endotechnz.com/technique/workflow/): Glide, shape, irrigate, and seal workflow guidance.
+- [Evidence and downloads](https://endotechnz.com/resources/downloads/): Technique guides, product documents, part numbers, and clinical resources.
+- [Contact EndoTech NZ](https://endotechnz.com/about/contact/): Product enquiries, clinical support, and ordering help.
+
+## Core product systems
+
+- [Transform S ET](https://endotechnz.com/products/transform-s-et/): Rotary NiTi shaping files for familiar .04/.06 constant-taper workflows.
+- [Transform S PT](https://endotechnz.com/products/transform-s-pt/): Rotary NiTi shaping files for progressive, ProTaper-style sequence workflows.
+- [Transform S RG](https://endotechnz.com/products/transform-s-rg/): Reciprocating endodontic shaping system with a dedicated Glider and four shaping sizes.
+- [Micro-Path](https://endotechnz.com/products/micro-path/): Rotary glide-path instruments used before shaping.
+- [Transform S C+ Files](https://endotechnz.com/products/c-plus/): Stainless-steel hand files for initial negotiation of narrow or calcified canals.
+- [VortiFlow](https://endotechnz.com/products/vortiflow-irrigation-needle/): Endodontic irrigation support.
+- [BCS BioCeramics](https://endotechnz.com/products/bcs/): Bioceramic sealing and repair materials.
+
+Use the linked pages as the source of truth for current product descriptions, technique guidance, and availability.
