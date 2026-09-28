@@ -87,6 +87,7 @@ export const getFooterSections = (base: string): FooterSection[] => [
   {
     title: 'Products',
     links: [
+      { label: 'Endodontic Files NZ', href: `${base}endodontic-files-new-zealand/` },
       { label: 'Product Overview', href: `${base}products/overview/` },
       { label: 'Transform S™ ET', href: `${base}products/transform-s-et/` },
       { label: 'Transform S™ PT', href: `${base}products/transform-s-pt/` },
