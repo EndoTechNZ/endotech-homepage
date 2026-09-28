@@ -12,6 +12,7 @@ const base = import.meta.env.BASE_URL;
 const rgOrderHref = `${base}quote-request/?family=rg#select-products`;
 const workflowHref = `${base}technique/workflow/`;
 const rgBrochureHref = `${base}downloads/EndoTech-TransformS-PT-RG-Brochure-4pp-WEB.pdf`;
+const rgIfuHref = `${base}downloads/EndoTech-NZ-Transform-S-RG-IFU.pdf`;
 const rgProducts = nzCustomerSelectableCatalog.filter(
   (item) => item.family === 'rg' && (item.sku.endsWith('-6PK') || item.sku.endsWith('-4PK'))
 );
@@ -226,6 +227,10 @@ const comparisonRows = [
         <a href={rgBrochureHref} target="_blank" rel="noreferrer">
           <strong>Transform S™ PT + RG product brochure</strong>
           <span>PDF · 4 pages · Opens in a new tab</span>
+        </a>
+        <a href={rgIfuHref} target="_blank" rel="noreferrer">
+          <strong>Transform S™ RG instructions for use</strong>
+          <span>PDF · 2 pages · Opens in a new tab</span>
         </a>
       </div>
       <a class="et-button dark et-downloads-button" href={rgBrochureHref} target="_blank" rel="noreferrer">Review evidence &amp; downloads</a>

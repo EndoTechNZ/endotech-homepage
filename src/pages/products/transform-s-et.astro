@@ -13,6 +13,7 @@ const etOrderHref = `${base}order/#et-order`;
 const workflowHref = `${base}technique/workflow/`;
 const downloadsHref = `${base}resources/downloads/`;
 const etPartNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-ET-Part-Numbers.pdf`;
+const etIfuHref = `${base}downloads/EndoTech-NZ-Transform-S-ET-IFU.pdf`;
 const etProducts = nzCustomerSelectableCatalog.filter((item) => item.family === 'et');
 
 const etSchema = {
@@ -224,9 +225,10 @@ const comparisonRows = [
     <section class="et-downloads-section" aria-labelledby="et-downloads-title">
       <div class="et-downloads-heading">
         <p class="et-eyebrow">Downloads</p>
-        <h2 id="et-downloads-title">Confirmed ET part-number guide.</h2>
-        <p>The customer-selectable article numbers are available as a clean PDF. Technique and IFU documents remain pending approval.</p>
+        <h2 id="et-downloads-title">ET product documents.</h2>
+        <p>Download the New Zealand instructions for use or the customer-selectable article-number guide.</p>
       </div>
+      <a class="et-button dark" href={etIfuHref}>Download ET IFU</a>
       <a class="et-button dark" href={etPartNumbersHref}>Download ET guide</a>
     </section>
 

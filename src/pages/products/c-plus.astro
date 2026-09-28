@@ -6,6 +6,7 @@ import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
 const base = import.meta.env.BASE_URL;
 const products = nzCustomerSelectableCatalog.filter((item) => item.family === 'c-plus');
 const partNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-C-Plus-Part-Numbers.pdf`;
+const ifuHref = `${base}downloads/EndoTech-NZ-Transform-S-C-Plus-IFU.pdf`;
 ---
 
 <ProductLayout
@@ -42,7 +43,7 @@ const partNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-C-Plus-Part-Nu
         </table>
       </div>
       <a class="download-link" href={partNumbersHref}>Download C+ part-number guide</a>
-      <p class="document-note">Product-specific technique and IFU documents will be published after final approval. Confirm availability with EndoTech NZ when ordering.</p>
+      <a class="download-link" href={ifuHref}>Download C+ IFU</a>
     </section>
   </main>
 </ProductLayout>

@@ -12,6 +12,7 @@ const ptOrderHref = `${base}order/#pt-order`;
 const workflowHref = `${base}technique/workflow/`;
 const downloadsHref = `${base}resources/downloads/`;
 const ptPartNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-PT-Part-Numbers.pdf`;
+const ptIfuHref = `${base}downloads/EndoTech-NZ-Transform-S-PT-IFU.pdf`;
 const ptProducts = nzCustomerSelectableCatalog.filter((item) => item.family === 'pt');
 
 const ptSchema = {
@@ -221,9 +222,10 @@ const comparisonRows = [
     <section class="pt-downloads-section" aria-labelledby="pt-downloads-title">
       <div class="pt-downloads-heading">
         <p class="pt-eyebrow">Downloads</p>
-        <h2 id="pt-downloads-title">Confirmed PT part-number guide.</h2>
-        <p>The customer-selectable article numbers are available as a clean PDF. Technique and IFU documents remain pending approval.</p>
+        <h2 id="pt-downloads-title">PT product documents.</h2>
+        <p>Download the New Zealand instructions for use or the customer-selectable article-number guide.</p>
       </div>
+      <a class="pt-button dark" href={ptIfuHref}>Download PT IFU</a>
       <a class="pt-button dark" href={ptPartNumbersHref}>Download PT guide</a>
     </section>
 

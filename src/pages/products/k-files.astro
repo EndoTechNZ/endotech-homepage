@@ -6,6 +6,7 @@ import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
 const base = import.meta.env.BASE_URL;
 const products = nzCustomerSelectableCatalog.filter((item) => item.family === 'k-files');
 const partNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-K-Files-Part-Numbers.pdf`;
+const ifuHref = `${base}downloads/EndoTech-NZ-Transform-S-K-Files-IFU.pdf`;
 ---
 
 <ProductLayout
@@ -43,7 +44,7 @@ const partNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-K-Files-Part-N
         </table>
       </div>
       <a class="download-link" href={partNumbersHref}>Download K-File part-number guide</a>
-      <p class="document-note">Product-specific technique and IFU documents will be published after final approval. Confirm availability with EndoTech NZ when ordering.</p>
+      <a class="download-link" href={ifuHref}>Download K-File IFU</a>
     </section>
   </main>
 </ProductLayout>
