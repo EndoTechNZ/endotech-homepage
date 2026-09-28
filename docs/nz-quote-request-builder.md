@@ -140,7 +140,6 @@ The separate endpoint must include all of the following:
 - Every export states that it is not a quotation, invoice, purchase order or confirmed order.
 - Product selections alone are stored locally to help customers continue a draft.
 - Customer, practice, delivery and notes fields are never saved to local storage.
-- The form and PDF both warn against patient-identifiable information.
 
 ## Operational review checklist
 

@@ -44,7 +44,6 @@ body.nz-quote-review .quote-details-section{background:white}
 body.nz-quote-review .quote-privacy-note{background:#f8fafc;color:#475569;border-left-color:#94a3b8}
 body.nz-quote-review .quote-export-actions button{border-color:#cbd5e1;color:#0c4a6e;background:white}
 body.nz-quote-review .quote-export-actions button.quote-primary-action{background:#0c4a6e;color:white;border-color:#0c4a6e}
-body.nz-quote-review .quote-consent input{border-radius:4px}
 @media(max-width:1350px){body.nz-quote-review :is(.quote-steps,.quote-section){margin-left:24px;margin-right:24px}}
 @media(max-width:900px){body.nz-quote-review .quote-hero{grid-template-columns:1fr;padding:40px 24px;gap:28px}body.nz-quote-review .quote-hero-brand{max-width:400px;padding:24px}body.nz-quote-review .quote-hero-brand img{max-width:260px}body.nz-quote-review .quote-section{padding:44px 0}}
 @media(max-width:500px){body.nz-quote-review .quote-hero-actions{flex-direction:column;align-items:stretch}body.nz-quote-review .quote-hero-actions a{justify-content:center}body.nz-quote-review .quote-hero-lede{font-size:16px}}

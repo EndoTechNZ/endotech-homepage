@@ -137,8 +137,6 @@
     box-shadow: 0 0 0 100vmax #eef5f7;
     clip-path: inset(0 -100vmax);
   }
-  body.nz-quote-review .quote-privacy-note { border-left-color: var(--quote-gold); background: #fff9e9; color: #665126; }
-  body.nz-quote-review .quote-consent { border-left: 4px solid var(--quote-teal); }
   body.nz-quote-review .quote-review-card > header { border-top: 3px solid var(--quote-gold); background: #f7f2e6; }
 
   body.nz-quote-review .quote-export-card {

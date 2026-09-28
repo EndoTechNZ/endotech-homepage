@@ -296,7 +296,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   const pages = pdf.getPages();
   pages.forEach((currentPage, index) => {
     currentPage.drawLine({ start: { x: MARGIN, y: 56 }, end: { x: PAGE_WIDTH - MARGIN, y: 56 }, thickness: 0.6, color: LIGHT });
-    currentPage.drawText('EndoTech NZ | Unpriced pro forma invoice request | No patient-identifiable information', {
+    currentPage.drawText('EndoTech NZ | Unpriced pro forma invoice request', {
       x: MARGIN,
       y: 38,
       size: 6.8,
