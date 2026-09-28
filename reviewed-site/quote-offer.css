@@ -1,3 +1,5 @@
+@import url('/quote-colour.css?v=20260928');
+
 body.nz-quote-review .quote-hero-actions { align-items: center; gap: 12px; }
 .quote-rotary-offer {
   position: relative;
@@ -9,16 +11,16 @@ body.nz-quote-review .quote-hero-actions { align-items: center; gap: 12px; }
   min-width: 218px;
   margin-left: 16px;
   padding: 13px 20px;
-  border: 1px solid #dce5ed;
-  border-radius: 12px;
-  background: #f5f8fa;
-  color: #0c4a6e;
+  border: 1px solid #e4c980;
+  border-radius: 6px;
+  background: #fff8e7;
+  color: #102b47;
   font-family: "Segoe UI", sans-serif;
 }
 .quote-offer-label { font-size: 12px; font-weight: 500; }
 .quote-offer-price { font-size: 26px; font-weight: 300; line-height: 1.15; letter-spacing: -.025em; }
 .quote-offer-price small { font-size: 12px; font-weight: 400; letter-spacing: 0; }
-.quote-offer-date { font-size: 11px; color: #64748b; }
+.quote-offer-date { font-size: 11px; color: #735b28; }
 .quote-offer-swipe {
   position: absolute;
   inset: -8px auto -8px 0;
@@ -26,7 +28,7 @@ body.nz-quote-review .quote-hero-actions { align-items: center; gap: 12px; }
   pointer-events: none;
   z-index: -1;
   opacity: 0;
-  background: linear-gradient(100deg, transparent, rgba(85,165,205,.18), transparent);
+  background: linear-gradient(100deg, transparent, rgba(180,137,53,.2), transparent);
   animation: quote-offer-sweep 850ms ease-in-out 350ms 1;
 }
 @keyframes quote-offer-sweep {
