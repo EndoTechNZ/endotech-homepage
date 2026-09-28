@@ -556,8 +556,6 @@ if (root) {
       ...(remaining ? [`...plus ${remaining} additional line${remaining === 1 ? '' : 's'} shown in the attached PDF.`] : []),
       '',
       'Please confirm availability, account terms, GST, freight and pricing in the pro forma invoice.',
-      '',
-      'No patient-identifiable information is included.',
     ].join('\n');
 
     const pdfBytes = await buildQuoteRequestPdf({

@@ -220,10 +220,6 @@ const contactEmail = siteConfig.email.toLowerCase();
           <h2 id="practice-details-title">Add the practice and delivery details</h2>
           <p>These details are used only to build this request. They are not saved in the browser.</p>
         </div>
-        <div class="quote-privacy-note">
-          <strong>Privacy</strong>
-          <span>Do not include patient names, NHI numbers, images or other patient-identifiable clinical information.</span>
-        </div>
       </div>
 
       <form class="quote-customer-form" data-customer-form novalidate>
@@ -258,17 +254,13 @@ const contactEmail = siteConfig.email.toLowerCase();
           </label>
           <label class="quote-form-wide">
             <span>Notes</span>
-            <textarea name="notes" rows="4" maxlength="1500" placeholder="Availability questions or commercial notes only — no patient information"></textarea>
+            <textarea name="notes" rows="4" maxlength="1500" placeholder="Availability questions or commercial notes (optional)"></textarea>
           </label>
           <label class="quote-honeypot" aria-hidden="true" tabindex="-1">
             <span>Website</span>
             <input name="website" type="text" autocomplete="off" tabindex="-1" />
           </label>
         </div>
-        <label class="quote-consent">
-          <input name="privacyConsent" type="checkbox" required />
-          <span>I confirm that this request contains no patient-identifiable information and understand that EndoTech NZ must prepare and issue the priced pro forma invoice.</span>
-        </label>
       </form>
     </section>
 
@@ -346,7 +338,7 @@ const contactEmail = siteConfig.email.toLowerCase();
     </section>
     <section><h2>Notes</h2><p data-print-notes></p></section>
     <aside><strong>Next step</strong><p>Email this request to {contactEmail}. EndoTech NZ will enter the listed SKUs and quantities into its desktop invoicing app, then issue the priced pro forma invoice.</p></aside>
-    <footer>EndoTech NZ · Unpriced pro forma invoice request · No patient-identifiable information</footer>
+    <footer>EndoTech NZ · Unpriced pro forma invoice request</footer>
   </article>
 </ProductLayout>
 
@@ -531,14 +523,10 @@ const contactEmail = siteConfig.email.toLowerCase();
   .quote-selection-card footer strong { color: var(--quote-navy); }
   .quote-selection-card footer a { color: var(--quote-teal-dark); font-size: .82rem; font-weight: 800; }
   .quote-details-section { background: linear-gradient(180deg, #fff, #f9fbfc); }
-  .quote-privacy-note { display: grid; gap: .25rem; max-width: 24rem; padding: .9rem 1rem; border-left: 3px solid var(--quote-gold); background: #fffaf0; color: #695126; font-size: .82rem; line-height: 1.45; }
   .quote-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
   .quote-form-wide { grid-column: 1 / -1; }
   .quote-customer-form label b { color: #9b3535; }
   .quote-honeypot { position: absolute !important; left: -10000px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; }
-  .quote-consent { display: flex; gap: .7rem; align-items: start; margin-top: 1.2rem; padding: 1rem; border: 1px solid var(--quote-line); border-radius: .65rem; background: #fff; }
-  .quote-consent input { flex: 0 0 auto; width: 1.15rem; min-height: 1.15rem; margin-top: .1rem; }
-  .quote-consent span { margin: 0 !important; color: var(--quote-ink) !important; font-weight: 600 !important; line-height: 1.5; }
   .quote-draft-reference { display: grid; gap: .2rem; max-width: 21rem; padding: .85rem 1rem; border: 1px solid var(--quote-line); border-radius: .65rem; background: var(--quote-pale); }
   .quote-draft-reference span { color: var(--quote-teal); font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
   .quote-draft-reference strong { color: var(--quote-navy); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .8rem; overflow-wrap: anywhere; }
