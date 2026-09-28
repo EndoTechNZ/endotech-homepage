@@ -148,11 +148,12 @@ const schema = {
     const arrival = reader.querySelector<HTMLElement>('[data-catalogue-arrival]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const arrivalUrl = new URL(window.location.href);
-    const shouldIntroduce = arrivalUrl.searchParams.get('intro') === 'flip' && !hashMatch;
+    const landingOnFirstPage = !hashMatch || Number(hashMatch[1]) === 1;
+    const shouldIntroduce = landingOnFirstPage;
     let introCancelled = false;
     let introAnimations: Animation[] = [];
 
-    // Consume the entrance request: reloads and page turns must not replay it.
+    // Consume the legacy entrance request; first-page arrivals now flutter automatically.
     if (arrivalUrl.searchParams.has('intro')) {
       arrivalUrl.searchParams.delete('intro');
       window.history.replaceState(null, '', arrivalUrl);
