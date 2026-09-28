@@ -550,7 +550,8 @@ const vertucciClinicalChecks = [
                 {weeklyArticle.sources.map((source) => (
                   <li>
                     <a href={source.url} target="_blank" rel="noopener noreferrer">
-                      {source.label} <span aria-hidden="true">↗</span>
+                      <span class="weekly-source__label">{source.label}</span>
+                      <span class="weekly-source__arrow" aria-hidden="true">↗</span>
                     </a>
                   </li>
                 ))}
@@ -2357,17 +2358,47 @@ const vertucciClinicalChecks = [
 
   .weekly-sources a {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     gap: 18px;
     padding: 14px 0;
     color: #ffffff;
     line-height: 1.45;
     text-decoration: none;
+    transition: color 220ms ease-in-out;
+  }
+
+  .weekly-source__label {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 1px;
+    transition: background-size 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .weekly-source__arrow {
+    flex: 0 0 auto;
+    display: inline-block;
+    line-height: 1;
+    transform: rotate(0deg);
+    transform-origin: center;
+    transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .weekly-sources a:hover,
   .weekly-sources a:focus-visible {
     color: #71c8ff;
+    outline: none;
+  }
+
+  .weekly-sources a:hover .weekly-source__label,
+  .weekly-sources a:focus-visible .weekly-source__label {
+    background-size: 100% 1px;
+  }
+
+  .weekly-sources a:hover .weekly-source__arrow,
+  .weekly-sources a:focus-visible .weekly-source__arrow {
+    transform: rotate(45deg);
   }
 
   .weekly-disclaimer {

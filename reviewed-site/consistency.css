@@ -43,3 +43,11 @@ body.nz-consistent .sidebar-content ul ul{border-color:#e2e8f0!important}
 @media(prefers-reduced-motion:reduce){body.nz-consistent .sidebar-content a{transition:none}}
 @media(max-width:600px){body.nz-consistent main a.nz-action{min-width:0!important;white-space:normal!important}body.nz-consistent :is(section,[id]){scroll-margin-top:95px}}
 @media(prefers-reduced-motion:reduce){body.nz-consistent main a.nz-action{transition:none!important}}
+
+/* Evidence-list links: animated underline and directional arrow. */
+.weekly-sources a{align-items:center;transition:color .22s ease-in-out}
+.weekly-sources .weekly-source__label{background-image:linear-gradient(currentColor,currentColor);background-position:0 100%;background-repeat:no-repeat;background-size:0 1px;transition:background-size .24s cubic-bezier(.22,1,.36,1)}
+.weekly-sources .weekly-source__arrow{display:inline-block;flex:0 0 auto;line-height:1;transform:rotate(0);transform-origin:center;transition:transform .24s cubic-bezier(.22,1,.36,1)}
+.weekly-sources a:hover .weekly-source__label,.weekly-sources a:focus-visible .weekly-source__label{background-size:100% 1px}
+.weekly-sources a:hover .weekly-source__arrow,.weekly-sources a:focus-visible .weekly-source__arrow{transform:rotate(45deg)}
+@media(prefers-reduced-motion:reduce){.weekly-sources .weekly-source__label,.weekly-sources .weekly-source__arrow{transition:none}}
