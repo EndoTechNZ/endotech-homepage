@@ -25,6 +25,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 
 <Layout title={title} description={description} image={image}>
   {schema && <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />}
+  <link slot="head" rel="stylesheet" href={`${base}product-system-colour.css`} />
   <header class="product-site-header">
     <div class="product-site-header-inner">
       <a href={base} class="product-site-brand" aria-label={`${siteConfig.name} home`}>
