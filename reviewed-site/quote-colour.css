@@ -1,0 +1,162 @@
+/* Clinical colour pass for the NZ ordering page. Screen presentation only. */
+@media screen {
+  body.nz-quote-review { background: #f5f8fa; }
+  body.nz-quote-review .quote-builder-page {
+    --quote-navy: #102b47;
+    --quote-blue: #286488;
+    --quote-teal: #2b716d;
+    --quote-teal-dark: #205b58;
+    --quote-red: #a43f46;
+    --quote-gold: #b48935;
+    --quote-ink: #273b4d;
+    --quote-muted: #607387;
+    --quote-line: #d8e2e8;
+    --quote-pale: #f0f5f7;
+    background: #fff;
+  }
+
+  body.nz-quote-review .quote-hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 5px solid var(--quote-red);
+    background: var(--quote-navy);
+  }
+  body.nz-quote-review .quote-hero::after {
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+    width: 32%;
+    height: 5px;
+    background: var(--quote-gold);
+    content: "";
+  }
+  body.nz-quote-review .quote-hero h1 { color: #fff; letter-spacing: 0; }
+  body.nz-quote-review .quote-hero-lede { color: #d9e5ec; }
+  body.nz-quote-review .quote-hero .quote-eyebrow { color: #e1bd6c; }
+  body.nz-quote-review .quote-hero-brand {
+    border: 1px solid rgba(255, 255, 255, .38);
+    border-top: 4px solid var(--quote-gold);
+    border-radius: 8px;
+    box-shadow: 0 18px 38px rgba(3, 18, 31, .22);
+  }
+  body.nz-quote-review .quote-hero-actions a {
+    border-color: rgba(255, 255, 255, .58);
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 600;
+  }
+  body.nz-quote-review .quote-hero-actions a:first-child { border-color: var(--quote-red); background: var(--quote-red); }
+  body.nz-quote-review .quote-hero-actions a:hover { border-color: #fff; background: rgba(255, 255, 255, .09); }
+  body.nz-quote-review .quote-hero-actions a:first-child:hover { border-color: #bc5158; background: #bc5158; }
+  body.nz-quote-review .quote-rotary-offer {
+    border-color: #e4c980;
+    border-radius: 6px;
+    background: #fff8e7;
+    color: var(--quote-navy);
+  }
+  body.nz-quote-review .quote-offer-date { color: #735b28; }
+
+  body.nz-quote-review .quote-steps {
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(16, 43, 71, .08);
+  }
+  body.nz-quote-review .quote-steps li { border-top: 4px solid var(--quote-blue); }
+  body.nz-quote-review .quote-steps li:nth-child(2) { border-top-color: var(--quote-red); }
+  body.nz-quote-review .quote-steps li:nth-child(3) { border-top-color: var(--quote-gold); }
+  body.nz-quote-review .quote-steps li > span {
+    border-radius: 8px;
+    background: #e7f0f5;
+    color: var(--quote-blue);
+    font-weight: 700;
+  }
+  body.nz-quote-review .quote-steps li:nth-child(2) > span { background: #f7e9ea; color: var(--quote-red); }
+  body.nz-quote-review .quote-steps li:nth-child(3) > span { background: #f7f0df; color: #88661f; }
+  body.nz-quote-review .quote-steps strong { font-weight: 600; }
+
+  body.nz-quote-review .quote-section-heading h2 { color: var(--quote-navy); letter-spacing: 0; }
+  body.nz-quote-review .quote-section-step {
+    border-color: #bdd3df;
+    border-radius: 4px;
+    background: #eaf3f7;
+    color: var(--quote-blue) !important;
+    font-weight: 700 !important;
+  }
+  body.nz-quote-review .quote-builder-page :is(button, .quote-hero-actions a) { border-radius: 6px; font-weight: 600; }
+  body.nz-quote-review .quote-builder-page :is(input, textarea, select) {
+    border-color: #c4d2dc;
+    border-radius: 6px;
+    accent-color: var(--quote-red);
+  }
+  body.nz-quote-review .quote-builder-page :is(input, textarea, select):focus { border-color: var(--quote-blue); outline-color: #dcecf4; }
+
+  body.nz-quote-review .quote-family-tabs button {
+    --family-accent: var(--quote-blue);
+    border-top: 3px solid var(--family-accent);
+    border-radius: 6px;
+  }
+  body.nz-quote-review .quote-family-tabs button:nth-child(2) { --family-accent: var(--quote-red); }
+  body.nz-quote-review .quote-family-tabs button:nth-child(3) { --family-accent: var(--quote-gold); }
+  body.nz-quote-review .quote-family-tabs button:nth-child(4) { --family-accent: var(--quote-teal); }
+  body.nz-quote-review .quote-family-tabs button:nth-child(5) { --family-accent: #6c5682; }
+  body.nz-quote-review .quote-family-tabs button.is-active {
+    border-color: var(--family-accent);
+    background: var(--family-accent);
+    box-shadow: 0 7px 18px color-mix(in srgb, var(--family-accent) 22%, transparent);
+  }
+
+  body.nz-quote-review :is(.quote-family-panel, .quote-review-card) {
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(16, 43, 71, .06);
+  }
+  body.nz-quote-review .quote-family-panel { --panel-accent: var(--quote-blue); }
+  body.nz-quote-review .quote-family-panel[data-family-panel="pt"] { --panel-accent: var(--quote-red); }
+  body.nz-quote-review .quote-family-panel[data-family-panel="rg"] { --panel-accent: var(--quote-gold); }
+  body.nz-quote-review .quote-family-panel[data-family-panel="micro-path"] { --panel-accent: var(--quote-teal); }
+  body.nz-quote-review .quote-family-panel[data-family-panel="c-plus"] { --panel-accent: #6c5682; }
+  body.nz-quote-review .quote-family-panel > header { border-left: 5px solid var(--panel-accent); background: #eef5f8; }
+  body.nz-quote-review .quote-family-panel > header h3 { font-weight: 500; }
+  body.nz-quote-review .quote-family-panel > header p { color: var(--panel-accent); font-weight: 700; }
+  body.nz-quote-review .quote-catalog-table th { background: var(--quote-navy); color: #fff; font-weight: 600; }
+  body.nz-quote-review .quote-catalog-table tbody tr:nth-child(even) { background: #f8fafb; }
+  body.nz-quote-review .quote-catalog-table tbody tr:hover { background: #eaf3f7; }
+  body.nz-quote-review .quote-catalog-table td:first-child strong { font-weight: 600; }
+
+  body.nz-quote-review :is(.quote-selection-card, .quote-export-card) {
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(16, 43, 71, .09);
+  }
+  body.nz-quote-review .quote-selection-card { border-top: 4px solid var(--quote-red); }
+  body.nz-quote-review :is(.quote-selection-card-heading h3, .quote-export-card h3) { font-weight: 500; }
+  body.nz-quote-review .quote-selection-card footer { background: #eaf3f7; }
+  body.nz-quote-review .quote-selection-card footer a { color: var(--quote-blue); }
+
+  body.nz-quote-review .quote-details-section {
+    position: relative;
+    background: #eef5f7;
+    box-shadow: 0 0 0 100vmax #eef5f7;
+    clip-path: inset(0 -100vmax);
+  }
+  body.nz-quote-review .quote-privacy-note { border-left-color: var(--quote-gold); background: #fff9e9; color: #665126; }
+  body.nz-quote-review .quote-consent { border-left: 4px solid var(--quote-teal); }
+  body.nz-quote-review .quote-review-card > header { border-top: 3px solid var(--quote-gold); background: #f7f2e6; }
+
+  body.nz-quote-review .quote-export-card {
+    border: 0;
+    border-top: 4px solid var(--quote-gold);
+    background: var(--quote-navy);
+    color: #dce7ed;
+  }
+  body.nz-quote-review .quote-export-card .quote-eyebrow { color: #e1bd6c; }
+  body.nz-quote-review .quote-export-card h3,
+  body.nz-quote-review .quote-export-card p:not(.quote-eyebrow),
+  body.nz-quote-review .quote-export-card a { color: #fff; }
+  body.nz-quote-review .quote-export-actions button { border-color: rgba(255, 255, 255, .55); background: transparent; color: #fff; }
+  body.nz-quote-review .quote-export-actions button.quote-primary-action { border-color: var(--quote-red); background: var(--quote-red); }
+
+  @media (max-width: 500px) {
+    body.nz-quote-review .quote-steps li { border-top: 0; border-left: 4px solid var(--quote-blue); }
+    body.nz-quote-review .quote-steps li:nth-child(2) { border-left-color: var(--quote-red); }
+    body.nz-quote-review .quote-steps li:nth-child(3) { border-left-color: var(--quote-gold); }
+  }
+}
