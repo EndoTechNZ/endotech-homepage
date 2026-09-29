@@ -5,17 +5,35 @@ import path from 'node:path';
 import { JSDOM } from 'jsdom';
 const root=path.resolve('reviewed-site'),dist=path.resolve('dist');
 let pages=0;
+function refreshQuoteCatalog(reviewedHtml,generatedHtml){
+ const reviewedDom=new JSDOM(reviewedHtml),generatedDom=new JSDOM(generatedHtml);
+ const reviewedDocument=reviewedDom.window.document,generatedDocument=generatedDom.window.document;
+ const reviewedBuilder=reviewedDocument.querySelector('.quote-builder-page');
+ const generatedBuilder=generatedDocument.querySelector('.quote-builder-page');
+ const catalog=generatedBuilder?.getAttribute('data-catalog');
+ if(!reviewedBuilder||!catalog)throw Error('Unable to refresh the reviewed quote catalogue');
+ reviewedBuilder.setAttribute('data-catalog',catalog);
+ for(const selector of ['[data-family-tab="gutta-percha"]','[data-family-panel="gutta-percha"]']){
+  const current=reviewedDocument.querySelector(selector),fresh=generatedDocument.querySelector(selector);
+  if(!current||!fresh)throw Error(`Unable to refresh quote element: ${selector}`);
+  current.replaceWith(reviewedDocument.importNode(fresh,true));
+ }
+ return '<!DOCTYPE html>\n'+reviewedDom.serialize();
+}
 function publish(dir,rel=''){
  for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
   const next=path.join(rel,entry.name),from=path.join(dir,entry.name),to=path.join(dist,next);
   if(entry.isDirectory()){publish(from,next);continue;}
   fs.mkdirSync(path.dirname(to),{recursive:true});
   if(!entry.name.endsWith('.html')){fs.copyFileSync(from,to);continue;}
+  const isQuotePage=next.replaceAll('\\', '/') === 'quote-request/index.html';
+  const generatedHtml=isQuotePage&&fs.existsSync(to)?fs.readFileSync(to,'utf8'):'';
   let html=fs.readFileSync(from,'utf8');
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
-  if(next.replaceAll('\\', '/') === 'quote-request/index.html') {
+  if(isQuotePage) {
+   html=refreshQuoteCatalog(html,generatedHtml);
    html=html.replace('</head>', '<link rel="stylesheet" href="/quote-feedback.css"></head>');
    html=html.replace('</body>', '<script src="/quote-search.js" defer></script><script src="/quote-feedback.js" defer></script></body>');
   }
