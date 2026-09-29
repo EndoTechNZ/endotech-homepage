@@ -31,6 +31,7 @@ function publish(dir,rel=''){
   let html=fs.readFileSync(from,'utf8');
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
+   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=mobile-menu-20260930')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
   if(isQuotePage) {
    html=refreshQuoteCatalog(html,generatedHtml);

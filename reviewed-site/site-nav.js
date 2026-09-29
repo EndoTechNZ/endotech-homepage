@@ -28,6 +28,49 @@ function connectSharedExploreMenus(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',connectSharedExploreMenus);else connectSharedExploreMenus();
 
+const mobileExploreQuery=window.matchMedia('(max-width: 750px)');
+const mobileExploreStyleProperties=['position','left','right','top','width','min-width','max-width','max-height','box-sizing','z-index'];
+
+function positionMobileExploreMenu(details){
+  const menu=details.querySelector('.clean-dropdown,.preview-menu');
+  if(!menu)return;
+  if(!details.open||!mobileExploreQuery.matches){
+    mobileExploreStyleProperties.forEach(property=>menu.style.removeProperty(property));
+    return;
+  }
+  const trigger=details.querySelector('summary');
+  if(!trigger)return;
+  const gutter=12;
+  const top=Math.round(trigger.getBoundingClientRect().bottom+10);
+  Object.assign(menu.style,{
+    position:'fixed',
+    left:`${gutter}px`,
+    right:`${gutter}px`,
+    top:`${top}px`,
+    width:'auto',
+    minWidth:'0',
+    maxWidth:'none',
+    maxHeight:`${Math.max(160,window.innerHeight-top-gutter)}px`,
+    boxSizing:'border-box',
+    zIndex:'10020',
+  });
+}
+
+function connectViewportSafeExploreMenus(){
+  const menus=[...document.querySelectorAll('.clean-explore,.preview-explore')];
+  menus.forEach(details=>details.addEventListener('toggle',()=>positionMobileExploreMenu(details)));
+  let frame;
+  const reposition=()=>{
+    cancelAnimationFrame(frame);
+    frame=requestAnimationFrame(()=>menus.forEach(positionMobileExploreMenu));
+  };
+  window.addEventListener('resize',reposition,{passive:true});
+  window.addEventListener('scroll',reposition,{passive:true});
+  mobileExploreQuery.addEventListener('change',reposition);
+  reposition();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',connectViewportSafeExploreMenus);else connectViewportSafeExploreMenus();
+
 document.addEventListener('click',e=>{document.querySelectorAll('.clean-explore[open],.preview-explore[open]').forEach(d=>{if(!d.contains(e.target))d.open=false})});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.clean-explore[open],.preview-explore[open]').forEach(d=>{d.open=false;d.querySelector('summary').focus()})});
 
