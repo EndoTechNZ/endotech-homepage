@@ -15,6 +15,7 @@ export const getProductMenu = (base: string): NavItem[] => [
   { label: 'Transform S™ RG Files', href: `${base}products/transform-s-rg/` },
   { label: 'Micro-Path™ Files', href: `${base}products/micro-path/` },
   { label: 'Transform S™ C+ Files', href: `${base}products/c-plus/` },
+  { label: 'Gutta Percha Points', href: `${base}products/gutta-percha/` },
   { label: 'Transform S™ K-Files', href: `${base}products/k-files/` },
 ];
 
@@ -50,6 +51,7 @@ export const getProductMobileNavItems = (base: string): NavItem[] => [
   { label: 'Transform S™ RG', href: `${base}products/transform-s-rg/` },
   { label: 'Micro-Path™', href: `${base}products/micro-path/` },
   { label: 'Transform S™ C+', href: `${base}products/c-plus/` },
+  { label: 'Gutta Percha Points', href: `${base}products/gutta-percha/` },
   { label: 'Transform S™ K-Files', href: `${base}products/k-files/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
   { label: 'Technology Overview', href: `${base}technology/` },
@@ -76,6 +78,7 @@ export const getHomepageMobileNavItems = (base: string): NavItem[] => [
   { label: 'Transform S™ PT', href: `${base}products/transform-s-pt/` },
   { label: 'Transform S™ RG', href: `${base}products/transform-s-rg/` },
   { label: 'Transform S™ C+', href: `${base}products/c-plus/` },
+  { label: 'Gutta Percha Points', href: `${base}products/gutta-percha/` },
   { label: 'Transform S™ K-Files', href: `${base}products/k-files/` },
   { label: 'Education', href: `${base}resources/clinical-tips/` },
   { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
@@ -94,6 +97,7 @@ export const getFooterSections = (base: string): FooterSection[] => [
       { label: 'Transform S™ RG', href: `${base}products/transform-s-rg/` },
       { label: 'Micro-Path™', href: `${base}products/micro-path/` },
       { label: 'Transform S™ C+', href: `${base}products/c-plus/` },
+      { label: 'Gutta Percha Points', href: `${base}products/gutta-percha/` },
       { label: 'Transform S™ K-Files', href: `${base}products/k-files/` },
     ],
   },

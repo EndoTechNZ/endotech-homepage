@@ -1,6 +1,6 @@
 import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 
-export type NzLaunchFamily = 'micro-path' | 'et' | 'pt' | 'rg' | 'k-files' | 'c-plus';
+export type NzLaunchFamily = 'micro-path' | 'et' | 'pt' | 'rg' | 'k-files' | 'c-plus' | 'gutta-percha';
 
 export interface NzLaunchCatalogItem {
   family: NzLaunchFamily;
@@ -15,7 +15,8 @@ export interface NzLaunchCatalogItem {
   confirmationNote: string;
 }
 
-// Exact launch rows transcribed from the approved 2026-08-05 Transform S workbook.
+// Exact launch rows transcribed from the approved 2026-08-05 Transform S workbook,
+// plus the stocked Gutta Percha range confirmed on purchase order PO-26-003.
 export const nzLaunchCatalog: NzLaunchCatalogItem[] = [
   { family: "micro-path", system: "Transform S Micro-Path™", publicMeaning: "Glide path files", sku: "TSMP-130321RF", fileType: "Standard glide path", size: "13/.03", lengthMm: 21, packQty: 6, requiresConfirmation: true, confirmationNote: "Tip colour / identification is marked TO CONFIRM in the source workbook." },
   { family: "micro-path", system: "Transform S Micro-Path™", publicMeaning: "Glide path files", sku: "TSMP-130325RF", fileType: "Standard glide path", size: "13/.03", lengthMm: 25, packQty: 6, requiresConfirmation: true, confirmationNote: "Tip colour / identification is marked TO CONFIRM in the source workbook." },
@@ -211,6 +212,14 @@ export const nzLaunchCatalog: NzLaunchCatalogItem[] = [
   { family: "c-plus", system: "Transform S C Plus", publicMeaning: "Ultra-stiff calcified-canal hand files", sku: "TSCP-ASST0815-18-6PK", fileType: "Assorted C+ hand file pack", size: "08-15 assorted", lengthMm: 18, packQty: 6, requiresConfirmation: true, confirmationNote: "Source reference SKU and final assorted-pack composition are marked TO CONFIRM." },
   { family: "c-plus", system: "Transform S C Plus", publicMeaning: "Ultra-stiff calcified-canal hand files", sku: "TSCP-ASST0815-21-6PK", fileType: "Assorted C+ hand file pack", size: "08-15 assorted", lengthMm: 21, packQty: 6, requiresConfirmation: true, confirmationNote: "Source reference SKU and final assorted-pack composition are marked TO CONFIRM." },
   { family: "c-plus", system: "Transform S C Plus", publicMeaning: "Ultra-stiff calcified-canal hand files", sku: "TSCP-ASST0815-25-6PK", fileType: "Assorted C+ hand file pack", size: "08-15 assorted", lengthMm: 25, packQty: 6, requiresConfirmation: true, confirmationNote: "Source reference SKU and final assorted-pack composition are marked TO CONFIRM." },
+  { family: "gutta-percha", system: "EndoTech Gutta Percha Points", publicMeaning: "Matched-taper obturation points", sku: "TSGP-2003-60PK", fileType: "Gutta percha points", size: "20/.03", lengthMm: null, packQty: 60, requiresConfirmation: false, confirmationNote: "" },
+  { family: "gutta-percha", system: "EndoTech Gutta Percha Points", publicMeaning: "Matched-taper obturation points", sku: "TSGP-2005-60PK", fileType: "Gutta percha points", size: "20/.05", lengthMm: null, packQty: 60, requiresConfirmation: false, confirmationNote: "" },
+  { family: "gutta-percha", system: "EndoTech Gutta Percha Points", publicMeaning: "Matched-taper obturation points", sku: "TSGP-2503-60PK", fileType: "Gutta percha points", size: "25/.03", lengthMm: null, packQty: 60, requiresConfirmation: false, confirmationNote: "" },
+  { family: "gutta-percha", system: "EndoTech Gutta Percha Points", publicMeaning: "Matched-taper obturation points", sku: "TSGP-2505-60PK", fileType: "Gutta percha points", size: "25/.05", lengthMm: null, packQty: 60, requiresConfirmation: false, confirmationNote: "" },
+  { family: "gutta-percha", system: "EndoTech Gutta Percha Points", publicMeaning: "Matched-taper obturation points", sku: "TSGP-3003-60PK", fileType: "Gutta percha points", size: "30/.03", lengthMm: null, packQty: 60, requiresConfirmation: false, confirmationNote: "" },
+  { family: "gutta-percha", system: "EndoTech Gutta Percha Points", publicMeaning: "Matched-taper obturation points", sku: "TSGP-3005-60PK", fileType: "Gutta percha points", size: "30/.05", lengthMm: null, packQty: 60, requiresConfirmation: false, confirmationNote: "" },
+  { family: "gutta-percha", system: "EndoTech Gutta Percha Points", publicMeaning: "Matched-taper obturation points", sku: "TSGP-3503-60PK", fileType: "Gutta percha points", size: "35/.03", lengthMm: null, packQty: 60, requiresConfirmation: false, confirmationNote: "" },
+  { family: "gutta-percha", system: "EndoTech Gutta Percha Points", publicMeaning: "Matched-taper obturation points", sku: "TSGP-3505-60PK", fileType: "Gutta percha points", size: "35/.05", lengthMm: null, packQty: 60, requiresConfirmation: false, confirmationNote: "" },
 ];
 
 // Every row in the workbook-backed New Zealand launch catalogue is available

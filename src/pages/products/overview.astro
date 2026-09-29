@@ -7,6 +7,7 @@ import microPathProduct from '../../assets/micro-path-thumbnail.png';
 import transformSWordmark from '../../assets/transform-s-wordmark.png';
 
 const base = import.meta.env.BASE_URL;
+const guttaPerchaProduct = `${base}products/gutta-percha/gutta-percha-points.png`;
 
 const systems = [
   {
@@ -80,6 +81,10 @@ const workflowSteps = [
     title: 'Review',
     description: 'Select the listed catalogue item and article number required for the case.',
   },
+  {
+    title: 'Obturate',
+    description: 'Match the prepared size and taper with a stocked Gutta Percha Point.',
+  },
 ];
 
 const compareRows = [
@@ -116,7 +121,7 @@ const compareRows = [
 
 <ProductLayout
   title="Product Systems | EndoTech NZ"
-  description="Review the EndoTech NZ Transform S product range: ET, PT, RG, Micro-Path™, C+ and upcoming K-Files."
+  description="Review the EndoTech NZ product range: Transform S ET, PT and RG, Micro-Path™, C+, Gutta Percha Points and upcoming K-Files."
   image={etProduct.src}
   accent="teal"
 >
@@ -130,7 +135,7 @@ const compareRows = [
         </div>
         <h1 id="overview-hero-title">The Transform S™ range for New Zealand.</h1>
         <p class="overview-hero-lede">
-          Review five available product families and the upcoming K-File range, then open the exact product path that fits the case.
+          Review six available product families and the upcoming K-File range, then open the exact product path that fits the case.
         </p>
       </div>
 
@@ -169,8 +174,8 @@ const compareRows = [
 
     <section class="overview-supporting-systems" aria-labelledby="overview-supporting-title">
       <div class="overview-section-heading">
-        <p class="overview-eyebrow">Glide path and hand files</p>
-        <h2 id="overview-supporting-title">Micro-Path™ and C+ complete the available range. K-Files are coming later.</h2>
+        <p class="overview-eyebrow">Glide path, hand files and obturation</p>
+        <h2 id="overview-supporting-title">Micro-Path™, C+ and Gutta Percha Points complete the available range. K-Files are coming later.</h2>
       </div>
 
       <div class="overview-support-grid">
@@ -185,6 +190,20 @@ const compareRows = [
               Establish a reproducible route before shaping becomes more demanding.
             </p>
             <a href={`${base}products/micro-path/`}>View Micro-Path™</a>
+          </div>
+        </article>
+
+        <article class="overview-support-card">
+          <figure>
+            <img src={guttaPerchaProduct} alt="Gutta Percha Points with ISO colour-coded ends" />
+          </figure>
+          <div>
+            <span>Obturation</span>
+            <h3>Gutta Percha Points</h3>
+            <p>
+              Match ISO sizes 20–35 in .03 or .05 taper from the stocked New Zealand range.
+            </p>
+            <a href={`${base}products/gutta-percha/`}>View Gutta Percha Points</a>
           </div>
         </article>
 

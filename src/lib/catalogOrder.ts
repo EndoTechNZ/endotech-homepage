@@ -1,6 +1,6 @@
 import type { NzLaunchCatalogItem, NzLaunchFamily } from '../data/nzLaunchCatalog';
 
-const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'k-files'];
+const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'k-files'];
 
 const firstNumber = (value: string, fallback = Number.MAX_SAFE_INTEGER): number => {
   const match = value.match(/\d+(?:\.\d+)?/);
@@ -57,7 +57,7 @@ export const compareNzLaunchCatalogItems = (a: NzLaunchCatalogItem, b: NzLaunchC
   const familyDifference = familyOrder.indexOf(a.family) - familyOrder.indexOf(b.family);
   if (familyDifference) return familyDifference;
 
-  if (a.family === 'et' || a.family === 'micro-path') {
+  if (a.family === 'et' || a.family === 'micro-path' || a.family === 'gutta-percha') {
     const aSize = rotarySize(a);
     const bSize = rotarySize(b);
     return aSize.taper - bSize.taper ||

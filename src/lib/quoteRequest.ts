@@ -1,6 +1,6 @@
 import type { NzLaunchCatalogItem, NzLaunchFamily } from '../data/nzLaunchCatalog';
 
-export const QUOTE_REQUEST_SCHEMA_VERSION = '2026-08-14';
+export const QUOTE_REQUEST_SCHEMA_VERSION = '2026-09-30';
 export const QUOTE_REQUEST_MAX_QUANTITY = 999;
 
 export const quoteFamilyLabels: Record<NzLaunchFamily, string> = {
@@ -10,6 +10,7 @@ export const quoteFamilyLabels: Record<NzLaunchFamily, string> = {
   'micro-path': 'Micro-Path™',
   'c-plus': 'Transform S™ C+ Files',
   'k-files': 'Transform S™ K-Files',
+  'gutta-percha': 'Gutta Percha Points',
 };
 
 export interface QuoteCustomerDetails {

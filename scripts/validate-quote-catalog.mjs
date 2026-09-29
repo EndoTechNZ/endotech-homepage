@@ -20,8 +20,8 @@ const rows = objectRows.map((row, index) => {
   }
 });
 
-const expectedAll = 194;
-const expectedSelectable = 194;
+const expectedAll = 202;
+const expectedSelectable = 202;
 const expectedSelectableFamilies = new Map([
   ['et', 50],
   ['pt', 25],
@@ -29,6 +29,7 @@ const expectedSelectableFamilies = new Map([
   ['micro-path', 16],
   ['c-plus', 15],
   ['k-files', 53],
+  ['gutta-percha', 8],
 ]);
 const expectedPrefixes = new Map([
   ['et', 'TSET-'],
@@ -37,6 +38,7 @@ const expectedPrefixes = new Map([
   ['micro-path', 'TSMP-'],
   ['c-plus', 'TSCP-'],
   ['k-files', 'TSKF-'],
+  ['gutta-percha', 'TSGP-'],
 ]);
 
 const failures = [];

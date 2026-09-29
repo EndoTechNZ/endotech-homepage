@@ -1,5 +1,7 @@
 # build output
 dist/
+raw-dist/
+tmp/
 # Local visual checks, server logs, and browser automation sessions
 output/
 .playwright-cli/

@@ -8,7 +8,7 @@ import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 import { quoteFamilyLabels } from '../lib/quoteRequest';
 import { siteConfig } from '../config/site';
 
-const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus'];
+const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha'];
 const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string }> = {
   et: {
     eyebrow: 'Rotary shaping',
@@ -34,6 +34,10 @@ const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string 
     eyebrow: 'Hand files',
     description: 'K-Files are not yet available for ordering.',
   },
+  'gutta-percha': {
+    eyebrow: 'Obturation',
+    description: 'Matched-taper gutta percha points in the stocked New Zealand .03 and .05 range.',
+  },
 };
 
 const quoteRequestCatalog = nzCustomerSelectableCatalog.filter((item) => item.family !== 'k-files');
@@ -58,7 +62,7 @@ const contactEmail = siteConfig.email.toLowerCase();
 
 <ProductLayout
   title="Request a Pro Forma Invoice | EndoTech NZ"
-  description="Prepare an unpriced EndoTech NZ pro forma invoice request using the available Transform S ET, PT, RG, Micro-Path™ and C+ product range."
+  description="Prepare an unpriced EndoTech NZ pro forma invoice request using the available Transform S, Micro-Path™, C+ and Gutta Percha product range."
   image={transformLogo.src}
   accent="slate"
 >
@@ -86,7 +90,7 @@ const contactEmail = siteConfig.email.toLowerCase();
       </div>
       <div class="quote-hero-brand" aria-label="Transform S root canal shaping system">
         <img src={transformLogo.src} width="742" height="116" alt="Transform S root canal shaping system" />
-        <p>Five available families · {quoteRequestCatalog.length} listed SKUs · no prices shown</p>
+        <p>Six available families · {quoteRequestCatalog.length} listed SKUs · no prices shown</p>
       </div>
     </section>
 
