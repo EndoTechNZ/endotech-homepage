@@ -1,0 +1,11 @@
+.v10 .bg-shapes > div {
+  translate: 0 var(--shape-scroll-y, 0px);
+  will-change: transform, translate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v10 .bg-shapes > div {
+    translate: none !important;
+    will-change: auto;
+  }
+}
