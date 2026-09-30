@@ -307,7 +307,7 @@ const compareRows = [
         </p>
       </div>
       <div class="overview-cta-actions">
-        <a class="overview-button primary" href={`${base}order/`}>Order Products</a>
+        <a class="clean-order overview-order-button" href={`${base}quote-request/`}>Order <span aria-hidden="true">↗</span></a>
         <a class="overview-button secondary on-dark" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
       </div>
     </section>
@@ -683,6 +683,50 @@ const compareRows = [
   .overview-support-card p {
     margin: 14px 0 0;
     font-size: 0.94rem;
+  }
+
+  .overview-order-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    border-radius: 30px;
+    padding: 12px 23px;
+    background: #0c4a6e;
+    color: #ffffff;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .overview-order-button > span[aria-hidden='true'] {
+    display: inline-block;
+    line-height: 1;
+    transform: rotate(0deg);
+    transform-origin: center;
+    transition: transform 0.2s ease;
+  }
+
+  .overview-order-button:is(:hover, :focus-visible) {
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .overview-order-button:is(:hover, :focus-visible) > span[aria-hidden='true'] {
+    transform: rotate(45deg);
+  }
+
+  .overview-order-button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overview-order-button > span[aria-hidden='true'] {
+      transition: none;
+    }
   }
 
   .overview-system-card .overview-compatibility,
