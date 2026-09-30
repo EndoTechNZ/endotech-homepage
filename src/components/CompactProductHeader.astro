@@ -1,0 +1,101 @@
+---
+const base = import.meta.env.BASE_URL;
+
+const productLinks = [
+  { href: `${base}products/transform-s-et/`, label: 'Transform S ET' },
+  { href: `${base}products/transform-s-pt/`, label: 'Transform S PT' },
+  { href: `${base}products/transform-s-rg/`, label: 'Transform S RG' },
+  { href: `${base}products/micro-path/`, label: 'Micro-Path' },
+  { href: `${base}products/c-plus/`, label: 'Transform S C+' },
+  { href: `${base}products/gutta-percha/`, label: 'Gutta Percha Points' },
+];
+
+const resourceLinks = [
+  { href: `${base}technology/`, label: 'Technology' },
+  { href: `${base}technique/workflow/`, label: 'Clinical workflow' },
+  { href: `${base}resources/clinical-tips/`, label: 'Education' },
+  { href: `${base}resources/downloads/`, label: 'Evidence & downloads' },
+  { href: `${base}promotions/transform-s-catalogue/?intro=flip`, label: 'NZ promotional brochure' },
+  { href: `${base}about/company/`, label: 'About EndoTech' },
+];
+---
+
+<header class="compact-product-header">
+  <div class="compact-product-nav">
+    <a class="compact-product-brand" href={base} aria-label="EndoTech NZ home">
+      <img src={`${base}brand/endotech-nz-logo-2026.jpg`} width="76" height="76" alt="EndoTech NZ" />
+    </a>
+    <nav aria-label="Main navigation">
+      <a class="compact-nav-control" href={`${base}products/overview/`}>Systems</a>
+      <details class="compact-explore">
+        <summary class="compact-nav-control">Explore <span aria-hidden="true">⌄</span></summary>
+        <div class="compact-dropdown">
+          {productLinks.map((item) => <a href={item.href}>{item.label}</a>)}
+          <hr />
+          {resourceLinks.map((item) => <a href={item.href}>{item.label}</a>)}
+        </div>
+      </details>
+      <a class="compact-order" href={`${base}quote-request/`}>Order <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('.compact-product-header');
+  const explore = header?.querySelector('.compact-explore');
+  const dropdown = explore?.querySelector('.compact-dropdown');
+  const mobileQuery = window.matchMedia('(max-width: 600px)');
+
+  const clearDropdownPosition = () => {
+    if (!(dropdown instanceof HTMLElement)) return;
+    ['position', 'left', 'right', 'top', 'width', 'max-height'].forEach((property) => dropdown.style.removeProperty(property));
+  };
+
+  const positionDropdown = () => {
+    if (!(explore instanceof HTMLDetailsElement) || !(dropdown instanceof HTMLElement) || !explore.open || !mobileQuery.matches) {
+      clearDropdownPosition();
+      return;
+    }
+    const trigger = explore.querySelector('summary');
+    if (!(trigger instanceof HTMLElement)) return;
+    const gutter = 10;
+    const top = Math.round(trigger.getBoundingClientRect().bottom + 8);
+    Object.assign(dropdown.style, {
+      position: 'fixed',
+      left: `${gutter}px`,
+      right: `${gutter}px`,
+      top: `${top}px`,
+      width: 'auto',
+      maxHeight: `${Math.max(180, window.innerHeight - top - gutter)}px`,
+    });
+  };
+
+  explore?.addEventListener('toggle', positionDropdown);
+  document.addEventListener('click', (event) => {
+    if (explore instanceof HTMLDetailsElement && !explore.contains(event.target as Node)) explore.open = false;
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && explore instanceof HTMLDetailsElement && explore.open) {
+      explore.open = false;
+      explore.querySelector('summary')?.focus();
+    }
+  });
+  window.addEventListener('resize', positionDropdown, { passive: true });
+  window.addEventListener('scroll', positionDropdown, { passive: true });
+
+  const currentPath = window.location.pathname.replace(/\/+$/, '/') || '/';
+  header?.querySelectorAll('a[href]').forEach((link) => {
+    const targetPath = new URL(link.getAttribute('href') || '', window.location.href).pathname.replace(/\/+$/, '/') || '/';
+    if (targetPath === currentPath) {
+      link.setAttribute('aria-current', 'page');
+      if (link.closest('.compact-dropdown')) explore?.querySelector('summary')?.classList.add('is-current');
+    }
+  });
+</script>
+
+<style>
+  .compact-product-header{position:sticky;top:0;z-index:1000;border-bottom:1px solid #e2e8f0;background:rgba(255,255,255,.98);color:#64748b;font:14px system-ui,sans-serif}.compact-product-nav{display:flex;max-width:1280px;min-height:112px;align-items:center;justify-content:space-between;gap:20px;margin:auto;padding:18px 24px}.compact-product-brand{display:block;flex:0 0 auto}.compact-product-brand img{display:block;width:76px;height:76px;object-fit:contain}.compact-product-header nav{display:flex;align-items:center;gap:10px}.compact-product-header a{color:inherit;text-decoration:none}.compact-product-header a:hover{color:#0c4a6e}.compact-nav-control{display:inline-flex;min-height:42px;box-sizing:border-box;align-items:center;justify-content:center;border:1px solid #d5dee7;border-radius:8px;padding:0 15px;background:#f8fafc;color:#294b70!important;font-weight:650;line-height:1;white-space:nowrap;transition:color .18s ease,background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}.compact-nav-control:is(:hover,:focus-visible),.compact-nav-control.is-current,.compact-nav-control[aria-current="page"],.compact-explore[open] summary{border-color:#9fb4c4;background:#edf4f8;color:#0c4a6e!important;box-shadow:0 4px 12px rgba(15,54,86,.08);transform:translateY(-1px)}.compact-explore{position:relative}.compact-explore summary{gap:9px;cursor:pointer;list-style:none}.compact-explore summary::-webkit-details-marker{display:none}.compact-explore summary>span{display:inline-block;color:#61788c;font-size:14px;line-height:1;transition:transform .18s ease}.compact-explore[open] summary>span{transform:rotate(180deg)}.compact-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:260px;max-height:70vh;overflow:auto;border:1px solid #d5dee7;border-radius:8px;padding:10px;background:#fff;box-shadow:0 18px 38px rgba(15,23,42,.1)}.compact-dropdown a{display:block;border-radius:6px;padding:10px 12px;font-size:14px}.compact-dropdown a:hover{background:#f1f5f9}.compact-dropdown a[aria-current="page"]{background:#e8f1f6;color:#0c4a6e;font-weight:650}.compact-dropdown hr{margin:8px;border:0;border-top:1px solid #e2e8f0}.compact-order{display:inline-flex;align-items:center;gap:.35em;margin-left:6px;border-radius:30px;padding:12px 23px;background:#0c4a6e;color:#fff!important;white-space:nowrap}.compact-order>span{display:inline-block;line-height:1;transform-origin:center;transition:transform .2s ease}.compact-order:is(:hover,:focus-visible)>span{transform:rotate(45deg)}.compact-product-header :focus-visible{outline:2px solid #0c4a6e;outline-offset:4px}
+  @media(max-width:600px){.compact-product-nav{min-height:80px;gap:10px;padding:10px}.compact-product-brand img{width:48px;height:48px}.compact-product-header nav{gap:4px;font-size:12px}.compact-nav-control{min-height:36px;padding:0 10px}.compact-order{margin-left:2px;padding:10px 13px}.compact-dropdown{z-index:10020;box-sizing:border-box;min-width:0;max-width:none}}
+  @media(max-width:390px){.compact-product-nav{gap:6px}.compact-product-header nav{gap:3px}.compact-nav-control{padding-inline:8px}.compact-order{padding-inline:11px}}
+  @media(prefers-reduced-motion:reduce){.compact-nav-control,.compact-explore summary>span,.compact-order>span{transition:none}}
+</style>
