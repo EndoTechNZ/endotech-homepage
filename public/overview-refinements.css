@@ -1,0 +1,65 @@
+.overview-system-card .overview-compatibility,
+.overview-support-card .overview-compatibility {
+  margin-top: 10px;
+  border-left: 3px solid #79aab8;
+  padding: 7px 10px;
+  background: #f1f7f8;
+  color: #31566a;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.overview-trademark-notice {
+  padding: 30px 24px;
+  border-top: 1px solid #d9dde3;
+  border-bottom: 1px solid #d9dde3;
+  background: #f1f3f5;
+  color: #5c6572;
+}
+
+.overview-trademark-inner {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 32px;
+  width: calc(100% - 48px);
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.overview-trademark-title,
+.overview-trademark-copy {
+  margin: 0;
+}
+
+.overview-trademark-title {
+  color: #24384d;
+  font-family: Inter, "Segoe UI", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.overview-trademark-copy {
+  max-width: 860px;
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 720px) {
+  .overview-trademark-notice {
+    padding: 24px 0;
+  }
+
+  .overview-trademark-inner {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: calc(100% - 44px);
+  }
+
+  .overview-trademark-title,
+  .overview-trademark-copy {
+    font-size: 0.69rem;
+  }
+}

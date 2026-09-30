@@ -13,6 +13,7 @@ const systems = [
   {
     eyebrow: 'Rotary shaping system',
     title: 'Transform S™ ET',
+    compatibility: 'Compatible with EdgeTaper X7',
     description:
       'ET-style shaping for clinicians who want familiar .04/.06 sequence logic and a clear apical sequence, positioned as a replacement for EdgeFile X7, HyFlex CM, FKG RACE EVO / RaCe, MicroMega, Komet FQ, and HERO systems.',
     href: `${base}products/transform-s-et/`,
@@ -22,6 +23,7 @@ const systems = [
   {
     eyebrow: 'Rotary shaping system',
     title: 'Transform S™ PT',
+    compatibility: 'Compatible with ProTaper Gold',
     description:
       'PT-style shaping for clinicians preserving progressive crown-down sequence logic through more demanding anatomy, positioned as a replacement for ProTaper, ProTaper Gold, and ProTaper Next.',
     href: `${base}products/transform-s-pt/`,
@@ -31,6 +33,7 @@ const systems = [
   {
     eyebrow: 'Reciprocating shaping system',
     title: 'Transform S™ RG',
+    compatibility: 'Compatible with WaveOne Gold',
     description:
       'Reciprocating shaping with a dedicated Glider and Small, Primary, Medium and Large options for clinicians using WaveOne Gold-style workflows.',
     href: `${base}products/transform-s-rg/`,
@@ -164,6 +167,7 @@ const compareRows = [
             <div>
               <span>{system.eyebrow}</span>
               <h3>{system.title}</h3>
+              <p class="overview-compatibility">{system.compatibility}</p>
               <p>{system.description}</p>
               <a href={system.href}>View product page</a>
             </div>
@@ -186,6 +190,7 @@ const compareRows = [
           <div>
             <span>Glide path</span>
             <h3>Micro-Path™</h3>
+            <p class="overview-compatibility">Compatible with GlidePath files</p>
             <p>
               Establish a reproducible route before shaping becomes more demanding.
             </p>
@@ -200,6 +205,7 @@ const compareRows = [
           <div>
             <span>Obturation</span>
             <h3>Gutta Percha Points</h3>
+            <p class="overview-compatibility">Compatible with .04 and .06 taper preparation</p>
             <p>
               Match ISO sizes 20–35 in stocked .04 or .06 taper. $9.95 NZD + GST per box of 60.
             </p>
@@ -214,6 +220,7 @@ const compareRows = [
           <div>
             <span>Calcified-canal hand files</span>
             <h3>Transform S™ C+ Files</h3>
+            <p class="overview-compatibility">Compatible with established C+ hand-file workflows</p>
             <p>
               Select the listed C+ sizes for initial negotiation of narrow or calcified canals.
             </p>
@@ -225,6 +232,7 @@ const compareRows = [
           <div class="overview-support-copy">
             <p class="overview-eyebrow">Stainless-steel hand files</p>
             <h3>Transform S™ K-Files</h3>
+            <p class="overview-compatibility">Compatible with established K-file hand-file workflows</p>
             <p>
               K-Files are planned in individual and assorted packs, but they are not available yet.
             </p>
@@ -303,6 +311,15 @@ const compareRows = [
         <a class="overview-button secondary on-dark" href={`${base}about/contact/`}>Contact EndoTech NZ</a>
       </div>
     </section>
+
+    <aside class="overview-trademark-notice" aria-labelledby="overview-trademark-title">
+      <div class="overview-trademark-inner">
+        <p class="overview-trademark-title" id="overview-trademark-title">Trademark notice</p>
+        <p class="overview-trademark-copy">
+          ProTaper Gold® and WaveOne Gold® are registered trademarks of Dentsply Tulsa Dental Specialties. EdgeTaper™, EdgeTaper Platinum™ and EdgeFile® X7 are trademarks of EdgeEndo, a division of HSG-S Corp. All other third-party product names and trademarks are the property of their respective owners. References are for product identification and workflow compatibility only and do not imply affiliation, sponsorship or endorsement.
+        </p>
+      </div>
+    </aside>
   </main>
 </ProductLayout>
 
@@ -668,6 +685,18 @@ const compareRows = [
     font-size: 0.94rem;
   }
 
+  .overview-system-card .overview-compatibility,
+  .overview-support-card .overview-compatibility {
+    margin-top: 10px;
+    border-left: 3px solid #79aab8;
+    padding: 7px 10px;
+    background: #f1f7f8;
+    color: #31566a;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
   .overview-system-card a,
   .overview-support-card a {
     display: inline-flex;
@@ -869,6 +898,43 @@ const compareRows = [
     color: rgba(255, 255, 255, 0.82);
   }
 
+  .overview-trademark-notice {
+    padding: 30px 24px;
+    border-top: 1px solid #d9dde3;
+    border-bottom: 1px solid #d9dde3;
+    background: #f1f3f5;
+    color: #5c6572;
+  }
+
+  .overview-trademark-inner {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 32px;
+    width: calc(100% - 48px);
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .overview-trademark-title,
+  .overview-trademark-copy {
+    margin: 0;
+  }
+
+  .overview-trademark-title {
+    color: #24384d;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .overview-trademark-copy {
+    max-width: 860px;
+    font-size: 0.75rem;
+    line-height: 1.7;
+  }
+
   @media (max-width: 1120px) {
     .overview-hero,
     .overview-systems-section,
@@ -934,6 +1000,21 @@ const compareRows = [
 
     .overview-comparison-table {
       min-width: 760px;
+    }
+
+    .overview-trademark-notice {
+      padding: 24px 0;
+    }
+
+    .overview-trademark-inner {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      width: calc(100% - 44px);
+    }
+
+    .overview-trademark-title,
+    .overview-trademark-copy {
+      font-size: 0.69rem;
     }
   }
 </style>
