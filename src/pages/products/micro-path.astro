@@ -367,6 +367,8 @@ const microPathSchema = {
       observer.observe(mask);
     })();
   </script>
+
+  <script is:inline src="/micropath-range-hover.js"></script>
 </ProductLayout>
 
 <style>
@@ -531,14 +533,53 @@ const microPathSchema = {
     content: '';
     display: block;
     position: absolute;
-    top: 10%;
+    top: 18%;
     right: 3%;
     z-index: 1;
     width: 24%;
-    height: 76%;
+    height: 62%;
     background: url('/assets/micropath-vtaper-20-25.png') center / contain no-repeat;
     pointer-events: none;
   }
+
+  .microPath-hero-visual::before {
+    content: var(--file-label, '');
+    display: flex;
+    position: absolute;
+    top: 3%;
+    left: var(--file-x, 50%);
+    z-index: 3;
+    align-items: flex-start;
+    justify-content: center;
+    width: 11%;
+    height: 88%;
+    border: 1px solid color-mix(in srgb, var(--file-accent, #6c9caf) 48%, transparent);
+    border-radius: 999px;
+    padding-top: 8px;
+    background:
+      radial-gradient(circle at 50% 34%, color-mix(in srgb, var(--file-accent, #6c9caf) 20%, transparent), transparent 58%),
+      linear-gradient(180deg, color-mix(in srgb, var(--file-accent, #6c9caf) 13%, white), transparent 30% 72%, color-mix(in srgb, var(--file-accent, #6c9caf) 9%, transparent));
+    box-shadow: 0 18px 42px color-mix(in srgb, var(--file-accent, #6c9caf) 24%, transparent);
+    color: #173c58;
+    font: 700 0.66rem/1 Inter, 'Segoe UI', sans-serif;
+    letter-spacing: 0;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.94);
+    transition: opacity 180ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .microPath-hero-visual[data-active-file]::before {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+
+  .microPath-hero-visual[data-active-file='13'] { --file-x: 32.6%; --file-accent: #aeb7c2; --file-label: '13/.03'; }
+  .microPath-hero-visual[data-active-file='15'] { --file-x: 43.6%; --file-accent: #a45aa7; --file-label: '15/.03'; }
+  .microPath-hero-visual[data-active-file='17'] { --file-x: 54.5%; --file-accent: #d6bd2d; --file-label: '17/.03'; }
+  .microPath-hero-visual[data-active-file='mb2'] { --file-x: 65.5%; --file-accent: #5677b5; --file-label: 'MB2'; }
+  .microPath-hero-visual[data-active-file='20'] { --file-x: 80%; --file-accent: #e4c527; --file-label: '20/.03'; }
+  .microPath-hero-visual[data-active-file='25'] { --file-x: 91%; --file-accent: #c84b4b; --file-label: '25/.03'; }
 
   .microPath-hero-actions,
   .microPath-cta-actions,
@@ -578,6 +619,17 @@ const microPathSchema = {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     background: #fbfdff;
+    cursor: pointer;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease, border-color 220ms ease;
+  }
+
+  .microPath-hero-size:hover,
+  .microPath-hero-size:focus-visible,
+  .microPath-hero-size.is-file-active {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, currentColor 28%, #d7e0e8);
+    box-shadow: 0 10px 24px rgba(23, 60, 88, 0.13);
+    outline: none;
   }
 
   .microPath-hero-token {
@@ -1124,10 +1176,25 @@ const microPathSchema = {
     }
 
     .microPath-hero-visual::after {
-      top: 12%;
+      top: 20%;
       right: 1%;
-      height: 72%;
+      height: 60%;
     }
+
+    .microPath-hero-visual::before {
+      top: 7%;
+      width: 14%;
+      height: 82%;
+      padding-top: 6px;
+      font-size: 0.58rem;
+    }
+
+    .microPath-hero-visual[data-active-file='13'] { --file-x: 35.4%; }
+    .microPath-hero-visual[data-active-file='15'] { --file-x: 45.7%; }
+    .microPath-hero-visual[data-active-file='17'] { --file-x: 56%; }
+    .microPath-hero-visual[data-active-file='mb2'] { --file-x: 66.3%; }
+    .microPath-hero-visual[data-active-file='20'] { --file-x: 81.7%; }
+    .microPath-hero-visual[data-active-file='25'] { --file-x: 92.6%; }
 
     .microPath-bcs-metrics {
       grid-template-columns: 1fr;
