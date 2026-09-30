@@ -13,6 +13,11 @@ function refreshQuoteCatalog(reviewedHtml,generatedHtml){
  const catalog=generatedBuilder?.getAttribute('data-catalog');
  if(!reviewedBuilder||!catalog)throw Error('Unable to refresh the reviewed quote catalogue');
  reviewedBuilder.setAttribute('data-catalog',catalog);
+ for(const attribute of ['data-submission-endpoint','data-submission-enabled']){
+  const value=generatedBuilder.getAttribute(attribute);
+  if(value===null)throw Error(`Unable to refresh quote submission setting: ${attribute}`);
+  reviewedBuilder.setAttribute(attribute,value);
+ }
  for(const selector of ['[data-family-tab="gutta-percha"]','[data-family-panel="gutta-percha"]']){
   const current=reviewedDocument.querySelector(selector),fresh=generatedDocument.querySelector(selector);
   if(!current||!fresh)throw Error(`Unable to refresh quote element: ${selector}`);
@@ -58,4 +63,12 @@ check(dist);
 if(issues.length){console.error(JSON.stringify(issues,null,2));throw Error('Missing production destinations/assets');}
 const quote=fs.readFileSync(path.join(dist,'quote-request/index.html'),'utf8');
 if(!quote.includes('/quote-nz.css')||quote.includes('quote-local-notice">'))throw Error('Quote redesign not production-ready');
+if(process.env.PUBLIC_QUOTE_REQUEST_SUBMISSION_ENABLED==='true'){
+ const d=new JSDOM(quote).window.document;
+ const builder=d.querySelector('.quote-builder-page');
+ const expectedEndpoint=process.env.PUBLIC_QUOTE_REQUEST_ENDPOINT||'';
+ if(builder?.getAttribute('data-submission-enabled')!=='true'||!expectedEndpoint||builder.getAttribute('data-submission-endpoint')!==expectedEndpoint){
+  throw Error('Production quote submission settings were not preserved');
+ }
+}
 console.log(`Published ${pages} reviewed HTML pages; production destinations/assets verified.`);
