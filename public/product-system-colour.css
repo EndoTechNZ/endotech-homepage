@@ -43,11 +43,18 @@ main.et-stitch-page:has(.et-hero-image[alt*="RG"]){--system-a:#8f3341;--system-b
 /* Micro-Path carries the file identifiers through the page without colouring the ordering data. */
 .microPath-hero{background:linear-gradient(135deg,#f7f2fa 0%,#fff 34%,#fff 62%,#fff9df 82%,#f1f5fb 100%)!important}
 .microPath-hero h1{color:#173c58!important}
-.microPath-hero-meta span{border:1px solid #d8e0e9!important;border-radius:5px!important;background:#fff!important;box-shadow:0 5px 16px rgba(29,52,77,.06)!important}
-.microPath-hero-meta span:nth-child(1){border-top:3px solid #c7cdd5!important}
-.microPath-hero-meta span:nth-child(2){border-top:3px solid #a45aa7!important}
-.microPath-hero-meta span:nth-child(3){border-top:3px solid #d6bd2d!important}
-.microPath-hero-meta span:nth-child(4){border-top:3px solid #5677b5!important}
+.microPath-hero-meta{display:flex!important;flex-wrap:wrap!important;align-items:flex-start!important;justify-content:center!important;gap:10px!important}
+.microPath-hero-size{border:1px solid #d8e0e9!important;border-radius:5px!important;background:#fff!important;box-shadow:0 5px 16px rgba(29,52,77,.06)!important}
+.microPath-hero-size--13{border-top:3px solid #c7cdd5!important}
+.microPath-hero-size--15{border-top:3px solid #a45aa7!important}
+.microPath-hero-size--17{border-top:3px solid #d6bd2d!important}
+.microPath-hero-size--mb2{border-top:3px solid #5677b5!important}
+.microPath-hero-size--20{border-top:3px solid #4f9b90!important}
+.microPath-hero-size--25{border-top:3px solid #3f7f9f!important}
+.microPath-hero-token{display:grid;justify-items:center;gap:8px}
+.microPath-hero-size-pair{display:flex;gap:10px}
+.microPath-hero-meta-note{margin:0;color:#667386;font:600 .68rem/1.2 Inter,"Segoe UI",sans-serif;text-align:center;letter-spacing:0}
+@media(max-width:720px){.microPath-hero-meta{max-width:354px!important}.microPath-hero-token--paired{width:100%}.microPath-hero-size-pair{justify-content:center}}
 .nz-micropath-media{max-width:none!important;padding:0!important;background:#fbf8fc!important}
 .nz-micropath-media>section{width:min(1120px,calc(100% - 48px));margin-inline:auto!important;padding-block:64px!important}
 .nz-micropath-media>section:nth-child(2){width:min(1120px,calc(100% - 48px));background:#fff!important;box-shadow:0 0 0 100vmax #fff;clip-path:inset(0 -100vmax)}

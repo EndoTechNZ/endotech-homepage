@@ -152,10 +152,20 @@ const microPathSchema = {
       </div>
 
       <div class="microPath-hero-meta" aria-label="Micro-Path™ key range">
-        <span>13/.03</span>
-        <span>15/.03</span>
-        <span>17/.03</span>
-        <span>MB2 15/.05</span>
+        <span class="microPath-hero-size microPath-hero-size--13">13/.03</span>
+        <span class="microPath-hero-size microPath-hero-size--15">15/.03</span>
+        <span class="microPath-hero-size microPath-hero-size--17">17/.03</span>
+        <div class="microPath-hero-token">
+          <span class="microPath-hero-size microPath-hero-size--mb2">MB2 15/.05</span>
+          <small class="microPath-hero-meta-note">Mini Magic<br />File</small>
+        </div>
+        <div class="microPath-hero-token microPath-hero-token--paired">
+          <div class="microPath-hero-size-pair">
+            <span class="microPath-hero-size microPath-hero-size--20">20/.03</span>
+            <span class="microPath-hero-size microPath-hero-size--25">25/.03</span>
+          </div>
+          <small class="microPath-hero-meta-note">Compatible with V-Taper</small>
+        </div>
       </div>
     </section>
 
@@ -534,11 +544,12 @@ const microPathSchema = {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: flex-start;
     gap: 10px;
     margin-top: 18px;
   }
 
-  .microPath-hero-meta span {
+  .microPath-hero-size {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -553,6 +564,27 @@ const microPathSchema = {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     background: #fbfdff;
+  }
+
+  .microPath-hero-token {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+  }
+
+  .microPath-hero-size-pair {
+    display: flex;
+    gap: 10px;
+  }
+
+  .microPath-hero-meta-note {
+    margin: 0;
+    color: #667386;
+    font-family: Inter, 'Segoe UI', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
   }
 
   .microPath-button {
@@ -1068,9 +1100,9 @@ const microPathSchema = {
     }
 
     .microPath-hero-meta {
-      display: grid;
+      display: flex;
       width: 100%;
-      max-width: 320px;
+      max-width: 354px;
     }
 
     .microPath-button {
