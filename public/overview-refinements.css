@@ -1,5 +1,8 @@
 .overview-system-card .overview-compatibility,
 .overview-support-card .overview-compatibility {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
   margin-top: 10px;
   border-left: 3px solid #79aab8;
   padding: 7px 10px;

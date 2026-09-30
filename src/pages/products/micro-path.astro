@@ -505,6 +505,7 @@ const microPathSchema = {
   }
 
   .microPath-hero-visual {
+    position: relative;
     width: 100%;
     max-width: 1080px;
     margin: 52px 0 0;
@@ -524,6 +525,19 @@ const microPathSchema = {
     max-height: 780px;
     object-fit: contain;
     backface-visibility: hidden;
+  }
+
+  .microPath-hero-visual::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 10%;
+    right: 3%;
+    z-index: 1;
+    width: 24%;
+    height: 76%;
+    background: url('/assets/micropath-vtaper-20-25.png') center / contain no-repeat;
+    pointer-events: none;
   }
 
   .microPath-hero-actions,
@@ -1107,6 +1121,12 @@ const microPathSchema = {
 
     .microPath-button {
       width: 100%;
+    }
+
+    .microPath-hero-visual::after {
+      top: 12%;
+      right: 1%;
+      height: 72%;
     }
 
     .microPath-bcs-metrics {

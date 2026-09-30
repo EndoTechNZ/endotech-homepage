@@ -54,7 +54,10 @@ main.et-stitch-page:has(.et-hero-image[alt*="RG"]){--system-a:#8f3341;--system-b
 .microPath-hero-token{display:grid;justify-items:center;gap:8px}
 .microPath-hero-size-pair{display:flex;gap:10px}
 .microPath-hero-meta-note{margin:0;color:#667386;font:600 .68rem/1.2 Inter,"Segoe UI",sans-serif;text-align:center;letter-spacing:0}
+.microPath-hero-visual{position:relative!important}
+.clean-subpage .microPath-hero-visual::after{content:"";display:block!important;position:absolute!important;top:10%!important;right:3%!important;z-index:1;width:24%!important;height:76%!important;background:url("/assets/micropath-vtaper-20-25.png") center/contain no-repeat;pointer-events:none}
 @media(max-width:720px){.microPath-hero-meta{max-width:354px!important}.microPath-hero-token--paired{width:100%}.microPath-hero-size-pair{justify-content:center}}
+@media(max-width:800px){.clean-subpage .microPath-hero-visual::after{top:12%!important;right:1%!important;height:72%!important}}
 .nz-micropath-media{max-width:none!important;padding:0!important;background:#fbf8fc!important}
 .nz-micropath-media>section{width:min(1120px,calc(100% - 48px));margin-inline:auto!important;padding-block:64px!important}
 .nz-micropath-media>section:nth-child(2){width:min(1120px,calc(100% - 48px));background:#fff!important;box-shadow:0 0 0 100vmax #fff;clip-path:inset(0 -100vmax)}
