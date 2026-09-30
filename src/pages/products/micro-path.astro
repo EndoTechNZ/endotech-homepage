@@ -1,7 +1,7 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import microPathFiles from '../../assets/micro-path-files.png';
-import microPathBox from '../../assets/transform-s-micro-path-box.png';
+import microPathBox from '../../assets/micro-path-files-six.png';
 import { siteConfig } from '../../config/site';
 import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
 
@@ -529,19 +529,6 @@ const microPathSchema = {
     backface-visibility: hidden;
   }
 
-  .microPath-hero-visual::after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 21%;
-    right: 3%;
-    z-index: 1;
-    width: 24%;
-    height: 57%;
-    background: url('/assets/micropath-vtaper-20-25.png?v=proportion-20261001') center / contain no-repeat;
-    pointer-events: none;
-  }
-
   .microPath-hero-visual::before {
     content: var(--file-label, '');
     display: flex;
@@ -574,12 +561,12 @@ const microPathSchema = {
     transform: translateX(-50%) scale(1);
   }
 
-  .microPath-hero-visual[data-active-file='13'] { --file-x: 32.6%; --file-accent: #aeb7c2; --file-label: '13/.03'; }
-  .microPath-hero-visual[data-active-file='15'] { --file-x: 43.6%; --file-accent: #a45aa7; --file-label: '15/.03'; }
-  .microPath-hero-visual[data-active-file='17'] { --file-x: 54.5%; --file-accent: #d6bd2d; --file-label: '17/.03'; }
-  .microPath-hero-visual[data-active-file='mb2'] { --file-x: 65.5%; --file-accent: #5677b5; --file-label: 'MB2'; }
-  .microPath-hero-visual[data-active-file='20'] { --file-x: 80%; --file-accent: #e4c527; --file-label: '20/.03'; }
-  .microPath-hero-visual[data-active-file='25'] { --file-x: 91%; --file-accent: #c84b4b; --file-label: '25/.03'; }
+  .microPath-hero-visual[data-active-file='13'] { --file-x: 45.58%; --file-accent: #aeb7c2; --file-label: '13/.03'; }
+  .microPath-hero-visual[data-active-file='15'] { --file-x: 55.82%; --file-accent: #a45aa7; --file-label: '15/.03'; }
+  .microPath-hero-visual[data-active-file='17'] { --file-x: 66.21%; --file-accent: #d6bd2d; --file-label: '17/.03'; }
+  .microPath-hero-visual[data-active-file='mb2'] { --file-x: 35.25%; --file-accent: #5677b5; --file-label: 'MB2'; }
+  .microPath-hero-visual[data-active-file='20'] { --file-x: 76.5%; --file-accent: #e4c527; --file-label: '20/.03'; }
+  .microPath-hero-visual[data-active-file='25'] { --file-x: 86.8%; --file-accent: #c84b4b; --file-label: '25/.03'; }
 
   .microPath-hero-actions,
   .microPath-cta-actions,
@@ -1175,12 +1162,6 @@ const microPathSchema = {
       width: 100%;
     }
 
-    .microPath-hero-visual::after {
-      top: 22%;
-      right: 1%;
-      height: 56%;
-    }
-
     .microPath-hero-visual::before {
       top: 7%;
       width: 14%;
@@ -1189,12 +1170,12 @@ const microPathSchema = {
       font-size: 0.58rem;
     }
 
-    .microPath-hero-visual[data-active-file='13'] { --file-x: 35.4%; }
-    .microPath-hero-visual[data-active-file='15'] { --file-x: 45.7%; }
-    .microPath-hero-visual[data-active-file='17'] { --file-x: 56%; }
-    .microPath-hero-visual[data-active-file='mb2'] { --file-x: 66.3%; }
-    .microPath-hero-visual[data-active-file='20'] { --file-x: 81.7%; }
-    .microPath-hero-visual[data-active-file='25'] { --file-x: 92.6%; }
+    .microPath-hero-visual[data-active-file='13'] { --file-x: 45.58%; }
+    .microPath-hero-visual[data-active-file='15'] { --file-x: 55.82%; }
+    .microPath-hero-visual[data-active-file='17'] { --file-x: 66.21%; }
+    .microPath-hero-visual[data-active-file='mb2'] { --file-x: 35.25%; }
+    .microPath-hero-visual[data-active-file='20'] { --file-x: 76.5%; }
+    .microPath-hero-visual[data-active-file='25'] { --file-x: 86.8%; }
 
     .microPath-bcs-metrics {
       grid-template-columns: 1fr;
