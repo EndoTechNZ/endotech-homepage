@@ -14,9 +14,7 @@ const workflowHref = `${base}technique/workflow/`;
 const motorSettingsHref = `${base}technique/motor-settings/`;
 
 const microPathEntries = nzCustomerSelectableCatalog.filter((item) => item.family === 'micro-path');
-const standardSizes = [...new Set(
-  microPathEntries.filter((item) => item.fileType === 'Standard glide path').map((item) => item.size)
-)];
+const standardSizes = ['13/.03', '15/.03', '17/.03', '20/.03', '25/.03'];
 const standardRange = standardSizes.map((size) => ({
   size,
   items: microPathEntries
@@ -217,7 +215,7 @@ const microPathSchema = {
         <p class="microPath-eyebrow">Product range</p>
         <h2 id="microPath-range-title">Sizes, lengths, and part numbers.</h2>
         <p>
-          The core Micro-Path™ range stays deliberately simple: 13/.03, 15/.03, and 17/.03 in 21 mm, 25 mm, and 29 mm lengths, plus a dedicated MB2 option.
+          The core Micro-Path™ range stays deliberately simple: 13/.03, 15/.03, 17/.03, 20/.03, and 25/.03 in 21 mm, 25 mm, and 29 mm lengths, plus a dedicated MB2 option.
         </p>
       </div>
 
