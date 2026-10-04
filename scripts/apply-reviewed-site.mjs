@@ -31,6 +31,11 @@ function publish(dir,rel=''){
   if(entry.isDirectory()){publish(from,next);continue;}
   fs.mkdirSync(path.dirname(to),{recursive:true});
   if(!entry.name.endsWith('.html')){fs.copyFileSync(from,to);continue;}
+  // The interactive MB2 viewer is maintained in Astro, including its mobile controls.
+  if(next.replaceAll('\\', '/') === 'viewers/upper-molar-mb2/index.html'){
+   if(!fs.existsSync(to))throw Error('Generated MB2 viewer is missing');
+   continue;
+  }
   const isQuotePage=next.replaceAll('\\', '/') === 'quote-request/index.html';
   const generatedHtml=isQuotePage&&fs.existsSync(to)?fs.readFileSync(to,'utf8'):'';
   let html=fs.readFileSync(from,'utf8');
