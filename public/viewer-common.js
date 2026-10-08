@@ -23,4 +23,6 @@ const rearrange=()=>{const on=mobileQuery.matches;document.body.classList.toggle
 if(!lower){const sync=()=>{if(mobileQuery.matches){const value=window.mobileInsertion.getPercent();percent.value=value;output.textContent=Math.round(value)+'%';}requestAnimationFrame(sync)};sync();}
 if(lower){const alignDesktopCanvas=()=>{if(mobileQuery.matches){stage.style.removeProperty('height');return}const target=specific.querySelector('summary');const height=Math.max(520,Math.ceil(target.getBoundingClientRect().bottom-stage.getBoundingClientRect().top));if(stage.style.height!==height+'px')stage.style.height=height+'px'};new ResizeObserver(alignDesktopCanvas).observe(aside);window.addEventListener('resize',alignDesktopCanvas);mobileQuery.addEventListener('change',alignDesktopCanvas);alignDesktopCanvas();}
 const announce=()=>{if(parent!==window)parent.postMessage({type:'endo-viewer-height',height:Math.ceil(document.body.getBoundingClientRect().height)},location.origin)};new ResizeObserver(announce).observe(document.body);setTimeout(announce,1500);
+// Wait for the resized canvas to render before revealing the LM6 layout.
+if(lower)requestAnimationFrame(()=>requestAnimationFrame(()=>document.dispatchEvent(new Event('lm6-viewer-ready'))));
 })();
