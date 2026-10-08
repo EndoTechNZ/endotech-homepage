@@ -1,11 +1,26 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import { withBasePath } from '../../utils/paths';
+import protocolDownloads from '../../data/protocolDownloads.json';
 
 const ideasHref = withBasePath('/resources/ideas/');
 const ideasTeaserSrc = withBasePath('/blog-ideas-teaser.png');
 
-const documentGroups = [
+const documentGroups: {
+  label: string;
+  description: string;
+  files: { name: string; href: string; details?: string; download?: string }[];
+}[] = [
+  {
+    label: 'File System Protocol Cards',
+    description: 'Illustrated file sequences and motor settings for ET, PT, RG and Micro-Path™.',
+    files: [...Object.values(protocolDownloads.systems), protocolDownloads.collection].map((card) => ({
+      name: card.title,
+      href: `/downloads/${card.fileName}`,
+      details: `PDF · ${card.pages} pages · ${card.description}`,
+      download: card.fileName,
+    })),
+  },
   {
     label: 'Transform S Instructions for Use',
     description: 'New Zealand instructions for use with EndoTech NZ distributor contact details.',
@@ -81,10 +96,10 @@ const missionStatement = {
           </p>
         </div>
         <h1 class="mt-5 max-w-[11ch] text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.7rem]">
-          Technical files in one clean library.
+          Protocol cards and product downloads.
         </h1>
         <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
-          Technique guides, part numbers, and supporting company files presented in the same premium clinical system as the redesigned product pages.
+          Download file sequences, motor settings, instructions for use, part numbers and clinical checklists.
         </p>
       </div>
 
@@ -117,7 +132,7 @@ const missionStatement = {
     <div class="mx-auto max-w-7xl px-6 py-20 sm:py-20 lg:py-24">
       <div class="grid gap-5">
         {documentGroups.map((group) => (
-          <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
+          <article id={group.label === 'File System Protocol Cards' ? 'protocol-cards' : undefined} class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
             <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">{group.label}</p>
             <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">{group.label}</h2>
             <p class="mt-3 text-base leading-8 text-slate-600">{group.description}</p>
@@ -140,12 +155,15 @@ const missionStatement = {
                     <div>
                       <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">PDF document</p>
                       <h3 class="mt-2 text-lg font-bold tracking-tight text-slate-900">{file.name}</h3>
+                      {file.details && <p class="mt-2 text-sm leading-7 text-slate-600">{file.details}</p>}
                     </div>
                     <a
                       href={withBasePath(file.href)}
+                      download={file.download}
+                      aria-label={file.download ? `Download ${file.name}` : undefined}
                       class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.04)] transition-[background-color,box-shadow,transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_24px_rgba(15,23,42,0.08),0_2px_6px_rgba(15,23,42,0.05)]"
                     >
-                      Open PDF
+                      {file.download ? 'Download PDF' : 'Open PDF'}
                     </a>
                   </div>
                 ))}

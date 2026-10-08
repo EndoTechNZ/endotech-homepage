@@ -4,11 +4,13 @@ import microPathFiles from '../../assets/micro-path-files.png';
 import microPathBox from '../../assets/micro-path-files-six.png';
 import { siteConfig } from '../../config/site';
 import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
+import protocolDownloads from '../../data/protocolDownloads.json';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const base = import.meta.env.BASE_URL;
 const microPathOrderHref = `${base}order/#micro-path-order`;
 const microPathPartNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-Micro-Path-Part-Numbers.pdf`;
+const microPathProtocol = protocolDownloads.systems['micro-path'];
 const microPathIfuHref = `${base}downloads/EndoTech-NZ-Transform-S-MicroPath-IFU.pdf`;
 const workflowHref = `${base}technique/workflow/`;
 const motorSettingsHref = `${base}technique/motor-settings/`;
@@ -281,14 +283,26 @@ const microPathSchema = {
       </div>
     </section>
 
-    <section class="microPath-downloads-section" aria-labelledby="microPath-downloads-title">
+    <section id="downloads" class="microPath-downloads-section" aria-labelledby="microPath-downloads-title">
       <div class="microPath-downloads-heading">
         <p class="microPath-eyebrow">Downloads</p>
-        <h2 id="microPath-downloads-title">Micro-Path™ product documents.</h2>
-        <p>Download the New Zealand instructions for use or the customer-selectable article-number guide.</p>
+        <h2 id="microPath-downloads-title">Micro-Path™ protocol and product documents.</h2>
+        <p>Download the illustrated sequence, instructions for use and part numbers.</p>
       </div>
-      <a class="microPath-button dark" href={microPathIfuHref}>Download Micro-Path™ IFU</a>
-      <a class="microPath-button dark" href={microPathPartNumbersHref}>Download Micro-Path™ guide</a>
+      <div class="microPath-download-list">
+        <a href={`${base}downloads/${microPathProtocol.fileName}`} download={microPathProtocol.fileName}>
+          <strong>Download {microPathProtocol.title}</strong>
+          <span>PDF · {microPathProtocol.pages} pages</span>
+        </a>
+        <a href={microPathIfuHref}>
+          <strong>Micro-Path™ instructions for use</strong>
+          <span>PDF · New Zealand IFU</span>
+        </a>
+        <a href={microPathPartNumbersHref}>
+          <strong>Micro-Path™ part-number guide</strong>
+          <span>PDF · Article numbers and ordering</span>
+        </a>
+      </div>
     </section>
 
     <section class="microPath-cta-section" aria-labelledby="microPath-cta-title">

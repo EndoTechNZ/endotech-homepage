@@ -6,12 +6,15 @@ import avatarTipComparison from '../../assets/avatar-tip-comparison.png';
 import etFirewireMachine from '../../assets/et-firewire-machine.png';
 import { siteConfig } from '../../config/site';
 import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
+import protocolDownloads from '../../data/protocolDownloads.json';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const base = import.meta.env.BASE_URL;
 const rgOrderHref = `${base}quote-request/?family=rg#select-products`;
 const workflowHref = `${base}technique/workflow/`;
 const rgBrochureHref = `${base}downloads/EndoTech-TransformS-PT-RG-Brochure-4pp-WEB.pdf`;
+const downloadsHref = `${base}resources/downloads/`;
+const rgProtocol = protocolDownloads.systems.rg;
 const rgIfuHref = `${base}downloads/EndoTech-NZ-Transform-S-RG-IFU.pdf`;
 const rgProducts = nzCustomerSelectableCatalog.filter(
   (item) => item.family === 'rg' && (item.sku.endsWith('-6PK') || item.sku.endsWith('-4PK'))
@@ -125,7 +128,7 @@ const comparisonRows = [
 
       <div class="et-hero-actions">
         <a class="et-button primary" href="#technical-specifications">Technical Specifications</a>
-        <a class="et-button secondary" href={rgBrochureHref} target="_blank" rel="noreferrer">Evidence &amp; Downloads</a>
+        <a class="et-button secondary" href="#downloads">Evidence &amp; Downloads</a>
       </div>
     </section>
 
@@ -213,17 +216,21 @@ const comparisonRows = [
           </tbody>
         </table>
       </div>
-      <p class="et-catalogue-note">Motor and reciprocation settings remain pending confirmation and are intentionally not published here.</p>
+      <p class="et-catalogue-note">See the RG protocol card below for the file sequence and motor settings.</p>
       <a class="et-button dark" href={rgOrderHref}>Review RG ordering options</a>
     </section>
 
-    <section class="et-downloads-section" aria-labelledby="et-downloads-title">
+    <section id="downloads" class="et-downloads-section" aria-labelledby="et-downloads-title">
       <div class="et-downloads-heading">
         <p class="et-eyebrow">Downloads</p>
-        <h2 id="et-downloads-title">Transform S™ PT + RG brochure.</h2>
-        <p>Review the progressive-taper PT and reciprocating RG pathways, file ranges and workflow comparison in the four-page product brochure.</p>
+        <h2 id="et-downloads-title">RG protocol and product documents.</h2>
+        <p>Download the illustrated sequence, instructions for use and product brochure.</p>
       </div>
       <div class="et-download-list">
+        <a href={`${base}downloads/${rgProtocol.fileName}`} download={rgProtocol.fileName}>
+          <strong>Download {rgProtocol.title}</strong>
+          <span>PDF · {rgProtocol.pages} pages</span>
+        </a>
         <a href={rgBrochureHref} target="_blank" rel="noreferrer">
           <strong>Transform S™ PT + RG product brochure</strong>
           <span>PDF · 4 pages · Opens in a new tab</span>
@@ -233,7 +240,7 @@ const comparisonRows = [
           <span>PDF · 2 pages · Opens in a new tab</span>
         </a>
       </div>
-      <a class="et-button dark et-downloads-button" href={rgBrochureHref} target="_blank" rel="noreferrer">Review evidence &amp; downloads</a>
+      <a class="et-button dark et-downloads-button" href={downloadsHref}>All downloads</a>
     </section>
 
     <section class="et-cta-section" aria-labelledby="et-cta-title">
@@ -245,7 +252,7 @@ const comparisonRows = [
       </div>
       <div class="et-cta-actions">
         <a class="et-button primary" href={rgOrderHref}>Order Transform S™ RG</a>
-        <a class="et-button secondary on-dark" href={rgBrochureHref} target="_blank" rel="noreferrer">Evidence &amp; Downloads</a>
+        <a class="et-button secondary on-dark" href={downloadsHref}>Evidence &amp; Downloads</a>
       </div>
     </section>
   </main>

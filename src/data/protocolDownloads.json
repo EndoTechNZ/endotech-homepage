@@ -1,0 +1,34 @@
+{
+  "systems": {
+    "et": {
+      "title": "Transform S™ ET protocol card",
+      "fileName": "EndoTech-ET-Protocol-Card.pdf",
+      "pages": 3,
+      "description": "File sequence, motor settings and illustrated ET workflow."
+    },
+    "pt": {
+      "title": "Transform S™ PT protocol card",
+      "fileName": "EndoTech-PT-Protocol-Card.pdf",
+      "pages": 2,
+      "description": "Progressive-taper file sequence and motor settings."
+    },
+    "rg": {
+      "title": "Transform S™ RG protocol card",
+      "fileName": "EndoTech-RG-Protocol-Card.pdf",
+      "pages": 2,
+      "description": "Reciprocating file sequence and motor settings."
+    },
+    "micro-path": {
+      "title": "Micro-Path™ protocol card",
+      "fileName": "EndoTech-MicroPath-Protocol-Card.pdf",
+      "pages": 2,
+      "description": "Glide-path sequence and motor settings."
+    }
+  },
+  "collection": {
+    "title": "Complete ET, PT, RG and Micro-Path™ protocol collection",
+    "fileName": "EndoTech-Four-System-Protocol-Collection.pdf",
+    "pages": 9,
+    "description": "All four protocol cards in one PDF."
+  }
+}

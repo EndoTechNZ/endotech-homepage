@@ -6,6 +6,7 @@ import avatarTipComparison from '../../assets/avatar-tip-comparison.png';
 import etFirewireMachine from '../../assets/et-firewire-machine.png';
 import { siteConfig } from '../../config/site';
 import { nzCustomerSelectableCatalog } from '../../data/nzLaunchCatalog';
+import protocolDownloads from '../../data/protocolDownloads.json';
 
 const siteUrl = Astro.site?.toString() ?? 'https://endotechnz.github.io';
 const base = import.meta.env.BASE_URL;
@@ -13,6 +14,7 @@ const etOrderHref = `${base}order/#et-order`;
 const workflowHref = `${base}technique/workflow/`;
 const downloadsHref = `${base}resources/downloads/`;
 const etPartNumbersHref = `${base}downloads/EndoTech-NZ-Transform-S-ET-Part-Numbers.pdf`;
+const etProtocol = protocolDownloads.systems.et;
 const etIfuHref = `${base}downloads/EndoTech-NZ-Transform-S-ET-IFU.pdf`;
 const etProducts = nzCustomerSelectableCatalog.filter((item) => item.family === 'et');
 
@@ -128,7 +130,7 @@ const comparisonRows = [
 
       <div class="et-hero-actions">
         <a class="et-button primary" href="#technical-specifications">Technical Specifications</a>
-        <a class="et-button secondary" href={downloadsHref}>Evidence &amp; Downloads</a>
+        <a class="et-button secondary" href="#downloads">Evidence &amp; Downloads</a>
       </div>
     </section>
 
@@ -222,14 +224,26 @@ const comparisonRows = [
       <a class="et-button dark" href={etPartNumbersHref}>Download ET part-number guide</a>
     </section>
 
-    <section class="et-downloads-section" aria-labelledby="et-downloads-title">
+    <section id="downloads" class="et-downloads-section" aria-labelledby="et-downloads-title">
       <div class="et-downloads-heading">
         <p class="et-eyebrow">Downloads</p>
-        <h2 id="et-downloads-title">ET product documents.</h2>
-        <p>Download the New Zealand instructions for use or the customer-selectable article-number guide.</p>
+        <h2 id="et-downloads-title">ET protocol and product documents.</h2>
+        <p>Download the illustrated sequence, instructions for use and part numbers.</p>
       </div>
-      <a class="et-button dark" href={etIfuHref}>Download ET IFU</a>
-      <a class="et-button dark" href={etPartNumbersHref}>Download ET guide</a>
+      <div class="et-download-list">
+        <a href={`${base}downloads/${etProtocol.fileName}`} download={etProtocol.fileName}>
+          <strong>Download {etProtocol.title}</strong>
+          <span>PDF · {etProtocol.pages} pages</span>
+        </a>
+        <a href={etIfuHref}>
+          <strong>ET instructions for use</strong>
+          <span>PDF · New Zealand IFU</span>
+        </a>
+        <a href={etPartNumbersHref}>
+          <strong>ET part-number guide</strong>
+          <span>PDF · Article numbers and ordering</span>
+        </a>
+      </div>
     </section>
 
     <section class="et-cta-section" aria-labelledby="et-cta-title">
