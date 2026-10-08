@@ -1,0 +1,61 @@
+{
+  "physicalMarks": [
+    {
+      "labelMm": 18,
+      "actualTipArcMm": 18.0,
+      "errorMm": 0.0,
+      "bandEdgesTipArcMm": [
+        17.869069137572342,
+        18.130930862427658
+      ]
+    },
+    {
+      "labelMm": 19,
+      "actualTipArcMm": 19.0,
+      "errorMm": 0.0,
+      "bandEdgesTipArcMm": [
+        18.869069137572342,
+        19.130930862427658
+      ]
+    },
+    {
+      "labelMm": 20,
+      "actualTipArcMm": 20.0,
+      "errorMm": 0.0,
+      "bandEdgesTipArcMm": [
+        19.869069137572342,
+        20.130930862427658
+      ]
+    },
+    {
+      "labelMm": 22,
+      "actualTipArcMm": 21.999999167561878,
+      "errorMm": 8.324381219892985e-07,
+      "bandEdgesTipArcMm": [
+        21.8690674726961,
+        22.130930862427658
+      ]
+    }
+  ],
+  "maximumBandCentreErrorMm": 8.324381219892985e-07,
+  "tipToStopperFrontArcMm": 18.330367356407077,
+  "stopperBetween18And19": true,
+  "handleFrontTipArcMm": 25.0,
+  "shaftTipArcRangeMm": [
+    0.0,
+    30.072246551513672
+  ],
+  "stopperTipArcRangeMm": [
+    18.330368041992188,
+    19.084396362304688
+  ],
+  "shaftReachesIntoHandle": true,
+  "noGapAtProximalTransition": true,
+  "axisCoincidenceAllFeedsAndPhasesMm": 0.0,
+  "fullInsertionCuspStationErrorMm": 1.5543122344752192e-15,
+  "testedFeeds": 101,
+  "testedPhases": 64,
+  "unchangedNativeDisplayAxialRoutePortalFiles": 297,
+  "nativeToothRescaled": false,
+  "clinicalWorkingLengthValidated": false
+}

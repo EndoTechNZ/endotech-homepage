@@ -1,0 +1,88 @@
+{
+  "components": [
+    {
+      "id": 1,
+      "voxels": 134,
+      "bboxLocalZYX": [
+        [
+          41,
+          136,
+          63
+        ],
+        [
+          43,
+          150,
+          71
+        ]
+      ],
+      "bboxGlobalZYX": [
+        [
+          161,
+          316,
+          243
+        ],
+        [
+          163,
+          330,
+          251
+        ]
+      ],
+      "storedIntensityPercentiles": [
+        1031.0,
+        1332.4,
+        1728.0,
+        1913.2,
+        1982.0
+      ],
+      "minimumToothClearanceMm": 0.15
+    },
+    {
+      "id": 2,
+      "voxels": 207600,
+      "bboxLocalZYX": [
+        [
+          43,
+          82,
+          39
+        ],
+        [
+          266,
+          143,
+          119
+        ]
+      ],
+      "bboxGlobalZYX": [
+        [
+          163,
+          262,
+          219
+        ],
+        [
+          386,
+          323,
+          299
+        ]
+      ],
+      "storedIntensityPercentiles": [
+        0.0,
+        0.0,
+        287.0,
+        2021.0,
+        2839.0
+      ],
+      "minimumToothClearanceMm": 0.16770509831248423
+    }
+  ],
+  "canals": {
+    "vertices": 44474,
+    "minimumToothEDTMm": 0.11250038146972619,
+    "verticesBelowHalfEnvelope": 0,
+    "outsideBBoxLocalZYX": null
+  },
+  "canals-display": {
+    "vertices": 44474,
+    "minimumToothEDTMm": 0.09699091151778594,
+    "verticesBelowHalfEnvelope": 0,
+    "outsideBBoxLocalZYX": null
+  }
+}

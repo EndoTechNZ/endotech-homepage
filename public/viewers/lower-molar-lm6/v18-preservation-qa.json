@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "preservedGeometryInstrumentRouteConfigAxialFiles": 310,
+  "cameraMotionControlsUnchangedExceptPresentationTick": true,
+  "tipTriggerAndSelectedSpatialMaskByteIdentical": true,
+  "fileDepthTestWriteAndRenderOrderPreserved": true,
+  "badgeOutsideCanvas": true,
+  "outlineOrHalo": false,
+  "singleEntryBrighteningDurationMs": 900,
+  "steadyLocalOpacity": 0.82,
+  "clinicalEvidenceUnchanged": true
+}

@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "preservedGeometryInstrumentAxialRouteFiles": 309,
+  "cameraPresetAndZoomLinesByteIdentical": 5,
+  "teachingZoneArcLengthMm": 3,
+  "nativeZoneArcLengthMm": 2.618623907410598,
+  "nativeTriggerArcIntervalMm": [
+    15.016874939952952,
+    17.63549884736355
+  ],
+  "insertionEntryFraction": 0.8515140439136445,
+  "otherEndpointDistanceToZoneSamplesMm": 3.930171614568998,
+  "otherEndpointExcluded": true,
+  "branchDesignation": "User-designated current file-bearing MB route; marked apical screenshot unavailable",
+  "endpointMarkerId": 2,
+  "clinicalRiskOrForamenValidated": false
+}

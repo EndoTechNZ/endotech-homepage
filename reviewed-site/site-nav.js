@@ -7,6 +7,7 @@ const sharedExploreItems=[
   {href:'/products/gutta-percha/',label:'Gutta Percha Points'},
   {divider:true},
   {href:'/technology/',label:'Technology'},
+  {href:'/3d-solutions/micropath/',label:'3D Solutions with MicroPath'},
   {href:'/technique/workflow/',label:'Clinical workflow'},
   {href:'/resources/clinical-tips/',label:'Education'},
   {href:'/resources/downloads/',label:'Evidence & downloads'},

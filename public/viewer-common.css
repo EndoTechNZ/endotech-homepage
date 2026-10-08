@@ -1,0 +1,42 @@
+body.endo-shared-viewer{height:auto;min-height:0;background:#fff;color:#19373d;font:14px Sora,Arial,sans-serif}body.endo-shared-viewer header{padding:20px 24px;max-width:none}body.endo-shared-viewer header h1{font-size:25px;font-weight:600}body.endo-shared-viewer main{padding:0 20px 20px;max-width:none;display:block}.endo-shared-viewer main:has(>aside),.endo-shared-viewer .layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px;align-items:start}.endo-shared-viewer aside{width:260px;padding:14px;border:1px solid #dce4e4;border-radius:16px;background:#fff;display:block}.endo-shared-viewer #stage{height:650px;min-height:520px;border:1px solid #dce4e4;border-radius:16px;background:#fff}.endo-shared-viewer .control-group{border:0;border-top:1px solid #e1e7ed;margin:14px 0 0;padding:12px 0 0;display:grid;gap:6px}.endo-shared-viewer .control-group:first-child{border:0;margin:0;padding:0}.endo-shared-viewer .control-group h2,.endo-shared-viewer .control-group summary{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#657873;margin:0 0 7px}.endo-shared-viewer details.control-group{display:block}.endo-shared-viewer details.control-group>summary{cursor:pointer;min-height:44px;display:flex;align-items:center}.endo-shared-viewer details.control-group>*:not(summary){margin:6px 0}.endo-shared-viewer button{width:100%;min-height:44px;padding:10px 12px;margin:0;background:#f5f8fa;border:1px solid #d5dee7;border-radius:8px;color:#294b70;font:500 12px Sora,Arial,sans-serif;text-align:left}.endo-shared-viewer button:hover{background:#edf4f8}.endo-shared-viewer button.active,.endo-shared-viewer button[aria-pressed=true]{background:#0c4a6e;color:#fff;border-color:#0c4a6e}.endo-shared-viewer label{font-size:12px;display:block;margin:9px 0 4px}.endo-shared-viewer input[type=range]{accent-color:#0c4a6e;width:100%;min-height:28px}.endo-shared-viewer .common-pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}.endo-shared-viewer #fullscreen{width:auto;white-space:nowrap}.endo-shared-viewer #danger-zone-panel{margin:0 0 16px!important}.endo-shared-viewer footer{grid-column:1/-1}.endo-shared-viewer .source-evidence{margin-top:20px;border:1px solid #dce4e4;border-radius:12px;padding:16px}.endo-shared-viewer .source-evidence>summary{cursor:pointer;min-height:44px;font-weight:600}.endo-shared-viewer .evidence{margin:0;padding:8px 0}.endo-shared-viewer button:focus-visible,.endo-shared-viewer summary:focus-visible,.endo-shared-viewer input:focus-visible{outline:3px solid #1678b5;outline-offset:3px}
+@media(max-width:720px){.endo-shared-viewer main:has(>aside),.endo-shared-viewer .layout{display:flex;flex-direction:column;gap:14px}.endo-shared-viewer #stage{order:0;width:100%;height:440px;min-height:400px}.endo-shared-viewer #stage.mb2-danger-stage{min-height:520px;height:520px}.endo-shared-viewer aside{order:1;width:100%;padding:14px}.endo-shared-viewer main{padding:0 12px 16px!important}.endo-shared-viewer header{padding:16px!important}.endo-shared-viewer .control-group{grid-template-columns:1fr 1fr}.endo-shared-viewer .control-group h2,.endo-shared-viewer .control-group label,.endo-shared-viewer .common-pair,.endo-shared-viewer #scrub,.endo-shared-viewer .setting{grid-column:1/-1}.endo-shared-viewer button{font-size:12px;text-align:center}.endo-shared-viewer .modes,.endo-shared-viewer .actions,.endo-shared-viewer .instrument{display:contents}.endo-shared-viewer footer{font-size:11px}.endo-shared-viewer #fullscreen{min-width:88px}.endo-shared-viewer #danger-zone-panel{padding:12px!important}.endo-shared-viewer header h1{font-size:22px}}
+/* Keep the accepted upper risk-point markers compact; shared buttons apply only to controls. */
+.endo-shared-viewer .mb2-danger-marker{width:26px!important;min-width:26px!important;min-height:26px!important;height:26px!important;padding:0!important;margin:0!important;border:2px solid white!important;border-radius:50%!important;background:#b52c35!important;color:#fff!important;font:600 12px/22px Arial,sans-serif!important;text-align:center!important}
+
+.endo-shared-viewer details.control-group>summary{display:list-item;line-height:44px;list-style-position:inside}
+
+/* Mobile insertion controls follow the canvas; desktop controls retain their original positions. */
+.mobile-insertion[hidden]{display:none!important}
+.endo-shared-viewer .mb2-danger-marker{border:0!important;background:#657873!important;box-shadow:none!important;color:white!important}
+.endo-shared-viewer header{position:relative}
+.endo-shared-viewer .mb2-danger-panel{position:absolute;left:50%;top:18px;transform:translateX(-50%);width:350px;max-width:35%;padding:8px 12px;border:0;border-left:3px solid #9aa9a4;box-shadow:none;border-radius:6px;text-align:left;background:#fff}
+.endo-shared-viewer .mb2-danger-panel h2{display:inline-block;background:#e8efec;color:#19373b;padding:5px 10px;border-radius:5px;font:700 21px/1.2 Arial,sans-serif;margin:0 0 5px}
+.endo-shared-viewer .mb2-danger-panel.is-active{border-left-color:#c41524}
+.endo-shared-viewer .mb2-danger-panel.is-active h2{background:#c41524;color:#fff}
+.endo-shared-viewer .mb2-danger-panel p{font-size:11px;line-height:1.4}
+@media(max-width:720px),(hover:none) and (pointer:coarse) and (max-width:1000px){
+.endo-shared-viewer main:has(>aside),.endo-shared-viewer .layout{display:flex;flex-direction:column;gap:14px}
+.endo-shared-viewer main{padding:0 12px 16px!important}
+.endo-shared-viewer #stage,.endo-shared-viewer #stage.mb2-danger-stage{order:0;width:100%;height:min(440px,calc(var(--mobile-viewport-height,100svh) - 178px));min-height:260px;padding-top:0}
+.endo-shared-viewer[data-molar=lower] #stage{height:min(620px,calc(var(--mobile-viewport-height,100svh)*.70),calc(var(--mobile-viewport-height,100svh) - 178px))}
+.endo-shared-viewer .mobile-insertion{order:1;width:100%;box-sizing:border-box;border:1px solid #dce4e4;border-radius:12px;padding:10px 14px;touch-action:pan-y}
+.endo-shared-viewer .mobile-insertion label{margin:0 0 4px}
+.endo-shared-viewer .mobile-insertion input{display:block;margin:0;min-height:36px}
+.endo-shared-viewer aside{order:2;width:100%}
+.endo-shared-viewer #scrub[hidden],.endo-shared-viewer label[hidden]{display:none!important}
+.endo-shared-viewer header:has(.mb2-danger-panel){display:flex;flex-wrap:wrap;gap:10px}
+.endo-shared-viewer header:has(.mb2-danger-panel)>div:first-child{flex:1}
+.endo-shared-viewer .mb2-danger-panel{position:static;transform:none;flex-basis:100%;width:auto;max-width:none;padding:8px 12px}
+}
+@media(max-height:500px) and (max-width:720px),(max-height:500px) and (hover:none) and (pointer:coarse) and (max-width:1000px){
+.endo-shared-viewer #stage,.endo-shared-viewer #stage.mb2-danger-stage,.endo-shared-viewer[data-molar=lower] #stage{height:clamp(160px,calc(var(--mobile-viewport-height,100svh) - 178px),320px);min-height:160px}
+}
+
+.endo-shared-viewer.mobile-insertion-layout.mobile-short #stage,.endo-shared-viewer.mobile-insertion-layout.mobile-short #stage.mb2-danger-stage{height:clamp(160px,calc(var(--mobile-viewport-height,100svh) - 178px),320px);min-height:160px}
+.endo-shared-viewer.mobile-insertion-layout #stage{flex:0 0 auto!important}
+
+/* A shared instruction line follows each model without moving its slider. */
+.endo-shared-viewer .viewer-gesture-help{grid-column:2;margin:0;color:#5d7479;font-size:12px;line-height:1.6;overflow-wrap:break-word}
+.endo-shared-viewer .viewer-touch-help{display:none}
+@media(pointer:coarse),(any-pointer:coarse),(max-width:720px){.endo-shared-viewer .viewer-touch-help{display:block;margin-top:4px}}
+@media(max-width:720px),(hover:none) and (pointer:coarse) and (max-width:1000px){.endo-shared-viewer .viewer-gesture-help{order:3;width:100%;grid-column:auto}}

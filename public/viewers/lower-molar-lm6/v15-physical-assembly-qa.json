@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "modes": [
+    {
+      "scale": 1,
+      "tipToBottomContactFaceMm": 18.330367356407077,
+      "tipToStopperCentreMm": 18.707382202148438,
+      "rubberThicknessMm": 0.7540274262428284,
+      "cuspInBottomFaceAnnulus": true,
+      "planeResidualMm": 4.718447854656915e-16,
+      "shaftHoleRadialClearanceMm": 0.03250200777322382,
+      "physicalBandCentresMm": [
+        17.999999046325684,
+        18.999999046325684,
+        19.999999046325684,
+        21.999999523162842,
+        23.999999523162842
+      ],
+      "physicalBandWidthsMm": [
+        0.3000011444091797,
+        0.3000011444091797,
+        0.3000011444091797,
+        0.3000001907348633,
+        0.3000001907348633
+      ]
+    },
+    {
+      "scale": 1.145639888,
+      "tipToBottomContactFaceMm": 21.000000005193062,
+      "tipToStopperCentreMm": 21.431922912597656,
+      "rubberThicknessMm": 0.8638439178466797,
+      "cuspInBottomFaceAnnulus": true,
+      "planeResidualMm": 3.3306690738754696e-16,
+      "shaftHoleRadialClearanceMm": 0.06910750115794184,
+      "physicalBandCentresMm": [
+        17.999999046325684,
+        18.999999046325684,
+        19.999999046325684,
+        21.999999523162842,
+        23.999999523162842
+      ],
+      "physicalBandWidthsMm": [
+        0.3000011444091797,
+        0.3000011444091797,
+        0.3000011444091797,
+        0.3000001907348633,
+        0.3000001907348633
+      ]
+    }
+  ],
+  "contract": {
+    "all_five_bands_verified": true,
+    "spacing_mm": [
+      1.0,
+      1.0,
+      2.000000476837158,
+      2.0
+    ],
+    "flute_to_first_band_gap_mm": 1.0420993677999988,
+    "last_band_to_handle_clearance_mm": 0.8500003814697266,
+    "clinical_working_length_validated": false
+  },
+  "markerTrianglesStayWithinIndividualBands": true,
+  "nativePreservedFiles": 298,
+  "wholeAnatomyAndRouteUniformScale": 1.145639888,
+  "instrumentPhysicalAxialScale": 1,
+  "contactUsesBottomFaceNotCentre": true,
+  "clinicalWorkingLengthValidated": false,
+  "markerRepair": "Five copies of intact original 22 mm reference ring; no inter-band bridging triangles"
+}

@@ -1,0 +1,9 @@
+{
+  "coldLauncherWithSpacesPassed": true,
+  "httpAssetCount": 373,
+  "allHTTP200": true,
+  "duplicateListenerRejected": true,
+  "regressionTestsPassed": 24,
+  "temporaryPort": 8829,
+  "desktopForegroundObserved": false
+}

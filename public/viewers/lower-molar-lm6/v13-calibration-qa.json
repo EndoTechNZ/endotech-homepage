@@ -1,0 +1,19 @@
+{
+  "nativeToothRescaled": false,
+  "routeUnchanged": true,
+  "actualBandCentresTipArcMm": [
+    18,
+    19,
+    20,
+    22
+  ],
+  "actualTipToStopperArcMm": 18.330367356407077,
+  "stopperBetween18And19": true,
+  "handleFrontTipArcMm": 25,
+  "proximalShaftScale": 1.2680617574618789,
+  "distalFluteScale": 0.8728746360193846,
+  "shaftContinuousAtTransition": true,
+  "shaftReachesInsideHandle": true,
+  "clinicalWorkingLengthValidated": false,
+  "scanPatientInformationExcluded": true
+}

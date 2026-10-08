@@ -1,0 +1,325 @@
+{
+  "attempts": [
+    {
+      "args": [],
+      "loaded": true,
+      "errors": []
+    }
+  ],
+  "checks": {
+    "tooth": {
+      "loaded": true,
+      "mode": "tooth",
+      "revision": "v2",
+      "uncertain": false,
+      "cutaway": false,
+      "opacity": 0.12,
+      "rotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "camera": [
+        24,
+        11.999999999999996,
+        39
+      ],
+      "vertices": 147054,
+      "canalVertices": 43694,
+      "frame": 343
+    },
+    "canals": {
+      "loaded": true,
+      "mode": "canals",
+      "revision": "v2",
+      "uncertain": false,
+      "cutaway": false,
+      "opacity": 0.12,
+      "rotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "camera": [
+        24,
+        11.999999999999996,
+        39
+      ],
+      "vertices": 147054,
+      "canalVertices": 43694,
+      "frame": 343
+    },
+    "combined": {
+      "loaded": true,
+      "mode": "combined",
+      "revision": "v2",
+      "uncertain": false,
+      "cutaway": false,
+      "opacity": 0.12,
+      "rotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "camera": [
+        24,
+        11.999999999999996,
+        39
+      ],
+      "vertices": 147054,
+      "canalVertices": 43694,
+      "frame": 343
+    },
+    "cut": {
+      "loaded": true,
+      "mode": "combined",
+      "revision": "v2",
+      "uncertain": false,
+      "cutaway": true,
+      "opacity": 0.55,
+      "rotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "camera": [
+        24,
+        11.999999999999996,
+        39
+      ],
+      "vertices": 147054,
+      "canalVertices": 43694,
+      "frame": 343
+    },
+    "rotate": {
+      "loaded": true,
+      "mode": "combined",
+      "revision": "v2",
+      "uncertain": false,
+      "cutaway": true,
+      "opacity": 0.55,
+      "rotation": [
+        0,
+        0.07200000000000004,
+        0,
+        "XYZ"
+      ],
+      "camera": [
+        24,
+        11.999999999999996,
+        39
+      ],
+      "vertices": 147054,
+      "canalVertices": 43694,
+      "frame": 343
+    }
+  },
+  "desktopForegroundObserved": false,
+  "views": [
+    {
+      "angle": 0,
+      "state": {
+        "loaded": true,
+        "mode": "tooth",
+        "revision": "v2",
+        "uncertain": false,
+        "cutaway": false,
+        "opacity": 1,
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          20.400000000000013,
+          10.200000000000003,
+          33.15000000000002
+        ],
+        "vertices": 147054,
+        "canalVertices": 43694,
+        "frame": 343
+      }
+    },
+    {
+      "angle": 45,
+      "state": {
+        "loaded": true,
+        "mode": "tooth",
+        "revision": "v2",
+        "uncertain": false,
+        "cutaway": false,
+        "opacity": 1,
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          -0.07644555559064933,
+          10.20000000000001,
+          38.923985613976306
+        ],
+        "vertices": 147054,
+        "canalVertices": 43694,
+        "frame": 343
+      }
+    },
+    {
+      "angle": 90,
+      "state": {
+        "loaded": true,
+        "mode": "tooth",
+        "revision": "v2",
+        "uncertain": false,
+        "cutaway": false,
+        "opacity": 1,
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          -26.22375343957848,
+          10.20000000000001,
+          28.764513824158403
+        ],
+        "vertices": 147054,
+        "canalVertices": 43694,
+        "frame": 343
+      }
+    },
+    {
+      "angle": 135,
+      "state": {
+        "loaded": true,
+        "mode": "tooth",
+        "revision": "v2",
+        "uncertain": false,
+        "cutaway": false,
+        "opacity": 1,
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          -38.81731935537377,
+          10.200000000000006,
+          2.880662781883332
+        ],
+        "vertices": 147054,
+        "canalVertices": 43694,
+        "frame": 343
+      }
+    },
+    {
+      "angle": 180,
+      "state": {
+        "loaded": true,
+        "mode": "tooth",
+        "revision": "v2",
+        "uncertain": false,
+        "cutaway": false,
+        "opacity": 1,
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          -30.84565393238345,
+          10.2,
+          -23.740853680599567
+        ],
+        "vertices": 147054,
+        "canalVertices": 43694,
+        "frame": 343
+      }
+    },
+    {
+      "angle": 225,
+      "state": {
+        "loaded": true,
+        "mode": "tooth",
+        "revision": "v2",
+        "uncertain": false,
+        "cutaway": false,
+        "opacity": 1,
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          -4.9858795444057105,
+          10.20000000000001,
+          -38.603413128487496
+        ],
+        "vertices": 147054,
+        "canalVertices": 43694,
+        "frame": 343
+      }
+    },
+    {
+      "angle": 270,
+      "state": {
+        "loaded": true,
+        "mode": "tooth",
+        "revision": "v2",
+        "uncertain": false,
+        "cutaway": false,
+        "opacity": 1,
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          23.072037142082365,
+          10.200000000000003,
+          -31.349060625708923
+        ],
+        "vertices": 147054,
+        "canalVertices": 43694,
+        "frame": 343
+      }
+    },
+    {
+      "angle": 315,
+      "state": {
+        "loaded": true,
+        "mode": "tooth",
+        "revision": "v2",
+        "uncertain": false,
+        "cutaway": false,
+        "opacity": 1,
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          38.32267787665823,
+          10.20000000000001,
+          -6.815780246009511
+        ],
+        "vertices": 147054,
+        "canalVertices": 43694,
+        "frame": 343
+      }
+    }
+  ],
+  "mobileOverflow": false
+}

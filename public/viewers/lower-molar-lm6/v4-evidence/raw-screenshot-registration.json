@@ -1,0 +1,37 @@
+{
+  "method": "Foreground bounding-box normalized intensity MSE; screenshot is rescaled/cropped and has unknown pixel window. Approximate frame candidates only, not exact registration.",
+  "topFrameCandidates": [
+    [
+      8.60797119140625,
+      379
+    ],
+    [
+      131.77911376953125,
+      378
+    ],
+    [
+      220.908447265625,
+      380
+    ],
+    [
+      398.56817626953125,
+      377
+    ],
+    [
+      541.3643188476562,
+      376
+    ],
+    [
+      611.9276123046875,
+      381
+    ],
+    [
+      776.552490234375,
+      374
+    ],
+    [
+      783.1267700195312,
+      375
+    ]
+  ]
+}

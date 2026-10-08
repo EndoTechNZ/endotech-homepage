@@ -1,0 +1,11 @@
+{
+  "scale": 1.145639888,
+  "defaultView": "teaching",
+  "measuredViewQuery": "?view=measured",
+  "teachingViewQuery": "?view=teaching",
+  "targetBottomFaceTipArcMm": 21,
+  "measuredBottomFaceTipArcMm": 18.330367356407077,
+  "originalMeshAndEvidenceFilesUnchanged": true,
+  "approvedSeparateTargetScaledView": true,
+  "clinicalWorkingLengthValidated": false
+}

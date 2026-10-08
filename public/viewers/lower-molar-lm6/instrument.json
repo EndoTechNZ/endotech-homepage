@@ -1,0 +1,258 @@
+{
+  "reference": "Live MicroPath CAD axial stations restored to physical mm; original four rings plus exact-style 24 mm ring; cusp-fit stopper footprint retained",
+  "referenceMotionBinSHA256": "c341d5e58234620b41a3f7b3331cb72a0244af468b610c705438c2245a024be7",
+  "referenceScript": "src/scripts/upper-molar-viewer.js",
+  "parts": [
+    {
+      "role": "flutes",
+      "arrays": {
+        "positions": {
+          "offset": 0,
+          "length": 468552,
+          "dtype": "float32"
+        },
+        "normals": {
+          "offset": 1874208,
+          "length": 468552,
+          "dtype": "float32"
+        },
+        "indices": {
+          "offset": 3748416,
+          "length": 891378,
+          "dtype": "uint32"
+        }
+      },
+      "vertexCount": 156184,
+      "triangleCount": 297126,
+      "originalVertexCount": 130650,
+      "maximumProfileRadius": 0.8012538552284241,
+      "cadZRange": [
+        7.0,
+        36.0
+      ],
+      "maximumPotentialIntracanalTriangleDepthSpanMm": 0.047985076904296875,
+      "retessellation": "Exact planar CAD face subdivisions only; axial warping chord span reduced; no surface displacement"
+    },
+    {
+      "role": "handle",
+      "arrays": {
+        "positions": {
+          "offset": 7313928,
+          "length": 57042,
+          "dtype": "float32"
+        },
+        "normals": {
+          "offset": 7542096,
+          "length": 57042,
+          "dtype": "float32"
+        },
+        "indices": {
+          "offset": 7770264,
+          "length": 93456,
+          "dtype": "uint32"
+        }
+      },
+      "vertexCount": 19014,
+      "triangleCount": 31152,
+      "originalVertexCount": 19340,
+      "maximumProfileRadius": 3.1133337020874023,
+      "cadZRange": [
+        9.999999406318238e-08,
+        11.0
+      ]
+    },
+    {
+      "role": "stopper",
+      "arrays": {
+        "positions": {
+          "offset": 8144088,
+          "length": 6912,
+          "dtype": "float32"
+        },
+        "normals": {
+          "offset": 8171736,
+          "length": 6912,
+          "dtype": "float32"
+        },
+        "indices": {
+          "offset": 8199384,
+          "length": 4608,
+          "dtype": "uint32"
+        }
+      },
+      "vertexCount": 2304,
+      "triangleCount": 1536,
+      "originalVertexCount": 4608,
+      "maximumProfileRadius": 4.887218475341797,
+      "cadZRange": [
+        14.13615608215332,
+        15.0
+      ]
+    },
+    {
+      "role": "markers",
+      "arrays": {
+        "positions": {
+          "offset": 8217816,
+          "length": 75840,
+          "dtype": "float32"
+        },
+        "normals": {
+          "offset": 8521176,
+          "length": 75840,
+          "dtype": "float32"
+        },
+        "indices": {
+          "offset": 8824536,
+          "length": 135060,
+          "dtype": "uint32"
+        }
+      },
+      "vertexCount": 25280,
+      "triangleCount": 45020,
+      "originalVertexCount": 4452,
+      "maximumProfileRadius": 0.8100000023841858,
+      "cadZRange": [
+        11.850000381469727,
+        18.149999618530273
+      ],
+      "added24mmBand": "Exact duplicate of LIVE 22 mm ring translated 2 CAD mm proximally; same width, radial geometry and material",
+      "maximumPotentialIntracanalTriangleDepthSpanMm": 0.03750038146972656
+    },
+    {
+      "role": "sleeve",
+      "arrays": {
+        "positions": {
+          "offset": 9364776,
+          "length": 3804,
+          "dtype": "float32"
+        },
+        "normals": {
+          "offset": 9379992,
+          "length": 3804,
+          "dtype": "float32"
+        },
+        "indices": {
+          "offset": 9395208,
+          "length": 3792,
+          "dtype": "uint32"
+        }
+      },
+      "vertexCount": 1268,
+      "triangleCount": 1264,
+      "originalVertexCount": 1272,
+      "maximumProfileRadius": 2.7333335876464844,
+      "cadZRange": [
+        8.40000057220459,
+        9.90000057220459
+      ]
+    },
+    {
+      "role": "sleeve",
+      "arrays": {
+        "positions": {
+          "offset": 9410376,
+          "length": 3792,
+          "dtype": "float32"
+        },
+        "normals": {
+          "offset": 9425544,
+          "length": 3792,
+          "dtype": "float32"
+        },
+        "indices": {
+          "offset": 9440712,
+          "length": 3792,
+          "dtype": "uint32"
+        }
+      },
+      "vertexCount": 1264,
+      "triangleCount": 1264,
+      "originalVertexCount": 1272,
+      "maximumProfileRadius": 2.9333336353302,
+      "cadZRange": [
+        6.700000286102295,
+        7.5
+      ]
+    }
+  ],
+  "cadTipZ": 36,
+  "fluteRadialScale": 0.27355061386797563,
+  "extracoronalRadialScale": 0.27355061386797563,
+  "axialStationScale": 1.0,
+  "clinicalDiameterAndWorkingLengthValidated": false,
+  "originalFaceCornerPositionsAndNormalsPreserved": true,
+  "externalHandleAndStopperAreNotCanalFitClaims": true,
+  "cycleSeconds": 32,
+  "motionTimingIsIllustrative": true,
+  "referenceURL": "https://endotechnz.com/products/micro-path/",
+  "uniformMagnificationFromWebsite": 1.7953037031044246,
+  "websiteRadialScale": 0.133,
+  "websiteAxialScale": 0.4861988723746389,
+  "fullWidthContained": false,
+  "wallOverlapPermittedForTeaching": true,
+  "arcRig": {
+    "count": 17637,
+    "stepMm": 0.0009999715835429547,
+    "lengthMm": 17.63549884736355,
+    "width": 4096,
+    "binary": "instrument-rig.bin",
+    "maximumInterpolatedCurveErrorMm": 3e-06
+  },
+  "cuspReference": {
+    "positionMm": [
+      -4.050000190734863,
+      8.742321014404297,
+      -0.9000000357627869
+    ],
+    "entryAxisStationMm": -0.6948685090435254,
+    "stopperFrontCADStation": 15,
+    "stopperFrontPositionMm": [
+      -3.6822305222263245,
+      9.061136752137413,
+      0.15502068182085374
+    ],
+    "nominalCADSettingMm": 21,
+    "calibratedModelTipToStopperArcMm": 18.330367356407077,
+    "actualStraightCuspToModelEndpointMm": 17.219565822135976,
+    "selection": "Highest visible crown vertex under annular stopper footprint; geometric display reference, not clinical cusp selection"
+  },
+  "nominalMarkToPhysicalTipArcMm": {
+    "18": 18.0,
+    "19": 19.0,
+    "20": 20.0,
+    "22": 22.0,
+    "24": 24.0
+  },
+  "clinicalWorkingLengthValidated": false,
+  "stopperCentrelineContinuous": true,
+  "properInstrumentDepthOcclusion": true,
+  "physicalStationMapping": {
+    "distalAxialScale": 1,
+    "proximalShaftScale": 1,
+    "proximalTransitionCADZ": 19.0420993678,
+    "proximalTransitionDistanceMm": 16.9579006322,
+    "handleFrontDistanceMm": 25,
+    "stopperFrontDistanceMm": 18.330367356407077,
+    "bandCentresTipArcMm": [
+      18,
+      19,
+      20,
+      22,
+      24
+    ],
+    "bandThicknessMm": 0.3
+  },
+  "physicalBandsCorrect": true,
+  "stopperRadialScale": 0.23877539251288846,
+  "stopperAxialScale": 0.8728746360193846,
+  "referenceFluteShankTransitionDistanceMm": 16.9579006322,
+  "firstBandBeyondFluteTransitionMm": 1.0420993677999988,
+  "radialToAxialWebsiteAspectRestoredExceptRetainedStopper": true,
+  "stopperFootprintRetainedToPreventNewCrownIntersection": true,
+  "binaryChunks": [
+    "instrument-chunk-0.bin",
+    "instrument-chunk-1.bin",
+    "instrument-chunk-2.bin"
+  ]
+}

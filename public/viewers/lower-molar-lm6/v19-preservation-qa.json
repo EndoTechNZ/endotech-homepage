@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "exactHTMLRemovals": 3,
+  "exactJSRemovals": 4,
+  "unchangedFileCount": 1228,
+  "geometryAndDangerZoneUnchanged": true,
+  "focusStopperRetainedForRemainingControls": true
+}

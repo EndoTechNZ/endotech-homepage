@@ -1,0 +1,41 @@
+{
+  "validationScope": "Exact rendered blue/cyan route mesh surfaces against native candidate trilinear mask; not clinical clearance",
+  "boundaryField": 0.5,
+  "routeMeshes": [
+    {
+      "kind": "blue Glide path",
+      "displayRadiusMm": 0.02,
+      "renderedVertices": 7209,
+      "triangles": 12800,
+      "barycentricSamples": 2956800,
+      "outsideCandidateSamples": 0,
+      "minimumSampledCandidateField": 0.5716666332737077,
+      "maximumTriangleEdgeMm": 0.027377144366754647,
+      "triangleGridSubdivisions": 20,
+      "globalFieldLipschitzBoundPerMm": 23.09401076758503,
+      "conservativeWholeTriangleLowerFieldBound": 0.5400542299341297,
+      "entireRenderedTriangleSurfaceInsideCandidate": true
+    },
+    {
+      "kind": "cyan bend highlight",
+      "displayRadiusMm": 0.02,
+      "renderedVertices": 7209,
+      "triangles": 12800,
+      "barycentricSamples": 2956800,
+      "outsideCandidateSamples": 0,
+      "minimumSampledCandidateField": 0.8966572902039265,
+      "maximumTriangleEdgeMm": 0.015729711502102815,
+      "triangleGridSubdivisions": 20,
+      "globalFieldLipschitzBoundPerMm": 23.09401076758503,
+      "conservativeWholeTriangleLowerFieldBound": 0.8784941838638981,
+      "entireRenderedTriangleSurfaceInsideCandidate": true
+    }
+  ],
+  "unsupportedEntryRendered": false,
+  "locationRingsAreAnnotationsNotRouteGeometry": true,
+  "nativeModelsChanged": false,
+  "all288AxialImagesPreserved": true,
+  "sideRegionRemovalApplied": false,
+  "anatomicalJoinsAndExitsConfirmed": false,
+  "clinicalInstrumentSafetyValidated": false
+}

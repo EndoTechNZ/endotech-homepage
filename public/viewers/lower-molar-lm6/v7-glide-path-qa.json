@@ -1,0 +1,25 @@
+{
+  "continuity": "C2 cubic spline, including knot joins",
+  "maximumTangentJumpAcrossKnots": 4.767825022387134e-08,
+  "maximumCurvaturePerMm": 0.8887110045793675,
+  "maximumSampleTurnDegrees": 0.696467618993823,
+  "sampleStepDepthMm": 0.0125,
+  "maximumDeviationFromInputMm": 0.11471344498065274,
+  "rmsDeviationMm": 0.03413993246760505,
+  "knotSpacingMm": 1.5,
+  "clinicalInstrumentSafetyValidated": false,
+  "minimumNativeMaskField": 0.8006037086357665,
+  "unsupportedSampleCount": 0,
+  "totalSamples": 1339,
+  "nativeSegmentationChanged": false,
+  "originalModelHashes": {
+    "canals-display.json": "468c78dc5210c8f6c56165baa05394b760044552791b6bdd4b59a4319c254b08",
+    "canals-v1.json": "5434d067ef33fb9578f8b4c63b63e369da364069aca3acf9027c31d15e9c8742",
+    "canals.json": "a6021a10a17210fef6aca0bf6710a547b5fffec7dc389c42cfe922527d2a47b7",
+    "tooth-display.json": "4fdf6aa3090f377f299a4bd254dcab565c24e3e4905dc3be1911daa08878e7ea",
+    "tooth.json": "e5baac84250e2e0b9f5af5ffd60c930f624d7c6f7586f682307c95a5da4881dc",
+    "uncertain-display.json": "1433ed851c8fab0aa62208fc7bdbf33b7e6882a19842bd911d5c81fea9ca3b16",
+    "uncertain.json": "204b15faea530754e003d852857b97c0a4b5ac9433a2d61fa06b829ac206dc6d"
+  },
+  "sideRegionRemovalApplied": false
+}

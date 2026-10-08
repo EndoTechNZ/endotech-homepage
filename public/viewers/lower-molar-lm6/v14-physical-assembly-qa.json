@@ -1,0 +1,86 @@
+{
+  "physicalMarks": [
+    {
+      "labelMm": 18,
+      "actualTipArcMm": 18.0,
+      "widthMm": 0.2999992370605469,
+      "edgesTipArcMm": [
+        17.850000381469727,
+        18.149999618530273
+      ]
+    },
+    {
+      "labelMm": 19,
+      "actualTipArcMm": 19.0,
+      "widthMm": 0.2999992370605469,
+      "edgesTipArcMm": [
+        18.850000381469727,
+        19.149999618530273
+      ]
+    },
+    {
+      "labelMm": 20,
+      "actualTipArcMm": 20.0,
+      "widthMm": 0.2999992370605469,
+      "edgesTipArcMm": [
+        19.850000381469727,
+        20.149999618530273
+      ]
+    },
+    {
+      "labelMm": 22,
+      "actualTipArcMm": 21.999999523162842,
+      "widthMm": 0.3000001907348633,
+      "edgesTipArcMm": [
+        21.84999942779541,
+        22.149999618530273
+      ]
+    },
+    {
+      "labelMm": 24,
+      "actualTipArcMm": 23.999999523162842,
+      "widthMm": 0.3000001907348633,
+      "edgesTipArcMm": [
+        23.84999942779541,
+        24.149999618530273
+      ]
+    }
+  ],
+  "maximumBandCentreErrorMm": 4.76837158203125e-07,
+  "contract": {
+    "all_five_bands_verified": true,
+    "spacing_mm": [
+      1.0,
+      1.0,
+      1.9999995231628418,
+      2.0
+    ],
+    "flute_to_first_band_gap_mm": 1.0420993677999988,
+    "last_band_to_handle_clearance_mm": 0.8500003814697266,
+    "clinical_working_length_validated": false
+  },
+  "sourceOriginalCADPositionsNormalsPreservedAllSixParts": true,
+  "distalAndProximalAxialScale": 1,
+  "radialScale": 0.27355061386797563,
+  "originalWebsiteRadialToAxialRatio": 0.27355061386797563,
+  "fluteTransitionTipArcMm": 16.9579006322,
+  "tipToStopperFrontArcMm": 18.330367356407077,
+  "stopperBetween18And19": true,
+  "stopperOriginalV12FootprintAndThicknessPreserved": true,
+  "stopperRadialScale": 0.23877539251288846,
+  "stopperAxialScale": 0.8728746360193846,
+  "handleFrontTipArcMm": 25.0,
+  "shaftTipArcRangeMm": [
+    0.0,
+    29.0
+  ],
+  "stopperTipArcRangeMm": [
+    18.330368041992188,
+    19.084396362304688
+  ],
+  "shaftReachesIntoHandle": true,
+  "stopperHoleRadialClearanceMm": 0.03250200777322382,
+  "unchangedNativeDisplayAxialRoutePortalFiles": 297,
+  "nativeToothRescaled": false,
+  "clinicalWorkingLengthValidated": false
+}

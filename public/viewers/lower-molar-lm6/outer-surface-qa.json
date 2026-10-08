@@ -1,0 +1,105 @@
+{
+  "method": "Bounded physical signed-distance field fairing; native envelope remains unchanged",
+  "sigmaMm": 0.225,
+  "signedDistanceCapMm": 0.3,
+  "nativeVoxelCount": 2053496,
+  "displayFieldPositiveVoxelCount": 2041907,
+  "componentsBefore": 1,
+  "componentsAfter": 1,
+  "voxelEulerBefore": 1,
+  "voxelEulerAfter": 1,
+  "candidateVoxelsCutAway": 0,
+  "lumenProtectedWithinMm": 0.3,
+  "terminalContourProtectedMm": 0.45,
+  "displayDetachedComponentsRemoved": 0,
+  "nativeDetachedComponents": 0,
+  "nativeMeshVertexSampleDistancesMm": {
+    "newToNativeMax": 0.2078232183997457,
+    "nativeToNewMax": 1.5448969730540958,
+    "newToNativeMedian": 0.022521044922481116,
+    "nativeToNewMedian": 0.023313238909615647,
+    "note": "Nearest-vertex distances are conservative surface distance samples; not an exhaustive continuous Hausdorff certificate."
+  },
+  "originalBoundsMm": [
+    [
+      -8.3625,
+      -8.8875,
+      -3.7875
+    ],
+    [
+      2.0625,
+      9.3375,
+      6.4125
+    ]
+  ],
+  "displayBoundsMm": [
+    [
+      -8.3623628616333,
+      -8.887495994567871,
+      -3.734011650085449
+    ],
+    [
+      2.059652805328369,
+      9.269059181213379,
+      6.412108898162842
+    ]
+  ],
+  "sourceIntensityAtNativeSurfacePercentiles": [
+    948.8709333333322,
+    1106.5,
+    1187.5,
+    1266.5,
+    1430.629599999994
+  ],
+  "nativeMeshVolumeMm3": 866.1975950858919,
+  "displayMeshVolumeMm3": 861.058349609375,
+  "vertices": 147054,
+  "triangles": 294104,
+  "meshEulerCharacteristic": 2,
+  "minimumTriangleAreaMm2": 8.100187187665142e-13,
+  "preservedHashes": {
+    "tooth.json": "e5baac84250e2e0b9f5af5ffd60c930f624d7c6f7586f682307c95a5da4881dc",
+    "canals.json": "a6021a10a17210fef6aca0bf6710a547b5fffec7dc389c42cfe922527d2a47b7",
+    "canals-display.json": "468c78dc5210c8f6c56165baa05394b760044552791b6bdd4b59a4319c254b08",
+    "uncertain.json": "204b15faea530754e003d852857b97c0a4b5ac9433a2d61fa06b829ac206dc6d",
+    "uncertain-display.json": "1433ed851c8fab0aa62208fc7bdbf33b7e6882a19842bd911d5c81fea9ca3b16"
+  },
+  "canalContainment": {
+    "canals": {
+      "outsideOuterDisplayFieldVertices": 0,
+      "minimumSignedFieldMm": 0.13688489027834513
+    },
+    "canals-display": {
+      "outsideOuterDisplayFieldVertices": 0,
+      "minimumSignedFieldMm": 0.13688489027834513
+    }
+  },
+  "endpointChecks": [
+    {
+      "id": 1,
+      "nativeFrame": 378,
+      "displayFieldDistanceMm": 0.3517811819867572,
+      "nativePositiveFieldDistanceMm": 0.35178118198675723,
+      "foramenStillUnresolved": true
+    },
+    {
+      "id": 2,
+      "nativeFrame": 387,
+      "displayFieldDistanceMm": 0.16770509831248423,
+      "nativePositiveFieldDistanceMm": 0.16770509831248423,
+      "foramenStillUnresolved": true
+    }
+  ],
+  "orientationCorrection": {
+    "signedVolumeBeforeMm3": -861.0587313720207,
+    "signedVolumeAfterMm3": 861.0587313720207,
+    "verticesMoved": 0,
+    "nativeGeometryChanged": false
+  },
+  "renderNormals": {
+    "method": "Outward gradient of smoothed physical signed-distance field",
+    "scaleMm": 0.12,
+    "vertexMovementMm": 0,
+    "note": "Smooth shading of protected voxel contours; geometry and native scan unchanged."
+  }
+}

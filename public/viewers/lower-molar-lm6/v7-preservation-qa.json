@@ -1,0 +1,48 @@
+{
+  "allModelBytesPreserved": true,
+  "all288AxialImagesPreserved": true,
+  "sideRegionRemovalApplied": false,
+  "newMeshCapsAdded": 0,
+  "newDebrisObjectsAdded": 0,
+  "visibilityRegionAudit": {
+    "canals-display.json": {
+      "changedVisibilityVertexCount": 432,
+      "trianglesTouchingChangedVertices": 1192,
+      "changedDisplayBoundsMm": [
+        [
+          -5.362500190734863,
+          8.325000762939453,
+          -0.5625
+        ],
+        [
+          -0.862500011920929,
+          8.4375,
+          2.7375001907348633
+        ]
+      ],
+      "vertexCoordinatesChanged": 0,
+      "faceIndicesChanged": 0,
+      "allChangedVisibilityAtOrAboveDisplayYMm": 8.325000762939453
+    },
+    "tooth-display.json": {
+      "changedVisibilityVertexCount": 295,
+      "trianglesTouchingChangedVertices": 1076,
+      "changedDisplayBoundsMm": [
+        [
+          -5.325000286102295,
+          8.587495803833008,
+          -0.6426017880439758
+        ],
+        [
+          -0.8250000476837158,
+          9.04226303100586,
+          2.738140344619751
+        ]
+      ],
+      "vertexCoordinatesChanged": 0,
+      "faceIndicesChanged": 0,
+      "allChangedVisibilityAtOrAboveDisplayYMm": 8.587495803833008
+    }
+  },
+  "clinicalValidation": false
+}

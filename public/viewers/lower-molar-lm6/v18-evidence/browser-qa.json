@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "mode": "teaching",
+      "boundary": 0.8515140439136445,
+      "oneEntryBrighteningSettles": true,
+      "badge": {
+        "text": "Danger Zone",
+        "bg": "rgb(196, 21, 36)",
+        "color": "rgb(255, 255, 255)"
+      },
+      "seekReverseResetPassed": true
+    },
+    {
+      "mode": "measured",
+      "boundary": 0.8515140439136445,
+      "oneEntryBrighteningSettles": true,
+      "badge": {
+        "text": "Danger Zone",
+        "bg": "rgb(196, 21, 36)",
+        "color": "rgb(255, 255, 255)"
+      },
+      "seekReverseResetPassed": true
+    }
+  ],
+  "fullPlaybackEntryTime": 17.833999999999975,
+  "withdrawalReplayPassed": true,
+  "noRepeatingPulse": true,
+  "reducedMotionSteadyPassed": true,
+  "mobileRendered": true,
+  "normalAndCloseupTransparencyRendered": true,
+  "noOutlineOrHalo": true,
+  "errors": [],
+  "desktopForegroundObserved": false
+}

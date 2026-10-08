@@ -1,0 +1,257 @@
+{
+  "purpose": "Trace supported routes toward external communication; no clinical diagnosis or invented foramen. Shortest distances are to the segmented envelope, not confirmed foramen distances.",
+  "endpoints": [
+    {
+      "id": 1,
+      "globalFrame": 378,
+      "localZYX": [
+        257,
+        95,
+        40
+      ],
+      "globalZYX": [
+        377,
+        275,
+        220
+      ],
+      "viewerXYZmm": [
+        -6.75,
+        -7.6499999999999995,
+        2.625
+      ],
+      "nearestOutsideEnvelopeVoxelGlobalZYX": [
+        379,
+        272,
+        217
+      ],
+      "voxelCentreToOutsideEnvelopeDistanceMm": 0.3517811819867572,
+      "approximateBoundaryDistanceMm": 0.3142811819867572,
+      "axialToOutsideEnvelopeAtFixedXYmm": 0.6375,
+      "status": "Opening unresolved at native 0.075mm; candidate segmentation ends internally. No anatomical closed end or foramen location is claimed.",
+      "nearbyNativeSections": [
+        {
+          "frame": 375,
+          "rawCentreStored": 2404,
+          "local5x5MinimumStored": 2152,
+          "centreLocalContrastStored": 377.0,
+          "candidateRegionVoxelsNearEndpoint": 18,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 376,
+          "rawCentreStored": 2232,
+          "local5x5MinimumStored": 2183,
+          "centreLocalContrastStored": 424.0,
+          "candidateRegionVoxelsNearEndpoint": 21,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 377,
+          "rawCentreStored": 2131,
+          "local5x5MinimumStored": 2131,
+          "centreLocalContrastStored": 380.0,
+          "candidateRegionVoxelsNearEndpoint": 17,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 378,
+          "rawCentreStored": 2160,
+          "local5x5MinimumStored": 2001,
+          "centreLocalContrastStored": 201.0,
+          "candidateRegionVoxelsNearEndpoint": 10,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 379,
+          "rawCentreStored": 2240,
+          "local5x5MinimumStored": 1833,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 380,
+          "rawCentreStored": 2316,
+          "local5x5MinimumStored": 1666,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 381,
+          "rawCentreStored": 2372,
+          "local5x5MinimumStored": 1475,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 382,
+          "rawCentreStored": 2359,
+          "local5x5MinimumStored": 1254,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 383,
+          "rawCentreStored": 2237,
+          "local5x5MinimumStored": 1001,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 384,
+          "rawCentreStored": 2018,
+          "local5x5MinimumStored": 728,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 385,
+          "rawCentreStored": 1704,
+          "local5x5MinimumStored": 464,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 386,
+          "rawCentreStored": 1306,
+          "local5x5MinimumStored": 240,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "globalFrame": 387,
+      "localZYX": [
+        266,
+        114,
+        88
+      ],
+      "globalZYX": [
+        386,
+        294,
+        268
+      ],
+      "viewerXYZmm": [
+        -3.15,
+        -8.325,
+        1.2
+      ],
+      "nearestOutsideEnvelopeVoxelGlobalZYX": [
+        387,
+        294,
+        266
+      ],
+      "voxelCentreToOutsideEnvelopeDistanceMm": 0.16770509831248423,
+      "approximateBoundaryDistanceMm": 0.13020509831248422,
+      "axialToOutsideEnvelopeAtFixedXYmm": 0.1875,
+      "status": "Opening unresolved at native 0.075mm; candidate segmentation ends internally. No anatomical closed end or foramen location is claimed.",
+      "nearbyNativeSections": [
+        {
+          "frame": 384,
+          "rawCentreStored": 2236,
+          "local5x5MinimumStored": 1993,
+          "centreLocalContrastStored": 444.0,
+          "candidateRegionVoxelsNearEndpoint": 14,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 385,
+          "rawCentreStored": 2140,
+          "local5x5MinimumStored": 1960,
+          "centreLocalContrastStored": 334.0,
+          "candidateRegionVoxelsNearEndpoint": 12,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 386,
+          "rawCentreStored": 2048,
+          "local5x5MinimumStored": 1749,
+          "centreLocalContrastStored": 166.0,
+          "candidateRegionVoxelsNearEndpoint": 9,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 387,
+          "rawCentreStored": 1903,
+          "local5x5MinimumStored": 1354,
+          "centreLocalContrastStored": 13.0,
+          "candidateRegionVoxelsNearEndpoint": 1,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 388,
+          "rawCentreStored": 1694,
+          "local5x5MinimumStored": 960,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 389,
+          "rawCentreStored": 1437,
+          "local5x5MinimumStored": 628,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": true
+        },
+        {
+          "frame": 390,
+          "rawCentreStored": 1158,
+          "local5x5MinimumStored": 395,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": false
+        },
+        {
+          "frame": 391,
+          "rawCentreStored": 883,
+          "local5x5MinimumStored": 248,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": false
+        },
+        {
+          "frame": 392,
+          "rawCentreStored": 635,
+          "local5x5MinimumStored": 156,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": false
+        },
+        {
+          "frame": 393,
+          "rawCentreStored": 432,
+          "local5x5MinimumStored": 94,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": false
+        },
+        {
+          "frame": 394,
+          "rawCentreStored": 285,
+          "local5x5MinimumStored": 51,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": false
+        },
+        {
+          "frame": 395,
+          "rawCentreStored": 189,
+          "local5x5MinimumStored": 24,
+          "centreLocalContrastStored": 0.0,
+          "candidateRegionVoxelsNearEndpoint": 0,
+          "toothAtReferenceXY": false
+        }
+      ]
+    }
+  ]
+}

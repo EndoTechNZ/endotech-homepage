@@ -1,0 +1,11 @@
+{
+  "testedFeedPositions": 21,
+  "testedRotationPhases": 8,
+  "poses": 168,
+  "actualCADIntracanalVertexSamples": 1813560,
+  "minimumCandidateField": 0.0,
+  "outsideSamples": 1496,
+  "allMotionContainmentCertified": false,
+  "fullWidthTeachingOverlapExplicit": true,
+  "anatomicalFitOrWorkingLengthValidated": false
+}

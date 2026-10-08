@@ -1,0 +1,88 @@
+{
+  "sourceFilename": "LM6.dcm",
+  "sourceSha256": "fbbdfec9587711aed94b3df5c9dadb7c612a37a0fe3fbbf1a59733c7736e7ffb",
+  "shapeZYX": [
+    668,
+    668,
+    668
+  ],
+  "spacingMmZYX": [
+    0.075,
+    0.075,
+    0.075
+  ],
+  "imageOrientationPatient": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0
+  ],
+  "sliceVectorMm": [
+    0.0,
+    0.0,
+    -0.075
+  ],
+  "cropZYX": [
+    [
+      120,
+      430
+    ],
+    [
+      180,
+      440
+    ],
+    [
+      180,
+      440
+    ]
+  ],
+  "toothBoundsZYX": [
+    [
+      151,
+      225,
+      199
+    ],
+    [
+      393,
+      360,
+      337
+    ]
+  ],
+  "cropBoundaryTouched": false,
+  "tooth": {
+    "vertices": 151024,
+    "triangles": 302044,
+    "boundsMm": [
+      [
+        -8.3625,
+        -8.8875,
+        -3.787499999999998
+      ],
+      [
+        2.0625,
+        9.337499999999999,
+        6.412500000000001
+      ]
+    ]
+  },
+  "canals": {
+    "vertices": 44474,
+    "triangles": 88948,
+    "smoothing": false,
+    "decimation": false,
+    "sampleSpacingMm": 0.075
+  },
+  "method": "Native axial local-contrast candidates correlated on adjacent sections; retained internal tracks added to original axial mask. Boundary/short candidates kept separate. No absent evidence bridged.",
+  "status": "Nonclinical visualization; candidate enclosed low-attenuation spaces are not expert-validated canals. Connectivity and apical termini unresolved.",
+  "rescale": {
+    "slope": 1.0,
+    "intercept": -1000.0
+  },
+  "revision": 4,
+  "axialRevisionEvidence": "axial-v2/reconstruction-qa.json",
+  "refinementQA": "v4-refinement-qa.json",
+  "endpointAudit": "v4-evidence/endpoint-audit.json",
+  "anatomicalExitsResolved": false
+}

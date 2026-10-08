@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "preservedGeometryInstrumentRouteConfigAxialFiles": 310,
+  "viewerCameraMotionAndControlsUnchanged": true,
+  "dangerShaderAndNumericStateContractByteIdentical": true,
+  "onlyRuntimeChange": "Removed writing to deleted verbose status node; versioned module import prevents stale cached status references",
+  "clinicalEvidenceAndReportRetained": true
+}

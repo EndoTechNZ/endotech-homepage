@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "mode": "teaching",
+      "zoneLengthMm": 3,
+      "boundary": 0.8515140439136445,
+      "exactBoundaryReverseSeekResetPassed": true,
+      "headingOutsideCanvas": true
+    },
+    {
+      "mode": "measured",
+      "zoneLengthMm": 2.618623907410598,
+      "boundary": 0.8515140439136445,
+      "exactBoundaryReverseSeekResetPassed": true,
+      "headingOutsideCanvas": true
+    }
+  ],
+  "playbackEntryTime": 17.834099999999903,
+  "playbackExitTime": 26.717799999999745,
+  "entryWithdrawalReplayPassed": true,
+  "mobileRendered": true,
+  "errors": [],
+  "desktopForegroundObserved": false
+}

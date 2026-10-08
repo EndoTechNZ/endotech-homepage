@@ -1,0 +1,34 @@
+{
+  "nativeSpacingMm": 0.075,
+  "nativeToothRescaled": false,
+  "pathUnchanged": true,
+  "curveArcLengthMm": 17.63549884736355,
+  "straightCuspToRouteEndpointMm": 17.219565822135976,
+  "geometricCuspReferenceMm": [
+    -4.050000190734863,
+    8.742321014404297,
+    -0.9000000357627869
+  ],
+  "stopperContactAxisStationMm": -0.6948685090435254,
+  "axialScale": 0.8728746360193846,
+  "allPartsRadialScale": 0.23877539251288846,
+  "referenceRadialAxialRatioPreserved": true,
+  "nominalCADTipToStopperSettingMm": 21,
+  "actualScaledModelTipToStopperArcMm": 18.330367356407077,
+  "nominalMarkerToPhysicalTipArcMm": {
+    "18": 15.711743448348923,
+    "19": 16.58461808436831,
+    "20": 17.45749272038769,
+    "22": 19.203241992426463
+  },
+  "stopperCentreHoleAxisOffsetMm": 0,
+  "shaftAxisOffsetAtStopperMm": 0,
+  "shaftRunsContinuouslyAcrossStopperThickness": true,
+  "CADShaftRadiusAtStopperMm": 0.1910203140103108,
+  "CADStopperHoleRadiusMm": 0.25134249886760435,
+  "positiveHoleClearanceMm": 0.06032218485729357,
+  "rigInterpolationErrorAllowanceMm": 3e-06,
+  "clinicalWorkingLengthValidated": false,
+  "population21mmNotUsedToRescaleScan": true,
+  "contactVertexWithinStopperAnnulusAtAllPhases": true
+}

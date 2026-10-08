@@ -1,0 +1,49 @@
+{
+  "state": {
+    "viewer": {
+      "loaded": true,
+      "mode": "combined",
+      "revision": "v2",
+      "uncertain": false,
+      "cutaway": false,
+      "opacity": 0.12,
+      "rotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "camera": [
+        7.6263550281524655,
+        8.209218406677246,
+        23.960951375961315
+      ],
+      "vertices": 147054,
+      "canalVertices": 43694,
+      "teachingPath": false,
+      "teachingPointCount": 1339,
+      "frame": 343,
+      "fileVisible": true,
+      "fileInsertion": 1,
+      "filePlaying": false,
+      "filePhase": 276.894949939157,
+      "fileTime": 22.034599999999827,
+      "filePartCount": 6,
+      "fileSchematic": true
+    },
+    "instrument": {
+      "feedDepthMm": 16.725,
+      "phase": 276.894949939157,
+      "schematic": true
+    },
+    "pathEnd": [
+      -3.15,
+      -8.325,
+      1.2
+    ]
+  },
+  "actualPlaybackReachedFullInsertion": true,
+  "capApplied": false,
+  "errors": [],
+  "desktopForegroundObserved": false
+}

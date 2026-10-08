@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "mode": "teaching",
+      "titleCorrect": true,
+      "deletedTextAbsent": true,
+      "boundaryReverseSeekPassed": true
+    },
+    {
+      "mode": "measured",
+      "titleCorrect": true,
+      "deletedTextAbsent": true,
+      "boundaryReverseSeekPassed": true
+    }
+  ],
+  "mobileLayoutPassed": true,
+  "replayResetPassed": true,
+  "errors": [],
+  "desktopForegroundObserved": false
+}

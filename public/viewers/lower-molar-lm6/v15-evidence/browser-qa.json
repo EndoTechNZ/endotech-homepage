@@ -1,0 +1,95 @@
+{
+  "results": [
+    {
+      "loaded": true,
+      "teachingView": true,
+      "sceneScale": 1.145639888,
+      "bottomFaceDistanceMm": 21.000000005193062,
+      "markerStationsMm": [
+        17.999999046325684,
+        18.999999046325684,
+        19.999999046325684,
+        21.999999523162842,
+        23.999999523162842
+      ],
+      "mode": "combined",
+      "revision": "v2",
+      "uncertain": false,
+      "cutaway": false,
+      "opacity": 0.12,
+      "rotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "camera": [
+        15.600578413500827,
+        20.383471764793264,
+        72.61157237232976
+      ],
+      "vertices": 147054,
+      "canalVertices": 43694,
+      "teachingPath": false,
+      "teachingPointCount": 1339,
+      "frame": 343,
+      "fileVisible": true,
+      "fileInsertion": 1,
+      "filePlaying": false,
+      "filePhase": 0,
+      "fileTime": 23,
+      "filePartCount": 6,
+      "fileSchematic": true,
+      "fileFeedArcMm": 20.203930924317707,
+      "stopperAtCusp": true
+    },
+    {
+      "loaded": true,
+      "teachingView": false,
+      "sceneScale": 1,
+      "bottomFaceDistanceMm": 18.330367356407077,
+      "markerStationsMm": [
+        17.999999046325684,
+        18.999999046325684,
+        19.999999046325684,
+        21.999999523162842,
+        23.999999523162842
+      ],
+      "mode": "combined",
+      "revision": "v2",
+      "uncertain": false,
+      "cutaway": false,
+      "opacity": 0.12,
+      "rotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "camera": [
+        15.651355028152466,
+        18.809218406677253,
+        72.6609513759613
+      ],
+      "vertices": 147054,
+      "canalVertices": 43694,
+      "teachingPath": false,
+      "teachingPointCount": 1339,
+      "frame": 343,
+      "fileVisible": true,
+      "fileInsertion": 1,
+      "filePlaying": false,
+      "filePhase": 0,
+      "fileTime": 23,
+      "filePartCount": 6,
+      "fileSchematic": true,
+      "fileFeedArcMm": 17.63549884736355,
+      "stopperAtCusp": true
+    }
+  ],
+  "fullPlaybackPassed": true,
+  "desktopMobileRendered": true,
+  "insertionControlsPassed": true,
+  "errors": [],
+  "desktopForegroundObserved": false
+}

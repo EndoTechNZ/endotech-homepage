@@ -1,0 +1,59 @@
+{
+  "largestChangedRegions": [
+    {
+      "rank": 1,
+      "changedVoxels": 1453,
+      "globalVoxelZYX": [
+        163,
+        247,
+        222
+      ]
+    },
+    {
+      "rank": 2,
+      "changedVoxels": 608,
+      "globalVoxelZYX": [
+        292,
+        312,
+        250
+      ]
+    },
+    {
+      "rank": 3,
+      "changedVoxels": 268,
+      "globalVoxelZYX": [
+        316,
+        313,
+        206
+      ]
+    },
+    {
+      "rank": 4,
+      "changedVoxels": 248,
+      "globalVoxelZYX": [
+        264,
+        259,
+        323
+      ]
+    },
+    {
+      "rank": 5,
+      "changedVoxels": 234,
+      "globalVoxelZYX": [
+        153,
+        318,
+        222
+      ]
+    },
+    {
+      "rank": 6,
+      "changedVoxels": 203,
+      "globalVoxelZYX": [
+        160,
+        250,
+        301
+      ]
+    }
+  ],
+  "scope": "Five consecutive native axial sections and two orthogonal sections per region. Display fairing is a modelling choice, not proof that an attached projection is absent in the tooth."
+}

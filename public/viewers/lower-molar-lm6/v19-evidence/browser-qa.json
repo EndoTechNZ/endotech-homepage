@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "mode": "teaching",
+      "remainingControlsPassed": true,
+      "dangerZoneWithdrawalEntryPassed": true,
+      "geometry": 1.145639888,
+      "bottomFaceDistanceMm": 21.000000005193062
+    },
+    {
+      "mode": "measured",
+      "remainingControlsPassed": true,
+      "dangerZoneWithdrawalEntryPassed": true,
+      "geometry": 1,
+      "bottomFaceDistanceMm": 18.330367356407077
+    }
+  ],
+  "removedControlsAbsent": true,
+  "removedParagraphAbsent": true,
+  "desktopAndMobileRendered": true,
+  "errors": [],
+  "desktopForegroundObserved": false
+}

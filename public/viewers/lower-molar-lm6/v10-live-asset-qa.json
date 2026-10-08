@@ -1,0 +1,16 @@
+{
+  "liveReferenceURL": "https://endotechnz.com/products/micro-path/",
+  "liveMotionBinSHA256": "c341d5e58234620b41a3f7b3331cb72a0244af468b610c705438c2245a024be7",
+  "allSixCADFaceCornerPositionsAndNormalsMatchLive": true,
+  "instrumentBinUnchangedFromReferenceDeduplication": true,
+  "uniformMagnificationFromWebsite": 2.056771532841922,
+  "radialToAxialRatioReference": 0.27355061386797563,
+  "radialToAxialRatioLM6": 0.27355061386797563,
+  "allPartsSameRadialScale": true,
+  "shaftNotIndependentlyNarrowed": true,
+  "materialsMatchLiveSource": true,
+  "fullWidthCandidateContainmentClaim": false,
+  "teachingWallOverlapPermitted": true,
+  "nativeGeometryModified": false,
+  "clinicalFitValidated": false
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "minimumSampledField": 0.5716666332737077,
+    "outsideSamples": 0,
+    "surfaceSamples": 2956800,
+    "wholeTriangleLowerFieldBound": 0.5400542299341297,
+    "fieldBoundary": 0.5,
+    "maximumEdgeMm": 0.027377144366754647,
+    "lipschitzBoundPerMm": 23.094010767585033,
+    "subdivisions": 20,
+    "kind": "blue Glide path"
+  },
+  {
+    "minimumSampledField": 0.8966572902039265,
+    "outsideSamples": 0,
+    "surfaceSamples": 2956800,
+    "wholeTriangleLowerFieldBound": 0.8784941838638981,
+    "fieldBoundary": 0.5,
+    "maximumEdgeMm": 0.015729711502102815,
+    "lipschitzBoundPerMm": 23.094010767585033,
+    "subdivisions": 20,
+    "kind": "cyan bend highlight"
+  }
+]

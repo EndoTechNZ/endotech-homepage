@@ -1,0 +1,18 @@
+{
+  "displayOnly": true,
+  "nativeMeshesAndMasksChanged": false,
+  "portalTextureScale": 4,
+  "smoothingSigmaMm": 0.09,
+  "illustrativePortalOutsetMm": 0.075,
+  "originalComponents": 1,
+  "newComponents": 1,
+  "originalHoles": 1,
+  "newHoles": 1,
+  "changedFootprintPixels": 192,
+  "changedFootprintAreaMm2": 1.08,
+  "oldPortalAreaMm2": 9.8325,
+  "newPortalAreaMm2": 10.897734374999999,
+  "candidateClipPlaneDisplayYMm": 8.3,
+  "newCapsOrMeshObjectsAdded": 0,
+  "sourceAxialOverlayChanged": false
+}
