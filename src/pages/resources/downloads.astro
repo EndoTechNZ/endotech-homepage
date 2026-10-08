@@ -16,7 +16,7 @@ const documentGroups: {
     description: 'Illustrated file sequences and motor settings for ET, PT, RG and Micro-Path™.',
     files: [...Object.values(protocolDownloads.systems), protocolDownloads.collection].map((card) => ({
       name: card.title,
-      href: `/downloads/${card.fileName}`,
+      href: `/downloads/${card.fileName}${'version' in card ? `?v=${card.version}` : ''}`,
       details: `PDF · ${card.pages} pages · ${card.description}`,
       download: card.fileName,
     })),

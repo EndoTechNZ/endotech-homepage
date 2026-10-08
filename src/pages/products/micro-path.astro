@@ -290,7 +290,7 @@ const microPathSchema = {
         <p>Download the illustrated sequence, instructions for use and part numbers.</p>
       </div>
       <div class="microPath-download-list">
-        <a href={`${base}downloads/${microPathProtocol.fileName}`} download={microPathProtocol.fileName}>
+        <a href={`${base}downloads/${microPathProtocol.fileName}?v=${microPathProtocol.version}`} download={microPathProtocol.fileName}>
           <strong>Download {microPathProtocol.title}</strong>
           <span>PDF · {microPathProtocol.pages} pages</span>
         </a>
