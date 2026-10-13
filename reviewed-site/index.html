@@ -1,765 +1,1125 @@
-<!DOCTYPE html><html lang="en-NZ"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EndoTech NZ | Rotary, Reciprocating &amp; NiTi Files</title>
+<!DOCTYPE html>
+<html lang="en-NZ"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EndoTech NZ | Rotary, Reciprocating &amp; NiTi Files</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Space+Grotesk:wght@500;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,700&amp;display=swap" rel="stylesheet">
-
-<style>
-  :root {
-    --c-white: #ffffff;
-    --c-off-white: #f8f9fa;
-    --c-black: #0a0a0a;
-    --c-dark: #222222;
-    --c-grey: #888888;
-    --c-light-grey: #e5e5e5;
-
-
-    --c-pink: #ff2a6d;
-    --c-blue: #056bfd;
-    --c-yellow: #ffc300;
-    --c-green: #00e5a3;
-    --c-red: #fa462b;
-
-    --font-sans: 'Inter', sans-serif;
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-serif: 'Newsreader', serif;
-
-    --space-xs: 0.5rem;
-    --space-sm: 1rem;
-    --space-md: 2rem;
-    --space-lg: 4rem;
-    --space-xl: 8rem;
-
-    --grid-gap: 1rem;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: var(--font-sans);
-    color: var(--c-black);
-    background: #e0e0e0;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
+            --bg-clinical: #f4f5f6;
+            --bg-pure: #ffffff;
+            --ink-navy: #17334e;
+            --ink-navy-light: rgba(23, 51, 78, 0.15);
+            --brand-blue: #0b75b7;
+            --deep-navy: #294b70;
+            --offer-yellow: #ffe344;
+            --purple-accent: #60257a;
 
 
-  .variation-wrapper {
-    margin-bottom: 4rem;
-    background: var(--c-white);
-    min-height: 100vh;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-ui: 'Inter', sans-serif;
+
+
+            --border-thin: 1px solid var(--ink-navy);
+            --border-faint: 1px solid var(--ink-navy-light);
+            --grid-pad: 2rem;
+            --header-h: 80px;
+
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-snap: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.8s var(--ease-out-expo);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            :root {
+                --transition-snap: 0s;
+                --transition-smooth: 0s;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-clinical);
+            color: var(--ink-navy);
+            font-family: var(--font-ui);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        button { background: none; border: none; color: inherit; cursor: pointer; font: inherit; }
+        ul { list-style: none; }
+
+
+        .t-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; letter-spacing: -0.02em; }
+        .t-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 2.5vw, 2.5rem); line-height: 1.2; letter-spacing: -0.01em; }
+        .t-body { font-size: 1.125rem; font-weight: 400; color: var(--deep-navy); }
+        .t-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+        .t-mono-like { font-family: var(--font-display); font-variant-numeric: tabular-nums; }
+
+
+        .site-wrapper {
+            border-left: var(--border-thin);
+            border-right: var(--border-thin);
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+
+        .site-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(to right, var(--ink-navy-light) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--ink-navy-light) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+
+        .site-header {
+            height: var(--header-h);
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            border-bottom: var(--border-thin);
+            position: sticky;
+            top: 0;
+            background: var(--bg-clinical);
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            padding: 0 var(--grid-pad);
+            border-right: var(--border-thin);
+            background: var(--bg-pure);
+        }
+
+        .logo-container img { height: 24px; width: auto; mix-blend-mode: multiply; }
+
+        .header-nav { display: flex; align-items: center; padding: 0 var(--grid-pad); }
+
+        .contact-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0 var(--grid-pad);
+            border-left: var(--border-thin);
+            background: var(--offer-yellow);
+            font-weight: 500;
+            transition: background var(--transition-snap);
+        }
+        .contact-bar:hover { background: var(--ink-navy); color: var(--offer-yellow); }
+        .contact-bar svg { width: 16px; height: 16px; }
+
+
+        .hero {
+            height: calc(100vh - var(--header-h));
+            min-height: 600px;
+            border-bottom: var(--border-thin);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slides-container {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .slide.is-active { opacity: 1; visibility: visible; z-index: 2; }
+
+
+        .slide-content {
+            padding: calc(var(--grid-pad) * 2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: var(--border-thin);
+            background: var(--bg-pure);
+            position: relative;
+        }
+
+
+        .slide-content::before, .slide-content::after {
+            content: ''; position: absolute; left: 0; width: 8px; height: 1px; background: var(--ink-navy);
+        }
+        .slide-content::before { top: 25%; }
+        .slide-content::after { bottom: 25%; }
+
+        .s-eyebrow {
+            display: inline-block;
+            padding: 4px 8px;
+            border: var(--border-thin);
+            margin-bottom: 2rem;
+            align-self: flex-start;
+        }
+
+        .s-headline { margin-bottom: 1.5rem; }
+        .s-desc { max-width: 400px; margin-bottom: 2.5rem; }
+
+        .s-metadata {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            padding-top: 1rem;
+            border-top: var(--border-faint);
+        }
+        .meta-item { display: flex; flex-direction: column; gap: 4px; }
+        .meta-val { font-weight: 600; font-family: var(--font-display); }
+        .s-smallprint { font-size: 0.75rem; color: var(--deep-navy); margin-top: 0.5rem; max-width: 300px; }
+
+        .s-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: auto;
+        }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 12px 24px;
+            background: var(--ink-navy); color: var(--bg-pure);
+            font-weight: 500; font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.05em;
+            transition: all var(--transition-snap);
+        }
+        .btn-primary:hover { background: var(--brand-blue); transform: translateY(-2px); }
+        .link-sec { font-size: 0.875rem; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
+        .link-sec:hover { color: var(--brand-blue); }
+
+
+        .slide-viewport {
+            position: relative;
+            background: var(--bg-clinical);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+
+        .reticle {
+            position: absolute; inset: 2rem; border: 1px solid rgba(23, 51, 78, 0.1); pointer-events: none; z-index: 1;
+        }
+        .reticle::before, .reticle::after {
+            content: ''; position: absolute; background: rgba(23, 51, 78, 0.2);
+        }
+        .reticle::before { top: 50%; left: -10px; right: -10px; height: 1px; }
+        .reticle::after { left: 50%; top: -10px; bottom: -10px; width: 1px; }
+        .reticle-center {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 40px; height: 40px; border: 1px solid var(--ink-navy); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .reticle-center::inner { content: ''; width: 4px; height: 4px; background: var(--ink-navy); border-radius: 50%; }
+
+        .slide-img-wrapper {
+            position: absolute;
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            transform: scale(1);
+            transition: transform var(--transition-smooth);
+        }
+
+        .slide.is-active .slide-viewport:hover .slide-img-wrapper {
+            transform: scale(1.08);
+        }
+
+
+        .instrument-img {
+            max-height: 180%;
+            max-width: none;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+
+            transform: rotate(-35deg) scale(1.4);
+            filter: drop-shadow(20px 20px 30px rgba(0,0,0,0.1));
+            transition: transform var(--transition-smooth);
+        }
+
+
+        .instrument-bg {
+            position: absolute;
+            max-height: 180%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            transform: rotate(-35deg) scale(1.4) translate(-40px, 40px);
+            opacity: 0.15;
+            filter: blur(8px);
+            z-index: 0;
+        }
+
+
+        .carousel-controls {
+            height: 60px;
+            border-top: var(--border-thin);
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            background: var(--bg-pure);
+            z-index: 10;
+        }
+
+        .control-panel {
+            display: flex;
+            border-right: var(--border-thin);
+        }
+
+        .ctrl-btn {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            border-right: var(--border-thin);
+            transition: background var(--transition-snap);
+        }
+        .ctrl-btn:last-child { border-right: none; }
+        .ctrl-btn:hover { background: var(--ink-navy-light); }
+        .ctrl-btn svg { width: 20px; height: 20px; }
+
+        .indicators {
+            display: flex; align-items: center; padding: 0 var(--grid-pad); gap: 2rem;
+        }
+
+        .dot {
+            display: flex; flex-direction: column; gap: 4px; cursor: pointer;
+            opacity: 0.4; transition: opacity var(--transition-snap);
+        }
+        .dot.is-active { opacity: 1; }
+        .dot-line { width: 40px; height: 2px; background: var(--ink-navy); }
+        .dot-label { font-size: 0.6rem; font-family: var(--font-display); font-weight: 700; }
+
+        .progress-bar-container { display: flex; align-items: center; padding: 0 var(--grid-pad); border-left: var(--border-thin); width: 200px;}
+        .progress-bar { width: 100%; height: 2px; background: var(--ink-navy-light); position: relative; }
+        .progress-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--ink-navy); width: 0%; }
+
+        .is-playing .progress-fill { animation: progress 5s linear infinite; }
+        @keyframes progress { 0% { width: 0%; } 100% { width: 100%; } }
+
+
+        .offers-banner {
+            background: var(--offer-yellow);
+            border-bottom: var(--border-thin);
+            padding: 1rem var(--grid-pad);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ob-data { display: flex; gap: 2rem; align-items: center; }
+        .ob-tag { background: var(--ink-navy); color: var(--offer-yellow); padding: 4px 8px; }
+
+
+        .systems-section {
+            padding: 0;
+        }
+
+        .section-header {
+            padding: var(--grid-pad);
+            border-bottom: var(--border-thin);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            background: var(--bg-pure);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+            gap: 1px;
+            background: var(--ink-navy);
+            border-bottom: var(--border-thin);
+        }
+
+        .p-card {
+            background: var(--bg-pure);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all var(--transition-snap);
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .p-card::before {
+            content: 'VIEW SPEC';
+            position: absolute; top: 1rem; right: 1rem;
+            font-size: 0.6rem; font-family: var(--font-display); font-weight: 700;
+            opacity: 0; transform: translateY(-10px); transition: all var(--transition-snap);
+            z-index: 2;
+        }
+
+        .p-card:hover {
+            background: var(--bg-clinical);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(23, 51, 78, 0.1);
+            z-index: 10;
+        }
+        .p-card:hover::before { opacity: 1; transform: translateY(0); }
+
+        .p-img-box {
+            height: 240px;
+            padding: 2rem;
+            display: flex; align-items: center; justify-content: center;
+            border-bottom: var(--border-faint);
+            background: var(--bg-clinical);
+            position: relative;
+        }
+        .p-img-box img {
+            max-height: 100%; max-width: 100%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            transform: rotate(-15deg);
+            transition: transform var(--transition-smooth);
+        }
+        .p-card:hover .p-img-box img { transform: rotate(-15deg) scale(1.1); }
+
+        .p-data { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+        .p-name { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; }
+        .p-compat { font-size: 0.875rem; color: var(--deep-navy); margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--ink-navy-light); }
+
+
+        footer {
+            padding: var(--grid-pad);
+            background: var(--bg-pure);
+        }
+        .trademark-notice {
+            font-size: 0.7rem; color: #666; max-width: 800px;
+            line-height: 1.6; font-family: var(--font-ui);
+        }
+
+
+        @media (max-width: 1024px) {
+            .hero { height: auto; min-height: 0; }
+            .slide { position: relative; grid-template-columns: 1fr; opacity: 1; visibility: visible; display: none; }
+            .slide.is-active { display: grid; }
+            .slide-viewport { height: 400px; order: -1; border-right: none; border-bottom: var(--border-thin); }
+            .instrument-img, .instrument-bg { transform: rotate(-15deg) scale(1.2); }
+            .carousel-controls { grid-template-columns: auto 1fr; }
+            .progress-bar-container { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .site-header { grid-template-columns: 1fr auto; }
+            .contact-bar span { display: none; }
+            .s-metadata { flex-direction: column; gap: 1rem; }
+            .ob-data { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .s-actions { flex-direction: column; align-items: flex-start; }
+            .indicators { display: none; }
+        }
+
+        .slide-compatibility {
+            position: absolute;
+            left: 2rem; right: 2rem; bottom: 2rem;
+            z-index: 3;
+            display: flex; flex-direction: column; gap: 0.3rem;
+            padding: 1.1rem 1.4rem;
+            background: var(--ink-navy);
+            color: #fff;
+            border-left: 6px solid var(--offer-yellow);
+            box-shadow: 0 8px 24px rgba(23, 51, 78, 0.16);
+            pointer-events: none;
+        }
+        .compatibility-label {
+            color: var(--offer-yellow);
+            font-family: var(--font-display);
+            font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+            font-weight: 700;
+            letter-spacing: 0.055em;
+            line-height: 1.25;
+        }
+        .compatibility-system {
+            font-family: var(--font-display);
+            font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .slide-viewport:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: -4px; }
+        .slide.is-active .slide-viewport:focus-visible .slide-img-wrapper { transform: scale(1.08); }
+        @media (max-width: 768px) {
+            .header-nav { display: none; }
+            .logo-container, .contact-bar { padding: 0 1rem; }
+            .contact-bar span:first-child { display: inline; }
+            .logo-container img { height: 40px; }
+            .slide-content { padding: 2rem 1.5rem; border-right: none; }
+            .s-eyebrow { margin-bottom: 1.5rem; }
+            .s-headline { font-size: clamp(2.5rem, 8vw, 3rem); }
+            .s-desc { margin-bottom: 1.5rem; }
+            .s-metadata { margin-bottom: 2rem; }
+            .carousel-controls { grid-template-columns: 1fr; }
+            .control-panel { border-right: none; }
+            .offers-banner { flex-wrap: wrap; gap: 1rem; padding: 1.25rem; }
+            .slide-compatibility { left: 1rem; right: 1rem; bottom: 1rem; padding: 1rem; }
+            .compatibility-label { font-size: 1.1rem; }
+            .compatibility-system { font-size: clamp(1.5rem, 5.8vw, 2rem); }
+        }
+        @media (max-width: 480px) { .slide-viewport { height: 320px; } }
+
+.site-wrapper > .site-header {
+    height: var(--header-h);
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr) auto auto;
+    grid-template-rows: 1fr;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.site-header .logo-container { padding: 0 1rem; }
+.site-header .logo-container img { height: 48px; max-width: 88px; object-fit: contain; }
+.site-header .contact-bar {
+    display: grid;
+    grid-template-columns: 1fr 16px;
+    gap: 2px 16px;
+    align-content: center;
+    padding: 0 1.25rem;
+}
+.site-header .contact-bar span:first-child { display: block; grid-column: 1; font-weight: 600; white-space: nowrap; }
+.site-header .contact-bar .t-label { display: block; grid-column: 1; font-size: 0.6rem; white-space: nowrap; }
+.site-header .contact-bar > svg { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+.header-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(94px, auto));
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    border-left: var(--border-thin);
+    background: var(--bg-pure);
     position: relative;
-    overflow: hidden;
+}
+.header-control {
+    min-height: 46px;
     display: flex;
-    flex-direction: column;
-    border-bottom: 20px solid var(--c-black);
-  }
-
-  .variation-label {
-    position: absolute;
-    top: 0; left: 0;
-    background: var(--c-black);
-    color: var(--c-white);
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    z-index: 9999;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-
-  a { text-decoration: none; color: inherit; }
-  ul { list-style: none; }
-
-  .nav-pill {
-    display: inline-flex;
     align-items: center;
-    background: var(--c-black);
-    color: var(--c-white);
-    padding: 0.5rem 1rem;
-    border-radius: 999px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: background 0.3s ease;
-  }
-
-  .cta-arrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: var(--font-sans);
-  }
-  .cta-arrow svg {
-    width: 1.2em; height: 1.2em;
-    transform: rotate(-45deg);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .cta-arrow:hover svg, .cta-arrow:focus-visible svg {
-    transform: rotate(0deg);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .cta-arrow svg { transition: none; }
-  }
-
-
-  .logo { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
-  .logo-mark { width: 1.5rem; height: 1.5rem; background: var(--c-black); border-radius: 2px; }
-
-
-  .file-placeholder { width: 100%; height: auto; max-width: 60px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
-
-
-  .u-footer {
-    padding: var(--space-md);
-    border-top: 1px solid var(--c-light-grey);
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: var(--c-grey);
-    margin-top: auto;
-    background: var(--c-white);
-    position: relative;
-    z-index: 10;
-  }
-
-
-  .v1 { background: var(--c-off-white); }
-  .v1 header { padding: var(--space-md); display: flex; justify-content: space-between; align-items: center; }
-  .v1 nav { display: flex; gap: var(--space-md); font-size: 0.875rem; font-weight: 500; }
-  .v1 .hero { padding: var(--space-xl) var(--space-md); max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: center; position: relative; }
-  .v1 .eyebrow { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-md); display: block; color: var(--c-grey); }
-  .v1 h1 { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 6rem); line-height: 1; letter-spacing: -0.02em; margin-bottom: var(--space-md); }
-  .v1 .lede { font-size: 1.25rem; max-width: 400px; margin-bottom: var(--space-md); line-height: 1.4; }
-  .v1 .actions { display: flex; gap: var(--space-md); align-items: center; margin-bottom: var(--space-lg); }
-  .v1 .actions .primary { background: var(--c-black); color: var(--c-white); padding: 1rem 2rem; border-radius: 4px; }
-  .v1 .small-print { font-size: 0.75rem; color: var(--c-grey); max-width: 300px; }
-
-  .v1 .product-visual { background: var(--c-white); aspect-ratio: 3/4; display: flex; justify-content: center; align-items: center; border: 1px solid var(--c-light-grey); position: relative; }
-
-
-  .v1 .price-sticker {
-    position: absolute;
-    top: 10%; right: -10%;
-    background: var(--c-green);
-    color: var(--c-black);
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    transform: rotate(15deg);
-    box-shadow: 0 20px 40px rgba(0,229,163,0.3);
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border: var(--border-thin);
+    border-radius: 3px;
+    background: var(--bg-pure);
     font-family: var(--font-display);
-    text-align: center;
-    z-index: 10;
-  }
-  .v1 .price-sticker .price { font-size: 2.5rem; font-weight: 700; line-height: 1; }
-  .v1 .price-sticker .sub { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; }
-
-  .v1 .family-section { padding: var(--space-lg) var(--space-md); max-width: 1400px; margin: 0 auto; }
-  .v1 .family-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; background: var(--c-light-grey); border: 1px solid var(--c-light-grey); }
-  .v1 .family-card { background: var(--c-white); padding: var(--space-md); transition: background 0.3s ease; display: block; }
-  .v1 .family-card:hover { background: var(--c-off-white); }
-  .v1 .family-card h3 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.5rem; }
-  .v1 .family-card p { font-size: 0.875rem; color: var(--c-grey); }
-
-  .v1 .contact-bar { padding: var(--space-lg) var(--space-md); text-align: center; background: var(--c-black); color: var(--c-white); }
-  .v1 .contact-bar h2 { font-size: 2rem; margin-bottom: var(--space-md); font-family: var(--font-serif); font-weight: 400; }
-
-  @media (max-width: 900px) {
-    .v1 .hero { grid-template-columns: 1fr; }
-    .v1 .price-sticker { right: 10%; top: -5%; width: 150px; height: 150px; }
-    .v1 .price-sticker .price { font-size: 1.8rem; }
-  }
-
-
-  .v2 { background: var(--c-white); }
-  .v2 header { padding: var(--space-md); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--space-md); position: relative; z-index: 10; }
-  .v2 nav { justify-self: center; display: flex; gap: var(--space-lg); font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; }
-
-  .v2 .hero { position: relative; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding: var(--space-md); }
-
-
-  .v2 .bg-price {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: var(--font-display);
-    font-size: 40vw;
-    font-weight: 700;
-    color: var(--c-pink);
-    opacity: 0.05;
-    white-space: nowrap;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .v2 .hero-content { position: relative; z-index: 10; max-width: 1200px; margin: 0 auto; display: flex; width: 100%; justify-content: space-between; align-items: center; }
-  .v2 .text-col { max-width: 500px; }
-  .v2 .eyebrow { font-size: 0.875rem; font-weight: 700; margin-bottom: 2rem; }
-  .v2 h1 { font-family: var(--font-display); font-size: clamp(3rem, 5vw, 5rem); line-height: 0.9; margin-bottom: 1.5rem; text-transform: uppercase; }
-  .v2 .price-block { margin: 2rem 0; display: flex; align-items: baseline; gap: 0.5rem; }
-  .v2 .price-block .val { font-size: 4rem; font-family: var(--font-display); font-weight: 700; color: var(--c-pink); letter-spacing: -0.05em;}
-  .v2 .price-block .desc { font-size: 0.875rem; font-weight: 700; max-width: 150px; }
-
-  .v2 .product-col { flex-shrink: 0; background: radial-gradient(circle at center, #f0f0f0 0%, #fff 70%); border-radius: 50%; width: 400px; height: 400px; display: flex; justify-content: center; align-items: center; }
-  .v2 .product-col svg { transform: scale(1.5); }
-
-  .v2 .family-section { padding: var(--space-xl) var(--space-md); border-top: 1px solid var(--c-black); }
-  .v2 .family-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-lg); }
-  .v2 .family-header h2 { font-size: 3rem; font-family: var(--font-display); text-transform: uppercase; }
-  .v2 .family-grid { display: flex; gap: var(--space-md); overflow-x: auto; padding-bottom: 1rem; }
-  .v2 .family-card { min-width: 300px; flex: 1; border: 2px solid var(--c-black); padding: var(--space-md); position: relative; }
-  .v2 .family-card::before { content: ''; position: absolute; top: 4px; left: 4px; right: -4px; bottom: -4px; background: var(--c-light-grey); z-index: -1; transition: all 0.2s ease; }
-  .v2 .family-card:hover::before { top: 8px; left: 8px; right: -8px; bottom: -8px; background: var(--c-pink); }
-  .v2 .family-card h3 { font-size: 2rem; font-family: var(--font-display); margin-bottom: 1rem; }
-
-  .v2 .contact-bar { padding: var(--space-lg) var(--space-md); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--c-black); }
-  .v2 .contact-bar h2 { font-size: 1.5rem; max-width: 300px; }
-  .v2 .contact-btn { font-size: 1.5rem; font-family: var(--font-display); text-transform: uppercase; border-bottom: 4px solid var(--c-pink); padding-bottom: 0.5rem; }
-
-  @media (max-width: 900px) {
-    .v2 .hero-content { flex-direction: column; text-align: center; gap: 3rem; }
-    .v2 .text-col { display: flex; flex-direction: column; align-items: center; }
-    .v2 .price-block { justify-content: center; }
-    .v2 .product-col { width: 300px; height: 300px; }
-    .v2 .family-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  }
-
-
-
-  .v3 { background: var(--c-black); color: var(--c-white); }
-  .v3 .top-half { position: relative; z-index: 10; background: var(--c-black); padding: var(--space-md); padding-bottom: 8rem; clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 90%, 80% 82%, 70% 95%, 60% 88%, 50% 98%, 40% 85%, 30% 92%, 20% 86%, 10% 96%, 0 88%); }
-
-  .v3 header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1rem; margin-bottom: var(--space-lg); }
-  .v3 nav { display: flex; gap: var(--space-md); }
-  .v3 .logo .logo-mark { background: var(--c-white); }
-  .v3 .nav-pill { background: var(--c-white); color: var(--c-black); }
-
-  .v3 .corporate-hero { max-width: 800px; margin: 0 auto; text-align: center; }
-  .v3 .corporate-hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1rem; letter-spacing: -0.03em; }
-  .v3 .corporate-hero .lede { color: var(--c-grey); font-size: 1.25rem; }
-
-
-  .v3 .bottom-half { background: var(--c-yellow); color: var(--c-black); padding: 8rem var(--space-md) var(--space-xl); margin-top: -6rem; position: relative; z-index: 1; }
-  .v3 .price-reveal { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-  .v3 .price-tag { font-family: var(--font-display); font-size: clamp(4rem, 10vw, 12rem); font-weight: 700; line-height: 0.8; letter-spacing: -0.05em; }
-  .v3 .price-meta { max-width: 300px; font-weight: 500; }
-  .v3 .actions { margin-top: 2rem; display: flex; gap: 1rem; }
-  .v3 .btn-outline { border: 2px solid var(--c-black); padding: 1rem 2rem; font-weight: 700; border-radius: 99px; }
-
-  .v3 .product-showcase { display: flex; justify-content: center; margin: var(--space-xl) 0; }
-  .v3 .product-showcase svg { transform: scale(2) rotate(15deg); filter: drop-shadow(20px 20px 0px rgba(0,0,0,0.1)); }
-
-  .v3 .family-section { background: var(--c-white); color: var(--c-black); padding: var(--space-lg) var(--space-md); }
-  .v3 .family-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-  .v3 .family-card { padding: var(--space-md); background: #f0f0f0; border-radius: 8px; }
-  .v3 .family-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; font-family: var(--font-display); }
-  .v3 .family-card p { font-size: 0.875rem; color: var(--c-dark); }
-
-  .v3 .contact-bar { background: var(--c-white); color: var(--c-black); padding: var(--space-lg); text-align: center; border-top: 1px solid var(--c-light-grey); }
-
-  @media (max-width: 900px) {
-    .v3 .price-reveal { flex-direction: column; text-align: center; gap: 2rem; }
-    .v3 .family-grid { grid-template-columns: 1fr 1fr; }
-  }
-
-
-
-  .v4 { background: var(--c-white); border: 1px solid var(--c-black); max-width: 1600px; margin: 0 auto 4rem auto; }
-  .v4 .grid-container { display: grid; grid-template-columns: 250px 1fr 300px; min-height: 90vh; }
-
-  .v4 .sidebar { border-right: 1px solid var(--c-black); display: flex; flex-direction: column; }
-  .v4 header { padding: var(--space-md); border-bottom: 1px solid var(--c-black); }
-  .v4 nav { padding: var(--space-md); display: flex; flex-direction: column; gap: 1rem; font-size: 0.875rem; }
-  .v4 nav a { display: block; border-bottom: 1px solid transparent; width: fit-content; }
-  .v4 nav a:hover { border-bottom-color: var(--c-black); }
-  .v4 .small-print-box { margin-top: auto; padding: var(--space-md); border-top: 1px solid var(--c-black); font-size: 0.7rem; color: var(--c-grey); font-family: monospace; }
-
-  .v4 .main-content { position: relative; padding: var(--space-lg); display: flex; flex-direction: column; justify-content: center; }
-  .v4 .eyebrow { font-family: monospace; text-transform: uppercase; margin-bottom: 1rem; }
-  .v4 h1 { font-family: var(--font-sans); font-weight: 500; font-size: clamp(2rem, 4vw, 4rem); max-width: 800px; line-height: 1.1; margin-bottom: 2rem; }
-  .v4 .lede { font-size: 1.5rem; max-width: 600px; font-weight: 400; color: var(--c-dark); }
-
-  .v4 .actions { margin-top: var(--space-lg); display: flex; gap: 2rem; }
-
-
-  .v4 .receipt-col { border-left: 1px solid var(--c-black); background: var(--c-off-white); position: relative; padding: var(--space-md); }
-  .v4 .receipt {
-    background: var(--c-blue); color: var(--c-white);
-    padding: var(--space-md);
-    box-shadow: 10px 10px 0 var(--c-black);
-    transform: rotate(2deg) translateY(2rem);
-    font-family: monospace;
-  }
-  .v4 .receipt-header { border-bottom: 1px dashed rgba(255,255,255,0.5); padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; text-transform: uppercase; }
-  .v4 .receipt-price { font-size: 3rem; font-family: var(--font-display); font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
-  .v4 .receipt-item { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.5rem; }
-
-  .v4 .product-stage { position: absolute; bottom: 0; right: 0; width: 150px; opacity: 0.2; pointer-events: none; }
-
-  .v4 .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--c-black); }
-  .v4 .family-section { padding: var(--space-md); border-right: 1px solid var(--c-black); }
-  .v4 .family-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
-  .v4 .family-list a { display: grid; grid-template-columns: 50px 1fr; padding: 0.5rem; border: 1px solid var(--c-light-grey); font-size: 0.875rem; align-items: center; }
-  .v4 .family-list a:hover { background: var(--c-black); color: var(--c-white); }
-
-  .v4 .contact-section { padding: var(--space-md); display: flex; flex-direction: column; justify-content: center; }
-
-  @media (max-width: 1024px) {
-    .v4 .grid-container { grid-template-columns: 1fr; }
-    .v4 .sidebar { border-right: none; border-bottom: 1px solid var(--c-black); flex-direction: row; justify-content: space-between; align-items: center; }
-    .v4 nav { flex-direction: row; padding: 0 var(--space-md); }
-    .v4 .small-print-box { display: none; }
-    .v4 .receipt-col { border-left: none; border-top: 1px solid var(--c-black); }
-    .v4 .receipt { transform: none; box-shadow: none; border-radius: 8px; }
-    .v4 .bottom-grid { grid-template-columns: 1fr; }
-    .v4 .family-section { border-right: none; border-bottom: 1px solid var(--c-black); }
-  }
-
-
-
-  .v5 { background: var(--c-white); padding: var(--space-md); display: flex; flex-direction: column; }
-  .v5 .inner-frame { border: 1px solid var(--c-light-grey); flex-grow: 1; display: flex; flex-direction: column; border-radius: 20px; overflow: hidden; }
-
-  .v5 header { display: flex; justify-content: space-between; padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--c-light-grey); }
-  .v5 nav { display: flex; gap: var(--space-lg); font-size: 0.875rem; align-items: center; }
-
-  .v5 .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10rem var(--space-md); text-align: center; position: relative; }
-  .v5 .eyebrow { font-size: 1rem; color: var(--c-grey); margin-bottom: 2rem; }
-  .v5 h1 { font-size: clamp(3rem, 7vw, 8rem); font-weight: 400; letter-spacing: -0.04em; max-width: 1200px; line-height: 1; }
-
-
-  .v5 .tiny-price {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--c-red);
-    color: var(--c-white);
-    padding: 0.25rem 0.75rem;
-    border-radius: 99px;
     font-size: 1rem;
     font-weight: 700;
-    vertical-align: middle;
-    margin-left: 1rem;
-    transform: translateY(-20px);
-    font-family: var(--font-display);
-    animation: float 4s ease-in-out infinite;
-  }
-  @keyframes float { 0%, 100% { transform: translateY(-20px); } 50% { transform: translateY(-10px); } }
-  @media (prefers-reduced-motion: reduce) { .v5 .tiny-price { animation: none; } }
-
-  .v5 .lede { font-size: 1.5rem; color: var(--c-dark); margin-top: 3rem; max-width: 600px; }
-
-  .v5 .product-and-actions { display: flex; align-items: center; gap: 4rem; margin-top: 4rem; }
-  .v5 .product-wrapper { width: 120px; height: 120px; border-radius: 50%; background: var(--c-off-white); display: flex; justify-content: center; align-items: center; }
-  .v5 .product-wrapper svg { width: 40px; }
-  .v5 .actions { display: flex; flex-direction: column; gap: 1rem; text-align: left; }
-  .v5 .small-print { font-size: 0.7rem; color: var(--c-grey); max-width: 250px; }
-
-  .v5 .family-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--c-light-grey); }
-  .v5 .family-card { padding: var(--space-lg); border-right: 1px solid var(--c-light-grey); display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; }
-  .v5 .family-card:last-child { border-right: none; }
-  .v5 .family-card h3 { font-size: 1.5rem; font-weight: 400; }
-  .v5 .family-card p { font-size: 0.875rem; color: var(--c-grey); }
-
-  .v5 .contact { padding: var(--space-lg); text-align: center; border-top: 1px solid var(--c-light-grey); }
-
-  @media (max-width: 900px) {
-    .v5 .family-grid { grid-template-columns: 1fr 1fr; }
-    .v5 .family-card:nth-child(even) { border-right: none; }
-    .v5 .family-card:nth-child(1), .v5 .family-card:nth-child(2) { border-bottom: 1px solid var(--c-light-grey); }
-    .v5 .product-and-actions { flex-direction: column; text-align: center; }
-    .v5 .actions { text-align: center; align-items: center; }
-    .v5 .tiny-price { display: block; margin: 1rem auto; transform: none; animation: none; width: fit-content; }
-  }
-
-
-
-  .v6 { background: var(--c-off-white); padding: var(--space-md); display: flex; flex-direction: column; }
-  .v6 header { margin-bottom: var(--space-md); display: flex; justify-content: space-between; align-items: center; }
-  .v6 nav { display: flex; gap: 2rem; font-weight: 500; font-size: 0.875rem; }
-
-
-  .v6 .poster-frame {
-    background: var(--c-black);
-    border-radius: 12px;
-    padding: 2px;
+    line-height: 1.4;
+    white-space: nowrap;
+    cursor: pointer;
+    list-style: none;
+    transition: background var(--transition-snap), color var(--transition-snap);
+}
+.header-control::-webkit-details-marker { display: none; }
+.header-control svg { width: 16px; height: 16px; flex: 0 0 16px; }
+.header-control:hover, .header-explore[open] > summary { background: var(--bg-clinical); }
+.header-order { background: var(--ink-navy); color: #fff; }
+.header-order:hover { background: var(--brand-blue); }
+.header-control:focus-visible, .header-menu a:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 3px; }
+.menu-chevron { transition: transform var(--transition-snap); }
+.header-explore[open] .menu-chevron { transform: rotate(180deg); }
+.header-menu {
+    position: absolute;
+    top: calc(100% - 1px);
+    right: 16px;
+    width: min(560px, calc(100vw - 32px));
+    max-height: min(640px, calc(100dvh - var(--header-h) - 16px));
+    overflow-y: auto;
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 2px;
-    overflow: hidden;
-  }
-
-  .v6 .block { padding: var(--space-lg); }
-
-  .v6 .block-hero { background: var(--c-blue); color: var(--c-white); grid-column: 1 / 2; grid-row: 1 / 2; display: flex; flex-direction: column; justify-content: space-between; min-height: 500px; }
-  .v6 .block-hero h1 { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 6rem); text-transform: uppercase; line-height: 0.9; margin: 2rem 0; }
-  .v6 .block-hero .eyebrow { font-family: monospace; }
-
-  .v6 .block-price { background: var(--c-yellow); color: var(--c-black); grid-column: 2 / 3; grid-row: 1 / 3; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-  .v6 .block-price .val { font-size: clamp(4rem, 8vw, 8rem); font-family: var(--font-display); font-weight: 700; line-height: 1; letter-spacing: -0.05em; }
-  .v6 .block-price .desc { font-size: 1.5rem; font-weight: 500; margin-bottom: 2rem; }
-  .v6 .block-price .btn { background: var(--c-black); color: var(--c-white); padding: 1rem 2rem; font-size: 1.25rem; font-family: var(--font-display); border-radius: 99px; }
-
-  .v6 .block-product { background: var(--c-white); grid-column: 1 / 2; grid-row: 2 / 3; display: flex; align-items: center; gap: 2rem; }
-  .v6 .product-img { width: 80px; }
-  .v6 .product-text p { font-size: 1.25rem; font-weight: 500; max-width: 400px; margin-bottom: 1rem; }
-  .v6 .small-print { font-size: 0.75rem; color: var(--c-grey); font-family: monospace; }
-
-  .v6 .family-section { margin-top: var(--space-lg); }
-  .v6 .family-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-  .v6 .family-card { background: var(--c-white); border: 1px solid var(--c-light-grey); padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-  .v6 .family-card h3 { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 0.5rem; }
-  .v6 .family-card p { font-size: 0.875rem; color: var(--c-grey); }
-
-  .v6 .contact-bar { margin-top: var(--space-lg); display: flex; justify-content: space-between; align-items: center; padding: 2rem; background: var(--c-white); border-radius: 8px; }
-
-  @media (max-width: 900px) {
-    .v6 .poster-frame { grid-template-columns: 1fr; grid-template-rows: auto; }
-    .v6 .block-price { grid-column: 1 / 2; grid-row: 2 / 3; padding: 4rem 2rem; }
-    .v6 .block-product { grid-column: 1 / 2; grid-row: 3 / 4; flex-direction: column; text-align: center; }
-    .v6 .family-grid { grid-template-columns: 1fr 1fr; }
-    .v6 .contact-bar { flex-direction: column; gap: 1rem; text-align: center; }
-  }
-
-
-
-  .v7 { background: #d0d5d9; padding: var(--space-md); }
-  .v7 header { margin-bottom: var(--space-lg); display: flex; justify-content: space-between; }
-  .v7 nav { display: flex; gap: 1rem; }
-  .v7 .nav-pill { background: transparent; border: 1px solid var(--c-black); color: var(--c-black); }
-
-  .v7 .stamp-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .v7 .stamp {
-    background: var(--c-white);
-    padding: var(--space-md);
-    position: relative;
-
-    background-image: radial-gradient(#d0d5d9 4px, transparent 5px);
-    background-size: 15px 15px;
-    background-position: -7px -7px;
-    border: 1px solid rgba(0,0,0,0.1);
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    background: #fff;
+    border: var(--border-thin);
+    box-shadow: 0 16px 32px rgba(23, 51, 78, 0.15);
+    z-index: 200;
+}
+.header-menu-group { display: flex; flex-direction: column; }
+.header-menu-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--deep-navy);
+    padding: 0 10px 12px;
+    border-bottom: var(--border-faint);
+    margin-bottom: 6px;
+}
+.header-menu a { padding: 10px; font-size: 0.875rem; line-height: 1.4; }
+.header-menu a:hover { background: var(--bg-clinical); color: var(--brand-blue); }
+.unit-price-line { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; }
+.unit-price-line > .meta-val { font-size: 1.35rem; font-weight: 700; white-space: nowrap; }
+.price-comparison {
     display: flex;
     flex-direction: column;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-  }
-  .v7 .stamp-inner { background: var(--c-white); padding: 1rem; height: 100%; display: flex; flex-direction: column; }
+    gap: 1px;
+    padding: 8px 12px;
+    background: var(--offer-yellow);
+    border: var(--border-thin);
+    line-height: 1.3;
+}
+.price-comparison strong { font-family: var(--font-display); font-weight: 700; font-size: 1rem; }
+.price-comparison span { font-size: 0.85rem; }
+@media (max-width: 850px) {
+    :root { --header-h: 132px; }
+    .site-wrapper > .site-header { grid-template-columns: 80px minmax(0, 1fr); grid-template-rows: 72px minmax(0, 1fr); }
+    .site-header .logo-container { grid-column: 1; grid-row: 1; justify-content: center; padding: 0 8px; }
+    .site-header .logo-container img { height: 44px; max-width: 64px; }
+    .header-spacer { display: none; }
+    .site-header .contact-bar { grid-column: 2; grid-row: 1; }
+    .header-actions { grid-column: 1 / -1; grid-row: 2; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 7px 12px; border-left: none; border-top: var(--border-thin); }
+    .header-control { min-height: 44px; padding: 10px 8px; }
+    .header-menu { right: 12px; width: calc(100% - 24px); }
+}
+@media (max-width: 600px) {
+    .header-menu { grid-template-columns: 1fr; gap: 16px; padding: 16px; }
+    .header-menu a { min-height: 44px; }
+}
+    </style>
 
-  .v7 .stamp-hero { grid-column: 1 / -1; min-height: 40vh; flex-direction: row; align-items: center; gap: 4rem; padding: 3rem; }
-  .v7 .stamp-hero h1 { font-size: clamp(2.5rem, 5vw, 5rem); letter-spacing: -0.02em; margin-bottom: 1rem; }
+<meta name="description" content="New Zealand supplier of rotary, reciprocating and NiTi endodontic files, including Transform S, Micro-Path glide-path files and C+ hand files.">
+<meta property="og:title" content="EndoTech NZ | Rotary, Reciprocating &amp; NiTi Files">
+<meta property="og:description" content="Rotary, reciprocating and glide-path endodontic file systems for New Zealand dentists.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://endotechnz.com/">
+<meta property="og:locale" content="en_NZ">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://endotechnz.com/">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://endotechnz.com/#organization","name":"EndoTech NZ","alternateName":"EndoTechNZ","url":"https://endotechnz.com/","logo":"https://endotechnz.com/assets/homepage/logo.webp","description":"New Zealand supplier of rotary, reciprocating and NiTi endodontic file systems.","email":"sales@endotechnz.com","areaServed":{"@type":"Country","name":"New Zealand"},"contactPoint":{"@type":"ContactPoint","contactType":"sales","email":"sales@endotechnz.com","areaServed":"NZ","availableLanguage":"English"}},{"@type":"WebSite","@id":"https://endotechnz.com/#website","url":"https://endotechnz.com/","name":"EndoTech NZ","inLanguage":"en-NZ","publisher":{"@id":"https://endotechnz.com/#organization"}}]}</script>
+<link rel="icon" href="/brand/endotech-nz-logo-2026.jpg">
+</head>
+<body>
+    <div class="site-wrapper">
+        <header class="site-header">
+            <a href="/" class="logo-container" aria-label="EndoTech NZ home">
+                <img src="/assets/homepage/logo.webp" alt="EndoTech NZ Logo">
+            </a>
+            <span class="header-spacer" aria-hidden="true"></span>
+            <a href="/about/contact/" class="contact-bar">
+                <span>Talk to EndoTech</span>
+                <span class="t-label">Cut out the Middle Man</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+            <nav class="header-actions" aria-label="Main navigation">
+                <a class="header-control" href="/products/overview/">Systems</a>
+                <details class="header-explore">
+                    <summary class="header-control">Explore <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
+                    <div class="header-menu">
+                        <div class="header-menu-group">
+                            <span class="header-menu-label">File systems</span>
+                            <a href="/products/transform-s-rg/">Transform S RG</a>
+                            <a href="/products/transform-s-et/">Transform S ET</a>
+                            <a href="/products/transform-s-pt/">Transform S PT</a>
+                            <a href="/products/micro-path/">Micro-Path</a>
+                            <a href="/products/c-plus/">C+ Files</a>
+                            <a href="/products/gutta-percha/">Gutta Percha Points</a>
+                        </div>
+                        <div class="header-menu-group">
+                            <span class="header-menu-label">Explore EndoTech</span>
+                            <a href="/technology/">Technology</a>
+                            <a href="/3d-solutions/micropath/">3D Solutions with MicroPath</a>
+                            <a href="/technique/workflow/">Clinical workflow</a>
+                            <a href="/resources/clinical-tips/">Education</a>
+                            <a href="/resources/downloads/">Evidence &amp; downloads</a>
+                            <a href="/promotions/transform-s-catalogue/?intro=flip">NZ promotional brochure</a>
+                            <a href="/about/company/">About EndoTech</a>
+                        </div>
+                    </div>
+                </details>
+                <a class="header-control header-order" href="/quote-request/">Order <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg></a>
+            </nav>
+        </header>
 
+        <main>
 
-  .v7 .stamp-price {
-    background: var(--c-pink);
-    color: var(--c-white);
-    background-image: radial-gradient(#d0d5d9 4px, transparent 5px);
-    transform: rotate(-3deg);
-  }
-  .v7 .stamp-price .stamp-inner { background: var(--c-pink); text-align: center; justify-content: center; border: 2px solid rgba(255,255,255,0.3); }
-  .v7 .stamp-price .val { font-size: 4rem; font-family: var(--font-display); font-weight: 700; }
-  .v7 .stamp-price .desc { font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; }
-
-  .v7 .stamp-product { align-items: center; justify-content: center; }
-  .v7 .stamp-product svg { height: 150px; width: auto; }
-
-  .v7 .stamp-family h3 { font-size: 1.25rem; font-family: var(--font-display); border-bottom: 1px solid var(--c-light-grey); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
-
-  .v7 .contact-stamp { grid-column: 1 / -1; background: var(--c-black); color: var(--c-white); background-image: radial-gradient(#d0d5d9 4px, transparent 5px); text-align: center; }
-  .v7 .contact-stamp .stamp-inner { background: var(--c-black); align-items: center; justify-content: center; padding: 3rem; }
-
-
-
-  .v8 { background: var(--c-white); min-height: 100vh; position: relative; overflow: hidden; padding: var(--space-md); }
-
-
-  .v8 .clinical-grid {
-    display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem;
-    max-width: 1200px; margin: 0 auto;
-    opacity: 0.8;
-  }
-  .v8 header { grid-column: 1 / -1; display: flex; justify-content: space-between; margin-bottom: 4rem; }
-  .v8 .clinical-text { grid-column: 2 / 10; margin-bottom: 6rem; }
-  .v8 .clinical-text h1 { font-family: var(--font-sans); font-weight: 400; font-size: 4rem; line-height: 1.1; margin-bottom: 1rem; }
-  .v8 .clinical-text .lede { font-size: 1.25rem; color: var(--c-grey); }
-
-  .v8 .family-section { grid-column: 1 / -1; margin-top: 10rem; border-top: 1px solid var(--c-light-grey); padding-top: 2rem; }
-  .v8 .family-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-  .v8 .family-card h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; }
-  .v8 .family-card p { font-size: 0.875rem; color: var(--c-grey); }
-
-
-  .v8 .sticker {
-    position: absolute;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5);
-    padding: 1.5rem;
-    font-family: var(--font-display);
-  }
-  .v8 .s-price {
-    background: var(--c-green); color: var(--c-black);
-    top: 30%; right: 15%;
-    transform: rotate(8deg);
-    border-radius: 8px;
-    z-index: 20;
-  }
-  .v8 .s-price .val { font-size: 3.5rem; font-weight: 700; line-height: 1; }
-  .v8 .s-price .btn { margin-top: 1rem; background: var(--c-black); color: var(--c-white); padding: 0.5rem 1rem; border-radius: 4px; display: inline-block; font-size: 0.875rem; }
-
-  .v8 .s-product {
-    background: var(--c-off-white);
-    top: 45%; left: 55%;
-    transform: rotate(-5deg);
-    border-radius: 4px;
-    padding: 1rem;
-    z-index: 10;
-    display: flex; flex-direction: column; align-items: center;
-  }
-  .v8 .s-product svg { height: 200px; }
-  .v8 .s-product span { font-size: 0.75rem; font-family: monospace; color: var(--c-grey); margin-top: 0.5rem; }
-
-  .v8 .s-disclaimer {
-    background: var(--c-yellow); color: var(--c-black);
-    top: 60%; right: 25%;
-    transform: rotate(-2deg);
-    border-radius: 4px;
-    font-size: 0.75rem;
-    max-width: 200px;
-    padding: 1rem;
-    z-index: 15;
-    font-family: var(--font-sans);
-  }
-
-  .v8 .contact-wrap { grid-column: 1 / -1; text-align: center; margin-top: 6rem; margin-bottom: 2rem; }
-  .v8 .contact-wrap a { font-size: 2rem; font-weight: 500; text-decoration: underline; }
-
-  @media (max-width: 1024px) {
-    .v8 .sticker { position: relative; top: auto; right: auto; left: auto; transform: none; margin-bottom: 2rem; width: fit-content; }
-    .v8 .clinical-text { grid-column: 1 / -1; }
-    .v8 .family-grid { grid-template-columns: 1fr 1fr; }
-  }
+            <section class="hero" id="hero-carousel" aria-label="Product Showcase Carousel" aria-roledescription="carousel">
+                <div class="slides-container">
 
 
+                    <div class="slide is-active" data-index="0" id="hero-slide-rg" role="tabpanel" aria-labelledby="hero-tab-rg" aria-hidden="false">
+                        <div class="slide-content">
+                            <span class="t-label s-eyebrow">ENDOTECH NZ · TRANSFORM S™ RG</span>
+                            <h2 class="t-display s-headline">Serious files.<br>Un-serious prices.</h2>
+                            <p class="t-body s-desc">Reciprocating files for a familiar shaping workflow.</p>
 
-  .v9 { background: var(--c-black); color: var(--c-white); font-family: var(--font-sans); }
-  .v9 header { padding: var(--space-md) var(--space-lg); display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
-  .v9 nav { display: flex; gap: 2rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--c-grey); }
-  .v9 nav a:hover { color: var(--c-white); }
-
-  .v9 .grid-layout { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
-  .v9 .text-side { padding: var(--space-xl) var(--space-lg); display: flex; flex-direction: column; justify-content: center; }
-  .v9 .eyebrow { color: var(--c-grey); font-size: 0.875rem; margin-bottom: 1rem; }
-  .v9 h1 { font-family: var(--font-serif); font-size: clamp(3rem, 5vw, 5rem); font-weight: 400; line-height: 1.1; margin-bottom: 2rem; }
-  .v9 .lede { font-size: 1.1rem; color: #aaaaaa; max-width: 400px; line-height: 1.6; }
-
-  .v9 .visual-side { border-left: 1px solid rgba(255,255,255,0.1); position: relative; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); }
-  .v9 .product-glow { width: 100px; filter: drop-shadow(0 0 30px rgba(255,255,255,0.2)); }
-
-
-  .v9 .electric-price {
-    position: absolute;
-    bottom: var(--space-lg);
-    left: -4rem;
-    background: var(--c-green);
-    color: var(--c-black);
-    padding: 1.5rem 2rem;
-    font-family: var(--font-display);
-    box-shadow: 0 0 40px rgba(0,229,163,0.4);
-    z-index: 10;
-  }
-  .v9 .electric-price .val { font-size: 3rem; font-weight: 700; line-height: 1; margin-bottom: 0.5rem; }
-  .v9 .electric-price .small-print { font-size: 0.7rem; font-family: var(--font-sans); opacity: 0.8; max-width: 200px; }
-
-  .v9 .actions { margin-top: 3rem; }
-  .v9 .btn-lux { border: 1px solid var(--c-white); padding: 1rem 2rem; display: inline-flex; align-items: center; gap: 1rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; transition: all 0.3s ease; }
-  .v9 .btn-lux:hover { background: var(--c-white); color: var(--c-black); }
-
-  .v9 .family-section { padding: var(--space-xl) var(--space-lg); border-top: 1px solid rgba(255,255,255,0.1); }
-  .v9 .family-section h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 400; margin-bottom: 3rem; text-align: center; }
-  .v9 .family-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-  .v9 .family-card { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem; }
-  .v9 .family-card h3 { font-size: 1.25rem; font-weight: 400; margin-bottom: 0.5rem; color: var(--c-white); }
-  .v9 .family-card p { font-size: 0.875rem; color: var(--c-grey); }
-
-  .v9 .contact-bar { padding: var(--space-xl) 0; text-align: center; }
-  .v9 .contact-bar a { font-family: var(--font-serif); font-size: 3rem; color: var(--c-white); text-decoration: none; position: relative; }
-  .v9 .contact-bar a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: var(--c-green); transform: scaleX(0); transform-origin: right; transition: transform 0.4s ease; }
-  .v9 .contact-bar a:hover::after { transform: scaleX(1); transform-origin: left; }
-
-  @media (max-width: 900px) {
-    .v9 .grid-layout { grid-template-columns: 1fr; }
-    .v9 .visual-side { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding: 4rem 0; }
-    .v9 .electric-price { position: relative; bottom: auto; left: auto; margin: -2rem auto 2rem auto; width: fit-content; text-align: center; }
-    .v9 .family-grid { grid-template-columns: 1fr 1fr; }
-  }
-
-
-
-  .v10 { background: #f0f0f0; position: relative; overflow: hidden; padding-bottom: 4rem; }
-
-
-  .v10 .bg-shapes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: 0; }
-  .v10 .shape-1 { position: absolute; top: -10%; right: -5%; width: 60vw; height: 60vw; border-radius: 50%; background: var(--c-blue); mix-blend-mode: multiply; opacity: 0.8; }
-  .v10 .shape-2 { position: absolute; top: 20%; right: 10%; width: 40vw; height: 40vw; border-radius: 50%; background: var(--c-pink); mix-blend-mode: multiply; opacity: 0.9; }
-  .v10 .shape-3 { position: absolute; bottom: -20%; left: -10%; width: 70vw; height: 70vw; border-radius: 50%; background: var(--c-yellow); mix-blend-mode: multiply; opacity: 0.8; }
-
-
-  .v10 .ui-layer { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; background: rgba(255,255,255,0.9); backdrop-filter: blur(20px); border: 1px solid var(--c-white); border-radius: 24px; margin-top: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; }
-
-  .v10 header { padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--c-light-grey); }
-  .v10 nav { display: flex; gap: 1.5rem; font-size: 0.875rem; font-weight: 500; }
-
-  .v10 .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding: 4rem; }
-  .v10 h1 { font-family: var(--font-display); font-size: 4rem; font-weight: 700; line-height: 1; margin-bottom: 1.5rem; }
-  .v10 .lede { font-size: 1.25rem; color: var(--c-dark); margin-bottom: 2rem; }
-
-  .v10 .price-box { background: var(--c-black); color: var(--c-white); padding: 2rem; border-radius: 16px; display: inline-block; }
-  .v10 .price-box .val { font-size: 3.5rem; font-family: var(--font-display); font-weight: 700; margin-bottom: 0.5rem; }
-  .v10 .price-box .small-print { font-size: 0.75rem; color: var(--c-grey); max-width: 200px; }
-
-  .v10 .visual-box { background: #e5e5e5; border-radius: 16px; display: flex; justify-content: center; align-items: center; min-height: 400px; }
-
-  .v10 .family-section { padding: 4rem; border-top: 1px solid var(--c-light-grey); }
-  .v10 .family-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-  .v10 .family-card { background: var(--c-white); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--c-light-grey); }
-  .v10 .family-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-  .v10 .family-card p { font-size: 0.875rem; color: var(--c-grey); }
-
-  .v10 .contact-bar { padding: 3rem 4rem; background: var(--c-off-white); display: flex; justify-content: space-between; align-items: center; }
-
-  @media (max-width: 1024px) {
-    .v10 .hero-content { grid-template-columns: 1fr; padding: 2rem; }
-    .v10 .family-section { padding: 2rem; }
-    .v10 .family-grid { grid-template-columns: 1fr 1fr; }
-    .v10 .contact-bar { flex-direction: column; text-align: center; gap: 1.5rem; padding: 2rem; }
-  }
-
-
-
-  .dummy-file-svg { width: 100%; height: 100%; }
-
-</style>
-<style>.preview-toolbar{position:relative;z-index:10000;background:#172650;color:white;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;font:13px Arial,sans-serif}.preview-toolbar select{font:inherit;max-width:65vw;border:1px solid #ffffff66;border-radius:5px;padding:8px;background:#fff;color:#172650}.variation-wrapper{margin-bottom:0;border-bottom:0}.variation-label{display:none}.logo{min-width:70px}.approved-logo{width:70px;height:70px;object-fit:contain;background:white;border-radius:4px}.file-placeholder{width:78%;max-width:350px!important;height:auto!important}.real-product{width:100%;height:auto;max-height:460px;object-fit:contain;mix-blend-mode:multiply}.v9 .real-product{mix-blend-mode:normal}.family-section{width:100%}.cta-arrow svg{overflow:visible}a:focus-visible{outline:3px solid #056bfd;outline-offset:5px}@media(max-width:600px){header{gap:16px!important;flex-wrap:wrap}nav{gap:14px!important;flex-wrap:wrap}.actions{flex-wrap:wrap}.v1 .hero{padding:45px 22px}.v1 .product-visual{max-width:100%}.v1 .family-grid{grid-template-columns:1fr}.u-footer{gap:15px;flex-wrap:wrap}.preview-toolbar{padding:10px 12px}.v4 .main-content,.v5 header{padding:24px}.v5 .product-and-actions{gap:20px}.v5 .family-grid,.v6 .family-grid,.v9 .family-grid{grid-template-columns:1fr 1fr!important}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}</style><style>.v1 .price-sticker{right:3%}.v1 .hero{padding-top:70px;padding-bottom:70px}.v1 .product-visual{aspect-ratio:1/1;max-height:640px}.v1 .file-placeholder{width:90%;max-width:480px!important}</style><meta name="description" content="New Zealand supplier of rotary, reciprocating and NiTi endodontic files, including Transform S, Micro-Path glide-path files and C+ hand files."><meta property="og:title" content="EndoTech NZ | Rotary, Reciprocating &amp; NiTi Files"><meta property="og:description" content="Rotary, reciprocating and glide-path endodontic file systems for New Zealand dentists."><meta property="og:type" content="website"><meta property="og:url" content="https://endotechnz.com/"><meta property="og:locale" content="en_NZ"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://endotechnz.com/"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://endotechnz.com/#organization","name":"EndoTech NZ","alternateName":"EndoTechNZ","url":"https://endotechnz.com/","logo":"https://endotechnz.com/assets/homepage/logo.webp","description":"New Zealand supplier of rotary, reciprocating and NiTi endodontic file systems.","email":"sales@endotechnz.com","areaServed":{"@type":"Country","name":"New Zealand"},"contactPoint":{"@type":"ContactPoint","contactType":"sales","email":"sales@endotechnz.com","areaServed":"NZ","availableLanguage":"English"}},{"@type":"WebSite","@id":"https://endotechnz.com/#website","url":"https://endotechnz.com/","name":"EndoTech NZ","inLanguage":"en-NZ","publisher":{"@id":"https://endotechnz.com/#organization"}}]}</script><link rel="stylesheet" href="/email-options.css"><link rel="stylesheet" href="/homepage-colour.css"><script src="/email-options.js" defer=""></script><script src="/site-nav.js?v=mobile-menu-20260930" defer=""></script><link rel="stylesheet" href="/homepage-scroll-motion.css?v=dynamic-20260930"></head><body><svg style="display:none;">
-  <defs>
-    <g id="file-icon">
-      <path d="M25 0 L35 0 L32 150 L28 150 Z" fill="#b0b5b9"></path>
-      <path d="M25 0 L30 0 L29 150 L28 150 Z" fill="#ffffff" opacity="0.5"></path>
-      <path d="M28 150 L32 150 L30 200 Z" fill="#8d9398"></path>
-
-      <rect x="20" y="0" width="20" height="30" fill="#333" rx="2"></rect>
-      <rect x="20" y="5" width="20" height="2" fill="#e63946"></rect>
-      <rect x="20" y="10" width="20" height="2" fill="#e63946"></rect>
-    </g>
-    <g id="arrow-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-        <polyline points="12 5 19 12 12 19"></polyline>
-      </svg>
-    </g>
-  </defs>
-</svg><section class="variation-wrapper v10">
-  <div class="variation-label">10. Organic Geometry Clash</div>
-
-  <div class="bg-shapes">
-    <div class="shape-1"></div>
-    <div class="shape-2"></div>
-    <div class="shape-3"></div>
-  </div>
-
-  <div class="ui-layer">
-    <header>
-      <a class="logo" href="/" aria-label="EndoTech NZ home"><img class="approved-logo" src="/assets/homepage/logo.webp" alt="EndoTech NZ"></a>
-      <nav class="familiar-nav" aria-label="Main navigation"><a href="/products/overview/">Systems</a><details class="preview-explore"><summary>Explore <span aria-hidden="true">⌄</span></summary><div class="preview-menu"><a href="/products/transform-s-et/">Transform S ET</a><a href="/products/transform-s-pt/">Transform S PT</a><a href="/products/transform-s-rg/">Transform S RG</a><a href="/products/micro-path/">Micro-Path</a><a href="/products/c-plus/">Transform S C+</a><a href="/products/gutta-percha/">Gutta Percha Points</a><hr><a href="/technology/">Technology</a><a href="/3d-solutions/micropath/">3D Solutions with MicroPath</a><a href="/technique/workflow/">Clinical workflow</a><a href="/resources/clinical-tips/">Education</a><a href="/resources/downloads/">Evidence &amp; downloads</a><a href="/promotions/transform-s-catalogue/?intro=flip">NZ promotional brochure</a><a href="/about/company/">About EndoTech</a></div></details><a class="preview-order" href="/quote-request/">Order <svg class="preview-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></nav>
-    </header>
-
-    <div class="hero-content">
-      <div class="text-area">
-        <span class="hero-brand-word">EndoTech NZ</span>
-        <span style="font-family:monospace; text-transform:uppercase; color:var(--c-grey); display:block; margin-bottom:1.5rem;">Precision engineering.</span>
-        <h1>Serious files.<br>Un-serious prices.</h1>
-        <p class="lede"><strong>Half price of major competitor.</strong><br>A little unexpected on pricing.</p>
-
-        <div class="price-box" id="offer">
-          <div class="val">$39.95 <span style="font-size:1.5rem; font-weight:500;">+ GST</span></div>
-          <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:1.5rem;">
-            <p class="small-print">Transform S™ · New Zealand offers until 31 December 2026. See catalogue for product and pack details.</p>
-            <a href="/promotions/transform-s-catalogue/" class="nav-pill cta-arrow" style="background:var(--c-white); color:var(--c-black);">See offer <svg><use href="#arrow-icon"></use></svg></a>
-          </div>
-        </div>
-
-        <div style="margin-top:3rem;">
-          <a href="#systems" class="cta-arrow" style="font-weight:700;">Meet the files ↓</a>
-        </div>
-      </div>
-
-      <div class="visual-box">
-        <div class="product-stage"><img class="hero-family is-active" data-family="transform-s-rg" src="/assets/homepage/rg.webp" alt="RG file family" fetchpriority="high"><img class="hero-family" data-family="transform-s-et" src="/assets/homepage/et.webp" alt="ET file family" aria-hidden="true"><img class="hero-family" data-family="transform-s-pt" src="/assets/homepage/pt.webp" alt="PT file family" aria-hidden="true"><img class="hero-family" data-family="micro-path" src="/assets/homepage/micro-path.webp" alt="Micro-Path file family" aria-hidden="true"><img class="hero-family" data-family="c-plus" src="/assets/homepage/c-plus.webp" alt="C+ file" aria-hidden="true"><img class="hero-family" data-family="gutta-percha" src="/products/gutta-percha/gutta-percha-points.png" alt="Gutta Percha Points" aria-hidden="true"><span class="family-caption" aria-live="polite">Transform S RG</span></div>
-      </div>
-    </div>
-
-    <aside class="funky-offer" aria-label="New Zealand offers"><div class="offer-date"><strong>New Zealand offers</strong><span>Until 31 December 2026</span></div><a class="funky-brochure" href="/promotions/transform-s-catalogue/"><span>View offer brochure</span><svg class="preview-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a><a class="savings-sticker" href="/promotions/transform-s-catalogue/" aria-label="Huge savings — view offer brochure">Huge<br>savings <svg class="preview-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></aside><div class="family-section" id="systems">
-      <h2 style="font-family:var(--font-display); font-size:2rem; margin-bottom:2rem;">Find your kind of control.</h2>
-      <div class="family-grid">
-        <a href="/products/transform-s-rg/" class="family-card"><h3>RG</h3><p>Compatible with WaveOne Gold</p></a>
-        <a href="/products/transform-s-et/" class="family-card"><h3>ET</h3><p>Compatible with EdgeTaper X7</p></a>
-        <a href="/products/transform-s-pt/" class="family-card"><h3>PT</h3><p>Compatible with ProTaper Gold</p></a>
-        <a href="/products/micro-path/" class="family-card"><h3>Micro-Path</h3><p>Compatible with GlidePath files</p></a>
-<a href="/products/c-plus/" class="family-card c-plus-card"><h3>C+</h3><p>Compatible with established C+ hand-file workflows</p></a><a href="/products/gutta-percha/" class="family-card gutta-percha-card"><h3>Gutta Percha</h3><p>Matched-taper points · $9.95 + GST per box</p></a>
-      </div>
-    </div>
-
-    <div class="contact-bar">
-      <h2 style="font-size:1.5rem; font-weight:500;">Cut out the Middle Man</h2>
-      <a href="/about/contact/" class="nav-pill cta-arrow" style="font-size:1.1rem; padding:1rem 2rem;">Talk to Steve <svg><use href="#arrow-icon"></use></svg></a>
-    </div>
-  </div>
-
-
-</section><div class="homepage-lower"><section class="architecture" id="features"><div class="architecture-inner"><figure class="mesh-stage" aria-label="Transform S RG Primary wireframe">
- <canvas id="view" aria-label="Rotating blue RG Primary wireframe"></canvas>
- <figcaption>TRANSFORM S RG · PRIMARY</figcaption>
-</figure><div class="architecture-heading"><div><p class="section-eyebrow">Inside the engineering</p><h2>System Architecture</h2><p>A comprehensive approach to canal preparation, engineered with advanced metallurgy for optimal flexibility and resistance.</p></div><a class="tech-download" href="https://endotechnz.com/downloads/EndoTech-NZ-TransformS-Complete-Catalogue-WEB.pdf" target="_blank" rel="noopener noreferrer">Download Tech Specs <span aria-hidden="true">↗</span></a></div><div class="architecture-grid"><a class="architecture-card" href="/products/transform-s-rg/"><span class="architecture-icon"><svg class="text-slate-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></span><h3>RG Series</h3><p>Reciprocating motion files. Specifically designed to handle the vast majority of cases with a single instrument, reducing chair time.</p></a><a class="architecture-card" href="/products/transform-s-et/"><span class="architecture-icon"><svg class="text-slate-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"></path></svg></span><h3>ET Series</h3><p>Rotary shaping with consistent .04 and .06 tapers. Provides a conservative preparation while maintaining the natural canal anatomy.</p></a><a class="architecture-card" href="/products/transform-s-pt/"><span class="architecture-icon"><svg class="text-slate-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span><h3>PT Series</h3><p>Progressive taper design. Enhances cutting efficiency in the coronal and middle thirds while ensuring flexibility in the apical third.</p></a><a class="architecture-card" href="/products/micro-path/"><span class="architecture-icon"><svg class="text-slate-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="m17 5-5-3-5 3"></path><path d="m19 19-7 3-7-3"></path><path d="M22 12h-4"></path><path d="M6 12H2"></path></svg></span><h3>Micro-Path</h3><p>Dedicated rotary glide path instruments. Safely navigate challenging anatomies and create a smooth, reproducible pathway.</p></a></div></div></section><section class="upgrade"><div class="upgrade-card"><span class="upgrade-kicker">Let’s talk files.</span><h2>Ready to Upgrade</h2><p>Tell us which system you currently use. We can help you explore the EndoTech range and arrange a clinical trial.</p><div class="email-contact-actions">
-                        <a href="/about/contact/" class="specialist-link">
-                            Contact a Specialist
-                        </a>
-                        <button class="email-options-trigger" type="button" aria-expanded="false" aria-controls="email-options-panel">Email us directly</button>
-                            <div class="email-options-panel" id="email-options-panel" hidden="">
-                                <p class="email-options-address">steveshepherdnz@gmail.com</p>
-                                <div class="email-options-actions">
-                                    <a href="mailto:steveshepherdnz@gmail.com">Open email app <span class="email-arrow" aria-hidden="true">→</span></a>
-                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=steveshepherdnz%40gmail.com" target="_blank" rel="noopener noreferrer">Open Gmail <span class="email-arrow" aria-hidden="true">→</span></a>
-                                    <button type="button" data-copy-email="">Copy email address</button>
+                            <div class="s-metadata">
+                                <div class="meta-item">
+                                    <span class="t-label">UNIT PRICE</span>
+                                    <div class="unit-price-line">
+                                        <span class="meta-val t-mono-like">$39.95 + GST</span>
+                                        <span class="price-comparison"><strong>Half the price</strong><span>of major competitors</span></span>
+                                    </div>
+                                    <span class="s-smallprint">NZ offers until 31 December 2026. See catalogue for pack details.</span>
                                 </div>
-                                <p class="email-options-status" role="status" aria-live="polite"></p>
                             </div>
-                    </div></div></section><aside class="trademark-notice" aria-labelledby="homepage-trademark-title"><div class="trademark-notice-inner"><p class="trademark-notice-title" id="homepage-trademark-title">Trademark notice</p><p class="trademark-notice-copy">ProTaper Gold® and WaveOne Gold® are registered trademarks of Dentsply Tulsa Dental Specialties. EdgeTaper™, EdgeTaper Platinum™ and EdgeFile® X7 are trademarks of EdgeEndo, a division of HSG-S Corp. All other third-party product names and trademarks are the property of their respective owners. References are for product identification and workflow compatibility only and do not imply affiliation, sponsorship or endorsement.</p></div></aside><footer class="clean-footer"><div><a href="/">EndoTech NZ</a><p>Rotary, reciprocating and glide-path files for New Zealand dentists.</p></div><nav aria-label="Footer navigation"><a href="/endodontic-files-new-zealand/">Endodontic files NZ</a><a href="/products/overview/">All systems</a><a href="/resources/downloads/">Downloads</a><a href="/about/company/">About</a><a href="/resources/ideas/">Clinical articles</a><a href="/about/contact/">Contact Sales</a><a href="/quote-request/">orders/requests</a><a href="/products/c-plus/">C+ hand files</a></nav><small>© 2026 EndoTech NZ</small></footer></div><style>.trademark-notice{padding:30px 24px;background:#f1f3f5;border-top:1px solid #d9dde3;border-bottom:1px solid #d9dde3;color:#5c6572}.trademark-notice-inner{display:grid;grid-template-columns:160px minmax(0,1fr);gap:32px;width:calc(100% - 48px);max-width:1120px;margin:0 auto}.trademark-notice-title,.trademark-notice-copy{margin:0}.trademark-notice-title{color:#24384d;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.trademark-notice-copy{max-width:860px;font-size:12px;line-height:1.7}.v10 .visual-box{position:relative;overflow:hidden;min-height:400px}.v10 .product-stage{position:absolute;inset:0;overflow:hidden}.v10 .hero-family{position:absolute;top:5%;left:50%;transform:translateX(-50%);height:86%;width:auto;max-width:none;object-fit:contain;mix-blend-mode:multiply;opacity:0;transition:opacity .4s ease;pointer-events:none}.v10 .hero-family.is-active{opacity:1}.family-caption{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:13px;color:#526278;letter-spacing:.04em}.v10 .family-card.is-previewed{border-color:#294b70;background:#f0f5ff;box-shadow:0 3px 0 #294b70}.v10 .shape-1{animation:circle-drift-one 46s ease-in-out infinite alternate}.v10 .shape-2{animation:circle-drift-two 58s ease-in-out infinite alternate}.v10 .shape-3{animation:circle-drift-three 65s ease-in-out infinite alternate}@keyframes circle-drift-one{to{transform:translate(-5%,9%) scale(1.04)}}@keyframes circle-drift-two{to{transform:translate(9%,-8%) scale(.96)}}@keyframes circle-drift-three{to{transform:translate(6%,-7%) scale(1.05)}}@media(max-width:700px){.trademark-notice{padding:24px 0}.trademark-notice-inner{grid-template-columns:1fr;gap:10px;width:calc(100% - 44px)}.trademark-notice-title{font-size:11px}.trademark-notice-copy{font-size:11px;line-height:1.65}}@media(prefers-reduced-motion:reduce){.v10 .bg-shapes>div{animation:none}.v10 .hero-family{transition:none}}</style><style>
-  .v10 .familiar-nav{gap:32px;font-family:Arial,sans-serif;font-size:16px;font-weight:400;color:#73819b;align-items:center}
-  .v10 .hero-brand-word{display:block;width:max-content;max-width:100%;margin:0 0 .7rem;color:#111318;font-family:"Trebuchet MS",Arial,sans-serif;font-size:clamp(3rem,4.4vw,4.65rem);font-style:italic;font-weight:700;line-height:.95;letter-spacing:0;transform:skewX(-6deg) scaleX(1.06);transform-origin:left center}
-  @media(max-width:520px){.v10 .hero-brand-word{font-size:clamp(2.55rem,12vw,3rem);transform:skewX(-6deg) scaleX(1)}}
-  .v10 .familiar-nav a{font-weight:400}.v10 .preview-order{display:inline-flex;align-items:center;gap:8px;background:#294b70;color:white!important;border-radius:99px;padding:15px 27px;white-space:nowrap}
-  .preview-arrow{width:18px;height:18px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transform:rotate(-45deg);transition:transform .25s ease}
-  a:hover>.preview-arrow,a:focus-visible>.preview-arrow{transform:rotate(0deg)}
-  .preview-explore{position:relative}.preview-explore summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px}.preview-explore summary::-webkit-details-marker{display:none}.preview-explore summary:focus-visible{outline:3px solid #056bfd;outline-offset:6px}
-  .preview-menu{position:absolute;right:0;top:calc(100% + 18px);z-index:40;min-width:205px;background:white;padding:12px;border:1px solid #e3e7ed;border-radius:14px;box-shadow:0 12px 30px #182c5222}.preview-menu a{display:block;padding:10px;border-radius:7px;color:#294b70}.preview-menu a:hover{background:#f0f4fa}
-  .v10 .funky-offer{margin:0 4rem 1rem;padding:22px 26px;background:#ffdb42;border-radius:18px;display:flex;gap:24px;align-items:center;position:relative;color:#191322;box-shadow:5px 5px 0 #191322}
-  .offer-date{display:grid;gap:6px;margin-right:auto}.offer-date strong{font-size:19px}.offer-date span{font-size:12px}.funky-brochure{display:inline-flex;align-items:center;gap:12px;font-size:15px;font-weight:600;white-space:nowrap}.funky-brochure>span{border-bottom:1px solid currentColor;padding-bottom:4px}
-  .savings-sticker{display:block;position:relative;background:#60257a;color:white;padding:14px 24px;border-radius:8px;transform:rotate(5deg);font-size:24px;line-height:1;font-weight:800;white-space:nowrap;transition:transform .25s ease;box-shadow:3px 3px 0 #fff}.savings-sticker .preview-arrow{position:absolute;right:8px;top:8px;width:14px;height:14px}.funky-offer:has(.funky-brochure:hover) .savings-sticker,.funky-offer:has(.funky-brochure:focus-visible) .savings-sticker,.savings-sticker:hover{transform:rotate(-3deg) scale(1.08)}
-  @media(max-width:750px){.v10 .familiar-nav{gap:18px;font-size:14px}.v10 .preview-order{padding:12px 20px}.v10 .ui-layer{display:flex;flex-direction:column}.v10 .ui-layer>header{order:1}.v10 .hero-content{order:2}.v10 .family-section{order:3}.v10 .funky-offer{order:4;margin:0 1.5rem 1.5rem;padding:20px;gap:20px;flex-wrap:wrap}.v10 .contact-bar{order:5}.offer-date{width:100%}.savings-sticker{margin-left:auto;font-size:22px}}
-  </style><style>
-  .v10 .hero-family{height:79%;top:4%}.v10 .family-caption{bottom:20px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 15px;letter-spacing:0}.family-name{font-size:14px;font-weight:600;color:#294b70}.family-compatibility{font:italic 18px/1.25 Georgia,serif;color:#60257a;background:#f6edf9;padding:6px 15px;border-radius:30px;transform:rotate(-1deg)}.family-compatibility[hidden]{display:none}
-  .v10 .bg-shapes{isolation:isolate}.v10 .bg-shapes>div{will-change:transform;transform-origin:center;backface-visibility:hidden}.v10 .shape-1{animation:calm-circle-one 36s ease-in-out -9s infinite}.v10 .shape-2{animation:calm-circle-two 44s ease-in-out -11s infinite}.v10 .shape-3{animation:calm-circle-three 52s ease-in-out -13s infinite}
-  @keyframes calm-circle-one{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(-12%,10%,0)}}@keyframes calm-circle-two{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(14%,-10%,0)}}@keyframes calm-circle-three{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(10%,-12%,0)}}
-  @media(max-width:750px) and (prefers-reduced-motion:no-preference){.v10 .hero-family{transform:translateX(-50%) translateY(7px) scale(.988);transition:opacity .42s ease,transform .62s cubic-bezier(.22,.8,.3,1)}.v10 .hero-family.is-active{transform:translateX(-50%) translateY(0) scale(1)}.v10.mobile-motion-ready .family-section h2,.v10.mobile-motion-ready .family-card{opacity:0;transform:translateY(9px)}.v10.mobile-motion-ready .family-section.mobile-motion-visible h2,.v10.mobile-motion-ready .family-section.mobile-motion-visible .family-card{opacity:1;transform:translateY(0);transition:opacity .44s ease,transform .58s cubic-bezier(.22,.8,.3,1)}.v10.mobile-motion-ready .family-section.mobile-motion-visible .family-card:nth-child(2){transition-delay:45ms}.v10.mobile-motion-ready .family-section.mobile-motion-visible .family-card:nth-child(3){transition-delay:90ms}.v10.mobile-motion-ready .family-section.mobile-motion-visible .family-card:nth-child(4){transition-delay:135ms}.v10.mobile-motion-ready .family-section.mobile-motion-visible .family-card:nth-child(5){transition-delay:180ms}}
-  @media(prefers-reduced-motion:reduce){.v10 .bg-shapes>div{animation:none;will-change:auto}}
-</style><script>(()=>{const root=document.querySelector('.v10');const images=[...root.querySelectorAll('.hero-family')];const cards=[...root.querySelectorAll('.family-card')];const caption=root.querySelector('.family-caption');const familySection=root.querySelector('.family-section');const visualBox=root.querySelector('.visual-box');caption.innerHTML='<span class="family-name"></span><span class="family-compatibility"></span>';const equivalents={'transform-s-rg':'WaveOne Gold','transform-s-et':'EdgeTaper X7','transform-s-pt':'ProTaper Gold','micro-path':'GlidePath files','c-plus':'established C+ hand-file workflows','gutta-percha':'matched-taper obturation workflows'};function preview(card){const key=card.getAttribute('href').split('/').filter(Boolean).pop();images.forEach(img=>{const active=img.dataset.family===key;img.classList.toggle('is-active',active);img.setAttribute('aria-hidden',String(!active));});cards.forEach(c=>{const active=c===card;c.classList.toggle('is-previewed',active);if(active)c.setAttribute('aria-current','true');else c.removeAttribute('aria-current');});caption.querySelector('.family-name').textContent=key==='micro-path'?'Micro-Path':key==='c-plus'?'Transform S C+':key==='gutta-percha'?'Gutta Percha Points':'Transform S '+key.split('-').pop().toUpperCase();const compatibility=caption.querySelector('.family-compatibility');compatibility.textContent=equivalents[key]?'Compatible with '+equivalents[key]:'';compatibility.hidden=!equivalents[key];}let activeIndex=0;let rotationTimer=null;let showcaseInView=false;const rotationAllowed=window.matchMedia('(prefers-reduced-motion: no-preference)');const stopRotation=()=>{if(rotationTimer){clearInterval(rotationTimer);rotationTimer=null;}};const startRotation=()=>{if(rotationTimer||!rotationAllowed.matches||!showcaseInView||document.hidden)return;caption.setAttribute('aria-live','off');rotationTimer=setInterval(()=>{activeIndex=(activeIndex+1)%cards.length;preview(cards[activeIndex]);},4000);};cards.forEach((card,index)=>{card.addEventListener('pointerenter',event=>{activeIndex=index;preview(card);if(event.pointerType==='mouse')stopRotation();});card.addEventListener('focus',()=>{activeIndex=index;caption.setAttribute('aria-live','polite');stopRotation();preview(card);});card.addEventListener('blur',()=>{window.setTimeout(()=>{if(!familySection?.contains(document.activeElement))startRotation();},0);});});familySection?.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse')startRotation();});document.addEventListener('visibilitychange',()=>{if(document.hidden)stopRotation();else startRotation();});preview(cards[0]);if(visualBox&&'IntersectionObserver'in window){const showcaseObserver=new IntersectionObserver(entries=>{showcaseInView=entries.some(entry=>entry.isIntersecting);if(showcaseInView)startRotation();else stopRotation();},{threshold:.12});showcaseObserver.observe(visualBox);}else{showcaseInView=true;startRotation();}const mobileMotion=window.matchMedia('(max-width: 750px) and (prefers-reduced-motion: no-preference)');if(mobileMotion.matches&&familySection){root.classList.add('mobile-motion-ready');const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(!entry.isIntersecting)return;entry.target.classList.add('mobile-motion-visible');revealObserver.unobserve(entry.target);});},{threshold:.18,rootMargin:'0px 0px -8%'});revealObserver.observe(familySection);}})();</script><style>.v10 .family-section{padding-top:2rem;padding-bottom:2rem}.v10 .family-grid{grid-template-columns:repeat(6,minmax(0,1fr))}.v10 .family-grid .family-card{grid-column:span 2}@media(max-width:1024px){.v10 .family-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}</style><script src="/rg-wireframe.js?v=whoosh4-20260930" defer=""></script><script src="/homepage-scroll-motion.js?v=dynamic-20260930" defer></script></body></html>
+
+                            <div class="s-actions">
+                                <a href="/products/transform-s-rg/" class="btn-primary">Explore RG <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
+                            </div>
+                        </div>
+                        <a href="/products/transform-s-rg/" class="slide-viewport">
+                            <div class="reticle">
+                                <div class="reticle-center"><div class="inner"></div></div>
+                            </div>
+                            <div class="slide-img-wrapper">
+                                <img src="/assets/homepage/rg.webp" alt="" aria-hidden="true" class="instrument-bg" loading="eager">
+                                <img src="/assets/homepage/rg.webp" alt="Transform S RG File" class="instrument-img" loading="eager">
+                            </div>
+                            <div class="slide-compatibility">
+                                <strong class="compatibility-label">COMPATIBLE WITH</strong>
+                                <span class="compatibility-system">WaveOne Gold</span>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="slide" data-index="1" id="hero-slide-et" role="tabpanel" aria-labelledby="hero-tab-et" aria-hidden="true">
+                        <div class="slide-content">
+                            <span class="t-label s-eyebrow">ENDOTECH NZ · TRANSFORM S™ ET</span>
+                            <h2 class="t-display s-headline">Shaping.<br>With control.</h2>
+                            <p class="t-body s-desc">Rotary files with a familiar .04 and .06 taper sequence.</p>
+
+                            <div class="s-metadata">
+                                <div class="meta-item">
+                                    <span class="t-label">SPECIFICATION</span>
+                                    <span class="meta-val t-mono-like">ROTARY SHAPING</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="t-label">GEOMETRY</span>
+                                    <span class="meta-val t-mono-like">.04 / .06 TAPERS</span>
+                                </div>
+                            </div>
+
+                            <div class="s-actions">
+                                <a href="/products/transform-s-et/" class="btn-primary">Explore ET <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
+                            </div>
+                        </div>
+                        <a href="/products/transform-s-et/" class="slide-viewport">
+                            <div class="reticle">
+                                <div class="reticle-center"><div class="inner"></div></div>
+                            </div>
+                            <div class="slide-img-wrapper">
+                                <img src="/assets/homepage/et.webp" alt="" aria-hidden="true" class="instrument-bg" loading="lazy">
+                                <img src="/assets/homepage/et.webp" alt="Transform S ET File" class="instrument-img" loading="lazy">
+                            </div>
+                            <div class="slide-compatibility">
+                                <strong class="compatibility-label">COMPATIBLE WITH</strong>
+                                <span class="compatibility-system">X7</span>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="slide" data-index="2" id="hero-slide-pt" role="tabpanel" aria-labelledby="hero-tab-pt" aria-hidden="true">
+                        <div class="slide-content">
+                            <span class="t-label s-eyebrow">ENDOTECH NZ · TRANSFORM S™ PT</span>
+                            <h2 class="t-display s-headline">A familiar<br>progression.</h2>
+                            <p class="t-body s-desc">Progressive taper files for a coronal-to-apical shaping sequence.</p>
+
+                            <div class="s-metadata">
+                                <div class="meta-item">
+                                    <span class="t-label">SPECIFICATION</span>
+                                    <span class="meta-val t-mono-like">ROTARY SHAPING</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="t-label">GEOMETRY</span>
+                                    <span class="meta-val t-mono-like">PROGRESSIVE TAPERS</span>
+                                </div>
+                            </div>
+
+                            <div class="s-actions">
+                                <a href="/products/transform-s-pt/" class="btn-primary">Explore PT <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
+                            </div>
+                        </div>
+                        <a href="/products/transform-s-pt/" class="slide-viewport">
+                            <div class="reticle">
+                                <div class="reticle-center"><div class="inner"></div></div>
+                            </div>
+                            <div class="slide-img-wrapper">
+                                <img src="/assets/homepage/pt.webp" alt="" aria-hidden="true" class="instrument-bg" loading="lazy">
+                                <img src="/assets/homepage/pt.webp" alt="Transform S PT File" class="instrument-img" loading="lazy">
+                            </div>
+                            <div class="slide-compatibility">
+                                <strong class="compatibility-label">COMPATIBLE WITH</strong>
+                                <span class="compatibility-system">ProTaper</span>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="slide" data-index="3" id="hero-slide-micro-path" role="tabpanel" aria-labelledby="hero-tab-micro-path" aria-hidden="true">
+                        <div class="slide-content">
+                            <span class="t-label s-eyebrow">ENDOTECH NZ · MICRO-PATH™</span>
+                            <h2 class="t-display s-headline">Start with a<br>clear path.</h2>
+                            <p class="t-body s-desc">Dedicated rotary glide-path files before the shaping sequence.</p>
+
+                            <div class="s-metadata">
+                                <div class="meta-item">
+                                    <span class="t-label">STAGE</span>
+                                    <span class="meta-val t-mono-like">BEFORE SHAPING</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="t-label">FUNCTION</span>
+                                    <span class="meta-val t-mono-like">GLIDE PATH</span>
+                                </div>
+                            </div>
+
+                            <div class="s-actions">
+                                <a href="/products/micro-path/" class="btn-primary">Explore Micro-Path <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
+                            </div>
+                        </div>
+                        <a href="/products/micro-path/" class="slide-viewport">
+                            <div class="reticle">
+                                <div class="reticle-center"><div class="inner"></div></div>
+                            </div>
+                            <div class="slide-img-wrapper">
+                                <img src="/assets/homepage/micro-path.webp" alt="" aria-hidden="true" class="instrument-bg" loading="lazy">
+                                <img src="/assets/homepage/micro-path.webp" alt="Micro-Path File" class="instrument-img" loading="lazy">
+                            </div>
+                            <div class="slide-compatibility">
+                                <strong class="compatibility-label">COMPATIBLE WITH</strong>
+                                <span class="compatibility-system">V Taper &amp; GlidePath</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="slide" data-index="4" id="hero-slide-c-plus" role="tabpanel" aria-labelledby="hero-tab-c-plus" aria-hidden="true">
+                        <div class="slide-content">
+                            <span class="t-label s-eyebrow">ENDOTECH NZ · C+ FILES</span>
+                            <h2 class="t-display s-headline">Small files.<br>A clear start.</h2>
+                            <p class="t-body s-desc">C+ hand files for a familiar manual canal-negotiation workflow.</p>
+
+                            <div class="s-metadata">
+                                <div class="meta-item">
+                                    <span class="t-label">SPECIFICATION</span>
+                                    <span class="meta-val t-mono-like">HAND FILES</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="t-label">WORKFLOW</span>
+                                    <span class="meta-val t-mono-like">MANUAL NEGOTIATION</span>
+                                </div>
+                            </div>
+
+                            <div class="s-actions">
+                                <a href="/products/c-plus/" class="btn-primary">Explore C+ <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
+                            </div>
+                        </div>
+                        <a href="/products/c-plus/" class="slide-viewport">
+                            <div class="reticle">
+                                <div class="reticle-center"><div class="inner"></div></div>
+                            </div>
+                            <div class="slide-img-wrapper">
+                                <img src="/assets/homepage/c-plus.webp" alt="" aria-hidden="true" class="instrument-bg" loading="lazy">
+                                <img src="/assets/homepage/c-plus.webp" alt="C+ Hand File" class="instrument-img" loading="lazy">
+                            </div>
+                            <div class="slide-compatibility">
+                                <strong class="compatibility-label">COMPATIBLE WITH</strong>
+                                <span class="compatibility-system">C+ Files</span>
+                            </div>
+                        </a>
+                    </div>
+
+
+                </div>
+
+
+                <div class="carousel-controls">
+                    <div class="control-panel">
+                        <button class="ctrl-btn" id="btn-prev" aria-label="Previous Slide">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
+                        </button>
+                        <button class="ctrl-btn" id="btn-play-pause" aria-label="Pause Carousel">
+
+                            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+
+                            <svg class="icon-play" style="display:none;" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"></path></svg>
+                        </button>
+                        <button class="ctrl-btn" id="btn-next" aria-label="Next Slide">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+                        </button>
+                    </div>
+                    <div class="indicators" id="slide-indicators" role="tablist">
+                        <div class="dot is-active" data-index="0" id="hero-tab-rg" role="tab" aria-controls="hero-slide-rg" aria-selected="true" tabindex="0"><span class="dot-label">01 / RG</span><div class="dot-line"></div></div>
+                        <div class="dot" data-index="1" id="hero-tab-et" role="tab" aria-controls="hero-slide-et" aria-selected="false" tabindex="-1"><span class="dot-label">02 / ET</span><div class="dot-line"></div></div>
+                        <div class="dot" data-index="2" id="hero-tab-pt" role="tab" aria-controls="hero-slide-pt" aria-selected="false" tabindex="-1"><span class="dot-label">03 / PT</span><div class="dot-line"></div></div>
+                        <div class="dot" data-index="3" id="hero-tab-micro-path" role="tab" aria-controls="hero-slide-micro-path" aria-selected="false" tabindex="-1"><span class="dot-label">04 / MP</span><div class="dot-line"></div></div>
+                        <div class="dot" data-index="4" id="hero-tab-c-plus" role="tab" aria-controls="hero-slide-c-plus" aria-selected="false" tabindex="-1"><span class="dot-label">05 / C+</span><div class="dot-line"></div></div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar"><div class="progress-fill" id="progress-indicator"></div></div>
+                    </div>
+                </div>
+            </section>
+
+
+            <div class="offers-banner">
+                <div class="ob-data">
+                    <span class="t-label ob-tag">PROMOTION</span>
+                    <span class="t-mono-like">New Zealand offers</span>
+                    <span class="t-label">Until 31 December 2026</span>
+                </div>
+                <a href="/promotions/transform-s-catalogue/" class="link-sec" style="color:var(--ink-navy);">View offer brochure →</a>
+            </div>
+
+
+            <section class="systems-section">
+                <header class="section-header">
+                    <h3 class="t-title">System Directory</h3>
+                    <span class="t-label">DATA / CATALOGUE</span>
+                </header>
+
+                <div class="product-grid">
+                    <a href="/products/transform-s-rg/" class="p-card">
+                        <div class="p-img-box"><img src="/assets/homepage/rg.webp" alt="RG File" loading="lazy"></div>
+                        <div class="p-data">
+                            <span class="t-label">RECIPROCATING</span>
+                            <span class="p-name">Transform S™ RG</span>
+                            <span class="p-compat"><strong>Compatible with</strong> WaveOne Gold</span>
+                        </div>
+                    </a>
+                    <a href="/products/transform-s-et/" class="p-card">
+                        <div class="p-img-box"><img src="/assets/homepage/et.webp" alt="ET File" loading="lazy"></div>
+                        <div class="p-data">
+                            <span class="t-label">ROTARY .04/.06</span>
+                            <span class="p-name">Transform S™ ET</span>
+                            <span class="p-compat"><strong>Compatible with</strong> X7</span>
+                        </div>
+                    </a>
+                    <a href="/products/transform-s-pt/" class="p-card">
+                        <div class="p-img-box"><img src="/assets/homepage/pt.webp" alt="PT File" loading="lazy"></div>
+                        <div class="p-data">
+                            <span class="t-label">ROTARY PROGRESSIVE</span>
+                            <span class="p-name">Transform S™ PT</span>
+                            <span class="p-compat"><strong>Compatible with</strong> ProTaper</span>
+                        </div>
+                    </a>
+                    <a href="/products/micro-path/" class="p-card">
+                        <div class="p-img-box"><img src="/assets/homepage/micro-path.webp" alt="Micro-Path File" loading="lazy"></div>
+                        <div class="p-data">
+                            <span class="t-label">GLIDE PATH</span>
+                            <span class="p-name">Micro-Path™</span>
+                            <span class="p-compat"><strong>Compatible with</strong> V Taper &amp; GlidePath</span>
+                        </div>
+                    </a>
+                    <a href="/products/c-plus/" class="p-card">
+                        <div class="p-img-box"><img src="/assets/homepage/c-plus.webp" alt="C+ File" loading="lazy"></div>
+                        <div class="p-data">
+                            <span class="t-label">HAND FILES</span>
+                            <span class="p-name">C+ Files</span>
+                            <span class="p-compat"><strong>Compatible with</strong> C+ Files</span>
+                        </div>
+                    </a>
+                    <a href="/products/gutta-percha/" class="p-card">
+                        <div class="p-img-box" style="padding:4rem;"><img src="/products/gutta-percha/gutta-percha-points.png" alt="Gutta Percha" loading="lazy" style="transform:none;"></div>
+                        <div class="p-data">
+                            <span class="t-label">OBTURATION</span>
+                            <span class="p-name">Gutta Percha</span>
+                            <span class="p-compat">Matched-taper points · $9.95 + GST per box</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p class="trademark-notice">ProTaper Gold® and WaveOne Gold® are registered trademarks of Dentsply Tulsa Dental Specialties. EdgeTaper™, EdgeTaper Platinum™ and EdgeFile® X7 are trademarks of EdgeEndo, a division of HSG-S Corp. All other third-party product names and trademarks are the property of their respective owners. References are for product identification and workflow compatibility only and do not imply affiliation, sponsorship or endorsement.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('hero-carousel');
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            const btnPlayPause = document.getElementById('btn-play-pause');
+            const iconPlay = btnPlayPause.querySelector('.icon-play');
+            const iconPause = btnPlayPause.querySelector('.icon-pause');
+
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+            let slideInterval;
+            const intervalTime = 5000;
+            let isPlaying = true;
+
+
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) {
+                isPlaying = false;
+                carousel.classList.remove('is-playing');
+                updatePlayPauseIcon();
+            } else {
+                carousel.classList.add('is-playing');
+            }
+
+            function goToSlide(index) {
+
+                slides.forEach((s, i) => { s.classList.remove('is-active'); s.setAttribute('aria-hidden', String(i !== index)); });
+                dots.forEach((d, i) => { d.classList.remove('is-active'); d.setAttribute('aria-selected', String(i === index)); d.tabIndex = i === index ? 0 : -1; });
+
+
+                const progressFill = document.getElementById('progress-indicator');
+                if(progressFill) {
+                    progressFill.style.animation = 'none';
+                    progressFill.offsetHeight;
+                    if(isPlaying) progressFill.style.animation = null;
+                }
+
+
+                slides[index].classList.add('is-active');
+                dots[index].classList.add('is-active');
+                currentIndex = index;
+            }
+
+            function nextSlide() {
+                let nextIndex = (currentIndex + 1) % totalSlides;
+                goToSlide(nextIndex);
+            }
+
+            function prevSlide() {
+                let prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                goToSlide(prevIndex);
+            }
+
+            function startTimer() {
+                if (isPlaying && !slideInterval) {
+                    slideInterval = setInterval(nextSlide, intervalTime);
+                    carousel.classList.add('is-playing');
+                }
+            }
+
+            function stopTimer() {
+                clearInterval(slideInterval);
+                slideInterval = null;
+                carousel.classList.remove('is-playing');
+            }
+
+            function updatePlayPauseIcon() {
+                btnPlayPause.setAttribute('aria-label', isPlaying ? 'Pause Carousel' : 'Play Carousel');
+                if (isPlaying) {
+                    iconPlay.style.display = 'none';
+                    iconPause.style.display = 'block';
+                } else {
+                    iconPlay.style.display = 'block';
+                    iconPause.style.display = 'none';
+                }
+            }
+
+
+            btnNext.addEventListener('click', () => { nextSlide(); resetTimer(); });
+            btnPrev.addEventListener('click', () => { prevSlide(); resetTimer(); });
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    goToSlide(index);
+                    resetTimer();
+                });
+                dot.addEventListener('keydown', (e) => {
+                    if (e.altKey || e.ctrlKey || e.metaKey) return;
+                    const keys = ['Enter', ' ', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
+                    if (!keys.includes(e.key)) return;
+                    e.preventDefault();
+                    const index = parseInt(dot.getAttribute('data-index'));
+                    const target = e.key === 'ArrowLeft' ? (index - 1 + totalSlides) % totalSlides
+                        : e.key === 'ArrowRight' ? (index + 1) % totalSlides
+                        : e.key === 'Home' ? 0 : e.key === 'End' ? totalSlides - 1 : index;
+                    goToSlide(target);
+                    dots[target].focus();
+                    resetTimer();
+                });
+            });
+
+            btnPlayPause.addEventListener('click', () => {
+                isPlaying = !isPlaying;
+                updatePlayPauseIcon();
+                if (isPlaying) {
+                    nextSlide();
+                    startTimer();
+                } else {
+                    stopTimer();
+                }
+            });
+
+
+            carousel.addEventListener('mouseenter', () => { if(isPlaying) stopTimer(); });
+            carousel.addEventListener('mouseleave', () => { if(isPlaying) startTimer(); });
+            carousel.addEventListener('focusin', () => { if(isPlaying) stopTimer(); });
+            carousel.addEventListener('focusout', () => { if(isPlaying) startTimer(); });
+
+            function resetTimer() {
+                if (isPlaying) {
+                    stopTimer();
+                    startTimer();
+                }
+            }
+
+
+            let touchstartX = 0;
+            let touchendX = 0;
+
+            carousel.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+
+            carousel.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, {passive: true});
+
+            function handleSwipe() {
+                const threshold = 50;
+                if (touchendX < touchstartX - threshold) nextSlide();
+                if (touchendX > touchstartX + threshold) prevSlide();
+                resetTimer();
+            }
+
+
+            if(isPlaying) startTimer();
+
+
+            document.addEventListener("visibilitychange", function() {
+                if (document.hidden) {
+                    stopTimer();
+                } else {
+                    if (isPlaying) startTimer();
+                }
+            });
+        });
+    </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const explore = document.querySelector('.header-explore');
+    const summary = explore.querySelector('summary');
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && explore.open) {
+            explore.open = false;
+            summary.focus();
+        }
+    });
+    document.addEventListener('click', event => {
+        if (!explore.contains(event.target)) explore.open = false;
+    });
+});
+</script>
+</body></html>
