@@ -601,6 +601,122 @@
 <link rel="canonical" href="https://endotechnz.com/">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://endotechnz.com/#organization","name":"EndoTech NZ","alternateName":"EndoTechNZ","url":"https://endotechnz.com/","logo":"https://endotechnz.com/assets/homepage/logo.webp","description":"New Zealand supplier of rotary, reciprocating and NiTi endodontic file systems.","email":"sales@endotechnz.com","areaServed":{"@type":"Country","name":"New Zealand"},"contactPoint":{"@type":"ContactPoint","contactType":"sales","email":"sales@endotechnz.com","areaServed":"NZ","availableLanguage":"English"}},{"@type":"WebSite","@id":"https://endotechnz.com/#website","url":"https://endotechnz.com/","name":"EndoTech NZ","inLanguage":"en-NZ","publisher":{"@id":"https://endotechnz.com/#organization"}}]}</script>
 <link rel="icon" href="/brand/endotech-nz-logo-2026.jpg">
+<style id="directory-refinement">
+.product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.system-story {
+    grid-column: 1 / -1;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: center;
+    gap: clamp(24px, 3vw, 48px);
+    padding: clamp(28px, 3vw, 48px);
+    background: var(--ink-navy);
+    color: #fff;
+    overflow: hidden;
+}
+.system-story::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+}
+.story-copy, .workflow-stages { position: relative; }
+.story-eyebrow {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--offer-yellow);
+}
+.story-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 2.5vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
+}
+.story-description {
+    max-width: 380px;
+    color: #dbe5ee;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+.story-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 48px;
+    padding: 12px 18px;
+    background: var(--offer-yellow);
+    color: var(--ink-navy);
+    border: 1px solid var(--offer-yellow);
+    border-radius: 3px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: background var(--transition-snap), border-color var(--transition-snap);
+}
+.story-cta:hover { background: #fff; border-color: #fff; }
+.story-cta svg { width: 18px; height: 18px; }
+.workflow-stages { display: flex; flex-direction: column; }
+.workflow-stage {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    transition: background var(--transition-snap);
+}
+.workflow-stage:first-child { border-top: 1px solid rgba(255,255,255,0.2); }
+.stage-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255,255,255,0.35);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    color: #dbe5ee;
+}
+.stage-copy { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.stage-copy strong { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; line-height: 1.35; }
+.stage-copy small { font-size: 0.8rem; line-height: 1.45; color: #dbe5ee; }
+.stage-arrow { color: var(--offer-yellow); font-size: 1.25rem; transition: transform var(--transition-snap); }
+.workflow-stage:hover { background: rgba(255,255,255,0.045); }
+.workflow-stage:hover .stage-arrow { transform: translateX(4px); }
+.story-cta:focus-visible, .workflow-stage:focus-visible { outline: 3px solid var(--offer-yellow); outline-offset: 4px; }
+.p-card:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: -4px; z-index: 10; }
+.p-card:focus-visible .p-img-box img { transform: rotate(-15deg) scale(1.1); }
+@media (min-width: 1500px) {
+    .product-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .system-story { grid-column: span 4; padding: 36px; }
+}
+@media (max-width: 1099px) {
+    .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+    .system-story { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
+@media (max-width: 600px) {
+    .product-grid { grid-template-columns: minmax(0, 1fr); }
+    .system-story { padding: 28px 24px; }
+    .story-title { font-size: 2.1rem; }
+    .story-cta { width: 100%; }
+    .workflow-stage { grid-template-columns: 36px minmax(0, 1fr) 16px; gap: 12px; padding: 18px 0; }
+    .stage-number { width: 36px; height: 36px; }
+    .stage-copy strong { font-size: 1rem; }
+}
+</style>
 </head>
 <body>
     <div class="site-wrapper">
@@ -935,6 +1051,31 @@
                             <span class="p-compat">Matched-taper points · $9.95 + GST per box</span>
                         </div>
                     </a>
+                    <section class="system-story" aria-labelledby="workflow-story-title">
+                        <div class="story-copy">
+                            <span class="story-eyebrow">Your connected workflow</span>
+                            <h3 class="story-title" id="workflow-story-title">From first file<br>to final seal.</h3>
+                            <p class="story-description">Glide-path files, shaping systems and matched points. Explore the EndoTech range for each stage of your workflow.</p>
+                            <a class="story-cta" href="/quote-request/">Build your order <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg></a>
+                        </div>
+                        <div class="workflow-stages" aria-label="Explore products by workflow stage">
+                            <a class="workflow-stage" href="/products/micro-path/">
+                                <span class="stage-number" aria-hidden="true">01</span>
+                                <span class="stage-copy"><strong>Glide &amp; negotiate</strong><small>Micro-Path™ and C+ hand files</small></span>
+                                <span class="stage-arrow" aria-hidden="true">↗</span>
+                            </a>
+                            <a class="workflow-stage" href="/products/overview/">
+                                <span class="stage-number" aria-hidden="true">02</span>
+                                <span class="stage-copy"><strong>Choose your shaping system</strong><small>Transform&nbsp;S™ RG, ET or PT</small></span>
+                                <span class="stage-arrow" aria-hidden="true">↗</span>
+                            </a>
+                            <a class="workflow-stage" href="/products/gutta-percha/">
+                                <span class="stage-number" aria-hidden="true">03</span>
+                                <span class="stage-copy"><strong>Finish with matched points</strong><small>Explore Gutta Percha Points</small></span>
+                                <span class="stage-arrow" aria-hidden="true">↗</span>
+                            </a>
+                        </div>
+                    </section>
                 </div>
             </section>
         </main>
