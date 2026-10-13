@@ -26,7 +26,7 @@
             --border-thin: 1px solid var(--ink-navy);
             --border-faint: 1px solid var(--ink-navy-light);
             --grid-pad: 2rem;
-            --header-h: 80px;
+            --header-h: 112px;
 
 
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -477,14 +477,14 @@
 .site-wrapper > .site-header {
     height: var(--header-h);
     display: grid;
-    grid-template-columns: 120px minmax(0, 1fr) auto auto;
+    grid-template-columns: 144px minmax(0, 1fr) auto auto;
     grid-template-rows: 1fr;
     position: sticky;
     top: 0;
     z-index: 100;
 }
-.site-header .logo-container { padding: 0 1rem; }
-.site-header .logo-container img { height: 48px; max-width: 88px; object-fit: contain; }
+.site-header .logo-container { justify-content: center; padding: 0 1rem; }
+.site-header .logo-container img { height: 96px; max-width: 96px; object-fit: contain; }
 .site-header .contact-bar {
     display: grid;
     grid-template-columns: 1fr 16px;
@@ -575,10 +575,10 @@
 .price-comparison strong { font-family: var(--font-display); font-weight: 700; font-size: 1rem; }
 .price-comparison span { font-size: 0.85rem; }
 @media (max-width: 850px) {
-    :root { --header-h: 132px; }
-    .site-wrapper > .site-header { grid-template-columns: 80px minmax(0, 1fr); grid-template-rows: 72px minmax(0, 1fr); }
+    :root { --header-h: 164px; }
+    .site-wrapper > .site-header { grid-template-columns: 112px minmax(0, 1fr); grid-template-rows: 104px minmax(0, 1fr); }
     .site-header .logo-container { grid-column: 1; grid-row: 1; justify-content: center; padding: 0 8px; }
-    .site-header .logo-container img { height: 44px; max-width: 64px; }
+    .site-header .logo-container img { height: 88px; max-width: 88px; }
     .header-spacer { display: none; }
     .site-header .contact-bar { grid-column: 2; grid-row: 1; }
     .header-actions { grid-column: 1 / -1; grid-row: 2; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 7px 12px; border-left: none; border-top: var(--border-thin); }
@@ -588,6 +588,9 @@
 @media (max-width: 600px) {
     .header-menu { grid-template-columns: 1fr; gap: 16px; padding: 16px; }
     .header-menu a { min-height: 44px; }
+}
+@media (max-width: 360px) {
+    .site-header .contact-bar { padding: 0 8px; column-gap: 6px; }
 }
     </style>
 
