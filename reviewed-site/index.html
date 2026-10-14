@@ -225,7 +225,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            cursor: crosshair;
+            cursor: pointer;
         }
 
 
@@ -476,6 +476,18 @@
             font-size: clamp(1.6rem, 2.5vw, 2.4rem);
             font-weight: 700;
             line-height: 1.2;
+        }
+        .slide-viewport > .cursor-follow-label {
+            left: 0;
+            top: 0;
+            bottom: auto;
+            max-width: calc(100% - 32px);
+            z-index: 4;
+            pointer-events: none;
+            will-change: transform;
+        }
+        .slide-viewport.is-cursor-following > .cursor-follow-label {
+            box-shadow: 0 6px 18px rgba(23, 51, 78, 0.14);
         }
         .slide-viewport:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: -4px; }
         .slide.is-active .slide-viewport:focus-visible .slide-img-wrapper { transform: scale(1.08); }
@@ -744,6 +756,7 @@
     .stage-copy strong { font-size: 1rem; }
 }
 </style>
+<script src="/assets/homepage/cursor-label.js?v=20261014" defer></script>
 </head>
 <body>
     <div class="site-wrapper">
