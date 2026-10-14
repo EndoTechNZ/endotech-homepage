@@ -33,6 +33,22 @@ function refreshQuoteCatalog(reviewedHtml,generatedHtml){
  const currentScript=reviewedDocument.querySelector(scriptSelector),freshScript=generatedDocument.querySelector(scriptSelector);
  if(!currentScript||!freshScript)throw Error('Updated quote request script is missing');
  currentScript.replaceWith(reviewedDocument.importNode(freshScript,true));
+ // Preserve the new promo pricing in the reviewed page and its print preview.
+ const freshPrice=generatedDocument.querySelector('[data-review-promo-summary]');
+ const reviewGrid=reviewedDocument.querySelector('#review-request .quote-review-grid');
+ const freshNote=generatedDocument.querySelector('[data-review-pricing-note]');
+ const currentNote=reviewedDocument.querySelector('#review-request .quote-section-heading > div:first-child > p:last-child');
+ const freshHead=generatedDocument.querySelector('.quote-review-table thead');
+ const currentHead=reviewedDocument.querySelector('.quote-review-table thead');
+ const freshPrint=generatedDocument.querySelector('[data-print-promo-summary]');
+ const printDisclaimer=reviewedDocument.querySelector('.quote-print-disclaimer');
+ if(!freshPrice||!reviewGrid||!freshNote||!currentNote||!freshHead||!currentHead||!freshPrint||!printDisclaimer)throw Error('Promo pricing review or print elements are missing');
+ reviewedDocument.querySelector('[data-review-promo-summary]')?.remove();
+ reviewGrid.before(reviewedDocument.importNode(freshPrice,true));
+ currentNote.replaceWith(reviewedDocument.importNode(freshNote,true));
+ currentHead.replaceWith(reviewedDocument.importNode(freshHead,true));
+ reviewedDocument.querySelector('[data-print-promo-summary]')?.remove();
+ printDisclaimer.after(reviewedDocument.importNode(freshPrint,true));
  // Refresh ET rows as well so the new 17/.08 article is visible and selectable.
  const currentEt=reviewedDocument.querySelector('[data-family-panel="et"]');
  const freshEt=generatedDocument.querySelector('[data-family-panel="et"]');
@@ -69,7 +85,7 @@ function publish(dir,rel=''){
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
   if(isQuotePage) {
    html=refreshQuoteCatalog(html,generatedHtml);
-   html=html.replace('</head>', '<link rel="stylesheet" href="/quote-feedback.css"></head>');
+   html=html.replace('</head>', '<link rel="stylesheet" href="/quote-feedback.css"><link rel="stylesheet" href="/quote-promo.css"></head>');
    html=html.replace('</body>', '<script src="/quote-search.js" defer></script><script src="/quote-feedback.js" defer></script></body>');
   }
   fs.writeFileSync(to,html);pages++;

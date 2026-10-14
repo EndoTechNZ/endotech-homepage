@@ -1,0 +1,27 @@
+.quote-promo-summary[hidden], [data-review-promo-column][hidden], [data-print-promo-summary][hidden] { display:none !important; }
+.quote-promo-summary { margin:0 0 28px; padding:24px 28px; border:1px solid #dce5ea; border-radius:14px; background:#f7fafc; color:#17334e; }
+.quote-promo-summary-main { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:18px 30px; }
+.quote-promo-summary-copy p { margin:0; }
+.quote-promo-summary-copy .quote-promo-label { font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#52677b; margin-bottom:6px; }
+.quote-promo-summary-copy h3 { margin:0 0 4px; font-size:21px; font-weight:500; letter-spacing:-.02em; }
+.quote-promo-summary-copy .quote-promo-packs { font-size:14px; color:#647587; }
+.quote-promo-price { text-align:right; }
+.quote-promo-price strong { display:block; font-size:34px; line-height:1.2; font-weight:500; letter-spacing:-.035em; }
+.quote-promo-price span { display:block; margin-top:4px; font-size:14px; color:#52677b; }
+.quote-promo-breakdown { display:flex; flex-wrap:wrap; gap:12px 30px; padding:16px 0 0; margin:18px 0 0; border-top:1px solid #dce5ea; font-size:14px; }
+.quote-promo-breakdown div { display:flex; gap:12px; }
+.quote-promo-breakdown dt { color:#647587; }
+.quote-promo-breakdown dd { margin:0; font-weight:500; }
+.quote-promo-summary .quote-promo-note { margin:12px 0 0; font-size:13px; line-height:1.5; color:#647587; }
+.quote-review-table .quote-promo-line-price { white-space:nowrap; font-weight:500; color:#17334e; }
+.quote-review-table .quote-promo-line-price small { display:block; font-size:11px; color:#647587; font-weight:400; }
+.quote-print-promo-summary { margin:18px 0; padding:16px; border:1px solid #cbd5e1; }
+@media (max-width:600px) {
+  .quote-promo-summary { padding:20px; }
+  .quote-promo-summary-main { align-items:flex-start; flex-direction:column; gap:16px; }
+  .quote-promo-price { text-align:left; }
+  .quote-promo-summary-copy h3 { font-size:19px; }
+  .quote-promo-price strong { font-size:32px; }
+  .quote-promo-breakdown { flex-direction:column; gap:8px; }
+  .quote-promo-breakdown div { justify-content:space-between; }
+}

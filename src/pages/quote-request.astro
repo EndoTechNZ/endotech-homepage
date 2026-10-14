@@ -58,6 +58,7 @@ const contactEmail = siteConfig.email.toLowerCase();
 ---
 
 <link rel="stylesheet" href="/quote-feedback.css" />
+<link rel="stylesheet" href="/quote-promo.css" />
 <script is:inline src="/quote-feedback.js" defer></script>
 
 <ProductLayout
@@ -281,13 +282,29 @@ const contactEmail = siteConfig.email.toLowerCase();
         <div>
           <p class="quote-eyebrow quote-section-step">Step 3</p>
           <h2 id="review-request-title">Review and send the request</h2>
-          <p>The website supplies SKUs and quantities only. EndoTech NZ will add pricing, GST, freight, availability and account terms in the pro forma invoice.</p>
+          <p data-review-pricing-note>The website supplies SKUs and quantities only. EndoTech NZ will add pricing, GST, freight, availability and account terms in the pro forma invoice.</p>
         </div>
         <div class="quote-draft-reference">
           <span>Draft reference</span>
           <strong data-draft-reference>NZQ-DRAFT</strong>
         </div>
       </div>
+
+      <section class="quote-promo-summary" data-review-promo-summary hidden aria-label="Promotional pack price" aria-live="polite">
+        <div class="quote-promo-summary-main">
+          <div class="quote-promo-summary-copy">
+            <p class="quote-promo-label">Your <span data-promo-price-code>TRYBOTH</span> offer</p>
+            <h3>Two six-packs of files</h3>
+            <p class="quote-promo-packs">One Mini Magic. One 17/.08 Orifice Shaper.</p>
+          </div>
+          <div class="quote-promo-price"><strong data-promo-price-total></strong><span>incl. GST, plus postage</span></div>
+        </div>
+        <dl class="quote-promo-breakdown">
+          <div><dt>Two six-packs</dt><dd data-promo-price-net></dd></div>
+          <div><dt>GST (15%)</dt><dd data-promo-price-gst></dd></div>
+        </dl>
+        <p class="quote-promo-note" data-promo-price-note></p>
+      </section>
 
       <div class="quote-review-grid">
         <div class="quote-review-card">
@@ -300,7 +317,7 @@ const contactEmail = siteConfig.email.toLowerCase();
           <p class="quote-review-empty" data-review-empty>No products have been selected yet.</p>
           <div class="quote-review-table-scroll">
             <table class="quote-review-table">
-              <thead><tr><th>SKU</th><th>Qty</th><th>Product</th><th>Size</th><th>Length</th></tr></thead>
+              <thead><tr><th>SKU</th><th>Qty</th><th>Product</th><th>Size</th><th>Length</th><th data-review-promo-column hidden>Promo price</th></tr></thead>
               <tbody data-review-lines></tbody>
             </table>
           </div>
@@ -343,6 +360,7 @@ const contactEmail = siteConfig.email.toLowerCase();
       <dl><div><dt>Draft reference</dt><dd data-draft-reference></dd></div><div><dt>Created</dt><dd data-print-created></dd></div></dl>
     </div>
     <p class="quote-print-disclaimer">Customer-prepared request for EndoTech NZ review. This is not the priced pro forma invoice, a tax invoice, a purchase order or a confirmed order.</p>
+    <section class="quote-print-promo-summary" data-print-promo-summary hidden><h2>Promo price</h2><p data-print-promo-price></p><p data-print-promo-note></p></section>
     <section><h2>Practice details</h2><dl class="quote-print-details" data-print-details></dl></section>
     <section>
       <h2>Requested products</h2>
