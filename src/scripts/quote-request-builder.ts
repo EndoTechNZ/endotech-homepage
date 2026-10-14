@@ -261,8 +261,8 @@ if (root) {
   const renderSelections = () => {
     const lines = selectedLines();
     const packs = lines.reduce((total, line) => total + line.quantity, 0);
-    if (selectionTotal) selectionTotal.textContent = `${lines.length} line${lines.length === 1 ? '' : 's'} Â· ${packs} pack${packs === 1 ? '' : 's'}`;
-    if (reviewTotal) reviewTotal.textContent = `${lines.length} line${lines.length === 1 ? '' : 's'} Â· ${packs} pack${packs === 1 ? '' : 's'}`;
+    if (selectionTotal) selectionTotal.textContent = `${lines.length} line${lines.length === 1 ? '' : 's'} · ${packs} pack${packs === 1 ? '' : 's'}`;
+    if (reviewTotal) reviewTotal.textContent = `${lines.length} line${lines.length === 1 ? '' : 's'} · ${packs} pack${packs === 1 ? '' : 's'}`;
 
     if (summary) {
       summary.replaceChildren();
@@ -273,7 +273,7 @@ if (root) {
 
         const copy = document.createElement('div');
         copy.append(createText('strong', quoteFamilyLabels[item.family], 'quote-product-label'));
-        copy.append(createText('span', `${item.size} Â· ${item.lengthMm ? `${item.lengthMm} mm` : 'Length n/a'} Â· ${item.sku}`));
+        copy.append(createText('span', `${item.size} · ${item.lengthMm ? `${item.lengthMm} mm` : 'Length n/a'} · ${item.sku}`));
 
         const controls = document.createElement('div');
         controls.className = 'quote-summary-controls';
@@ -303,7 +303,7 @@ if (root) {
 
   const appendDetail = (list: HTMLElement, label: string, value: string) => {
     const wrapper = document.createElement('div');
-    wrapper.append(createText('dt', label), createText('dd', value || 'â€”'));
+    wrapper.append(createText('dt', label), createText('dd', value || '—'));
     list.append(wrapper);
   };
 
@@ -322,7 +322,7 @@ if (root) {
           createText('td', String(quantity)),
           product,
           createText('td', item.size),
-          createText('td', item.lengthMm ? `${item.lengthMm} mm` : 'â€”'),
+          createText('td', item.lengthMm ? `${item.lengthMm} mm` : '—'),
         ].forEach((cell) => row.append(cell));
         reviewBody.append(row);
       });
@@ -432,7 +432,7 @@ if (root) {
       body.replaceChildren();
       lines.forEach(({ item, quantity }) => {
         const row = document.createElement('tr');
-        [item.sku, String(quantity), quoteFamilyLabels[item.family], item.size, item.lengthMm ? `${item.lengthMm} mm` : 'â€”']
+        [item.sku, String(quantity), quoteFamilyLabels[item.family], item.size, item.lengthMm ? `${item.lengthMm} mm` : '—']
           .forEach((value) => row.append(createText('td', value)));
         body.append(row);
       });
@@ -508,8 +508,8 @@ if (root) {
   downloadButton?.addEventListener('click', () => withBusyButton(downloadButton, async () => {
     const draft = validateDraft();
     if (!draft) return;
-    downloadButton.textContent = 'Building PDFâ€¦';
-    setStatus('Building your multipage pro forma invoice request PDFâ€¦');
+    downloadButton.textContent = 'Building PDF…';
+    setStatus('Building your multipage pro forma invoice request PDF…');
     try {
       const bytes = await buildQuoteRequestPdf({
         draftReference,
@@ -541,7 +541,7 @@ if (root) {
   copySkuListButton?.addEventListener('click', () => withBusyButton(copySkuListButton, async () => {
     const draft = validateDraft();
     if (!draft) return;
-    copySkuListButton.textContent = 'Copyingâ€¦';
+    copySkuListButton.textContent = 'Copying…';
     try {
       await copyText(skuEntryText(draft.lines));
       setStatus('SKU and quantity list copied. It is ready to paste beside the desktop invoicing app.', 'success');
@@ -622,8 +622,8 @@ if (root) {
     const mobileSend = mobileSendMedia.matches;
     let failureStage: 'pdf' | 'delivery' = 'pdf';
     emailButton.setAttribute('aria-busy', 'true');
-    emailButton.textContent = mobileSend ? 'Preparing request PDFâ€¦' : 'Sending PDF requestâ€¦';
-    setStatus(mobileSend ? 'Preparing your request PDFâ€¦' : 'Building the PDF and sending it securely to EndoTech NZâ€¦');
+    emailButton.textContent = mobileSend ? 'Preparing request PDF…' : 'Sending PDF request…';
+    setStatus(mobileSend ? 'Preparing your request PDF…' : 'Building the PDF and sending it securely to EndoTech NZ…');
     try {
       const emailPackage = await buildAttachedEmail();
       if (!emailPackage) {
@@ -632,8 +632,8 @@ if (root) {
         return;
       }
       if (mobileSend) {
-        emailButton.textContent = 'Sending requestâ€¦';
-        setStatus('PDF ready. Sending your request securely to EndoTech NZâ€¦');
+        emailButton.textContent = 'Sending request…';
+        setStatus('PDF ready. Sending your request securely to EndoTech NZ…');
       }
       failureStage = 'delivery';
       const formData = new FormData(customerForm || undefined);
@@ -656,7 +656,7 @@ if (root) {
         pageOrigin: window.location.origin,
       });
       emailButton.dataset.completed = 'true';
-      emailButton.textContent = 'Request sent â€” PDF emailed';
+      emailButton.textContent = 'Request sent — PDF emailed';
       showRequestConfirmation(emailPackage.draft.customer.email, result.quoteReference);
       setStatus('');
     } catch (error) {
@@ -674,8 +674,8 @@ if (root) {
   });
 
   emailDraftButton?.addEventListener('click', () => withBusyButton(emailDraftButton, async () => {
-    emailDraftButton.textContent = 'Building email draftâ€¦';
-    setStatus('Building the PDF and attached email draftâ€¦');
+    emailDraftButton.textContent = 'Building email draft…';
+    setStatus('Building the PDF and attached email draft…');
     try {
       const emailPackage = await buildAttachedEmail();
       if (!emailPackage) return;
