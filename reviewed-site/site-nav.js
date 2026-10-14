@@ -142,7 +142,7 @@ function connectComparisonSwipe(){
     if(!hero)return;
     comparison=document.createElement('p');
     comparison.className='microPath-hero-comparison';
-    comparison.textContent='Compare with other glide path files';
+    comparison.textContent='Compatible with V Taper & GlidePath';
     hero.append(comparison);
   }
   const text=document.createElement('span');
