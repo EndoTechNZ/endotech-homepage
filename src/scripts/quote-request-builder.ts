@@ -14,6 +14,7 @@ import {
   quoteRequestPdfBase64,
 } from '../lib/quoteRequestEmail';
 import { submitQuoteRequest } from '../lib/quoteRequestSubmission';
+import { nzShaperPromo, normalisePromoCode, validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
 
 const root = document.querySelector<HTMLElement>('[data-quote-builder]');
 
@@ -176,6 +177,7 @@ if (root) {
       email: String(data.get('email') || '').trim(),
       phone: String(data.get('phone') || '').trim(),
       accountNumber: String(data.get('accountNumber') || '').trim(),
+      promoCode: normalisePromoCode(data.get('promoCode')),
       deliveryAddress: String(data.get('deliveryAddress') || '').trim(),
       purchaseOrderReference: String(data.get('purchaseOrderReference') || '').trim(),
       notes: String(data.get('notes') || '').trim(),
@@ -335,6 +337,7 @@ if (root) {
       appendDetail(reviewDetails, 'Email', customer.email);
       appendDetail(reviewDetails, 'Phone', customer.phone);
       appendDetail(reviewDetails, 'Account number', customer.accountNumber);
+      if (customer.promoCode) appendDetail(reviewDetails, 'Promo code', customer.promoCode);
       appendDetail(reviewDetails, 'PO reference', customer.purchaseOrderReference);
       appendDetail(reviewDetails, 'Delivery', customer.deliveryAddress);
       appendDetail(reviewDetails, 'Notes', customer.notes);
@@ -376,6 +379,11 @@ if (root) {
     const customer = readCustomer();
     const customerErrors = validateQuoteCustomer(customer);
     const lines = selectedLines();
+    const promoError = validatePromoSelection(customer.promoCode, lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
+    if (promoError) {
+      setStatus(promoError, 'error');
+      return null;
+    }
     const lineValidation = validateQuoteLines(
       lines.map(({ item, quantity }) => ({ sku: item.sku, quantity })),
       catalog,
@@ -416,6 +424,7 @@ if (root) {
       appendDetail(details, 'Email', customer.email);
       appendDetail(details, 'Phone', customer.phone);
       appendDetail(details, 'Account number', customer.accountNumber);
+      if (customer.promoCode) appendDetail(details, 'Promo code', customer.promoCode);
       appendDetail(details, 'PO reference', customer.purchaseOrderReference);
       appendDetail(details, 'Delivery address', customer.deliveryAddress);
     }
@@ -475,6 +484,26 @@ if (root) {
   });
 
   productSearch?.addEventListener('input', applySearch);
+
+  root.querySelector<HTMLButtonElement>('[data-apply-promo]')?.addEventListener('click', () => {
+    const input = customerForm?.querySelector<HTMLInputElement>('[name="promoCode"]');
+    const message = root.querySelector<HTMLElement>('[data-promo-status]');
+    if (!input || !message) return;
+    const code = normalisePromoCode(input.value);
+    input.value = code;
+    message.hidden = false;
+    if (code !== nzShaperPromo.code) {
+      message.textContent = 'That promo code is not recognised. Check the code in your offer.';
+      return;
+    }
+    if (!nzShaperPromo.skus.every(sku => catalogBySku.has(sku))) {
+      message.textContent = 'This offer is not available in the current catalogue. Please contact EndoTech NZ.';
+      return;
+    }
+    nzShaperPromo.skus.forEach(sku => setQuantity(sku, 1));
+    message.textContent = `${nzShaperPromo.description} One six-pack of each has been added. One introductory bundle per practice.`;
+    renderReview();
+  });
 
   downloadButton?.addEventListener('click', () => withBusyButton(downloadButton, async () => {
     const draft = validateDraft();
@@ -546,6 +575,8 @@ if (root) {
       `Practice / account: ${draft.customer.practice}`,
       `Contact: ${draft.customer.fullName}`,
       `Phone: ${draft.customer.phone}`,
+      `Account number: ${draft.customer.accountNumber || '-'}`,
+      ...(draft.customer.promoCode ? [`Promo code: ${draft.customer.promoCode}`, nzShaperPromo.description] : []),
       `PO reference: ${draft.customer.purchaseOrderReference || '-'}`,
       '',
       'Customer comments:',
