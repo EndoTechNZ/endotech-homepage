@@ -782,6 +782,7 @@
 }
 </style>
 <script src="/assets/homepage/cursor-label.js?v=20261014" defer></script>
+<link rel="stylesheet" href="/assets/homepage/price-badge.css?v=20261014-arc">
 </head>
 <body>
     <div class="site-wrapper">
@@ -828,10 +829,11 @@
         <main>
 
             <section class="hero" id="hero-carousel" aria-label="Product Showcase Carousel" aria-roledescription="carousel">
+                <div class="price-badge-mobile-dock" aria-hidden="true"><span class="price-badge-slot" aria-hidden="true"></span></div>
                 <div class="slides-container">
 
 
-                    <div class="slide is-active" data-index="0" id="hero-slide-rg" role="tabpanel" aria-labelledby="hero-tab-rg" aria-hidden="false">
+                    <div class="slide is-active" data-index="0" id="hero-slide-rg" role="tabpanel" aria-labelledby="hero-tab-rg" aria-describedby="persistent-price-badge" aria-hidden="false">
                         <div class="slide-content">
                             <span class="t-label s-eyebrow">ENDOTECH NZ · TRANSFORM S™ RG</span>
                             <h2 class="t-display s-headline">Serious files.<br>Un-serious prices.</h2>
@@ -842,7 +844,7 @@
                                     <span class="t-label">UNIT PRICE</span>
                                     <div class="unit-price-line">
                                         <span class="meta-val t-mono-like">$39.95 + GST</span>
-                                        <span class="price-comparison"><strong>Half the price</strong><span>of major competitors</span></span>
+                                        <span class="price-badge-slot" aria-hidden="true"></span>
                                     </div>
                                     <span class="s-smallprint">NZ offers until 31 December 2026. See catalogue for pack details.</span>
                                 </div>
@@ -873,7 +875,7 @@
                     </div>
 
 
-                    <div class="slide" data-index="1" id="hero-slide-et" role="tabpanel" aria-labelledby="hero-tab-et" aria-hidden="true">
+                    <div class="slide" data-index="1" id="hero-slide-et" role="tabpanel" aria-labelledby="hero-tab-et" aria-describedby="persistent-price-badge" aria-hidden="true">
                         <div class="slide-content">
                             <span class="t-label s-eyebrow">ENDOTECH NZ · TRANSFORM S™ ET</span>
                             <h2 class="t-display s-headline">Shaping.<br>With control.</h2>
@@ -888,6 +890,7 @@
                                     <span class="t-label">GEOMETRY</span>
                                     <span class="meta-val t-mono-like">.04 / .06 TAPERS</span>
                                 </div>
+                                <div class="price-badge-slot-row" aria-hidden="true"><span class="price-badge-slot" aria-hidden="true"></span></div>
                             </div>
 
                             <div class="s-action-group">
@@ -915,7 +918,7 @@
                     </div>
 
 
-                    <div class="slide" data-index="2" id="hero-slide-pt" role="tabpanel" aria-labelledby="hero-tab-pt" aria-hidden="true">
+                    <div class="slide" data-index="2" id="hero-slide-pt" role="tabpanel" aria-labelledby="hero-tab-pt" aria-describedby="persistent-price-badge" aria-hidden="true">
                         <div class="slide-content">
                             <span class="t-label s-eyebrow">ENDOTECH NZ · TRANSFORM S™ PT</span>
                             <h2 class="t-display s-headline">A familiar<br>progression.</h2>
@@ -930,6 +933,7 @@
                                     <span class="t-label">GEOMETRY</span>
                                     <span class="meta-val t-mono-like">PROGRESSIVE TAPERS</span>
                                 </div>
+                                <div class="price-badge-slot-row" aria-hidden="true"><span class="price-badge-slot" aria-hidden="true"></span></div>
                             </div>
 
                             <div class="s-action-group">
@@ -957,7 +961,7 @@
                     </div>
 
 
-                    <div class="slide" data-index="3" id="hero-slide-micro-path" role="tabpanel" aria-labelledby="hero-tab-micro-path" aria-hidden="true">
+                    <div class="slide" data-index="3" id="hero-slide-micro-path" role="tabpanel" aria-labelledby="hero-tab-micro-path" aria-describedby="persistent-price-badge" aria-hidden="true">
                         <div class="slide-content">
                             <span class="t-label s-eyebrow">ENDOTECH NZ · MICRO-PATH™</span>
                             <h2 class="t-display s-headline">Glidepath Files</h2>
@@ -972,6 +976,7 @@
                                     <span class="t-label">FUNCTION</span>
                                     <span class="meta-val t-mono-like">GLIDE PATH</span>
                                 </div>
+                                <div class="price-badge-slot-row" aria-hidden="true"><span class="price-badge-slot" aria-hidden="true"></span></div>
                             </div>
 
                             <div class="s-action-group">
@@ -997,7 +1002,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="slide" data-index="4" id="hero-slide-c-plus" role="tabpanel" aria-labelledby="hero-tab-c-plus" aria-hidden="true">
+                    <div class="slide" data-index="4" id="hero-slide-c-plus" role="tabpanel" aria-labelledby="hero-tab-c-plus" aria-describedby="persistent-price-badge" aria-hidden="true">
                         <div class="slide-content">
                             <span class="t-label s-eyebrow">ENDOTECH NZ · C+ FILES</span>
                             <h2 class="t-display s-headline">Small files.<br>A clear start.</h2>
@@ -1012,6 +1017,7 @@
                                     <span class="t-label">WORKFLOW</span>
                                     <span class="meta-val t-mono-like">MANUAL NEGOTIATION</span>
                                 </div>
+                                <div class="price-badge-slot-row" aria-hidden="true"><span class="price-badge-slot" aria-hidden="true"></span></div>
                             </div>
 
                             <div class="s-action-group">
@@ -1068,6 +1074,7 @@
                         <div class="progress-bar"><div class="progress-fill" id="progress-indicator"></div></div>
                     </div>
                 </div>
+                <div id="persistent-price-badge" class="persistent-price-badge" role="note"><div class="price-comparison shared-price-card"><strong>Half the price</strong> <span class="shared-price-detail">of major competitors</span><span class="shared-price-shine" aria-hidden="true"></span></div></div>
             </section>
 
 
@@ -1171,6 +1178,7 @@
     </div>
 
 <script src="/assets/homepage/carousel.js?v=20261014-progress" defer></script>
+<script src="/assets/homepage/price-badge.js?v=20261014-arc" defer></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
