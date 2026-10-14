@@ -126,7 +126,7 @@
 
         .hero {
             height: calc(100vh - var(--header-h));
-            min-height: 600px;
+            min-height: clamp(900px, 70vw, 1000px);
             border-bottom: var(--border-thin);
             position: relative;
             overflow: hidden;
@@ -214,6 +214,33 @@
             transition: all var(--transition-snap);
         }
         .btn-primary:hover { background: var(--brand-blue); transform: translateY(-2px); }
+        .btn-primary.progress-action {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            min-width: 220px;
+            max-width: 100%;
+            min-height: 52px;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 14px 24px;
+            border-radius: 32px;
+        }
+        .action-progress-fill {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: var(--brand-blue);
+            transform: scaleX(0);
+            transform-origin: left;
+            pointer-events: none;
+            will-change: transform;
+        }
+        .progress-action-label, .progress-action > svg { position: relative; z-index: 1; }
+        .progress-action-label { white-space: nowrap; }
+        .progress-action > svg { flex: 0 0 16px; }
+        .btn-primary.progress-action:hover { background: var(--ink-navy); }
+        .progress-action:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
         .link-sec { font-size: 0.875rem; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
         .link-sec:hover { color: var(--brand-blue); }
 
@@ -318,10 +345,8 @@
 
         .progress-bar-container { display: flex; align-items: center; padding: 0 var(--grid-pad); border-left: var(--border-thin); width: 200px;}
         .progress-bar { width: 100%; height: 2px; background: var(--ink-navy-light); position: relative; }
-        .progress-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--ink-navy); width: 0%; }
+        .progress-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--ink-navy); width: 100%; transform: scaleX(0); transform-origin: left; }
 
-        .is-playing .progress-fill { animation: progress 5s linear infinite; }
-        @keyframes progress { 0% { width: 0%; } 100% { width: 100%; } }
 
 
         .offers-banner {
@@ -826,7 +851,7 @@
                             <div class="s-action-group">
                                 <p class="s-product-name">Transform&nbsp;S™</p>
                                 <div class="s-actions">
-                                    <a href="/products/transform-s-rg/" class="btn-primary">Explore RG <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                    <a href="/products/transform-s-rg/" class="btn-primary progress-action"><span class="action-progress-fill" aria-hidden="true"></span><span class="progress-action-label">Explore RG</span> <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
                                     <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
                                 </div>
                             </div>
@@ -868,7 +893,7 @@
                             <div class="s-action-group">
                                 <p class="s-product-name">Transform&nbsp;S™ ET</p>
                                 <div class="s-actions">
-                                    <a href="/products/transform-s-et/" class="btn-primary">Explore ET <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                    <a href="/products/transform-s-et/" class="btn-primary progress-action"><span class="action-progress-fill" aria-hidden="true"></span><span class="progress-action-label">Explore ET</span> <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
                                     <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
                                 </div>
                             </div>
@@ -910,7 +935,7 @@
                             <div class="s-action-group">
                                 <p class="s-product-name">Transform&nbsp;S™ PT</p>
                                 <div class="s-actions">
-                                    <a href="/products/transform-s-pt/" class="btn-primary">Explore PT <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                    <a href="/products/transform-s-pt/" class="btn-primary progress-action"><span class="action-progress-fill" aria-hidden="true"></span><span class="progress-action-label">Explore PT</span> <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
                                     <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
                                 </div>
                             </div>
@@ -952,7 +977,7 @@
                             <div class="s-action-group">
                                 <p class="s-product-name">Transform&nbsp;S™ MP</p>
                                 <div class="s-actions">
-                                    <a href="/products/micro-path/" class="btn-primary">Explore MicroPath <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                    <a href="/products/micro-path/" class="btn-primary progress-action"><span class="action-progress-fill" aria-hidden="true"></span><span class="progress-action-label">Explore MicroPath</span> <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
                                     <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
                                 </div>
                             </div>
@@ -992,7 +1017,7 @@
                             <div class="s-action-group">
                                 <p class="s-product-name">C+ Files</p>
                                 <div class="s-actions">
-                                    <a href="/products/c-plus/" class="btn-primary">Explore C+ <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+                                    <a href="/products/c-plus/" class="btn-primary progress-action"><span class="action-progress-fill" aria-hidden="true"></span><span class="progress-action-label">Explore C+</span> <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
                                     <a href="/promotions/transform-s-catalogue/" class="link-sec">View NZ offers →</a>
                                 </div>
                             </div>
@@ -1145,168 +1170,7 @@
         </footer>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const carousel = document.getElementById('hero-carousel');
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            const btnPrev = document.getElementById('btn-prev');
-            const btnNext = document.getElementById('btn-next');
-            const btnPlayPause = document.getElementById('btn-play-pause');
-            const iconPlay = btnPlayPause.querySelector('.icon-play');
-            const iconPause = btnPlayPause.querySelector('.icon-pause');
-
-            let currentIndex = 0;
-            const totalSlides = slides.length;
-            let slideInterval;
-            const intervalTime = 5000;
-            let isPlaying = true;
-
-
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (prefersReducedMotion) {
-                isPlaying = false;
-                carousel.classList.remove('is-playing');
-                updatePlayPauseIcon();
-            } else {
-                carousel.classList.add('is-playing');
-            }
-
-            function goToSlide(index) {
-
-                slides.forEach((s, i) => { s.classList.remove('is-active'); s.setAttribute('aria-hidden', String(i !== index)); });
-                dots.forEach((d, i) => { d.classList.remove('is-active'); d.setAttribute('aria-selected', String(i === index)); d.tabIndex = i === index ? 0 : -1; });
-
-
-                const progressFill = document.getElementById('progress-indicator');
-                if(progressFill) {
-                    progressFill.style.animation = 'none';
-                    progressFill.offsetHeight;
-                    if(isPlaying) progressFill.style.animation = null;
-                }
-
-
-                slides[index].classList.add('is-active');
-                dots[index].classList.add('is-active');
-                currentIndex = index;
-            }
-
-            function nextSlide() {
-                let nextIndex = (currentIndex + 1) % totalSlides;
-                goToSlide(nextIndex);
-            }
-
-            function prevSlide() {
-                let prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-                goToSlide(prevIndex);
-            }
-
-            function startTimer() {
-                if (isPlaying && !slideInterval) {
-                    slideInterval = setInterval(nextSlide, intervalTime);
-                    carousel.classList.add('is-playing');
-                }
-            }
-
-            function stopTimer() {
-                clearInterval(slideInterval);
-                slideInterval = null;
-                carousel.classList.remove('is-playing');
-            }
-
-            function updatePlayPauseIcon() {
-                btnPlayPause.setAttribute('aria-label', isPlaying ? 'Pause Carousel' : 'Play Carousel');
-                if (isPlaying) {
-                    iconPlay.style.display = 'none';
-                    iconPause.style.display = 'block';
-                } else {
-                    iconPlay.style.display = 'block';
-                    iconPause.style.display = 'none';
-                }
-            }
-
-
-            btnNext.addEventListener('click', () => { nextSlide(); resetTimer(); });
-            btnPrev.addEventListener('click', () => { prevSlide(); resetTimer(); });
-
-            dots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    goToSlide(index);
-                    resetTimer();
-                });
-                dot.addEventListener('keydown', (e) => {
-                    if (e.altKey || e.ctrlKey || e.metaKey) return;
-                    const keys = ['Enter', ' ', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
-                    if (!keys.includes(e.key)) return;
-                    e.preventDefault();
-                    const index = parseInt(dot.getAttribute('data-index'));
-                    const target = e.key === 'ArrowLeft' ? (index - 1 + totalSlides) % totalSlides
-                        : e.key === 'ArrowRight' ? (index + 1) % totalSlides
-                        : e.key === 'Home' ? 0 : e.key === 'End' ? totalSlides - 1 : index;
-                    goToSlide(target);
-                    dots[target].focus();
-                    resetTimer();
-                });
-            });
-
-            btnPlayPause.addEventListener('click', () => {
-                isPlaying = !isPlaying;
-                updatePlayPauseIcon();
-                if (isPlaying) {
-                    nextSlide();
-                    startTimer();
-                } else {
-                    stopTimer();
-                }
-            });
-
-
-            carousel.addEventListener('mouseenter', () => { if(isPlaying) stopTimer(); });
-            carousel.addEventListener('mouseleave', () => { if(isPlaying) startTimer(); });
-            carousel.addEventListener('focusin', () => { if(isPlaying) stopTimer(); });
-            carousel.addEventListener('focusout', () => { if(isPlaying) startTimer(); });
-
-            function resetTimer() {
-                if (isPlaying) {
-                    stopTimer();
-                    startTimer();
-                }
-            }
-
-
-            let touchstartX = 0;
-            let touchendX = 0;
-
-            carousel.addEventListener('touchstart', e => {
-                touchstartX = e.changedTouches[0].screenX;
-            }, {passive: true});
-
-            carousel.addEventListener('touchend', e => {
-                touchendX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, {passive: true});
-
-            function handleSwipe() {
-                const threshold = 50;
-                if (touchendX < touchstartX - threshold) nextSlide();
-                if (touchendX > touchstartX + threshold) prevSlide();
-                resetTimer();
-            }
-
-
-            if(isPlaying) startTimer();
-
-
-            document.addEventListener("visibilitychange", function() {
-                if (document.hidden) {
-                    stopTimer();
-                } else {
-                    if (isPlaying) startTimer();
-                }
-            });
-        });
-    </script>
+<script src="/assets/homepage/carousel.js?v=20261014-progress" defer></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
