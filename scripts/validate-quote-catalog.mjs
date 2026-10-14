@@ -20,10 +20,10 @@ const rows = objectRows.map((row, index) => {
   }
 });
 
-const expectedAll = 202;
-const expectedSelectable = 202;
+const expectedAll = 203;
+const expectedSelectable = 203;
 const expectedSelectableFamilies = new Map([
-  ['et', 50],
+  ['et', 51],
   ['pt', 25],
   ['rg', 35],
   ['micro-path', 16],
@@ -59,7 +59,7 @@ if (/approvedCatalog[\s\S]{0,120}\.filter\([^\n]*requiresConfirmation/.test(vali
 const selectable = rows;
 if (selectable.length !== expectedSelectable) failures.push(`Expected ${expectedSelectable} customer-selectable rows; found ${selectable.length}.`);
 const internallyFlagged = rows.filter((row) => row.requiresConfirmation === true);
-if (internallyFlagged.length !== 73) failures.push(`Expected 73 internally flagged rows; found ${internallyFlagged.length}.`);
+if (internallyFlagged.length !== 74) failures.push(`Expected 74 internally flagged rows; found ${internallyFlagged.length}.`);
 
 const requiredEtSizes = new Map([
   ['15/.04', [21, 25, 29]],

@@ -13,11 +13,34 @@ function refreshQuoteCatalog(reviewedHtml,generatedHtml){
  const catalog=generatedBuilder?.getAttribute('data-catalog');
  if(!reviewedBuilder||!catalog)throw Error('Unable to refresh the reviewed quote catalogue');
  reviewedBuilder.setAttribute('data-catalog',catalog);
+ const catalogSize=JSON.parse(decodeURIComponent(catalog)).length;
+ const textNodes=reviewedDocument.createTreeWalker(reviewedBuilder,reviewedDom.window.NodeFilter.SHOW_TEXT);
+ while(textNodes.nextNode()){
+  const node=textNodes.currentNode;
+  if(/\d+ listed SKUs/.test(node.textContent||''))node.textContent=node.textContent.replace(/\d+ listed SKUs/,`${catalogSize} listed SKUs`);
+ }
  for(const attribute of ['data-submission-endpoint','data-submission-enabled']){
   const value=generatedBuilder.getAttribute(attribute);
   if(value===null)throw Error(`Unable to refresh quote submission setting: ${attribute}`);
   reviewedBuilder.setAttribute(attribute,value);
  }
+ const freshPromo=generatedDocument.querySelector('[data-promo-field]');
+ const formGrid=reviewedDocument.querySelector('[data-customer-form] .quote-form-grid');
+ if(!freshPromo||!formGrid)throw Error('Promo code field is missing from the quote request');
+ reviewedDocument.querySelector('[data-promo-field]')?.remove();
+ formGrid.appendChild(reviewedDocument.importNode(freshPromo,true));
+ const scriptSelector='script[src*="quote-request.astro_astro_type_script"]';
+ const currentScript=reviewedDocument.querySelector(scriptSelector),freshScript=generatedDocument.querySelector(scriptSelector);
+ if(!currentScript||!freshScript)throw Error('Updated quote request script is missing');
+ currentScript.replaceWith(reviewedDocument.importNode(freshScript,true));
+ // Refresh ET rows as well so the new 17/.08 article is visible and selectable.
+ const currentEt=reviewedDocument.querySelector('[data-family-panel="et"]');
+ const freshEt=generatedDocument.querySelector('[data-family-panel="et"]');
+ if(!currentEt||!freshEt)throw Error('ET catalogue panel is missing');
+ currentEt.replaceWith(reviewedDocument.importNode(freshEt,true));
+ const currentEtTab=reviewedDocument.querySelector('[data-family-tab="et"]');
+ const freshEtTab=generatedDocument.querySelector('[data-family-tab="et"]');
+ if(currentEtTab&&freshEtTab)currentEtTab.replaceWith(reviewedDocument.importNode(freshEtTab,true));
  for(const selector of ['[data-family-tab="gutta-percha"]','[data-family-panel="gutta-percha"]']){
   const current=reviewedDocument.querySelector(selector),fresh=generatedDocument.querySelector(selector);
   if(!current||!fresh)throw Error(`Unable to refresh quote element: ${selector}`);

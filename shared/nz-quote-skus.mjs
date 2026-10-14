@@ -44,6 +44,7 @@ export const nzQuoteSkus = [
   "TSET-200625RF",
   "TSET-200629RF",
   "TSET-200717OO",
+  "TSET-170817OO",
   "TSET-250421RF",
   "TSET-250425RF",
   "TSET-250429RF",

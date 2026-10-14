@@ -192,6 +192,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
     ['Email', input.customer.email],
     ['Phone', input.customer.phone],
     ['Account number', input.customer.accountNumber || '-'],
+    ...(input.customer.promoCode ? [['Promo code', input.customer.promoCode] as [string, string]] : []),
     ['PO reference', input.customer.purchaseOrderReference || '-'],
     ['Delivery address', input.customer.deliveryAddress],
   ];

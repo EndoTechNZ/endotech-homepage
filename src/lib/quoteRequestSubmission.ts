@@ -1,4 +1,5 @@
 import type { NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
+import { validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
 import {
   validateQuoteCustomer,
   validateQuoteLines,
@@ -67,6 +68,8 @@ export const submitQuoteRequest = async (
 
   const endpoint = resolveEndpoint(config.endpoint, config.pageOrigin);
   const customerErrors = validateQuoteCustomer(payload.customer);
+  const promoError = validatePromoSelection(payload.customer.promoCode, payload.lines);
+  if (promoError) throw new Error(promoError);
   const lineValidation = validateQuoteLines(payload.lines, config.approvedCatalog);
   if (customerErrors.length || !lineValidation.ok) {
     throw new Error([...customerErrors, ...lineValidation.errors][0] || 'The request could not be validated.');

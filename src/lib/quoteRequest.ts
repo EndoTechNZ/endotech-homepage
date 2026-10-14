@@ -1,4 +1,5 @@
 import type { NzLaunchCatalogItem, NzLaunchFamily } from '../data/nzLaunchCatalog';
+import { normalisePromoCode } from '../../shared/nz-promo-offers.mjs';
 
 export const QUOTE_REQUEST_SCHEMA_VERSION = '2026-09-30';
 export const QUOTE_REQUEST_MAX_QUANTITY = 999;
@@ -19,6 +20,7 @@ export interface QuoteCustomerDetails {
   email: string;
   phone: string;
   accountNumber: string;
+  promoCode?: string;
   deliveryAddress: string;
   purchaseOrderReference: string;
   notes: string;
@@ -92,6 +94,7 @@ export const validateQuoteCustomer = (customer: QuoteCustomerDetails): string[] 
   }
 
   if (clean(customer.accountNumber).length > 80) errors.push('Account number is too long.');
+  if (normalisePromoCode(customer.promoCode).length > 40) errors.push('Promo code is too long.');
   if (clean(customer.purchaseOrderReference).length > 100) errors.push('Purchase-order reference is too long.');
   if (clean(customer.notes).length > 1_500) errors.push('Notes are too long.');
 
@@ -165,6 +168,7 @@ export const createQuoteRequestPayload = ({
     email: clean(customer.email),
     phone: clean(customer.phone),
     accountNumber: clean(customer.accountNumber),
+    promoCode: normalisePromoCode(customer.promoCode),
     deliveryAddress: clean(customer.deliveryAddress),
     purchaseOrderReference: clean(customer.purchaseOrderReference),
     notes: clean(customer.notes),

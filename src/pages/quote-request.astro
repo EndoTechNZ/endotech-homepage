@@ -252,6 +252,14 @@ const contactEmail = siteConfig.email.toLowerCase();
             <span>Purchase-order reference</span>
             <input name="purchaseOrderReference" type="text" maxlength="100" placeholder="Optional" />
           </label>
+          <div class="quote-form-wide" data-promo-field id="promotion-code">
+            <label for="quote-promo-code">Promo code</label>
+            <div style="display:flex;gap:.65rem;align-items:center;margin-top:.4rem">
+              <input id="quote-promo-code" name="promoCode" type="text" maxlength="40" autocomplete="off" autocapitalize="characters" placeholder="Enter the code from your offer" style="flex:1;min-width:0" />
+              <button type="button" class="quote-primary-action" style="background:#0c4a6e;color:#fff;border:1px solid #0c4a6e;padding:.65rem 1rem;white-space:nowrap;cursor:pointer" data-apply-promo>Apply code</button>
+            </div>
+            <p data-promo-status role="status" hidden style="font-size:.9rem;margin:.65rem 0 0"></p>
+          </div>
           <label class="quote-form-wide">
             <span>Delivery address <b aria-hidden="true">*</b></span>
             <textarea name="deliveryAddress" rows="4" autocomplete="shipping street-address" maxlength="500" required></textarea>
