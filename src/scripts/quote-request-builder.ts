@@ -15,6 +15,7 @@ import {
 } from '../lib/quoteRequestEmail';
 import { submitQuoteRequest } from '../lib/quoteRequestSubmission';
 import { nzShaperPromo, normalisePromoCode, validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
+import { formatPromoPrice, getPromoPriceSummary, promoPriceNote } from '../lib/quotePromoPricing';
 
 const root = document.querySelector<HTMLElement>('[data-quote-builder]');
 
@@ -309,6 +310,29 @@ if (root) {
 
   const renderReview = () => {
     const lines = selectedLines();
+    const customer = readCustomer();
+    const price = getPromoPriceSummary(customer.promoCode, lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
+    const priceSummary = root.querySelector<HTMLElement>('[data-review-promo-summary]');
+    if (priceSummary) {
+      priceSummary.hidden = !price;
+      if (price) {
+        for (const [selector,value] of [
+          ['[data-promo-price-code]',price.code],
+          ['[data-promo-price-total]',formatPromoPrice(price.totalInclGst)],
+          ['[data-promo-price-net]',formatPromoPrice(price.netTotal)],
+          ['[data-promo-price-gst]',formatPromoPrice(price.gstTotal)],
+          ['[data-promo-price-note]',promoPriceNote(price)],
+        ]) {
+          const element = priceSummary.querySelector<HTMLElement>(selector);
+          if (element) element.textContent = value;
+        }
+      }
+    }
+    const pricingNote = root.querySelector<HTMLElement>('[data-review-pricing-note]');
+    if (pricingNote) pricingNote.textContent = price
+      ? 'Your promo pack price is shown below. EndoTech NZ will confirm postage, availability and account terms in the pro forma invoice.'
+      : 'The website supplies SKUs and quantities only. EndoTech NZ will add pricing, GST, freight, availability and account terms in the pro forma invoice.';
+    root.querySelectorAll<HTMLElement>('[data-review-promo-column]').forEach(element => { element.hidden = !price; });
     if (reviewBody) {
       reviewBody.replaceChildren();
       lines.forEach(({ item, quantity }) => {
@@ -324,6 +348,15 @@ if (root) {
           createText('td', item.size),
           createText('td', item.lengthMm ? `${item.lengthMm} mm` : '—'),
         ].forEach((cell) => row.append(cell));
+        if (price) {
+          const cell = createText('td', '', 'quote-promo-line-price');
+          if (nzShaperPromo.skus.includes(item.sku)) {
+            cell.append(createText('span',formatPromoPrice(price.packPrice)),createText('small','+ GST'));
+          } else {
+            cell.textContent = 'To be quoted';
+          }
+          row.append(cell);
+        }
         reviewBody.append(row);
       });
     }
@@ -331,7 +364,6 @@ if (root) {
 
     if (reviewDetails) {
       reviewDetails.replaceChildren();
-      const customer = readCustomer();
       appendDetail(reviewDetails, 'Contact', customer.fullName);
       appendDetail(reviewDetails, 'Practice / account', customer.practice);
       appendDetail(reviewDetails, 'Email', customer.email);
@@ -411,6 +443,17 @@ if (root) {
 
   const buildPrintSheet = (customer: QuoteCustomerDetails, lines: Array<{ item: NzLaunchCatalogItem; quantity: number }>) => {
     if (!printSheet) return;
+    const price = getPromoPriceSummary(customer.promoCode, lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
+    const priceSummary = printSheet.querySelector<HTMLElement>('[data-print-promo-summary]');
+    if (priceSummary) priceSummary.hidden = !price;
+    const priceLabel = printSheet.querySelector<HTMLElement>('.quote-print-title > div > p');
+    if (priceLabel) priceLabel.textContent = price ? 'PROMO PRICE SHOWN' : 'UNPRICED';
+    const footer = printSheet.querySelector<HTMLElement>('footer');
+    if (footer) footer.textContent = price ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request';
+    const priceCopy = printSheet.querySelector<HTMLElement>('[data-print-promo-price]');
+    const priceNote = printSheet.querySelector<HTMLElement>('[data-print-promo-note]');
+    if (priceCopy && price) priceCopy.textContent = `${price.code}: two six-packs at ${formatPromoPrice(price.packPrice)} each + GST. ${formatPromoPrice(price.netTotal)} + ${formatPromoPrice(price.gstTotal)} GST = ${formatPromoPrice(price.totalInclGst)} incl. GST, plus postage.`;
+    if (priceNote && price) priceNote.textContent = promoPriceNote(price);
     const details = printSheet.querySelector<HTMLElement>('[data-print-details]');
     const body = printSheet.querySelector<HTMLTableSectionElement>('[data-print-lines]');
     const created = printSheet.querySelector<HTMLElement>('[data-print-created]');

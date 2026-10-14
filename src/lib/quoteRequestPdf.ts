@@ -2,6 +2,7 @@ import { PDFDocument, StandardFonts, rgb, type PDFImage, type PDFPage, type PDFF
 import type { NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
 import { compareNzLaunchCatalogItems } from './catalogOrder';
 import { quoteFamilyLabels, type QuoteCustomerDetails } from './quoteRequest';
+import { formatPromoPrice, getPromoPriceSummary, promoPriceNote } from './quotePromoPricing';
 
 export interface QuoteRequestPdfLine {
   item: NzLaunchCatalogItem;
@@ -86,10 +87,11 @@ const drawImageContained = (
 };
 
 export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise<Uint8Array> => {
+  const promoPrice = getPromoPriceSummary(input.customer.promoCode, input.lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
   const pdf = await PDFDocument.create();
   pdf.setTitle(`EndoTech NZ pro forma invoice request ${input.draftReference}`);
   pdf.setAuthor('EndoTech NZ');
-  pdf.setSubject('Unpriced customer request for an EndoTech NZ pro forma invoice');
+  pdf.setSubject(promoPrice ? 'Customer request with promotional pack pricing for EndoTech NZ review' : 'Unpriced customer request for an EndoTech NZ pro forma invoice');
   pdf.setCreator('EndoTech NZ pro forma request builder');
   pdf.setProducer('EndoTech NZ pro forma request builder');
   pdf.setCreationDate(input.createdAt);
@@ -157,15 +159,16 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   addPage();
 
   page.drawText('PRO FORMA INVOICE REQUEST', { x: MARGIN, y, size: 19, font: bold, color: NAVY });
-  page.drawText('UNPRICED', {
-    x: PAGE_WIDTH - MARGIN - 62,
+  const priceLabel = promoPrice ? 'PROMO PRICE SHOWN' : 'UNPRICED';
+  page.drawText(priceLabel, {
+    x: PAGE_WIDTH - MARGIN - bold.widthOfTextAtSize(priceLabel, 8.5),
     y: y + 1,
     size: 8.5,
     font: bold,
     color: GOLD,
   });
   y -= 25;
-  drawWrapped('Prepared by the customer for EndoTech NZ review. This is not the priced pro forma invoice, a tax invoice, a purchase order or a product reservation.', {
+  drawWrapped(promoPrice ? 'Prepared by the customer with the requested promo pack price. Postage, availability and account eligibility will be confirmed in the pro forma invoice.' : 'Prepared by the customer for EndoTech NZ review. This is not the priced pro forma invoice, a tax invoice, a purchase order or a product reservation.', {
     size: 9.5,
     color: MID,
     width: 460,
@@ -184,6 +187,15 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   page.drawText('CREATED', { x: MARGIN + 270, y: y - 10, size: 7, font: bold, color: TEAL });
   page.drawText(pdfSafe(created), { x: MARGIN + 270, y: y - 28, size: 10, font: regular, color: NAVY });
   y -= 67;
+
+  if (promoPrice) {
+    drawSectionTitle(`${promoPrice.code} offer`);
+    drawWrapped(`Mini Magic six-pack ${formatPromoPrice(promoPrice.packPrice)} + GST. 17/.08 Orifice Shaper six-pack ${formatPromoPrice(promoPrice.packPrice)} + GST.`, {size:9.2,color:NAVY});
+    drawWrapped(`Two six-packs: ${formatPromoPrice(promoPrice.netTotal)}. GST (15%): ${formatPromoPrice(promoPrice.gstTotal)}.`, {size:9.2,color:NAVY});
+    drawWrapped(`${formatPromoPrice(promoPrice.totalInclGst)} incl. GST, plus postage.`, {size:13,font:bold,color:NAVY});
+    drawWrapped(promoPriceNote(promoPrice), {size:8.5,color:MID});
+    y -= 8;
+  }
 
   drawSectionTitle('Practice details');
   const details: Array<[string, string]> = [
@@ -297,7 +309,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   const pages = pdf.getPages();
   pages.forEach((currentPage, index) => {
     currentPage.drawLine({ start: { x: MARGIN, y: 56 }, end: { x: PAGE_WIDTH - MARGIN, y: 56 }, thickness: 0.6, color: LIGHT });
-    currentPage.drawText('EndoTech NZ | Unpriced pro forma invoice request', {
+    currentPage.drawText(promoPrice ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request', {
       x: MARGIN,
       y: 38,
       size: 6.8,
