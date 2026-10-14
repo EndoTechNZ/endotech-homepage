@@ -8,6 +8,7 @@ import rgProduct from '../../assets/transform-s-rg-system-alpha.png';
 import microPathProduct from '../../assets/micro-path-thumbnail.png';
 import ClinicalWorkflowWheel from './ClinicalWorkflowWheel.astro';
 import HomepagePromotion from './HomepagePromotion.astro';
+import EquipmentTeaser from '../EquipmentTeaser.astro';
 import { siteConfig } from '../../config/site';
 import { getFooterSections, getFooterUtilityLinks, getHomepageMobileNavItems, getOrderMenu, getPrimaryNavItems, getProductMenu } from '../../data/navigation';
 
@@ -281,6 +282,8 @@ const workflowSteps = [
     </div>
   </section>
 
+  <link rel="stylesheet" href={`${base}eighteeth.css`} />
+  <EquipmentTeaser />
   <ClinicalWorkflowWheel base={base} />
 
   <section class="homepage-evidence-section" aria-labelledby="homepage-evidence-title">

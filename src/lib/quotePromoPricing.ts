@@ -9,7 +9,7 @@ export interface PromoPriceSummary {
   hasAdditionalItems: boolean;
 }
 
-export const formatPromoPrice = (amount: number): string => `NZ$${amount.toFixed(2)}`;
+export const formatPromoPrice = (amount: number): string => `NZ$${amount.toLocaleString('en-NZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 export const getPromoPriceSummary = (
   value: unknown,

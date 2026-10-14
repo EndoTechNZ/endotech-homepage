@@ -1,0 +1,20 @@
+Eighteeth equipment release - 15 October 2026
+
+Approved products and NZD prices excluding GST:
+EIGHTEETH-ECS: E-Connect S endodontic motor, 1 unit, $1,295.
+EIGHTEETH-ULTRAX: Ultra X ultrasonic activator, 1 unit, $795.
+The same references and per-unit prices are registered in the NZ Product/SKU Master.
+
+The homepage hero and carousel remain unchanged. The equipment section follows the existing product directory. Individual pages link to one another, manuals, manufacturer brochures, and training. Files and equipment share one pro forma request, with equipment pricing shown separately. A submitted request is not an order until confirmed by EndoTech NZ.
+
+Training source: EndoTech's Eighteeth resource library. MP4 files were remuxed with stream copy and faststart. Original Cardinali 1920x1080 H.264 video and AAC audio are preserved. The files are stored in the eighteeth-training-20261015 GitHub release, fetched and verified by scripts/fetch-equipment-media.mjs at build time, and served from the site's normal /videos/eighteeth/ paths. SHA-256 and byte counts are pinned in shared/eighteeth-training-assets.json.
+
+E-Connect S manual: supplied manufacturer IFU, Version 10, 31 March 2025.
+Ultra X manual: manufacturer IFU-6235001, Version 11, 2 April 2025, 44 pages, sourced from https://abmed.ca/wp-content/uploads/2025/06/Ultra-X-User-Manual.pdf . Match the IFU revision to the device supplied.
+Ultra X brochure: https://www.eighteeth.com/upload/2026/0723/UltraX.pdf
+Ultra X tip/wrench instruction video: https://www.youtube.com/watch?v=FRWDNrR0sq8 (Eighteeth Sifary).
+Manufacturer product pages: https://www.eighteeth.com/Endo-Motor/11.html and https://www.eighteeth.com/ultrasonic-device/9.html .
+
+Production: npm run build:github with the existing GitHub Pages environment.
+Local review without sending: npm run build:equipment-preview, then npm run preview.
+The NZ request service in the SG repository accepts the two references through an identical shared/nz-equipment-skus.mjs. Its existing validation, PDF safeguards, promotion rules and rate limiting remain in force.

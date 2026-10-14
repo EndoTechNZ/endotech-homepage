@@ -1,0 +1,16 @@
+---
+import { equipment } from '../data/eighteethEquipment';
+const base = import.meta.env.BASE_URL;
+---
+<section class="et-equipment-teaser" id="motors-ultrasonics" data-equipment-section aria-labelledby="equipment-title">
+  <div class="et-equipment-heading">
+    <div><p class="et-eyebrow">Eighteeth equipment</p><h2 id="equipment-title">Motors &amp; ultrasonics.</h2><p>Two tools. A connected endodontic workflow.</p></div>
+    <a class="et-text-link" href={`${base}products/motors-ultrasonics/`}>Explore the equipment <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="et-equipment-pair">
+    {equipment.map(item => <a class="et-equipment-mini" href={`${base}products/${item.slug}/`}>
+      <img src={`${base}${item.image.slice(1)}`} width="160" height="160" alt={`${item.name} ${item.category.toLowerCase()}`} loading="lazy" />
+      <div><span>{item.category}</span><h3>{item.name}</h3><p>{item.description}</p><strong>Discover {item.name} <span aria-hidden="true">→</span></strong></div>
+    </a>)}
+  </div>
+</section>

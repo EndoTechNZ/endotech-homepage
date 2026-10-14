@@ -1,0 +1,14 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import EConnectTraining from '../../components/EConnectTraining.astro';
+import { equipment } from '../../data/eighteethEquipment';
+const base = import.meta.env.BASE_URL;
+---
+<ProductLayout title="Eighteeth Training & IFUs | EndoTech NZ" description="E-Connect S training with Dr Filippo Cardinali, manufacturer instruction videos, and E-Connect S and Ultra X manuals." accent="slate">
+  <link rel="stylesheet" href={`${base}eighteeth.css`} />
+  <div class="et-device-page"><nav class="et-breadcrumb" aria-label="Breadcrumb"><a href={base}>Home</a><span>/</span><a href={`${base}products/motors-ultrasonics/`}>Motors &amp; ultrasonics</a><span>/</span><span>Training</span></nav>
+    <section class="et-device-section"><p class="et-eyebrow">Eighteeth / Training library</p><h2>Get to know your equipment.</h2><p class="et-section-intro">E-Connect S instruction videos and the complete Dr Filippo Cardinali tutorial. Watch online or download a copy for your team.</p><EConnectTraining /></section>
+    <section class="et-device-section"><p class="et-eyebrow">Ultra X</p><h2>Ultrasonic activation.</h2><div class="et-remote-video"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/FRWDNrR0sq8?rel=0" title="Eighteeth Ultra X: fitting a tip with the wrench" allowfullscreen></iframe><div><p>Manufacturer instruction video: fitting a tip using the Ultra X wrench.</p><a class="et-text-link" href={`${base}products/ultra-x/#training`}>Ultra X training &amp; product details ↗</a></div></div></section>
+    <section class="et-device-section"><p class="et-eyebrow">Reference documents</p><h2>Download the instructions for use.</h2><div class="et-downloads">{equipment.map(item => <a class="et-download" href={`${base}${item.manual.slice(1)}`} download><span class="et-file-icon">PDF</span><div><strong>{item.name} · Instructions for use</strong><small>English · Manufacturer user manual</small></div><span aria-hidden="true">↓</span></a>)}</div><p class="et-clinical-note">Match the IFU revision to the device supplied. Training videos support the manufacturer's instructions.</p></section>
+  </div>
+</ProductLayout>

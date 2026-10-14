@@ -2,7 +2,7 @@ import type { NzLaunchCatalogItem, NzLaunchFamily } from '../data/nzLaunchCatalo
 import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 import {
   createQuoteRequestPayload,
-  quoteFamilyLabels,
+  quoteProductLabel,
   validateQuoteCustomer,
   validateQuoteLines,
   type QuoteCustomerDetails,
@@ -16,6 +16,7 @@ import {
 import { submitQuoteRequest } from '../lib/quoteRequestSubmission';
 import { nzShaperPromo, normalisePromoCode, validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
 import { formatPromoPrice, getPromoPriceSummary, promoPriceNote } from '../lib/quotePromoPricing';
+import { equipmentForSku, getEquipmentTotals } from '../data/eighteethEquipment';
 
 const root = document.querySelector<HTMLElement>('[data-quote-builder]');
 
@@ -30,9 +31,9 @@ if (root) {
 
   const catalog = decodeCatalog();
   const catalogBySku = new Map(catalog.map((item) => [item.sku, item]));
-  const selectionStorageKey = 'endotechnz_quote_request_selections_v1';
+  const selectionStorageKey = root.dataset.localPreview === 'true' ? 'endotechnz_equipment_preview_selections_v1' : 'endotechnz_quote_request_selections_v1';
   const formStartedAt = new Date().toISOString();
-  const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha'];
+  const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'equipment'];
   const selections = new Map<string, number>();
   const createDraftReference = () => {
     const now = new Date();
@@ -261,9 +262,22 @@ if (root) {
 
   const renderSelections = () => {
     const lines = selectedLines();
-    const packs = lines.reduce((total, line) => total + line.quantity, 0);
-    if (selectionTotal) selectionTotal.textContent = `${lines.length} line${lines.length === 1 ? '' : 's'} · ${packs} pack${packs === 1 ? '' : 's'}`;
-    if (reviewTotal) reviewTotal.textContent = `${lines.length} line${lines.length === 1 ? '' : 's'} · ${packs} pack${packs === 1 ? '' : 's'}`;
+    const packs = lines.filter(line => line.item.family !== 'equipment').reduce((total, line) => total + line.quantity, 0);
+    const units = lines.filter(line => line.item.family === 'equipment').reduce((total, line) => total + line.quantity, 0);
+    const count = `${lines.length} line${lines.length === 1 ? '' : 's'}${packs ? ` · ${packs} pack${packs === 1 ? '' : 's'}` : ''}${units ? ` · ${units} unit${units === 1 ? '' : 's'}` : ''}`;
+    if (selectionTotal) selectionTotal.textContent = count;
+    if (reviewTotal) reviewTotal.textContent = count;
+    const equipmentTotal = getEquipmentTotals(lines.map(line => ({ sku: line.item.sku, quantity: line.quantity })));
+    const liveTotal = root.querySelector<HTMLElement>('[data-equipment-live-total]');
+    if (liveTotal) {
+      liveTotal.hidden = equipmentTotal.selected.length === 0;
+      liveTotal.replaceChildren(
+        createText('span', 'Equipment subtotal'),
+        createText('strong', `${formatPromoPrice(equipmentTotal.net)} + GST`),
+        createText('span', `${formatPromoPrice(equipmentTotal.total)} incl. GST`),
+        createText('small', equipmentTotal.hasOtherItems ? 'Equipment only. Files, points and freight will be quoted separately.' : 'Freight confirmed on your pro forma.'),
+      );
+    }
 
     if (summary) {
       summary.replaceChildren();
@@ -273,8 +287,8 @@ if (root) {
         row.dataset.summarySku = item.sku;
 
         const copy = document.createElement('div');
-        copy.append(createText('strong', quoteFamilyLabels[item.family], 'quote-product-label'));
-        copy.append(createText('span', `${item.size} · ${item.lengthMm ? `${item.lengthMm} mm` : 'Length n/a'} · ${item.sku}`));
+        copy.append(createText('strong', quoteProductLabel(item), 'quote-product-label'));
+        copy.append(createText('span', item.family === 'equipment' ? `${item.fileType} · per unit` : `${item.size} · ${item.lengthMm ? `${item.lengthMm} mm` : 'Length n/a'} · ${item.sku}`));
 
         const controls = document.createElement('div');
         controls.className = 'quote-summary-controls';
@@ -286,7 +300,7 @@ if (root) {
         quantityInput.inputMode = 'numeric';
         quantityInput.value = String(quantity);
         quantityInput.dataset.summaryQuantity = item.sku;
-        quantityInput.setAttribute('aria-label', `Quantity for ${quoteFamilyLabels[item.family]} ${item.size} ${item.sku}`);
+        quantityInput.setAttribute('aria-label', `Quantity for ${quoteProductLabel(item)} ${item.size} ${item.sku}`);
         const remove = document.createElement('button');
         remove.type = 'button';
         remove.textContent = 'Remove';
@@ -311,6 +325,20 @@ if (root) {
   const renderReview = () => {
     const lines = selectedLines();
     const customer = readCustomer();
+    const eq = getEquipmentTotals(lines.map(line => ({ sku: line.item.sku, quantity: line.quantity })));
+    const equipmentSummary = root.querySelector<HTMLElement>('[data-equipment-review]');
+    if (equipmentSummary) {
+      equipmentSummary.hidden = eq.selected.length === 0;
+      for (const [selector, value] of [
+        ['[data-equipment-net]', formatPromoPrice(eq.net)],
+        ['[data-equipment-gst]', formatPromoPrice(eq.gst)],
+        ['[data-equipment-total]', formatPromoPrice(eq.total)],
+        ['[data-equipment-note]', eq.hasOtherItems ? 'Files, points, any promotional offers and freight are separate; this is not the complete order total.' : 'Freight and availability will be confirmed on the pro forma invoice.'],
+      ]) {
+        const element = equipmentSummary.querySelector<HTMLElement>(selector);
+        if (element) element.textContent = value;
+      }
+    }
     const price = getPromoPriceSummary(customer.promoCode, lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
     const priceSummary = root.querySelector<HTMLElement>('[data-review-promo-summary]');
     if (priceSummary) {
@@ -329,17 +357,19 @@ if (root) {
       }
     }
     const pricingNote = root.querySelector<HTMLElement>('[data-review-pricing-note]');
-    if (pricingNote) pricingNote.textContent = price
+    if (pricingNote) pricingNote.textContent = eq.selected.length
+      ? 'Review the quantities below. Equipment pricing is shown separately, with GST. Other products and freight will be confirmed on your pro forma.'
+      : price
       ? 'Your promo pack price is shown below. EndoTech NZ will confirm postage, availability and account terms in the pro forma invoice.'
       : 'The website supplies SKUs and quantities only. EndoTech NZ will add pricing, GST, freight, availability and account terms in the pro forma invoice.';
-    root.querySelectorAll<HTMLElement>('[data-review-promo-column]').forEach(element => { element.hidden = !price; });
+    root.querySelectorAll<HTMLElement>('[data-review-promo-column]').forEach(element => { element.hidden = !price && !eq.selected.length; });
     if (reviewBody) {
       reviewBody.replaceChildren();
       lines.forEach(({ item, quantity }) => {
         const row = document.createElement('tr');
         const product = document.createElement('td');
         product.className = 'quote-review-product';
-        product.append(createText('strong', quoteFamilyLabels[item.family], 'quote-product-label'));
+        product.append(createText('strong', quoteProductLabel(item), 'quote-product-label'));
         product.append(createText('span', item.fileType));
         [
           createText('td', item.sku),
@@ -348,9 +378,12 @@ if (root) {
           createText('td', item.size),
           createText('td', item.lengthMm ? `${item.lengthMm} mm` : '—'),
         ].forEach((cell) => row.append(cell));
-        if (price) {
+        if (price || eq.selected.length) {
           const cell = createText('td', '', 'quote-promo-line-price');
-          if (nzShaperPromo.skus.includes(item.sku)) {
+          const equipmentItem = equipmentForSku(item.sku);
+          if (equipmentItem) {
+            cell.append(createText('span', formatPromoPrice(equipmentItem.price)), createText('small', '+ GST / unit'));
+          } else if (price && nzShaperPromo.skus.includes(item.sku)) {
             cell.append(createText('span',formatPromoPrice(price.packPrice)),createText('small','+ GST'));
           } else {
             cell.textContent = 'To be quoted';
@@ -377,6 +410,12 @@ if (root) {
   };
 
   const setActiveFamily = (family: string) => {
+    root.querySelectorAll<HTMLButtonElement>('[data-order-category]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.orderCategory === (family === 'equipment' ? 'equipment' : 'files')));
+    });
+    const fileTabs = root.querySelector<HTMLElement>('[data-file-family-tabs]');
+    if (fileTabs) fileTabs.hidden = family === 'equipment';
+    if (productSearch) productSearch.value = '';
     root.querySelectorAll<HTMLButtonElement>('[data-family-tab]').forEach((tab) => {
       const active = tab.dataset.familyTab === family;
       tab.classList.toggle('is-active', active);
@@ -444,12 +483,17 @@ if (root) {
   const buildPrintSheet = (customer: QuoteCustomerDetails, lines: Array<{ item: NzLaunchCatalogItem; quantity: number }>) => {
     if (!printSheet) return;
     const price = getPromoPriceSummary(customer.promoCode, lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
+    const eq = getEquipmentTotals(lines.map(line => ({ sku: line.item.sku, quantity: line.quantity })));
+    const eqSection = printSheet.querySelector<HTMLElement>('[data-print-equipment-summary]');
+    if (eqSection) eqSection.hidden = eq.selected.length === 0;
+    const eqPrice = printSheet.querySelector<HTMLElement>('[data-print-equipment-price]');
+    if (eqPrice) eqPrice.textContent = `Equipment ${formatPromoPrice(eq.net)} + GST ${formatPromoPrice(eq.gst)} = ${formatPromoPrice(eq.total)} incl. GST.`;
     const priceSummary = printSheet.querySelector<HTMLElement>('[data-print-promo-summary]');
     if (priceSummary) priceSummary.hidden = !price;
     const priceLabel = printSheet.querySelector<HTMLElement>('.quote-print-title > div > p');
-    if (priceLabel) priceLabel.textContent = price ? 'PROMO PRICE SHOWN' : 'UNPRICED';
+    if (priceLabel) priceLabel.textContent = eq.selected.length ? 'PARTIAL PRICING' : price ? 'PROMO PRICE SHOWN' : 'UNPRICED';
     const footer = printSheet.querySelector<HTMLElement>('footer');
-    if (footer) footer.textContent = price ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request';
+    if (footer) footer.textContent = eq.selected.length ? 'EndoTech NZ | Pro forma request with equipment pricing' : price ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request';
     const priceCopy = printSheet.querySelector<HTMLElement>('[data-print-promo-price]');
     const priceNote = printSheet.querySelector<HTMLElement>('[data-print-promo-note]');
     if (priceCopy && price) priceCopy.textContent = `${price.code}: two six-packs at ${formatPromoPrice(price.packPrice)} each + GST. ${formatPromoPrice(price.netTotal)} + ${formatPromoPrice(price.gstTotal)} GST = ${formatPromoPrice(price.totalInclGst)} incl. GST, plus postage.`;
@@ -475,7 +519,7 @@ if (root) {
       body.replaceChildren();
       lines.forEach(({ item, quantity }) => {
         const row = document.createElement('tr');
-        [item.sku, String(quantity), quoteFamilyLabels[item.family], item.size, item.lengthMm ? `${item.lengthMm} mm` : '—']
+        [item.sku, String(quantity), quoteProductLabel(item), item.size, item.lengthMm ? `${item.lengthMm} mm` : '—']
           .forEach((value) => row.append(createText('td', value)));
         body.append(row);
       });
@@ -499,6 +543,8 @@ if (root) {
   root.addEventListener('click', (event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
+    const category = target.closest<HTMLButtonElement>('[data-order-category]');
+    if (category) setActiveFamily(category.dataset.orderCategory === 'equipment' ? 'equipment' : 'et');
     const familyTab = target.closest<HTMLButtonElement>('[data-family-tab]');
     if (familyTab) setActiveFamily(familyTab.dataset.familyTab || 'et');
     const remove = target.closest<HTMLButtonElement>('[data-remove-sku]');
@@ -607,7 +653,7 @@ if (root) {
     const email = root.dataset.contactEmail || 'steveshepherdnz@gmail.com';
     const subject = `Pro forma invoice request ${draftReference}`;
     const pdfFilename = `EndoTech-NZ-Pro-Forma-Request-${draftReference}.pdf`;
-    const previewLines = draft.lines.slice(0, 20).map(({ item, quantity }) => `${item.sku} - ${quoteFamilyLabels[item.family]} ${item.size} - Qty ${quantity}`);
+    const previewLines = draft.lines.slice(0, 20).map(({ item, quantity }) => `${item.sku} - ${quoteProductLabel(item)} ${item.size} - Qty ${quantity}`);
     const remaining = Math.max(0, draft.lines.length - previewLines.length);
     const body = [
       'Hello EndoTech NZ,',
@@ -729,11 +775,17 @@ if (root) {
   }));
 
   restoreSelections();
+  const params = new URLSearchParams(window.location.search);
+  const requestedProduct = params.get('product') || '';
+  if (equipmentForSku(requestedProduct) && catalogBySku.has(requestedProduct) && !selections.has(requestedProduct)) {
+    selections.set(requestedProduct, 1);
+    persistSelections();
+  }
   root.querySelectorAll<HTMLInputElement>('[data-quote-quantity]').forEach((input) => {
     const quantity = selections.get(input.dataset.sku || '');
     input.value = quantity ? String(quantity) : '';
   });
-  const requestedFamily = new URLSearchParams(window.location.search).get('family');
+  const requestedFamily = params.get('category') === 'equipment' || equipmentForSku(requestedProduct) ? 'equipment' : params.get('family');
   const initialFamily = requestedFamily && familyOrder.includes(requestedFamily as NzLaunchFamily)
     ? requestedFamily
     : root.querySelector<HTMLButtonElement>('[data-family-tab]')?.dataset.familyTab || 'et';

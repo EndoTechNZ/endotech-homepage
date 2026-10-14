@@ -1,0 +1,14 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import { equipment, formatEquipmentPrice } from '../../data/eighteethEquipment';
+const base = import.meta.env.BASE_URL;
+---
+<ProductLayout title="Motors & Ultrasonics | EndoTech NZ" description="Explore Eighteeth E-Connect S endodontic motor and Ultra X ultrasonic activator, with instruction videos and downloadable IFUs." accent="slate">
+  <link rel="stylesheet" href={`${base}eighteeth.css`} />
+  {import.meta.env.PUBLIC_LOCAL_PREVIEW === 'true' && <div class="et-review-strip">Local design preview · Prepared for review before publication.</div>}
+  <div class="et-equipment-hub"><nav class="et-breadcrumb" aria-label="Breadcrumb"><a href={base}>Home</a><span>/</span><span>Motors &amp; ultrasonics</span></nav>
+    <header><p class="et-eyebrow">Eighteeth / EndoTech NZ</p><h1>Two tools.<br />One connected workflow.</h1><p>Controlled shaping with E-Connect S. Irrigant activation with Ultra X. Explore the equipment, learn the controls, and add either device to your EndoTech pro forma request.</p></header>
+    <div class="et-hub-grid">{equipment.map(item => <article class="et-hub-card"><a class="et-hub-image" href={`${base}products/${item.slug}/`}><img src={`${base}${item.image.slice(1)}`} alt={item.name} width="1000" height="1000" /></a><p class="et-eyebrow">{item.category}</p><h2>{item.name}</h2><p>{item.description}</p><p class="et-device-price"><strong>NZ{formatEquipmentPrice(item.price)}</strong><span>+ GST per unit</span></p><div class="et-actions"><a class="et-button" href={`${base}products/${item.slug}/`}>Explore {item.name} ↗</a><a class="et-button secondary" href={`${base}quote-request/?category=equipment&product=${item.sku}#select-products`}>Add to request</a></div></article>)}</div>
+    <section class="et-device-section"><p class="et-eyebrow">Product support</p><h2>Training when you need it.</h2><p class="et-section-intro">Watch the complete E-Connect S tutorial with Dr Filippo Cardinali, review the manufacturer instruction videos and download the IFUs.</p><a class="et-button secondary" href={`${base}resources/eighteeth-training/`}>Open the training library ↗</a></section>
+  </div>
+</ProductLayout>

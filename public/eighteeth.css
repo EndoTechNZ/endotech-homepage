@@ -1,0 +1,61 @@
+.et-equipment-teaser,.et-device-page,.et-equipment-hub{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#122b3a;--et-blue:#0876b6;--et-muted:#5d6e7c;--et-line:#dfe7eb;--et-soft:#f5f8fa}
+.et-equipment-teaser *,.et-device-page *,.et-equipment-hub *{box-sizing:border-box}
+.et-equipment-teaser{max-width:1200px;margin:0 auto;padding:64px 32px 72px;border-top:1px solid var(--et-line);scroll-margin-top:90px}
+.et-eyebrow{font-size:11px!important;font-weight:650;letter-spacing:.15em;text-transform:uppercase;color:#496d7d;margin:0 0 14px!important}
+.et-equipment-heading{display:flex;justify-content:space-between;align-items:center;gap:32px;margin-bottom:28px}
+.et-equipment-heading h2{font-size:clamp(25px,3vw,36px);font-weight:550;letter-spacing:-1.1px;line-height:1.15;margin:0 0 10px}
+.et-equipment-heading p:not(.et-eyebrow){font-size:15px;color:var(--et-muted);margin:0;line-height:1.5}
+.et-text-link{color:var(--et-blue);text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap}
+.et-text-link:hover{text-decoration:underline;text-underline-offset:4px}
+.et-equipment-pair{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--et-line);border-radius:14px;background:#fff;overflow:hidden}
+.et-equipment-mini{display:grid;grid-template-columns:140px 1fr;align-items:center;gap:20px;padding:24px;text-decoration:none!important;color:inherit;transition:background .2s}
+.et-equipment-mini+.et-equipment-mini{border-left:1px solid var(--et-line)}
+.et-equipment-mini:hover{background:#f6f9fb}
+.et-equipment-mini img{width:140px;height:170px;object-fit:contain;mix-blend-mode:multiply}
+.et-equipment-mini span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--et-muted)}
+.et-equipment-mini h3{font-size:24px;letter-spacing:-.6px;font-weight:550;margin:7px 0 9px}
+.et-equipment-mini p{font-size:14px;line-height:1.6;color:var(--et-muted);margin:0 0 16px}
+.et-equipment-mini strong{font-size:13px;font-weight:600;color:var(--et-blue)}
+.et-review-strip{background:#eef5f7;border-bottom:1px solid #d5e5eb;text-align:center;padding:10px 20px;color:#405d69;font-size:12px;line-height:1.5}
+.et-device-page,.et-equipment-hub{max-width:1200px;margin:auto;padding:0 32px 72px}
+.et-breadcrumb{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--et-muted);padding:26px 0}
+.et-breadcrumb a{color:inherit;text-decoration:none}.et-breadcrumb a:hover{color:var(--et-blue)}
+.et-device-hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:72px;min-height:530px;padding:0 0 48px}
+.et-device-hero h1{font-size:clamp(44px,5.4vw,70px);line-height:1.02;font-weight:550;letter-spacing:-2.5px;margin:0 0 18px}
+.et-device-hero h2{font-size:clamp(23px,2.5vw,31px);line-height:1.22;font-weight:450;letter-spacing:-.8px;margin:0 0 21px}
+.et-device-intro{font-size:16px;line-height:1.7;color:var(--et-muted);max-width:440px;margin:0 0 25px}
+.et-device-price{display:flex;align-items:baseline;gap:9px;margin:0 0 8px}.et-device-price strong{font-size:28px;letter-spacing:-.6px;font-weight:550}.et-device-price span{font-size:13px;color:var(--et-muted)}
+.et-price-note{font-size:12px;line-height:1.5;color:var(--et-muted);margin:0 0 24px}
+.et-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.et-button{display:inline-flex;align-items:center;justify-content:center;gap:18px;border-radius:7px;padding:13px 19px;font-size:13px;font-weight:600;background:var(--et-blue);border:1px solid var(--et-blue);color:#fff!important;text-decoration:none!important;line-height:1.3;cursor:pointer}
+.et-button:hover{background:#096295}.et-button.secondary{background:white;color:#244657!important;border-color:#c8d7de}.et-button.secondary:hover{background:#f1f6f8}
+.et-device-visual{background:#f4f7f9;border-radius:16px;display:flex;align-items:center;justify-content:center;min-height:480px;position:relative;overflow:hidden}
+.et-device-visual img{width:100%;height:460px;object-fit:contain;mix-blend-mode:multiply;padding:20px}
+.et-device-visual-label{position:absolute;bottom:19px;left:22px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#66818e}
+.et-device-nav{display:flex;gap:26px;align-items:center;overflow:auto;white-space:nowrap;border-top:1px solid var(--et-line);border-bottom:1px solid var(--et-line);padding:18px 0}
+.et-device-nav a{font-size:13px;text-decoration:none;color:#4d6370}.et-device-nav a:hover{color:var(--et-blue)}
+.et-device-section{padding:66px 0;border-bottom:1px solid var(--et-line);scroll-margin-top:95px}
+.et-device-section h2,.et-related h2{font-size:clamp(27px,3vw,36px);font-weight:500;letter-spacing:-1px;line-height:1.2;margin:0 0 18px}
+.et-section-intro{font-size:16px;color:var(--et-muted);line-height:1.7;max-width:700px;margin:0 0 30px}
+.et-features{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.et-features article{border-top:2px solid #cfe2eb;padding:22px 0 0}
+.et-features h3{font-size:18px;line-height:1.35;font-weight:550;letter-spacing:-.3px;margin:0 0 10px}
+.et-features p{font-size:14px;color:var(--et-muted);line-height:1.75;margin:0}
+.et-two-col{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.et-two-col h3{font-size:19px;font-weight:550;letter-spacing:-.3px;margin:0 0 16px}.et-two-col p,.et-two-col li{font-size:14px;line-height:1.8;color:var(--et-muted)}
+.et-two-col ul,.et-two-col ol{padding-left:20px;margin:0}.et-two-col li{margin-bottom:8px}
+.et-specs{margin:0}.et-specs div{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--et-line);padding:13px 0;font-size:14px}.et-specs dt{color:var(--et-muted)}.et-specs dd{margin:0;text-align:right;font-weight:550}
+.et-video-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px}.et-video-feature video{width:100%;display:block;aspect-ratio:16/9;background:#152e3b;border-radius:9px}.et-video-feature h3{font-size:21px;font-weight:500;letter-spacing:-.5px;margin:18px 0 7px}.et-video-feature p{font-size:14px;line-height:1.65;color:var(--et-muted);margin:0 0 12px}
+.et-video-support{display:flex;flex-direction:column;gap:24px}.et-video-support video{width:100%;aspect-ratio:16/9;background:#152e3b;border-radius:9px}.et-video-support h3{font-size:16px;font-weight:550;margin:12px 0 6px}.et-video-support p{font-size:12px;color:var(--et-muted);margin:0 0 10px}
+.et-video-download{font-size:12px;color:var(--et-blue);text-underline-offset:4px}.et-clinical-note{font-size:12px!important;line-height:1.7!important;color:#677d89!important;margin-top:24px!important}
+.et-downloads{display:grid;grid-template-columns:1fr 1fr;gap:16px}.et-download{display:flex;align-items:center;gap:16px;padding:23px;border:1px solid var(--et-line);border-radius:9px;color:inherit;text-decoration:none!important;background:#fff}.et-download:hover{border-color:#91bccf;background:#f8fbfc}.et-file-icon{border:1px solid #c7dce6;color:#39748f;font-size:10px;font-weight:650;padding:12px 8px;border-radius:5px}.et-download div{flex:1}.et-download strong{display:block;font-size:15px;font-weight:550;margin-bottom:6px}.et-download small{display:block;font-size:12px;color:var(--et-muted)}.et-download>span:last-child{color:var(--et-blue);font-size:20px}
+.et-source-note{font-size:12px;color:var(--et-muted);line-height:1.7;margin:22px 0 0}.et-source-note a{color:var(--et-blue);text-underline-offset:3px}
+.et-related{padding:58px 0 0}.et-related-card{display:grid;grid-template-columns:200px 1fr auto;gap:30px;align-items:center;background:var(--et-soft);border-radius:13px;padding:24px 30px}.et-related-card img{height:180px;width:180px;object-fit:contain;mix-blend-mode:multiply}.et-related-card h3{font-size:26px;font-weight:500;letter-spacing:-.7px;margin:0 0 10px}.et-related-card p{max-width:450px;font-size:14px;line-height:1.7;color:var(--et-muted);margin:0}.et-related-card .et-eyebrow{margin-bottom:8px!important}
+.et-remote-video{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center}.et-remote-video iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:9px}.et-remote-video p{font-size:14px;line-height:1.7;color:var(--et-muted)}
+.et-equipment-hub>header{max-width:710px;padding:30px 0 45px}.et-equipment-hub h1{font-size:clamp(36px,5vw,57px);font-weight:500;letter-spacing:-2px;line-height:1.08;margin:0 0 22px}.et-equipment-hub>header>p:last-child{font-size:17px;color:var(--et-muted);line-height:1.7}
+.et-hub-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}.et-hub-card{padding:28px;border:1px solid var(--et-line);border-radius:13px}.et-hub-image{display:block;background:var(--et-soft);border-radius:9px;margin-bottom:26px}.et-hub-card img{width:100%;height:320px;object-fit:contain;mix-blend-mode:multiply}.et-hub-card h2{font-size:32px;font-weight:500;letter-spacing:-1px;margin:0 0 12px}.et-hub-card>p{font-size:15px;line-height:1.7;color:var(--et-muted);margin-bottom:20px}
+:where(.et-device-page,.et-equipment-hub,.et-equipment-teaser) a:focus-visible,:where(.et-device-page,.et-equipment-hub) button:focus-visible{outline:3px solid #2b9dd4;outline-offset:4px}
+@media(max-width:900px){.et-device-hero{gap:30px;min-height:0}.et-device-visual{min-height:400px}.et-device-visual img{height:400px}.et-equipment-mini{grid-template-columns:100px 1fr;gap:10px;padding:20px}.et-equipment-mini img{width:100px;height:150px}.et-related-card{grid-template-columns:130px 1fr}.et-related-card img{width:130px}.et-related-card .et-button{grid-column:2;justify-self:start}.et-two-col{gap:30px}}
+@media(max-width:640px){.et-equipment-teaser{padding:40px 20px 48px}.et-equipment-heading{display:block}.et-equipment-heading .et-text-link{display:inline-block;margin-top:18px}.et-equipment-pair{grid-template-columns:1fr}.et-equipment-mini+.et-equipment-mini{border-left:0;border-top:1px solid var(--et-line)}.et-equipment-mini{grid-template-columns:100px 1fr;padding:20px 14px}.et-equipment-mini h3{font-size:23px}.et-equipment-mini p{font-size:13px}.et-device-page,.et-equipment-hub{padding:0 20px 48px}.et-device-hero{grid-template-columns:1fr;gap:24px;padding-bottom:32px}.et-device-copy{order:2}.et-device-visual{order:1;min-height:280px}.et-device-visual img{height:280px}.et-device-hero h1{font-size:46px;letter-spacing:-1.7px}.et-device-hero h2{font-size:26px}.et-device-hero .et-eyebrow{margin-bottom:12px!important}.et-device-intro{font-size:15px}.et-breadcrumb{padding:20px 0;font-size:11px}.et-device-section{padding:40px 0}.et-features,.et-two-col,.et-downloads,.et-video-grid,.et-remote-video,.et-hub-grid{grid-template-columns:1fr}.et-features{gap:22px}.et-features article{padding-top:16px}.et-video-grid{gap:32px}.et-video-support{gap:28px}.et-related{padding-top:38px}.et-related-card{padding:18px;gap:18px;grid-template-columns:95px 1fr}.et-related-card img{width:95px;height:140px}.et-related-card h3{font-size:23px}.et-related-card .et-button{grid-column:1/-1;justify-self:stretch}.et-related-card p{font-size:13px}.et-hub-card{padding:20px}.et-hub-card img{height:250px}.et-device-nav{gap:22px;padding:15px 0}.et-download{padding:18px}.et-review-strip{font-size:11px}}
+
+.et-equipment-teaser,.et-device-section{scroll-margin-top:125px}

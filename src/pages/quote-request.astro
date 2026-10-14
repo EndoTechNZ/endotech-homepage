@@ -3,13 +3,15 @@ import ProductLayout from '../layouts/ProductLayout.astro';
 import endotechLogo from '../assets/endotech-nz-logo-2026.jpg';
 import BrandLogo from '../components/BrandLogo.astro';
 import transformLogo from '../assets/transform-s-wordmark.png';
-import { nzCustomerSelectableCatalog, type NzLaunchFamily } from '../data/nzLaunchCatalog';
+import { nzCustomerSelectableCatalog, type NzLaunchFamily, type NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
+import { equipment, formatEquipmentPrice } from '../data/eighteethEquipment';
 import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 import { quoteFamilyLabels } from '../lib/quoteRequest';
 import { siteConfig } from '../config/site';
 
-const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha'];
+const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'equipment'];
 const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string }> = {
+  equipment: { eyebrow: 'Eighteeth equipment', description: 'Add a motor, ultrasonic activator, or both. Quantities are individual units.' },
   et: {
     eyebrow: 'Rotary shaping',
     description: 'Constant-taper shaping files in the complete New Zealand ET range.',
@@ -40,7 +42,12 @@ const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string 
   },
 };
 
-const quoteRequestCatalog = nzCustomerSelectableCatalog.filter((item) => item.family !== 'k-files');
+const equipmentCatalog: NzLaunchCatalogItem[] = equipment.map(item => ({
+  family: 'equipment', system: item.name, publicMeaning: item.category, sku: item.sku,
+  fileType: item.category, size: 'Complete unit', lengthMm: null, packQty: 1,
+  requiresConfirmation: false, confirmationNote: '',
+}));
+const quoteRequestCatalog = [...nzCustomerSelectableCatalog.filter((item) => item.family !== 'k-files'), ...equipmentCatalog];
 
 const groupedCatalog = Object.fromEntries(
   familyOrder.map((family) => [
@@ -53,23 +60,26 @@ const groupedCatalog = Object.fromEntries(
 
 const encodedCatalog = encodeURIComponent(JSON.stringify(quoteRequestCatalog));
 const submissionEndpoint = import.meta.env.PUBLIC_QUOTE_REQUEST_ENDPOINT || '';
-const submissionEnabled = import.meta.env.PUBLIC_QUOTE_REQUEST_SUBMISSION_ENABLED === 'true';
+const submissionEnabled = import.meta.env.PUBLIC_QUOTE_REQUEST_SUBMISSION_ENABLED === 'true' && Boolean(submissionEndpoint);
 const contactEmail = siteConfig.email.toLowerCase();
 ---
 
 <link rel="stylesheet" href="/quote-feedback.css" />
 <link rel="stylesheet" href="/quote-promo.css" />
+<link rel="stylesheet" href="/eighteeth.css" />
+<link rel="stylesheet" href="/equipment-order-preview.css" />
 <script is:inline src="/quote-feedback.js" defer></script>
 
 <ProductLayout
   title="Request a Pro Forma Invoice | EndoTech NZ"
-  description="Prepare an unpriced EndoTech NZ pro forma invoice request using the available Transform S, Micro-Path™, C+ and Gutta Percha product range."
+  description="Build one EndoTech NZ pro forma request for files, obturation products, E-Connect S and Ultra X equipment."
   image={transformLogo.src}
   accent="slate"
 >
   <div
     class="quote-builder-page"
     data-quote-builder
+    data-local-preview={String(!submissionEnabled)}
     data-catalog={encodedCatalog}
     data-transform-logo={transformLogo.src}
     data-endotech-logo={endotechLogo.src}
@@ -77,12 +87,13 @@ const contactEmail = siteConfig.email.toLowerCase();
     data-submission-endpoint={submissionEndpoint}
     data-submission-enabled={String(submissionEnabled)}
   >
+    {!submissionEnabled && <div class="et-review-strip">Local ordering preview · Email sending is disabled.</div>}
     <section class="quote-hero" aria-labelledby="quote-builder-title">
       <div class="quote-hero-copy">
         <p class="quote-eyebrow">Account pro forma request</p>
-        <h1 id="quote-builder-title">Request a pro forma invoice from EndoTech NZ.</h1>
+        <h1 id="quote-builder-title">Your next EndoTech order.</h1>
         <p class="quote-hero-lede">
-          Select New Zealand products and quantities, add the practice details, then send the PDF request directly to EndoTech NZ. We will prepare the priced pro forma invoice in our invoicing system.
+          Choose files, equipment, or both. One product list. One pro forma request.
         </p>
         <div class="quote-hero-actions">
           <a href="#select-products">Start selecting products</a>
@@ -91,7 +102,7 @@ const contactEmail = siteConfig.email.toLowerCase();
       </div>
       <div class="quote-hero-brand" aria-label="Transform S root canal shaping system">
         <img src={transformLogo.src} width="742" height="116" alt="Transform S root canal shaping system" />
-        <p>Six available families · {quoteRequestCatalog.length} listed SKUs · final pricing confirmed by pro forma</p>
+        <p>Files &amp; obturation + Eighteeth equipment<br />Final pricing confirmed by pro forma.</p>
       </div>
     </section>
 
@@ -106,7 +117,7 @@ const contactEmail = siteConfig.email.toLowerCase();
         <div>
           <p class="quote-eyebrow quote-section-step">Step 1</p>
           <h2 id="select-products-title">Select New Zealand products</h2>
-          <p>Quantities are packs. Product selections are saved on this device; customer and practice details are not.</p>
+          <p>Files and points are ordered in packs; equipment is ordered by unit. Your selected products stay together.</p>
         </div>
         <label class="quote-search">
           <span>Search this family</span>
@@ -114,8 +125,12 @@ const contactEmail = siteConfig.email.toLowerCase();
         </label>
       </div>
 
-      <div class="quote-family-tabs" role="tablist" aria-label="Product family">
-        {familyOrder.map((family, index) => (
+      <div class="equipment-order-categories" role="group" aria-label="Choose product category">
+        <button type="button" data-order-category="files" aria-pressed="true"><span>01</span><div><strong>Files &amp; obturation</strong><small>Shaping, glide path, hand files &amp; points</small></div></button>
+        <button type="button" data-order-category="equipment" aria-pressed="false" aria-controls="quote-family-equipment"><span>02</span><div><strong>Motors &amp; ultrasonics</strong><small>E-Connect S &amp; Ultra X</small></div></button>
+      </div>
+      <div class="quote-family-tabs" role="tablist" aria-label="File and obturation family" data-file-family-tabs>
+        {familyOrder.filter(family => family !== 'equipment').map((family, index) => (
           <button
             type="button"
             role="tab"
@@ -137,7 +152,7 @@ const contactEmail = siteConfig.email.toLowerCase();
             <section
               id={`quote-family-${family}`}
               class="quote-family-panel"
-              role="tabpanel"
+              role={family === 'equipment' ? 'region' : 'tabpanel'}
               aria-label={quoteFamilyLabels[family]}
               data-family-panel={family}
               hidden={index !== 0}
@@ -149,6 +164,15 @@ const contactEmail = siteConfig.email.toLowerCase();
                 </div>
                 <span>{familyMeta[family].description}</span>
               </header>
+              {family === 'equipment' ? <>
+                <div class="equipment-order-cards">
+                  {equipment.map(item => <article class="equipment-order-card" data-catalog-row data-search={`${item.name} ${item.category} ${item.sku}`.toLowerCase()}>
+                    <a class="equipment-order-image" href={`/products/${item.slug}/`}><img src={item.image} width="240" height="240" alt={item.name} loading="lazy" /></a>
+                    <div class="equipment-order-copy"><p class="et-eyebrow">{item.category}</p><a href={`/products/${item.slug}/`}><h4>{item.name}</h4></a><p>{item.description}</p><strong class="equipment-order-price">NZ{formatEquipmentPrice(item.price)} <small>+ GST / unit</small></strong><label><span>Units</span><input type="number" min="0" max="999" step="1" inputmode="numeric" placeholder="0" data-quote-quantity data-sku={item.sku} aria-label={`Quantity for ${item.name}`} /></label><a class="equipment-order-details" href={`/products/${item.slug}/#training`}>Training &amp; IFU ↗</a></div>
+                  </article>)}
+                </div>
+                <p class="equipment-order-note">Add either device or both. You can return to files at any time; all selections remain in the same request.</p>
+              </> : <>
               <div class="quote-catalog-scroll">
                 <table class="quote-catalog-table">
                   <thead>
@@ -193,6 +217,7 @@ const contactEmail = siteConfig.email.toLowerCase();
                   </tbody>
                 </table>
               </div>
+              </>}
               <p class="quote-no-results" data-no-results hidden>No products in this family match that search.</p>
             </section>
           ))}
@@ -210,6 +235,7 @@ const contactEmail = siteConfig.email.toLowerCase();
             Enter a pack quantity beside any listed product to add it here.
           </div>
           <div class="quote-selection-summary" data-selection-summary hidden></div>
+          <div class="equipment-live-total" data-equipment-live-total hidden aria-live="polite"></div>
           <footer>
             <strong data-selection-total>0 lines · 0 packs</strong>
             <a href="#practice-details">Continue to practice details</a>
@@ -306,6 +332,9 @@ const contactEmail = siteConfig.email.toLowerCase();
         <p class="quote-promo-note" data-promo-price-note></p>
       </section>
 
+      <section class="equipment-review-price" data-equipment-review hidden aria-label="Equipment price summary">
+        <h3>Equipment subtotal</h3><dl><div><dt>Equipment excl. GST</dt><dd data-equipment-net></dd></div><div><dt>GST · 15%</dt><dd data-equipment-gst></dd></div><div><dt>Equipment incl. GST</dt><dd data-equipment-total></dd></div></dl><p data-equipment-note></p>
+      </section>
       <div class="quote-review-grid">
         <div class="quote-review-card">
           <header>
@@ -317,7 +346,7 @@ const contactEmail = siteConfig.email.toLowerCase();
           <p class="quote-review-empty" data-review-empty>No products have been selected yet.</p>
           <div class="quote-review-table-scroll">
             <table class="quote-review-table">
-              <thead><tr><th>SKU</th><th>Qty</th><th>Product</th><th>Size</th><th>Length</th><th data-review-promo-column hidden>Promo price</th></tr></thead>
+              <thead><tr><th>SKU</th><th>Qty</th><th>Product</th><th>Size / unit</th><th>Length</th><th data-review-promo-column hidden>Unit price + GST</th></tr></thead>
               <tbody data-review-lines></tbody>
             </table>
           </div>
@@ -331,14 +360,13 @@ const contactEmail = siteConfig.email.toLowerCase();
 
       <div class="quote-export-card">
         <div>
-          <p class="quote-eyebrow">Ready to send</p>
-          <h3>Send the PDF request directly to EndoTech NZ.</h3>
-          <p id="email-attachment-help">The main button securely emails the generated PDF and customer comments to EndoTech NZ, then emails the same PDF to the customer as confirmation. It does not open an email program. Download options remain available as a backup.</p>
+          <p class="quote-eyebrow">Review your request</p>
+          <h3>Create pro forma</h3>
+          <p id="email-attachment-help">Send your pro forma request to EndoTech NZ. This is not an order until confirmed by EndoTech NZ.</p>
           <p><strong>Email recipient:</strong> <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
         </div>
         <div class="quote-export-actions">
-          <button type="button" class="quote-primary-action" data-prepare-email aria-describedby="email-attachment-help">Send PDF request directly to EndoTech NZ</button>
-          <button type="button" data-download-email-draft aria-describedby="email-attachment-help">Download attached email draft</button>
+          <button type="button" class="quote-primary-action" disabled={!submissionEnabled} data-prepare-email aria-describedby="email-attachment-help" title={!submissionEnabled ? 'Sending is disabled in this local preview.' : undefined}>Create pro forma</button>
           <button type="button" class="quote-primary-action" data-download-pdf>Download pro forma request PDF</button>
           <button type="button" data-download-sku-list>Download SKU entry list</button>
           <button type="button" data-copy-sku-list>Copy SKU + quantity</button>
@@ -361,6 +389,7 @@ const contactEmail = siteConfig.email.toLowerCase();
     </div>
     <p class="quote-print-disclaimer">Customer-prepared request for EndoTech NZ review. This is not the priced pro forma invoice, a tax invoice, a purchase order or a confirmed order.</p>
     <section class="quote-print-promo-summary" data-print-promo-summary hidden><h2>Promo price</h2><p data-print-promo-price></p><p data-print-promo-note></p></section>
+    <section class="quote-print-equipment-summary" data-print-equipment-summary hidden><h2>Equipment pricing</h2><p data-print-equipment-price></p><p>Files, points, promotional offers and freight are separate.</p></section>
     <section><h2>Practice details</h2><dl class="quote-print-details" data-print-details></dl></section>
     <section>
       <h2>Requested products</h2>

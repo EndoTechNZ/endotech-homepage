@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import ts from 'typescript';
+import { nzEquipmentSkus } from '../shared/nz-equipment-skus.mjs';
+const source=await readFile(new URL('../src/data/eighteethEquipment.ts',import.meta.url),'utf8');
+const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+const {equipment,getEquipmentTotals,formatEquipmentPrice}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+assert.deepEqual(equipment.map(item=>item.sku).sort(),[...nzEquipmentSkus].sort(),'Backend equipment references must match the visible product catalogue');
+let result=getEquipmentTotals([{sku:'EIGHTEETH-ECS',quantity:1},{sku:'EIGHTEETH-ULTRAX',quantity:1}]);
+assert.deepEqual([result.net,result.gst,result.total],[2090,313.5,2403.5]);
+result=getEquipmentTotals([{sku:'EIGHTEETH-ECS',quantity:2},{sku:'EIGHTEETH-ULTRAX',quantity:1},{sku:'TSET-150421RF',quantity:6}]);
+assert.deepEqual([result.net,result.gst,result.total,result.hasOtherItems],[3385,507.75,3892.75,true]);
+assert.equal(getEquipmentTotals([]).total,0);
+assert.match(formatEquipmentPrice(1489.25),/1,489\.25/);
+console.log('Equipment pricing verified: both units, mixed quantities, GST rounding, mixed file order and decimal display.');

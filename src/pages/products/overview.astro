@@ -1,5 +1,6 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
+import EquipmentTeaser from '../../components/EquipmentTeaser.astro';
 import etProduct from '../../assets/transform-s-et-thumbnail.png';
 import ptProduct from '../../assets/transform-s-pt-thumbnail.png';
 import rgProduct from '../../assets/transform-s-rg-system-alpha.png';
@@ -129,6 +130,8 @@ const compareRows = [
   accent="teal"
 >
   <main class="overview-stitch-page">
+    <link rel="stylesheet" href={`${base}eighteeth.css`} />
+    <EquipmentTeaser />
     <section class="overview-hero" aria-labelledby="overview-hero-title">
       <div class="overview-hero-copy">
         <div class="overview-product-systems-reveal-mask">

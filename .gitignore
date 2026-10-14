@@ -1,4 +1,6 @@
 # build output
+public/videos/eighteeth/*.mp4
+LOCAL-EQUIPMENT-PREVIEW.txt
 dist/
 raw-dist/
 tmp/
@@ -51,3 +53,6 @@ homepage-hero-prototype.html
 
 # macOS-specific files
 .DS_Store
+
+# Local visual review helpers
+scripts/qa-equipment-*.mjs

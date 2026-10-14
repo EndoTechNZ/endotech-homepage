@@ -12,7 +12,11 @@ export const quoteFamilyLabels: Record<NzLaunchFamily, string> = {
   'c-plus': 'Transform S™ C+ Files',
   'k-files': 'Transform S™ K-Files',
   'gutta-percha': 'Gutta Percha Points',
+  equipment: 'Motors & ultrasonics',
 };
+
+export const quoteProductLabel = (item: NzLaunchCatalogItem): string =>
+  item.family === 'equipment' ? item.system : quoteFamilyLabels[item.family];
 
 export interface QuoteCustomerDetails {
   fullName: string;

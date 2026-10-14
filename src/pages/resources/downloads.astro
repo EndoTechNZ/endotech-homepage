@@ -12,6 +12,17 @@ const documentGroups: {
   files: { name: string; href: string; details?: string; download?: string }[];
 }[] = [
   {
+    label: 'Eighteeth Motors & Ultrasonics',
+    description: 'Device manuals, product brochures and E-Connect S training with Dr Filippo Cardinali.',
+    files: [
+      { name: 'E-Connect S Instructions for Use (PDF)', href: '/downloads/eighteeth/E-Connect-S-User-Manual.pdf', details: 'English · Version 10 · 31 March 2025' },
+      { name: 'Ultra X Instructions for Use (PDF)', href: '/downloads/eighteeth/Ultra-X-User-Manual.pdf', details: 'English · Version 11 · 2 April 2025' },
+      { name: 'E-Connect S Manufacturer Brochure (PDF)', href: '/downloads/eighteeth/E-Connect-S-Manufacturer-Brochure.pdf' },
+      { name: 'Ultra X Manufacturer Brochure (PDF)', href: '/downloads/eighteeth/Ultra-X-Manufacturer-Brochure.pdf' },
+      { name: 'Equipment training videos & Cardinali tutorial', href: '/resources/eighteeth-training/', details: 'Watch online or download the E-Connect S videos.' },
+    ],
+  },
+  {
     label: 'File System Protocol Cards',
     description: 'Illustrated file sequences and motor settings for ET, PT, RG and Micro-Path™.',
     files: [...Object.values(protocolDownloads.systems), protocolDownloads.collection].map((card) => ({

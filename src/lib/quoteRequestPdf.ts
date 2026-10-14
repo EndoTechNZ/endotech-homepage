@@ -1,7 +1,8 @@
 import { PDFDocument, StandardFonts, rgb, type PDFImage, type PDFPage, type PDFFont } from 'pdf-lib';
 import type { NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
 import { compareNzLaunchCatalogItems } from './catalogOrder';
-import { quoteFamilyLabels, type QuoteCustomerDetails } from './quoteRequest';
+import { quoteProductLabel, type QuoteCustomerDetails } from './quoteRequest';
+import { getEquipmentTotals } from '../data/eighteethEquipment';
 import { formatPromoPrice, getPromoPriceSummary, promoPriceNote } from './quotePromoPricing';
 
 export interface QuoteRequestPdfLine {
@@ -87,11 +88,12 @@ const drawImageContained = (
 };
 
 export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise<Uint8Array> => {
+  const equipmentTotal = getEquipmentTotals(input.lines.map(line => ({ sku: line.item.sku, quantity: line.quantity })));
   const promoPrice = getPromoPriceSummary(input.customer.promoCode, input.lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
   const pdf = await PDFDocument.create();
   pdf.setTitle(`EndoTech NZ pro forma invoice request ${input.draftReference}`);
   pdf.setAuthor('EndoTech NZ');
-  pdf.setSubject(promoPrice ? 'Customer request with promotional pack pricing for EndoTech NZ review' : 'Unpriced customer request for an EndoTech NZ pro forma invoice');
+  pdf.setSubject(equipmentTotal.selected.length ? 'Customer request with equipment pricing for EndoTech NZ review' : promoPrice ? 'Customer request with promotional pack pricing for EndoTech NZ review' : 'Unpriced customer request for an EndoTech NZ pro forma invoice');
   pdf.setCreator('EndoTech NZ pro forma request builder');
   pdf.setProducer('EndoTech NZ pro forma request builder');
   pdf.setCreationDate(input.createdAt);
@@ -159,7 +161,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   addPage();
 
   page.drawText('PRO FORMA INVOICE REQUEST', { x: MARGIN, y, size: 19, font: bold, color: NAVY });
-  const priceLabel = promoPrice ? 'PROMO PRICE SHOWN' : 'UNPRICED';
+  const priceLabel = equipmentTotal.selected.length ? 'PARTIAL PRICING' : promoPrice ? 'PROMO PRICE SHOWN' : 'UNPRICED';
   page.drawText(priceLabel, {
     x: PAGE_WIDTH - MARGIN - bold.widthOfTextAtSize(priceLabel, 8.5),
     y: y + 1,
@@ -197,6 +199,14 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
     y -= 8;
   }
 
+  if (equipmentTotal.selected.length) {
+    drawSectionTitle('Equipment pricing');
+    equipmentTotal.selected.forEach(line => drawWrapped(`${line.item.name}: ${line.quantity} unit(s) at ${formatPromoPrice(line.item.price)} + GST each.`, { size: 9.2, color: NAVY }));
+    drawWrapped(`Equipment subtotal: ${formatPromoPrice(equipmentTotal.net)}. GST (15%): ${formatPromoPrice(equipmentTotal.gst)}.`, { size: 9.2, color: NAVY });
+    drawWrapped(`Equipment incl. GST: ${formatPromoPrice(equipmentTotal.total)}`, { size: 12, font: bold, color: NAVY });
+    drawWrapped('Files, points, any promotional offers and freight are separate. This request is not an order until confirmed by EndoTech NZ.', { size: 8.5, color: MID });
+    y -= 8;
+  }
   drawSectionTitle('Practice details');
   const details: Array<[string, string]> = [
     ['Contact', input.customer.fullName],
@@ -241,7 +251,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   const sortedLines = [...input.lines].sort((a, b) => compareNzLaunchCatalogItems(a.item, b.item));
 
   for (const [index, line] of sortedLines.entries()) {
-    const productLines = wrapText(quoteFamilyLabels[line.item.family], bold, 7.8, columns[2].width - 10).slice(0, 2);
+    const productLines = wrapText(quoteProductLabel(line.item), bold, 7.8, columns[2].width - 10).slice(0, 2);
     const sizeLines = wrapText(line.item.size, regular, 7.8, columns[3].width - 10).slice(0, 2);
     const skuLines = wrapText(line.item.sku, regular, 7.3, columns[0].width - 10).slice(0, 2);
     const rowLines = Math.max(productLines.length, sizeLines.length, skuLines.length);
@@ -280,7 +290,9 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
 
   ensureSpace(55);
   y -= 9;
-  page.drawText(`${input.lines.length} product line${input.lines.length === 1 ? '' : 's'} | ${input.lines.reduce((sum, line) => sum + line.quantity, 0)} packs requested`, {
+  const packCount = input.lines.filter(line => line.item.family !== 'equipment').reduce((sum, line) => sum + line.quantity, 0);
+  const unitCount = equipmentTotal.selected.reduce((sum, line) => sum + line.quantity, 0);
+  page.drawText(`${input.lines.length} product line${input.lines.length === 1 ? '' : 's'} | ${packCount} packs | ${unitCount} equipment units`, {
     x: MARGIN,
     y,
     size: 9,
@@ -293,6 +305,9 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   drawWrapped(input.customer.notes || 'No additional notes supplied.', { size: 9.2, color: NAVY, lineHeight: 13 });
   y -= 3;
 
+  // Equipment preview already explains the next step beside its pricing.
+  // Avoid creating a second page containing only the repeated next-step box.
+  if (!equipmentTotal.selected.length) {
   if (y - 56 < 60) addPage();
   page.drawRectangle({ x: MARGIN, y: y - 52, width: CONTENT_WIDTH, height: 58, color: PALE, borderColor: LIGHT, borderWidth: 1 });
   page.drawText('NEXT STEP', { x: MARGIN + 14, y: y - 10, size: 7, font: bold, color: TEAL });
@@ -305,11 +320,12 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   nextStep.slice(0, 4).forEach((line, index) => {
     page.drawText(line, { x: MARGIN + 14, y: y - 27 - (index * 11), size: 8.8, font: regular, color: NAVY });
   });
+  }
 
   const pages = pdf.getPages();
   pages.forEach((currentPage, index) => {
     currentPage.drawLine({ start: { x: MARGIN, y: 56 }, end: { x: PAGE_WIDTH - MARGIN, y: 56 }, thickness: 0.6, color: LIGHT });
-    currentPage.drawText(promoPrice ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request', {
+    currentPage.drawText(equipmentTotal.selected.length ? 'EndoTech NZ | Pro forma request with equipment pricing' : promoPrice ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request', {
       x: MARGIN,
       y: 38,
       size: 6.8,

@@ -1,0 +1,33 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+<div class="et-video-grid">
+  <article class="et-video-feature">
+    <video controls playsinline preload="none" poster={`${base}products/eighteeth/cardinali-tutorial-poster.jpg`} aria-label="E-Connect S tutorial with Dr Filippo Cardinali">
+      <source src={`${base}videos/eighteeth/e-connect-s-cardinali-tutorial.mp4`} type="video/mp4" />
+      Your browser does not support this video. Use the download link below.
+    </video>
+    <h3>Learn with Dr Filippo Cardinali.</h3>
+    <p>A detailed E-Connect S tutorial from Eighteeth. Watch the complete presentation here or download it for training.</p>
+    <a class="et-video-download" href={`${base}videos/eighteeth/e-connect-s-cardinali-tutorial.mp4`} download>Download the full tutorial · 1080p · 8:35 · 110 MB ↓</a>
+  </article>
+  <div class="et-video-support">
+    <article>
+      <video controls playsinline preload="none" poster={`${base}products/eighteeth/how-to-use-poster.jpg`} aria-label="E-Connect S how to use">
+        <source src={`${base}videos/eighteeth/e-connect-s-how-to-use.mp4`} type="video/mp4" />
+      </video>
+      <h3>Getting started: how to use E-Connect S</h3>
+      <p>Manufacturer instruction video · 4:59</p>
+      <a class="et-video-download" href={`${base}videos/eighteeth/e-connect-s-how-to-use.mp4`} download>Download instruction video · 96 MB ↓</a>
+    </article>
+    <article>
+      <video controls playsinline preload="none" poster={`${base}products/eighteeth/overview-poster.jpg`} aria-label="E-Connect S short overview">
+        <source src={`${base}videos/eighteeth/e-connect-s-overview.mp4`} type="video/mp4" />
+      </video>
+      <h3>A quick introduction</h3>
+      <p>Manufacturer product overview · 1:24</p>
+      <a class="et-video-download" href={`${base}videos/eighteeth/e-connect-s-overview.mp4`} download>Download overview · 2.3 MB ↓</a>
+    </article>
+  </div>
+</div>
+<p class="et-clinical-note">Training supports the manufacturer's instructions for use. Read the current IFU supplied with your device and follow the instrument manufacturer's settings.</p>

@@ -1,0 +1,67 @@
+---
+import ProductLayout from '../layouts/ProductLayout.astro';
+import EConnectTraining from './EConnectTraining.astro';
+import { equipment, formatEquipmentPrice } from '../data/eighteethEquipment';
+interface Props { slug: 'e-connect-s' | 'ultra-x' }
+const { slug } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const motor = slug === 'e-connect-s';
+const item = equipment.find(item => item.slug === slug)!;
+const related = equipment.find(item => item.slug !== slug)!;
+const features = motor ? [
+  { title: 'Working length, in view.', body: 'The integrated apex locator displays file position on the handpiece. Use it during shaping or select M0 for standalone measurement with a hand file.' },
+  { title: 'Choose the movement.', body: 'Switch between forward rotation, reverse rotation, reciprocation and Adaptive Torque Control. Set speed and torque to match your instrument’s instructions.' },
+  { title: 'A head that adapts to access.', body: 'The 360° adjustable contra-angle and ambidextrous OLED display help position the handpiece for visibility and access.' },
+] : [
+  { title: 'Ultrasonic activation.', body: 'The 45 kHz (±5 kHz) operating frequency agitates irrigant through acoustic streaming and cavitation. Use after canal preparation as directed in the IFU.' },
+  { title: 'Two power settings.', body: 'Select low or high output. LED indicators show the selected mode and battery condition on the cordless handpiece.' },
+  { title: 'A tip for the task.', body: 'Silver, blue and gold tip options serve different applications. Select the correct type, size and length; follow the tip-specific instructions.' },
+];
+const specs = motor ? [
+  ['Movement modes', 'FWD · REV · REC · ATC'], ['Speed range', '120–1,000 rpm'], ['Torque range', '0.5–4.0 N·cm'],
+  ['Memory', 'M0 apex locator + M1–M10'], ['Contra-angle adjustment', '360°'], ['Display', 'Ambidextrous OLED'], ['Battery', '1,500 mAh lithium'],
+] : [
+  ['Device type', 'Cordless ultrasonic activator'], ['Operating frequency', '45 kHz ±5 kHz'], ['Output settings', 'High / low'],
+  ['Tip options', 'Silver · Blue · Gold'], ['Power', 'Rechargeable battery'], ['Indicators', 'Mode and battery LEDs'],
+];
+---
+<ProductLayout title={`${item.name} ${item.category} | EndoTech NZ`} description={item.description} image={item.image} accent="slate">
+  <link rel="stylesheet" href={`${base}eighteeth.css`} />
+  {import.meta.env.PUBLIC_LOCAL_PREVIEW === 'true' && <div class="et-review-strip">Local design preview · Prepared for review before publication.</div>}
+  <div class="et-device-page">
+    <nav class="et-breadcrumb" aria-label="Breadcrumb"><a href={base}>Home</a><span>/</span><a href={`${base}products/motors-ultrasonics/`}>Motors &amp; ultrasonics</a><span>/</span><span>{item.name}</span></nav>
+    <section class="et-device-hero" aria-labelledby="device-title">
+      <div class="et-device-copy">
+        <p class="et-eyebrow">Eighteeth · {item.category}</p>
+        <h1 id="device-title">{item.name}</h1>
+        <h2>{motor ? <>Shape with control.<br />Keep the apex in view.</> : <>Bring your irrigant<br />into motion.</>}</h2>
+        <p class="et-device-intro">{motor ? 'A cordless endodontic motor with an integrated apex locator. Flexible movement modes and working-length feedback in one handpiece.' : 'A cordless ultrasonic activator for the cleaning stage of endodontic treatment. Compact in the hand, with two output modes and a choice of activation tips.'}</p>
+        <p class="et-device-price"><strong>NZ{formatEquipmentPrice(item.price)}</strong><span>+ GST per unit</span></p>
+        <p class="et-price-note">NZ{formatEquipmentPrice(item.price * 1.15)} incl. GST · Freight confirmed on your pro forma.</p>
+        <div class="et-actions"><a class="et-button" href={`${base}quote-request/?category=equipment&product=${item.sku}#select-products`}>Add to a pro forma request <span aria-hidden="true">↗</span></a><a class="et-button secondary" href="#training">Watch training</a></div>
+      </div>
+      <figure class="et-device-visual"><img src={`${base}${item.image.slice(1)}`} width="1000" height="1000" alt={`${item.name} ${item.category.toLowerCase()} handpiece`} fetchpriority="high" /><figcaption class="et-device-visual-label">Eighteeth / {motor ? 'Shaping & apex location' : 'Irrigant activation'}</figcaption></figure>
+    </section>
+    <nav class="et-device-nav" aria-label={`${item.name} page sections`}><a href="#overview">Overview</a><a href="#features">Key features</a><a href="#specifications">Specifications</a><a href="#training">Training videos</a><a href="#downloads">IFU &amp; downloads</a><a href={`#related`}>{related.name} ↗</a></nav>
+    <section class="et-device-section" id="overview">
+      <p class="et-eyebrow">Clinical workflow</p><h2>{motor ? 'Control at the shaping stage.' : 'Shaping is followed by cleaning.'}</h2>
+      <div class="et-two-col">
+        <article><h3>The clinical problem</h3><p>{motor ? 'During canal preparation, instrument movement, load and working length need continual attention. A clear handpiece display and accessible settings help the clinician keep track of the selected parameters.' : 'Shaping instruments do not contact every surface of a root canal system. Irrigant needs to reach spaces around the prepared canal, including fins and isthmuses.'}</p></article>
+        <article><h3>{item.name} in the EndoTech workflow</h3><p>{motor ? 'E-Connect S combines shaping and apex-location functions. Select the movement for your file system, confirm the settings, and use the integrated feedback alongside your working-length checks.' : 'Ultra X adds ultrasonic agitation to the irrigant already placed in the canal. Acoustic streaming supports movement of the solution and suspended debris during the cleaning stage.'}</p></article>
+      </div>
+    </section>
+    <section class="et-device-section" id="features"><p class="et-eyebrow">Key features &amp; clinical benefits</p><h2>{motor ? 'Designed around your working hand.' : 'A focused tool for activation.'}</h2><div class="et-features">{features.map(feature => <article><h3>{feature.title}</h3><p>{feature.body}</p></article>)}</div></section>
+    <section class="et-device-section" id="specifications"><div class="et-two-col">
+      <div><p class="et-eyebrow">Technical details</p><h2>Know your device.</h2><p class="et-section-intro">{motor ? 'Rotary, reciprocating and adaptive modes, with a dedicated standalone apex-locator programme.' : 'A cordless handpiece with selectable power and dedicated ultrasonic tips.'}</p><a class="et-text-link" href={`${base}${item.brochure.slice(1)}`} download>Download manufacturer brochure ↓</a></div>
+      <dl class="et-specs">{specs.map(([term, detail]) => <div><dt>{term}</dt><dd>{detail}</dd></div>)}</dl>
+    </div><p class="et-clinical-note">{motor ? 'The stated speed range depends on the selected mode. REC and ATC settings differ from continuous rotation; check the IFU and your file manufacturer’s recommendations before use.' : 'Tip designs and supplied accessories can vary by product revision. Confirm the supplied configuration with EndoTech NZ. Read the IFU for tip selection, use, cleaning and sterilisation.'}</p></section>
+    <section class="et-device-section" id="training"><p class="et-eyebrow">Product learning</p><h2>{motor ? 'Watch. Learn. Put it into practice.' : 'See Ultra X in use.'}</h2><p class="et-section-intro">{motor ? 'Manufacturer instruction videos and the complete Dr Filippo Cardinali tutorial, available to watch here and download.' : 'Learn how to fit a tip using the Ultra X wrench. The downloadable IFU covers setup, operation and reprocessing.'}</p>
+      {motor ? <EConnectTraining /> : <><div class="et-remote-video"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/FRWDNrR0sq8?rel=0" title="Eighteeth Ultra X: fitting a tip with the wrench" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><div><h3>Fit the tip with the Ultra X wrench</h3><p>Eighteeth’s instruction video demonstrates how to use the wrench when fitting an Ultra X tip. Read the IFU for full setup and operating instructions.</p><a class="et-text-link" href="https://www.youtube.com/watch?v=FRWDNrR0sq8" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div></div><p class="et-clinical-note">For professional dental use. Use the IFU supplied with your unit for operation and reprocessing instructions.</p></>}
+    </section>
+    <section class="et-device-section" id="downloads"><p class="et-eyebrow">Keep the reference close</p><h2>Instructions &amp; downloads.</h2><div class="et-downloads">
+      <a class="et-download" href={`${base}${item.manual.slice(1)}`} download><span class="et-file-icon">PDF</span><div><strong>{item.name} · Instructions for use</strong><small>{motor ? 'English · Version 10 · 31 March 2025' : 'English · Version 11 · 2 April 2025'}</small></div><span aria-hidden="true">↓</span></a>
+      <a class="et-download" href={`${base}${item.brochure.slice(1)}`} download><span class="et-file-icon">PDF</span><div><strong>{item.name} · Product brochure</strong><small>Manufacturer overview · Features and product information</small></div><span aria-hidden="true">↓</span></a>
+    </div><p class="et-source-note">Product information: <a href={item.manufacturer} target="_blank" rel="noopener noreferrer">Eighteeth {item.name} ↗</a>. {motor ? 'Manual and training files supplied from the EndoTech Eighteeth resource library.' : <>Manufacturer-authored IFU sourced from <a href="https://abmed.ca/wp-content/uploads/2025/06/Ultra-X-User-Manual.pdf" target="_blank" rel="noopener noreferrer">the AB Medical document library ↗</a>. Match the IFU revision to the unit supplied.</>}</p></section>
+    <section class="et-related" id="related" aria-labelledby="related-title"><p class="et-eyebrow">Continue the workflow</p><h2 id="related-title">{motor ? 'You may also be interested in.' : 'Pair activation with controlled shaping.'}</h2><div class="et-related-card"><a href={`${base}products/${related.slug}/`}><img src={`${base}${related.image.slice(1)}`} width="180" height="180" alt={related.name} loading="lazy" /></a><div><p class="et-eyebrow">{related.category}</p><h3>{related.name}</h3><p>{related.description}</p></div><a class="et-button secondary" href={`${base}products/${related.slug}/`}>Explore {related.name} <span aria-hidden="true">↗</span></a></div></section>
+  </div>
+</ProductLayout>

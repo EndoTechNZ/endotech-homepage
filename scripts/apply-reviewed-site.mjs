@@ -1,93 +1,45 @@
 // Publish the approved review after Astro builds the supporting site and assets.
-// Frozen _astro assets retain the unchanged production quote/PDF implementation.
+// Keep reviewed pages and assets, with approved Astro pages for the request and resources.
 import fs from 'node:fs';
 import path from 'node:path';
 import { JSDOM } from 'jsdom';
 const root=path.resolve('reviewed-site'),dist=path.resolve('dist');
+// Preserve the approved homepage while publishing the approved equipment and request pages.
+const generatedEquipment=new JSDOM(fs.readFileSync(path.join(dist,'index.html'),'utf8')).window.document.querySelector('[data-equipment-section]')?.outerHTML;
+if(!generatedEquipment)throw Error('Equipment teaser was not generated');
+const equipmentGeneratedPages=new Set(['quote-request/index.html','resources/downloads/index.html']);
 let pages=0;
-function refreshQuoteCatalog(reviewedHtml,generatedHtml){
- const reviewedDom=new JSDOM(reviewedHtml),generatedDom=new JSDOM(generatedHtml);
- const reviewedDocument=reviewedDom.window.document,generatedDocument=generatedDom.window.document;
- const reviewedBuilder=reviewedDocument.querySelector('.quote-builder-page');
- const generatedBuilder=generatedDocument.querySelector('.quote-builder-page');
- const catalog=generatedBuilder?.getAttribute('data-catalog');
- if(!reviewedBuilder||!catalog)throw Error('Unable to refresh the reviewed quote catalogue');
- reviewedBuilder.setAttribute('data-catalog',catalog);
- const catalogSize=JSON.parse(decodeURIComponent(catalog)).length;
- const textNodes=reviewedDocument.createTreeWalker(reviewedBuilder,reviewedDom.window.NodeFilter.SHOW_TEXT);
- while(textNodes.nextNode()){
-  const node=textNodes.currentNode;
-  if(/\d+ listed SKUs/.test(node.textContent||''))node.textContent=node.textContent.replace(/\d+ listed SKUs/,`${catalogSize} listed SKUs`);
- }
- for(const attribute of ['data-submission-endpoint','data-submission-enabled']){
-  const value=generatedBuilder.getAttribute(attribute);
-  if(value===null)throw Error(`Unable to refresh quote submission setting: ${attribute}`);
-  reviewedBuilder.setAttribute(attribute,value);
- }
- const freshPromo=generatedDocument.querySelector('[data-promo-field]');
- const formGrid=reviewedDocument.querySelector('[data-customer-form] .quote-form-grid');
- if(!freshPromo||!formGrid)throw Error('Promo code field is missing from the quote request');
- reviewedDocument.querySelector('[data-promo-field]')?.remove();
- formGrid.appendChild(reviewedDocument.importNode(freshPromo,true));
- const scriptSelector='script[src*="quote-request.astro_astro_type_script"]';
- const currentScript=reviewedDocument.querySelector(scriptSelector),freshScript=generatedDocument.querySelector(scriptSelector);
- if(!currentScript||!freshScript)throw Error('Updated quote request script is missing');
- currentScript.replaceWith(reviewedDocument.importNode(freshScript,true));
- // Preserve the new promo pricing in the reviewed page and its print preview.
- const freshPrice=generatedDocument.querySelector('[data-review-promo-summary]');
- const reviewGrid=reviewedDocument.querySelector('#review-request .quote-review-grid');
- const freshNote=generatedDocument.querySelector('[data-review-pricing-note]');
- const currentNote=reviewedDocument.querySelector('#review-request .quote-section-heading > div:first-child > p:last-child');
- const freshHead=generatedDocument.querySelector('.quote-review-table thead');
- const currentHead=reviewedDocument.querySelector('.quote-review-table thead');
- const freshPrint=generatedDocument.querySelector('[data-print-promo-summary]');
- const printDisclaimer=reviewedDocument.querySelector('.quote-print-disclaimer');
- if(!freshPrice||!reviewGrid||!freshNote||!currentNote||!freshHead||!currentHead||!freshPrint||!printDisclaimer)throw Error('Promo pricing review or print elements are missing');
- reviewedDocument.querySelector('[data-review-promo-summary]')?.remove();
- reviewGrid.before(reviewedDocument.importNode(freshPrice,true));
- currentNote.replaceWith(reviewedDocument.importNode(freshNote,true));
- currentHead.replaceWith(reviewedDocument.importNode(freshHead,true));
- reviewedDocument.querySelector('[data-print-promo-summary]')?.remove();
- printDisclaimer.after(reviewedDocument.importNode(freshPrint,true));
- // Refresh ET rows as well so the new 17/.08 article is visible and selectable.
- const currentEt=reviewedDocument.querySelector('[data-family-panel="et"]');
- const freshEt=generatedDocument.querySelector('[data-family-panel="et"]');
- if(!currentEt||!freshEt)throw Error('ET catalogue panel is missing');
- currentEt.replaceWith(reviewedDocument.importNode(freshEt,true));
- const currentEtTab=reviewedDocument.querySelector('[data-family-tab="et"]');
- const freshEtTab=generatedDocument.querySelector('[data-family-tab="et"]');
- if(currentEtTab&&freshEtTab)currentEtTab.replaceWith(reviewedDocument.importNode(freshEtTab,true));
- for(const selector of ['[data-family-tab="gutta-percha"]','[data-family-panel="gutta-percha"]']){
-  const current=reviewedDocument.querySelector(selector),fresh=generatedDocument.querySelector(selector);
-  if(!current||!fresh)throw Error(`Unable to refresh quote element: ${selector}`);
-  current.replaceWith(reviewedDocument.importNode(fresh,true));
- }
- return '<!DOCTYPE html>\n'+reviewedDom.serialize();
-}
 function publish(dir,rel=''){
  for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
   const next=path.join(rel,entry.name),from=path.join(dir,entry.name),to=path.join(dist,next);
   if(entry.isDirectory()){publish(from,next);continue;}
   fs.mkdirSync(path.dirname(to),{recursive:true});
   if(!entry.name.endsWith('.html')){fs.copyFileSync(from,to);continue;}
+  if(equipmentGeneratedPages.has(next.replaceAll('\\','/'))){
+   if(!fs.existsSync(to))throw Error(`Generated equipment page missing: ${next}`);
+   continue;
+  }
   // The interactive MB2 viewer is maintained in Astro, including its mobile controls.
   if(next.replaceAll('\\', '/') === 'viewers/upper-molar-mb2/index.html'){
    if(!fs.existsSync(to))throw Error('Generated MB2 viewer is missing');
    continue;
   }
-  const isQuotePage=next.replaceAll('\\', '/') === 'quote-request/index.html';
-  const generatedHtml=isQuotePage&&fs.existsSync(to)?fs.readFileSync(to,'utf8'):'';
   let html=fs.readFileSync(from,'utf8');
+  if(next.replaceAll('\\','/')==='index.html'){
+   // String insertion keeps every existing hero/carousel byte intact.
+   html=html.replace('</main>',`${generatedEquipment}</main>`)
+    .replace('</head>','<link rel="stylesheet" href="/eighteeth.css"></head>');
+  }
+  if(next.replaceAll('\\','/')==='products/overview/index.html'){
+   html=html.replace('</main>',`${generatedEquipment}</main>`)
+    .replace('</head>','<link rel="stylesheet" href="/eighteeth.css"></head>');
+  }
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
    .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=compatibility-20261014')
    .replace(/\/rg-wireframe\.js(?:\?[^"']*)?/g,'/rg-wireframe.js?v=whoosh4-20260930')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
-  if(isQuotePage) {
-   html=refreshQuoteCatalog(html,generatedHtml);
-   html=html.replace('</head>', '<link rel="stylesheet" href="/quote-feedback.css"><link rel="stylesheet" href="/quote-promo.css"></head>');
-   html=html.replace('</body>', '<script src="/quote-search.js" defer></script><script src="/quote-feedback.js" defer></script></body>');
-  }
+
   fs.writeFileSync(to,html);pages++;
  }
 }
@@ -107,7 +59,10 @@ function check(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){
 check(dist);
 if(issues.length){console.error(JSON.stringify(issues,null,2));throw Error('Missing production destinations/assets');}
 const quote=fs.readFileSync(path.join(dist,'quote-request/index.html'),'utf8');
-if(!quote.includes('/quote-nz.css')||quote.includes('quote-local-notice">'))throw Error('Quote redesign not production-ready');
+if(process.env.PUBLIC_LOCAL_PREVIEW==='true'){
+ const builder=new JSDOM(quote).window.document.querySelector('[data-quote-builder]');
+ if(builder?.getAttribute('data-submission-enabled')!=='false'||builder.getAttribute('data-submission-endpoint'))throw Error('Local preview must not send email');
+}
 if(process.env.PUBLIC_QUOTE_REQUEST_SUBMISSION_ENABLED==='true'){
  const d=new JSDOM(quote).window.document;
  const builder=d.querySelector('.quote-builder-page');

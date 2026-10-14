@@ -1,0 +1,9 @@
+{
+  "repository": "EndoTechNZ/endotech-homepage",
+  "release": "eighteeth-training-20261015",
+  "assets": [
+    { "filename": "e-connect-s-cardinali-tutorial.mp4", "bytes": 109635953, "sha256": "d83c976665d1559cbbc17af5c3625384dd6a9a6c1823bd88622d9096695c05f1" },
+    { "filename": "e-connect-s-how-to-use.mp4", "bytes": 96171754, "sha256": "58a9435de100132eb893e53bed697f6c376ec1bfec4135adb2ed4e29e8b84b0d" },
+    { "filename": "e-connect-s-overview.mp4", "bytes": 2342845, "sha256": "26c088ebbd9de91477f447c0ad7e3423708b30d8a140a1c3389613fac08215a2" }
+  ]
+}
