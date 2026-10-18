@@ -1,6 +1,7 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import UpperMolarViewer from '../../components/UpperMolarViewer.astro';
+import Mb2OrificeShaper from '../../components/Mb2OrificeShaper.astro';
 import microPathMb2FileImage from '../../assets/micro-path-mb2-file-transparent.png';
 
 const base = import.meta.env.BASE_URL;
@@ -13,6 +14,8 @@ const protocolNav = [
   { label: 'Specifications', href: '#specifications' },
   { label: 'Checklist', href: '#checklist' },
   { label: 'Evidence', href: '#evidence' },
+  { label: 'Mini Magic', href: '#mini-magic' },
+  { label: '17/.08 Orifice Shaper', href: '#orifice-shaper-1708' },
   { label: 'MicroPath MB2 File', href: `${microPathMb2ProductHref}#mb2-file` },
   { label: 'MicroPath GlidePath Files', href: `${base}products/micro-path/#product-range` },
 ];
@@ -310,7 +313,7 @@ const relatedLinks = [
           </div>
         </div>
 
-        <section class="mb2-available-file" aria-labelledby="mb2-available-file-title">
+        <section id="mini-magic" class="mb2-available-file" aria-labelledby="mb2-available-file-title">
           <div class="mb2-available-file-visual" aria-hidden="true">
             <img
               src={microPathMb2FileImage.src}
@@ -323,8 +326,8 @@ const relatedLinks = [
           </div>
 
           <div class="mb2-available-file-copy">
-            <p class="mb2-protocol-eyebrow">Micro-Path™ MB2 file</p>
-            <h3 id="mb2-available-file-title">Size 15, .05 taper, 17 mm short-access file.</h3>
+            <p class="mb2-protocol-eyebrow">Mini Magic / Micro-Path™ MB2 file</p>
+            <h3 id="mb2-available-file-title">Mini Magic — size 15, .05 taper, 17 mm.</h3>
             <p>
               This is the Micro-Path™ MB2 file used in the sequence above: a short access
               glide-path option for controlled MB2 negotiation after the hand file has
@@ -351,6 +354,8 @@ const relatedLinks = [
         </section>
       </section>
     </section>
+
+    <Mb2OrificeShaper />
 
     <section class="mb2-protocol-detail" aria-labelledby="mb2-clinical-problem-title">
       <div class="mb2-protocol-section-heading">
