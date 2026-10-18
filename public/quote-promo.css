@@ -16,7 +16,10 @@
 .quote-review-table .quote-promo-line-price { white-space:nowrap; font-weight:500; color:#17334e; }
 .quote-review-table .quote-promo-line-price small { display:block; font-size:11px; color:#647587; font-weight:400; }
 .quote-print-promo-summary { margin:18px 0; padding:16px; border:1px solid #cbd5e1; }
+#promotion-code { scroll-margin-top:132px; }
+#promotion-code:target #quote-promo-code { border-color:#0b75b7; box-shadow:0 0 0 2px rgba(11,117,183,.12); }
 @media (max-width:600px) {
+  #promotion-code { scroll-margin-top:100px; }
   .quote-promo-summary { padding:20px; }
   .quote-promo-summary-main { align-items:flex-start; flex-direction:column; gap:16px; }
   .quote-promo-price { text-align:left; }

@@ -41,10 +41,12 @@ export const getPrimaryNavItems = (base: string): NavItem[] => [
   { label: 'Education', href: `${base}resources/clinical-tips/` },
   { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
   { label: 'About', href: `${base}about/company/` },
+  { label: 'Offers', href: `${base}offers/` },
 ];
 
 export const getProductMobileNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
+  { label: 'Offers', href: `${base}offers/` },
   { label: 'Product Overview', href: `${base}products/overview/` },
   { label: 'Transform S™ ET', href: `${base}products/transform-s-et/` },
   { label: 'Transform S™ PT', href: `${base}products/transform-s-pt/` },
@@ -66,6 +68,7 @@ export const getProductMobileNavItems = (base: string): NavItem[] => [
 
 export const getHomepageMobileNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
+  { label: 'Offers', href: `${base}offers/` },
   { label: 'Product Overview', href: `${base}products/overview/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
   { label: 'Technology Overview', href: `${base}technology/` },
@@ -114,6 +117,7 @@ export const getFooterSections = (base: string): FooterSection[] => [
   {
     title: 'Company',
     links: [
+      { label: 'Offers', href: `${base}offers/` },
       { label: 'About', href: `${base}about/company/` },
       { label: 'Contact', href: `${base}about/contact/` },
       { label: 'Order', href: `${base}order/` },

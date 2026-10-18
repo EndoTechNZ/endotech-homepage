@@ -1,0 +1,87 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import { nzShaperPromo } from '../../../shared/nz-promo-offers.mjs';
+
+const base = import.meta.env.BASE_URL;
+const products = [
+  {
+    name: 'Mini Magic',
+    spec: '15/.05 · 17 mm · six-pack',
+    description: 'For tight, difficult canal entrances, particularly MB2s.',
+    image: `${base}offers/tryboth/mini-magic.webp`,
+    width: 340,
+    height: 1015,
+    href: `${base}technique/mb2-file/#mini-magic`,
+    className: 'tryboth-product--mini',
+  },
+  {
+    name: '17/.08 Orifice Shaper',
+    spec: 'Size 17 tip · .08 taper · 17 mm · six-pack',
+    description: 'Its size 17 tip is smaller than traditional size 20 tips, giving far easier access to calcified orifices than traditional orifice openers with tip sizes of 20 or greater.',
+    image: `${base}offers/tryboth/orifice-shaper-real-photo.svg`,
+    width: 222,
+    height: 1030,
+    href: `${base}technique/mb2-file/#orifice-shaper-1708`,
+    className: 'tryboth-product--shaper',
+  },
+];
+---
+
+<ProductLayout title="Offers | EndoTech NZ" description="Explore the TRYBOTH introductory bundle: one six-pack of Mini Magic and one six-pack of the 17/.08 Orifice Shaper for NZ$30 plus GST and postage.">
+  <link rel="stylesheet" href={`${base}tryboth-offer.css`} />
+  <div class="offers-page">
+    <header class="offers-heading">
+      <p class="offers-eyebrow">EndoTech NZ</p>
+      <h1>Offers</h1>
+      <p>Practical file options. A simple way to try them.</p>
+    </header>
+
+    <section id="tryboth" class="tryboth-offer" aria-labelledby="tryboth-title">
+      <div class="tryboth-heading">
+        <p class="offers-eyebrow">The TRYBOTH introductory bundle</p>
+        <h2 id="tryboth-title">Two options for difficult canal entrances.</h2>
+        <p>A tight MB2 entrance and a small orifice that needs modification call for different file characteristics.</p>
+      </div>
+
+      <div class="tryboth-products">
+        {products.map((product) => (
+          <a class:list={['tryboth-product', product.className]} href={product.href}>
+            <span class="tryboth-product-image">
+              <img src={product.image} alt={product.name} width={product.width} height={product.height} />
+            </span>
+            <span class="tryboth-product-copy">
+              <span class="tryboth-product-title">{product.name}</span>
+              <span class="tryboth-product-spec">{product.spec}</span>
+              <span class="tryboth-product-description">{product.description}</span>
+              <span class="tryboth-product-education">Explore its role in MB2 education <span aria-hidden="true">→</span></span>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <div class="tryboth-request">
+        <div class="tryboth-price">
+          <p class="offers-eyebrow">One six-pack of each</p>
+          <h3>NZ${nzShaperPromo.netPrice} <span>plus GST plus postage</span></h3>
+          <p>NZ${nzShaperPromo.packPrice} per six-pack before GST.<br />NZ$34.50 including GST, plus postage.</p>
+          <p class="tryboth-limit">One introductory bundle per practice.</p>
+          <a class="tryboth-request-button" href={`${base}quote-request/#promotion-code`}>Request the TRYBOTH bundle <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="tryboth-instructions">
+          <h3>How to claim the offer</h3>
+          <ol>
+            <li>Click <strong>Request the TRYBOTH bundle</strong> to open the ordering page.</li>
+            <li>Under <strong>Step 2 — Add the practice and delivery details</strong>, find the <strong>Promo code</strong> box.</li>
+            <li>Type <strong class="tryboth-code">TRYBOTH</strong> <span>(one word, no space)</span>, then click <strong>Apply code</strong>. One six-pack of each file will be added.</li>
+          </ol>
+          <p>Complete your practice details and review the request. EndoTech NZ will confirm postage and availability in your pro forma invoice.</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="offers-catalogue">
+      <div><h2>Explore the wider NZ range</h2><p>See the current promotional catalogue for other file systems and pack details.</p></div>
+      <a href={`${base}promotions/transform-s-catalogue/?intro=flip`}>View the NZ catalogue <span aria-hidden="true">→</span></a>
+    </aside>
+  </div>
+</ProductLayout>

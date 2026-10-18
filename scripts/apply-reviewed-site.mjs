@@ -8,6 +8,9 @@ const root=path.resolve('reviewed-site'),dist=path.resolve('dist');
 const generatedEquipment=new JSDOM(fs.readFileSync(path.join(dist,'index.html'),'utf8')).window.document.querySelector('[data-equipment-section]')?.outerHTML;
 if(!generatedEquipment)throw Error('Equipment teaser was not generated');
 const equipmentGeneratedPages=new Set(['quote-request/index.html','resources/downloads/index.html']);
+const generatedMb2=new JSDOM(fs.readFileSync(path.join(dist,'technique/mb2-file/index.html'),'utf8')).window.document;
+const orificeShaperEducation=generatedMb2.querySelector('[data-mb2-orifice-shaper]')?.outerHTML;
+if(!orificeShaperEducation)throw Error('17/.08 MB2 education reference was not generated');
 let pages=0;
 function publish(dir,rel=''){
  for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
@@ -25,6 +28,16 @@ function publish(dir,rel=''){
    continue;
   }
   let html=fs.readFileSync(from,'utf8');
+  // Keep the reviewed navigation while making the Offers page directly discoverable.
+  html=html.replace(/<a\b([^>]*href="\/products\/overview\/"[^>]*)>Systems<\/a>/, (match,attributes)=>`${match}<a${attributes.replace('href="/products/overview/"','href="/offers/"')}>Offers</a>`);
+  html=html.replace(/href="\/promotions\/transform-s-catalogue\/"([^>]*>View NZ offers)/g,'href="/offers/"$1');
+  if(next.replaceAll('\\','/')==='technique/mb2-file/index.html'){
+   html=html.replace(/<section\b([^>]*class="[^\"]*\bmb2-available-file\b[^\"]*"[^>]*)>/, '<section id="mini-magic"$1>')
+    .replace(/(<h3 id="mb2-available-file-title"[^>]*>)[\s\S]*?(<\/h3>)/, '$1Mini Magic — size 15, .05 taper, 17 mm.$2')
+    .replace(/(<nav\b[^>]*class="[^\"]*\bmb2-protocol-local-nav\b[^\"]*"[^>]*>[\s\S]*?)(<\/nav>)/, '$1<a href="#mini-magic">Mini Magic</a><a href="#orifice-shaper-1708">17/.08 Orifice Shaper</a>$2')
+    .replace(/<section\b[^>]*class="[^\"]*\bmb2-protocol-detail\b[^\"]*"[^>]*>/, match=>`${orificeShaperEducation}${match}`);
+   if(!html.includes('id="orifice-shaper-1708"')||!html.includes('id="mini-magic"'))throw Error('Reviewed MB2 product anchors missing');
+  }
   if(next.replaceAll('\\','/')==='index.html'){
    // String insertion keeps every existing hero/carousel byte intact.
    html=html.replace('</main>',`${generatedEquipment}</main>`)
@@ -36,7 +49,7 @@ function publish(dir,rel=''){
   }
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
-   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=compatibility-20261014')
+   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=offers-20261019')
    .replace(/\/rg-wireframe\.js(?:\?[^"']*)?/g,'/rg-wireframe.js?v=whoosh4-20260930')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
 
