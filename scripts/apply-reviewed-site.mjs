@@ -8,6 +8,8 @@ const root=path.resolve('reviewed-site'),dist=path.resolve('dist');
 const generatedEquipment=new JSDOM(fs.readFileSync(path.join(dist,'index.html'),'utf8')).window.document.querySelector('[data-equipment-section]')?.outerHTML;
 if(!generatedEquipment)throw Error('Equipment teaser was not generated');
 const equipmentGeneratedPages=new Set(['quote-request/index.html','resources/downloads/index.html']);
+const generatedTipsTeaser=new JSDOM(fs.readFileSync(path.join(dist,'products/overview/index.html'),'utf8')).window.document.querySelector('[data-iroot-tips-teaser]')?.outerHTML;
+if(!generatedTipsTeaser)throw Error('iRoot SP product teaser was not generated');
 const generatedMb2=new JSDOM(fs.readFileSync(path.join(dist,'technique/mb2-file/index.html'),'utf8')).window.document;
 const orificeShaperEducation=generatedMb2.querySelector('[data-mb2-orifice-shaper]')?.outerHTML;
 if(!orificeShaperEducation)throw Error('17/.08 MB2 education reference was not generated');
@@ -49,13 +51,13 @@ function publish(dir,rel=''){
     .replace('</head>','<link rel="stylesheet" href="/eighteeth.css"></head>');
   }
   if(next.replaceAll('\\','/')==='products/overview/index.html'){
-   html=html.replace('</main>',`${generatedEquipment}</main>`)
+   html=html.replace('</main>',`${generatedTipsTeaser}${generatedEquipment}</main>`)
     .replace('</head>','<link rel="stylesheet" href="/eighteeth.css"></head>');
   }
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/\/site-style\.css(?:\?[^"']*)?/g,'/site-style.css?v=nav-labels-20261019')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
-   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=offers-20261019')
+   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=iroot-sp-20261020')
    .replace(/\/rg-wireframe\.js(?:\?[^"']*)?/g,'/rg-wireframe.js?v=whoosh4-20260930')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
 

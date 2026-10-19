@@ -16,6 +16,7 @@ export const getProductMenu = (base: string): NavItem[] => [
   { label: 'Micro-Path™ Files', href: `${base}products/micro-path/` },
   { label: 'Transform S™ C+ Files', href: `${base}products/c-plus/` },
   { label: 'Gutta Percha Points', href: `${base}products/gutta-percha/` },
+  { label: 'iRoot SP Disposable Tips', href: `${base}products/iroot-sp-disposable-tips/` },
   { label: 'Transform S™ K-Files', href: `${base}products/k-files/` },
 ];
 
