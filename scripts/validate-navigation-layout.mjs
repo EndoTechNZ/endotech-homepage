@@ -113,16 +113,11 @@ try {
     assert.ok(['chromium', 'webkit'].includes(engine), `Unknown browser: ${engine}`);
     browser = await ({ chromium, webkit })[engine].launch();
     const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
-    const fontResponses = new Map();
     // Do not download training videos, 3D models, or contact external tracking services.
     await context.route('**/*', async route => {
       const request = route.request();
       if (request.resourceType() === 'media' || /\.(?:glb|gltf|mp4)(?:\?|$)/.test(request.url()) || /google-analytics|googletagmanager|clarity\.ms/.test(request.url())) return route.abort();
       const url = new URL(request.url());
-      if (['fonts.googleapis.com', 'fonts.gstatic.com'].includes(url.hostname)) {
-        if (!fontResponses.has(url.href)) fontResponses.set(url.href, route.fetch());
-        return route.fulfill({ response: await fontResponses.get(url.href) });
-      }
       if (server && url.hostname === 'endotechnz.com') return route.fulfill({ response: await route.fetch({ url: new URL(url.pathname + url.search, base).href }) });
       return route.continue();
     });
