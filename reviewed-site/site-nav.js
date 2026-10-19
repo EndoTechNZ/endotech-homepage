@@ -3,6 +3,7 @@ const sharedExploreItems=[
   {href:'/products/transform-s-pt/',label:'Transform S PT'},
   {href:'/products/transform-s-rg/',label:'Transform S RG'},
   {href:'/products/micro-path/',label:'Micro-Path'},
+  {href:'/products/orifice-shapers/',label:'Orifice Shapers'},
   {href:'/products/c-plus/',label:'Transform S C+'},
   {href:'/products/gutta-percha/',label:'Gutta Percha Points'},
   {href:'/products/iroot-sp-disposable-tips/',label:'iRoot SP Disposable Tips'},

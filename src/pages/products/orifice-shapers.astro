@@ -1,0 +1,109 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import { getImage } from 'astro:assets';
+import rgLineup from '../../assets/transform-s-rg-system-alpha.png';
+import ptLineup from '../../assets/transform-s-pt.png';
+
+const base = import.meta.env.BASE_URL;
+const rgImage = await getImage({ src: rgLineup, width: 1600, format: 'webp' });
+const ptImage = await getImage({ src: ptLineup, width: 2000, format: 'webp' });
+const files = [
+  {
+    id: 'mini-magic', number: '01', name: 'Mini Magic', family: 'Micro-Path™ MB2', motion: 'Continuous rotation',
+    role: 'Tight MB2 entrances', spec: '15/.05 · 17 mm', pack: '6 files',
+    description: 'A short access and glide-path file for tight, difficult MB2 entrances. Its 17 mm format gives the handpiece more room when coronal access is restricted.',
+    workflow: 'Use after a hand file has confirmed direction, before progressing through the Micro-Path glide-path sequence and into shaping.',
+    href: 'technique/mb2-file/#mini-magic', link: 'Mini Magic in the MB2 guide',
+    image: 'mini',
+  },
+  {
+    id: '17-08', number: '02', name: '17/.08 Orifice Shaper', family: 'Transform\u00a0S™ ET', motion: 'Continuous rotation',
+    role: 'Small or calcified orifices', spec: '17/.08 · 17 mm', pack: '6 files',
+    description: 'A size 17 tip is smaller than the size 20 or larger tips of many traditional openers. The .08 taper supports controlled modification at a restricted canal entrance.',
+    workflow: 'Use for coronal orifice modification within the established path. It complements Mini Magic’s separate MB2 access and glide-path role.',
+    href: 'technique/mb2-file/#orifice-shaper-1708', link: '17/.08 in the MB2 guide',
+    image: '1708',
+  },
+  {
+    // Stephen confirmed reciprocation for the 18/.04v, 16 mm RG opener on 20 October 2026.
+    id: 'rg', number: '03', name: 'RG Orifice Shaper', family: 'Transform\u00a0S™ RG', motion: 'Reciprocation',
+    role: 'Coronal access for RG', spec: '18/.04v · 16 mm', pack: '3 files',
+    description: 'The dedicated coronal opening option in the RG range. Its short format supports access preparation before the RG glide-path and shaping stages.',
+    workflow: 'Uses reciprocation within the RG system, alongside the dedicated RG Glider and shaping files in a WaveOne Gold-style workflow. Select the motor program specified for each file.',
+    href: 'products/transform-s-rg/', link: 'Explore the RG system',
+    image: 'rg',
+  },
+  {
+    id: 'sx', number: '04', name: 'SX Orifice Shaper', family: 'Transform\u00a0S™ PT', motion: 'Continuous rotation',
+    role: 'PT-style coronal pre-enlargement', spec: 'SX · 19 mm', pack: '6 files',
+    description: 'The short, progressively tapered coronal shaping file in the PT sequence. It opens restrictive coronal anatomy before S1, S2 and the finishing files.',
+    workflow: 'For clinicians familiar with ProTaper Gold-style sequence logic. Use SX where coronal enlargement is needed, with controlled brushing away from the furcation.',
+    href: 'products/transform-s-pt/', link: 'Explore the PT system',
+    image: 'sx',
+  },
+];
+---
+
+<ProductLayout title="Orifice Shapers | Mini Magic, 17/.08, RG & SX | EndoTech NZ" description="Compare Mini Magic, the 17/.08 Orifice Shaper, Transform S RG opener and PT SX: short access files, coronal shaping roles and system compatibility.">
+  <article class="orifice-page">
+    <header class="orifice-intro">
+      <p class="eyebrow">Access / coronal preparation</p>
+      <h1>Orifice Shapers.</h1>
+      <p class="intro-line">A clearer entrance. A more controlled next step.</p>
+      <p class="intro-copy">Tight canal entrances and restrictive coronal anatomy call for different file characteristics. Compare four options for access, MB2 negotiation and coronal shaping.</p>
+    </header>
+
+    <section class="file-grid" aria-label="Compare access files and orifice shapers">
+      {files.map((file) => (
+        <section class="file" id={file.id} aria-labelledby={`${file.id}-title`}>
+          <div class="file-visual">
+            <span class="file-number" aria-hidden="true">{file.number}</span>
+            {file.image === 'mini' && <img src={`${base}offers/tryboth/mini-magic.webp`} alt="Micro-Path MB2 Mini Magic with red stopper and gold handle" width="340" height="1015" fetchpriority="high" />}
+            {file.image === '1708' && <img src={`${base}offers/tryboth/orifice-shaper-real-photo.svg`} alt="17/.08 Orifice Shaper with yellow stopper and silver handle" width="222" height="1030" />}
+            {file.image === 'rg' && <svg class="file-crop" viewBox="170 50 250 1550" role="img" aria-label="Transform S RG orifice shaper, isolated from the RG product lineup"><image href={rgImage.src} width="1953" height="1660" /></svg>}
+            {file.image === 'sx' && <svg class="file-crop" viewBox="1450 170 330 2300" role="img" aria-label="Transform S PT SX file, isolated from the PT product lineup"><g transform="rotate(180 1615 1320)"><image href={ptImage.src} width="5000" height="3224" /></g></svg>}
+          </div>
+          <div class="file-copy">
+            <p class="file-family">{file.family}</p>
+            <h2 id={`${file.id}-title`}>{file.name}</h2>
+            <p class="file-spec">{file.spec} <span>· {file.pack}</span></p>
+            <p class="file-role">{file.role}</p>
+            <p class="description">{file.description}</p>
+            <p class="workflow">{file.workflow}</p>
+            <div class="file-bottom">
+              <p class="motion"><span aria-hidden="true">{file.id === 'rg' ? '↔' : '↻'}</span> {file.motion}</p>
+              <a href={`${base}${file.href}`}>{file.link} <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </section>
+      ))}
+    </section>
+
+    <aside class="access-note" aria-label="Access and shaping sequence">
+      <p class="eyebrow">Keep the stages distinct</p>
+      <h2>Explore. Open where needed. Then glide and shape.</h2>
+      <p>Confirm the canal direction with small hand files. Keep coronal enlargement within the known path and stop before curvature or resistance. Match the motor program to the individual file, including when moving into a reciprocating system.</p>
+    </aside>
+
+    <section class="orifice-next" aria-label="Offers and product support">
+      <div><p class="eyebrow">Mini Magic + 17/.08</p><h2>Try one six-pack of each.</h2><p>Explore the TRYBOTH introductory bundle and its ordering instructions.</p></div>
+      <a class="offer-link" href={`${base}offers/#tryboth`}>View the TRYBOTH offer <span aria-hidden="true">↗</span></a>
+    </section>
+    <p class="support-link">Need help choosing? <a href={`${base}about/contact/`}>Talk with Steve Shepherd <span aria-hidden="true">→</span></a></p>
+  </article>
+</ProductLayout>
+
+<style>
+  .orifice-page{max-width:1280px;margin:auto;padding:56px 32px 48px;color:#183344;font-family:Inter,"Segoe UI",sans-serif}
+  .orifice-intro{max-width:780px;margin:0 auto 44px;text-align:center}.eyebrow{margin:0 0 12px;font-size:11px;font-weight:650;letter-spacing:.14em;text-transform:uppercase;color:#4d7d7e}
+  h1{margin:0;font-size:clamp(38px,5vw,62px);font-weight:550;letter-spacing:-.055em;line-height:1.08}.intro-line{margin:20px 0 12px;font-size:22px;letter-spacing:-.025em;color:#496774}.intro-copy{max-width:640px;margin:auto;color:#607084;font-size:15px;line-height:1.8}
+  .file-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.file{display:flex;min-width:0;flex-direction:column;border:1px solid #dbe3e9;border-radius:10px;overflow:hidden;scroll-margin-top:150px;background:white}
+  .file-visual{position:relative;display:flex;align-items:center;justify-content:center;height:270px;padding:24px;background:#fff;border-bottom:1px solid #e8edf2}.file-visual>img,.file-crop{display:block;width:auto;height:100%;max-width:100%;object-fit:contain}.file-number{position:absolute;left:18px;top:16px;color:#879aa6;font-size:11px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+  .file-copy{display:flex;flex:1;flex-direction:column;padding:24px 20px 22px}.file-family{margin:0 0 9px;font-size:12px;color:#597c86;font-weight:600;white-space:nowrap}.file h2{min-height:56px;margin:0 0 8px;font-size:23px;font-weight:550;line-height:1.2;letter-spacing:-.035em}.file-spec{margin:0 0 22px;color:#607084;font-size:12px;line-height:1.7}.file-spec span{white-space:nowrap}.file-role{margin:0 0 10px;color:#24364a;font-size:13px;font-weight:650}.description,.workflow{margin:0 0 14px;color:#4e6475;font-size:13px;line-height:1.8}.workflow{color:#657686}.file-bottom{margin-top:auto;padding-top:8px}.motion{display:flex;align-items:center;gap:7px;margin:0 0 20px;padding-top:17px;border-top:1px solid #e3e8ee;font-size:12px;font-weight:600;color:#294e63}.motion>span{font-size:19px;line-height:1}
+  a{color:#0b75b7;text-underline-offset:4px}.file-bottom>a{display:flex;justify-content:space-between;gap:12px;align-items:center;min-height:44px;font-size:12px;font-weight:600;text-decoration:none}.file-bottom>a span{font-size:20px;transition:transform .22s ease}.file-bottom>a:hover{text-decoration:underline}.file-bottom>a:hover span{transform:translateX(3px)}a:focus-visible{outline:2px solid #0b75b7;outline-offset:5px;border-radius:3px}
+  .access-note{margin:36px 0;padding:28px 32px;border-left:2px solid #7d9da5;background:#f7f9fb}.access-note .eyebrow{font-size:10px}.access-note h2,.orifice-next h2{margin:0 0 10px;font-size:23px;font-weight:550;letter-spacing:-.03em;line-height:1.3}.access-note>p:last-child{max-width:920px;margin:0;font-size:13px;line-height:1.9;color:#607084}
+  .orifice-next{display:flex;align-items:center;justify-content:space-between;gap:28px;padding:30px 32px;border:1px solid #dbe4ea;border-radius:10px;background:#f3f6f8}.orifice-next .eyebrow{font-size:10px}.orifice-next p:last-child{margin:0;font-size:13px;line-height:1.8;color:#607084}.offer-link{display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:48px;padding:14px 22px;border-radius:6px;background:#183c53;color:#fff;white-space:nowrap;text-decoration:none;font-size:13px;font-weight:600;transition:background .2s ease}.offer-link:hover{background:#0b75b7}.offer-link span{font-size:19px}.support-link{margin:26px 0 0;text-align:center;color:#607084;font-size:13px;line-height:1.8}.support-link a{display:inline-block;margin-left:5px}
+  @media(max-width:1100px){.file-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.file h2{min-height:0}.file-visual{height:280px}.file-copy{padding:24px}.description,.workflow{font-size:14px}.file-bottom>a{font-size:13px}}
+  @media(max-width:640px){.orifice-page{padding:32px 16px 36px}.orifice-intro{margin-bottom:28px}.intro-line{font-size:19px;line-height:1.45;margin-top:16px}.intro-copy{font-size:14px}.file-grid{grid-template-columns:1fr;gap:22px}.file-visual{height:240px}.file-copy{padding:24px}.file h2{font-size:25px}.file-spec{margin-bottom:18px}.access-note{margin:28px 0;padding:24px 20px}.access-note h2,.orifice-next h2{font-size:22px}.orifice-next{align-items:stretch;flex-direction:column;gap:20px;padding:26px 22px}.offer-link{white-space:normal;text-align:center}.support-link{font-size:12px}}
+  @media(prefers-reduced-motion:reduce){.file-bottom>a span,.offer-link{transition:none}}
+</style>

@@ -54,7 +54,7 @@ if (!base) {
   base = `http://127.0.0.1:${server.address().port}`;
 }
 
-const representativeRoutes = ['/', '/offers/', '/products/overview/', '/products/transform-s-et/', '/quote-request/', '/technique/mb2-file/', '/products/e-connect-s/'].filter(route => routes.includes(route));
+const representativeRoutes = ['/', '/offers/', '/products/overview/', '/products/transform-s-et/', '/products/orifice-shapers/', '/quote-request/', '/technique/mb2-file/', '/products/e-connect-s/'].filter(route => routes.includes(route));
 const widths = [320, 360, 375, 390, 414, 600, 601, 768, 850, 851, 1000, 1001, 1024, 1280, 1440, 1600, 1920, 2560];
 let cases = 0;
 
@@ -193,6 +193,7 @@ try {
       await load(route);
       const summary = page.locator('header details > summary').first();
       await summary.click();
+      assert.equal(await page.locator('header details a[href="/products/orifice-shapers/"]').count(), 1, `${engine} ${route}: Explore includes Orifice Shapers`);
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
       const menu = page.locator(variants.map(variant => `${variant.header} ${variant.menu}`).join(', '));
       const menuBounds = await menu.boundingBox();
