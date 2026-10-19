@@ -31,7 +31,8 @@ const product=new THREE.Group();product.position.y=-.0375;pose.add(product);
 const singleHolder=new THREE.Group();singleHolder.visible=false;scene.add(singleHolder);
 const tips=[],shells=[],labels=[],materials=[],geometryCache=new Map();
 const tipMaterials={hub:null,nozzle:null};
-let selectedView='3',visibleLayer=0,opacity=.12,tipOpacity=.12,loaded=false,errorLog=[];
+const requestedView=new URLSearchParams(location.search).get('view');
+let selectedView=['1','2','3','4','5','6'].includes(requestedView)?requestedView:'3',visibleLayer=0,opacity=.12,tipOpacity=.12,loaded=false,errorLog=[];
 
 // Read the Blender-exported static indexed GLB. The original PNG artwork is
 // used for the labels here and is also embedded in the downloadable GLB.
@@ -128,7 +129,7 @@ function applyInspection(){
 }
 function setView(id){
     selectedView=id;
-    const presets={'1':{e:88,a:-90,r:0,label:'Photo 1 · Near overhead'},'2':{e:39,a:-60,r:-14,label:'Photo 2 · Resting on its side'},'3':{e:33,a:-70,r:-2,label:'Photo 3 · Standing'},'4':{e:89.5,a:-90,r:0,label:'Open tray · all 20 positions filled'},'5':{e:50,a:-70,r:0,label:'Single tip · winged hub, short elbow, straight nozzle'},'6':{e:-78,a:-90,r:0,label:'Back label · smaller underside label'}};
+    const presets={'1':{e:88,a:-90,r:0,label:'Top view · Near overhead'},'2':{e:39,a:-60,r:-14,label:'Side view · Resting on its side'},'3':{e:33,a:-70,r:-2,label:'Full stack · Standing'},'4':{e:89.5,a:-90,r:0,label:'Open tray · all 20 positions filled'},'5':{e:50,a:-70,r:0,label:'Single tip · winged hub, short elbow, straight nozzle'},'6':{e:-78,a:-90,r:0,label:'Back label · smaller underside label'}};
     const p=presets[id];pose.quaternion.identity();
     visibleLayer=id==='4'?5:0;document.getElementById('layer').value=String(visibleLayer);applyInspection();
     controls.minDistance=id==='5'?.04:.12;
@@ -186,4 +187,4 @@ function resize(){
 }
 new ResizeObserver(()=>{resize();requestRender();}).observe(stage);resize();
 function render(){frameRequest=0;if(document.hidden)return;controls.update();renderer.render(scene,camera);}requestRender();
-loadProduct().catch(e=>{errorLog.push(String(e));document.getElementById('loading').hidden=true;renderer.domElement.hidden=true;document.getElementById('fallback').hidden=false;document.getElementById('error').textContent='Unable to load the interactive model. You can still explore the product pictures using the links above.';document.querySelectorAll('button,select,input').forEach(c=>c.disabled=true);updateState();});
+loadProduct().catch(e=>{errorLog.push(String(e));document.getElementById('loading').hidden=true;renderer.domElement.hidden=true;document.getElementById('fallback').hidden=false;document.getElementById('error').textContent='Unable to load the interactive model. Use the Product page link to return to the previews.';document.querySelectorAll('button,select,input').forEach(c=>c.disabled=true);updateState();});
