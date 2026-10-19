@@ -14,6 +14,7 @@ export const getProductMenu = (base: string): NavItem[] => [
   { label: 'Transform S™ PT Files', href: `${base}products/transform-s-pt/` },
   { label: 'Transform S™ RG Files', href: `${base}products/transform-s-rg/` },
   { label: 'Micro-Path™ Files', href: `${base}products/micro-path/` },
+  { label: 'Orifice Shapers', href: `${base}products/orifice-shapers/` },
   { label: 'Transform S™ C+ Files', href: `${base}products/c-plus/` },
   { label: 'Gutta Percha Points', href: `${base}products/gutta-percha/` },
   { label: 'iRoot SP Disposable Tips', href: `${base}products/iroot-sp-disposable-tips/` },
@@ -47,6 +48,7 @@ export const getPrimaryNavItems = (base: string): NavItem[] => [
 
 export const getProductMobileNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
+  { label: 'Orifice Shapers', href: `${base}products/orifice-shapers/` },
   { label: 'Offers', href: `${base}offers/` },
   { label: 'Product Overview', href: `${base}products/overview/` },
   { label: 'Transform S™ ET', href: `${base}products/transform-s-et/` },
@@ -69,6 +71,7 @@ export const getProductMobileNavItems = (base: string): NavItem[] => [
 
 export const getHomepageMobileNavItems = (base: string): NavItem[] => [
   { label: 'Home', href: base },
+  { label: 'Orifice Shapers', href: `${base}products/orifice-shapers/` },
   { label: 'Offers', href: `${base}offers/` },
   { label: 'Product Overview', href: `${base}products/overview/` },
   { label: 'Clinical Workflow', href: `${base}technique/workflow/` },
@@ -96,6 +99,7 @@ export const getFooterSections = (base: string): FooterSection[] => [
     links: [
       { label: 'Endodontic Files NZ', href: `${base}endodontic-files-new-zealand/` },
       { label: 'Product Overview', href: `${base}products/overview/` },
+      { label: 'Orifice Shapers', href: `${base}products/orifice-shapers/` },
       { label: 'Transform S™ ET', href: `${base}products/transform-s-et/` },
       { label: 'Transform S™ PT', href: `${base}products/transform-s-pt/` },
       { label: 'Transform S™ RG', href: `${base}products/transform-s-rg/` },
