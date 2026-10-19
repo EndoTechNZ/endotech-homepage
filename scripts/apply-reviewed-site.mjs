@@ -28,6 +28,11 @@ function publish(dir,rel=''){
    continue;
   }
   let html=fs.readFileSync(from,'utf8');
+  // Keep the reviewed footer menus aligned with the generated resource links.
+  html=html.replace(/<footer\b[\s\S]*?<\/footer>/gi, footer=>{
+   if(footer.includes('href="/resources/safety-data-sheets/"'))return footer;
+   return footer.replace(/<a\b([^>]*href="\/resources\/downloads\/"[^>]*)>[\s\S]*?<\/a>/, (match,attributes)=>`${match}<a${attributes.replace('href="/resources/downloads/"','href="/resources/safety-data-sheets/"')}>Safety Data Sheets</a>`);
+  });
   // Keep the reviewed navigation while making the Offers page directly discoverable.
   html=html.replace(/<a\b([^>]*href="\/products\/overview\/"[^>]*)>Systems<\/a>/, (match,attributes)=>`${match}<a${attributes.replace('href="/products/overview/"','href="/offers/"')}>Offers</a>`);
   html=html.replace(/href="\/promotions\/transform-s-catalogue\/"([^>]*>View NZ offers)/g,'href="/offers/"$1');

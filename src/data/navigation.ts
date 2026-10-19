@@ -112,6 +112,7 @@ export const getFooterSections = (base: string): FooterSection[] => [
       { label: 'Blog', href: `${base}resources/ideas/` },
       { label: 'Education', href: `${base}resources/clinical-tips/` },
       { label: 'Evidence & Downloads', href: `${base}resources/downloads/` },
+      { label: 'Safety Data Sheets', href: `${base}resources/safety-data-sheets/` },
     ],
   },
   {

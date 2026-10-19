@@ -1,0 +1,48 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import { withBasePath } from '../../utils/paths';
+import safetyDownloads from '../../data/safetyDownloads.json';
+
+const downloadsHref = withBasePath('/resources/downloads/');
+const collectionHref = withBasePath(`/downloads/safety-data/${safetyDownloads.collection.fileName}`);
+---
+
+<ProductLayout title="Safety Data Sheets | EndoTech NZ" description="Download New Zealand product safety information for sterile EndoTech file systems.">
+  <section class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-14 sm:py-20">
+      <a href={downloadsHref} class="text-sm font-semibold text-slate-600 underline decoration-slate-300 underline-offset-4 hover:text-slate-900">← Evidence &amp; Downloads</a>
+      <p class="mt-8 text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">New Zealand product documentation</p>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">Safety Data Sheets</h1>
+      <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">Product safety information for finished, sterile file systems. Read each sheet with the product label and instructions for use; the scope of the available test evidence is stated in the documents.</p>
+    </div>
+  </section>
+
+  <section class="bg-slate-50/70" aria-label="Safety information downloads">
+    <div class="mx-auto max-w-7xl px-6 py-12 sm:py-16">
+      <article class="flex flex-col gap-6 rounded-[1.75rem] bg-slate-900 p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">Combined collection</p>
+          <h2 class="mt-3 text-2xl font-bold tracking-tight">All six file systems</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-200">Product Safety Information · 24-page PDF · Revision 1 · 19 October 2026</p>
+        </div>
+        <a href={collectionHref} download={safetyDownloads.collection.fileName} class="safety-download inline-flex min-h-12 shrink-0 items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-100" aria-label="Download all six New Zealand product safety information sheets">Download all <span class="ml-3" aria-hidden="true">↓</span></a>
+      </article>
+
+      <div class="mt-6 grid gap-5 md:grid-cols-2">
+        {safetyDownloads.files.map((file) => (
+          <article class="flex flex-col items-start rounded-[1.75rem] border border-slate-200 bg-white p-6 sm:p-8">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Product Safety Information</p>
+            <h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-900">{file.name}</h2>
+            <p class="mt-3 text-sm leading-7 text-slate-600">New Zealand edition · 4-page PDF<br />Sterile instruments · Revision 1</p>
+            <a href={withBasePath(`/downloads/safety-data/${file.fileName}`)} download={file.fileName} aria-label={`Download ${file.name} New Zealand product safety information PDF`} class="safety-download mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800">Download PDF <span class="ml-3" aria-hidden="true">↓</span></a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</ProductLayout>
+
+<style>
+  .safety-download { transition: background-color 180ms ease; }
+  .safety-download:focus-visible { outline: 2px solid #64748b; outline-offset: 4px; }
+</style>
