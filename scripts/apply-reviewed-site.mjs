@@ -48,6 +48,7 @@ function publish(dir,rel=''){
     .replace('</head>','<link rel="stylesheet" href="/eighteeth.css"></head>');
   }
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
+   .replace(/\/site-style\.css(?:\?[^"']*)?/g,'/site-style.css?v=nav-20261019')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
    .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=offers-20261019')
    .replace(/\/rg-wireframe\.js(?:\?[^"']*)?/g,'/rg-wireframe.js?v=whoosh4-20260930')

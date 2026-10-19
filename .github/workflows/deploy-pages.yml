@@ -45,6 +45,19 @@ jobs:
       - name: Build site
         run: npm run build:github
 
+      - name: Install navigation test browsers
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Check published navigation at mobile and desktop widths
+        run: npm run check:navigation-layout
+
+      - name: Save navigation screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: navigation-layout
+          path: output/playwright/navigation/
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

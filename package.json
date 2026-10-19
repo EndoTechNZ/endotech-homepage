@@ -12,6 +12,7 @@
     "check:docs-links": "node scripts/validate-docs-links.js",
     "check:homepage-carousel": "node scripts/validate-homepage-carousel.mjs",
     "check:homepage-price-badge": "node scripts/validate-price-badge.mjs",
+    "check:navigation-layout": "node scripts/validate-navigation-layout.mjs",
     "build": "node scripts/fetch-equipment-media.mjs && npm run check:quote-catalog && npm run check:quote-types && npm run check:promo-pricing && node scripts/test-equipment-pricing.mjs && npm run check:docs-links && astro build && node scripts/apply-reviewed-site.mjs && node scripts/validate-all-links.js",
     "build:staging": "node scripts/fetch-equipment-media.mjs && npm run check:docs-links && astro build && node scripts/setup-password-protection.js && node scripts/validate-all-links.js",
     "build:github": "node scripts/fetch-equipment-media.mjs && npm run check:quote-catalog && npm run check:quote-types && npm run check:promo-pricing && node scripts/test-equipment-pricing.mjs && npm run check:docs-links && npm run check:homepage-carousel && npm run check:homepage-price-badge && astro build && node scripts/apply-reviewed-site.mjs && node scripts/validate-all-links.js",
