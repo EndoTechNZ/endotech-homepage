@@ -28,6 +28,7 @@ Each page must include:
 - Give every clinical blog post a compact numbered key-points panel near the opening. Tailor three to five points to the article's central clinical decisions; do not reuse a generic checklist.
 
 ## Navigation layout checks
+- For every future product or new website destination added to EndoTech NZ, include its link in the homepage's Explore menu and keep the applicable shared desktop and mobile menus consistent. The published homepage has its own menu in `reviewed-site/index.html`; updating a product page or `reviewed-site/site-nav.js` alone does not update it. Verify the final production output and the live homepage link on desktop and mobile before reporting the addition complete.
 - Keep headers in normal flow with content-driven height. Adding or changing a navigation link must never place a control outside its header or over page content.
 - Keep navigation labels, including Explore and its chevron, on one line. Size buttons to their contents; wrap whole buttons when necessary. Preserve the fine animated underline on Systems, Offers and Explore, including keyboard focus and reduced-motion support.
 - After navigation or offer changes, build the production output with `npm run build:github`, then run `npm run check:navigation-layout`. Test the final `dist` output because the reviewed-site publishing step inserts navigation links after Astro builds.
