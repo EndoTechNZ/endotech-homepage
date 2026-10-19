@@ -27,3 +27,14 @@ body.clean-subpage{background:#fafafa!important;color:#475569!important;font-fam
 @media(max-width:800px){.clean-subpage .clean-product-hero{grid-template-columns:1fr;gap:24px;padding:40px 24px!important}.clean-product-copy,.clean-product-actions,.clean-product-visual{grid-column:1;grid-row:auto}.clean-product-visual{height:300px!important;max-width:100%!important}.clean-product-actions{flex-wrap:wrap!important}}
 @media(max-width:600px){.clean-header{padding:10px}.clean-nav-inner{gap:10px}.clean-brand img{width:48px;height:48px}.clean-header nav{gap:4px;font-size:12px}.clean-header nav>a[href="/products/overview/"],.clean-explore summary{min-height:36px;padding:0 10px}.clean-header .clean-order{margin-left:2px;padding:10px 13px}.clean-dropdown{right:-72px;width:min(260px,calc(100vw - 20px))}.clean-footer{padding-top:32px}.clean-subpage h1{font-size:38px!important}}
 .overview-cta-actions .clean-order{display:inline-flex;align-items:center;gap:.35em;border-radius:30px;background:#0c4a6e;color:#fff;padding:12px 23px;font-weight:600;line-height:1;text-decoration:none;white-space:nowrap}
+
+/* Keep all navigation controls inside the header when links or text sizes change. */
+.clean-header nav>a[href="/offers/"]{display:inline-flex;align-items:center;justify-content:center;min-height:42px;box-sizing:border-box;border:1px solid #d5dee7;border-radius:8px;padding:0 15px;background:#f8fafc;color:#294b70;font-weight:650;line-height:1;white-space:nowrap}
+.clean-nav-inner{flex-wrap:wrap}
+.clean-header nav{flex-wrap:wrap;justify-content:flex-end;max-width:100%;min-width:0}
+@media(max-width:600px){
+  .clean-header nav{flex:1 1 100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,64px),1fr))}
+  .clean-header nav>a[href],.clean-header .clean-explore summary{min-width:0;min-height:44px;box-sizing:border-box;justify-content:center;padding:10px 5px;white-space:normal;overflow-wrap:anywhere;text-align:center}
+  .clean-header .clean-order{margin-left:0;padding:10px 5px}
+  .clean-explore{min-width:0}
+}
