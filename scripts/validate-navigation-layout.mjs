@@ -55,7 +55,7 @@ if (!base) {
 }
 
 const representativeRoutes = ['/', '/offers/', '/products/overview/', '/products/transform-s-et/', '/quote-request/', '/technique/mb2-file/', '/products/e-connect-s/'].filter(route => routes.includes(route));
-const widths = [320, 360, 375, 390, 414, 600, 601, 768, 850, 851, 1024, 1440];
+const widths = [320, 360, 375, 390, 414, 600, 601, 768, 850, 851, 1000, 1001, 1024, 1280, 1440, 1600, 1920, 2560];
 let cases = 0;
 
 async function checkLayout(page, label, scrolled = false) {
@@ -89,7 +89,9 @@ async function checkLayout(page, label, scrolled = false) {
           if (!walker.currentNode.textContent.trim()) continue;
           const range = document.createRange();
           range.selectNode(walker.currentNode);
-          for (const textRect of range.getClientRects()) if (!within(textRect, rect)) issues.push(`${name}: text escapes button`);
+          const textRects = [...range.getClientRects()].filter(textRect => textRect.width > 0);
+          if (textRects.length > 1) issues.push(`${name}: label breaks onto multiple lines`);
+          for (const textRect of textRects) if (!within(textRect, rect)) issues.push(`${name}: text escapes button`);
         }
       }
       const order = header.querySelector('a[href="/quote-request/"]');
@@ -105,6 +107,42 @@ async function checkLayout(page, label, scrolled = false) {
   if (issues.length) await page.screenshot({ path: path.join(output, 'failure.png') });
   assert.deepEqual(issues, [], label);
   cases++;
+}
+
+async function checkUnderlines(page, route, engine) {
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+  const buttons = [
+    { label: 'Systems', selector: 'header nav > a[href="/products/overview/"]' },
+    { label: 'Offers', selector: 'header nav > a[href="/offers/"]' },
+    { label: 'Explore', selector: 'header nav > details > summary' },
+  ];
+  for (const { label, selector } of buttons) {
+    const button = page.locator(selector).first();
+    await page.mouse.move(1, 500);
+    await button.evaluate(element => element.blur());
+    const element = await button.elementHandle();
+    await page.waitForFunction(element => new DOMMatrixReadOnly(getComputedStyle(element, '::after').transform).a < .01, element);
+    const before = await button.boundingBox();
+    await button.hover();
+    await page.waitForFunction(element => new DOMMatrixReadOnly(getComputedStyle(element, '::after').transform).a > .99, element);
+    const line = await button.evaluate(element => {
+      const style = getComputedStyle(element, '::after');
+      return { content: style.content, height: style.height, duration: style.transitionDuration, width: parseFloat(style.width) };
+    });
+    assert.equal(line.content, '""', `${engine} ${route} ${label}: underline exists`);
+    assert.equal(line.height, '1px', `${label}: drawing rule stays fine`);
+    assert.equal(line.duration, '0.3s', `${label}: underline draws smoothly`);
+    assert.ok(line.width > 20, `${label}: underline has visible length`);
+    const after = await button.boundingBox();
+    assert.ok(Math.abs(after.width - before.width) < 1 && Math.abs(after.height - before.height) < 1, 'Hover must not resize the button');
+    if (route === '/') await page.locator('.site-header').screenshot({ path: path.join(output, `${engine}-desktop-${label.toLowerCase()}-hover.png`) });
+    cases++;
+  }
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  assert.equal(await page.locator(buttons[2].selector).first().evaluate(element => getComputedStyle(element, '::after').transitionDuration), '0s', 'Reduced motion disables underline travel');
+  await page.mouse.move(1, 500);
 }
 
 let browser;
@@ -149,6 +187,7 @@ try {
         await page.evaluate(() => scrollTo(0, 500));
         await checkLayout(page, `${engine} ${route} scrolled at ${width}px`, true);
       }
+      await checkUnderlines(page, route, engine);
       // Explore opens below the complete navigation and stays on a short screen.
       await page.setViewportSize({ width: 390, height: 390 });
       await load(route);
@@ -162,7 +201,7 @@ try {
       assert.equal(await summary.evaluate(element => element.parentElement.open), false, 'Escape closes Explore');
       // Returning keyboard focus may scroll the document underneath a sticky header.
       await checkLayout(page, `${engine} ${route} after closing Explore`, true);
-      for (const width of [320, 390, 851]) {
+      for (const width of [320, 390, 851, 1280, 1440, 1920]) {
         await page.setViewportSize({ width, height: 844 });
         await load(route);
         // Simulate another menu addition and a longer label, without changing source.
@@ -179,10 +218,12 @@ try {
     await page.setViewportSize({ width: 390, height: 844 });
     await load('/');
     await page.screenshot({ path: path.join(output, `${engine}-mobile-after.png`) });
+    await page.setViewportSize({ width: 1600, height: 900 });
+    await page.screenshot({ path: path.join(output, `${engine}-desktop-after.png`) });
     await context.close();
     await browser.close();
     browser = null;
-    console.log(`${engine}: all published navigation pages, responsive widths, sticky headers, extra links and enlarged text passed.`);
+    console.log(`${engine}: all published navigation pages, single-line labels, hover underlines, responsive widths, sticky headers, extra links and enlarged text passed.`);
   }
   console.log(`Navigation layout passed: ${cases} browser checks across ${routes.length} published pages. Screenshots: ${output}`);
 } finally {

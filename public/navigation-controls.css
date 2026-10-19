@@ -1,0 +1,36 @@
+/* The same fine drawing rule used on the site's contact links. */
+:is(.header-actions, .clean-header nav, .compact-product-header nav) > a:not([href$="/quote-request/"]),
+:is(.header-explore, .clean-explore, .compact-explore) > summary {
+  position: relative;
+}
+:is(.header-actions, .clean-header nav, .compact-product-header nav) > a:not([href$="/quote-request/"])::after,
+:is(.header-explore, .clean-explore, .compact-explore) > summary::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 7px;
+  height: 1px;
+  background: currentColor;
+  opacity: .65;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms cubic-bezier(.22, .61, .36, 1);
+}
+@media (hover: hover) {
+  :is(.header-actions, .clean-header nav, .compact-product-header nav) > a:not([href$="/quote-request/"]):hover::after,
+  :is(.header-explore, .clean-explore, .compact-explore) > summary:hover::after {
+    transform: scaleX(1);
+  }
+}
+:is(.header-actions, .clean-header nav, .compact-product-header nav) > a:not([href$="/quote-request/"]):focus-visible::after,
+:is(.header-explore, .clean-explore, .compact-explore) > summary:focus-visible::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.header-actions, .clean-header nav, .compact-product-header nav) > a:not([href$="/quote-request/"])::after,
+  :is(.header-explore, .clean-explore, .compact-explore) > summary::after {
+    transition: none;
+  }
+}
