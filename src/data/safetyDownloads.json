@@ -1,0 +1,61 @@
+{
+  "region": "New Zealand",
+  "documentType": "Product Safety Information Sheet",
+  "version": "2026-10-19-r1",
+  "files": [
+    {
+      "key": "ET",
+      "name": "TransformS ET",
+      "fileName": "EndoTech-NZ-ET-Product-Safety-Information.pdf",
+      "pages": 4,
+      "bytes": 15238,
+      "sha256": "b3ed6745a649bf97087535d10999ba884e3a93136741835d74dcd830fe5e41cb"
+    },
+    {
+      "key": "PT",
+      "name": "TransformS PT",
+      "fileName": "EndoTech-NZ-PT-Product-Safety-Information.pdf",
+      "pages": 4,
+      "bytes": 15255,
+      "sha256": "d62f765664e899a8231c9506421302ecdb22772843a20ff7757950f4cb93f528"
+    },
+    {
+      "key": "RG",
+      "name": "TransformS RG",
+      "fileName": "EndoTech-NZ-RG-Product-Safety-Information.pdf",
+      "pages": 4,
+      "bytes": 15226,
+      "sha256": "95401a7ff35a5df4f2a3c118867240a43a5183382f04f4a4d72562de3d0552f5"
+    },
+    {
+      "key": "MP",
+      "name": "Micropath",
+      "fileName": "EndoTech-NZ-MP-Product-Safety-Information.pdf",
+      "pages": 4,
+      "bytes": 15224,
+      "sha256": "af355dce3709d10ac7746f66441e8fa59a0fa0b3058e53bda6cfdf5c562ef148"
+    },
+    {
+      "key": "CT",
+      "name": "TransformS CT",
+      "fileName": "EndoTech-NZ-CT-Product-Safety-Information.pdf",
+      "pages": 4,
+      "bytes": 15234,
+      "sha256": "d536a24eaa19600111f5529340b153b72c601d981327e59868def7df87529813"
+    },
+    {
+      "key": "CTHT",
+      "name": "TransformS CTHT",
+      "fileName": "EndoTech-NZ-CTHT-Product-Safety-Information.pdf",
+      "pages": 4,
+      "bytes": 15228,
+      "sha256": "22f5347e7fa1e96770ec9815870f7c5a79ac6ba570a811f1f5d07f5edfe6a9fa"
+    }
+  ],
+  "collection": {
+    "fileName": "EndoTech-NZ-All-Six-Product-Safety-Information.pdf",
+    "pages": 24,
+    "bytes": 89711,
+    "sha256": "647fe32eaad69291750fceb8b60c182ee2a8a39ada925256b0d69b05a93912a8"
+  }
+}
