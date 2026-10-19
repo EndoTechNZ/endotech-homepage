@@ -22,6 +22,7 @@ const footerUtilityLinks = getFooterUtilityLinks(base);
 <Layout title={title} description={description} image={image}>
   {schema && <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />}
   <link slot="head" rel="stylesheet" href={`${base}product-system-colour.css`} />
+  <link slot="head" rel="stylesheet" href={`${base}navigation-controls.css?v=20261019-labels`} />
   <CompactProductHeader />
 
   <main class="product-site-main" data-accent={accent}>

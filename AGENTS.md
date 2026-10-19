@@ -29,6 +29,7 @@ Each page must include:
 
 ## Navigation layout checks
 - Keep headers in normal flow with content-driven height. Adding or changing a navigation link must never place a control outside its header or over page content.
+- Keep navigation labels, including Explore and its chevron, on one line. Size buttons to their contents; wrap whole buttons when necessary. Preserve the fine animated underline on Systems, Offers and Explore, including keyboard focus and reduced-motion support.
 - After navigation or offer changes, build the production output with `npm run build:github`, then run `npm run check:navigation-layout`. Test the final `dist` output because the reviewed-site publishing step inserts navigation links after Astro builds.
 - Install test browsers with `npx playwright install chromium webkit` if needed. The GitHub Pages deployment checks phone, tablet and desktop widths in Chromium and WebKit before publishing.
 

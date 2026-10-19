@@ -1,3 +1,4 @@
+@import url('/navigation-controls.css?v=20261019-labels');
 .clean-header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.98);border-bottom:1px solid #e2e8f0;padding:18px 24px;font:14px system-ui,sans-serif;color:#64748b}
 .clean-nav-inner{max-width:1280px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .clean-brand img{width:76px;height:76px;object-fit:contain}
@@ -32,9 +33,11 @@ body.clean-subpage{background:#fafafa!important;color:#475569!important;font-fam
 .clean-header nav>a[href="/offers/"]{display:inline-flex;align-items:center;justify-content:center;min-height:42px;box-sizing:border-box;border:1px solid #d5dee7;border-radius:8px;padding:0 15px;background:#f8fafc;color:#294b70;font-weight:650;line-height:1;white-space:nowrap}
 .clean-nav-inner{flex-wrap:wrap}
 .clean-header nav{flex-wrap:wrap;justify-content:flex-end;max-width:100%;min-width:0}
+.clean-header nav>:is(a,details){min-width:max-content}
 @media(max-width:600px){
-  .clean-header nav{flex:1 1 100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,64px),1fr))}
-  .clean-header nav>a[href],.clean-header .clean-explore summary{min-width:0;min-height:44px;box-sizing:border-box;justify-content:center;padding:10px 5px;white-space:normal;overflow-wrap:anywhere;text-align:center}
+  .clean-header nav{flex:1 1 100%}
+  .clean-header nav>:is(a,details){flex:1 0 auto}
+  .clean-header nav>a[href],.clean-header .clean-explore summary{min-width:max-content;min-height:44px;box-sizing:border-box;justify-content:center;padding:10px 5px;white-space:nowrap;overflow-wrap:normal;text-align:center}
   .clean-header .clean-order{margin-left:0;padding:10px 5px}
   .clean-explore{min-width:0}
 }
