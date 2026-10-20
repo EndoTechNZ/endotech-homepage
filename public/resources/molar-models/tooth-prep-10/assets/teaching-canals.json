@@ -1,1 +1,1 @@
-{"vertices":37040,"faces":73910,"positions":"teaching-canals-positions.bin","normals":"teaching-canals-normals.bin","indices":"teaching-canals-indices.bin"}
+{"vertices":37040,"faces":73910,"positions":"teaching-canals-positions.bin","normals":"teaching-canals-normals.bin","indices":"teaching-canals-indices.bin","compact":"teaching-canals-display.mesh","max_display_position_error_mm":0.00013221311282063768}

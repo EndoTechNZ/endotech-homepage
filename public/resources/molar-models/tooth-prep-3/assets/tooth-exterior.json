@@ -1,1 +1,1 @@
-{"vertices":154259,"faces":308428,"positions":"tooth-exterior-positions.bin","normals":"tooth-exterior-normals.bin","indices":"tooth-exterior-indices.bin"}
+{"vertices":154259,"faces":308428,"positions":"tooth-exterior-positions.bin","normals":"tooth-exterior-normals.bin","indices":"tooth-exterior-indices.bin","compact":"tooth-exterior-display.mesh","max_display_position_error_mm":0.000162657395307591}
