@@ -3,7 +3,7 @@ import ProductLayout from '../../layouts/ProductLayout.astro';
 import { withBasePath } from '../../utils/paths';
 const assets = withBasePath('/models/iroot-sp-disposable-tips/');
 const viewer = `${assets}viewer/`;
-const kitPreview = `${assets}previews/full-kit.webp?v=approved-variant-label-20261020`;
+const kitPreview = `${assets}previews/full-kit.webp?v=round-label-100mm-20261020`;
 const tipPreview = `${assets}previews/single-tip.webp?v=single-tip-35-20261020`;
 ---
 <ProductLayout title="iRoot SP Disposable Tips | Interactive 3D | EndoTech NZ" description="Click the full kit or individual tip to open the complete interactive iRoot SP Disposable Tips 3D viewer." image={kitPreview} accent="teal">
@@ -16,7 +16,7 @@ const tipPreview = `${assets}previews/single-tip.webp?v=single-tip-35-20261020`;
     </header>
     <section id="interactive-model" class="tips-previews" aria-label="Choose a product to explore in 3D">
       <a class="product-preview" href={viewer} aria-label="Open the full kit in the interactive 3D viewer">
-        <img src={kitPreview} alt="Full stack of five clear trays containing 100 disposable tips with the approved illustrated iRoot SP label, tightly framed on a neutral blue-grey background" width="530" height="470" fetchpriority="high" />
+        <img src={kitPreview} alt="Full stack of five clear trays containing 100 disposable tips with the circular illustrated iRoot SP label, tightly framed on a neutral blue-grey background" width="530" height="470" fetchpriority="high" />
         <span class="product-caption"><span><strong>The full kit</strong><small>Five circular layers · 100 tips</small></span><span class="open-label">Click to explore in 3D <span aria-hidden="true">↗</span></span></span>
       </a>
       <div class="tip-column">
