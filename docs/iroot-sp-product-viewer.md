@@ -41,3 +41,9 @@ Revision token: `approved-variant-label-20261020`. It versions the viewer bootst
 Top PNG SHA-256: `c131ad561948cf72d37336a7f7690b4f06898fa168ae2b599088c46dfa89221d`.
 
 Current native source: `output/irrigation-tip-organizer-20261020/Irrigation-tip-organizer-approved-variant-label.blend` in the original design workspace. It was saved separately from the verified matched-photo source to preserve older native files. Regenerate using `scripts/apply_approved_variant_label.py` there. Native verification and GLB component comparison are saved alongside that source. Future edits should start from this approved native file.
+
+## Single-tip opacity — 20 October 2026
+
+The single-tip view (`?view=5`, or the Single tip button) starts at **35% tip surface opacity**. Assembly views start at 12%. Each mode keeps its own slider adjustment during the session; switching between them restores that mode's value. The slider, output text and rendered materials stay synchronized. The existing finer-nozzle opacity ratio of two thirds of the hub value is preserved.
+
+The individual-tip product-page preview is captured from this same viewer at the 35% setting. Both the preview and viewer module/bootstrap use the cache token `single-tip-35-20261020`.

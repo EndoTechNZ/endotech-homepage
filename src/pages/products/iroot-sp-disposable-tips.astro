@@ -4,6 +4,7 @@ import { withBasePath } from '../../utils/paths';
 const assets = withBasePath('/models/iroot-sp-disposable-tips/');
 const viewer = `${assets}viewer/`;
 const kitPreview = `${assets}previews/full-kit.webp?v=approved-variant-label-20261020`;
+const tipPreview = `${assets}previews/single-tip.webp?v=single-tip-35-20261020`;
 ---
 <ProductLayout title="iRoot SP Disposable Tips | Interactive 3D | EndoTech NZ" description="Click the full kit or individual tip to open the complete interactive iRoot SP Disposable Tips 3D viewer." image={kitPreview} accent="teal">
   <article class="tips-page">
@@ -20,7 +21,7 @@ const kitPreview = `${assets}previews/full-kit.webp?v=approved-variant-label-202
       </a>
       <div class="tip-column">
         <a class="product-preview" href={`${viewer}?view=5`} aria-label="Open the single tip in the full interactive 3D viewer">
-          <img src={`${assets}previews/single-tip.webp`} alt="Enlarged translucent disposable tip with a winged hub, short elbow and straight nozzle, tightly framed on a neutral blue-grey background" width="600" height="200" />
+          <img src={tipPreview} alt="Enlarged disposable tip at 35% surface opacity with a winged hub, short elbow and straight nozzle, tightly framed on a neutral blue-grey background" width="600" height="200" />
           <span class="product-caption"><span><strong>The individual tip</strong><small>Inspect the connector and nozzle</small></span><span class="open-label">Click to explore in 3D <span aria-hidden="true">↗</span></span></span>
         </a>
         <p class="viewer-note">Both images open the complete 3D program. Rotate, zoom, adjust transparency, or switch between the full stack, individual layers and single tip.</p>

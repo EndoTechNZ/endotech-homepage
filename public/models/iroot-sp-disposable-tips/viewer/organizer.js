@@ -32,7 +32,8 @@ const singleHolder=new THREE.Group();singleHolder.visible=false;scene.add(single
 const tips=[],shells=[],labels=[],materials=[],geometryCache=new Map();
 const tipMaterials={hub:null,nozzle:null};
 const requestedView=new URLSearchParams(location.search).get('view');
-let selectedView=['1','2','3','4','5','6'].includes(requestedView)?requestedView:'3',visibleLayer=0,opacity=.12,tipOpacity=.12,loaded=false,errorLog=[];
+const tipOpacityByView={assembly:.12,single:.35};
+let selectedView=['1','2','3','4','5','6'].includes(requestedView)?requestedView:'3',visibleLayer=0,opacity=.12,tipOpacity=tipOpacityByView[requestedView==='5'?'single':'assembly'],loaded=false,errorLog=[];
 
 // Read the Blender-exported static indexed GLB. The original PNG artwork is
 // used for the labels here and is also embedded in the downloadable GLB.
@@ -129,6 +130,7 @@ function applyInspection(){
 }
 function setView(id){
     selectedView=id;
+    setTipOpacity(tipOpacityByView[id==='5'?'single':'assembly']);
     const presets={'1':{e:88,a:-90,r:0,label:'Top view · Near overhead'},'2':{e:39,a:-60,r:-14,label:'Side view · Resting on its side'},'3':{e:33,a:-70,r:-2,label:'Full stack · Standing'},'4':{e:89.5,a:-90,r:0,label:'Open tray · all 20 positions filled'},'5':{e:50,a:-70,r:0,label:'Single tip · winged hub, short elbow, straight nozzle'},'6':{e:-78,a:-90,r:0,label:'Back label · smaller underside label'}};
     const p=presets[id];pose.quaternion.identity();
     visibleLayer=id==='4'?5:0;document.getElementById('layer').value=String(visibleLayer);applyInspection();
@@ -148,13 +150,15 @@ function setOpacity(value){
 }
 function setTipOpacity(value){
     tipOpacity=value;
+    tipOpacityByView[selectedView==='5'?'single':'assembly']=value;
     if(tipMaterials.hub)tipMaterials.hub.opacity=value;
     if(tipMaterials.nozzle)tipMaterials.nozzle.opacity=value*2/3;
+    document.getElementById('tip-opacity').value=String(Math.round(value*100));
     document.getElementById('tip-opacity-value').textContent=Math.round(value*100)+'%';updateState();
 }
 function updateState(){
     requestRender();
-    stage.dataset.model=JSON.stringify({loaded,revision:'approved-variant-label-20261020',tipCount:tips.length,tipsByLayer:[1,2,3,4,5].map(i=>tips.filter(t=>t.userData.layer===i).length),caseComponents:shells.length,labelCount:labels.length,labelsVisible:labels.filter(l=>l.visible).map(l=>l.userData.label_side),labelWidthsMm:labels.map(l=>({side:l.userData.label_side,width:l.userData.label_width_mm,height:l.userData.label_height_mm})),view:selectedView,visibleLayer,visibleTips:selectedView==='5'?1:tips.filter(t=>t.visible).length,caseOpacity:opacity,hubSurfaceOpacity:tipOpacity,nozzleSurfaceOpacity:tipOpacity*2/3,straightNozzleMm:35,gripWingsPerTip:2,missingPositionRestored:true,cameraPosition:camera.position.toArray(),cameraQuaternion:camera.quaternion.toArray(),errors:errorLog});
+    stage.dataset.model=JSON.stringify({loaded,revision:'single-tip-35-20261020',tipCount:tips.length,tipsByLayer:[1,2,3,4,5].map(i=>tips.filter(t=>t.userData.layer===i).length),caseComponents:shells.length,labelCount:labels.length,labelsVisible:labels.filter(l=>l.visible).map(l=>l.userData.label_side),labelWidthsMm:labels.map(l=>({side:l.userData.label_side,width:l.userData.label_width_mm,height:l.userData.label_height_mm})),view:selectedView,visibleLayer,visibleTips:selectedView==='5'?1:tips.filter(t=>t.visible).length,caseOpacity:opacity,hubSurfaceOpacity:tipOpacity,nozzleSurfaceOpacity:tipOpacity*2/3,straightNozzleMm:35,gripWingsPerTip:2,missingPositionRestored:true,cameraPosition:camera.position.toArray(),cameraQuaternion:camera.quaternion.toArray(),errors:errorLog});
 }
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
 document.getElementById('opacity').addEventListener('input',e=>setOpacity(Number(e.target.value)/100));
