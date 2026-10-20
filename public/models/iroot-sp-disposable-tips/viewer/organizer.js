@@ -37,7 +37,7 @@ let selectedView=['1','2','3','4','5','6'].includes(requestedView)?requestedView
 // Read the Blender-exported static indexed GLB. The original PNG artwork is
 // used for the labels here and is also embedded in the downloadable GLB.
 async function loadProduct(){
-    const response=await fetch('./model.glb?v=clear-tips-with-labels-20261020');
+    const response=await fetch('./model.glb?v=approved-variant-label-20261020');
     if(!response.ok)throw new Error('Model download failed ('+response.status+')');
     const data=await response.arrayBuffer();
     const view=new DataView(data);
@@ -69,7 +69,7 @@ async function loadProduct(){
     const labelMaps=new Map();
     await Promise.all(json.nodes.filter(n=>n.extras?.component==='packaging_label').map(async n=>{
         const file=n.extras.label_art_file;
-        const texture=await new THREE.TextureLoader().loadAsync('./artwork/'+file);
+        const texture=await new THREE.TextureLoader().loadAsync('./artwork/'+file+'?v=approved-variant-label-20261020');
         texture.colorSpace=THREE.SRGBColorSpace;texture.flipY=false;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();
         labelMaps.set(file,texture);
     }));
@@ -154,7 +154,7 @@ function setTipOpacity(value){
 }
 function updateState(){
     requestRender();
-    stage.dataset.model=JSON.stringify({loaded,revision:'clear-tips-and-labels-20261020',tipCount:tips.length,tipsByLayer:[1,2,3,4,5].map(i=>tips.filter(t=>t.userData.layer===i).length),caseComponents:shells.length,labelCount:labels.length,labelsVisible:labels.filter(l=>l.visible).map(l=>l.userData.label_side),labelWidthsMm:labels.map(l=>({side:l.userData.label_side,width:l.userData.label_width_mm})),view:selectedView,visibleLayer,visibleTips:selectedView==='5'?1:tips.filter(t=>t.visible).length,caseOpacity:opacity,hubSurfaceOpacity:tipOpacity,nozzleSurfaceOpacity:tipOpacity*2/3,straightNozzleMm:35,gripWingsPerTip:2,missingPositionRestored:true,cameraPosition:camera.position.toArray(),cameraQuaternion:camera.quaternion.toArray(),errors:errorLog});
+    stage.dataset.model=JSON.stringify({loaded,revision:'approved-variant-label-20261020',tipCount:tips.length,tipsByLayer:[1,2,3,4,5].map(i=>tips.filter(t=>t.userData.layer===i).length),caseComponents:shells.length,labelCount:labels.length,labelsVisible:labels.filter(l=>l.visible).map(l=>l.userData.label_side),labelWidthsMm:labels.map(l=>({side:l.userData.label_side,width:l.userData.label_width_mm,height:l.userData.label_height_mm})),view:selectedView,visibleLayer,visibleTips:selectedView==='5'?1:tips.filter(t=>t.visible).length,caseOpacity:opacity,hubSurfaceOpacity:tipOpacity,nozzleSurfaceOpacity:tipOpacity*2/3,straightNozzleMm:35,gripWingsPerTip:2,missingPositionRestored:true,cameraPosition:camera.position.toArray(),cameraQuaternion:camera.quaternion.toArray(),errors:errorLog});
 }
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
 document.getElementById('opacity').addEventListener('input',e=>setOpacity(Number(e.target.value)/100));
