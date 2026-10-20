@@ -52,8 +52,18 @@ The individual-tip product-page preview is captured from this same viewer at the
 
 Stephen requested a round label approximately 10 cm across on the 15 cm lid. The top label is now an actual **100 mm diameter circular mesh**, with a **25 mm clear radial rim** around it. The artwork is rearranged to fit the circle using the same IBC and iRoot SP marks, manufacturer, Sealing Paste and Disposable Tips wording, selected illustration and fine blue border. The underside label remains unchanged.
 
-Current native source: `output/irrigation-tip-organizer-20261020/Irrigation-tip-organizer-round-label-100mm.blend` in the original design workspace. Editable SVG, actual-size PDF, PNG and `label-copy.json` are in `artwork/round-label/` there. Regenerate artwork with `scripts/build_round_front_label.py`, then apply it with `scripts/apply_round_front_label.py`. The earlier native models are preserved.
+The circular-label native source is preserved as `output/irrigation-tip-organizer-20261020/Irrigation-tip-organizer-round-label-100mm.blend` in the original design workspace. The current native model also includes the side outlets described below. Editable SVG, actual-size PDF, PNG and `label-copy.json` are in `artwork/round-label/` there. Regenerate artwork with `scripts/build_round_front_label.py`, then apply it with `scripts/apply_round_front_label.py`. That script reads `current-model.json` so later label revisions preserve the latest tip geometry. The earlier native models are preserved.
 
 All 147 exported nodes other than the top label retain identical geometry, transforms and metadata. There are still 100 tips, 20 in each of five layers. The single-tip view and its product-page picture retain the 35% setting; assembly views retain 12%.
 
 The model, label images, viewer bootstrap/module and full-kit preview are versioned `round-label-100mm-20261020`. The displayed verification revision is `round-label-100mm-single-tip-35-20261020`.
+
+## Two distal side outlets — 20 October 2026
+
+Current native source: `output/irrigation-tip-organizer-20261020/Irrigation-tip-organizer-two-side-outlets.blend` in the original design workspace, tracked by `current-model.json`. The shared tip mesh has two actual curved openings through the distal wall, 180° apart, with the same handedness, and a smooth closed rounded terminal end. The form follows Stephen's supplied CN223169817U patent PDF, claims 1–3 and Figures 5–6. The model's microscopic outlet dimensions are illustrative, rather than measured manufacturing dimensions.
+
+Only the last 2.625 mm of the nozzle changes. The hub, wings, elbow, proximal nozzle and all 100 placements are preserved. All 48 non-tip nodes, including both labels, preserve their geometry, materials, transforms and metadata. Blender checks confirm a manifold shared tip mesh, two opposed open sectors through the side wall and a closed cap.
+
+Single-tip mode still opens at 35% opacity. It allows closer manual zoom and adds **Zoom to side outlets**, followed by **View opposite outlet**, so both sides can be inspected. `?view=5&detail=outlets` opens the first outlet close-up directly. The rest of the six views and the separate assembly/single-tip opacity settings are retained.
+
+Model and viewer code revision: `two-side-outlets-20261020`; displayed verification revision: `two-side-outlets-single-tip-35-20261020`. The round-label artwork files are unchanged. Geometry checks are saved as `side-outlets-verification.json` and `side-outlets-export-comparison.json` in the original working project.

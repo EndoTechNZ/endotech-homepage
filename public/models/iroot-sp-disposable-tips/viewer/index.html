@@ -17,7 +17,7 @@ html[data-embedded] main{padding:22px;gap:24px}html[data-embedded] #stage{height
 <section id="stage" aria-label="Rotatable 3D irrigation tip organizer">
 <div class="tag" id="view-label">Standing view</div>
 <div class="hint"><span class="mouse">Drag to rotate · Scroll to zoom · Right-drag to pan · Arrow keys rotate</span><span class="touch">One finger rotates · Pinch to zoom · Two fingers pan</span></div>
-<img id="fallback" src="../previews/full-kit.webp?v=round-label-100mm-20261020" alt="Static view of the transparent iRoot SP Disposable Tips organizer" hidden style="width:100%;height:100%;object-fit:contain">
+<img id="fallback" src="../previews/full-kit.webp?v=two-side-outlets-20261020" alt="Static view of the transparent iRoot SP Disposable Tips organizer" hidden style="width:100%;height:100%;object-fit:contain">
 <div id="loading" role="status">Loading 3D model…</div>
 </section>
 <aside>
@@ -29,6 +29,7 @@ html[data-embedded] main{padding:22px;gap:24px}html[data-embedded] #stage{height
 <button type="button" data-view="3" class="active">Full stack · Standing</button>
 <button type="button" data-view="4">Open tray · 20 complete tips</button>
 <button type="button" data-view="5">Single tip · Close-up</button>
+<button type="button" id="tip-outlet-zoom" hidden>Zoom to side outlets</button>
 <button type="button" data-view="6">Back label · Underside</button>
 
 </div>
@@ -42,11 +43,11 @@ html[data-embedded] main{padding:22px;gap:24px}html[data-embedded] #stage{height
 <p id="status" aria-live="polite">100 individual tips visible</p>
 
 <p class="small"> winged hollow hubs, short elbows and straight tapered nozzles.</p>
-<details><summary>Model details</summary><p class="small">The overall size and counts follow the supplied measurements. Smaller connector details, tip curvature and wall thickness are approximated from reference photographs.</p></details>
+<details><summary>Model details</summary><p class="small">The overall size and counts follow the supplied measurements. The two opposed curved side outlets and closed rounded end follow the supplied CN223169817U patent drawing. Microscopic dimensions and smaller connector details are illustrative.</p></details>
 <div id="error" role="alert"></div>
 </div>
 </aside>
 </main>
 <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/controls/OrbitControls.js":"./vendor/OrbitControls.js"}}</script>
-<script type="module" src="./bootstrap.js?v=round-label-100mm-20261020"></script>
+<script type="module" src="./bootstrap.js?v=two-side-outlets-20261020"></script>
 </body></html>
