@@ -17,5 +17,8 @@ export function decodeDisplayMesh(buffer){
   const n=Math.hypot(x,y,z);normals[i*3]=x/n;normals[i*3+1]=y/n;normals[i*3+2]=z/n;
  }
  for(let i=1;i<indices.length;i++)indices[i]=(indices[i]+indices[i-1])>>>0;
+ // Preserve even sub-micrometre sliver faces that need exact source vertices.
+ for(const [index,x,y,z] of meta.exact_vertices||[])positions.set([x,y,z],index*3);
+ for(const index of meta.zero_normals||[])normals.fill(0,index*3,index*3+3);
  return {positions,normals,indices,meta};
 }
