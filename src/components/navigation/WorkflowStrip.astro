@@ -2,6 +2,7 @@
 import { getWorkflowStripItems, type WorkflowStepId } from '../../data/workflowStrip';
 
 type WorkflowStripIcon =
+  | 'models'
   | 'assess'
   | 'access'
   | 'glide'
@@ -47,6 +48,9 @@ const workflow = items ?? getWorkflowStripItems(base);
           aria-current={activeStep === item.id ? 'page' : undefined}
         >
           <span class="workflow-strip-icon" aria-hidden="true">
+            {item.icon === 'models' && (
+              <svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"></path><path d="m4 7.5 8 4.5 8-4.5M12 12v9M8 5.3l8 4.5"></path></svg>
+            )}
             {item.icon === 'assess' && (
               <svg viewBox="0 0 24 24" fill="none">
                 <circle cx="11" cy="11" r="6.5"></circle>
