@@ -15,7 +15,7 @@ Do not revise the artwork until Stephen supplies approved changes.
 
 - Editable label image inputs: `viewer/artwork/top-label.png` and
   `viewer/artwork/back-label.png` inside that asset directory.
-- Keep the top film a 100 mm diameter circle and the underside film 92 mm wide unless the
+- Keep the top film a 100 mm diameter circle and the underside film a 92 mm diameter circle unless the
   approved revision explicitly changes placement. Preserve the clear border.
 - Update the corresponding PNG inputs in the original Blender project, rerun its
   label export and matching-angle renders, then replace `viewer/model.glb`, both
@@ -67,3 +67,13 @@ Only the last 2.625 mm of the nozzle changes. The hub, wings, elbow, proximal no
 Single-tip mode still opens at 35% opacity. It allows closer manual zoom and adds **Zoom to side outlets**, followed by **View opposite outlet**, so both sides can be inspected. `?view=5&detail=outlets` opens the first outlet close-up directly. The rest of the six views and the separate assembly/single-tip opacity settings are retained.
 
 Model and viewer code revision: `two-side-outlets-20261020`; displayed verification revision: `two-side-outlets-single-tip-35-20261020`. The round-label artwork files are unchanged. Geometry checks are saved as `side-outlets-verification.json` and `side-outlets-export-comparison.json` in the original working project.
+
+## Current circular back label — 20 October 2026
+
+Stephen requested the back label round as well. It is now an actual **92 mm diameter circular mesh**, centred on the 150 mm base with a **29 mm clear radial rim**. The existing manufacturer, representative, distributor, contact details, document revision and original supplied symbols are reflowed into the circle. The front label remains a 100 mm circle.
+
+Current native source: `output/irrigation-tip-organizer-20261020/Irrigation-tip-organizer-round-front-and-back-labels.blend` in the original design workspace. `current-model.json` tracks the current native source, export and protected tip hash. The back artwork has an editable SVG, actual-size PDF, PNG, source symbols and `label-copy.json` in `artwork/round-back-label/`. Regenerate with `scripts/build_round_back_label.py`, then apply with `scripts/apply_round_back_label.py`. Both back and front label application scripts read the current manifest and preserve the latest tip geometry.
+
+All 147 exported nodes other than the back label retain identical geometry, materials, transforms and metadata. The five layers of 20 tips, two opposed side outlets, closed rounded ends and 35% single-tip setting are preserved. `?view=6` opens the circular underside label. The full-kit preview is refreshed from the updated viewer; the single-tip preview is unchanged.
+
+Model, artwork and viewer code revision: `round-back-label-92mm-20261020`; displayed verification revision: `round-back-label-92mm-single-tip-35-20261020`. Native checks and export comparison are in `round-back-label-verification.json` and `round-back-label-export-comparison.json` in the working project.

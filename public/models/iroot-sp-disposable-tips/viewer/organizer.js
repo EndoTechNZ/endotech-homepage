@@ -40,7 +40,7 @@ let selectedView=['1','2','3','4','5','6'].includes(requestedView)?requestedView
 // Read the Blender-exported static indexed GLB. The original PNG artwork is
 // used for the labels here and is also embedded in the downloadable GLB.
 async function loadProduct(){
-    const response=await fetch('./model.glb?v=two-side-outlets-20261020');
+    const response=await fetch('./model.glb?v=round-back-label-92mm-20261020');
     if(!response.ok)throw new Error('Model download failed ('+response.status+')');
     const data=await response.arrayBuffer();
     const view=new DataView(data);
@@ -73,7 +73,7 @@ async function loadProduct(){
     const labelMaps=new Map();
     await Promise.all(json.nodes.filter(n=>n.extras?.component==='packaging_label').map(async n=>{
         const file=n.extras.label_art_file;
-        const texture=await new THREE.TextureLoader().loadAsync('./artwork/'+file+'?v=round-label-100mm-20261020');
+        const texture=await new THREE.TextureLoader().loadAsync('./artwork/'+file+'?v=round-back-label-92mm-20261020');
         texture.colorSpace=THREE.SRGBColorSpace;texture.flipY=false;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();
         labelMaps.set(file,texture);
     }));
@@ -139,7 +139,7 @@ function setView(id){
     const outletButton=document.getElementById('tip-outlet-zoom');
     outletButton.hidden=id!=='5';outletButton.textContent='Zoom to side outlets';
     setTipOpacity(tipOpacityByView[id==='5'?'single':'assembly']);
-    const presets={'1':{e:88,a:-90,r:0,label:'Top view · Near overhead'},'2':{e:39,a:-60,r:-14,label:'Side view · Resting on its side'},'3':{e:33,a:-70,r:-2,label:'Full stack · Standing'},'4':{e:89.5,a:-90,r:0,label:'Open tray · all 20 positions filled'},'5':{e:50,a:-70,r:0,label:'Single tip · winged hub, short elbow, straight nozzle'},'6':{e:-78,a:-90,r:0,label:'Back label · smaller underside label'}};
+    const presets={'1':{e:88,a:-90,r:0,label:'Top view · Near overhead'},'2':{e:39,a:-60,r:-14,label:'Side view · Resting on its side'},'3':{e:33,a:-70,r:-2,label:'Full stack · Standing'},'4':{e:89.5,a:-90,r:0,label:'Open tray · all 20 positions filled'},'5':{e:50,a:-70,r:0,label:'Single tip · winged hub, short elbow, straight nozzle'},'6':{e:-78,a:-90,r:0,label:'Back label · circular underside label'}};
     const p=presets[id];pose.quaternion.identity();
     visibleLayer=id==='4'?5:0;document.getElementById('layer').value=String(visibleLayer);applyInspection();
     controls.minDistance=id==='5'?.0015:.12;
@@ -190,7 +190,7 @@ function setTipOpacity(value){
 }
 function updateState(){
     requestRender();
-    stage.dataset.model=JSON.stringify({loaded,revision:'two-side-outlets-single-tip-35-20261020',tipCount:tips.length,tipsByLayer:[1,2,3,4,5].map(i=>tips.filter(t=>t.userData.layer===i).length),caseComponents:shells.length,labelCount:labels.length,labelsVisible:labels.filter(l=>l.visible).map(l=>l.userData.label_side),labelWidthsMm:labels.map(l=>({side:l.userData.label_side,width:l.userData.label_width_mm,height:l.userData.label_height_mm,shape:l.userData.label_shape||'rectangle',diameter:l.userData.label_diameter_mm||null})),view:selectedView,visibleLayer,visibleTips:selectedView==='5'?1:tips.filter(t=>t.visible).length,caseOpacity:opacity,hubSurfaceOpacity:tipOpacity,nozzleSurfaceOpacity:tipOpacity*2/3,sideOutletsPerTip:tips[0]?.userData.side_outlet_count||0,closedRoundedEnd:tips[0]?.userData.closed_rounded_end||false,tipDetailSide,straightNozzleMm:35,gripWingsPerTip:2,missingPositionRestored:true,cameraPosition:camera.position.toArray(),cameraQuaternion:camera.quaternion.toArray(),errors:errorLog});
+    stage.dataset.model=JSON.stringify({loaded,revision:'round-back-label-92mm-single-tip-35-20261020',tipCount:tips.length,tipsByLayer:[1,2,3,4,5].map(i=>tips.filter(t=>t.userData.layer===i).length),caseComponents:shells.length,labelCount:labels.length,labelsVisible:labels.filter(l=>l.visible).map(l=>l.userData.label_side),labelWidthsMm:labels.map(l=>({side:l.userData.label_side,width:l.userData.label_width_mm,height:l.userData.label_height_mm,shape:l.userData.label_shape||'rectangle',diameter:l.userData.label_diameter_mm||null})),view:selectedView,visibleLayer,visibleTips:selectedView==='5'?1:tips.filter(t=>t.visible).length,caseOpacity:opacity,hubSurfaceOpacity:tipOpacity,nozzleSurfaceOpacity:tipOpacity*2/3,sideOutletsPerTip:tips[0]?.userData.side_outlet_count||0,closedRoundedEnd:tips[0]?.userData.closed_rounded_end||false,tipDetailSide,straightNozzleMm:35,gripWingsPerTip:2,missingPositionRestored:true,cameraPosition:camera.position.toArray(),cameraQuaternion:camera.quaternion.toArray(),errors:errorLog});
 }
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
 document.getElementById('tip-outlet-zoom').addEventListener('click',focusSideOutlets);
