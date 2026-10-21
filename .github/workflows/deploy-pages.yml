@@ -51,12 +51,20 @@ jobs:
       - name: Check published navigation at mobile and desktop widths
         run: npm run check:navigation-layout
 
+      - name: Check mobile molar playback stays visible
+        env:
+          MOLAR_MODELS: "7"
+          MOLAR_RAF_LAG_MS: "80"
+        run: node scripts/validate-molar-mobile-playback.mjs
+
       - name: Save navigation screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: navigation-layout
-          path: output/playwright/navigation/
+          path: |
+            output/playwright/navigation/
+            output/playwright/molar-mobile/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
