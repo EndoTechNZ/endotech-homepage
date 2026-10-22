@@ -62,6 +62,11 @@ jobs:
           MOLAR_RENDER_MODELS: "1"
         run: node scripts/validate-molar-rendering.mjs
 
+      - name: Check molar lessons always open unprepared
+        env:
+          MOLAR_ENTRY_MODELS: "1,7"
+        run: node scripts/validate-molar-entry.mjs
+
       - name: Save navigation screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -71,6 +76,7 @@ jobs:
             output/playwright/navigation/
             output/playwright/molar-mobile/
             output/playwright/molar-rendering/
+            output/playwright/molar-entry/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

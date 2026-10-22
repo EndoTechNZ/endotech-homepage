@@ -101,9 +101,9 @@ try{
       if(report.captureMode!=='summary'||c===tooth.canals[0]||j===c.sequence.length-1||frame.counts[colour]<20)await p.locator('#stage canvas').screenshot({path:path.join(out,`${engine}-${profile}-${number}-${c.id}-${c.sequence[j]}.png`)});
      }
     }
-    // Restored opening must retain the actual surfaces, not only selected flags.
+    // Every page entry starts unprepared, even after this lesson was prepared.
     const before=await pixels(p),restoreURL=new URL(p.url());restoreURL.searchParams.set('canal',before.state.selectedCanal);
-    await p.goto(restoreURL.href);await drawn(p,{canal:before.state.selectedCanal,time:before.state.time});const after=await pixels(p);assert.ok(after.pulp>100);assert.equal(after.state.total,before.state.total);assert.deepEqual(errors,[]);model.restored=true;
+    await p.goto(restoreURL.href);await drawn(p,{canal:before.state.selectedCanal,time:0});const after=await pixels(p);assert.ok(after.pulp>100);assert.equal(after.state.total,0);assert.ok(after.state.canals.every(c=>c.time===0));assert.equal(after.state.visibleRemovalMeshes,0);assert.deepEqual(after.state.visiblePreparedCourses,[]);assert.deepEqual(errors,[]);model.reopenedUnprepared=true;
     console.log(`RENDER PASS ${engine} ${profile} model ${number}: ${model.courses.length} courses`);
    }catch(e){await p.screenshot({path:path.join(out,`FAILURE-${engine}-${profile}-${number}.png`)});await fs.writeFile(path.join(out,`FAILURE-${engine}-${profile}-${number}.json`),JSON.stringify({error:e.stack,warnings,network,diagnostic:await p.evaluate(()=>({state:document.querySelector('#stage').dataset.preparation,drawn:document.querySelector('#stage').dataset.drawnPreparation,error:document.querySelector('#error').textContent,load:document.querySelector('#mobile-load-status').textContent}))},null,2));throw e;}
    finally{await context.close();}
