@@ -16,9 +16,14 @@ const engines=(process.env.MOLAR_ROTATION_ENGINES||'chromium,webkit').split(',')
 const profiles=(process.env.MOLAR_ROTATION_PROFILES||'native,limited').split(',');
 const layers=(process.env.MOLAR_ROTATION_LAYERS||'both,stock').split(',');
 const step=Number(process.env.MOLAR_ROTATION_STEP||30);
+assert.ok(Number.isFinite(step)&&step>0&&step<=360,'MOLAR_ROTATION_STEP must be finite, greater than zero and at most 360');
+const requestedCourses=process.env.MOLAR_ROTATION_COURSES?process.env.MOLAR_ROTATION_COURSES.split(',').map(v=>Number(v.trim())):null;
+if(requestedCourses)assert.ok(requestedCourses.every(v=>Number.isInteger(v)&&v>0)&&new Set(requestedCourses).size===requestedCourses.length,'MOLAR_ROTATION_COURSES must contain unique positive course IDs');
+const angles=process.env.MOLAR_ROTATION_ANGLES?process.env.MOLAR_ROTATION_ANGLES.split(',').map(v=>Number(v.trim())):Array.from({length:Math.ceil(360/step)},(_,i)=>i*step);
+assert.ok(angles[0]===0&&angles.every(v=>Number.isFinite(v)&&v>=0&&v<360)&&new Set(angles).size===angles.length,'MOLAR_ROTATION_ANGLES must start with zero and contain unique finite angles from zero to less than 360');
 const probeCount=Number(process.env.MOLAR_ROTATION_PROBES||40);
 const requireStencil=!process.env.MOLAR_ROTATION_RUNTIME_FILE||process.env.MOLAR_ROTATION_REQUIRE_STENCIL==='1';
-const report={full,physicalDevices:false,requireStencil,method:'fixed-camera draw-order permutations plus CPU-clipped nearest stock ownership',cases:[],passed:false};
+const report={full,physicalDevices:false,requireStencil,requestedCourses,angles,method:'fixed-camera draw-order permutations plus CPU-clipped nearest stock ownership',warmedCourses:[],cases:[],passed:false};
 await fs.mkdir(out,{recursive:true});await fs.mkdir(captures,{recursive:true});
 let server,base=process.env.MOLAR_BASE_URL;
 if(!base){
@@ -34,7 +39,7 @@ async function select(p,c,tooth){
  await drawn(p,{canal:c.id});
 }
 async function seek(p,id,time){await p.locator('#timeline').evaluate((e,t)=>{e.value=t;e.dispatchEvent(new Event('input',{bubbles:true}));},time);await drawn(p,{canal:id,time});}
-function chooseCourses(tooth){if(full)return tooth.canals;if(tooth.number===7)return tooth.canals.filter(c=>c.pass_index);if(tooth.number===9)return tooth.canals.filter(c=>c.sidecut_motion);return tooth.canals.slice(0,1);}
+function chooseCourses(tooth){if(requestedCourses){const last=tooth.canals.reduce((last,c,i)=>requestedCourses.includes(c.id)?i:last,-1);assert.ok(last>=0,`No requested course IDs belong to model ${tooth.number}`);return tooth.canals.slice(0,last+1);}if(full)return tooth.canals;if(tooth.number===7)return tooth.canals.filter(c=>c.pass_index);if(tooth.number===9)return tooth.canals.filter(c=>c.sidecut_motion);return tooth.canals.slice(0,1);}
 
 // Executed inside the viewer. The hook exposes read-only objects; only the audit
 // camera and draw-order perturbation are changed, never preparation or geometry.
@@ -198,6 +203,9 @@ try{
     await p.goto(`${base}/resources/molar-models/tooth-prep-${number}/`);await drawn(p,{time:0});
     for(const c of chooseCourses(tooth)){
      await select(p,c,tooth);
+     // Keep the original full-audit cutting context. Earlier courses are prepared
+     // in tooth order even when CI only orbits a later requested course.
+     if(requestedCourses&&!requestedCourses.includes(c.id)){const time=c.sequence.length*16-.1;await seek(p,c.id,time);report.warmedCourses.push({engine,profile,model:number,course:c.id,file:c.sequence.at(-1),time});continue;}
      const stages=number===1&&!full?['30','35'].filter(f=>c.sequence.includes(f)):[c.sequence.at(-1)];
      for(const file of stages){const time=(c.sequence.indexOf(file)+1)*16-.1;await seek(p,c.id,time);
       for(const layer of layers){
@@ -205,7 +213,7 @@ try{
        if(current!==layer)await p.locator('#walls').evaluate(e=>e.click());
        await drawn(p,{canal:c.id,time,preparedWallsEnabled:layer==='both',removedDentineEnabled:true});
        const row={engine,profile,model:number,course:c.id,file,layer,angles:[]};report.cases.push(row);
-       for(let angle=0;angle<360;angle+=step){
+       for(const angle of angles){
         const result=await p.evaluate(orbitCheck,{angle,baseline:angle===0,probeCount});row.angles.push(result);
         assert.equal(result.glError,0);if(requireStencil)assert.ok(result.stencilBits>=8,'Production renderer lacks the eight-bit stock ownership stencil');assert.equal(result.time,time);assert.deepEqual(errors,[]);
         if(angle){assert.equal(result.total,row.angles[0].total);assert.deepEqual(result.visits,row.angles[0].visits);}

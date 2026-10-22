@@ -69,10 +69,10 @@ jobs:
 
       - name: Check prepared surface colours through rotation
         env:
-          MOLAR_ROTATION_FULL: "1"
           MOLAR_ROTATION_MODELS: "1,7"
+          MOLAR_ROTATION_COURSES: "1,19"
+          MOLAR_ROTATION_ANGLES: "0,180,210"
           MOLAR_ROTATION_PROFILES: "native"
-          MOLAR_ROTATION_STEP: "30"
         run: node scripts/validate-molar-rotation.mjs
 
       - name: Save navigation screenshots
