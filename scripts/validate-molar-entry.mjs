@@ -35,13 +35,13 @@ const hook=`
 window.__readMolarEntry=()=>({ready,playing,playRequested,changeToken,selected,
  state:stage.dataset.preparation?JSON.parse(stage.dataset.preparation):null,
  drawn:stage.dataset.drawnPreparation?JSON.parse(stage.dataset.drawnPreparation):null,
- courses:canals.map(c=>({id:c.id,time:c.time,order:c.order,tube:Boolean(c.tube?.visible),sidecut:Boolean(c.sidecutWall?.visible),stocks:c.stocks?.filter(o=>o?.visible).length||0})),
+ courses:canals.map(c=>({id:c.id,time:c.time,order:c.order,tube:Boolean(c.tube?.visible),sidecut:Boolean(c.sidecutWall?.visible),stocks:c.stocks?.filter(o=>o?.visible).length||0,depths:c.stocks?.filter(o=>o?.userData.depthProxy?.visible).length||0})),
  violations:window.__molarEntryViolations,frames:window.__molarEntryFrames,events:window.__molarEntryEvents});
 const entryRender=renderer.render.bind(renderer);
 renderer.render=(...args)=>{
  if(ready&&window.__watchMolarEntry!==false){
   window.__molarEntryFrames++;
-  const bad=canals.filter(c=>c.time!==0||c.order!==0||c.tube?.visible||c.sidecutWall?.visible||c.stocks.some(o=>o?.visible));
+  const bad=canals.filter(c=>c.time!==0||c.order!==0||c.tube?.visible||c.sidecutWall?.visible||c.stocks.some(o=>o?.visible||o?.userData.depthProxy?.visible));
   if((bad.length||playing||playRequested)&&window.__molarEntryViolations.length<10)window.__molarEntryViolations.push({playing,playRequested,courses:bad.map(c=>({id:c.id,time:c.time,order:c.order,tube:Boolean(c.tube?.visible),sidecut:Boolean(c.sidecutWall?.visible),stocks:c.stocks.filter(o=>o?.visible).length}))});
  }
  return entryRender(...args);
@@ -65,7 +65,7 @@ async function unprepared(p,label){
  assert.equal(x.state.time,0,label+': selected course not at zero');assert.equal(x.state.total,0,label+': removed volume exists');
  assert.deepEqual(x.state.visiblePreparedCourses,[],label+': prepared surface exists');assert.equal(x.state.visibleRemovalMeshes,0,label+': removed dentine exists');
  assert.ok(x.state.preparedWallsEnabled&&x.state.removedDentineEnabled&&x.state.fileShown&&x.state.toothOutlineShown,label+': required layers/file/outline disabled');
- for(const c of x.courses){assert.equal(c.time,0,label+': stored course time '+c.id);assert.equal(c.order,0,label+': stored cutting order '+c.id);assert.ok(!c.tube&&!c.sidecut&&!c.stocks,label+': visible prep mesh '+c.id);}
+ for(const c of x.courses){assert.equal(c.time,0,label+': stored course time '+c.id);assert.equal(c.order,0,label+': stored cutting order '+c.id);assert.ok(!c.tube&&!c.sidecut&&!c.stocks&&!c.depths,label+': visible prep mesh '+c.id);}
  for(const c of x.state.canals)assert.ok(c.visits.every(v=>v<=0),label+': positive cutting visit '+c.id);
  const gl=await p.evaluate(()=>{const g=document.querySelector('#stage canvas').getContext('webgl2');return {error:g.getError(),lost:g.isContextLost()};});
  assert.deepEqual(gl,{error:0,lost:false});return x;
