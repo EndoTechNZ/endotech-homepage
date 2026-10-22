@@ -115,13 +115,15 @@ async function select(p,tooth,c){
 }
 async function lifecycle(p,url,model){
  const play=p.locator(model.view==='mobile'?'#mobile-play':'#play');
+ // Install the hold before playback can reach the next file's mesh. The
+ // later seek must still be pending when page restoration invalidates it.
+ let held,release;const gate=new Promise(resolve=>release=resolve),seen=new Promise(resolve=>held=resolve);
+ await p.route('**/extra-1.json*',async route=>{held();await gate;await route.continue();});
  await seek(p,12);await play.click();await p.waitForFunction(()=>window.__readMolarEntry().playRequested);
  await p.evaluate(()=>{window.dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true}));window.dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true}));});
  await unprepared(p,'Synthetic persisted page return');model.syntheticPersistedReturn=true;
  // Hold a not-yet-loaded mesh while entering a later stage. Releasing it after
  // returning must not reapply a stale seek or resume a pending Play request.
- let held,release;const gate=new Promise(resolve=>release=resolve),seen=new Promise(resolve=>held=resolve);
- await p.route('**/extra-1.json*',async route=>{held();await gate;await route.continue();});
  await p.evaluate(()=>window.__watchMolarEntry=false);
  await p.locator('#timeline').evaluate(el=>{el.value=28;el.dispatchEvent(new Event('input',{bubbles:true}));});
  await Promise.race([seen,new Promise((_,reject)=>setTimeout(()=>reject(Error('Deferred preparation request not reached')),20000))]);
