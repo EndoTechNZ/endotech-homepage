@@ -43,3 +43,9 @@ Each page must include:
 - Evidence & Downloads
 - About
 - Contact
+
+## Copy review — standing rule
+
+- Before drafting or revising user-facing copy, read and apply `C:/Users/Stephen/.codex/skills/no-ai-slop/SKILL.md`.
+- Review the finished copy against its `eval.md`. Include titles, headings, body text, diagram and image labels, captions, alt text, menus, buttons and email copy.
+- Apply the review to every revision. Preserve clinical meaning, source quotations and the user's exact requested wording.
