@@ -12,6 +12,7 @@ const sharedExploreItems=[
   {href:'/3d-solutions/micropath/',label:'3D Solutions with MicroPath'},
   {href:'/technique/workflow/',label:'Clinical workflow'},
   {href:'/resources/clinical-tips/',label:'Education'},
+  {href:'/resources/ideas/lower-molar-canal-position-missed-distal-canal/',label:'Lower molar canal anatomy'},
   {href:'/resources/molar-models/',label:'12 Molar Models'},
   {href:'/offers/',label:'Offers'},
   {href:'/resources/downloads/',label:'Evidence & downloads'},

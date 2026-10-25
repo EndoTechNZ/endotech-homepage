@@ -5,7 +5,7 @@ import { weeklyClinicalArticles } from '../../../data/weeklyClinicalArticles';
 import { withBasePath } from '../../../utils/paths';
 
 export function getStaticPaths() {
-  return blogIdeas.map((idea) => ({
+  return blogIdeas.filter((idea) => idea.slug !== 'lower-molar-canal-position-missed-distal-canal').map((idea) => ({
     params: { slug: idea.slug },
     props: { idea },
   }));

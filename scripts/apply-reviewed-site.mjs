@@ -57,7 +57,7 @@ function publish(dir,rel=''){
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/\/site-style\.css(?:\?[^"']*)?/g,'/site-style.css?v=nav-labels-20261019')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
-   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=molar-models-20261020')
+   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=lower-molar-20261025')
    .replace(/\/rg-wireframe\.js(?:\?[^"']*)?/g,'/rg-wireframe.js?v=whoosh4-20260930')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
 
