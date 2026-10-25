@@ -42,7 +42,7 @@ function queuedFetch(url,convert){
  requestCache.set(url,task);return task;
 }
 function pumpRequests(){while(requestCount<8&&requestQueue.length){requestCount++;requestQueue.shift()().finally(()=>{requestCount--;pumpRequests();});}}
-async function getJSON(url){const target=new URL(assetURL(url));target.searchParams.set('v','fast-start-2');return queuedFetch(target.href,r=>r.json());}
+async function getJSON(url){const target=new URL(assetURL(url));target.searchParams.set('v','entry19-20261026-4');return queuedFetch(target.href,r=>r.json());}
 async function getBuffer(url){return queuedFetch(assetURL(url)+'.gz',async r=>decodeBuffer(await r.arrayBuffer()));}
 async function geometry(base,name){
  const key=base+name;if(cache[key])return cache[key];
@@ -108,6 +108,8 @@ function fitMobileOverview(){
  box.expandByScalar(radius+Math.abs(c.stopper_reference?.file_settings[sizes[j]]?.axial_translation_mm||0)+1);
  fit(overview,[box.min.toArray(),box.max.toArray()],[.7,-.7,.08],.52);
 }
+// Versioned course assets keep a revised route, fields and stock coherent in cached browsers.
+const courseAssetBase=c=>'/canal-assets-'+c.id+(c.asset_revision?'-'+c.asset_revision:'')+'/';
 const instrumentTasks=new Map();
 async function ensureInstrument(j){
  if(actors[j])return actors[j];
@@ -134,7 +136,7 @@ function routeTexture(raw,c){
  const t=new THREE.DataTexture(tx,c.route_samples,4,THREE.RGBAFormat,THREE.FloatType);t.needsUpdate=true;t.minFilter=t.magFilter=THREE.NearestFilter;return t;
 }
 async function loadCanalDisplay(c,i){
- const base='/canal-assets-'+c.id+'/';
+ const base=courseAssetBase(c);
  const [route,holes,pilot]=await Promise.all([getBuffer(base+'route.bin'),getBuffer(base+'anatomy-holes.bin'),c.sidecut_motion?getBuffer(base+'pilot-route.bin'):null]);
  c.raw=new Float32Array(route);c.routeTex=routeTexture(c.raw,c);
  if(pilot)c.pilotRouteTex=routeTexture(new Float32Array(pilot),c);
@@ -153,7 +155,7 @@ async function ensureCanalData(c){
  if(c.dataReady)return;
  if(c.dataTask)return c.dataTask;
  c.dataTask=(async()=>{
-  const base='/canal-assets-'+c.id+'/',[a,b]=await Promise.all([getBuffer(base+c.texture0),getBuffer(base+c.texture1)]);
+  const base=courseAssetBase(c),[a,b]=await Promise.all([getBuffer(base+c.texture0),getBuffer(base+c.texture1)]);
   c.ft0=new Float32Array(a);c.ft1=new Float32Array(b);
   const i=canals.indexOf(c);
   for(const [key,data] of [['texA',c.ft0],['texB',c.ft1]]){const u=baseUniforms[key+i],previous=u.value;u.value=texture3D(data,c);previous.dispose();}
@@ -165,7 +167,7 @@ async function ensureStockData(c,j){
  if(c.stock[j])return;
  if(c.stockTasks[j])return c.stockTasks[j];
  c.stockTasks[j]=(async()=>{
-  const base='/canal-assets-'+c.id+'/',[ids,feeds]=await Promise.all([getBuffer(base+`stock-${j}-ids.bin`),getBuffer(base+`stock-${j}-feed.bin`)]);
+  const base=courseAssetBase(c),[ids,feeds]=await Promise.all([getBuffer(base+`stock-${j}-ids.bin`),getBuffer(base+`stock-${j}-feed.bin`)]);
   c.stock[j]={ids:new Uint32Array(ids),feeds:new Float32Array(feeds)};
  })();try{await c.stockTasks[j];}catch(e){c.stockTasks[j]=null;throw e;}
 }
@@ -177,7 +179,7 @@ async function ensureStockMesh(c,j){
   const clipOthers=canals.map((d,k)=>k!==i?`if(cut${k}(prepWorld,.018))discard;`:'').join('');
   const mat=clippedMaterial(teachingMaterial({color:files[sizes[j]].color,side:THREE.DoubleSide,transparent:true,opacity:.8,depthWrite:false,shininess:15}),`if(stockTouch>stockVisited+.015||laterCut${i}(prepWorld,stockStage))discard;${clipOthers}`,{stockVisited:visited,stockStage:{value:j}},'stockTouch=firstTouch;','attribute float firstTouch;varying float stockTouch;uniform float stockVisited;uniform float stockStage;\n');
   mat.userData.visited=visited;
-  const ob=new THREE.Mesh(await geometry('/canal-assets-'+c.id+'/',`extra-${j}`),mat);ob.visible=false;scene.add(ob);addRemovalDepthSurface(ob,i*5+j+1);c.stocks[j]=ob;
+  const ob=new THREE.Mesh(await geometry(courseAssetBase(c),`extra-${j}`),mat);ob.visible=false;scene.add(ob);addRemovalDepthSurface(ob,i*5+j+1);c.stocks[j]=ob;
   if(j===0&&c.sidecut_motion){
    const v={value:-1e4},other=canals.map((_,k)=>k!==i?`if(cut${k}(prepWorld,.018))discard;`:'').join('');
    const wallMat=clippedMaterial(teachingMaterial({color:files['17'].color,side:THREE.BackSide,shininess:32,specular:0x303030}),`if(stockTouch>stockVisited+.015||dataB${i}(prepWorld).g<.001)discard;vec4 f=dataA${i}(prepWorld);if(f.g<=visits${i}.g-.025||f.b<=visits${i}.b-.025||f.a<=visits${i}.a-.025||dataB${i}(prepWorld).r<=lastVisit${i}-.025)discard;${other}`,{stockVisited:v},'stockTouch=firstTouch;','attribute float firstTouch;varying float stockTouch;uniform float stockVisited;\n');
