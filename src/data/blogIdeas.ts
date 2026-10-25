@@ -12,6 +12,18 @@ export interface BlogIdea {
 
 export const blogIdeas: BlogIdea[] = [
   {
+    slug: 'lower-molar-canal-position-missed-distal-canal',
+    title: 'Lower molar canal anatomy: find the missing distal canal',
+    category: 'Anatomy',
+    summary: 'Read the chamber-floor map, investigate a second distal canal, and understand the fins, isthmuses and variations that a root filling can hide.',
+    readTime: '12 min read',
+    image: '/blog/lower-molar/chamber-map.svg?v=canal-labels-20261026',
+    focus: 'Original illustrated lower molar canal maps with evidence from Versiani and the Root Canal Anatomy Project.',
+    placeholders: ['The missed distal canal', 'Chamber-floor landmarks', 'Fins and isthmuses', 'Chairside anatomy audit'],
+    published: '26 October 2026',
+  },
+
+  {
     slug: 'iowa-staging-index-cracked-teeth',
     title: 'Cracked teeth: making prognosis visible with the Iowa Staging Index',
     category: 'Clinical Thinking',
