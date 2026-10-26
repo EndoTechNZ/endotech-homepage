@@ -1,0 +1,78 @@
+---
+import MolarCountChart from './MolarCountChart.astro';
+const version = 'canal-labels-20261026';
+const diagram = `/blog/lower-molar/chamber-map.svg?v=${version}`;
+const panels = [
+  { count: '3', label: 'Three canals: MB, ML and one distal canal', short: 'Three canals' },
+  { count: '4', label: 'Four canals: MB, ML, DB and DL', short: 'Four canals' },
+  { count: 'all', label: 'An eccentric distal entry and a possible second entry', short: 'Distal canal check' },
+];
+---
+
+<figure class="hero-map chamber-comparison" data-chamber-comparison>
+  <div class="chamber-map desktop-diagram">
+    <img src={diagram} width="1200" height="660" alt="Occlusal chamber maps comparing three canals, four canals, and an eccentric distal entry with a possible missed distolingual canal." fetchpriority="high" />
+    {panels.map((panel, index) => <button type="button" class={`chamber-trigger chamber-panel-${index + 1}`} data-count-trigger data-count={panel.count} aria-label={`${panel.short}: compare first and second molars`} aria-haspopup="dialog" aria-controls="chamber-canal-count-preview" aria-expanded="false"></button>)}
+  </div>
+  <div class="mobile-diagrams" role="group" aria-label="Swipe to compare anatomy diagrams">
+    {panels.map((panel, index) => <div><button type="button" class="chamber-mobile-trigger" data-count-trigger data-count={panel.count} aria-label={`${panel.short}: compare first and second molars`} aria-haspopup="dialog" aria-controls="chamber-canal-count-preview" aria-expanded="false">
+      <img src={`/blog/lower-molar/chamber-map-panel-${index + 1}.svg?v=${version}`} width="400" height="570" alt={panel.label} loading="lazy" />
+      <span>{index + 1} / 3 · {panel.label}</span>
+    </button></div>)}
+  </div>
+  <figcaption>Hover, focus or tap a diagram to compare canal counts. Mesial left; distal right; buccal above; lingual below. Teaching schematics; positions vary. <a href={diagram} target="_blank" rel="noopener noreferrer">Open full diagram ↗</a></figcaption>
+  <div id="chamber-canal-count-preview" class="chamber-count-preview" popover="manual" role="dialog" aria-labelledby="chamber-canal-count-title">
+    <button type="button" class="count-preview-close" aria-label="Close canal comparison">×</button>
+    <MolarCountChart titleId="chamber-canal-count-title" />
+  </div>
+</figure>
+
+<script>
+  import { initializeEducationPopover } from '../scripts/educationPopover';
+  function initializeChamberComparisons() {
+    document.querySelectorAll<HTMLElement>('[data-chamber-comparison]').forEach(root => {
+      const preview = root.querySelector<HTMLElement>('.chamber-count-preview')!;
+      const chart = preview.querySelector<HTMLElement>('[data-count-chart]')!;
+      initializeEducationPopover({
+        root, preview,
+        triggers: Array.from(root.querySelectorAll<HTMLButtonElement>('[data-count-trigger]')),
+        closeButton: preview.querySelector<HTMLButtonElement>('.count-preview-close')!,
+        update: trigger => { chart.dataset.activeCount = trigger.dataset.count!; },
+        position: (trigger, panel) => {
+          const rect = trigger.getBoundingClientRect();
+          const width = panel.offsetWidth;
+          const height = panel.offsetHeight;
+          const mobile = window.matchMedia('(max-width:760px)').matches;
+          const below = rect.bottom + 12;
+          const above = rect.top - height - 12;
+          return {
+            left: mobile ? (window.innerWidth - width) / 2 : rect.left + (rect.width - width) / 2,
+            top: mobile ? (window.innerHeight - height) / 2 : below + height <= window.innerHeight - 12 ? below : above >= 12 ? above : below,
+          };
+        },
+      });
+    });
+  }
+  initializeChamberComparisons();
+  document.addEventListener('astro:page-load', initializeChamberComparisons);
+</script>
+
+<style>
+  .chamber-comparison{margin:32px 0 0}.chamber-map{position:relative}
+  .chamber-map>img{display:block;width:100%;height:auto;box-sizing:border-box;border:1px solid #dae5e9;border-radius:18px}
+  .chamber-trigger{position:absolute;top:4%;height:79%;width:31.1%;padding:0;border:2px solid transparent;border-radius:14px;background:transparent;cursor:help}
+  .chamber-panel-1{left:1.3%}.chamber-panel-2{left:34.45%}.chamber-panel-3{left:67.6%}
+  .chamber-trigger:hover,.chamber-trigger[aria-expanded="true"]{border-color:#82b2ad;background:rgb(48 139 129 / 3%)}
+  .chamber-trigger:focus-visible,.chamber-mobile-trigger:focus-visible,.count-preview-close:focus-visible{outline:3px solid #0b75b7;outline-offset:4px}
+  .chamber-mobile-trigger{display:block;width:100%;padding:0;border:0;border-radius:12px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:help}
+  .chamber-mobile-trigger[aria-expanded="true"]{outline:2px solid #308b81;outline-offset:3px}
+  .chamber-comparison figcaption{font:13px/1.6 'Nunito Sans',Arial,sans-serif;color:#536a75;margin-top:12px;max-width:960px}
+  .chamber-comparison figcaption a{color:#076e9d;text-underline-offset:3px}
+  .chamber-count-preview{position:fixed;inset:auto;margin:0;padding:0;width:456px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;box-sizing:border-box;border:0;border-radius:18px;background:#fff;box-shadow:0 16px 48px rgb(21 56 69 / 19%);z-index:20}
+  .chamber-count-preview::backdrop{background:transparent;pointer-events:none}
+  .count-preview-close{position:absolute;top:5px;right:5px;width:40px;height:40px;padding:0;border:0;border-radius:9px;background:transparent;color:#607b83;font:27px/1 Arial,sans-serif;cursor:pointer;z-index:1}
+  .count-preview-close:hover{background:#eef5f3}
+  .mobile-diagrams{display:none}
+  @media(max-width:760px){.desktop-diagram{display:none}.mobile-diagrams{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:15px;overscroll-behavior-x:contain}.mobile-diagrams>div{flex:0 0 100%;scroll-snap-align:start;min-width:0}.mobile-diagrams img{display:block;width:100%;height:350px;object-fit:contain;background:#f1f6f6;border:1px solid #dae5e9;border-radius:12px;box-sizing:border-box}.mobile-diagrams span{display:block;font-size:12px;color:#46616b;margin-top:9px;line-height:1.5}}
+  @media print{.chamber-trigger,.chamber-count-preview{display:none!important}}
+</style>

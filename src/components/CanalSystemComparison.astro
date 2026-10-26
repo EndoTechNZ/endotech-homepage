@@ -62,6 +62,7 @@ const diagram = `/blog/lower-molar/middle-mesial.svg?v=${version}`;
 </figure>
 
 <script>
+  import { initializeEducationPopover } from '../scripts/educationPopover';
   function initializeCanalComparisons() {
     document.querySelectorAll<HTMLElement>('[data-canal-comparison]').forEach(figure => {
       if (figure.dataset.initialized) return;
@@ -70,112 +71,35 @@ const diagram = `/blog/lower-molar/middle-mesial.svg?v=${version}`;
       const image = preview.querySelector<HTMLImageElement>('.canal-source')!;
       const title = preview.querySelector<HTMLElement>('h4')!;
       const specimen = preview.querySelector<HTMLElement>('[data-specimen-number]')!;
-      const closeButton = preview.querySelector<HTMLButtonElement>('.canal-preview-close')!;
       const triggers = Array.from(figure.querySelectorAll<HTMLButtonElement>('[data-canal-trigger]'));
-      const hover = window.matchMedia('(hover: hover) and (pointer: fine)');
-      const nativePopover = typeof preview.showPopover === 'function';
-      let active: HTMLButtonElement | null = null;
-      let open = false;
-      let pinned = false;
-      let suppressFocus = false;
-      let closeTimer = 0;
-      let frame = 0;
-      if (!nativePopover) preview.style.display = 'none';
-
-      const cancelClose = () => window.clearTimeout(closeTimer);
-      const positionPreview = () => {
-        if (!open || !active) return;
-        const width = preview.offsetWidth;
-        const height = preview.offsetHeight;
-        const map = figure.querySelector<HTMLElement>('.canal-map')!;
-        const mapRect = map.getBoundingClientRect();
-        const mobile = window.matchMedia('(max-width: 760px)').matches;
-        const left = mobile ? (window.innerWidth - width) / 2 : mapRect.left + (mapRect.width * 0.38 - width) / 2;
-        const top = mobile ? (window.innerHeight - height) / 2 : mapRect.top + (mapRect.height - height) / 2;
-        preview.style.left = `${Math.max(12, Math.min(left, window.innerWidth - width - 12))}px`;
-        preview.style.top = `${Math.max(12, Math.min(top, window.innerHeight - height - 12))}px`;
-      };
-      const close = (restoreFocus = false) => {
-        cancelClose();
-        const previous = active;
-        if (open && nativePopover) preview.hidePopover();
-        if (!nativePopover) preview.style.display = 'none';
-        open = false;
-        pinned = false;
-        active = null;
-        triggers.forEach(trigger => trigger.setAttribute('aria-expanded', 'false'));
-        if (restoreFocus && previous) {
-          suppressFocus = true;
-          previous.focus({ preventScroll: true });
-          queueMicrotask(() => { suppressFocus = false; });
-        }
-      };
-      const show = (trigger: HTMLButtonElement, pin = false) => {
-        cancelClose();
-        active = trigger;
-        pinned = pin;
-        const label = trigger.dataset.label!;
-        const number = trigger.dataset.specimen!;
-        image.src = `/blog/lower-molar/middle-mesial-${trigger.dataset.system}-source.webp`;
-        image.alt = `Micro-CT reconstruction: ${label}, specimen ${number}.`;
-        title.textContent = label;
-        specimen.textContent = number;
-        triggers.forEach(button => button.setAttribute('aria-expanded', String(button === trigger)));
-        if (!open && nativePopover) preview.showPopover();
-        if (!nativePopover) preview.style.display = 'block';
-        open = true;
-        positionPreview();
-      };
-      const scheduleClose = () => {
-        cancelClose();
-        closeTimer = window.setTimeout(() => {
-          if (pinned || preview.matches(':hover') || preview.contains(document.activeElement) || active === document.activeElement) return;
-          close();
-        }, 180);
-      };
-      triggers.forEach(trigger => {
-        trigger.addEventListener('pointerenter', event => {
-          if (hover.matches && event.pointerType !== 'touch') show(trigger);
-        });
-        trigger.addEventListener('pointerleave', scheduleClose);
-        trigger.addEventListener('focus', () => {
-          if (!suppressFocus && trigger.matches(':focus-visible')) show(trigger);
-        });
-        trigger.addEventListener('blur', scheduleClose);
-        trigger.addEventListener('click', () => {
-          if (open && active === trigger && pinned) close();
-          else show(trigger, true);
-        });
+      initializeEducationPopover({
+        root: figure, preview, triggers,
+        closeButton: preview.querySelector<HTMLButtonElement>('.canal-preview-close')!,
+        update: trigger => {
+          const label = trigger.dataset.label!;
+          const number = trigger.dataset.specimen!;
+          image.src = '/blog/lower-molar/middle-mesial-' + trigger.dataset.system + '-source.webp';
+          image.alt = 'Micro-CT reconstruction: ' + label + ', specimen ' + number + '.';
+          title.textContent = label;
+          specimen.textContent = number;
+        },
+        position: (_trigger, panel) => {
+          const rect = figure.querySelector<HTMLElement>('.canal-map')!.getBoundingClientRect();
+          const mobile = window.matchMedia('(max-width:760px)').matches;
+          return {
+            left: mobile ? (window.innerWidth - panel.offsetWidth) / 2 : rect.left + (rect.width * 0.38 - panel.offsetWidth) / 2,
+            top: mobile ? (window.innerHeight - panel.offsetHeight) / 2 : rect.top + (rect.height - panel.offsetHeight) / 2,
+          };
+        },
       });
-      preview.addEventListener('pointerenter', cancelClose);
-      preview.addEventListener('pointerleave', scheduleClose);
-      preview.addEventListener('focusout', scheduleClose);
-      closeButton.addEventListener('click', () => close(true));
-      preview.querySelector('a')!.addEventListener('click', () => close());
-      document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && open) {
-          event.preventDefault();
-          close(preview.contains(document.activeElement) || active === document.activeElement);
-        }
-      });
-      document.addEventListener('pointerdown', event => {
-        if (!open || !(event.target instanceof Node)) return;
-        if (!preview.contains(event.target) && !triggers.some(trigger => trigger.contains(event.target as Node))) close();
-      });
-      const reposition = () => {
-        cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(positionPreview);
-      };
-      window.addEventListener('resize', () => close());
-      window.addEventListener('scroll', reposition, { passive: true });
-      const preload = () => {
-        new Set(triggers.map(trigger => trigger.dataset.system)).forEach(key => {
-          const source = new Image();
-          source.src = `/blog/lower-molar/middle-mesial-${key}-source.webp`;
-        });
-      };
       const observer = new IntersectionObserver(entries => {
-        if (entries.some(entry => entry.isIntersecting)) { preload(); observer.disconnect(); }
+        if (entries.some(entry => entry.isIntersecting)) {
+          new Set(triggers.map(trigger => trigger.dataset.system)).forEach(key => {
+            const source = new Image();
+            source.src = '/blog/lower-molar/middle-mesial-' + key + '-source.webp';
+          });
+          observer.disconnect();
+        }
       }, { rootMargin: '400px' });
       observer.observe(figure);
     });
