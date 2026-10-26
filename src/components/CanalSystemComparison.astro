@@ -1,0 +1,218 @@
+---
+const version = 'canal-systems-20261026';
+const systems = [
+  { key: 'independent', label: 'Independent canal system', specimen: 1, panel: 2, width: 245 },
+  { key: 'confluent', label: 'Confluent canal system', specimen: 32, panel: 3, width: 245 },
+  { key: 'fin', label: 'Fin canal system', specimen: 6, panel: 4, width: 240 },
+];
+const diagram = `/blog/lower-molar/middle-mesial.svg?v=${version}`;
+---
+
+<figure class="canal-comparison" data-canal-comparison>
+  <div class="canal-map desktop-diagram">
+    <img src={diagram} width="1200" height="660" alt="Middle mesial search zone between MB and ML, with independent, confluent and fin canal systems." loading="lazy" />
+    <a class="canal-zone-link" href={diagram} target="_blank" rel="noopener noreferrer" aria-label="Open the middle mesial anatomy diagram at full size"></a>
+    {systems.map(system => <button
+      type="button"
+      class={`canal-hotspot canal-hotspot-${system.key}`}
+      data-canal-trigger
+      data-system={system.key}
+      data-label={system.label}
+      data-specimen={system.specimen}
+      aria-label={`${system.label}: show source image`}
+      aria-haspopup="dialog"
+      aria-controls="middle-mesial-source-preview"
+      aria-expanded="false"
+    ></button>)}
+  </div>
+  <div class="mobile-diagrams" role="group" aria-label="Swipe to compare anatomy diagrams">
+    <div>
+      <img src={`/blog/lower-molar/middle-mesial-panel-1.svg?v=${version}`} width="390" height="420" alt="Search zone between MB and ML" loading="lazy" />
+      <span>1 / 4 · Search zone between MB and ML</span>
+    </div>
+    {systems.map((system, index) => <div>
+      <button
+        type="button"
+        class="canal-mobile-trigger"
+        data-canal-trigger
+        data-system={system.key}
+        data-label={system.label}
+        data-specimen={system.specimen}
+        aria-label={`${system.label}: show source image`}
+        aria-haspopup="dialog"
+        aria-controls="middle-mesial-source-preview"
+        aria-expanded="false"
+      >
+        <img src={`/blog/lower-molar/middle-mesial-panel-${system.panel}.svg?v=${version}`} width={system.width} height="495" alt={system.label} loading="lazy" />
+        <span>{index + 2} / 4 · {system.label}</span>
+      </button>
+    </div>)}
+  </div>
+  <p class="canal-hint">Hover, focus or tap a canal system to see the source image.</p>
+  <figcaption>In the fin canal system, the openings communicate coronally while three canals can leave through separate foramina. A confluent middle mesial pathway joins another mesial canal. The drawings simplify the source descriptions. Source images: Versiani et al., Figure 1, specimens 1, 32 and 6. <a href="#ref-versiani">[3]</a></figcaption>
+
+  <div id="middle-mesial-source-preview" class="canal-preview" popover="manual" role="dialog" aria-labelledby="middle-mesial-source-title">
+    <button type="button" class="canal-preview-close" aria-label="Close source image">×</button>
+    <p class="canal-source-kind">Micro-CT source image</p>
+    <h4 id="middle-mesial-source-title">Independent canal system</h4>
+    <img class="canal-source" src="/blog/lower-molar/middle-mesial-independent-source.webp" width="528" height="800" alt="Micro-CT reconstruction of an independent canal system, specimen 1." loading="lazy" />
+    <a class="canal-source-credit" href="#ref-versiani">Versiani et al. · Fig. 1, specimen <span data-specimen-number>1</span></a>
+  </div>
+  <noscript><p class="canal-hint">Source images: {systems.map((system, index) => <><a href={`/blog/lower-molar/middle-mesial-${system.key}-source.webp`}>{system.label}</a>{index < systems.length - 1 ? ' · ' : ''}</>)}</p></noscript>
+</figure>
+
+<script>
+  function initializeCanalComparisons() {
+    document.querySelectorAll<HTMLElement>('[data-canal-comparison]').forEach(figure => {
+      if (figure.dataset.initialized) return;
+      figure.dataset.initialized = 'true';
+      const preview = figure.querySelector<HTMLElement>('.canal-preview')!;
+      const image = preview.querySelector<HTMLImageElement>('.canal-source')!;
+      const title = preview.querySelector<HTMLElement>('h4')!;
+      const specimen = preview.querySelector<HTMLElement>('[data-specimen-number]')!;
+      const closeButton = preview.querySelector<HTMLButtonElement>('.canal-preview-close')!;
+      const triggers = Array.from(figure.querySelectorAll<HTMLButtonElement>('[data-canal-trigger]'));
+      const hover = window.matchMedia('(hover: hover) and (pointer: fine)');
+      const nativePopover = typeof preview.showPopover === 'function';
+      let active: HTMLButtonElement | null = null;
+      let open = false;
+      let pinned = false;
+      let suppressFocus = false;
+      let closeTimer = 0;
+      let frame = 0;
+      if (!nativePopover) preview.style.display = 'none';
+
+      const cancelClose = () => window.clearTimeout(closeTimer);
+      const positionPreview = () => {
+        if (!open || !active) return;
+        const width = preview.offsetWidth;
+        const height = preview.offsetHeight;
+        const map = figure.querySelector<HTMLElement>('.canal-map')!;
+        const mapRect = map.getBoundingClientRect();
+        const mobile = window.matchMedia('(max-width: 760px)').matches;
+        const left = mobile ? (window.innerWidth - width) / 2 : mapRect.left + (mapRect.width * 0.38 - width) / 2;
+        const top = mobile ? (window.innerHeight - height) / 2 : mapRect.top + (mapRect.height - height) / 2;
+        preview.style.left = `${Math.max(12, Math.min(left, window.innerWidth - width - 12))}px`;
+        preview.style.top = `${Math.max(12, Math.min(top, window.innerHeight - height - 12))}px`;
+      };
+      const close = (restoreFocus = false) => {
+        cancelClose();
+        const previous = active;
+        if (open && nativePopover) preview.hidePopover();
+        if (!nativePopover) preview.style.display = 'none';
+        open = false;
+        pinned = false;
+        active = null;
+        triggers.forEach(trigger => trigger.setAttribute('aria-expanded', 'false'));
+        if (restoreFocus && previous) {
+          suppressFocus = true;
+          previous.focus({ preventScroll: true });
+          queueMicrotask(() => { suppressFocus = false; });
+        }
+      };
+      const show = (trigger: HTMLButtonElement, pin = false) => {
+        cancelClose();
+        active = trigger;
+        pinned = pin;
+        const label = trigger.dataset.label!;
+        const number = trigger.dataset.specimen!;
+        image.src = `/blog/lower-molar/middle-mesial-${trigger.dataset.system}-source.webp`;
+        image.alt = `Micro-CT reconstruction: ${label}, specimen ${number}.`;
+        title.textContent = label;
+        specimen.textContent = number;
+        triggers.forEach(button => button.setAttribute('aria-expanded', String(button === trigger)));
+        if (!open && nativePopover) preview.showPopover();
+        if (!nativePopover) preview.style.display = 'block';
+        open = true;
+        positionPreview();
+      };
+      const scheduleClose = () => {
+        cancelClose();
+        closeTimer = window.setTimeout(() => {
+          if (pinned || preview.matches(':hover') || preview.contains(document.activeElement) || active === document.activeElement) return;
+          close();
+        }, 180);
+      };
+      triggers.forEach(trigger => {
+        trigger.addEventListener('pointerenter', event => {
+          if (hover.matches && event.pointerType !== 'touch') show(trigger);
+        });
+        trigger.addEventListener('pointerleave', scheduleClose);
+        trigger.addEventListener('focus', () => {
+          if (!suppressFocus && trigger.matches(':focus-visible')) show(trigger);
+        });
+        trigger.addEventListener('blur', scheduleClose);
+        trigger.addEventListener('click', () => {
+          if (open && active === trigger && pinned) close();
+          else show(trigger, true);
+        });
+      });
+      preview.addEventListener('pointerenter', cancelClose);
+      preview.addEventListener('pointerleave', scheduleClose);
+      preview.addEventListener('focusout', scheduleClose);
+      closeButton.addEventListener('click', () => close(true));
+      preview.querySelector('a')!.addEventListener('click', () => close());
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && open) {
+          event.preventDefault();
+          close(preview.contains(document.activeElement) || active === document.activeElement);
+        }
+      });
+      document.addEventListener('pointerdown', event => {
+        if (!open || !(event.target instanceof Node)) return;
+        if (!preview.contains(event.target) && !triggers.some(trigger => trigger.contains(event.target as Node))) close();
+      });
+      const reposition = () => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(positionPreview);
+      };
+      window.addEventListener('resize', () => close());
+      window.addEventListener('scroll', reposition, { passive: true });
+      const preload = () => {
+        new Set(triggers.map(trigger => trigger.dataset.system)).forEach(key => {
+          const source = new Image();
+          source.src = `/blog/lower-molar/middle-mesial-${key}-source.webp`;
+        });
+      };
+      const observer = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) { preload(); observer.disconnect(); }
+      }, { rootMargin: '400px' });
+      observer.observe(figure);
+    });
+  }
+  initializeCanalComparisons();
+  document.addEventListener('astro:page-load', initializeCanalComparisons);
+</script>
+
+<style>
+  .canal-comparison{margin:32px 0 0}
+  .canal-comparison figcaption{font-size:13px;line-height:1.6;color:#536a75;margin-top:12px;max-width:960px}
+  .canal-map{position:relative}
+  .canal-map>img{display:block;width:100%;height:auto;box-sizing:border-box;border:1px solid #dae5e9;border-radius:18px}
+  .canal-zone-link{position:absolute;inset:0 auto 0 0;width:38%;border-radius:18px}
+  .canal-hotspot{position:absolute;top:16%;height:73%;width:19.3%;padding:0;border:2px solid transparent;border-radius:12px;background:transparent;cursor:zoom-in}
+  .canal-hotspot-independent{left:39.4%}.canal-hotspot-confluent{left:59.8%}.canal-hotspot-fin{left:80.2%}
+  .canal-hotspot:hover,.canal-hotspot[aria-expanded="true"]{border-color:#6b9f9b;background:rgb(48 139 129 / 4%)}
+  .canal-hotspot:focus-visible,.canal-mobile-trigger:focus-visible,.canal-preview button:focus-visible,.canal-preview a:focus-visible{outline:3px solid #0b75b7;outline-offset:4px}
+  .canal-mobile-trigger{display:block;width:100%;border:0;padding:0;background:transparent;color:inherit;text-align:left;font:inherit;cursor:zoom-in;border-radius:12px}
+  .canal-mobile-trigger[aria-expanded="true"]{outline:2px solid #308b81;outline-offset:3px}
+  .canal-comparison .canal-hint{margin:12px 0 0;color:#327580;font-size:13px;line-height:1.5}
+  .canal-preview{position:fixed;inset:auto;margin:0;box-sizing:border-box;width:276px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;padding:22px 18px 16px;border:1px solid #b9d2d0;border-radius:14px;background:#fff;color:#153845;box-shadow:0 12px 36px rgb(21 56 69 / 17%);font-family:'Nunito Sans',Arial,sans-serif;text-align:left;z-index:20}
+  .canal-preview::backdrop{background:transparent;pointer-events:none}
+  .canal-preview .canal-preview-close{position:absolute;right:4px;top:4px;width:40px;height:40px;border:0;border-radius:8px;background:transparent;color:#536a75;font:27px/1 Arial,sans-serif;cursor:pointer}
+  .canal-preview-close:hover{background:#eef5f3}
+  .canal-preview .canal-source-kind{font-size:10px;line-height:1.4;letter-spacing:.08em;text-transform:uppercase;color:#327580;margin:0 24px 7px 0}
+  .canal-preview h4{font-family:Sora,Arial,sans-serif;font-size:17px;line-height:1.35;letter-spacing:-.025em;margin:0 20px 12px 0;color:#153845}
+  .canal-preview .canal-source{display:block;width:180px;height:273px;max-width:100%;margin:0 auto 12px;border:0;border-radius:0;object-fit:contain;background:#fff}
+  .canal-preview .canal-source-credit{display:block;color:#536a75;font-size:11px;line-height:1.5;text-align:center;text-decoration:underline;text-underline-offset:3px}
+  .mobile-diagrams{display:none}
+  @media(max-width:760px){
+    .desktop-diagram{display:none}
+    .mobile-diagrams{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:15px;overscroll-behavior-x:contain}
+    .mobile-diagrams>div{flex:0 0 100%;scroll-snap-align:start;min-width:0}
+    .mobile-diagrams img{display:block;width:100%;height:350px;object-fit:contain;background:#f1f6f6;border:1px solid #dae5e9;border-radius:12px;box-sizing:border-box}
+    .mobile-diagrams span{display:block;font-size:12px;color:#46616b;margin-top:9px;line-height:1.5}
+  }
+  @media(max-height:520px){.canal-preview .canal-source{height:190px;width:126px}.canal-preview{padding-block:15px 12px}}
+  @media print{.canal-hotspot,.canal-zone-link,.canal-hint,.canal-preview{display:none!important}}
+</style>
