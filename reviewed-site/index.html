@@ -536,23 +536,57 @@
         @media (max-width: 480px) { .slide-viewport { height: 320px; } }
 
 .iroot-promo-banner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 3px 16px;
-    padding: 11px 20px;
-    background: #dff1eb;
-    border-bottom: 1px solid var(--ink-navy-light);
-    color: var(--ink-navy);
-    text-align: center;
-    font-size: 13px;
+    display: block;
+    background: #17334e;
+    color: #fff;
     line-height: 1.5;
 }
-.iroot-promo-banner strong { font-weight: 600; white-space: nowrap; }
-.iroot-promo-banner .promo-link { text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
-.iroot-promo-banner:hover .promo-link { color: var(--brand-blue); }
-.iroot-promo-banner:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: -3px; }
+.iroot-promo-inner {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-template-areas: "label price gift link" "label price limit link";
+    align-items: center;
+    gap: 1px 24px;
+    max-width: 1248px;
+    margin: 0 auto;
+    padding: 12px 24px;
+}
+.iroot-promo-label { grid-area: label; font-size: 14px; font-weight: 600; }
+.iroot-promo-price { grid-area: price; font-size: 22px; font-weight: 600; letter-spacing: -.025em; white-space: nowrap; }
+.iroot-promo-price span { font-size: 14px; font-weight: 400; letter-spacing: 0; }
+.iroot-promo-gift { grid-area: gift; font-size: 14px; }
+.iroot-promo-footer { display: contents; }
+.iroot-promo-limit { grid-area: limit; font-size: 14px; color: #d0deea; }
+.iroot-promo-banner .promo-link {
+    grid-area: link;
+    display: inline-flex;
+    align-items: center;
+    justify-self: end;
+    gap: 8px;
+    min-height: 44px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+}
+.iroot-promo-banner .promo-link svg { width: 14px; height: 14px; flex: 0 0 14px; }
+.iroot-promo-banner:hover { background: #203f5a; }
+.iroot-promo-banner:focus-visible { outline: 3px solid #9bcce8; outline-offset: -4px; }
+@media (max-width: 600px) {
+    .iroot-promo-inner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas: "label price" "gift gift" "footer footer";
+        gap: 5px 12px;
+        padding: 14px 20px;
+    }
+    .iroot-promo-price { justify-self: end; font-size: 21px; }
+    .iroot-promo-footer { grid-area: footer; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 5px 12px; }
+    .iroot-promo-banner .promo-link { min-height: 0; gap: 6px; }
+}
+@media (max-width: 360px) {
+    .iroot-promo-inner { padding-inline: 16px; }
+}
 .site-wrapper > .site-header {
     /* Navigation may gain links or wrap at larger text sizes. Reserve its actual height. */
     height: auto;
@@ -673,6 +707,24 @@
     .header-control { min-height: 44px; padding: 10px 4px; font-size: .875rem; gap: 4px; }
     .header-control svg { width: 14px; height: 14px; flex-basis: 14px; }
     .header-menu { right: 12px; width: calc(100% - 24px); }
+}
+@media (max-width: 1000px) {
+    :root { --header-h: 140px; }
+    .site-wrapper > .site-header { grid-template-rows: minmax(78px, auto) auto; border-color: #d4dee7; }
+    .site-header .logo-container { border-color: #e3e8ee; }
+    .site-header .logo-container img { height: 64px; max-width: 64px; }
+    .site-header .contact-bar { background: #fff; border-left: none; padding-inline: 20px; }
+    .site-header .contact-bar span:first-child { font-size: 14px; font-weight: 500; }
+    .site-header .contact-bar .t-label { display: none; }
+    .site-header .contact-bar > svg { color: var(--brand-blue); }
+    .header-actions { gap: 6px; padding: 8px 12px; border-color: #e3e8ee; }
+    .header-actions > .header-control, .header-explore > .header-control { border-color: #d4dee7; border-radius: 4px; }
+    .header-actions > .header-order { border-color: var(--ink-navy); }
+    #hero-carousel .shared-price-skin { filter: none; }
+    #hero-carousel .shared-price-outline { fill: #eef4f8; stroke: #c6d6e2; }
+    #hero-carousel .shared-price-card strong { font-family: var(--font-ui); font-weight: 600; }
+    #hero-carousel .slide-compatibility { border-left-color: #9db9cd; }
+    #hero-carousel .compatibility-label { color: #d0deea; }
 }
 @media (max-width: 600px) {
     .header-menu { grid-template-columns: 1fr; gap: 16px; padding: 16px; }
@@ -816,9 +868,15 @@
 <body>
     <div class="site-wrapper">
         <a class="iroot-promo-banner" href="/products/iroot-sp/">
-            <strong>iRoot promo</strong>
-            <span>NZ$240 + GST + a free Micro-Path six-pack · limit two iRoot boxes per clinic</span>
-            <span class="promo-link">View offer <span aria-hidden="true">→</span></span>
+            <span class="iroot-promo-inner">
+                <span class="iroot-promo-label">iRoot promo</span>
+                <strong class="iroot-promo-price">NZ$240 <span>+ GST</span></strong>
+                <span class="iroot-promo-gift">Free Micro-Path six-pack per box</span>
+                <span class="iroot-promo-footer">
+                    <span class="iroot-promo-limit">Limit 2 boxes per clinic</span>
+                    <span class="promo-link">View iRoot offer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></span>
+                </span>
+            </span>
         </a>
         <header class="site-header">
             <a href="/" class="logo-container" aria-label="EndoTech NZ home">

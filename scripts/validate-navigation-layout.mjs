@@ -221,7 +221,7 @@ try {
     await load('/');
     const promoBanner = page.locator('.iroot-promo-banner');
     assert.equal(await promoBanner.getAttribute('href'), '/products/iroot-sp/');
-    assert.match(await promoBanner.innerText(), /iRoot promo[\s\S]*NZ\$240 \+ GST[\s\S]*free Micro-Path six-pack[\s\S]*limit two iRoot boxes per clinic/);
+    assert.match(await promoBanner.innerText(), /iRoot promo[\s\S]*NZ\$240 \+ GST[\s\S]*Free Micro-Path six-pack per box[\s\S]*Limit 2 boxes per clinic[\s\S]*View iRoot offer/);
     const bannerBounds = await promoBanner.boundingBox();
     const headerBounds = await page.locator('.site-wrapper > .site-header').boundingBox();
     assert.ok(bannerBounds && headerBounds && bannerBounds.y + bannerBounds.height <= headerBounds.y + 2, 'Homepage promo stays above the navigation');
