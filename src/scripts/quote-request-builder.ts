@@ -340,6 +340,9 @@ if (root) {
       }
     }
     const price = getPromoPriceSummary(customer.promoCode, lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
+    root.querySelectorAll<HTMLButtonElement>('[data-review-shopping]').forEach(button => {
+      button.hidden = price?.code !== nzIrootPromo.code;
+    });
     if (price?.code === nzIrootPromo.code) {
       const boxes = price.netTotal / nzIrootPromo.netPrice;
       const selector = root.querySelector<HTMLSelectElement>('[data-iroot-boxes]');
@@ -589,7 +592,7 @@ if (root) {
 
   productSearch?.addEventListener('input', applySearch);
 
-  const applyPromo = (showOffer = true) => {
+  const applyPromo = (showOffer = true, startFresh = false) => {
     const input = customerForm?.querySelector<HTMLInputElement>('[name="promoCode"]');
     const message = root.querySelector<HTMLElement>('[data-promo-status]');
     if (!input || !message) return;
@@ -610,12 +613,19 @@ if (root) {
       return;
     }
     const boxSelector = root.querySelector<HTMLSelectElement>('[data-iroot-boxes]');
+    if (code === nzIrootPromo.code && startFresh) {
+      // A new offer starts its own request, rather than adding to an old saved basket.
+      [...selections.keys()].forEach(sku => setQuantity(sku, 0, false));
+      if (boxSelector) boxSelector.value = '1';
+    }
+    if (code !== nzIrootPromo.code || startFresh) root.classList.remove('iroot-shopping-active');
     const quantity = code === nzIrootPromo.code && boxSelector?.value === '2' ? 2 : 1;
     offer.skus.forEach(sku => setQuantity(sku, quantity, false));
     renderSelections();
     message.textContent = code === nzIrootPromo.code ? nzIrootPromo.description : `${nzShaperPromo.description} One six-pack of each has been added. One introductory bundle per practice.`;
     const url = new URL(window.location.href);
     url.searchParams.set('promo', code === nzIrootPromo.code ? 'iRoot' : code);
+    if (code !== nzIrootPromo.code || startFresh) url.searchParams.delete('shopping');
     if (code === nzIrootPromo.code && offerPanel) {
       offerPanel.hidden = false;
       root.classList.add('iroot-offer-active');
@@ -628,14 +638,29 @@ if (root) {
     window.history.replaceState(null, '', url);
     renderReview();
   };
-  root.querySelector<HTMLButtonElement>('[data-apply-promo]')?.addEventListener('click', () => applyPromo());
+  const applyEnteredPromo = () => applyPromo(true, !root.classList.contains('iroot-offer-active'));
+  root.querySelector<HTMLButtonElement>('[data-apply-promo]')?.addEventListener('click', applyEnteredPromo);
   root.querySelector<HTMLSelectElement>('[data-iroot-boxes]')?.addEventListener('change', event => {
     const boxes = (event.currentTarget as HTMLSelectElement).value === '2' ? 2 : 1;
     nzIrootPromo.skus.forEach(sku => setQuantity(sku, boxes, false));
     renderSelections();
   });
   customerForm?.querySelector<HTMLInputElement>('[name="promoCode"]')?.addEventListener('keydown', event => {
-    if (event.key === 'Enter') { event.preventDefault(); applyPromo(); }
+    if (event.key === 'Enter') { event.preventDefault(); applyEnteredPromo(); }
+  });
+  const continueShopping = (scroll = true) => {
+    root.classList.add('iroot-shopping-active');
+    const url = new URL(window.location.href);
+    url.searchParams.set('shopping', '1');
+    if (scroll) url.hash = 'select-products';
+    window.history.replaceState(null, '', url);
+    if (scroll) {
+      root.querySelector('#select-products')?.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'start'});
+      root.querySelector<HTMLElement>('#select-products-title')?.focus({preventScroll:true});
+    }
+  };
+  root.querySelectorAll<HTMLButtonElement>('[data-continue-shopping]').forEach(button => {
+    button.addEventListener('click', () => continueShopping());
   });
   root.querySelector<HTMLButtonElement>('[data-iroot-continue]')?.addEventListener('click', () => {
     customerForm?.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'start'});
@@ -822,15 +847,22 @@ if (root) {
     }
   }));
 
-  restoreSelections();
   const params = new URLSearchParams(window.location.search);
+  const irootEntry = normalisePromoCode(params.get('promo')) === nzIrootPromo.code;
+  const resumeIrootShopping = irootEntry && params.get('shopping') === '1';
+  const freshIrootOffer = irootEntry && !resumeIrootShopping;
+  if (!freshIrootOffer) restoreSelections();
+  if (resumeIrootShopping) {
+    const boxSelector = root.querySelector<HTMLSelectElement>('[data-iroot-boxes]');
+    if (boxSelector) boxSelector.value = selections.get(nzIrootPromo.productSku) === 2 ? '2' : '1';
+  }
   if (getPromoOffer(params.get('promo'))) {
     const input = customerForm?.querySelector<HTMLInputElement>('[name="promoCode"]');
-    if (input) { input.value = params.get('promo')!; applyPromo(false); }
+    if (input) { input.value = params.get('promo')!; applyPromo(false, freshIrootOffer); }
     if (window.location.hash === '#iroot-offer') window.requestAnimationFrame(() => root.querySelector('[data-iroot-offer]')?.scrollIntoView({block:'start'}));
   }
   const requestedProduct = params.get('product') || '';
-  if (equipmentForSku(requestedProduct) && catalogBySku.has(requestedProduct) && !selections.has(requestedProduct)) {
+  if (!freshIrootOffer && equipmentForSku(requestedProduct) && catalogBySku.has(requestedProduct) && !selections.has(requestedProduct)) {
     selections.set(requestedProduct, 1);
     persistSelections();
   }
@@ -844,4 +876,5 @@ if (root) {
     : root.querySelector<HTMLButtonElement>('[data-family-tab]')?.dataset.familyTab || 'et';
   setActiveFamily(initialFamily);
   renderSelections();
+  if (resumeIrootShopping) continueShopping(false);
 }

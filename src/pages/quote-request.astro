@@ -13,7 +13,7 @@ import { siteConfig } from '../config/site';
 
 const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'bioceramics', 'equipment'];
 const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string }> = {
-  bioceramics: { eyebrow: 'Bioceramic sealer', description: 'iRoot SP: one 2 g syringe with 15 disposable tips. NZ$240 including GST. Enter iRoot to include a free six-pack of Micro-Path 15/.03, 25 mm files.' },
+  bioceramics: { eyebrow: 'Bioceramic sealer', description: 'iRoot SP: one 2 g syringe with 15 disposable tips. NZ$240 + GST. Enter iRoot to include a free six-pack of Micro-Path 15/.03, 25 mm files.' },
   equipment: { eyebrow: 'Eighteeth equipment', description: 'Add a motor, ultrasonic activator, or both. Quantities are individual units.' },
   et: {
     eyebrow: 'Rotary shaping',
@@ -68,7 +68,7 @@ const contactEmail = siteConfig.email.toLowerCase();
 ---
 
 <link rel="stylesheet" href="/quote-feedback.css" />
-<link rel="stylesheet" href="/quote-promo.css?v=offer-entry-20261019" />
+<link rel="stylesheet" href="/quote-promo.css?v=iroot-shopping-20261028" />
 <link rel="stylesheet" href="/eighteeth.css" />
 <link rel="stylesheet" href="/equipment-order-preview.css" />
 <script is:inline src="/quote-feedback.js" defer></script>
@@ -120,7 +120,7 @@ const contactEmail = siteConfig.email.toLowerCase();
       <div class="quote-section-heading">
         <div>
           <p class="quote-eyebrow quote-section-step">Step 1</p>
-          <h2 id="select-products-title">Select New Zealand products</h2>
+          <h2 id="select-products-title" tabindex="-1">Select New Zealand products</h2>
           <p>Files and points are ordered in packs; equipment is ordered by unit. Your selected products stay together.</p>
         </div>
         <label class="quote-search">
@@ -341,11 +341,12 @@ const contactEmail = siteConfig.email.toLowerCase();
       </section>
       <div class="quote-review-grid">
         <div class="quote-review-card">
-          <header>
+          <header class="quote-products-heading">
             <div>
               <span>Requested products</span>
               <strong data-review-total>0 lines · 0 packs</strong>
             </div>
+            <button type="button" class="quote-continue-shopping" data-continue-shopping data-review-shopping hidden>Continue Shopping</button>
           </header>
           <p class="quote-review-empty" data-review-empty>No products have been selected yet.</p>
           <div class="quote-review-table-scroll">

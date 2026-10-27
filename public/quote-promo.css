@@ -1,7 +1,13 @@
 .quote-promo-summary[hidden], [data-review-promo-column][hidden], [data-print-promo-summary][hidden] { display:none !important; }
 .quote-builder-page.iroot-offer-active > .quote-hero { display:none; }
-.quote-builder-page.iroot-offer-active #select-products { display:none; }
-.quote-builder-page.iroot-offer-active > .quote-steps li:first-child { opacity:.6; }
+.quote-builder-page.iroot-offer-active:not(.iroot-shopping-active) #select-products { display:none; }
+.quote-builder-page.iroot-offer-active:not(.iroot-shopping-active) > .quote-steps li:first-child { opacity:.6; }
+.quote-continue-shopping[hidden] { display:none !important; }
+.quote-review-card > .quote-products-heading { align-items:center; flex-wrap:wrap; }
+.quote-products-heading > div { flex:1 1 250px; align-items:center; flex-wrap:wrap; }
+.quote-continue-shopping { min-height:44px; padding:.65rem 1rem; border:1px solid #c6d6e2; border-radius:6px; background:#fff; color:#17334e; font:600 13px/1.5 Inter,'Segoe UI',sans-serif; cursor:pointer; white-space:nowrap; }
+.quote-continue-shopping:hover { background:#f1f6fa; }
+.quote-continue-shopping:focus-visible { outline:3px solid #173342; outline-offset:4px; }
 .quote-promo-summary { margin:0 0 28px; padding:24px 28px; border:1px solid #dce5ea; border-radius:14px; background:#f7fafc; color:#17334e; }
 .quote-promo-summary-main { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:18px 30px; }
 .quote-promo-summary-copy p { margin:0; }
