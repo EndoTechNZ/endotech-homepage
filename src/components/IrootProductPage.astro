@@ -13,18 +13,18 @@ const features = [
 ];
 const schema = {'@context':'https://schema.org','@type':'Product',name:'iRoot SP Bioceramic Sealer',description:'Premixed calcium silicate root canal sealer. 2 g syringe with 15 disposable tips.',brand:{'@type':'Brand',name:'iRoot'},manufacturer:{'@type':'Organization',name:'Innovative BioCeramix Inc.'}};
 ---
-<ProductLayout title="iRoot Bioceramic Sealer | NZ$240 | EndoTech NZ" description="iRoot SP bioceramic sealer, NZ$240 including GST per 2 g syringe. Compare the listed constituents, manufacturer and price with EndoSequence BC Sealer. Read both IFUs." image={asset('iroot-sp-studio-rebuilt.webp')} schema={schema}>
+<ProductLayout title="iRoot Bioceramic Sealer | NZ$240 + GST | EndoTech NZ" description="iRoot SP bioceramic sealer, NZ$240 + GST per 2 g syringe. Compare the listed constituents, manufacturer and price with EndoSequence BC Sealer. Read both IFUs." image={asset('iroot-sp-studio-rebuilt.webp')} schema={schema}>
   <div class="iroot">
     <section class="hero" aria-labelledby="iroot-title"><div class="wrap">
       <div class="breadcrumb"><a href={`${base}products/overview/`}>Systems</a><span>/</span><span>Obturation</span></div>
       <div class="hero-grid">
         <div class="hero-copy"><p class="eyebrow"><i aria-hidden="true"></i> iRoot SP · Canadian manufacturer</p><h1 id="iroot-title">iRoot<span>Bioceramic Sealer.</span></h1><p class="intro">Premixed calcium silicate chemistry.<br />Manufactured by Innovative BioCeramix Inc.</p>
-          <div class="hero-price"><span>NZ$</span><strong>240</strong><div>per 2 g syringe · incl. GST<small>Includes 15 disposable tips</small></div></div>
-          <p class="gift"><strong>Free Micro-Path six-pack</strong>15/.03 · 25 mm · with promo code <a href={order}>iRoot</a></p><div class="actions"><a class="button primary" href={order}>Claim the iRoot offer ↗</a><a class="button secondary" href="#comparison">Compare with BC Sealer ↓</a></div><p class="price-note">NZ$100 below the NZ$340 BC Sealer reference RRP.<a href="#price-basis" aria-label="Price comparison basis">*</a></p>
+          <div class="hero-price"><span>NZ$</span><strong>240</strong><div>+ GST per 2 g syringe<small>NZ$276 including GST · includes 15 tips</small></div></div>
+          <p class="gift"><strong>Free Micro-Path six-pack per box</strong>15/.03 · 25 mm · code <a href={order}>iRoot</a> · limit two iRoot boxes per clinic</p><div class="actions"><a class="button primary" href={order}>Claim the iRoot offer ↗</a><a class="button secondary" href="#comparison">Compare with BC Sealer ↓</a></div><p class="price-note">NZ$100 + GST below the NZ$340 + GST BC Sealer reference RRP.<a href="#price-basis" aria-label="Price comparison basis">*</a></p>
         </div>
         <figure class="stage"><span class="stage-label">iRoot SP / Injectable root canal sealer</span><img src={asset('iroot-sp-studio-rebuilt.webp')} alt="Reconstructed studio image of the iRoot SP bioceramic sealer box and preloaded syringe" width="1774" height="887" fetchpriority="high" /><figcaption><span>1 × 2 g syringe + 15 tips</span><span>Innovative BioCeramix, Canada</span></figcaption></figure>
       </div>
-      <div class="proof-strip"><a href="#manufacturer"><strong>One manufacturer</strong><span>Innovative BioCeramix Inc., Canada ↘</span></a><a href="#composition"><strong>Five listed constituents</strong><span>Matching ingredient lists in both IFUs ↘</span></a><a href="#price"><strong>NZ$100 difference</strong><span>iRoot SP NZ$240 · BC Sealer RRP NZ$340 ↘</span></a></div>
+      <div class="proof-strip"><a href="#manufacturer"><strong>One manufacturer</strong><span>Innovative BioCeramix Inc., Canada ↘</span></a><a href="#composition"><strong>Five listed constituents</strong><span>Matching ingredient lists in both IFUs ↘</span></a><a href="#price"><strong>NZ$100 + GST difference</strong><span>iRoot SP NZ$240 · BC Sealer RRP NZ$340 · both + GST ↘</span></a></div>
     </div></section>
     <nav class="local-nav" aria-label="iRoot page sections"><div class="wrap"><a href="#comparison">Compare the products</a><a href="#price">Compare the prices</a><a href="#clinical">Clinical use</a><a href="#documents">IFUs & sources</a></div></nav>
     <section id="comparison" class="pale section" aria-labelledby="comparison-title"><div class="wrap">
@@ -36,16 +36,16 @@ const schema = {'@context':'https://schema.org','@type':'Product',name:'iRoot SP
           {ingredients.map((name, i) => <tr class="ingredient"><th scope="row"><span class="index">{String(i+1).padStart(2,'0')}</span></th><td><span class="check" aria-hidden="true">✓</span>{name}</td><td><span class="check neutral" aria-hidden="true">✓</span>{name}</td></tr>)}
           <tr class="divider"><th colspan="3" scope="colgroup">Handling & setting · IFU revision 11</th></tr>
           {facts.map(([label, value]) => <tr><th scope="row">{label}</th><td>{value}</td><td>{value}</td></tr>)}
-          <tr class="table-price"><th scope="row">Price per 2 g syringe<a href="#price-basis" aria-label="Price basis">*</a></th><td><strong>NZ$240</strong><span>EndoTech NZ price</span></td><td><strong>NZ$340</strong><span>Reference recommended retail price</span></td></tr>
+          <tr class="table-price"><th scope="row">Price per 2 g syringe<a href="#price-basis" aria-label="Price basis">*</a></th><td><strong>NZ$240</strong><span>+ GST · EndoTech NZ price</span></td><td><strong>NZ$340</strong><span>+ GST · reference recommended retail price</span></td></tr>
         </tbody>
       </table></div>
       <div class="notes"><p>The BC Sealer IFU identifies Brasseler U.S.A. Dental, LLC as the company the product is manufactured for. The manufacturer comparison is supported by the scientific overview, page 1.<a href="#source-3" aria-label="Scientific overview source">3</a></p><p>The IFUs list constituent groups, without exact proportions. This comparison covers standard BC Sealer; HiFlow and Ion+ are separate products.</p></div>
     </div></section>
     <section id="price" class="price-section section" aria-labelledby="price-title"><div class="wrap price-grid">
-      <div><p class="eyebrow">The price difference</p><h2 id="price-title">Save NZ$100<br />on each syringe.</h2><p>iRoot SP is NZ$240 per 2 g syringe.<br />The BC Sealer reference RRP is NZ$340.</p><p class="percent">29.4% less<small>than the reference RRP</small></p><a class="button light" href={order}>Order iRoot SP ↗</a></div>
-      <div class="calculator" data-iroot-calculator><div class="quantity-row"><label for="iroot-quantity">Number of 2 g syringes</label><div class="quantity-control"><button type="button" data-change="-1" aria-label="One fewer syringe">−</button><input id="iroot-quantity" type="number" min="1" max="100" value="1" inputmode="numeric" /><button type="button" data-change="1" aria-label="One more syringe">+</button></div></div>
-        <div class="bar-row"><div><span>BC Sealer reference RRP</span><strong data-bc-total>NZ$340</strong></div><div class="bar bc" aria-hidden="true"></div></div><div class="bar-row"><div><span>iRoot SP · EndoTech NZ</span><strong data-iroot-total>NZ$240</strong></div><div class="bar ir" aria-hidden="true"></div></div>
-        <div class="saving" aria-live="polite" aria-atomic="true"><span>Your price difference</span><output data-saving-total for="iroot-quantity">NZ$100</output></div><p id="price-basis" class="price-basis">NZD per standard 2 g syringe. BC Sealer RRP supplied by EndoTech NZ on 27 October 2026; actual selling prices may vary. Both prices include GST.</p>
+      <div><p class="eyebrow">The price difference</p><h2 id="price-title">Save NZ$100 + GST<br />on each syringe.</h2><p>iRoot SP is NZ$240 + GST per 2 g syringe.<br />The BC Sealer reference RRP is NZ$340 + GST.</p><p class="percent">29.4% less<small>than the reference RRP</small></p><a class="button light" href={order}>Order iRoot SP ↗</a></div>
+      <div class="calculator" data-iroot-calculator><div class="quantity-row"><label for="iroot-quantity">Number of 2 g syringes</label><div class="quantity-control"><button type="button" data-change="-1" aria-label="One fewer syringe">−</button><input id="iroot-quantity" type="number" min="1" max="2" value="1" inputmode="numeric" /><button type="button" data-change="1" aria-label="One more syringe">+</button></div></div>
+        <div class="bar-row"><div><span>BC Sealer reference RRP · before GST</span><strong data-bc-total>NZ$340</strong></div><div class="bar bc" aria-hidden="true"></div></div><div class="bar-row"><div><span>iRoot SP · before GST</span><strong data-iroot-total>NZ$240</strong></div><div class="bar ir" aria-hidden="true"></div></div>
+        <div class="saving" aria-live="polite" aria-atomic="true"><span>Your price difference before GST</span><output data-saving-total for="iroot-quantity">NZ$100</output></div><p id="price-basis" class="price-basis">NZD per standard 2 g syringe. BC Sealer RRP supplied by EndoTech NZ on 27 October 2026; actual selling prices may vary. Both prices exclude GST. iRoot SP is NZ$276 including GST; BC Sealer RRP is NZ$391 including GST. The difference is NZ$115 including GST.</p>
       </div>
     </div></section>
     <section id="clinical" class="section" aria-labelledby="clinical-title"><div class="wrap">
@@ -64,7 +64,7 @@ const schema = {'@context':'https://schema.org','@type':'Product',name:'iRoot SP
       <div class="research"><div><p class="eyebrow">Clinical literature</p><h3>BC Sealer in clinical research.</h3></div><div><p>Chybowski et al. reported outcomes for 307 teeth treated with EndoSequence BC Sealer and a single-cone technique. This was a retrospective study of BC Sealer, rather than a head-to-head clinical comparison with iRoot SP.</p><a class="text-link" href="https://pubmed.ncbi.nlm.nih.gov/29606401/" target="_blank" rel="noopener">Journal of Endodontics, 2018 · Read the study ↗</a></div></div>
       <p class="document-note">The documents above are identified by revision and date. Consult the current IFU supplied with the product before clinical use. EndoSequence and BC Sealer are trademarks of their respective owners.</p>
     </div></section>
-    <section class="closing"><div class="wrap closing-grid"><div><p class="eyebrow">iRoot SP · EndoTech NZ</p><h2>iRoot SP for NZ$240.</h2><p>Includes GST. Use code iRoot to add a free six-pack of Micro-Path 15/.03, 25 mm files.</p></div><div><a class="button primary" href={order}>Order iRoot SP ↗</a><a class="text-link" href={`${base}products/iroot-sp-disposable-tips/`}>Explore the disposable tip organiser →</a></div></div></section>
+    <section class="closing"><div class="wrap closing-grid"><div><p class="eyebrow">iRoot SP · EndoTech NZ</p><h2>iRoot SP for NZ$240 + GST.</h2><p>NZ$276 including GST per box. Use code iRoot for one free Micro-Path 15/.03, 25 mm six-pack per box. Limited to two iRoot boxes per clinic.</p></div><div><a class="button primary" href={order}>Order iRoot SP ↗</a><a class="text-link" href={`${base}products/iroot-sp-disposable-tips/`}>Explore the disposable tip organiser →</a></div></div></section>
   </div>
 </ProductLayout>
 <script>
@@ -73,12 +73,12 @@ const schema = {'@context':'https://schema.org','@type':'Product',name:'iRoot SP
   const format = (n: number) => `NZ$${n.toLocaleString('en-NZ')}`;
   const update = () => {
     if (!quantity || !calculator) return;
-    const n = Math.max(1, Math.min(100, Math.round(Number(quantity.value)||1)));
+    const n = Math.max(1, Math.min(2, Math.round(Number(quantity.value)||1)));
     quantity.value = String(n);
     calculator.querySelector('[data-bc-total]')!.textContent = format(n*340);
     calculator.querySelector('[data-iroot-total]')!.textContent = format(n*240);
     calculator.querySelector('[data-saving-total]')!.textContent = format(n*100);
-    calculator.querySelectorAll<HTMLButtonElement>('[data-change]').forEach(b => b.disabled = b.dataset.change === '-1' ? n===1 : n===100);
+    calculator.querySelectorAll<HTMLButtonElement>('[data-change]').forEach(b => b.disabled = b.dataset.change === '-1' ? n===1 : n===2);
   };
   quantity?.addEventListener('change', update);
   calculator?.querySelectorAll<HTMLButtonElement>('[data-change]').forEach(b => b.addEventListener('click', () => {if(quantity) quantity.value=String((Number(quantity.value)||1)+Number(b.dataset.change));update();}));

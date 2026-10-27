@@ -221,7 +221,7 @@ try {
     await load('/');
     const promoBanner = page.locator('.iroot-promo-banner');
     assert.equal(await promoBanner.getAttribute('href'), '/products/iroot-sp/');
-    assert.match(await promoBanner.innerText(), /iRoot promo[\s\S]*NZ\$240 incl\. GST[\s\S]*free Micro-Path six-pack/);
+    assert.match(await promoBanner.innerText(), /iRoot promo[\s\S]*NZ\$240 \+ GST[\s\S]*free Micro-Path six-pack[\s\S]*limit two iRoot boxes per clinic/);
     const bannerBounds = await promoBanner.boundingBox();
     const headerBounds = await page.locator('.site-wrapper > .site-header').boundingBox();
     assert.ok(bannerBounds && headerBounds && bannerBounds.y + bannerBounds.height <= headerBounds.y + 2, 'Homepage promo stays above the navigation');
@@ -236,7 +236,8 @@ try {
     assert.equal(await page.locator('.stage img').evaluate(img=>img.complete&&img.naturalWidth>=1700),true,'Rebuilt product image must load at full resolution');
     await page.locator('#iroot-quantity').fill('10');
     await page.locator('#iroot-quantity').press('Tab');
-    assert.equal(await page.locator('[data-saving-total]').innerText(),'NZ$1,000');
+    assert.equal(await page.locator('[data-saving-total]').innerText(),'NZ$200');
+    assert.equal(await page.locator('#iroot-quantity').inputValue(),'2','The calculator respects the two-box offer limit');
     await page.evaluate(()=>scrollTo(0,0));
     await page.screenshot({path:path.join(output,`${engine}-iroot-desktop.png`)});
     await page.setViewportSize({width:390,height:844});
@@ -252,7 +253,17 @@ try {
     assert.equal(await page.locator('[name="fullName"]').inputValue(),'LOCAL PREVIEW TEST','Applying iRoot must preserve entered details');
     assert.equal(await page.locator('[data-review-lines] tr').count(),2);
     assert.match(await page.locator('[data-review-lines]').innerText(),/TSMP-150325RF[\s\S]*15\/\.03[\s\S]*25 mm[\s\S]*FREE/);
-    assert.equal(await page.locator('[data-promo-price-total]').innerText(),'NZ$240.00');
+    assert.equal(await page.locator('[data-promo-price-total]').innerText(),'NZ$276.00');
+    assert.equal(await page.locator('[data-promo-price-net]').innerText(),'NZ$240.00');
+    assert.equal(await page.locator('[data-promo-price-gst]').innerText(),'NZ$36.00');
+    await page.locator('[data-iroot-boxes]').selectOption('2');
+    assert.equal(await page.locator('[data-promo-price-total]').innerText(),'NZ$552.00');
+    assert.equal(await page.locator('[data-promo-price-net]').innerText(),'NZ$480.00');
+    assert.equal(await page.locator('[data-promo-price-gst]').innerText(),'NZ$72.00');
+    assert.equal(await page.locator('[data-review-lines] tr').filter({hasText:'IRSP-08-K1-1'}).locator('td').nth(1).innerText(),'2');
+    assert.equal(await page.locator('[data-review-lines] tr').filter({hasText:'TSMP-150325RF'}).locator('td').nth(1).innerText(),'2');
+    assert.equal(await page.locator('[data-iroot-offer]').isVisible(),true);
+    await page.locator('[data-iroot-boxes]').selectOption('1');
     await page.locator('[name="fullName"]').fill('');
     await page.evaluate(()=>document.querySelector('[data-iroot-offer]').scrollIntoView());
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'iRoot offer must fit a phone');

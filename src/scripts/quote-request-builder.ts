@@ -240,7 +240,7 @@ if (root) {
     if (!copied) throw new Error('The SKU list could not be copied. Download the SKU entry list instead.');
   };
 
-  const setQuantity = (sku: string, rawQuantity: number) => {
+  const setQuantity = (sku: string, rawQuantity: number, render = true) => {
     const quantity = Math.max(0, Math.min(999, Math.floor(Number(rawQuantity) || 0)));
     if (!catalogBySku.has(sku)) return;
     if ((selections.get(sku) || 0) !== quantity) clearRequestConfirmation();
@@ -250,7 +250,7 @@ if (root) {
       input.value = quantity ? String(quantity) : '';
     });
     persistSelections();
-    renderSelections();
+    if (render) renderSelections();
   };
 
   const createText = (tag: keyof HTMLElementTagNameMap, text: string, className?: string) => {
@@ -340,6 +340,13 @@ if (root) {
       }
     }
     const price = getPromoPriceSummary(customer.promoCode, lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
+    if (price?.code === nzIrootPromo.code) {
+      const boxes = price.netTotal / nzIrootPromo.netPrice;
+      const selector = root.querySelector<HTMLSelectElement>('[data-iroot-boxes]');
+      if (selector) selector.value = String(boxes);
+      const total = root.querySelector<HTMLElement>('[data-iroot-selected-total]');
+      if (total) total.textContent = `${boxes} ${boxes === 1 ? 'box' : 'boxes'} + ${boxes} free ${boxes === 1 ? 'six-pack' : 'six-packs'} · ${formatPromoPrice(price.totalInclGst)} including GST`;
+    }
     if (root.classList.contains('iroot-offer-active') && price?.code !== nzIrootPromo.code) {
       root.classList.remove('iroot-offer-active');
       const panel = root.querySelector<HTMLElement>('[data-iroot-offer]');
@@ -602,7 +609,10 @@ if (root) {
       message.textContent = 'This offer is not available in the current catalogue. Please contact EndoTech NZ.';
       return;
     }
-    offer.skus.forEach(sku => setQuantity(sku, 1));
+    const boxSelector = root.querySelector<HTMLSelectElement>('[data-iroot-boxes]');
+    const quantity = code === nzIrootPromo.code && boxSelector?.value === '2' ? 2 : 1;
+    offer.skus.forEach(sku => setQuantity(sku, quantity, false));
+    renderSelections();
     message.textContent = code === nzIrootPromo.code ? nzIrootPromo.description : `${nzShaperPromo.description} One six-pack of each has been added. One introductory bundle per practice.`;
     const url = new URL(window.location.href);
     url.searchParams.set('promo', code === nzIrootPromo.code ? 'iRoot' : code);
@@ -619,6 +629,11 @@ if (root) {
     renderReview();
   };
   root.querySelector<HTMLButtonElement>('[data-apply-promo]')?.addEventListener('click', () => applyPromo());
+  root.querySelector<HTMLSelectElement>('[data-iroot-boxes]')?.addEventListener('change', event => {
+    const boxes = (event.currentTarget as HTMLSelectElement).value === '2' ? 2 : 1;
+    nzIrootPromo.skus.forEach(sku => setQuantity(sku, boxes, false));
+    renderSelections();
+  });
   customerForm?.querySelector<HTMLInputElement>('[name="promoCode"]')?.addEventListener('keydown', event => {
     if (event.key === 'Enter') { event.preventDefault(); applyPromo(); }
   });
