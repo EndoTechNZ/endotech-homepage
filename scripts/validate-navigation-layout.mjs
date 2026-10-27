@@ -54,7 +54,7 @@ if (!base) {
   base = `http://127.0.0.1:${server.address().port}`;
 }
 
-const representativeRoutes = ['/', '/offers/', '/products/overview/', '/products/transform-s-et/', '/products/orifice-shapers/', '/quote-request/', '/technique/mb2-file/', '/products/e-connect-s/'].filter(route => routes.includes(route));
+const representativeRoutes = ['/', '/offers/', '/products/overview/', '/products/transform-s-et/', '/products/orifice-shapers/', '/products/iroot-sp/', '/quote-request/', '/technique/mb2-file/', '/products/e-connect-s/'].filter(route => routes.includes(route));
 const widths = [320, 360, 375, 390, 414, 600, 601, 768, 850, 851, 1000, 1001, 1024, 1280, 1440, 1600, 1920, 2560];
 let cases = 0;
 
@@ -156,7 +156,7 @@ try {
       const request = route.request();
       if (request.resourceType() === 'media' || /\.(?:glb|gltf|mp4)(?:\?|$)/.test(request.url()) || /google-analytics|googletagmanager|clarity\.ms/.test(request.url())) return route.abort();
       const url = new URL(request.url());
-      if (server && url.hostname === 'endotechnz.com') return route.fulfill({ response: await route.fetch({ url: new URL(url.pathname + url.search, base).href }) });
+      if (server && url.hostname === 'endotechnz.com') return route.fulfill({ response: await route.fetch({ url: new URL(url.pathname + url.search, base).href, maxRetries: 2 }) });
       return route.continue();
     });
     const page = await context.newPage();
@@ -194,6 +194,7 @@ try {
       const summary = page.locator('header details > summary').first();
       await summary.click();
       assert.equal(await page.locator('header details a[href="/products/orifice-shapers/"]').count(), 1, `${engine} ${route}: Explore includes Orifice Shapers`);
+      assert.equal(await page.locator('header details a[href="/products/iroot-sp/"]').count(), 1, `${engine} ${route}: Explore includes iRoot Bioceramic Sealer`);
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
       const menu = page.locator(variants.map(variant => `${variant.header} ${variant.menu}`).join(', '));
       const menuBounds = await menu.boundingBox();
@@ -218,9 +219,47 @@ try {
     }
     await page.setViewportSize({ width: 390, height: 844 });
     await load('/');
+    const promoBanner = page.locator('.iroot-promo-banner');
+    assert.equal(await promoBanner.getAttribute('href'), '/products/iroot-sp/');
+    assert.match(await promoBanner.innerText(), /iRoot promo[\s\S]*NZ\$240 incl\. GST[\s\S]*free Micro-Path six-pack/);
+    const bannerBounds = await promoBanner.boundingBox();
+    const headerBounds = await page.locator('.site-wrapper > .site-header').boundingBox();
+    assert.ok(bannerBounds && headerBounds && bannerBounds.y + bannerBounds.height <= headerBounds.y + 2, 'Homepage promo stays above the navigation');
     await page.screenshot({ path: path.join(output, `${engine}-mobile-after.png`) });
     await page.setViewportSize({ width: 1600, height: 900 });
     await page.screenshot({ path: path.join(output, `${engine}-desktop-after.png`) });
+    // Validate the new offer in the built site, with no order submission.
+    await page.setViewportSize({width:1440,height:1000});
+    await load('/products/iroot-sp/');
+    assert.equal(await page.locator('.ingredient').count(),5);
+    assert.equal(await page.locator('#manufacturer td').count(),2);
+    assert.equal(await page.locator('.stage img').evaluate(img=>img.complete&&img.naturalWidth>=1700),true,'Rebuilt product image must load at full resolution');
+    await page.locator('#iroot-quantity').fill('10');
+    await page.locator('#iroot-quantity').press('Tab');
+    assert.equal(await page.locator('[data-saving-total]').innerText(),'NZ$1,000');
+    await page.evaluate(()=>scrollTo(0,0));
+    await page.screenshot({path:path.join(output,`${engine}-iroot-desktop.png`)});
+    await page.setViewportSize({width:390,height:844});
+    await load('/products/iroot-sp/');
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'iRoot comparison must fit a phone');
+    await page.screenshot({path:path.join(output,`${engine}-iroot-mobile.png`)});
+    await load('/quote-request/#promotion-code');
+    await page.locator('[name="fullName"]').fill('LOCAL PREVIEW TEST');
+    await page.locator('#quote-promo-code').fill(' iRoOt ');
+    await page.locator('#quote-promo-code').press('Enter');
+    await page.locator('[data-iroot-offer]').waitFor({state:'visible'});
+    assert.equal(new URL(page.url()).searchParams.get('promo'),'iRoot');
+    assert.equal(await page.locator('[name="fullName"]').inputValue(),'LOCAL PREVIEW TEST','Applying iRoot must preserve entered details');
+    assert.equal(await page.locator('[data-review-lines] tr').count(),2);
+    assert.match(await page.locator('[data-review-lines]').innerText(),/TSMP-150325RF[\s\S]*15\/\.03[\s\S]*25 mm[\s\S]*FREE/);
+    assert.equal(await page.locator('[data-promo-price-total]').innerText(),'NZ$240.00');
+    await page.locator('[name="fullName"]').fill('');
+    await page.evaluate(()=>document.querySelector('[data-iroot-offer]').scrollIntoView());
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'iRoot offer must fit a phone');
+    await page.screenshot({path:path.join(output,`${engine}-iroot-offer-mobile.png`)});
+    await page.setViewportSize({width:1440,height:1000});
+    await page.evaluate(()=>scrollTo(0,0));
+    await page.screenshot({path:path.join(output,`${engine}-iroot-offer-desktop.png`)});
     await context.close();
     await browser.close();
     browser = null;

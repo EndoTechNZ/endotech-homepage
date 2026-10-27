@@ -4,10 +4,17 @@ import path from 'node:path';
 import { build } from 'esbuild';
 
 const bundled = await build({
-  stdin: {contents: `export * from './src/lib/quotePromoPricing'; export * from './src/lib/quoteRequestPdf'; export {nzCustomerSelectableCatalog} from './src/data/nzLaunchCatalog';`,resolveDir:process.cwd(),loader:'ts'},
+  stdin: {contents: `export * from './src/lib/quotePromoPricing'; export * from './src/lib/quoteRequestPdf'; export {nzCustomerSelectableCatalog} from './src/data/nzLaunchCatalog'; export {irootCatalog} from './src/data/irootCatalog';`,resolveDir:process.cwd(),loader:'ts'},
   bundle:true,platform:'node',format:'esm',write:false,logLevel:'silent',
 });
-const {getPromoPriceSummary,buildQuoteRequestPdf,nzCustomerSelectableCatalog} = await import(`data:text/javascript;base64,${Buffer.from(bundled.outputFiles[0].text).toString('base64')}`);
+const {getPromoPriceSummary,buildQuoteRequestPdf,nzCustomerSelectableCatalog,irootCatalog} = await import(`data:text/javascript;base64,${Buffer.from(bundled.outputFiles[0].text).toString('base64')}`);
+const irootLines = [{sku:'IRSP-08-K1-1',quantity:1},{sku:'TSMP-150325RF',quantity:1}];
+assert.deepEqual(getPromoPriceSummary(' iRoOt ',irootLines),{code:'IROOT',packPrice:240,netTotal:208.70,gstTotal:31.30,totalInclGst:240,hasAdditionalItems:false});
+for (const invalid of [irootLines.slice(0,1), irootLines.map(line=>({...line,quantity:2})), [...irootLines,irootLines[1]], [irootLines[0],{sku:'TSMP-150321RF',quantity:1}]]) {
+  assert.equal(getPromoPriceSummary('iRoot',invalid),null,'iRoot requires the exact syringe and 25 mm free six-pack');
+}
+const irootExtra=getPromoPriceSummary('IROOT',[...irootLines,{sku:'TSET-150421RF',quantity:1}]);
+assert.equal(irootExtra.totalInclGst,240);assert.equal(irootExtra.hasAdditionalItems,true);
 const lines = [{sku:'TSMP-150517RF',quantity:1},{sku:'TSET-170817OO',quantity:1}];
 assert.deepEqual(getPromoPriceSummary(' tryboth ',lines),{code:'TRYBOTH',packPrice:15,netTotal:30,gstTotal:4.5,totalInclGst:34.5,hasAdditionalItems:false});
 for (const [code,selection] of [
@@ -28,8 +35,8 @@ const base = {
 };
 const output = path.resolve('output/promo-pricing-tests');
 await fs.mkdir(output,{recursive:true});
-for (const [name,code,selection] of [['promo','TRYBOTH',lines],['extra','TRYBOTH',extra],['normal','',lines]]) {
-  const input = {...base,customer:{...base.customer,promoCode:code},lines:selection.map(line=>({item:nzCustomerSelectableCatalog.find(item=>item.sku===line.sku),quantity:line.quantity}))};
+for (const [name,code,selection] of [['promo','TRYBOTH',lines],['extra','TRYBOTH',extra],['normal','',lines],['iroot','iRoot',irootLines]]) {
+  const input = {...base,customer:{...base.customer,promoCode:code},lines:selection.map(line=>({item:[...nzCustomerSelectableCatalog,...irootCatalog].find(item=>item.sku===line.sku),quantity:line.quantity}))};
   assert.ok(input.lines.every(line=>line.item),'Test products must exist in the real catalogue');
   await fs.writeFile(path.join(output,`${name}.pdf`),await buildQuoteRequestPdf(input));
 }

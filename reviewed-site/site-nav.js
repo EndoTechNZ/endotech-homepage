@@ -6,6 +6,7 @@ const sharedExploreItems=[
   {href:'/products/orifice-shapers/',label:'Orifice Shapers'},
   {href:'/products/c-plus/',label:'Transform S C+'},
   {href:'/products/gutta-percha/',label:'Gutta Percha Points'},
+  {href:'/products/iroot-sp/',label:'iRoot Bioceramic Sealer'},
   {href:'/products/iroot-sp-disposable-tips/',label:'iRoot SP Disposable Tips'},
   {divider:true},
   {href:'/technology/',label:'Technology'},

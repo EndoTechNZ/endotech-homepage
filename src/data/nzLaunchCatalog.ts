@@ -1,6 +1,6 @@
 import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 
-export type NzLaunchFamily = 'micro-path' | 'et' | 'pt' | 'rg' | 'k-files' | 'c-plus' | 'gutta-percha' | 'equipment';
+export type NzLaunchFamily = 'micro-path' | 'et' | 'pt' | 'rg' | 'k-files' | 'c-plus' | 'gutta-percha' | 'equipment' | 'bioceramics';
 
 export interface NzLaunchCatalogItem {
   family: NzLaunchFamily;

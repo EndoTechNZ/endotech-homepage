@@ -14,8 +14,8 @@ import {
   quoteRequestPdfBase64,
 } from '../lib/quoteRequestEmail';
 import { submitQuoteRequest } from '../lib/quoteRequestSubmission';
-import { nzShaperPromo, normalisePromoCode, validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
-import { formatPromoPrice, getPromoPriceSummary, promoPriceNote } from '../lib/quotePromoPricing';
+import { nzShaperPromo, nzIrootPromo, getPromoOffer, normalisePromoCode, validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
+import { formatPromoPrice, getPromoPriceSummary, promoPriceNote, promoTitle, promoProductCopy, promoPriceCopy, promoLinePrice } from '../lib/quotePromoPricing';
 import { equipmentForSku, getEquipmentTotals } from '../data/eighteethEquipment';
 
 const root = document.querySelector<HTMLElement>('[data-quote-builder]');
@@ -33,7 +33,7 @@ if (root) {
   const catalogBySku = new Map(catalog.map((item) => [item.sku, item]));
   const selectionStorageKey = root.dataset.localPreview === 'true' ? 'endotechnz_equipment_preview_selections_v1' : 'endotechnz_quote_request_selections_v1';
   const formStartedAt = new Date().toISOString();
-  const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'equipment'];
+  const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'bioceramics', 'equipment'];
   const selections = new Map<string, number>();
   const createDraftReference = () => {
     const now = new Date();
@@ -340,12 +340,20 @@ if (root) {
       }
     }
     const price = getPromoPriceSummary(customer.promoCode, lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
+    if (root.classList.contains('iroot-offer-active') && price?.code !== nzIrootPromo.code) {
+      root.classList.remove('iroot-offer-active');
+      const panel = root.querySelector<HTMLElement>('[data-iroot-offer]');
+      if (panel) panel.hidden = true;
+    }
     const priceSummary = root.querySelector<HTMLElement>('[data-review-promo-summary]');
     if (priceSummary) {
       priceSummary.hidden = !price;
       if (price) {
         for (const [selector,value] of [
-          ['[data-promo-price-code]',price.code],
+          ['[data-promo-price-code]',price.code === nzIrootPromo.code ? 'iRoot' : price.code],
+          ['[data-promo-title]',promoTitle(price)],
+          ['[data-promo-products]',promoProductCopy(price)],
+          ['[data-promo-net-label]',price.code === nzIrootPromo.code ? 'Bundle excl. GST' : 'Two six-packs'],
           ['[data-promo-price-total]',formatPromoPrice(price.totalInclGst)],
           ['[data-promo-price-net]',formatPromoPrice(price.netTotal)],
           ['[data-promo-price-gst]',formatPromoPrice(price.gstTotal)],
@@ -383,8 +391,8 @@ if (root) {
           const equipmentItem = equipmentForSku(item.sku);
           if (equipmentItem) {
             cell.append(createText('span', formatPromoPrice(equipmentItem.price)), createText('small', '+ GST / unit'));
-          } else if (price && nzShaperPromo.skus.includes(item.sku)) {
-            cell.append(createText('span',formatPromoPrice(price.packPrice)),createText('small','+ GST'));
+          } else if (price && promoLinePrice(price, item.sku)) {
+            cell.append(createText('span',promoLinePrice(price, item.sku)!));
           } else {
             cell.textContent = 'To be quoted';
           }
@@ -496,7 +504,7 @@ if (root) {
     if (footer) footer.textContent = eq.selected.length ? 'EndoTech NZ | Pro forma request with equipment pricing' : price ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request';
     const priceCopy = printSheet.querySelector<HTMLElement>('[data-print-promo-price]');
     const priceNote = printSheet.querySelector<HTMLElement>('[data-print-promo-note]');
-    if (priceCopy && price) priceCopy.textContent = `${price.code}: two six-packs at ${formatPromoPrice(price.packPrice)} each + GST. ${formatPromoPrice(price.netTotal)} + ${formatPromoPrice(price.gstTotal)} GST = ${formatPromoPrice(price.totalInclGst)} incl. GST, plus postage.`;
+    if (priceCopy && price) priceCopy.textContent = promoPriceCopy(price);
     if (priceNote && price) priceNote.textContent = promoPriceNote(price);
     const details = printSheet.querySelector<HTMLElement>('[data-print-details]');
     const body = printSheet.querySelector<HTMLTableSectionElement>('[data-print-lines]');
@@ -574,24 +582,49 @@ if (root) {
 
   productSearch?.addEventListener('input', applySearch);
 
-  root.querySelector<HTMLButtonElement>('[data-apply-promo]')?.addEventListener('click', () => {
+  const applyPromo = (showOffer = true) => {
     const input = customerForm?.querySelector<HTMLInputElement>('[name="promoCode"]');
     const message = root.querySelector<HTMLElement>('[data-promo-status]');
     if (!input || !message) return;
     const code = normalisePromoCode(input.value);
-    input.value = code;
+    input.value = code === nzIrootPromo.code ? 'iRoot' : code;
     message.hidden = false;
-    if (code !== nzShaperPromo.code) {
+    const offer = getPromoOffer(code);
+    const offerPanel = root.querySelector<HTMLElement>('[data-iroot-offer]');
+    root.classList.remove('iroot-offer-active');
+    if (offerPanel) offerPanel.hidden = true;
+    if (!offer) {
       message.textContent = 'That promo code is not recognised. Check the code in your offer.';
+      renderReview();
       return;
     }
-    if (!nzShaperPromo.skus.every(sku => catalogBySku.has(sku))) {
+    if (!offer.skus.every(sku => catalogBySku.has(sku))) {
       message.textContent = 'This offer is not available in the current catalogue. Please contact EndoTech NZ.';
       return;
     }
-    nzShaperPromo.skus.forEach(sku => setQuantity(sku, 1));
-    message.textContent = `${nzShaperPromo.description} One six-pack of each has been added. One introductory bundle per practice.`;
+    offer.skus.forEach(sku => setQuantity(sku, 1));
+    message.textContent = code === nzIrootPromo.code ? nzIrootPromo.description : `${nzShaperPromo.description} One six-pack of each has been added. One introductory bundle per practice.`;
+    const url = new URL(window.location.href);
+    url.searchParams.set('promo', code === nzIrootPromo.code ? 'iRoot' : code);
+    if (code === nzIrootPromo.code && offerPanel) {
+      offerPanel.hidden = false;
+      root.classList.add('iroot-offer-active');
+      if (showOffer) {
+        url.hash = 'iroot-offer';
+        offerPanel.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'start'});
+        offerPanel.querySelector<HTMLElement>('h1')?.focus({preventScroll:true});
+      }
+    }
+    window.history.replaceState(null, '', url);
     renderReview();
+  };
+  root.querySelector<HTMLButtonElement>('[data-apply-promo]')?.addEventListener('click', () => applyPromo());
+  customerForm?.querySelector<HTMLInputElement>('[name="promoCode"]')?.addEventListener('keydown', event => {
+    if (event.key === 'Enter') { event.preventDefault(); applyPromo(); }
+  });
+  root.querySelector<HTMLButtonElement>('[data-iroot-continue]')?.addEventListener('click', () => {
+    customerForm?.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'start'});
+    customerForm?.querySelector<HTMLInputElement>('[name="fullName"]')?.focus({preventScroll:true});
   });
 
   downloadButton?.addEventListener('click', () => withBusyButton(downloadButton, async () => {
@@ -665,7 +698,7 @@ if (root) {
       `Contact: ${draft.customer.fullName}`,
       `Phone: ${draft.customer.phone}`,
       `Account number: ${draft.customer.accountNumber || '-'}`,
-      ...(draft.customer.promoCode ? [`Promo code: ${draft.customer.promoCode}`, nzShaperPromo.description] : []),
+      ...(draft.customer.promoCode ? [`Promo code: ${draft.customer.promoCode}`, getPromoOffer(draft.customer.promoCode)?.description || ''] : []),
       `PO reference: ${draft.customer.purchaseOrderReference || '-'}`,
       '',
       'Customer comments:',
@@ -776,6 +809,11 @@ if (root) {
 
   restoreSelections();
   const params = new URLSearchParams(window.location.search);
+  if (getPromoOffer(params.get('promo'))) {
+    const input = customerForm?.querySelector<HTMLInputElement>('[name="promoCode"]');
+    if (input) { input.value = params.get('promo')!; applyPromo(false); }
+    if (window.location.hash === '#iroot-offer') window.requestAnimationFrame(() => root.querySelector('[data-iroot-offer]')?.scrollIntoView({block:'start'}));
+  }
   const requestedProduct = params.get('product') || '';
   if (equipmentForSku(requestedProduct) && catalogBySku.has(requestedProduct) && !selections.has(requestedProduct)) {
     selections.set(requestedProduct, 1);

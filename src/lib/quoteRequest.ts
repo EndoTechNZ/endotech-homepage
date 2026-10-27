@@ -13,6 +13,7 @@ export const quoteFamilyLabels: Record<NzLaunchFamily, string> = {
   'k-files': 'Transform S™ K-Files',
   'gutta-percha': 'Gutta Percha Points',
   equipment: 'Motors & ultrasonics',
+  bioceramics: 'iRoot SP',
 };
 
 export const quoteProductLabel = (item: NzLaunchCatalogItem): string =>

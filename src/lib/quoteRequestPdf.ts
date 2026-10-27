@@ -3,7 +3,7 @@ import type { NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
 import { compareNzLaunchCatalogItems } from './catalogOrder';
 import { quoteProductLabel, type QuoteCustomerDetails } from './quoteRequest';
 import { getEquipmentTotals } from '../data/eighteethEquipment';
-import { formatPromoPrice, getPromoPriceSummary, promoPriceNote } from './quotePromoPricing';
+import { formatPromoPrice, getPromoPriceSummary, promoPriceNote, promoTitle, promoProductCopy } from './quotePromoPricing';
 
 export interface QuoteRequestPdfLine {
   item: NzLaunchCatalogItem;
@@ -192,8 +192,8 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
 
   if (promoPrice) {
     drawSectionTitle(`${promoPrice.code} offer`);
-    drawWrapped(`Mini Magic six-pack ${formatPromoPrice(promoPrice.packPrice)} + GST. 17/.08 Orifice Shaper six-pack ${formatPromoPrice(promoPrice.packPrice)} + GST.`, {size:9.2,color:NAVY});
-    drawWrapped(`Two six-packs: ${formatPromoPrice(promoPrice.netTotal)}. GST (15%): ${formatPromoPrice(promoPrice.gstTotal)}.`, {size:9.2,color:NAVY});
+    drawWrapped(`${promoTitle(promoPrice)}. ${promoProductCopy(promoPrice)}`, {size:9.2,color:NAVY});
+    drawWrapped(`Bundle excl. GST: ${formatPromoPrice(promoPrice.netTotal)}. GST (15%): ${formatPromoPrice(promoPrice.gstTotal)}.`, {size:9.2,color:NAVY});
     drawWrapped(`${formatPromoPrice(promoPrice.totalInclGst)} incl. GST, plus postage.`, {size:13,font:bold,color:NAVY});
     drawWrapped(promoPriceNote(promoPrice), {size:8.5,color:MID});
     y -= 8;
@@ -305,9 +305,9 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   drawWrapped(input.customer.notes || 'No additional notes supplied.', { size: 9.2, color: NAVY, lineHeight: 13 });
   y -= 3;
 
-  // Equipment preview already explains the next step beside its pricing.
+  // Priced equipment and promo summaries already explain the next step.
   // Avoid creating a second page containing only the repeated next-step box.
-  if (!equipmentTotal.selected.length) {
+  if (!equipmentTotal.selected.length && !promoPrice) {
   if (y - 56 < 60) addPage();
   page.drawRectangle({ x: MARGIN, y: y - 52, width: CONTENT_WIDTH, height: 58, color: PALE, borderColor: LIGHT, borderWidth: 1 });
   page.drawText('NEXT STEP', { x: MARGIN + 14, y: y - 10, size: 7, font: bold, color: TEAL });

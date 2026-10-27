@@ -2,6 +2,8 @@
 import ProductLayout from '../layouts/ProductLayout.astro';
 import endotechLogo from '../assets/endotech-nz-logo-2026.jpg';
 import BrandLogo from '../components/BrandLogo.astro';
+import IrootOffer from '../components/IrootOffer.astro';
+import { irootCatalog } from '../data/irootCatalog';
 import transformLogo from '../assets/transform-s-wordmark.png';
 import { nzCustomerSelectableCatalog, type NzLaunchFamily, type NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
 import { equipment, formatEquipmentPrice } from '../data/eighteethEquipment';
@@ -9,8 +11,9 @@ import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 import { quoteFamilyLabels } from '../lib/quoteRequest';
 import { siteConfig } from '../config/site';
 
-const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'equipment'];
+const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'bioceramics', 'equipment'];
 const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string }> = {
+  bioceramics: { eyebrow: 'Bioceramic sealer', description: 'iRoot SP: one 2 g syringe with 15 disposable tips. NZ$240 including GST. Enter iRoot to include a free six-pack of Micro-Path 15/.03, 25 mm files.' },
   equipment: { eyebrow: 'Eighteeth equipment', description: 'Add a motor, ultrasonic activator, or both. Quantities are individual units.' },
   et: {
     eyebrow: 'Rotary shaping',
@@ -47,7 +50,7 @@ const equipmentCatalog: NzLaunchCatalogItem[] = equipment.map(item => ({
   fileType: item.category, size: 'Complete unit', lengthMm: null, packQty: 1,
   requiresConfirmation: false, confirmationNote: '',
 }));
-const quoteRequestCatalog = [...nzCustomerSelectableCatalog.filter((item) => item.family !== 'k-files'), ...equipmentCatalog];
+const quoteRequestCatalog = [...nzCustomerSelectableCatalog.filter((item) => item.family !== 'k-files'), ...irootCatalog, ...equipmentCatalog];
 
 const groupedCatalog = Object.fromEntries(
   familyOrder.map((family) => [
@@ -88,6 +91,7 @@ const contactEmail = siteConfig.email.toLowerCase();
     data-submission-enabled={String(submissionEnabled)}
   >
     {!submissionEnabled && <div class="et-review-strip">Local ordering preview · Email sending is disabled.</div>}
+    <IrootOffer inOrder initiallyHidden />
     <section class="quote-hero" aria-labelledby="quote-builder-title">
       <div class="quote-hero-copy">
         <p class="quote-eyebrow">Account pro forma request</p>
@@ -320,13 +324,13 @@ const contactEmail = siteConfig.email.toLowerCase();
         <div class="quote-promo-summary-main">
           <div class="quote-promo-summary-copy">
             <p class="quote-promo-label">Your <span data-promo-price-code>TRYBOTH</span> offer</p>
-            <h3>Two six-packs of files</h3>
-            <p class="quote-promo-packs">One Mini Magic. One 17/.08 Orifice Shaper.</p>
+            <h3 data-promo-title>Two six-packs of files</h3>
+            <p class="quote-promo-packs" data-promo-products>One Mini Magic. One 17/.08 Orifice Shaper.</p>
           </div>
           <div class="quote-promo-price"><strong data-promo-price-total></strong><span>incl. GST, plus postage</span></div>
         </div>
         <dl class="quote-promo-breakdown">
-          <div><dt>Two six-packs</dt><dd data-promo-price-net></dd></div>
+          <div><dt data-promo-net-label>Two six-packs</dt><dd data-promo-price-net></dd></div>
           <div><dt>GST (15%)</dt><dd data-promo-price-gst></dd></div>
         </dl>
         <p class="quote-promo-note" data-promo-price-note></p>

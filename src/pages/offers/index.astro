@@ -1,5 +1,6 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
+import IrootOffer from '../../components/IrootOffer.astro';
 import { nzShaperPromo } from '../../../shared/nz-promo-offers.mjs';
 
 const base = import.meta.env.BASE_URL;
@@ -27,15 +28,16 @@ const products = [
 ];
 ---
 
-<ProductLayout title="Offers | EndoTech NZ" description="Explore the TRYBOTH introductory bundle: one six-pack of Mini Magic and one six-pack of the 17/.08 Orifice Shaper for NZ$30 plus GST and postage.">
+<ProductLayout title="Offers | EndoTech NZ" description="iRoot SP for NZ$240 including GST with a free Micro-Path 15/.03, 25 mm six-pack. Explore the iRoot and TRYBOTH offers from EndoTech NZ.">
   <link rel="stylesheet" href={`${base}tryboth-offer.css`} />
   <div class="offers-page">
     <header class="offers-heading">
       <p class="offers-eyebrow">EndoTech NZ</p>
       <h1>Offers</h1>
-      <p>Practical file options. A simple way to try them.</p>
+      <p>iRoot SP with a free Micro-Path pack, plus the TRYBOTH file bundle.</p>
     </header>
 
+    <IrootOffer />
     <section id="tryboth" class="tryboth-offer" aria-labelledby="tryboth-title">
       <div class="tryboth-heading">
         <p class="offers-eyebrow">The TRYBOTH introductory bundle</p>

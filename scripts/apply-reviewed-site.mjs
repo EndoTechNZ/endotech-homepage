@@ -9,6 +9,8 @@ const generatedEquipment=new JSDOM(fs.readFileSync(path.join(dist,'index.html'),
 if(!generatedEquipment)throw Error('Equipment teaser was not generated');
 const equipmentGeneratedPages=new Set(['quote-request/index.html','resources/downloads/index.html']);
 const generatedTipsTeaser=new JSDOM(fs.readFileSync(path.join(dist,'products/overview/index.html'),'utf8')).window.document.querySelector('[data-iroot-tips-teaser]')?.outerHTML;
+const generatedSealerTeaser=new JSDOM(fs.readFileSync(path.join(dist,'products/overview/index.html'),'utf8')).window.document.querySelector('[data-iroot-sealer-teaser]')?.outerHTML;
+if(!generatedSealerTeaser)throw Error('iRoot bioceramic sealer teaser was not generated');
 if(!generatedTipsTeaser)throw Error('iRoot SP product teaser was not generated');
 const generatedMb2=new JSDOM(fs.readFileSync(path.join(dist,'technique/mb2-file/index.html'),'utf8')).window.document;
 const orificeShaperEducation=generatedMb2.querySelector('[data-mb2-orifice-shaper]')?.outerHTML;
@@ -30,6 +32,11 @@ function publish(dir,rel=''){
    continue;
   }
   let html=fs.readFileSync(from,'utf8');
+  // Keep every reviewed navigation group discoverable without rewriting page bodies.
+  html=html.replace(/<nav\b[\s\S]*?<\/nav>/gi,nav=>{
+   if(nav.includes('href="/products/iroot-sp/"'))return nav;
+   return nav.replace(/<a\b[^>]*href="\/products\/gutta-percha\/"[^>]*>[\s\S]*?<\/a>/g,match=>`${match}<a href="/products/iroot-sp/">iRoot Bioceramic Sealer</a>`);
+  });
   // Keep the reviewed footer menus aligned with the generated resource links.
   html=html.replace(/<footer\b[\s\S]*?<\/footer>/gi, footer=>{
    if(footer.includes('href="/resources/safety-data-sheets/"'))return footer;
@@ -51,13 +58,13 @@ function publish(dir,rel=''){
     .replace('</head>','<link rel="stylesheet" href="/eighteeth.css"></head>');
   }
   if(next.replaceAll('\\','/')==='products/overview/index.html'){
-   html=html.replace('</main>',`${generatedTipsTeaser}${generatedEquipment}</main>`)
+   html=html.replace('</main>',`${generatedSealerTeaser}${generatedTipsTeaser}${generatedEquipment}</main>`)
     .replace('</head>','<link rel="stylesheet" href="/eighteeth.css"></head>');
   }
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/\/site-style\.css(?:\?[^"']*)?/g,'/site-style.css?v=nav-labels-20261019')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
-   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=lower-molar-20261025')
+   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=iroot-sealer-20261027')
    .replace(/\/rg-wireframe\.js(?:\?[^"']*)?/g,'/rg-wireframe.js?v=whoosh4-20260930')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
 

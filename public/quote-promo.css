@@ -1,4 +1,7 @@
 .quote-promo-summary[hidden], [data-review-promo-column][hidden], [data-print-promo-summary][hidden] { display:none !important; }
+.quote-builder-page.iroot-offer-active > .quote-hero { display:none; }
+.quote-builder-page.iroot-offer-active #select-products { display:none; }
+.quote-builder-page.iroot-offer-active > .quote-steps li:first-child { opacity:.6; }
 .quote-promo-summary { margin:0 0 28px; padding:24px 28px; border:1px solid #dce5ea; border-radius:14px; background:#f7fafc; color:#17334e; }
 .quote-promo-summary-main { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:18px 30px; }
 .quote-promo-summary-copy p { margin:0; }

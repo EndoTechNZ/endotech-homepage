@@ -1,6 +1,6 @@
 import type { NzLaunchCatalogItem, NzLaunchFamily } from '../data/nzLaunchCatalog';
 
-const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'k-files', 'equipment'];
+const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'k-files', 'bioceramics', 'equipment'];
 
 const firstNumber = (value: string, fallback = Number.MAX_SAFE_INTEGER): number => {
   const match = value.match(/\d+(?:\.\d+)?/);

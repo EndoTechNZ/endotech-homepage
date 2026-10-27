@@ -535,6 +535,24 @@
         }
         @media (max-width: 480px) { .slide-viewport { height: 320px; } }
 
+.iroot-promo-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3px 16px;
+    padding: 11px 20px;
+    background: #dff1eb;
+    border-bottom: 1px solid var(--ink-navy-light);
+    color: var(--ink-navy);
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.iroot-promo-banner strong { font-weight: 600; white-space: nowrap; }
+.iroot-promo-banner .promo-link { text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.iroot-promo-banner:hover .promo-link { color: var(--brand-blue); }
+.iroot-promo-banner:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: -3px; }
 .site-wrapper > .site-header {
     /* Navigation may gain links or wrap at larger text sizes. Reserve its actual height. */
     height: auto;
@@ -797,6 +815,11 @@
 </head>
 <body>
     <div class="site-wrapper">
+        <a class="iroot-promo-banner" href="/products/iroot-sp/">
+            <strong>iRoot promo</strong>
+            <span>NZ$240 incl. GST + a free Micro-Path six-pack</span>
+            <span class="promo-link">View offer <span aria-hidden="true">→</span></span>
+        </a>
         <header class="site-header">
             <a href="/" class="logo-container" aria-label="EndoTech NZ home">
                 <img src="/assets/homepage/logo.webp" alt="EndoTech NZ Logo">
@@ -827,6 +850,7 @@
                             <a href="/technology/">Technology</a>
                             <a href="/3d-solutions/micropath/">3D Solutions with MicroPath</a>
                             <a href="/products/iroot-sp-disposable-tips/">iRoot SP Disposable Tips</a>
+                            <a href="/products/iroot-sp/">iRoot Bioceramic Sealer</a>
                             <a href="/technique/workflow/">Clinical workflow</a>
                             <a href="/resources/clinical-tips/">Education</a><a href="/resources/ideas/lower-molar-canal-position-missed-distal-canal/">Lower molar canal anatomy</a>
                             <a href="/resources/molar-models/">12 Molar Models</a>
