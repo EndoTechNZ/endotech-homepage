@@ -13,8 +13,8 @@ const Heading = inOrder ? 'h1' : 'h2';
       <div class="offer-total"><strong>NZ$240</strong><span>+ GST per box<br /><small>NZ$276 including GST · postage separate</small></span></div>
       <p class="offer-limit">Limited to two iRoot boxes per clinic.</p>
       {inOrder && <div class="offer-quantity"><label for="iroot-offer-boxes">iRoot boxes</label><select id="iroot-offer-boxes" data-iroot-boxes><option value="1">1 box</option><option value="2">2 boxes</option></select><p data-iroot-selected-total aria-live="polite">1 box + 1 free six-pack · NZ$276 including GST</p></div>}
-      {inOrder ? <button type="button" class="offer-action" data-iroot-continue>Continue with this offer <span aria-hidden="true">→</span></button> : <a class="offer-action" href={`${base}quote-request/?promo=iRoot#iroot-offer`}>Claim the iRoot offer <span aria-hidden="true">→</span></a>}
-      <p class="offer-help">{inOrder ? 'The syringe and free six-pack are in your request. Add your practice details, then review.' : 'Enter iRoot in the order’s Promo code box and press Enter, or claim the offer above.'}</p>
+      {inOrder ? <button type="button" class="offer-action" data-iroot-continue>Continue with this offer <span aria-hidden="true">→</span></button> : <a class="offer-action" href={`${base}quote-request/?promo=iRoot#iroot-offer`}>Order iRoot SP <span aria-hidden="true">→</span></a>}
+      <p class="offer-help">{inOrder ? 'The syringe and free six-pack are in your request. Add your practice details, then review.' : 'Enter iRoot in the order’s Promo code box and press Enter, or select Order iRoot SP above.'}</p>
     </div>
   </div>
 </section>
