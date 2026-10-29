@@ -20,6 +20,7 @@ const sharedExploreItems=[
   {href:'/resources/downloads/',label:'Evidence & downloads'},
   {href:'/promotions/transform-s-catalogue/?intro=flip',label:'NZ promotional brochure'},
   {href:'/about/company/',label:'About EndoTech'},
+  {href:'/connect/steve/',label:'Steve’s digital business card'},
 ];
 
 function connectSharedExploreMenus(){

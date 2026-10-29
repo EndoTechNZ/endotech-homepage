@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Shepherd;Steve;;;
+FN:Steve Shepherd
+ORG:EndoTechNZ
+EMAIL;TYPE=INTERNET,WORK:steveshepherdnz@gmail.com
+ADR;TYPE=WORK:;;;;;;New Zealand
+URL:https://endotechnz.com/
+END:VCARD
