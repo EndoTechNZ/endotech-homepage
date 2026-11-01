@@ -17,12 +17,15 @@ const { title, description, image, schema, accent = 'teal' } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const footerSections = getFooterSections(base);
 const footerUtilityLinks = getFooterUtilityLinks(base);
+const hasFileRange = /\/products\/(transform-s-et|transform-s-pt|transform-s-rg|micro-path|c-plus)\/?$/.test(Astro.url.pathname);
 ---
 
 <Layout title={title} description={description} image={image}>
   {schema && <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />}
   <link slot="head" rel="stylesheet" href={`${base}product-system-colour.css`} />
   <link slot="head" rel="stylesheet" href={`${base}navigation-controls.css?v=20261019-labels`} />
+  {hasFileRange && <link slot="head" rel="stylesheet" href={`${base}file-range-hover.css?v=20261102`} />}
+  {hasFileRange && <script slot="head" is:inline src={`${base}file-range-hover.js?v=20261102`} defer></script>}
   <CompactProductHeader />
 
   <main class="product-site-main" data-accent={accent}>
