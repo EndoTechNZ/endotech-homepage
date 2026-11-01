@@ -113,152 +113,7 @@ const shouldRenderSearch =
   </div>
 </div>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const productsMenu = document.querySelector('.endotech-docs-header .products-menu');
-    const productsMenuButton = document.getElementById('docs-products-menu-button');
-    const technologyMenu = document.querySelector('.endotech-docs-header .technology-menu');
-    const technologyMenuButton = document.getElementById('docs-technology-menu-button');
-    const orderMenu = document.querySelector('.endotech-docs-header .docs-order-menu');
-    const orderMenuButton = document.getElementById('docs-order-menu-button');
-    const mobileMenu = document.getElementById('docs-mobile-menu');
-    const mobileMenuButton = document.getElementById('docs-mobile-menu-button');
-    const docsHeader = document.querySelector('.endotech-docs-header');
-
-    function syncMobileMenuBounds() {
-      if (!mobileMenu || !docsHeader) return;
-      const headerBottom = Math.max(0, Math.ceil(docsHeader.getBoundingClientRect().bottom));
-      const viewportHeight = Math.floor(window.visualViewport?.height || window.innerHeight);
-      const openMenuRect = mobileMenu.classList.contains('is-open') ? mobileMenu.getBoundingClientRect() : null;
-      const panelTop = Math.max(0, Math.ceil(openMenuRect?.top || headerBottom));
-      const panelHeight = Math.max(160, viewportHeight - panelTop - 1);
-      document.documentElement.style.setProperty('--docs-mobile-menu-top', `${headerBottom}px`);
-      document.documentElement.style.setProperty('--docs-mobile-viewport-height', `${viewportHeight}px`);
-      document.documentElement.style.setProperty('--docs-mobile-menu-height', `${panelHeight}px`);
-    }
-
-    function syncOpenMobileMenuBounds() {
-      if (mobileMenuButton?.getAttribute('aria-expanded') === 'true') {
-        syncMobileMenuBounds();
-      }
-    }
-
-    function setProductsMenu(open) {
-      if (!productsMenu || !productsMenuButton) return;
-      productsMenu.classList.toggle('is-open', open);
-      productsMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-
-    function setTechnologyMenu(open) {
-      if (!technologyMenu || !technologyMenuButton) return;
-      technologyMenu.classList.toggle('is-open', open);
-      technologyMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-
-    function setOrderMenu(open) {
-      if (!orderMenu || !orderMenuButton) return;
-      orderMenu.classList.toggle('is-open', open);
-      orderMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-
-    function setMobileMenu(open) {
-      if (!mobileMenu || !mobileMenuButton) return;
-      if (open) {
-        syncMobileMenuBounds();
-        mobileMenu.scrollTop = 0;
-      }
-      mobileMenu.classList.toggle('is-open', open);
-      mobileMenuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.documentElement.classList.toggle('docs-mobile-menu-open', open);
-      document.body.classList.toggle('docs-mobile-menu-open', open);
-      if (open) {
-        window.requestAnimationFrame(syncMobileMenuBounds);
-      }
-    }
-
-    productsMenuButton?.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      const isOpen = productsMenuButton.getAttribute('aria-expanded') === 'true';
-      setProductsMenu(!isOpen);
-      setTechnologyMenu(false);
-      setOrderMenu(false);
-    });
-
-    technologyMenuButton?.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      const isOpen = technologyMenuButton.getAttribute('aria-expanded') === 'true';
-      setTechnologyMenu(!isOpen);
-      setProductsMenu(false);
-      setOrderMenu(false);
-    });
-
-    orderMenuButton?.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      const isOpen = orderMenuButton.getAttribute('aria-expanded') === 'true';
-      setOrderMenu(!isOpen);
-      setProductsMenu(false);
-      setTechnologyMenu(false);
-    });
-
-    mobileMenuButton?.addEventListener('click', () => {
-      const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-      setMobileMenu(!isOpen);
-    });
-
-    productsMenu?.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setProductsMenu(false));
-    });
-
-    technologyMenu?.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setTechnologyMenu(false));
-    });
-
-    orderMenu?.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setOrderMenu(false));
-    });
-
-    mobileMenu?.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setMobileMenu(false));
-    });
-
-    document.addEventListener('click', (event) => {
-      if (!productsMenu) return;
-      if (!productsMenu.contains(event.target)) {
-        setProductsMenu(false);
-      }
-      if (technologyMenu && !technologyMenu.contains(event.target)) {
-        setTechnologyMenu(false);
-      }
-      if (orderMenu && !orderMenu.contains(event.target)) {
-        setOrderMenu(false);
-      }
-      if (mobileMenu && mobileMenuButton && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
-        setMobileMenu(false);
-      }
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        setProductsMenu(false);
-        setTechnologyMenu(false);
-        setOrderMenu(false);
-        setMobileMenu(false);
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      syncOpenMobileMenuBounds();
-      if (window.innerWidth > 1120) {
-        setMobileMenu(false);
-      }
-    });
-    window.visualViewport?.addEventListener('resize', syncOpenMobileMenuBounds);
-    window.visualViewport?.addEventListener('scroll', syncOpenMobileMenuBounds);
-  });
-</script>
+<script type="module" src={`${base}navigation-menus.js?v=20261102`} is:inline></script>
 
 <style>
   :global(html.docs-mobile-menu-open),
@@ -390,6 +245,7 @@ const shouldRenderSearch =
       z-index: 90;
       width: 300px;
       padding-top: 10px;
+      visibility: hidden;
       opacity: 0;
       pointer-events: none;
       transform: translate(-50%, 4px);
@@ -438,9 +294,9 @@ const shouldRenderSearch =
       transform: translateX(2px);
     }
 
-    .products-menu:hover .products-menu-panel,
-    .products-menu:focus-within .products-menu-panel,
+    .endotech-docs-header:not(.is-managed) .products-menu:is(:hover, :focus-within) .products-menu-panel,
     .products-menu.is-open .products-menu-panel {
+      visibility: visible;
       opacity: 1;
       pointer-events: auto;
       transform: translate(-50%, 0);

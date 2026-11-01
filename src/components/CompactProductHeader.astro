@@ -50,49 +50,9 @@ const resourceLinks = [
   </div>
 </header>
 
+<script type="module" src={`${base}navigation-menus.js?v=20261102`} is:inline></script>
 <script>
   const header = document.querySelector('.compact-product-header');
-  const explore = header?.querySelector('.compact-explore');
-  const dropdown = explore?.querySelector('.compact-dropdown');
-  const mobileQuery = window.matchMedia('(max-width: 600px)');
-
-  const clearDropdownPosition = () => {
-    if (!(dropdown instanceof HTMLElement)) return;
-    ['position', 'left', 'right', 'top', 'width', 'max-height'].forEach((property) => dropdown.style.removeProperty(property));
-  };
-
-  const positionDropdown = () => {
-    if (!(explore instanceof HTMLDetailsElement) || !(dropdown instanceof HTMLElement) || !explore.open || !mobileQuery.matches) {
-      clearDropdownPosition();
-      return;
-    }
-    const trigger = explore.querySelector('summary');
-    if (!(trigger instanceof HTMLElement)) return;
-    const gutter = 10;
-    const top = Math.round(trigger.getBoundingClientRect().bottom + 8);
-    Object.assign(dropdown.style, {
-      position: 'fixed',
-      left: `${gutter}px`,
-      right: `${gutter}px`,
-      top: `${top}px`,
-      width: 'auto',
-      maxHeight: `${Math.max(180, window.innerHeight - top - gutter)}px`,
-    });
-  };
-
-  explore?.addEventListener('toggle', positionDropdown);
-  document.addEventListener('click', (event) => {
-    if (explore instanceof HTMLDetailsElement && !explore.contains(event.target as Node)) explore.open = false;
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && explore instanceof HTMLDetailsElement && explore.open) {
-      explore.open = false;
-      explore.querySelector('summary')?.focus();
-    }
-  });
-  window.addEventListener('resize', positionDropdown, { passive: true });
-  window.addEventListener('scroll', positionDropdown, { passive: true });
-
   const currentPath = window.location.pathname.replace(/\/+$/, '/') || '/';
   header?.querySelectorAll('a[href]').forEach((link) => {
     const targetPath = new URL(link.getAttribute('href') || '', window.location.href).pathname.replace(/\/+$/, '/') || '/';

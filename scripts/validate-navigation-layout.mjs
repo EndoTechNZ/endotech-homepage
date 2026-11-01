@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import http from 'node:http';
+import { existsSync } from 'node:fs';
 import { chromium, webkit } from 'playwright';
 
 const dist = path.resolve('dist');
@@ -201,6 +202,29 @@ try {
       assert.ok(menuBounds && menuBounds.x >= 0 && menuBounds.x + menuBounds.width <= 392 && menuBounds.y + menuBounds.height <= 392, `${engine} ${route}: Explore menu must fit the viewport`);
       await page.keyboard.press('Escape');
       assert.equal(await summary.evaluate(element => element.parentElement.open), false, 'Escape closes Explore');
+      // The full dropdown must stay reachable on short phone and desktop screens.
+      for (const shortWidth of [390, 1280]) {
+        await page.setViewportSize({ width: shortWidth, height: 260 });
+        await load(route);
+        await page.waitForFunction(() => document.querySelector('header details')?.dataset.navigationReady === 'true');
+        const trigger = page.locator('header details > summary').first();
+        await trigger.press('ArrowUp');
+        const panel = page.locator(variants.map(variant => `${variant.header} ${variant.menu}`).join(', '));
+        const bounds = await panel.boundingBox();
+        assert.ok(bounds && bounds.y >= 0 && bounds.y + bounds.height <= 261, `${engine} ${route}: dropdown fits ${shortWidth}x260 ${JSON.stringify(bounds)}`);
+        const last = panel.locator('a[href]').last();
+        assert.equal(await last.evaluate(element => element === document.activeElement), true, 'ArrowUp opens the last menu link');
+        const lastBounds = await last.boundingBox();
+        assert.ok(lastBounds && lastBounds.y >= bounds.y - 1 && lastBounds.y + lastBounds.height <= 261, `${engine} ${route} ${shortWidth}px: last menu link is reachable ${JSON.stringify({ bounds, lastBounds })}`);
+        await page.keyboard.press('Tab');
+        await page.waitForFunction(() => !document.querySelector('header details').open);
+        await trigger.press('ArrowDown');
+        assert.equal(await panel.locator('a[href]').first().evaluate(element => element === document.activeElement), true, 'ArrowDown opens the first menu link');
+        await page.keyboard.press('Escape');
+        assert.equal(await trigger.evaluate(element => element === document.activeElement), true, 'Escape returns focus to Explore');
+        assert.equal(await trigger.getAttribute('aria-expanded'), 'false');
+        cases++;
+      }
       // Returning keyboard focus may scroll the document underneath a sticky header.
       await checkLayout(page, `${engine} ${route} after closing Explore`, true);
       for (const width of [320, 390, 851, 1280, 1440, 1920]) {
@@ -216,6 +240,48 @@ try {
         });
         await checkLayout(page, `${engine} ${route}: extra link and enlarged text at ${width}px`);
       }
+    }
+    // Older reference pages have Products, Technology and Order hover menus.
+    for (const docsRoute of ['/research/apical-control/', '/technique/motor-settings/', '/technique/pt-technique/']) {
+      if (!existsSync(path.join(dist, docsRoute, 'index.html'))) continue;
+      await page.setViewportSize({ width: 1280, height: 260 });
+      await load(docsRoute);
+      await page.waitForFunction(() => document.querySelector('.endotech-docs-header')?.dataset.navigationReady);
+      if (await page.locator('.endotech-docs-header').getAttribute('data-navigation-ready') === 'replaced') {
+        assert.equal(await page.locator('.endotech-docs-header').getAttribute('inert'), '', 'Covered legacy header must not take keyboard focus');
+        assert.equal(await page.locator('.endotech-docs-header').getAttribute('aria-hidden'), 'true');
+        const explore = page.locator('.clean-header details > summary');
+        await explore.press('ArrowUp');
+        const bounds = await page.locator('.clean-dropdown').boundingBox();
+        assert.ok(bounds && bounds.y >= 0 && bounds.y + bounds.height <= 261, 'Approved reference-page Explore menu fits a short screen');
+        await page.keyboard.press('Escape');
+        assert.equal(await explore.getAttribute('aria-expanded'), 'false');
+        cases++;
+        continue;
+      }
+      for (const buttonId of ['docs-products-menu-button', 'docs-technology-menu-button', 'docs-order-menu-button']) {
+        const button = page.locator(`#${buttonId}`);
+        const panel = page.locator(`#${await button.getAttribute('aria-controls')}`);
+        await button.press('ArrowDown');
+        assert.equal(await button.getAttribute('aria-expanded'), 'true');
+        const bounds = await panel.boundingBox();
+        assert.ok(bounds && bounds.x >= -1 && bounds.x + bounds.width <= 1281 && bounds.y + bounds.height <= 261, `${engine} ${docsRoute}: ${buttonId} fits the viewport`);
+        await panel.locator('a[href]').first().press('End');
+        assert.equal(await panel.locator('a[href]').last().evaluate(element => element === document.activeElement), true);
+        await page.keyboard.press('Escape');
+        assert.equal(await button.getAttribute('aria-expanded'), 'false');
+        assert.equal(await panel.evaluate(element => getComputedStyle(element).visibility), 'hidden', 'Escape also hides the hovered or focused menu');
+        assert.equal(await panel.getAttribute('inert'), '', 'Closed reference-menu links cannot take focus');
+        cases++;
+      }
+      await page.setViewportSize({ width: 390, height: 260 });
+      const mobile = page.locator('#docs-mobile-menu-button');
+      await mobile.click();
+      const mobileBounds = await page.locator('#docs-mobile-menu').boundingBox();
+      assert.ok(mobileBounds && mobileBounds.y + mobileBounds.height <= 261, 'Reference-page phone menu fits a short screen');
+      await mobile.press('Escape');
+      assert.equal(await mobile.getAttribute('aria-expanded'), 'false');
+      cases++;
     }
     await page.setViewportSize({ width: 390, height: 844 });
     await load('/');

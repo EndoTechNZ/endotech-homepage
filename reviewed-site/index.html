@@ -1278,26 +1278,5 @@
 <script src="/assets/homepage/carousel.js?v=20261014-progress" defer></script>
 <script src="/assets/homepage/price-badge.js?v=20261014-liquid" defer></script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const explore = document.querySelector('.header-explore');
-    const summary = explore.querySelector('summary');
-    const menu = explore.querySelector('.header-menu');
-    const fitMenu = () => {
-        if (explore.open) menu.style.maxHeight = `${Math.max(0, innerHeight - menu.getBoundingClientRect().top - 12)}px`;
-    };
-    explore.addEventListener('toggle', fitMenu);
-    window.addEventListener('resize', fitMenu, { passive: true });
-    new ResizeObserver(fitMenu).observe(document.querySelector('.site-header'));
-    document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && explore.open) {
-            explore.open = false;
-            summary.focus();
-        }
-    });
-    document.addEventListener('click', event => {
-        if (!explore.contains(event.target)) explore.open = false;
-    });
-});
-</script>
+<script type="module" src="/navigation-menus.js?v=20261102"></script>
 </body></html>
