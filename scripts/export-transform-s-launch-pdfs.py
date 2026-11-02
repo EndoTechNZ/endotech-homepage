@@ -185,6 +185,11 @@ def load_family_rows(workbook, sheet_name: str) -> tuple[list[dict[str, object]]
                 "pack": clean(row[10]),
             }
         )
+    # Stephen confirmed on 2 November 2026 that the 17/.08 Orifice Shaper
+    # replaces the retired 20/.07 reference in the historical workbook.
+    for item in listed:
+        if item["sku"] == "TSET-200717OO":
+            item.update(sku="TSET-170817OO", file_type="Orifice Shaper", size="17/.08", length="17", pack="6")
     listed.sort(key=lambda item: catalogue_sort_key(sheet_name, item))
     return listed, internally_flagged
 

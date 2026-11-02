@@ -20,10 +20,10 @@ const rows = objectRows.map((row, index) => {
   }
 });
 
-const expectedAll = 203;
-const expectedSelectable = 203;
+const expectedAll = 202;
+const expectedSelectable = 202;
 const expectedSelectableFamilies = new Map([
-  ['et', 51],
+  ['et', 50],
   ['pt', 25],
   ['rg', 35],
   ['micro-path', 16],
@@ -59,7 +59,7 @@ if (/approvedCatalog[\s\S]{0,120}\.filter\([^\n]*requiresConfirmation/.test(vali
 const selectable = rows;
 if (selectable.length !== expectedSelectable) failures.push(`Expected ${expectedSelectable} customer-selectable rows; found ${selectable.length}.`);
 const internallyFlagged = rows.filter((row) => row.requiresConfirmation === true);
-if (internallyFlagged.length !== 74) failures.push(`Expected 74 internally flagged rows; found ${internallyFlagged.length}.`);
+if (internallyFlagged.length !== 73) failures.push(`Expected 73 internally flagged rows; found ${internallyFlagged.length}.`);
 
 const requiredEtSizes = new Map([
   ['15/.04', [21, 25, 29]],
@@ -116,6 +116,10 @@ for (const [sku, lengthMm, packQty] of requiredRgSpecials) {
   const match = selectable.find((row) => row.family === 'rg' && row.sku === sku && row.lengthMm === lengthMm && row.packQty === packQty);
   if (!match) failures.push(`Missing customer-selectable RG row ${sku}.`);
 }
+
+if (rows.some(row => row.sku === 'TSET-200717OO')) failures.push('Retired ET 20/.07 Orifice Shaper must not be offered.');
+const orificeShaper = rows.filter(row => row.sku === 'TSET-170817OO');
+if (orificeShaper.length !== 1 || orificeShaper[0].size !== '17/.08' || orificeShaper[0].lengthMm !== 17 || orificeShaper[0].packQty !== 6) failures.push('ET Orifice Shaper must be one 17/.08, 17 mm, six-file row.');
 
 const seen = new Set();
 for (const row of rows) {
