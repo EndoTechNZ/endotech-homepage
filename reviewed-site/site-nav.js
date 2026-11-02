@@ -14,6 +14,7 @@ const sharedExploreItems=[
   {href:'/resources/hybrid-micropath-negotiating-techniques/',label:'Hybrid MicroPath techniques'},
   {href:'/technique/workflow/',label:'Clinical workflow'},
   {href:'/resources/clinical-tips/',label:'Education'},
+  {href:'https://endotech-training.steveshepherdnz.chatgpt.site/',label:'Training library'},
   {href:'/resources/ideas/lower-molar-canal-position-missed-distal-canal/',label:'Lower molar canal anatomy'},
   {href:'/resources/molar-models/',label:'12 Molar Models'},
   {href:'/offers/',label:'Offers'},
