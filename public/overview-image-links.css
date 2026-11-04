@@ -1,0 +1,68 @@
+/* Shared by the Astro source and the reviewed production page. */
+.overview-stitch-page a.overview-image-link,
+.overview-stitch-page :is(.overview-system-card, .overview-support-card) > a.overview-image-link[href] {
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  text-decoration: none;
+  transform: none;
+  transition: box-shadow 180ms ease;
+}
+
+.overview-stitch-page a.overview-image-link img {
+  display: block;
+}
+
+.overview-stitch-page a.overview-image-link > figure {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.overview-stitch-page a.overview-image-link:focus-visible,
+.overview-stitch-page :is(.overview-system-card, .overview-support-card) > a.overview-image-link[href]:focus-visible {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  outline: 3px solid #005c92;
+  outline-offset: 4px;
+}
+
+@media (hover: hover) {
+  .overview-stitch-page a.overview-image-link:hover,
+  .overview-stitch-page :is(.overview-system-card, .overview-support-card) > a.overview-image-link[href]:hover {
+    background: transparent;
+    box-shadow: 0 0 0 2px #79aab8;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .overview-stitch-page a.overview-image-link img {
+    transition: transform 200ms ease;
+  }
+
+  .overview-stitch-page a.overview-image-link:focus-visible img {
+    transform: scale(1.04);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .overview-stitch-page a.overview-image-link:hover img {
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overview-stitch-page a.overview-image-link {
+    transition: none;
+  }
+}

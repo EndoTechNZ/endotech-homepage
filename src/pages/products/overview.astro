@@ -130,14 +130,15 @@ const compareRows = [
   accent="teal"
 >
   <main class="overview-stitch-page">
+    <link rel="stylesheet" href={`${base}overview-image-links.css?v=20261105`} />
     <link rel="stylesheet" href={`${base}eighteeth.css`} />
     <EquipmentTeaser />
     <section data-iroot-sealer-teaser style="max-width:1180px;margin:48px auto;padding:28px;border:1px solid #d7e5de;border-radius:10px;display:flex;align-items:center;flex-wrap:wrap;gap:32px;background:#edf5f0;color:#173342;font-family:Inter,system-ui,sans-serif">
-      <img src={`${base}products/iroot-sp/iroot-sp-studio-rebuilt.webp`} alt="iRoot SP bioceramic sealer box and syringe" width="340" height="170" loading="lazy" style="max-width:100%;height:auto" />
+      <a class="overview-image-link" href={`${base}products/iroot-sp/`} aria-label="View iRoot SP"><img src={`${base}products/iroot-sp/iroot-sp-studio-rebuilt.webp`} alt="iRoot SP bioceramic sealer box and syringe" width="340" height="170" loading="lazy" style="max-width:100%;height:auto" /></a>
       <div style="flex:1;min-width:220px"><p style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#286e68">Obturation · Innovative BioCeramix</p><h2 style="font-size:30px;line-height:1.2;margin:12px 0">iRoot Bioceramic Sealer</h2><p style="font-size:15px;line-height:1.8;color:#536975">NZ$240 + GST per 2 g syringe with 15 tips. NZ$276 including GST. Limited to two iRoot boxes per clinic for the free-pack offer. Compare the manufacturer, listed constituents and price with BC Sealer.</p><a href={`${base}products/iroot-sp/`} style="display:inline-block;margin-top:16px;color:#0b75b7;font-weight:600">View iRoot SP &amp; the comparison →</a></div>
     </section>
     <section data-iroot-tips-teaser style="max-width:1180px;margin:48px auto;padding:24px;border:1px solid #dce5e9;border-radius:16px;display:flex;align-items:center;flex-wrap:wrap;gap:28px;background:#f5f8f9;color:#183344;font-family:Inter,system-ui,sans-serif">
-      <img src={`${base}models/iroot-sp-disposable-tips/previews/full-kit.webp`} alt="Transparent iRoot SP Disposable Tips organizer" width="320" height="284" loading="lazy" style="max-width:100%;height:auto;border-radius:10px" />
+      <a class="overview-image-link" href={`${base}products/iroot-sp-disposable-tips/`} aria-label="View iRoot SP Disposable Tips"><img src={`${base}models/iroot-sp-disposable-tips/previews/full-kit.webp`} alt="Transparent iRoot SP Disposable Tips organizer" width="320" height="284" loading="lazy" style="max-width:100%;height:auto;border-radius:10px" /></a>
       <div style="flex:1;min-width:220px"><p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#4d7d7e">Interactive product model</p><h2 style="font-size:28px;line-height:1.2;margin:12px 0">iRoot SP Disposable Tips</h2><p style="font-size:15px;line-height:1.7;color:#617482">Explore the clear case, five circular layers and individual tip in 3D.</p><a href={`${base}products/iroot-sp-disposable-tips/`} style="display:inline-block;margin-top:16px;color:#0b75b7;font-weight:600">Explore the product →</a></div>
     </section>
     <section class="overview-hero" aria-labelledby="overview-hero-title">
@@ -154,7 +155,7 @@ const compareRows = [
       </div>
 
       <figure class="overview-hero-visual">
-        <img src={etProduct.src} alt="Transform S™ ET and Transform S™ PT product imagery presented as the core shaping system" />
+        <a class="overview-image-link" href={`${base}products/transform-s-et/`} aria-label="View Transform S™ ET"><img src={etProduct.src} alt="Transform S™ ET and Transform S™ PT product imagery presented as the core shaping system" /></a>
       </figure>
 
       <div class="overview-hero-actions">
@@ -172,9 +173,9 @@ const compareRows = [
       <div class="overview-systems-grid">
         {systems.slice(0, 3).map((system) => (
           <article class="overview-system-card">
-            <figure>
+            <a class="overview-image-link" href={system.href} aria-label={`View ${system.title}`}><figure>
               <img src={system.image} alt={system.alt} />
-            </figure>
+            </figure></a>
             <div>
               <span>{system.eyebrow}</span>
               <h3>{system.title}</h3>
@@ -195,9 +196,9 @@ const compareRows = [
 
       <div class="overview-support-grid">
         <article class="overview-support-card">
-          <figure>
+          <a class="overview-image-link" href={`${base}products/micro-path/`} aria-label="View Micro-Path™"><figure>
             <img src={microPathProduct.src} alt="Micro-Path™ files" />
-          </figure>
+          </figure></a>
           <div>
             <span>Glide path</span>
             <h3>Micro-Path™</h3>
@@ -210,9 +211,9 @@ const compareRows = [
         </article>
 
         <article class="overview-support-card">
-          <figure>
+          <a class="overview-image-link" href={`${base}products/gutta-percha/`} aria-label="View Gutta Percha Points"><figure>
             <img src={guttaPerchaProduct} alt="Gutta Percha Points with ISO colour-coded ends" />
-          </figure>
+          </figure></a>
           <div>
             <span>Obturation</span>
             <h3>Gutta Percha Points</h3>
@@ -225,9 +226,9 @@ const compareRows = [
         </article>
 
         <article class="overview-support-card">
-          <figure>
+          <a class="overview-image-link" href={`${base}products/c-plus/`} aria-label="View Transform S™ C+ Files"><figure>
             <img src={transformSWordmark.src} alt="Transform S™ C+ files" />
-          </figure>
+          </figure></a>
           <div>
             <span>Calcified-canal hand files</span>
             <h3>Transform S™ C+ Files</h3>
@@ -249,16 +250,16 @@ const compareRows = [
             </p>
             <a class="overview-button dark" href={`${base}products/k-files/`}>View K-Files</a>
           </div>
-          <figure>
+          <a class="overview-image-link" href={`${base}products/k-files/`} aria-label="View Transform S™ K-Files"><figure>
             <img src={transformSWordmark.src} alt="Transform S™ K-Files" />
-          </figure>
+          </figure></a>
         </article>
       </div>
     </section>
 
     <section class="overview-workflow-section" aria-labelledby="overview-workflow-title">
       <div class="overview-workflow-media">
-        <img src={microPathProduct.src} alt="Micro-Path™ glide path files" />
+        <a class="overview-image-link" href={`${base}products/micro-path/`} aria-label="View Micro-Path™"><img src={microPathProduct.src} alt="Micro-Path™ glide path files" /></a>
       </div>
 
       <div class="overview-workflow-copy">
