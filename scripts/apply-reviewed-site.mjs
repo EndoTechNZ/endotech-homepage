@@ -7,7 +7,7 @@ const root=path.resolve('reviewed-site'),dist=path.resolve('dist');
 // Preserve the approved homepage while publishing the approved equipment and request pages.
 const generatedEquipment=new JSDOM(fs.readFileSync(path.join(dist,'index.html'),'utf8')).window.document.querySelector('[data-equipment-section]')?.outerHTML;
 if(!generatedEquipment)throw Error('Equipment teaser was not generated');
-const equipmentGeneratedPages=new Set(['quote-request/index.html','resources/downloads/index.html']);
+const equipmentGeneratedPages=new Set(['quote-request/index.html','resources/downloads/index.html','products/iroot-sp-disposable-tips/index.html','products/vortiflow-irrigation-needle/index.html']);
 const generatedTipsTeaser=new JSDOM(fs.readFileSync(path.join(dist,'products/overview/index.html'),'utf8')).window.document.querySelector('[data-iroot-tips-teaser]')?.outerHTML;
 const generatedSealerTeaser=new JSDOM(fs.readFileSync(path.join(dist,'products/overview/index.html'),'utf8')).window.document.querySelector('[data-iroot-sealer-teaser]')?.outerHTML;
 if(!generatedSealerTeaser)throw Error('iRoot bioceramic sealer teaser was not generated');

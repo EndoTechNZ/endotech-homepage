@@ -102,9 +102,14 @@ function connectNzNavigation() {
       }
     });
     details.addEventListener('keydown', event => navigateLinks(event, trigger, panel, () => setOpen(true), controller.close));
-    details.addEventListener('focusout', () => queueMicrotask(() => {
-      if (!details.contains(document.activeElement)) controller.close();
-    }));
+    details.addEventListener('focusout', event => {
+      // During a pointer focus transfer activeElement can briefly be BODY.
+      // Keep the menu open until its link receives the pending click.
+      if (details.contains(event.relatedTarget)) return;
+      queueMicrotask(() => {
+        if (!details.contains(document.activeElement)) controller.close();
+      });
+    });
     trigger.setAttribute('aria-expanded', String(details.open));
   });
 
@@ -163,9 +168,12 @@ function connectNzNavigation() {
         });
         root.addEventListener('focusin', () => setOpen(true));
       }
-      root.addEventListener('focusout', () => queueMicrotask(() => {
-        if (!root.contains(document.activeElement)) setOpen(false);
-      }));
+      root.addEventListener('focusout', event => {
+        if (root.contains(event.relatedTarget)) return;
+        queueMicrotask(() => {
+          if (!root.contains(document.activeElement)) setOpen(false);
+        });
+      });
       const onKey = event => {
         if (event.target === trigger || panel.contains(event.target)) navigateLinks(event, trigger, panel, () => setOpen(true), controller.close);
       };

@@ -39,7 +39,7 @@ function connectSharedExploreMenus(){
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',connectSharedExploreMenus);else connectSharedExploreMenus();
 
 // Keep all NZ menu variants aligned without changing their presentation.
-import('/navigation-menus.js?v=20261102');
+import('/navigation-menus.js?v=20261105-focus');
 
 function markCurrentCleanNavigation(){
   const path=location.pathname.replace(/\/+$/,'/')||'/';

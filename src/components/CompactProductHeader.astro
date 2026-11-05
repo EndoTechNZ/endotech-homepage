@@ -51,9 +51,10 @@ const resourceLinks = [
   </div>
 </header>
 
-<script type="module" src={`${base}navigation-menus.js?v=20261102`} is:inline></script>
+<script type="module" src={`${base}navigation-menus.js?v=20261105-focus`} is:inline></script>
 <script>
   const header = document.querySelector('.compact-product-header');
+  const explore = header?.querySelector('.compact-explore');
   const currentPath = window.location.pathname.replace(/\/+$/, '/') || '/';
   header?.querySelectorAll('a[href]').forEach((link) => {
     const targetPath = new URL(link.getAttribute('href') || '', window.location.href).pathname.replace(/\/+$/, '/') || '/';

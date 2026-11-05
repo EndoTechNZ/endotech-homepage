@@ -1,37 +1,63 @@
 ---
 import ProductLayout from '../../layouts/ProductLayout.astro';
-import { withBasePath } from '../../utils/paths';
-const assets = withBasePath('/models/iroot-sp-disposable-tips/');
-const viewer = `${assets}viewer/`;
-const kitPreview = `${assets}previews/full-kit.webp?v=round-back-label-92mm-20261020`;
-const tipPreview = `${assets}previews/single-tip.webp?v=side-outlets-single-tip-35-20261020`;
+import '../../styles/iroot-tips.css';
+const productName = 'iRoot SP Disposable Tips';
 ---
-<ProductLayout title="iRoot SP Disposable Tips | Interactive 3D | EndoTech NZ" description="Click the full kit or individual tip to open the complete interactive iRoot SP Disposable Tips 3D viewer." image={kitPreview} accent="teal">
-  <article class="tips-page">
-    <header class="tips-intro">
-      <p class="eyebrow">Interactive product model</p>
-      <h1><span class="brand">iRoot SP</span><span>Disposable Tips.</span></h1>
-      <p class="instruction">Click either product image to open the full 3D viewer.</p>
-      <p class="specs">100 tips <span>·</span> 5 layers of 20 <span>·</span> Ø 150 × 75 mm</p>
-    </header>
-    <section id="interactive-model" class="tips-previews" aria-label="Choose a product to explore in 3D">
-      <a class="product-preview" href={viewer} aria-label="Open the full kit in the interactive 3D viewer">
-        <img src={kitPreview} alt="Full stack of five clear trays containing 100 disposable tips with the circular illustrated iRoot SP label, tightly framed on a neutral blue-grey background" width="530" height="470" fetchpriority="high" />
-        <span class="product-caption"><span><strong>The full kit</strong><small>Five circular layers · 100 tips</small></span><span class="open-label">Click to explore in 3D <span aria-hidden="true">↗</span></span></span>
-      </a>
-      <div class="tip-column">
-        <a class="product-preview" href={`${viewer}?view=5`} aria-label="Open the single tip in the full interactive 3D viewer">
-          <img src={tipPreview} alt="Enlarged disposable tip at 35% surface opacity with a winged hub, short elbow and straight nozzle, tightly framed on a neutral blue-grey background" width="600" height="200" />
-          <span class="product-caption"><span><strong>The individual tip</strong><small>Inspect the connector and nozzle</small></span><span class="open-label">Click to explore in 3D <span aria-hidden="true">↗</span></span></span>
-        </a>
-        <p class="viewer-note">Both images open the complete 3D program. Rotate, zoom, adjust transparency, or switch between the full stack, individual layers and single tip.</p>
+
+<ProductLayout title={`${productName} · Coming soon | EndoTech NZ`} image="/images/iroot-sp-tip-engineering-30g-4pct.png" description="Coming soon to EndoTech NZ. Explore the irrigation needle, pack and case in interactive 3D.">
+  <article class="vf-preview">
+  <section class="vf-intro vf-shell" aria-labelledby="product-title">
+    <a class="vf-back" href="/products/overview/">Systems <span aria-hidden="true">/</span> Irrigation</a>
+    <div class="vf-title-row">
+      <div>
+        <span class="vf-soon"><span aria-hidden="true"></span>Coming soon</span>
+        <h1 id="product-title">iRoot SP<span>Disposable Tips</span></h1>
+      </div>
+      <p class="vf-intro-copy">A closer look at the pack, case and needle tip.<br />Drag the models to explore them in 3D.</p>
+    </div>
+  </section>
+
+  <section class="vf-models vf-shell" aria-label="Interactive 3D product views">
+    <article class="vf-model-card vf-kit-card">
+      <div class="vf-card-top"><h2>Pack &amp; case</h2><span class="vf-3d-label">Interactive 3D</span></div>
+      <iframe src="/models/iroot-sp-disposable-tips/preview/?view=3" title="Interactive 3D pack and clear case" class="vf-viewer" loading="eager"></iframe>
+      <div class="vf-card-bottom"><span>Rotate the case or open a tray.</span><a href="/models/iroot-sp-disposable-tips/preview/?view=3" target="_blank" rel="noopener" aria-label="Open the pack and case 3D view in a new tab">Larger view <span aria-hidden="true">↗</span></a></div>
+    </article>
+    <article class="vf-model-card vf-tip-card">
+      <div class="vf-card-top"><h2>Needle &amp; tip</h2><span class="vf-3d-label">Interactive 3D</span></div>
+      <iframe src="/models/iroot-sp-disposable-tips/preview/?view=5" title="Interactive 3D irrigation needle and tip" class="vf-viewer" loading="eager"></iframe>
+      <div class="vf-card-bottom"><span>Turn the needle. Inspect the outlets.</span><a href="/models/iroot-sp-disposable-tips/preview/?view=5" target="_blank" rel="noopener" aria-label="Open the needle and tip 3D view in a new tab">Larger view <span aria-hidden="true">↗</span></a></div>
+    </article>
+  </section>
+
+  <section class="vf-details vf-shell" aria-labelledby="details-title">
+    <div class="vf-section-heading"><div><p class="vf-eyebrow">A closer look</p><h2 id="details-title">Needle design</h2></div><p>The engineering image and tip views.</p></div>
+    <figure class="vf-engineering"><img src="/images/iroot-sp-tip-engineering-30g-4pct.png" width="1678" height="937" alt="iRoot SP Disposable Tips engineering illustration labelled Tip: 30 Gauge and Taper: 4%" loading="lazy" /></figure>
+    <section class="vf-tip-scroll" aria-labelledby="tip-closeup-title" data-tip-scroll>
+      <div class="vf-tip-details vf-tip-details--3d" data-tip-card>
+        <div class="vf-tip-copy">
+          <p class="vf-eyebrow">Tip geometry</p>
+          <h3 id="tip-closeup-title">The needle tip,<br /> in 3D.</h3>
+          <p data-tip-instructions>Hover to turn the tip. Scroll past for a full 360° view.</p>
+          <div class="vf-tip-specs"><span>30 gauge</span><span>4% taper</span></div>
+        </div>
+        <div class="vf-tip-closeup" data-tip-closeup>
+          <img class="vf-tip-fallback" src="/images/vortiflow-cad-tip-render-1.jpg" width="600" height="600" alt="Black CAD close-up of the rounded needle tip and lateral outlet" />
+          <span class="vf-tip-loading" role="status">Loading 3D tip…</span>
+          <div class="vf-tip-caption"><span data-tip-caption>Hover or scroll to rotate</span><span aria-hidden="true">360°</span></div>
+          <div class="vf-tip-progress" aria-hidden="true"><span data-tip-progress></span></div>
+        </div>
       </div>
     </section>
+  </section>
+
+  <section class="vf-contact vf-shell" aria-label="Coming soon enquiries">
+    <div><span class="vf-soon"><span aria-hidden="true"></span>Coming soon</span><h2>Irrigation needles for EndoTech NZ.</h2></div>
+    <a class="vf-contact-link" href="/about/contact/">Enquire about availability <span aria-hidden="true">↗</span></a>
+  </section>
   </article>
 </ProductLayout>
-<style>
-  .tips-page{max-width:1280px;margin:auto;padding:40px 32px 64px;color:#183344;font-family:Inter,"Segoe UI",sans-serif}.tips-intro{text-align:center;margin:0 auto 32px}.eyebrow{margin:0 0 12px;color:#4d7d7e;font-size:11px;font-weight:650;letter-spacing:.14em;text-transform:uppercase}.tips-intro h1{display:flex;justify-content:center;flex-wrap:wrap;column-gap:.24em;margin:0;font-size:clamp(36px,4.4vw,58px);font-weight:550;line-height:1.08;letter-spacing:-.05em}.tips-intro h1 span{color:#6b898b}.tips-intro h1 .brand{color:#183344;white-space:nowrap}.instruction{margin:18px 0 12px;color:#4d6575;font-size:17px;line-height:1.6}.specs{margin:0;font-size:12px;color:#617482}.specs>span{padding:0 10px;color:#9caeb9}.tips-previews{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;scroll-margin-top:140px}.product-preview{display:block;overflow:hidden;border:1px solid #cddbe1;border-radius:14px;color:#183344;text-decoration:none;background:#fff;transition:border-color .18s,box-shadow .18s}.product-preview:hover{border-color:#0b75b7;box-shadow:0 8px 28px #18334412}.product-preview:focus-visible{outline:3px solid #0b75b7;outline-offset:5px}.product-preview img{display:block;width:100%;height:auto;background:#2c404d}.product-caption{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px}.product-caption strong{display:block;font-size:20px;font-weight:550;letter-spacing:-.03em}.product-caption small{display:block;margin-top:6px;font-size:12px;color:#617482}.open-label{display:flex;align-items:center;gap:12px;color:#0b75b7;font-size:13px;font-weight:650;white-space:nowrap}.open-label>span{font-size:24px;font-weight:400}.viewer-note{max-width:460px;margin:22px 6px 0;font-size:14px;line-height:1.8;color:#617482}
-  @media(max-width:1000px){.product-caption{align-items:start;flex-direction:column;gap:14px}.tips-intro h1{font-size:44px}}
-  @media(max-width:640px){.tips-page{padding:28px 16px 44px}.tips-intro{margin-bottom:24px}.tips-intro h1{font-size:38px}.instruction{font-size:15px;margin-top:16px}.specs{font-size:11px}.specs>span{padding:0 5px}.tips-previews{grid-template-columns:1fr;gap:24px}.product-caption{padding:18px;flex-direction:row;align-items:center;flex-wrap:wrap}.product-caption strong{font-size:19px}.open-label{font-size:13px}.viewer-note{font-size:13px;margin-top:16px}}
-  @media(prefers-reduced-motion:reduce){.product-preview{transition:none}}
-</style>
+
+<script>
+  import '../../scripts/iroot-tip-closeup.js';
+</script>

@@ -171,6 +171,20 @@ try {
         throw new Error(`Loading ${route} (${page.url()}): ${error.message}`, { cause: error });
       }
     };
+    // A mouse/touch focus transfer must not close Explore before link activation.
+    for (const width of [1440, 390]) {
+      await page.setViewportSize({width,height:900});
+      await load('/');
+      await page.locator('.header-explore summary').click();
+      const productLink = page.locator('.header-explore a[href="/products/iroot-sp-disposable-tips/"]');
+      await Promise.all([
+        page.waitForURL('**/products/iroot-sp-disposable-tips/'),
+        productLink.click(),
+      ]);
+      assert.equal(await page.locator('h1').innerText(), 'iRoot SP\nDisposable Tips');
+      cases++;
+    }
+    await page.setViewportSize({width:390,height:844});
     // Check every published page using these headers on a common phone width.
     for (const route of routes) {
       await load(route);

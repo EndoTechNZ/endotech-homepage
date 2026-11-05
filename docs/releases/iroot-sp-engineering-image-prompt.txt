@@ -1,0 +1,9 @@
+Use case: text-localization.
+Asset type: a renamed engineering picture for the EndoTech NZ local website preview.
+Input image: edit target. Preserve the existing pale grey landscape engineering layout, black diagonal needle illustration, rounded closed end, lateral window shape, turquoise rim accent, material shading, engineering leader lines and background. Do not change the needle geometry or add objects.
+Change the product nomenclature to exactly "iRoot SP Disposable Tips". Remove every instance of VortiFlow and remove the duplicated Irrigation word.
+Replace all large left headline text with two lines: "iRoot SP" and "Disposable Tips". Use the same dark navy bold sans serif style and comparable size fitted neatly to the left text region.
+Replace the small turquoise kicker with "A closer look at the needle tip."
+Replace the paragraph below the headline with "Closed rounded end with lateral outlets." in a clean grey sans serif, short enough to leave whitespace.
+Use these three small engineering callout labels only: "Polymer body", "Lateral outlet", "Closed rounded end". Replace the previous 30 Gauge and 4% numeric callouts, which are not needed in this coming-soon preview. Place labels so they refer to the corresponding visible geometry and do not overlap the illustration.
+Remove the NotebookLM corner credit from this newly edited derivative. Keep generous margins, the same wide aspect ratio and restrained clinical grey, navy and teal palette. Clean, sharp readable text. No logos or watermarks. The only product name anywhere in the picture must be "iRoot SP Disposable Tips".

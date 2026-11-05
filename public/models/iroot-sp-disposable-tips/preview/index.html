@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><link rel="icon" href="data:,">
+<title>Interactive irrigation tip model · EndoTech NZ</title>
+<style>
+*{box-sizing:border-box}html,body{height:100%;margin:0;font:12px 'Segoe UI',Arial,sans-serif;color:#cbdde4;background:#243b49}#stage{position:relative;width:100%;height:100%;overflow:hidden;background:radial-gradient(ellipse at 35% 28%,#526976 0,#2d4554 55%,#1f3645 100%)}canvas{display:block;width:100%;height:100%;touch-action:pan-y;outline-offset:-4px}canvas:focus-visible{outline:2px solid #a7dedb}.toolbar{position:absolute;bottom:17px;left:16px;right:16px;z-index:2;display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap}button{color:#e2eff2;font:11px 'Segoe UI',sans-serif;border:1px solid #69808c;border-radius:6px;background:#2b4351dd;padding:9px 13px;cursor:pointer;backdrop-filter:blur(8px)}button:hover{background:#526e7a}button:focus-visible{outline:2px solid #b7e2df;outline-offset:3px}button.active{background:#54717c;border-color:#a1c4c9}.hint{position:absolute;left:16px;right:16px;top:16px;text-align:center;font-size:10px;letter-spacing:.015em;color:#c6d9e1;pointer-events:none;z-index:2}#loading{position:absolute;inset:0;z-index:3;display:grid;place-content:center;background:#243b49}#error{position:absolute;top:42px;left:20px;right:20px;font-size:12px;text-align:center;z-index:4;color:#fff}#fallback{width:100%;height:100%;object-fit:contain}#view-label{position:absolute;overflow:hidden;clip-path:inset(50%);height:1px;width:1px}[hidden]{display:none!important}@media(max-width:350px){.toolbar{left:10px;right:10px;bottom:13px;gap:5px}button{font-size:10px;padding:9px 10px}.hint{font-size:9px}}
+</style>
+</head>
+<body>
+<section id="stage" aria-label="Interactive 3D irrigation model">
+  <div id="view-label" aria-live="polite"></div>
+  <div class="hint">Drag to rotate · Scroll or pinch to zoom</div>
+  <img id="fallback" src="../previews/full-kit.webp" alt="Static preview of the irrigation tip pack" hidden>
+  <div id="loading" role="status">Loading 3D model…</div>
+  <div class="toolbar" id="kit-controls" hidden><button data-view="3">Reset view</button><button data-view="1">Top view</button><button data-view="4">Open tray</button></div>
+  <div class="toolbar" id="tip-controls" hidden><button data-view="5">Whole needle</button><button id="tip-outlet-zoom" hidden>Zoom to side outlets</button></div>
+  <div id="error" role="alert"></div>
+</section>
+<div hidden><input id="opacity" value="12"><output id="opacity-value"></output><input id="tip-opacity" value="35"><output id="tip-opacity-value"></output><select id="layer"><option value="0">All layers</option><option value="5">Layer 5</option></select><p id="status"></p></div>
+<script type="importmap">{"imports":{"three":"../viewer/vendor/three.module.js","three/addons/controls/OrbitControls.js":"../viewer/vendor/OrbitControls.js"}}</script>
+<script type="module">
+  const tip=new URLSearchParams(location.search).get('view')==='5';
+  document.getElementById(tip?'tip-controls':'kit-controls').hidden=false;
+  const fallback=document.getElementById('fallback');
+  if(tip){fallback.src='../previews/single-tip-35.webp';fallback.alt='Static preview of an irrigation needle';}
+  import('./organizer.js').catch(error=>{
+    document.getElementById('loading').hidden=true;
+    fallback.hidden=false;
+    document.getElementById('error').textContent='The 3D view could not load. A static preview is shown.';
+    document.querySelectorAll('button').forEach(button=>button.disabled=true);
+    console.error(error);
+  });
+</script>
+</body>
+</html>
