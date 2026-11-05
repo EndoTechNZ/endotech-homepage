@@ -193,6 +193,9 @@ function connectNzNavigation() {
     });
   });
   const clearPointer = () => { pointerTarget = null; };
+  // Touch taps emit compatibility mouse events after pointerup in WebKit.
+  document.addEventListener('mousedown', event => { pointerTarget = event.target; });
+  document.addEventListener('mouseup', clearPointer);
   document.addEventListener('pointerup', clearPointer);
   document.addEventListener('pointercancel', clearPointer);
   window.addEventListener('blur', clearPointer);

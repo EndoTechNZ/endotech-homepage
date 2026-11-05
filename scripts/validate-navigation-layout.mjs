@@ -185,6 +185,20 @@ try {
       cases++;
     }
     await page.setViewportSize({width:390,height:844});
+    // Real touch emits a different focus/mouse sequence from a narrow desktop viewport.
+    const touchContext = await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
+    const touchPage = await touchContext.newPage();
+    await touchPage.route('**/*', route => /\.(?:glb|gltf|mp4)(?:\?|$)/.test(route.request().url()) ? route.abort() : route.continue());
+    await touchPage.goto(new URL('/', base).href, {waitUntil:'load'});
+    await touchPage.waitForFunction(() => document.querySelector('.header-explore')?.dataset.navigationReady === 'true');
+    await touchPage.locator('.header-explore summary').tap();
+    await Promise.all([
+      touchPage.waitForURL('**/products/iroot-sp-disposable-tips/'),
+      touchPage.locator('.header-explore a[href="/products/iroot-sp-disposable-tips/"]').tap(),
+    ]);
+    assert.equal((await touchPage.locator('h1').innerText()).trim(), 'iRoot SP\nDisposable Tips');
+    await touchContext.close();
+    cases++;
     // Check every published page using these headers on a common phone width.
     for (const route of routes) {
       await load(route);
