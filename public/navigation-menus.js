@@ -73,6 +73,7 @@ function navigateLinks(event, trigger, panel, open, close) {
 
 function connectNzNavigation() {
   const controllers = [];
+  let pointerTarget = null;
   document.querySelectorAll('.header-explore,.clean-explore,.compact-explore,.preview-explore').forEach((details, index) => {
     if (details.dataset.navigationReady) return;
     const trigger = details.querySelector('summary');
@@ -105,7 +106,7 @@ function connectNzNavigation() {
     details.addEventListener('focusout', event => {
       // During a pointer focus transfer activeElement can briefly be BODY.
       // Keep the menu open until its link receives the pending click.
-      if (details.contains(event.relatedTarget)) return;
+      if (details.contains(event.relatedTarget) || details.contains(pointerTarget)) return;
       queueMicrotask(() => {
         if (!details.contains(document.activeElement)) controller.close();
       });
@@ -169,7 +170,7 @@ function connectNzNavigation() {
         root.addEventListener('focusin', () => setOpen(true));
       }
       root.addEventListener('focusout', event => {
-        if (root.contains(event.relatedTarget)) return;
+        if (root.contains(event.relatedTarget) || root.contains(pointerTarget)) return;
         queueMicrotask(() => {
           if (!root.contains(document.activeElement)) setOpen(false);
         });
@@ -183,9 +184,18 @@ function connectNzNavigation() {
     });
   }
 
-  document.addEventListener('pointerdown', event => controllers.forEach(controller => {
-    if (!controller.root.contains(event.target)) controller.close();
-  }));
+  document.addEventListener('pointerdown', event => {
+    // WebKit reports no relatedTarget when a link is pressed. Remember the
+    // current press so focusout cannot hide its target before pointerup.
+    pointerTarget = event.target;
+    controllers.forEach(controller => {
+      if (!controller.root.contains(event.target)) controller.close();
+    });
+  });
+  const clearPointer = () => { pointerTarget = null; };
+  document.addEventListener('pointerup', clearPointer);
+  document.addEventListener('pointercancel', clearPointer);
+  window.addEventListener('blur', clearPointer);
   const reposition = () => controllers.forEach(controller => controller.fit());
   const resize = new ResizeObserver(reposition);
   document.querySelectorAll('header').forEach(header => {

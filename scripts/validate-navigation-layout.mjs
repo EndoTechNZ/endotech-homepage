@@ -181,7 +181,7 @@ try {
         page.waitForURL('**/products/iroot-sp-disposable-tips/'),
         productLink.click(),
       ]);
-      assert.equal(await page.locator('h1').innerText(), 'iRoot SP\nDisposable Tips');
+      assert.equal((await page.locator('h1').innerText()).trim(), 'iRoot SP\nDisposable Tips');
       cases++;
     }
     await page.setViewportSize({width:390,height:844});
