@@ -5,6 +5,7 @@ const sharedExploreItems=[
   {href:'/products/micro-path/',label:'Micro-Path'},
   {href:'/products/orifice-shapers/',label:'Orifice Shapers'},
   {href:'/products/c-plus/',label:'Transform S C+'},
+  {href:'/products/file-handi/',label:'File Handi'},
   {href:'/products/gutta-percha/',label:'Gutta Percha Points'},
   {href:'/products/iroot-sp/',label:'iRoot Bioceramic Sealer'},
   {href:'/products/iroot-sp-disposable-tips/',label:'iRoot SP Disposable Tips'},

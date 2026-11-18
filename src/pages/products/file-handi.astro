@@ -1,0 +1,201 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+
+const variants = [
+  { label: '35° backward', slug: '35-backward-lavender', colour: 'lavender' },
+  { label: '90° straight', slug: '90-degrees-charcoal', colour: 'charcoal' },
+  { label: '45°', slug: '45-degrees-pale-blue-grey', colour: 'pale blue-grey' },
+];
+const productPath = '/products/file-handi';
+---
+
+<ProductLayout
+  title="File Handi | EndoTech NZ"
+  description="Watch the File Handi Studio Edition, compare the pen and overhand grips, and explore the three instrument angles in 3D."
+  image={`${productPath}/images/file-handi-studio-poster.webp`}
+>
+  <article class="fh">
+    <a href="/products/overview/">Product systems</a>
+    <h1>File Handi</h1>
+
+  <section id="studio-edition" class="fh-studio" aria-labelledby="studio-title">
+    <h2 id="studio-title">Studio Edition</h2>
+    <p>See both grips, how the file sits in the barrel, and how turning the shank moves the file. The cutaway illustrates the gearing.</p>
+    <video controls playsinline preload="metadata" width="1280" height="720"
+      poster="/products/file-handi/images/file-handi-studio-poster.webp"
+      aria-labelledby="studio-title">
+      <source src="/products/file-handi/video/file-handi-studio-edition.mp4" type="video/mp4" />
+      <track kind="captions" srclang="en" label="English" src="/products/file-handi/video/file-handi-studio-edition.en.vtt" />
+    </video>
+    <a class="fh-film-link" href="/products/file-handi/video/file-handi-studio-edition.mp4">Open the Studio Edition MP4</a>
+    <p class="fh-accessory">An adapter for latch grip rotary files is also available.</p>
+  </section>
+
+  <section id="hand-grips" class="fh-detail" aria-labelledby="grips-title">
+    <h2 id="grips-title">Two ways to hold File Handi</h2>
+    <div class="fh-grips">
+      <figure>
+        <img src="/products/file-handi/images/file-handi-pen-grip.webp" width="1280" height="720" loading="lazy"
+          alt="A hand braces the pale side handle in the palm, with thumb and index finger on the black shank." />
+        <figcaption><h3>Pen grip</h3><p>The palm braces the round auxiliary handle while the thumb and index finger roll the shank.</p></figcaption>
+      </figure>
+      <figure>
+        <img src="/products/file-handi/images/file-handi-overhand-grip.webp" width="1280" height="720" loading="lazy"
+          alt="Fingers curve over the upright black instrument, with the thumb resting against the opposite side." />
+        <figcaption><h3>Overhand grip</h3><p>The hand holds the bare shaft from above, with the thumb opposite the fingers.</p></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="fh-detail" id="models" aria-labelledby="angles-title">
+    <h2 id="angles-title">Explore the three angles</h2>
+    <p>Select an instrument to rotate and zoom in 3D.</p>
+    <div class="fh-grid">
+      {variants.map(({label, slug, colour}) => (
+        <article class="fh-card">
+          <div class="fh-view" data-model={`${productPath}/models/file-handi-${slug}.glb`}>
+            <img src={`${productPath}/images/file-handi-${slug}-hero.webp`}
+              alt={`File Handi ${label} with a round ${colour} auxiliary handle`}
+              width="1200" height="800" loading="lazy" />
+            <button type="button" class="fh-load" aria-label={`Explore File Handi ${label} in 3D`}>Explore in 3D</button>
+            <span class="fh-status" role="status"></span>
+          </div>
+          <h3>{label}</h3>
+        </article>
+      ))}
+    </div>
+    <p class="fh-note">The models show example handle colours. Ask EndoTech NZ which colours are available for each angle. The 35° backward angle is measured from perpendicular towards the shaft. The 90° and 45° angles are measured from the shaft.</p>
+    <a href="/about/contact/">Enquire about File Handi</a>
+  </section>
+
+  <section id="assembly" class="fh-detail" aria-labelledby="assembly-title">
+    <h2 id="assembly-title">See how the handle fits</h2>
+    <p>This seven-second animation shows the collar sliding along the instrument into position.</p>
+    <video controls playsinline preload="metadata" width="1280" height="720"
+      poster="/products/file-handi/images/file-handi-assembly-poster.jpg" aria-labelledby="assembly-title">
+      <source src="/products/file-handi/video/file-handi-assembly.mp4" type="video/mp4" />
+      <a href="/products/file-handi/video/file-handi-assembly.mp4">Watch the fitting animation</a>
+    </video>
+    <p class="fh-note">The animation illustrates the fitting sequence. Handle dimensions, fit and colours are estimates based on photographs. Refer to the product instructions for clinical use.</p>
+  </section>
+  </article>
+</ProductLayout>
+
+<script>
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
+
+document.querySelectorAll<HTMLElement>('.fh-view').forEach(host => {
+  const button = host.querySelector<HTMLButtonElement>('button')!;
+  const status = host.querySelector<HTMLElement>('.fh-status')!;
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    status.textContent = 'Loading 3D view.';
+    try {
+      const {scene: product} = await new GLTFLoader().loadAsync(host.dataset.model!);
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color('#f2f4f5');
+      const renderer = new THREE.WebGLRenderer({antialias: true});
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+      // Give the graphite and knurling the soft reflections of the product stills.
+      const room = new RoomEnvironment();
+      const generator = new THREE.PMREMGenerator(renderer);
+      scene.environment = generator.fromScene(room, 0.04).texture;
+      scene.environmentIntensity = 0.8;
+      room.dispose();
+      generator.dispose();
+      const key = new THREE.DirectionalLight(0xffffff, 1.15);
+      key.position.set(-1, 3, 2);
+      scene.add(key);
+
+      // Match the Blender studio camera after converting Z-up to glTF Y-up.
+      const direction = new THREE.Vector3(89, 175, 180).normalize();
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.001, 10);
+      camera.position.copy(direction);
+      camera.lookAt(0, 0, 0);
+      const projection = new THREE.Group();
+      projection.quaternion.copy(camera.quaternion).invert();
+      projection.add(product);
+      const center = new THREE.Box3().setFromObject(projection, true)
+        .getCenter(new THREE.Vector3()).applyQuaternion(camera.quaternion);
+      scene.add(product);
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.target.copy(center);
+      camera.position.copy(center).addScaledVector(direction, 0.3);
+      controls.minZoom = 0.55;
+      controls.maxZoom = 8;
+      controls.update();
+
+      const draw = () => renderer.render(scene, camera);
+      const resize = () => {
+        const width = host.clientWidth;
+        const height = host.clientHeight;
+        if (!width || !height) return;
+        const aspect = width / height;
+        // The 1200 x 800 Blender still spans 147 mm across and 98 mm vertically.
+        const halfHeight = Math.max(0.098, 0.147 / aspect) / 2;
+        camera.left = -halfHeight * aspect;
+        camera.right = halfHeight * aspect;
+        camera.top = halfHeight;
+        camera.bottom = -halfHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+        draw();
+      };
+      controls.addEventListener('change', draw);
+      renderer.domElement.setAttribute('aria-label', 'Interactive File Handi model. Drag to rotate, scroll to zoom.');
+      renderer.domElement.tabIndex = 0;
+      host.prepend(renderer.domElement);
+      new ResizeObserver(resize).observe(host);
+      resize();
+      host.querySelector('img')!.hidden = true;
+      button.hidden = true;
+      status.textContent = 'Drag to rotate · Scroll to zoom';
+      host.dataset.loaded = 'true';
+    } catch {
+      status.textContent = '3D view unavailable. Product image remains available.';
+      button.disabled = false;
+    }
+  });
+});
+</script>
+<style>
+  .fh {
+    max-width: 1212px;
+    margin: 0 auto;
+    padding: clamp(30px, 5vw, 64px) clamp(18px, 4vw, 56px) 72px;
+    color: #132c45;
+  }
+  .fh h1 {
+    margin: 18px 0;
+    font-size: clamp(38px, 6vw, 64px);
+    letter-spacing: -0.045em;
+    line-height: 1.12;
+  }
+  .fh h2 { margin: 0 0 .5rem; font-size: clamp(24px, 3.5vw, 32px); line-height: 1.25; }
+  .fh h3 { margin: 14px 0 2px; font-size: 20px; }
+  .fh p { max-width: 80ch; margin: 0 0 12px; color: #475569; line-height: 1.7; }
+  .fh-studio, .fh-detail { margin-top: clamp(32px, 5vw, 64px); scroll-margin-top: 90px; }
+  .fh video { display: block; width: 100%; height: auto; aspect-ratio: 16/9; margin-top: 20px; background: #f2f4f5; }
+  .fh a { display: inline-flex; min-height: 44px; align-items: center; color: #154a71; text-decoration: underline; text-underline-offset: 4px; }
+  .fh a:focus-visible, .fh button:focus-visible { outline: 2px solid #154a71; outline-offset: 3px; }
+  .fh-film-link { margin-top: 4px; }
+  .fh .fh-accessory { margin-top: 8px; padding-left: 14px; border-left: 3px solid #154a71; color: #132c45; font-weight: 700; }
+  .fh-grips, .fh-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 20px; }
+  .fh-grips figure { margin: 0; }
+  .fh-grips img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; }
+  .fh-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .fh-card { min-width: 0; overflow: hidden; border: 1px solid #d9e3ea; border-radius: 12px; background: white; }
+  .fh-card h3 { margin: 0; padding: 14px 18px 16px; }
+  .fh-view { position: relative; height: 300px; overflow: hidden; background: #f2f4f5; }
+  .fh-view img, .fh-view :global(canvas) { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .fh-view img[hidden] { display: none; }
+  .fh-load { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); min-height: 44px; padding: 10px 18px; border: 0; border-radius: 4px; background: #173954; color: white; font-weight: 600; white-space: nowrap; cursor: pointer; }
+  .fh-status { position: absolute; bottom: 6px; left: 0; width: 100%; color: #243d55; font-size: 12px; text-align: center; pointer-events: none; }
+  .fh .fh-note { margin-top: 16px; font-size: 14px; }
+  @media (max-width: 800px) { .fh-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) { .fh-grips { grid-template-columns: 1fr; } }
+</style>

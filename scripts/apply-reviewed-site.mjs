@@ -34,6 +34,9 @@ function publish(dir,rel=''){
   let html=fs.readFileSync(from,'utf8');
   // Keep every reviewed navigation group discoverable without rewriting page bodies.
   html=html.replace(/<nav\b[\s\S]*?<\/nav>/gi,nav=>{
+   if(!nav.includes('href="/products/file-handi/"')){
+    nav=nav.replace(/<a\b[^>]*href="\/products\/c-plus\/"[^>]*>[\s\S]*?<\/a>/,match=>`${match}<a href="/products/file-handi/">File Handi</a>`);
+   }
    if(nav.includes('href="/products/iroot-sp/"'))return nav;
    return nav.replace(/<a\b[^>]*href="\/products\/gutta-percha\/"[^>]*>[\s\S]*?<\/a>/g,match=>`${match}<a href="/products/iroot-sp/">iRoot Bioceramic Sealer</a>`);
   });
@@ -64,7 +67,7 @@ function publish(dir,rel=''){
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/\/site-style\.css(?:\?[^"']*)?/g,'/site-style.css?v=nav-labels-20261019')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
-   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=nz-menu-touch-20261105')
+   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=nz-file-handi-20261119')
    .replace(/\/rg-wireframe\.js(?:\?[^"']*)?/g,'/rg-wireframe.js?v=whoosh4-20260930')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
 
