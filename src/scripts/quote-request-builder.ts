@@ -13,6 +13,7 @@ import {
   buildQuoteRequestEmailDraft,
   quoteRequestPdfBase64,
 } from '../lib/quoteRequestEmail';
+import { requestCopy } from '../lib/quoteRequestCopy';
 import { submitQuoteRequest } from '../lib/quoteRequestSubmission';
 import { nzShaperPromo, nzIrootPromo, getPromoOffer, normalisePromoCode, validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
 import { formatPromoPrice, getPromoPriceSummary, promoPriceNote, promoTitle, promoProductCopy, promoPriceCopy, promoLinePrice } from '../lib/quotePromoPricing';
@@ -77,6 +78,20 @@ if (root) {
 
   draftReferenceNodes.forEach((node) => { node.textContent = draftReference; });
 
+  const contactEmail = root.dataset.contactEmail || 'steveshepherdnz@gmail.com';
+  let submissionUnconfirmed = false;
+  let draftRevision = 0;
+  const currentCopyNote = () => {
+    if (emailButton?.dataset.completed === 'true') return requestCopy.accepted;
+    if (submissionUnconfirmed) return `We could not confirm online submission. You can retry or email the PDF to ${contactEmail}.`;
+    return submissionEnabled ? requestCopy.draft : requestCopy.preview;
+  };
+  const updateCopyNotes = () => {
+    document.querySelectorAll<HTMLElement>('[data-request-copy-note]').forEach(node => {
+      node.textContent = currentCopyNote();
+    });
+  };
+
   const refreshDraftReference = () => {
     draftReference = createDraftReference();
     draftReferenceNodes.forEach((node) => { node.textContent = draftReference; });
@@ -132,13 +147,16 @@ if (root) {
   const showRequestConfirmation = (customerEmail: string, quoteReference: string) => {
     if (!confirmation) return;
     confirmation.replaceChildren(
-      createText('strong', 'Pro forma request sent'),
-      createText('span', `The PDF request has been accepted for delivery to EndoTech NZ and ${customerEmail}. Reference: ${quoteReference}.`),
+      createText('strong', 'Pro forma request submitted'),
+      createText('span', `Your request was accepted for delivery to EndoTech NZ, with a copy for ${customerEmail}. No separate email is needed. Reference: ${quoteReference}.`),
     );
     confirmation.hidden = false;
   };
 
   const clearRequestConfirmation = () => {
+    draftRevision++;
+    const hadSubmissionStatus = submissionUnconfirmed || emailButton?.dataset.completed === 'true';
+    submissionUnconfirmed = false;
     if (emailButton?.dataset.completed === 'true') {
       delete emailButton.dataset.completed;
       emailButton.disabled = false;
@@ -147,6 +165,7 @@ if (root) {
       if (confirmation) confirmation.hidden = true;
       refreshDraftReference();
     }
+    if (hadSubmissionStatus) updateCopyNotes();
     setStatus('');
   };
 
@@ -680,10 +699,10 @@ if (root) {
         lines: draft.lines,
         transformLogoUrl: root.dataset.transformLogo || '',
         endotechLogoUrl: root.dataset.endotechLogo || '',
-        contactEmail: root.dataset.contactEmail || 'steveshepherdnz@gmail.com',
+        copyNote: currentCopyNote(),
       });
       downloadQuoteRequestPdf(bytes, `EndoTech-NZ-Pro-Forma-Request-${draftReference}.pdf`);
-      setStatus('Pro forma request PDF downloaded. Attach it to an email to EndoTech NZ when you are ready.', 'success');
+      setStatus(`PDF downloaded. ${currentCopyNote()}`, 'success');
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'The PDF could not be created.', 'error');
     }
@@ -716,14 +735,14 @@ if (root) {
     const draft = validateDraft();
     if (!draft) return;
     buildPrintSheet(draft.customer, draft.lines);
-    setStatus('The print window is opening. Choose Save as PDF if you want another PDF copy.');
+    setStatus(`The print window is opening. ${currentCopyNote()}`);
     window.requestAnimationFrame(() => window.print());
   });
 
   const buildAttachedEmail = async () => {
     const draft = validateDraft();
     if (!draft) return null;
-    const email = root.dataset.contactEmail || 'steveshepherdnz@gmail.com';
+    const email = contactEmail;
     const subject = `Pro forma invoice request ${draftReference}`;
     const pdfFilename = `EndoTech-NZ-Pro-Forma-Request-${draftReference}.pdf`;
     const previewLines = draft.lines.slice(0, 20).map(({ item, quantity }) => `${item.sku} - ${quoteProductLabel(item)} ${item.size} - Qty ${quantity}`);
@@ -758,7 +777,6 @@ if (root) {
       lines: draft.lines,
       transformLogoUrl: root.dataset.transformLogo || '',
       endotechLogoUrl: root.dataset.endotechLogo || '',
-      contactEmail: email,
     });
     const emailDraft = buildQuoteRequestEmailDraft({
       to: email,
@@ -779,6 +797,7 @@ if (root) {
   emailButton?.addEventListener('click', async () => {
     if (emailButton.disabled) return;
     const originalLabel = emailButton.textContent;
+    const submittedRevision = draftRevision;
     emailButton.disabled = true;
     emailButton.dataset.busy = 'true';
     const mobileSend = mobileSendMedia.matches;
@@ -817,8 +836,19 @@ if (root) {
         approvedCatalog: catalog,
         pageOrigin: window.location.origin,
       });
+      if (draftRevision !== submittedRevision) {
+        refreshDraftReference();
+        submissionUnconfirmed = false;
+        updateCopyNotes();
+        emailButton.disabled = false;
+        emailButton.textContent = originalLabel;
+        setStatus(`Request ${result.quoteReference} was accepted for delivery. No separate email is needed for that request. Your subsequent changes have not been sent.`, 'success');
+        return;
+      }
       emailButton.dataset.completed = 'true';
-      emailButton.textContent = 'Request sent — PDF emailed';
+      emailButton.textContent = 'Request submitted';
+      submissionUnconfirmed = false;
+      updateCopyNotes();
       showRequestConfirmation(emailPackage.draft.customer.email, result.quoteReference);
       setStatus('');
     } catch (error) {
@@ -826,9 +856,9 @@ if (root) {
       emailButton.disabled = false;
       emailButton.textContent = originalLabel;
       const message = error instanceof Error ? error.message : 'The PDF request could not be sent.';
-      setStatus(mobileSend
-        ? `Your request has not been sent. ${message} You can retry or download the PDF below.`
-        : message, 'error');
+      submissionUnconfirmed = failureStage === 'delivery' && draftRevision === submittedRevision;
+      updateCopyNotes();
+      setStatus(message, 'error');
     } finally {
       delete emailButton.dataset.busy;
       emailButton.removeAttribute('aria-busy');

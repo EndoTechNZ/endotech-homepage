@@ -8,6 +8,7 @@ import transformLogo from '../assets/transform-s-wordmark.png';
 import { nzCustomerSelectableCatalog, type NzLaunchFamily, type NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
 import { equipment, formatEquipmentPrice } from '../data/eighteethEquipment';
 import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
+import { requestCopy } from '../lib/quoteRequestCopy';
 import { quoteFamilyLabels } from '../lib/quoteRequest';
 import { siteConfig } from '../config/site';
 
@@ -113,7 +114,7 @@ const contactEmail = siteConfig.email.toLowerCase();
     <ol class="quote-steps" aria-label="Pro forma invoice request steps">
       <li><span>1</span><div><em>Step 1</em><strong>Select products</strong><small>Complete NZ launch list</small></div></li>
       <li><span>2</span><div><em>Step 2</em><strong>Add practice details</strong><small>Nothing personal is stored</small></div></li>
-      <li><span>3</span><div><em>Step 3</em><strong>Review and send</strong><small>PDF, SKU list or prepared email</small></div></li>
+      <li><span>3</span><div><em>Step 3</em><strong>Review and send</strong><small>Send your request or save a copy</small></div></li>
     </ol>
 
     <section id="select-products" class="quote-section" aria-labelledby="select-products-title">
@@ -367,7 +368,7 @@ const contactEmail = siteConfig.email.toLowerCase();
         <div>
           <p class="quote-eyebrow">Review your request</p>
           <h3>Create pro forma</h3>
-          <p id="email-attachment-help">Send your pro forma request to EndoTech NZ. This is not an order until confirmed by EndoTech NZ.</p>
+          <p id="email-attachment-help"><span data-request-copy-note>{submissionEnabled ? requestCopy.draft : requestCopy.preview}</span> This is not an order until confirmed by EndoTech NZ.</p>
           <p><strong>Email recipient:</strong> <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
         </div>
         <div class="quote-export-actions">
@@ -401,7 +402,7 @@ const contactEmail = siteConfig.email.toLowerCase();
       <table><thead><tr><th>SKU</th><th>Qty</th><th>Product</th><th>Size</th><th>Length</th></tr></thead><tbody data-print-lines></tbody></table>
     </section>
     <section><h2>Notes</h2><p data-print-notes></p></section>
-    <aside><strong>Next step</strong><p>Email this request to {contactEmail}. EndoTech NZ will enter the listed SKUs and quantities into its desktop invoicing app, then issue the priced pro forma invoice.</p></aside>
+    <aside><strong>Next step</strong><p><span data-request-copy-note>{submissionEnabled ? requestCopy.draft : requestCopy.preview}</span></p></aside>
     <footer>EndoTech NZ · Unpriced pro forma invoice request</footer>
   </article>
 </ProductLayout>

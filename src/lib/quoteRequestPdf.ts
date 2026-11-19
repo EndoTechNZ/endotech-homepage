@@ -1,6 +1,7 @@
 import { PDFDocument, StandardFonts, rgb, type PDFImage, type PDFPage, type PDFFont } from 'pdf-lib';
 import type { NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
 import { compareNzLaunchCatalogItems } from './catalogOrder';
+import { requestCopy } from './quoteRequestCopy';
 import { quoteProductLabel, type QuoteCustomerDetails } from './quoteRequest';
 import { getEquipmentTotals } from '../data/eighteethEquipment';
 import { formatPromoPrice, getPromoPriceSummary, promoPriceNote, promoTitle, promoProductCopy } from './quotePromoPricing';
@@ -17,7 +18,7 @@ export interface QuoteRequestPdfInput {
   lines: QuoteRequestPdfLine[];
   transformLogoUrl: string;
   endotechLogoUrl: string;
-  contactEmail: string;
+  copyNote?: string;
 }
 
 const PAGE_WIDTH = 595.28;
@@ -312,7 +313,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   page.drawRectangle({ x: MARGIN, y: y - 52, width: CONTENT_WIDTH, height: 58, color: PALE, borderColor: LIGHT, borderWidth: 1 });
   page.drawText('NEXT STEP', { x: MARGIN + 14, y: y - 10, size: 7, font: bold, color: TEAL });
   const nextStep = wrapText(
-    `Email this request to ${input.contactEmail}. EndoTech NZ will enter the listed SKUs and quantities into its desktop invoicing app, then issue the priced pro forma invoice.`,
+    input.copyNote ?? requestCopy.attachment,
     regular,
     8.8,
     CONTENT_WIDTH - 28,
