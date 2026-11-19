@@ -73,29 +73,6 @@ const educationCards = [
   },
 ];
 
-const principles = [
-  {
-    number: '01',
-    title: 'Establish a reproducible glide path first',
-    text: 'Before introducing rotary shaping, confirm a smooth path to working length. This remains the most important control step before file progression.',
-  },
-  {
-    number: '02',
-    title: 'Irrigate, recapitulate, re-irrigate',
-    text: 'Between files, flush debris, confirm patency with a small hand file, and irrigate again before moving to the next rotary instrument.',
-  },
-  {
-    number: '03',
-    title: 'Let the file work without excess apical pressure',
-    text: 'Transform S™ is designed for controlled advancement. Excessive apical pressure can reduce the benefit of the file geometry and increase procedural stress.',
-  },
-  {
-    number: '04',
-    title: 'Inspect files before reuse',
-    text: 'Watch for unwinding, visible distortion, or repeated use in difficult anatomy. Discard files when fatigue signs appear.',
-  },
-];
-
 const systems = [
   {
     title: 'Transform S™ ET',
@@ -119,12 +96,6 @@ const systems = [
   },
 ];
 
-const avatarPoints = [
-  'Canal centering in the apical third',
-  'Controlled engagement as curvature increases',
-  'Reduced tendency toward abrupt wall contact',
-  'Smoother progression toward working length',
-];
 ---
 
 <ProductLayout
@@ -196,52 +167,6 @@ const avatarPoints = [
   <link rel="stylesheet" href="/blog/lower-molar-feature.css" />
   <section class="molar-feature" aria-labelledby="molar-feature-title"><a href="/resources/ideas/lower-molar-canal-position-missed-distal-canal/"><img src="/blog/lower-molar/chamber-map.svg?v=canal-labels-20261026" width="1200" height="660" alt="Three lower molar chamber maps showing possible distal canal positions." loading="lazy"/><div><p>NEW / CLINICAL ANATOMY</p><h2 id="molar-feature-title">Lower molar canal anatomy</h2><span>Canal positions, missed distal canals, fins and isthmuses, with labelled diagrams and references.</span><b>Read the illustrated guide →</b></div></a></section>
   <WorkflowStrip items={educationCards} title="Education page navigation" />
-
-  <section class="border-b border-slate-200/80 bg-slate-50/70">
-    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
-      <div class="max-w-3xl">
-        <p class="text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">General Principles</p>
-        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-          A calmer sequence begins before the first shaping file.
-        </h2>
-      </div>
-
-      <div class="mt-10 grid gap-4 md:grid-cols-2">
-        {principles.map((principle) => (
-          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-[0_20px_48px_-42px_rgba(15,23,42,0.12)]">
-            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{principle.number}</p>
-            <h3 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">{principle.title}</h3>
-            <p class="mt-4 text-sm leading-7 text-slate-600">{principle.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="border-b border-slate-200/80 bg-white">
-    <div class="mx-auto grid max-w-7xl gap-5 px-6 py-16 sm:py-18 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:py-20">
-      <article class="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)] sm:p-8">
-        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Between Each File</p>
-        <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-          Irrigate, recapitulate, re-irrigate.
-        </h2>
-        <p class="mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-          Keep the sequence simple and repeatable. The technique value comes from how consistently those control steps are maintained.
-        </p>
-      </article>
-
-      <article class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_22px_48px_-42px_rgba(15,23,42,0.14)]">
-        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Avatar Tip</p>
-        <ul class="mt-5 space-y-3">
-          {avatarPoints.map((item) => (
-            <li class="rounded-[1.15rem] border border-slate-200 bg-slate-50/80 px-4 py-4 text-sm leading-7 text-slate-600">
-              {item}
-            </li>
-          ))}
-        </ul>
-      </article>
-    </div>
-  </section>
 
   <section class="border-b border-slate-200/80 bg-slate-50/70">
     <div class="mx-auto max-w-7xl px-6 py-16 sm:py-18 lg:py-20">
