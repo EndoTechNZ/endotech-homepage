@@ -2,8 +2,13 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import IrootOffer from '../../components/IrootOffer.astro';
 import { nzShaperPromo } from '../../../shared/nz-promo-offers.mjs';
+import { nzIrootPutty } from '../../../shared/nz-iroot-putty.mjs';
 
 const base = import.meta.env.BASE_URL;
+const nzd = (cents: number) => `NZ$${(cents / 100).toFixed(2)}`;
+const monthYear = (date: string) => new Intl.DateTimeFormat('en-NZ', {
+  timeZone: 'Pacific/Auckland', month: 'long', year: 'numeric',
+}).format(new Date(date));
 const products = [
   {
     name: 'Mini Magic',
@@ -28,14 +33,33 @@ const products = [
 ];
 ---
 
-<ProductLayout title="Offers | EndoTech NZ" description="iRoot SP for NZ$240 + GST with a free Micro-Path 15/.03, 25 mm six-pack per box. Limited to two iRoot boxes per clinic. Explore the iRoot and TRYBOTH offers from EndoTech NZ.">
+<ProductLayout title="Offers | EndoTech NZ" description="New Zealand pricing for iRoot BP Plus Putty, the iRoot SP sealer and Micro-Path offer, and the TRYBOTH file bundle.">
   <link rel="stylesheet" href={`${base}tryboth-offer.css`} />
   <div class="offers-page">
     <header class="offers-heading">
       <p class="offers-eyebrow">EndoTech NZ</p>
       <h1>Offers</h1>
-      <p>iRoot SP with a free Micro-Path pack, plus the TRYBOTH file bundle.</p>
+      <p>iRoot BP Plus Putty, iRoot SP sealer with a free Micro-Path pack, and the TRYBOTH file bundle.</p>
     </header>
+
+    <section class="putty-offer" id="iroot-bp-plus" aria-labelledby="putty-offer-title">
+      <div>
+        <h2 id="putty-offer-title">{nzIrootPutty.name}</h2>
+        <p>Standard premixed calcium silicate putty for root repair.</p>
+        <p data-putty-availability>See product details for current NZ availability.</p>
+        <a href={`${base}products/iroot-bp-plus/`}>View putty details <span aria-hidden="true">→</span></a>
+      </div>
+      <dl class="putty-prices">
+        <div data-december-price hidden>
+          <dt>{monthYear(nzIrootPutty.offerStart)} special</dt>
+          <dd><strong>{nzd(nzIrootPutty.decemberUnitNetCents)}</strong> + GST</dd>
+        </div>
+        <div>
+          <dt>Price from {monthYear(nzIrootPutty.offerEndExclusive)}</dt>
+          <dd><strong>{nzd(nzIrootPutty.regularUnitNetCents)}</strong> + GST</dd>
+        </div>
+      </dl>
+    </section>
 
     <IrootOffer />
     <section id="tryboth" class="tryboth-offer" aria-labelledby="tryboth-title">
@@ -87,3 +111,74 @@ const products = [
     </aside>
   </div>
 </ProductLayout>
+
+<script>
+  import { getPuttyOfferState, getPuttyPricePeriod } from '../../../shared/nz-iroot-putty.mjs';
+
+  const card = document.getElementById('iroot-bp-plus');
+  const decemberPrice = card?.querySelector<HTMLElement>('[data-december-price]');
+  const availability = card?.querySelector<HTMLElement>('[data-putty-availability]');
+  if (decemberPrice && availability) {
+    const refresh = () => {
+      const now = new Date();
+      decemberPrice.hidden = getPuttyPricePeriod(now) !== 'december';
+      availability.textContent = {
+        upcoming: 'Coming soon. We expect NZ stock in early December.',
+        'awaiting-stock': 'We are waiting for confirmation of NZ stock.',
+        available: 'See product details for NZ availability.',
+      }[getPuttyOfferState(now)];
+    };
+    const refreshOnTheHour = () => {
+      refresh();
+      window.setTimeout(refreshOnTheHour, 3_600_000 - Date.now() % 3_600_000);
+    };
+    refreshOnTheHour();
+    window.addEventListener('pageshow', refresh);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+  }
+</script>
+
+<style>
+  .putty-offer {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 48px);
+    align-items: center;
+    padding: clamp(24px, 4vw, 38px);
+    border: 1px solid #bdd8d0;
+    border-top: 4px solid #17675e;
+    border-radius: 12px;
+    background: #edf6f2;
+    color: #173c38;
+  }
+  .putty-offer h2 {
+    margin: 0 0 14px;
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 550;
+    line-height: 1.1;
+    letter-spacing: -.04em;
+  }
+  .putty-offer p { margin: 4px 0; color: #354e4a; line-height: 1.55; }
+  .putty-offer a {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    margin-top: 10px;
+    color: #115a52;
+    font-weight: 650;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .putty-offer a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .putty-prices { margin: 0; padding-inline-start: clamp(24px, 4vw, 42px); border-inline-start: 1px solid #b7d0c7; }
+  .putty-prices dt { margin: 0 0 3px; color: #385750; font-size: .93rem; }
+  .putty-prices dd { margin: 0; color: #173c38; font-weight: 550; }
+  .putty-prices strong { font-size: clamp(25px, 3.3vw, 37px); font-weight: 600; letter-spacing: -.035em; }
+  .putty-prices [data-december-price]:not([hidden]) + div { margin-top: 14px; }
+  .putty-prices [data-december-price]:not([hidden]) + div strong { font-size: 1.15rem; }
+  @media (max-width: 650px) {
+    .putty-offer { grid-template-columns: 1fr; gap: 16px; }
+    .putty-prices { padding: 16px 0 0; border-inline-start: 0; border-top: 1px solid #b7d0c7; }
+  }
+</style>

@@ -1,48 +1,169 @@
 ---
-import stateModule from '../../shared/nz-iroot-putty.mjs?url&no-inline';
+import { nzIrootPutty, getPuttyOfferState, getPuttyPricePeriod, getPuttyLinePrice } from '../../shared/nz-iroot-putty.mjs';
 import { withBasePath } from '../utils/paths';
+
+const headings = {
+  upcoming: 'iRoot Putty available from early December',
+  'awaiting-stock': 'iRoot BP Plus Putty · Awaiting stock confirmation',
+  available: 'iRoot BP Plus Putty',
+};
+
+function noticeFor(date: Date) {
+  const stock = getPuttyOfferState(date);
+  const prefix = getPuttyPricePeriod(date) === 'december' ? 'December special ' : '';
+  const amount = (getPuttyLinePrice(1, date).unitNetCents / 100).toFixed(2);
+  return { heading: headings[stock], price: stock === 'upcoming' ? '' : prefix + 'NZ$' + amount + ' + GST' };
+}
+
+// Calculate each scheduled message with the same rules as the NZ product and order pages.
+// Midnight UTC falls on the same calendar day in Auckland in either NZST or NZDT.
+const productUrl = withBasePath('/products/iroot-bp-plus/');
+const upcoming = { heading: headings.upcoming, price: '' };
+const changeDates = [nzIrootPutty.offerStart, nzIrootPutty.offerEndExclusive, nzIrootPutty.confirmedReleaseDate]
+  .filter((value): value is string => Boolean(value)).sort();
+const scheduled = changeDates.map(from => ({ from, ...noticeFor(new Date(from + 'T00:00:00Z')) }));
 ---
 
-<aside data-putty-announcement data-state-module={stateModule} aria-label="iRoot BP Plus Putty announcement">
-  <a href={withBasePath('/products/iroot-bp-plus/')}>
-    <strong data-putty-heading>iRoot BP Plus Putty</strong>
-    <span data-putty-price hidden></span>
-    <span aria-hidden="true">→</span>
-  </a>
+<aside data-putty-announcement aria-label="iRoot BP Plus Putty announcement">
   <style is:inline>
-    [data-putty-announcement] { background:#e6f4ef; color:#123d3a; font:600 15px/1.4 system-ui,sans-serif; }
-    [data-putty-announcement] a { display:flex; box-sizing:border-box; min-height:44px; align-items:center; justify-content:center; flex-wrap:wrap; gap:3px 16px; padding:9px 18px; color:inherit; text-align:center; text-decoration:none; }
-    [data-putty-announcement] a:hover strong, [data-putty-announcement] a:focus-visible strong { text-decoration:underline; }
-    [data-putty-announcement] a:focus-visible { outline:2px solid currentColor; outline-offset:-3px; }
-    [data-putty-price][hidden] { display:none; }
-  </style>
-  <script is:inline type="module">
-    const notice = document.querySelector('[data-putty-announcement]');
-    const { getPuttyOfferState, getPuttyPricePeriod, getPuttyLinePrice } = await import(notice.dataset.stateModule);
-    const heading = notice.querySelector('[data-putty-heading]');
-    const price = notice.querySelector('[data-putty-price]');
-    function update() {
-      const now = new Date();
-      const state = getPuttyOfferState(now);
-      price.hidden = state === 'upcoming';
-      if (state === 'upcoming') {
-        heading.textContent = 'iRoot Putty available from early December';
-        price.textContent = '';
-        return;
-      }
-      heading.textContent = state === 'awaiting-stock'
-        ? 'iRoot BP Plus Putty · Awaiting stock confirmation'
-        : 'iRoot BP Plus Putty';
-      const prefix = getPuttyPricePeriod(now) === 'december' ? 'December special ' : '';
-      const unitPrice = (getPuttyLinePrice(1, now).unitNetCents / 100).toFixed(2);
-      price.textContent = prefix + 'NZ$' + unitPrice + ' + GST';
+    [data-putty-announcement] {
+      inline-size: min(48rem, calc(100% - 2rem));
+      margin: 12px auto;
+      font-family: var(--font-ui, system-ui), sans-serif;
     }
+
+    [data-putty-announcement] a {
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      box-sizing: border-box;
+      min-block-size: 88px;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(12px, 2vw, 28px);
+      padding: 14px clamp(16px, 3vw, 40px);
+      border: 1px solid #085756;
+      border-radius: 12px;
+      background: #0b6962;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    [data-putty-announcement] a::before {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(105deg, #075854, #004544);
+      content: '';
+    }
+
+    .putty-notice-copy {
+      display: grid;
+      gap: 3px;
+      min-inline-size: 0;
+    }
+
+    [data-putty-heading], .putty-notice-heading {
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      font-weight: 700;
+      line-height: 1.17;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+    }
+
+    [data-putty-price], .putty-notice-detail {
+      display: block;
+      color: #d8f7ec;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    [data-putty-price][hidden] { display: none; }
+
+    .putty-notice-arrow {
+      display: grid;
+      flex: none;
+      inline-size: 36px;
+      block-size: 36px;
+      place-items: center;
+      border: 1px solid #9accc5;
+      border-radius: 50%;
+      color: #fff;
+      font: 500 24px/1 system-ui, sans-serif;
+    }
+
+    [data-putty-announcement] a:is(:hover, :focus-visible) strong {
+      text-decoration: underline;
+      text-underline-offset: 0.14em;
+    }
+
+    [data-putty-announcement] a:focus-visible {
+      outline: 3px solid #082e38;
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      [data-putty-announcement] a::before {
+        animation: putty-notice-entrance 2s cubic-bezier(0.22, 0.68, 0.24, 1) 1;
+      }
+    }
+
+    @keyframes putty-notice-entrance {
+      from { clip-path: inset(0 100% 0 0); }
+      to { clip-path: inset(0); }
+    }
+  </style>
+  <template>
+    <a href={productUrl}>
+      <span class="putty-notice-copy">
+        <strong data-putty-heading></strong>
+        <span data-putty-price hidden></span>
+      </span>
+      <span class="putty-notice-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </template>
+  <script is:inline define:vars={{ upcoming, scheduled }}>
+    const banner = document.currentScript.closest('[data-putty-announcement]');
+    const link = banner.querySelector('template').content.firstElementChild.cloneNode(true);
+    const heading = link.querySelector('[data-putty-heading]');
+    const price = link.querySelector('[data-putty-price]');
+    const calendar = new Intl.DateTimeFormat('en-NZ', {
+      timeZone: 'Pacific/Auckland', year: 'numeric', month: '2-digit', day: '2-digit',
+    });
+
+    function update() {
+      const parts = Object.fromEntries(calendar.formatToParts(new Date()).map(({ type, value }) => [type, value]));
+      const today = [parts.year, parts.month, parts.day].join('-');
+      let active = upcoming;
+      for (const entry of scheduled) {
+        if (entry.from > today) break;
+        active = entry;
+      }
+      if (heading.textContent !== active.heading) heading.textContent = active.heading;
+      if (price.textContent !== active.price) price.textContent = active.price;
+      price.hidden = !active.price;
+    }
+
     function updateOnTheHour() {
       update();
       window.setTimeout(updateOnTheHour, 3_600_000 - Date.now() % 3_600_000);
     }
+
     updateOnTheHour();
+    // Insert the fully labelled link before the browser parses the content below it.
+    banner.append(link);
     window.addEventListener('pageshow', update);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) update(); });
   </script>
+  <noscript>
+    <a href={productUrl}>
+      <span class="putty-notice-copy">
+        <strong class="putty-notice-heading">iRoot BP Plus Putty</strong>
+        <span class="putty-notice-detail">View availability and pricing</span>
+      </span>
+      <span class="putty-notice-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </noscript>
 </aside>
