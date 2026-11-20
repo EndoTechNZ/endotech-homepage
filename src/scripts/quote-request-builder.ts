@@ -14,9 +14,10 @@ import {
   quoteRequestPdfBase64,
 } from '../lib/quoteRequestEmail';
 import { requestCopy } from '../lib/quoteRequestCopy';
-import { submitQuoteRequest } from '../lib/quoteRequestSubmission';
+import { PuttyPriceChangedError, submitQuoteRequest } from '../lib/quoteRequestSubmission';
 import { nzShaperPromo, nzIrootPromo, getPromoOffer, normalisePromoCode, validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
-import { formatPromoPrice, getPromoPriceSummary, promoPriceNote, promoTitle, promoProductCopy, promoPriceCopy, promoLinePrice } from '../lib/quotePromoPricing';
+import { formatPromoPrice, getPromoPriceSummary, promoPriceNote, promoTitle, promoProductCopy, promoPriceCopy, promoLinePrice, puttyPeriodLabel, puttyPriceCopy, puttyQuantity } from '../lib/quotePromoPricing';
+import { getPuttyLinePrice, getPuttyOfferState, nzIrootPutty } from '../../shared/nz-iroot-putty.mjs';
 import { equipmentForSku, getEquipmentTotals } from '../data/eighteethEquipment';
 
 const root = document.querySelector<HTMLElement>('[data-quote-builder]');
@@ -169,22 +170,38 @@ if (root) {
     setStatus('');
   };
 
+  let displayedPuttyUnitNetCents = getPuttyLinePrice(1).unitNetCents;
+
   const persistSelections = () => {
     try {
-      window.localStorage.setItem(selectionStorageKey, JSON.stringify([...selections.entries()]));
+      const rows = [...selections].map(([sku, quantity]) =>
+        sku === nzIrootPutty.sku ? [sku, quantity, displayedPuttyUnitNetCents] : [sku, quantity]);
+      window.localStorage.setItem(selectionStorageKey, JSON.stringify(rows));
     } catch {
       // Product selections remain available for this page view if storage is unavailable.
     }
   };
 
+  const canSelectSku = (sku: string) =>
+    catalogBySku.has(sku) && (sku !== nzIrootPutty.sku || getPuttyOfferState() === 'available');
+
   const restoreSelections = () => {
     try {
-      const stored = JSON.parse(window.localStorage.getItem(selectionStorageKey) || '[]') as Array<[string, number]>;
-      stored.forEach(([sku, quantity]) => {
-        if (catalogBySku.has(sku) && Number.isInteger(quantity) && quantity > 0 && quantity <= 999) {
+      const stored = JSON.parse(window.localStorage.getItem(selectionStorageKey) || '[]') as Array<[string, number, number?]>;
+      let unavailablePutty = false;
+      stored.forEach(([sku, quantity, savedPrice]) => {
+        if (canSelectSku(sku) && Number.isInteger(quantity) && quantity > 0 && quantity <= 999) {
           selections.set(sku, quantity);
+          if (sku === nzIrootPutty.sku) {
+            // Earlier drafts only stored quantity, during the original December-only offer.
+            displayedPuttyUnitNetCents = savedPrice ?? nzIrootPutty.decemberUnitNetCents;
+          }
+        } else if (sku === nzIrootPutty.sku) {
+          unavailablePutty = true;
         }
       });
+      persistSelections();
+      if (unavailablePutty) setStatus('Your saved putty selection was removed because ordering is closed.', 'neutral');
     } catch {
       selections.clear();
     }
@@ -260,7 +277,7 @@ if (root) {
   };
 
   const setQuantity = (sku: string, rawQuantity: number, render = true) => {
-    const quantity = Math.max(0, Math.min(999, Math.floor(Number(rawQuantity) || 0)));
+    const quantity = canSelectSku(sku) ? Math.max(0, Math.min(999, Math.floor(Number(rawQuantity) || 0))) : 0;
     if (!catalogBySku.has(sku)) return;
     if ((selections.get(sku) || 0) !== quantity) clearRequestConfirmation();
     if (quantity > 0) selections.set(sku, quantity);
@@ -279,10 +296,18 @@ if (root) {
     return element;
   };
 
-  const renderSelections = () => {
+  const renderSelections = (now = new Date()) => {
     const lines = selectedLines();
-    const packs = lines.filter(line => line.item.family !== 'equipment').reduce((total, line) => total + line.quantity, 0);
-    const units = lines.filter(line => line.item.family === 'equipment').reduce((total, line) => total + line.quantity, 0);
+    const putty = puttyQuantity(lines);
+    const packs = lines.filter(line => line.item.family !== 'equipment').reduce((total, line) => total + line.quantity, 0) - putty;
+    const units = lines.filter(line => line.item.family === 'equipment').reduce((total, line) => total + line.quantity, putty);
+    const puttySummary = putty ? puttyPriceCopy(putty, now) : '';
+    root.querySelectorAll<HTMLElement>('[data-putty-price]').forEach(element => {
+      element.textContent = puttySummary;
+      element.hidden = !putty;
+    });
+    const puttyReview = root.querySelector<HTMLElement>('[data-putty-review]');
+    if (puttyReview) puttyReview.hidden = !putty;
     const count = `${lines.length} line${lines.length === 1 ? '' : 's'}${packs ? ` · ${packs} pack${packs === 1 ? '' : 's'}` : ''}${units ? ` · ${units} unit${units === 1 ? '' : 's'}` : ''}`;
     if (selectionTotal) selectionTotal.textContent = count;
     if (reviewTotal) reviewTotal.textContent = count;
@@ -307,7 +332,7 @@ if (root) {
 
         const copy = document.createElement('div');
         copy.append(createText('strong', quoteProductLabel(item), 'quote-product-label'));
-        copy.append(createText('span', item.family === 'equipment' ? `${item.fileType} · per unit` : `${item.size} · ${item.lengthMm ? `${item.lengthMm} mm` : 'Length n/a'} · ${item.sku}`));
+        copy.append(createText('span', item.sku === nzIrootPutty.sku ? item.sku : item.family === 'equipment' ? `${item.fileType} · per unit` : `${item.size} · ${item.lengthMm ? `${item.lengthMm} mm` : 'Length n/a'} · ${item.sku}`));
 
         const controls = document.createElement('div');
         controls.className = 'quote-summary-controls';
@@ -332,7 +357,7 @@ if (root) {
 
     if (summaryEmpty) summaryEmpty.hidden = lines.length > 0;
     if (summary) summary.hidden = lines.length === 0;
-    renderReview();
+    renderReview(now);
   };
 
   const appendDetail = (list: HTMLElement, label: string, value: string) => {
@@ -341,7 +366,7 @@ if (root) {
     list.append(wrapper);
   };
 
-  const renderReview = () => {
+  const renderReview = (now = new Date()) => {
     const lines = selectedLines();
     const customer = readCustomer();
     const eq = getEquipmentTotals(lines.map(line => ({ sku: line.item.sku, quantity: line.quantity })));
@@ -394,12 +419,15 @@ if (root) {
       }
     }
     const pricingNote = root.querySelector<HTMLElement>('[data-review-pricing-note]');
-    if (pricingNote) pricingNote.textContent = eq.selected.length
+    const putty = puttyQuantity(lines);
+    if (pricingNote) pricingNote.textContent = putty
+      ? 'The putty price is shown below. EndoTech NZ will confirm freight and account terms on the pro forma.'
+      : eq.selected.length
       ? 'Review the quantities below. Equipment pricing is shown separately, with GST. Other products and freight will be confirmed on your pro forma.'
       : price
       ? 'Your promo pack price is shown below. EndoTech NZ will confirm postage, availability and account terms in the pro forma invoice.'
       : 'The website supplies SKUs and quantities only. EndoTech NZ will add pricing, GST, freight, availability and account terms in the pro forma invoice.';
-    root.querySelectorAll<HTMLElement>('[data-review-promo-column]').forEach(element => { element.hidden = !price && !eq.selected.length; });
+    root.querySelectorAll<HTMLElement>('[data-review-promo-column]').forEach(element => { element.hidden = !price && !eq.selected.length && !putty; });
     if (reviewBody) {
       reviewBody.replaceChildren();
       lines.forEach(({ item, quantity }) => {
@@ -415,10 +443,12 @@ if (root) {
           createText('td', item.size),
           createText('td', item.lengthMm ? `${item.lengthMm} mm` : '—'),
         ].forEach((cell) => row.append(cell));
-        if (price || eq.selected.length) {
+        if (price || eq.selected.length || putty) {
           const cell = createText('td', '', 'quote-promo-line-price');
           const equipmentItem = equipmentForSku(item.sku);
-          if (equipmentItem) {
+          if (item.sku === nzIrootPutty.sku) {
+            cell.textContent = formatPromoPrice(getPuttyLinePrice(1, now).unitNetCents / 100);
+          } else if (equipmentItem) {
             cell.append(createText('span', formatPromoPrice(equipmentItem.price)), createText('small', '+ GST / unit'));
           } else if (price && promoLinePrice(price, item.sku)) {
             cell.append(createText('span',promoLinePrice(price, item.sku)!));
@@ -479,7 +509,42 @@ if (root) {
     if (noResults) noResults.hidden = visible > 0;
   };
 
+  const refreshPuttyAvailability = (now = new Date()) => {
+    const state = getPuttyOfferState(now);
+    const unitNetCents = getPuttyLinePrice(1, now).unitNetCents;
+    const changed = displayedPuttyUnitNetCents !== unitNetCents;
+    displayedPuttyUnitNetCents = unitNetCents;
+    const price = formatPromoPrice(unitNetCents / 100);
+    const period = puttyPeriodLabel(now);
+    const messages = {
+      upcoming: `Expected in early December. December special: ${price} + GST, subject to confirmed stock.`,
+      'awaiting-stock': `Awaiting confirmed stock. ${period}: ${price} + GST.`,
+      available: `${period}: ${price} + GST per unit.`,
+    };
+    const notice = root.querySelector<HTMLElement>('[data-putty-availability]');
+    if (notice) notice.textContent = messages[state];
+    const enquiry = root.querySelector<HTMLElement>('[data-putty-enquiry]');
+    if (enquiry) enquiry.hidden = state === 'available';
+    const input = root.querySelector<HTMLInputElement>(`[data-quote-quantity][data-sku="${nzIrootPutty.sku}"]`);
+    if (input) input.disabled = state !== 'available';
+    if (state !== 'available' && selections.has(nzIrootPutty.sku)) {
+      setQuantity(nzIrootPutty.sku, 0);
+      setStatus('iRoot BP Plus Putty was removed because it is unavailable. Please review your selection.', 'error');
+      return false;
+    }
+    if (changed && selections.has(nzIrootPutty.sku)) {
+      clearRequestConfirmation();
+      persistSelections();
+      renderSelections(now);
+      setStatus(`The putty price has changed to ${price} + GST. Please review your updated request.`, 'neutral');
+      return false;
+    }
+    return true;
+  };
+
   const validateDraft = () => {
+    const pricedAt = new Date();
+    if (!refreshPuttyAvailability(pricedAt)) return null;
     if (!customerForm?.reportValidity()) {
       setStatus('Complete the required practice details before exporting the request.', 'error');
       return null;
@@ -500,7 +565,14 @@ if (root) {
       setStatus([...customerErrors, ...lineValidation.errors][0] || 'Review the quotation request.', 'error');
       return null;
     }
-    return { customer, lines };
+    return { customer, lines, pricedAt };
+  };
+
+  const checkRenderedPrice = (draft: NonNullable<ReturnType<typeof validateDraft>>) => {
+    if (puttyQuantity(draft.lines) && getPuttyLinePrice(1, draft.pricedAt).unitNetCents !== getPuttyLinePrice(1).unitNetCents) {
+      refreshPuttyAvailability();
+      throw new PuttyPriceChangedError();
+    }
   };
 
   const withBusyButton = async (button: HTMLButtonElement | null, task: () => Promise<void>) => {
@@ -517,8 +589,15 @@ if (root) {
     }
   };
 
-  const buildPrintSheet = (customer: QuoteCustomerDetails, lines: Array<{ item: NzLaunchCatalogItem; quantity: number }>) => {
+  const buildPrintSheet = (customer: QuoteCustomerDetails, lines: Array<{ item: NzLaunchCatalogItem; quantity: number }>, pricedAt: Date) => {
     if (!printSheet) return;
+    const putty = puttyQuantity(lines);
+    const puttySection = printSheet.querySelector<HTMLElement>('[data-print-putty]');
+    if (puttySection) {
+      puttySection.hidden = !putty;
+      const amount = puttySection.querySelector<HTMLElement>('[data-putty-price]');
+      if (amount) amount.textContent = putty ? puttyPriceCopy(putty, pricedAt) : '';
+    }
     const price = getPromoPriceSummary(customer.promoCode, lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
     const eq = getEquipmentTotals(lines.map(line => ({ sku: line.item.sku, quantity: line.quantity })));
     const eqSection = printSheet.querySelector<HTMLElement>('[data-print-equipment-summary]');
@@ -528,9 +607,9 @@ if (root) {
     const priceSummary = printSheet.querySelector<HTMLElement>('[data-print-promo-summary]');
     if (priceSummary) priceSummary.hidden = !price;
     const priceLabel = printSheet.querySelector<HTMLElement>('.quote-print-title > div > p');
-    if (priceLabel) priceLabel.textContent = eq.selected.length ? 'PARTIAL PRICING' : price ? 'PROMO PRICE SHOWN' : 'UNPRICED';
+    if (priceLabel) priceLabel.textContent = putty ? 'PUTTY PRICE SHOWN' : eq.selected.length ? 'PARTIAL PRICING' : price ? 'PROMO PRICE SHOWN' : 'UNPRICED';
     const footer = printSheet.querySelector<HTMLElement>('footer');
-    if (footer) footer.textContent = eq.selected.length ? 'EndoTech NZ | Pro forma request with equipment pricing' : price ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request';
+    if (footer) footer.textContent = putty ? 'EndoTech NZ | Pro forma request with putty pricing' : eq.selected.length ? 'EndoTech NZ | Pro forma request with equipment pricing' : price ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request';
     const priceCopy = printSheet.querySelector<HTMLElement>('[data-print-promo-price]');
     const priceNote = printSheet.querySelector<HTMLElement>('[data-print-promo-note]');
     if (priceCopy && price) priceCopy.textContent = promoPriceCopy(price);
@@ -694,13 +773,14 @@ if (root) {
     try {
       const bytes = await buildQuoteRequestPdf({
         draftReference,
-        createdAt: new Date(),
+        createdAt: draft.pricedAt,
         customer: draft.customer,
         lines: draft.lines,
         transformLogoUrl: root.dataset.transformLogo || '',
         endotechLogoUrl: root.dataset.endotechLogo || '',
         copyNote: currentCopyNote(),
       });
+      checkRenderedPrice(draft);
       downloadQuoteRequestPdf(bytes, `EndoTech-NZ-Pro-Forma-Request-${draftReference}.pdf`);
       setStatus(`PDF downloaded. ${currentCopyNote()}`, 'success');
     } catch (error) {
@@ -734,7 +814,7 @@ if (root) {
   printButton?.addEventListener('click', () => {
     const draft = validateDraft();
     if (!draft) return;
-    buildPrintSheet(draft.customer, draft.lines);
+    buildPrintSheet(draft.customer, draft.lines, draft.pricedAt);
     setStatus(`The print window is opening. ${currentCopyNote()}`);
     window.requestAnimationFrame(() => window.print());
   });
@@ -747,6 +827,7 @@ if (root) {
     const pdfFilename = `EndoTech-NZ-Pro-Forma-Request-${draftReference}.pdf`;
     const previewLines = draft.lines.slice(0, 20).map(({ item, quantity }) => `${item.sku} - ${quoteProductLabel(item)} ${item.size} - Qty ${quantity}`);
     const remaining = Math.max(0, draft.lines.length - previewLines.length);
+    const putty = puttyQuantity(draft.lines);
     const body = [
       'Hello EndoTech NZ,',
       '',
@@ -765,6 +846,7 @@ if (root) {
       '',
       'Requested products:',
       ...previewLines,
+      ...(putty ? [`iRoot BP Plus Putty. ${puttyPriceCopy(putty, draft.pricedAt)} Freight and other products are separate.`] : []),
       ...(remaining ? [`...plus ${remaining} additional line${remaining === 1 ? '' : 's'} shown in the attached PDF.`] : []),
       '',
       'Please confirm availability, account terms, GST, freight and pricing in the pro forma invoice.',
@@ -772,12 +854,13 @@ if (root) {
 
     const pdfBytes = await buildQuoteRequestPdf({
       draftReference,
-      createdAt: new Date(),
+      createdAt: draft.pricedAt,
       customer: draft.customer,
       lines: draft.lines,
       transformLogoUrl: root.dataset.transformLogo || '',
       endotechLogoUrl: root.dataset.endotechLogo || '',
     });
+    checkRenderedPrice(draft);
     const emailDraft = buildQuoteRequestEmailDraft({
       to: email,
       subject,
@@ -821,7 +904,10 @@ if (root) {
       const payload = createQuoteRequestPayload({
         draftReference,
         customer: emailPackage.draft.customer,
-        lines: emailPackage.draft.lines.map(({ item, quantity }): QuoteRequestLine => ({ sku: item.sku, quantity })),
+        lines: emailPackage.draft.lines.map(({ item, quantity }): QuoteRequestLine => ({
+          sku: item.sku, quantity,
+          ...(item.sku === nzIrootPutty.sku ? { expectedUnitNetCents: getPuttyLinePrice(1, emailPackage.draft.pricedAt).unitNetCents } : {}),
+        })),
         formStartedAt,
         website: String(formData.get('website') || ''),
         path: window.location.pathname,
@@ -852,11 +938,13 @@ if (root) {
       showRequestConfirmation(emailPackage.draft.customer.email, result.quoteReference);
       setStatus('');
     } catch (error) {
-      reportMobileSendFailure(failureStage, error);
+      const priceChanged = error instanceof PuttyPriceChangedError;
+      if (priceChanged) refreshPuttyAvailability();
+      else reportMobileSendFailure(failureStage, error);
       emailButton.disabled = false;
       emailButton.textContent = originalLabel;
       const message = error instanceof Error ? error.message : 'The PDF request could not be sent.';
-      submissionUnconfirmed = failureStage === 'delivery' && draftRevision === submittedRevision;
+      submissionUnconfirmed = !priceChanged && failureStage === 'delivery' && draftRevision === submittedRevision;
       updateCopyNotes();
       setStatus(message, 'error');
     } finally {
@@ -900,11 +988,18 @@ if (root) {
     const quantity = selections.get(input.dataset.sku || '');
     input.value = quantity ? String(quantity) : '';
   });
-  const requestedFamily = params.get('category') === 'equipment' || equipmentForSku(requestedProduct) ? 'equipment' : params.get('family');
+  const puttyRequested = requestedProduct === 'iroot-bp-plus' || requestedProduct === nzIrootPutty.sku || params.get('sku') === nzIrootPutty.sku;
+  const requestedFamily = puttyRequested ? 'bioceramics' : params.get('category') === 'equipment' || equipmentForSku(requestedProduct) ? 'equipment' : params.get('family');
   const initialFamily = requestedFamily && familyOrder.includes(requestedFamily as NzLaunchFamily)
     ? requestedFamily
     : root.querySelector<HTMLButtonElement>('[data-family-tab]')?.dataset.familyTab || 'et';
   setActiveFamily(initialFamily);
+  refreshPuttyAvailability();
+  window.addEventListener('pageshow', () => refreshPuttyAvailability());
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refreshPuttyAvailability();
+  });
+  window.setInterval(refreshPuttyAvailability, 60_000);
   renderSelections();
   if (resumeIrootShopping) continueShopping(false);
 }

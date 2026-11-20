@@ -1,5 +1,155 @@
 ---
-import LegacyRedirect from '../../layouts/LegacyRedirect.astro';
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import { withBasePath } from '../../utils/paths';
+import { getPuttyLinePrice, nzIrootPutty } from '../../../shared/nz-iroot-putty.mjs';
+
+// These are dated display rates. The request builder uses the Auckland date at submission.
+const decemberPrice = getPuttyLinePrice(1, new Date(nzIrootPutty.offerStart));
+const regularPrice = getPuttyLinePrice(1, new Date(nzIrootPutty.offerEndExclusive));
+const nzd = (cents: number) => `NZ$${(cents / 100).toFixed(2)}`;
+const orderHref = withBasePath('/quote-request/?product=iroot-bp-plus#select-products');
+const contactHref = withBasePath('/about/contact/');
+const description = 'Premixed calcium silicate putty from Innovative BioCeramix for root repair. Check New Zealand availability.';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: nzIrootPutty.name,
+  sku: nzIrootPutty.sku,
+  description,
+  manufacturer: { '@type': 'Organization', name: 'Innovative BioCeramix, Inc.' },
+};
 ---
 
-<LegacyRedirect to="/products/bcs-bioceramic-putty/" title="Redirecting to BCS BioCeramic Putty" />
+<ProductLayout title="iRoot BP Plus Putty | EndoTech NZ" description={description} schema={schema} accent="teal">
+  <div class="putty">
+    <section class="intro" aria-labelledby="putty-title">
+      <div class="wrap">
+        <a class="back" href={withBasePath('/products/overview/')}>← Product catalogue</a>
+        <div class="intro-grid">
+          <div>
+            <p class="label">Bioceramic root repair material</p>
+            <h1 id="putty-title">iRoot BP Plus <span>Putty</span></h1>
+            <p class="lede">A premixed calcium silicate putty that sets in contact with moisture. Its radiopacity allows you to check placement on a radiograph.</p>
+          </div>
+          <aside class="availability" aria-labelledby="putty-offer-title">
+            <p class="label">New Zealand availability</p>
+            <h2 id="putty-offer-title">Stock and pricing</h2>
+            <div data-putty-price hidden>
+              <div data-putty-december-price>
+                <p class="price"><strong>{nzd(decemberPrice.netCents)}</strong> + GST</p>
+                <p class="inclusive">{nzd(decemberPrice.totalCents)} including GST</p>
+              </div>
+              <div class="regular-price">
+                <p class="regular-label">Price from January 2027</p>
+                <p class="price"><strong>{nzd(regularPrice.netCents)}</strong> + GST</p>
+                <p class="inclusive">{nzd(regularPrice.totalCents)} including GST</p>
+              </div>
+            </div>
+            <p class="status" data-putty-status>Contact EndoTech NZ for current availability and pack details.</p>
+            <a class="action" data-putty-action data-order-href={orderHref} href={contactHref}>Enquire about availability</a>
+            <p class="internal-code">EndoTech ordering code <span>{nzIrootPutty.sku}</span></p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap detail-grid">
+      <section aria-labelledby="putty-indications">
+        <h2 id="putty-indications">Clinical indications</h2>
+        <p>Innovative BioCeramix lists five uses for iRoot BP Plus in its instructions.</p>
+        <ul class="indications">
+          <li>Repair of root perforations</li>
+          <li>Repair of root resorption</li>
+          <li>Root-end filling</li>
+          <li>Apexification</li>
+          <li>Pulp capping</li>
+        </ul>
+      </section>
+
+      <section id="putty-ifu" aria-labelledby="putty-ifu-title">
+        <h2 id="putty-ifu-title">New Zealand pack instructions</h2>
+        <p>We are awaiting confirmation of the manufacturer’s instructions for the New Zealand pack.</p>
+        <a class="text-link" href={contactHref}>Contact EndoTech NZ</a>
+      </section>
+    </div>
+  </div>
+</ProductLayout>
+
+<script>
+  import { getPuttyOfferState, getPuttyPricePeriod } from '../../../shared/nz-iroot-putty.mjs';
+
+  const heading = document.getElementById('putty-offer-title');
+  const price = document.querySelector<HTMLElement>('[data-putty-price]');
+  const status = document.querySelector<HTMLElement>('[data-putty-status]');
+  const action = document.querySelector<HTMLAnchorElement>('[data-putty-action]');
+  const decemberBlock = price?.querySelector<HTMLElement>('[data-putty-december-price]');
+  if (heading && price && decemberBlock && status && action) {
+    const orderHref = action.dataset.orderHref || action.href;
+    const updateOffer = () => {
+      const now = new Date();
+      const state = getPuttyOfferState(now);
+      const period = getPuttyPricePeriod(now);
+      const released = state === 'available';
+      heading.textContent = period === 'december' ? 'December 2026 special' : 'Regular price';
+      decemberBlock.hidden = period === 'regular';
+      price.dataset.period = period;
+      price.hidden = false;
+      const message = {
+        upcoming: 'Coming soon. We expect NZ stock in early December. The release date and pack details are awaiting confirmation.',
+        'awaiting-stock': 'We are awaiting confirmation of NZ stock and pack details.',
+        available: period === 'december' ? 'The special applies to pro forma requests through 31 December 2026.' : 'You can request a pro forma at the regular price.',
+      };
+      status.textContent = message[state];
+      action.href = orderHref;
+      action.textContent = released ? 'Request a pro forma' : 'View ordering details';
+    };
+    const refresh = () => {
+      updateOffer();
+      window.setTimeout(refresh, 3_600_000 - Date.now() % 3_600_000);
+    };
+    refresh();
+    window.addEventListener('pageshow', updateOffer);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') updateOffer();
+    });
+  }
+</script>
+
+<style>
+  .putty { color: #152d3c; background: white; }
+  .wrap { width: min(71rem, calc(100% - 3rem)); margin-inline: auto; }
+  .intro { padding: 2rem 0 clamp(3rem, 6vw, 6rem); background: #f1f6f5; border-bottom: 1px solid #d6e3df; }
+  .back { color: #3b595b; font-size: .9rem; }
+  .intro-grid, .detail-grid { display: grid; gap: clamp(2rem, 5vw, 5rem); }
+  .intro-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, .85fr); align-items: center; margin-top: clamp(2rem, 5vw, 4rem); }
+  .label { margin: 0 0 .8rem; color: #20615c; font-size: .77rem; font-weight: 650; letter-spacing: .09em; text-transform: uppercase; }
+  h1 { margin: 0; font-size: clamp(3.65rem, 7vw, 6rem); font-weight: 500; letter-spacing: -.055em; line-height: 1; }
+  h1 span { display: block; color: #20615c; }
+  h2 { margin: 0; font-size: clamp(1.7rem, 3vw, 2.15rem); font-weight: 550; letter-spacing: -.035em; line-height: 1.15; }
+  .lede { max-width: 34rem; margin: 1.5rem 0; color: #36505c; font-size: clamp(1.05rem, 2vw, 1.25rem); line-height: 1.55; }
+  .text-link, .back { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+  .text-link { color: #1a5753; font-weight: 600; }
+  .availability { background: white; border: 1px solid #cbdcd7; border-top: 4px solid #316b64; border-radius: 1.15rem; padding: clamp(1.35rem, 3.5vw, 2.4rem); }
+  .availability h2 { font-size: clamp(1.4rem, 2.5vw, 1.7rem); }
+  .price { margin: 1.2rem 0 .15rem; color: #304d52; font-size: 1.1rem; }
+  .price strong { font-size: clamp(2.1rem, 4vw, 3rem); color: #163e3a; letter-spacing: -.055em; line-height: 1.1; }
+  .regular-label { display: none; }
+  [data-period="december"] .regular-price { border-top: 1px solid #d6e3df; margin-top: 1rem; padding-top: .8rem; }
+  [data-period="december"] .regular-label { display: block; margin: 0; font-size: .9rem; color: #3a515e; }
+  [data-period="december"] .regular-price .price { margin: .2rem 0 .15rem; }
+  [data-period="december"] .regular-price .price strong { font-size: 1.2rem; }
+  .inclusive { color: #4c6069; font-size: .9rem; }
+  .status, .detail-grid section > p { margin: 1rem 0 1.3rem; line-height: 1.6; color: #3a515e; }
+  .action { display: inline-flex; align-items: center; min-height: 44px; padding: .6rem 1.2rem; border-radius: 999px; color: white; background: #163e3a; font-weight: 600; text-decoration: none; }
+  .internal-code { margin: 1rem 0 0; font-size: .8rem; color: #4c6069; }
+  .internal-code span { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .action:hover { background: #235c55; }
+  a:focus-visible { outline: 3px solid #377b8c; outline-offset: 4px; }
+  .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-block: clamp(2.8rem, 6vw, 5rem); }
+  .indications { margin: 1rem 0 0; padding: 0; list-style: none; }
+  .indications li { padding: .56rem 0; border-bottom: 1px solid #d9e3e3; }
+  @media (max-width: 720px) {
+    .intro-grid, .detail-grid { grid-template-columns: 1fr; }
+    .wrap { width: min(100% - 2.5rem, 36rem); }
+  }
+</style>

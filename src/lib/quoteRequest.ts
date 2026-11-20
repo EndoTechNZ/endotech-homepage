@@ -1,4 +1,5 @@
 import type { NzLaunchCatalogItem, NzLaunchFamily } from '../data/nzLaunchCatalog';
+import { nzIrootPutty, validatePuttySelection } from '../../shared/nz-iroot-putty.mjs';
 import { normalisePromoCode } from '../../shared/nz-promo-offers.mjs';
 
 export const QUOTE_REQUEST_SCHEMA_VERSION = '2026-09-30';
@@ -13,11 +14,11 @@ export const quoteFamilyLabels: Record<NzLaunchFamily, string> = {
   'k-files': 'Transform S™ K-Files',
   'gutta-percha': 'Gutta Percha Points',
   equipment: 'Motors & ultrasonics',
-  bioceramics: 'iRoot SP',
+  bioceramics: 'iRoot bioceramics',
 };
 
 export const quoteProductLabel = (item: NzLaunchCatalogItem): string =>
-  item.family === 'equipment' ? item.system : quoteFamilyLabels[item.family];
+  item.family === 'equipment' || item.family === 'bioceramics' ? item.system : quoteFamilyLabels[item.family];
 
 export interface QuoteCustomerDetails {
   fullName: string;
@@ -34,6 +35,7 @@ export interface QuoteCustomerDetails {
 export interface QuoteRequestLine {
   sku: string;
   quantity: number;
+  expectedUnitNetCents?: number;
 }
 
 export interface QuoteRequestAttachment {
@@ -122,6 +124,9 @@ export const validateQuoteLines = (
     return { ok: false, errors, lines: validated };
   }
 
+  const puttyError = validatePuttySelection(lines);
+  if (puttyError) errors.push(puttyError);
+
   for (const line of lines) {
     const sku = clean(line?.sku).toUpperCase();
     const quantity = normaliseQuoteQuantity(line?.quantity);
@@ -178,7 +183,13 @@ export const createQuoteRequestPayload = ({
     purchaseOrderReference: clean(customer.purchaseOrderReference),
     notes: clean(customer.notes),
   },
-  lines: lines.map((line) => ({ sku: clean(line.sku).toUpperCase(), quantity: normaliseQuoteQuantity(line.quantity) })),
+  lines: lines.map((line) => {
+    const sku = clean(line.sku).toUpperCase();
+    return {
+      sku, quantity: normaliseQuoteQuantity(line.quantity),
+      ...(sku === nzIrootPutty.sku ? { expectedUnitNetCents: line.expectedUnitNetCents } : {}),
+    };
+  }),
   attachment: {
     filename: clean(attachment.filename),
     contentBase64: clean(attachment.contentBase64),

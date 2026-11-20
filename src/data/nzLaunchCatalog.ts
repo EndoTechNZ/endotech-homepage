@@ -10,7 +10,7 @@ export interface NzLaunchCatalogItem {
   fileType: string;
   size: string;
   lengthMm: number | null;
-  packQty: number;
+  packQty: number | null;
   requiresConfirmation: boolean;
   confirmationNote: string;
 }

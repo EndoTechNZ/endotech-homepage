@@ -23,12 +23,6 @@
   force = true
 
 [[redirects]]
-  from = "/products/iroot-bp-plus"
-  to = "/products/bcs-bioceramic-putty/"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/products/iroot-sealer"
   to = "/products/bcs-bioceramic-sealer/"
   status = 301

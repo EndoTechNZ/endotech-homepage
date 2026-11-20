@@ -5,11 +5,17 @@ import path from 'node:path';
 import { JSDOM } from 'jsdom';
 const root=path.resolve('reviewed-site'),dist=path.resolve('dist');
 // Preserve the approved homepage while publishing the approved equipment and request pages.
-const generatedEquipment=new JSDOM(fs.readFileSync(path.join(dist,'index.html'),'utf8')).window.document.querySelector('[data-equipment-section]')?.outerHTML;
+const generatedHome=new JSDOM(fs.readFileSync(path.join(dist,'index.html'),'utf8')).window.document;
+const generatedEquipment=generatedHome.querySelector('[data-equipment-section]')?.outerHTML;
+const puttyAnnouncement=generatedHome.querySelector('[data-putty-announcement]')?.outerHTML;
+if(!puttyAnnouncement)throw Error('iRoot putty announcement was not generated');
 if(!generatedEquipment)throw Error('Equipment teaser was not generated');
 const equipmentGeneratedPages=new Set(['quote-request/index.html','resources/downloads/index.html','products/iroot-sp-disposable-tips/index.html','products/vortiflow-irrigation-needle/index.html']);
-const generatedTipsTeaser=new JSDOM(fs.readFileSync(path.join(dist,'products/overview/index.html'),'utf8')).window.document.querySelector('[data-iroot-tips-teaser]')?.outerHTML;
-const generatedSealerTeaser=new JSDOM(fs.readFileSync(path.join(dist,'products/overview/index.html'),'utf8')).window.document.querySelector('[data-iroot-sealer-teaser]')?.outerHTML;
+const generatedOverview=new JSDOM(fs.readFileSync(path.join(dist,'products/overview/index.html'),'utf8')).window.document;
+const generatedTipsTeaser=generatedOverview.querySelector('[data-iroot-tips-teaser]')?.outerHTML;
+const generatedSealerTeaser=generatedOverview.querySelector('[data-iroot-sealer-teaser]')?.outerHTML;
+const generatedPuttyTeaser=generatedOverview.querySelector('[data-iroot-putty-teaser]')?.outerHTML;
+if(!generatedPuttyTeaser)throw Error('iRoot BP Plus Putty listing was not generated');
 if(!generatedSealerTeaser)throw Error('iRoot bioceramic sealer teaser was not generated');
 if(!generatedTipsTeaser)throw Error('iRoot SP product teaser was not generated');
 const generatedMb2=new JSDOM(fs.readFileSync(path.join(dist,'technique/mb2-file/index.html'),'utf8')).window.document;
@@ -37,8 +43,9 @@ function publish(dir,rel=''){
    if(!nav.includes('href="/products/file-handi/"')){
     nav=nav.replace(/<a\b[^>]*href="\/products\/c-plus\/"[^>]*>[\s\S]*?<\/a>/,match=>`${match}<a href="/products/file-handi/">File Handi</a>`);
    }
-   if(nav.includes('href="/products/iroot-sp/"'))return nav;
-   return nav.replace(/<a\b[^>]*href="\/products\/gutta-percha\/"[^>]*>[\s\S]*?<\/a>/g,match=>`${match}<a href="/products/iroot-sp/">iRoot Bioceramic Sealer</a>`);
+   if(!nav.includes('href="/products/iroot-sp/"'))nav=nav.replace(/<a\b[^>]*href="\/products\/gutta-percha\/"[^>]*>[\s\S]*?<\/a>/g,match=>`${match}<a href="/products/iroot-sp/">iRoot Bioceramic Sealer</a>`);
+   if(!nav.includes('href="/products/iroot-bp-plus/"'))nav=nav.replace(/<a\b[^>]*href="\/products\/iroot-sp\/"[^>]*>[\s\S]*?<\/a>/g,match=>match+'<a href="/products/iroot-bp-plus/">iRoot BP Plus Putty</a>');
+   return nav;
   });
   // Keep the reviewed footer menus aligned with the generated resource links.
   html=html.replace(/<footer\b[\s\S]*?<\/footer>/gi, footer=>{
@@ -57,17 +64,18 @@ function publish(dir,rel=''){
   }
   if(next.replaceAll('\\','/')==='index.html'){
    // String insertion keeps every existing hero/carousel byte intact.
-   html=html.replace('</main>',`${generatedEquipment}</main>`)
+   html=html.replace('<!-- nz-putty-announcement -->',()=>puttyAnnouncement)
+    .replace('</main>',`${generatedEquipment}</main>`)
     .replace('</head>','<link rel="stylesheet" href="/eighteeth.css"></head>');
   }
   if(next.replaceAll('\\','/')==='products/overview/index.html'){
-   html=html.replace('</main>',`${generatedSealerTeaser}${generatedTipsTeaser}${generatedEquipment}</main>`)
+   html=html.replace('</main>',`${generatedSealerTeaser}${generatedPuttyTeaser}${generatedTipsTeaser}${generatedEquipment}</main>`)
     .replace('</head>','<link rel="stylesheet" href="/eighteeth.css"></head>');
   }
   html=html.replace(/<aside class="quote-local-notice">[\s\S]*?<\/aside>/g,'')
    .replace(/\/site-style\.css(?:\?[^"']*)?/g,'/site-style.css?v=nav-labels-20261019')
    .replace(/<meta\b[^>]*name=["']robots["'][^>]*>/gi,'')
-   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=nz-file-handi-20261119')
+   .replace(/\/site-nav\.js(?:\?[^"']*)?/g,'/site-nav.js?v=nz-putty-20261120')
    .replace(/\/rg-wireframe\.js(?:\?[^"']*)?/g,'/rg-wireframe.js?v=whoosh4-20260930')
    .replaceAll('http://127.0.0.1:8772','https://endotechnz.com');
 

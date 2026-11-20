@@ -1,4 +1,5 @@
 import { nzShaperPromo, nzIrootPromo, getPromoOffer, normalisePromoCode, validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
+import { getPuttyLinePrice, getPuttyPricePeriod, nzIrootPutty } from '../../shared/nz-iroot-putty.mjs';
 
 export interface PromoPriceSummary {
   code: string;
@@ -10,6 +11,16 @@ export interface PromoPriceSummary {
 }
 
 export const formatPromoPrice = (amount: number): string => `NZ$${amount.toLocaleString('en-NZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+export const puttyPeriodLabel = (at: Date): string => getPuttyPricePeriod(at) === 'regular' ? 'Standard price' : 'December special';
+
+export const puttyPriceCopy = (quantity: number, at: Date): string => {
+  const price = getPuttyLinePrice(quantity, at);
+  return `${puttyPeriodLabel(at)}. Quantity ${quantity} at ${formatPromoPrice(price.unitNetCents / 100)} each. Putty subtotal ${formatPromoPrice(price.netCents / 100)} excl. GST, GST (15%) ${formatPromoPrice(price.gstCents / 100)}, total ${formatPromoPrice(price.totalCents / 100)} incl. GST.`;
+};
+
+export const puttyQuantity = (lines: Array<{ item: { sku: string }; quantity: number }>): number =>
+  lines.find(line => line.item.sku === nzIrootPutty.sku)?.quantity ?? 0;
 
 export const getPromoPriceSummary = (
   value: unknown,

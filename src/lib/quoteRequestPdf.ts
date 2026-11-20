@@ -3,8 +3,9 @@ import type { NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
 import { compareNzLaunchCatalogItems } from './catalogOrder';
 import { requestCopy } from './quoteRequestCopy';
 import { quoteProductLabel, type QuoteCustomerDetails } from './quoteRequest';
+import { validatePuttySelection } from '../../shared/nz-iroot-putty.mjs';
 import { getEquipmentTotals } from '../data/eighteethEquipment';
-import { formatPromoPrice, getPromoPriceSummary, promoPriceNote, promoTitle, promoProductCopy } from './quotePromoPricing';
+import { formatPromoPrice, getPromoPriceSummary, promoPriceNote, promoTitle, promoProductCopy, puttyPriceCopy, puttyQuantity } from './quotePromoPricing';
 
 export interface QuoteRequestPdfLine {
   item: NzLaunchCatalogItem;
@@ -89,8 +90,12 @@ const drawImageContained = (
 };
 
 export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise<Uint8Array> => {
-  const equipmentTotal = getEquipmentTotals(input.lines.map(line => ({ sku: line.item.sku, quantity: line.quantity })));
-  const promoPrice = getPromoPriceSummary(input.customer.promoCode, input.lines.map(({item,quantity}) => ({sku:item.sku,quantity})));
+  const requested = input.lines.map(line => ({ sku: line.item.sku, quantity: line.quantity }));
+  const puttyError = validatePuttySelection(requested, input.createdAt);
+  if (puttyError) throw new Error(puttyError);
+  const putty = puttyQuantity(input.lines);
+  const equipmentTotal = getEquipmentTotals(requested);
+  const promoPrice = getPromoPriceSummary(input.customer.promoCode, requested);
   const pdf = await PDFDocument.create();
   pdf.setTitle(`EndoTech NZ pro forma invoice request ${input.draftReference}`);
   pdf.setAuthor('EndoTech NZ');
@@ -162,7 +167,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   addPage();
 
   page.drawText('PRO FORMA INVOICE REQUEST', { x: MARGIN, y, size: 19, font: bold, color: NAVY });
-  const priceLabel = equipmentTotal.selected.length ? 'PARTIAL PRICING' : promoPrice ? 'PROMO PRICE SHOWN' : 'UNPRICED';
+  const priceLabel = putty ? 'PUTTY PRICE SHOWN' : equipmentTotal.selected.length ? 'PARTIAL PRICING' : promoPrice ? 'PROMO PRICE SHOWN' : 'UNPRICED';
   page.drawText(priceLabel, {
     x: PAGE_WIDTH - MARGIN - bold.widthOfTextAtSize(priceLabel, 8.5),
     y: y + 1,
@@ -197,6 +202,13 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
     drawWrapped(`Bundle excl. GST: ${formatPromoPrice(promoPrice.netTotal)}. GST (15%): ${formatPromoPrice(promoPrice.gstTotal)}.`, {size:9.2,color:NAVY});
     drawWrapped(`${formatPromoPrice(promoPrice.totalInclGst)} incl. GST, plus postage.`, {size:13,font:bold,color:NAVY});
     drawWrapped(promoPriceNote(promoPrice), {size:8.5,color:MID});
+    y -= 8;
+  }
+
+  if (putty) {
+    drawSectionTitle('iRoot BP Plus Putty');
+    drawWrapped(puttyPriceCopy(putty, input.createdAt), { size: 10, color: NAVY });
+    drawWrapped('Freight and other products are separate.', { size: 8.5, color: MID });
     y -= 8;
   }
 
@@ -291,9 +303,9 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
 
   ensureSpace(55);
   y -= 9;
-  const packCount = input.lines.filter(line => line.item.family !== 'equipment').reduce((sum, line) => sum + line.quantity, 0);
-  const unitCount = equipmentTotal.selected.reduce((sum, line) => sum + line.quantity, 0);
-  page.drawText(`${input.lines.length} product line${input.lines.length === 1 ? '' : 's'} | ${packCount} packs | ${unitCount} equipment units`, {
+  const packCount = input.lines.filter(line => line.item.family !== 'equipment').reduce((sum, line) => sum + line.quantity, 0) - putty;
+  const unitCount = equipmentTotal.selected.reduce((sum, line) => sum + line.quantity, putty);
+  page.drawText(`${input.lines.length} product line${input.lines.length === 1 ? '' : 's'} | ${packCount} packs | ${unitCount} ${putty ? 'units' : 'equipment units'}`, {
     x: MARGIN,
     y,
     size: 9,
@@ -308,7 +320,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
 
   // Priced equipment and promo summaries already explain the next step.
   // Avoid creating a second page containing only the repeated next-step box.
-  if (!equipmentTotal.selected.length && !promoPrice) {
+  if (!equipmentTotal.selected.length && !promoPrice && !putty) {
   if (y - 56 < 60) addPage();
   page.drawRectangle({ x: MARGIN, y: y - 52, width: CONTENT_WIDTH, height: 58, color: PALE, borderColor: LIGHT, borderWidth: 1 });
   page.drawText('NEXT STEP', { x: MARGIN + 14, y: y - 10, size: 7, font: bold, color: TEAL });
@@ -326,7 +338,7 @@ export const buildQuoteRequestPdf = async (input: QuoteRequestPdfInput): Promise
   const pages = pdf.getPages();
   pages.forEach((currentPage, index) => {
     currentPage.drawLine({ start: { x: MARGIN, y: 56 }, end: { x: PAGE_WIDTH - MARGIN, y: 56 }, thickness: 0.6, color: LIGHT });
-    currentPage.drawText(equipmentTotal.selected.length ? 'EndoTech NZ | Pro forma request with equipment pricing' : promoPrice ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request', {
+    currentPage.drawText(putty ? 'EndoTech NZ | Pro forma request with putty pricing' : equipmentTotal.selected.length ? 'EndoTech NZ | Pro forma request with equipment pricing' : promoPrice ? 'EndoTech NZ | Pro forma request with promotional pack price' : 'EndoTech NZ | Unpriced pro forma invoice request', {
       x: MARGIN,
       y: 38,
       size: 6.8,

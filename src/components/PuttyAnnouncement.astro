@@ -1,0 +1,48 @@
+---
+import stateModule from '../../shared/nz-iroot-putty.mjs?url&no-inline';
+import { withBasePath } from '../utils/paths';
+---
+
+<aside data-putty-announcement data-state-module={stateModule} aria-label="iRoot BP Plus Putty announcement">
+  <a href={withBasePath('/products/iroot-bp-plus/')}>
+    <strong data-putty-heading>iRoot BP Plus Putty</strong>
+    <span data-putty-price hidden></span>
+    <span aria-hidden="true">→</span>
+  </a>
+  <style is:inline>
+    [data-putty-announcement] { background:#e6f4ef; color:#123d3a; font:600 15px/1.4 system-ui,sans-serif; }
+    [data-putty-announcement] a { display:flex; box-sizing:border-box; min-height:44px; align-items:center; justify-content:center; flex-wrap:wrap; gap:3px 16px; padding:9px 18px; color:inherit; text-align:center; text-decoration:none; }
+    [data-putty-announcement] a:hover strong, [data-putty-announcement] a:focus-visible strong { text-decoration:underline; }
+    [data-putty-announcement] a:focus-visible { outline:2px solid currentColor; outline-offset:-3px; }
+    [data-putty-price][hidden] { display:none; }
+  </style>
+  <script is:inline type="module">
+    const notice = document.querySelector('[data-putty-announcement]');
+    const { getPuttyOfferState, getPuttyPricePeriod, getPuttyLinePrice } = await import(notice.dataset.stateModule);
+    const heading = notice.querySelector('[data-putty-heading]');
+    const price = notice.querySelector('[data-putty-price]');
+    function update() {
+      const now = new Date();
+      const state = getPuttyOfferState(now);
+      price.hidden = state === 'upcoming';
+      if (state === 'upcoming') {
+        heading.textContent = 'iRoot Putty available from early December';
+        price.textContent = '';
+        return;
+      }
+      heading.textContent = state === 'awaiting-stock'
+        ? 'iRoot BP Plus Putty · Awaiting stock confirmation'
+        : 'iRoot BP Plus Putty';
+      const prefix = getPuttyPricePeriod(now) === 'december' ? 'December special ' : '';
+      const unitPrice = (getPuttyLinePrice(1, now).unitNetCents / 100).toFixed(2);
+      price.textContent = prefix + 'NZ$' + unitPrice + ' + GST';
+    }
+    function updateOnTheHour() {
+      update();
+      window.setTimeout(updateOnTheHour, 3_600_000 - Date.now() % 3_600_000);
+    }
+    updateOnTheHour();
+    window.addEventListener('pageshow', update);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) update(); });
+  </script>
+</aside>

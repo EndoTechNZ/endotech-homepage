@@ -1,4 +1,5 @@
 import type { NzLaunchCatalogItem } from '../data/nzLaunchCatalog';
+import { nzIrootPutty, getPuttyLinePrice } from '../../shared/nz-iroot-putty.mjs';
 import { validatePromoSelection } from '../../shared/nz-promo-offers.mjs';
 import {
   validateQuoteCustomer,
@@ -17,6 +18,12 @@ export interface QuoteRequestSubmissionConfig {
 export interface QuoteRequestSubmissionResult {
   ok: true;
   quoteReference: string;
+}
+
+export class PuttyPriceChangedError extends Error {
+  constructor() {
+    super('The iRoot BP Plus Putty price has changed. Review the updated request before sending or saving it.');
+  }
 }
 
 const MINIMUM_COMPLETION_MS = 2_500;
@@ -75,6 +82,11 @@ export const submitQuoteRequest = async (
     throw new Error([...customerErrors, ...lineValidation.errors][0] || 'The request could not be validated.');
   }
 
+  const putty = payload.lines.find(line => line.sku === nzIrootPutty.sku);
+  if (putty && putty.expectedUnitNetCents !== getPuttyLinePrice(1).unitNetCents) {
+    throw new PuttyPriceChangedError();
+  }
+
   if (payload.antiAbuse.website) {
     throw new Error('The request could not be submitted.');
   }
@@ -107,7 +119,8 @@ export const submitQuoteRequest = async (
       body: JSON.stringify(payload),
     });
 
-    const body = await response.json().catch(() => ({})) as Partial<QuoteRequestSubmissionResult> & { error?: string };
+    const body = await response.json().catch(() => ({})) as Partial<QuoteRequestSubmissionResult> & { error?: string; code?: string };
+    if (!response.ok && body.code === 'PUTTY_PRICE_CHANGED') throw new PuttyPriceChangedError();
     if (!response.ok || body.ok !== true || !body.quoteReference) {
       throw new Error(body.error || 'EndoTech NZ could not receive the request. Please download the PDF and email it instead.');
     }

@@ -8,6 +8,7 @@ const sharedExploreItems=[
   {href:'/products/file-handi/',label:'File Handi'},
   {href:'/products/gutta-percha/',label:'Gutta Percha Points'},
   {href:'/products/iroot-sp/',label:'iRoot Bioceramic Sealer'},
+  {href:'/products/iroot-bp-plus/',label:'iRoot BP Plus Putty'},
   {href:'/products/iroot-sp-disposable-tips/',label:'iRoot SP Disposable Tips'},
   {divider:true},
   {href:'/technology/',label:'Technology'},

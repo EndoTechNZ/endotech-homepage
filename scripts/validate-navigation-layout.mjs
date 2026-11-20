@@ -5,6 +5,7 @@ import path from 'node:path';
 import http from 'node:http';
 import { existsSync } from 'node:fs';
 import { chromium, webkit } from 'playwright';
+import { getPuttyLinePrice, getPuttyOfferState, getPuttyPricePeriod } from '../shared/nz-iroot-putty.mjs';
 
 const dist = path.resolve('dist');
 const output = path.resolve('output/playwright/navigation');
@@ -36,7 +37,7 @@ assert.ok(routes.includes('/') && routes.includes('/offers/'), 'Build the produc
 let server;
 let base = process.env.NAV_BASE_URL;
 if (!base) {
-  const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.woff2': 'font/woff2' };
+  const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.woff2': 'font/woff2' };
   server = http.createServer(async (req, res) => {
     try {
       const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
@@ -224,6 +225,7 @@ try {
       await summary.click();
       assert.equal(await page.locator('header details a[href="/products/orifice-shapers/"]').count(), 1, `${engine} ${route}: Explore includes Orifice Shapers`);
       assert.equal(await page.locator('header details a[href="/products/iroot-sp/"]').count(), 1, `${engine} ${route}: Explore includes iRoot Bioceramic Sealer`);
+      assert.equal(await page.locator('header details a[href="/products/iroot-bp-plus/"]').count(), 1, `${engine} ${route}: Explore includes iRoot BP Plus Putty`);
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
       const menu = page.locator(variants.map(variant => `${variant.header} ${variant.menu}`).join(', '));
       const menuBounds = await menu.boundingBox();
@@ -313,6 +315,21 @@ try {
     }
     await page.setViewportSize({ width: 390, height: 844 });
     await load('/');
+    const puttyAnnouncement = page.locator('[data-putty-announcement] a');
+    assert.equal(await puttyAnnouncement.getAttribute('href'), '/products/iroot-bp-plus/');
+    assert.ok(await puttyAnnouncement.isVisible(), 'Homepage putty announcement remains reachable');
+    const now = new Date(await page.evaluate(() => Date.now()));
+    const stock = getPuttyOfferState(now);
+    const heading = stock === 'upcoming' ? 'iRoot Putty available from early December'
+      : stock === 'awaiting-stock' ? 'iRoot BP Plus Putty · Awaiting stock confirmation' : 'iRoot BP Plus Putty';
+    const priceLabel = getPuttyPricePeriod(now) === 'december' ? 'December special ' : '';
+    const price = stock === 'upcoming' ? '' : priceLabel + 'NZ$' + (getPuttyLinePrice(1, now).unitNetCents / 100).toFixed(2) + ' + GST';
+    // The reviewed homepage runs this module after its static fallback has rendered.
+    await page.waitForFunction(expected => {
+      const heading = document.querySelector('[data-putty-heading]');
+      const price = document.querySelector('[data-putty-price]');
+      return heading?.textContent === expected.heading && price?.hidden === !expected.price && price?.textContent === expected.price;
+    }, { heading, price });
     const promoBanner = page.locator('.iroot-promo-banner');
     assert.equal(await promoBanner.getAttribute('href'), '/products/iroot-sp/');
     assert.match(await promoBanner.innerText(), /iRoot promo[\s\S]*NZ\$240 \+ GST[\s\S]*Free Micro-Path six-pack per box[\s\S]*Limit 2 boxes per clinic[\s\S]*View iRoot offer/);

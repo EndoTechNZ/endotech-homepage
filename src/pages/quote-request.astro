@@ -9,12 +9,13 @@ import { nzCustomerSelectableCatalog, type NzLaunchFamily, type NzLaunchCatalogI
 import { equipment, formatEquipmentPrice } from '../data/eighteethEquipment';
 import { compareNzLaunchCatalogItems } from '../lib/catalogOrder';
 import { requestCopy } from '../lib/quoteRequestCopy';
-import { quoteFamilyLabels } from '../lib/quoteRequest';
+import { nzIrootPutty } from '../../shared/nz-iroot-putty.mjs';
+import { quoteFamilyLabels, quoteProductLabel } from '../lib/quoteRequest';
 import { siteConfig } from '../config/site';
 
 const familyOrder: NzLaunchFamily[] = ['et', 'pt', 'rg', 'micro-path', 'c-plus', 'gutta-percha', 'bioceramics', 'equipment'];
 const familyMeta: Record<NzLaunchFamily, { eyebrow: string; description: string }> = {
-  bioceramics: { eyebrow: 'Bioceramic sealer', description: 'iRoot SP: one 2 g syringe with 15 disposable tips. NZ$240 + GST. Enter iRoot to include a free six-pack of Micro-Path 15/.03, 25 mm files.' },
+  bioceramics: { eyebrow: 'Bioceramic materials', description: 'iRoot SP sealer is NZ$240 + GST per box. Enter iRoot with an eligible sealer purchase for a free Micro-Path six-pack.' },
   equipment: { eyebrow: 'Eighteeth equipment', description: 'Add a motor, ultrasonic activator, or both. Quantities are individual units.' },
   et: {
     eyebrow: 'Rotary shaping',
@@ -197,13 +198,17 @@ const contactEmail = siteConfig.email.toLowerCase();
                         data-search={`${item.system} ${item.publicMeaning} ${item.fileType} ${item.size} ${item.lengthMm ?? ''} ${item.sku}`.toLowerCase()}
                       >
                         <td>
-                          <strong class="quote-product-label">{quoteFamilyLabels[item.family]}</strong>
+                          <strong class="quote-product-label">{quoteProductLabel(item)}</strong>
+                          {item.sku === nzIrootPutty.sku && <>
+                            <span data-putty-availability>Contact EndoTech NZ to confirm availability.</span>
+                            <a href="/products/iroot-bp-plus/">Product details and instructions</a><span data-putty-enquiry><a href="/about/contact/">Enquire about availability</a></span>
+                          </>}
                           <span>{item.fileType}</span>
                         </td>
-                        <td data-label="Size">{item.size}</td>
+                        <td data-label="Size">{item.size || "–"}</td>
                         <td data-label="Length">{item.lengthMm ? `${item.lengthMm} mm` : '—'}</td>
-                        <td data-label="Pack">{item.packQty}</td>
-                        <td data-label="SKU"><code>{item.sku}</code></td>
+                        <td data-label="Pack">{item.packQty ?? "To confirm"}</td>
+                        <td data-label="SKU"><code>{item.sku}</code>{item.sku === nzIrootPutty.sku && <span>EndoTech NZ code</span>}</td>
                         <td data-label="Qty">
                           <input
                             type="number"
@@ -213,8 +218,9 @@ const contactEmail = siteConfig.email.toLowerCase();
                             inputmode="numeric"
                             placeholder="0"
                             data-quote-quantity
+                            disabled={item.sku === nzIrootPutty.sku}
                             data-sku={item.sku}
-                            aria-label={`Quantity for ${quoteFamilyLabels[item.family]} ${item.size} ${item.lengthMm ? `${item.lengthMm} millimetres` : ''}, SKU ${item.sku}`}
+                            aria-label={`Quantity for ${quoteProductLabel(item)} ${item.size} ${item.lengthMm ? `${item.lengthMm} millimetres` : ''}, SKU ${item.sku}`}
                           />
                         </td>
                       </tr>
@@ -240,6 +246,7 @@ const contactEmail = siteConfig.email.toLowerCase();
             Enter a pack quantity beside any listed product to add it here.
           </div>
           <div class="quote-selection-summary" data-selection-summary hidden></div>
+          <p class="equipment-live-total" data-putty-price hidden aria-live="polite"></p>
           <div class="equipment-live-total" data-equipment-live-total hidden aria-live="polite"></div>
           <footer>
             <strong data-selection-total>0 lines · 0 packs</strong>
@@ -337,6 +344,10 @@ const contactEmail = siteConfig.email.toLowerCase();
         <p class="quote-promo-note" data-promo-price-note></p>
       </section>
 
+      <section class="equipment-review-price" data-putty-review hidden aria-label="Putty price summary">
+        <h3>iRoot BP Plus Putty</h3><p data-putty-price></p><p>Freight and other products are separate.</p>
+      </section>
+
       <section class="equipment-review-price" data-equipment-review hidden aria-label="Equipment price summary">
         <h3>Equipment subtotal</h3><dl><div><dt>Equipment excl. GST</dt><dd data-equipment-net></dd></div><div><dt>GST · 15%</dt><dd data-equipment-gst></dd></div><div><dt>Equipment incl. GST</dt><dd data-equipment-total></dd></div></dl><p data-equipment-note></p>
       </section>
@@ -395,6 +406,7 @@ const contactEmail = siteConfig.email.toLowerCase();
     </div>
     <p class="quote-print-disclaimer">Customer-prepared request for EndoTech NZ review. This is not the priced pro forma invoice, a tax invoice, a purchase order or a confirmed order.</p>
     <section class="quote-print-promo-summary" data-print-promo-summary hidden><h2>Promo price</h2><p data-print-promo-price></p><p data-print-promo-note></p></section>
+    <section class="quote-print-equipment-summary" data-print-putty hidden><h2>iRoot BP Plus Putty</h2><p data-putty-price></p><p>Freight and other products are separate.</p></section>
     <section class="quote-print-equipment-summary" data-print-equipment-summary hidden><h2>Equipment pricing</h2><p data-print-equipment-price></p><p>Files, points, promotional offers and freight are separate.</p></section>
     <section><h2>Practice details</h2><dl class="quote-print-details" data-print-details></dl></section>
     <section>

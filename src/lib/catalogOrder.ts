@@ -76,7 +76,7 @@ export const compareNzLaunchCatalogItems = (a: NzLaunchCatalogItem, b: NzLaunchC
 
   if (a.family === 'rg') {
     return rgSequenceRank(a) - rgSequenceRank(b) ||
-      a.packQty - b.packQty ||
+      (a.packQty ?? Number.MAX_SAFE_INTEGER) - (b.packQty ?? Number.MAX_SAFE_INTEGER) ||
       (a.lengthMm ?? Number.MAX_SAFE_INTEGER) - (b.lengthMm ?? Number.MAX_SAFE_INTEGER) ||
       a.sku.localeCompare(b.sku, 'en-NZ', { numeric: true });
   }
